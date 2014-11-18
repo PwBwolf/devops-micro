@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express-jwt": "~0.2.1",
+    "express-jwt": "^0.2.2",
     "jsonwebtoken": "~0.4.0",
     "bcrypt": "~0.7.8",
     "express": "~4.9.1",
