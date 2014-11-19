@@ -86,7 +86,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
     .pipe(cssFilter.restore())	// Restore non-CSS files back to the stream
     .pipe(assets.restore())	// Restore all other files (we were only working on concatenated CSS/JS till now)
     .pipe($.useref())	// Finish replacing all CSS and JS links with our processed, concatenated, minified files
-    .pipe($.revReplace())	
+    .pipe($.revReplace())
     .pipe(htmlFilter)
     .pipe($.minifyHtml({
       empty: true,
@@ -121,12 +121,12 @@ gulp.task('fonts', function () {
 
 // Copy non-html files in project root including .htaccess, robots.txt, etc.
 gulp.task('extras', function () {
-    return gulp.src(['../client/app/*.*', '!../client/app/*.html'], { dot: true }) 
+    return gulp.src(['../client/app/*.*', '!../client/app/*.html'], { dot: true })
         .pipe(gulp.dest('dist'));
 });
 
 // Sometimes clearing the cache is the only way to fix path errors in the image task when building
-gulp.task('clear', function (done) { 
+gulp.task('clear', function (done) {
     return $.cache.clearAll(done);
 });
 
@@ -138,7 +138,7 @@ gulp.task('clean', function () {
 gulp.task('build', ['html', 'images', 'fonts', 'extras']);
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
-gulp.task('default', ['clean'], function () { 
+gulp.task('default', ['clean'], function () {
     gulp.start('build');
 });
 
@@ -153,9 +153,9 @@ gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
         .use(require('connect-livereload')({ port: 35729 }))
-        .use(connect.static('app'))
-        .use(connect.static('.tmp'))
-        .use(connect.directory('app'));
+        .use(connect.static('../client/app'))
+        .use(connect.static('../client/.tmp'))
+        .use(connect.directory('../client/app'));
 
     require('http').createServer(app)
         .listen(9000)
