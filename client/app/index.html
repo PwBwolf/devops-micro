@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>YipTV</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
@@ -13,7 +13,9 @@
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/carousel.css" />  <!-- TODO Replace this with pristine library version -->
+  <link rel="stylesheet" href="styles/flexslider.css" /><!-- TODO Replace this with pristine library version -->
   <!-- endbuild -->
 </head>
 <body>
@@ -21,8 +23,187 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<!-- Add your site or application content here -->
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="YipTV" title="YipTV"></a></div>
+    <div class="right-box home pull-right">
+      <div class="language"><a href="#">Spanish</a></div>
+      <span class="phone">855-919-4788</span>
+      <a href="#" class="btn-sign">Sign in</a><a href="#" class="btn-sign">Sign up</a>
+    </div>
+  </div>
+</header>
+<!-- /.Header -->
+
+<!-- Banner -->
+<div class="banner">
+  <div class="banner-wrap">
+    <div class="banner-caption">
+      <h1>Unlimited <span>Channels</span></h1>
+      <h2><sub>$</sub> 14.99 <span class="divide">/</span><span>month</span></h2>
+      <img src="img/guarantee-img.png" alt="">
+    </div>
+    <img src="img/banner.jpg" alt="" >
+  </div>
+</div>
+<!-- /.Banner -->
+
+<!-- Service -->
+<div class="service">
+  <div class="container">
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+        <div class="service-box">
+          <img src="img/img-live-news.png" alt="" border="0" >
+          <p>Watch live news, sports & events from around the world</p>
+        </div>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+        <div class="service-box">
+          <img src="img/img-tablet.png" alt="" border="0" >
+          <p>Watch on your TV, Tablet, Phone PC, Game System and more.</p>
+        </div>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+        <div class="service-box-last">
+          <img src="img/img-contracts.png" alt="" border="0" >
+          <p>No Contracts, Cancel Any Time</p>
+        </div>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+  </div>
+</div><!-- /.Service -->
+
+<!-- Revolution -->
+<div class="revolution-box">
+  <div class="container">
+    <div class="img-revolution"><img src="img/img-revolution.png" alt="" border="0"></div>
+    <div class="watch">
+      <h1>Watch on any screen, anywhere, any time.</h1>
+      No cable box needed. No bulky dish on the roof. Yip TV plays your channels through your broadband Internet connection.
+      <span>&gt;&gt; Join the revolution</span>
+    </div>
+  </div>
+</div>
+<!-- /.Revolution -->
+
+<!-- Partners -->
+<div class="link-box">
+  <div class="shadow">
+    <div class="container">
+      <!-- Slideshow  -->
+      <div id="flexslider1" class="flexslider carousel">
+        <ul class="slides">
+          <li>
+            <img src="img/img1.jpg" alt="" border="0">
+            <img src="img/img2.jpg" alt="" border="0">
+            <img src="img/img3.jpg" alt="" border="0">
+            <img src="img/img4.jpg" alt="" border="0">
+            <img src="img/img5.jpg" alt="" border="0">
+            <img src="img/img6.jpg" alt="" border="0">
+            <img src="img/img7.jpg" alt="" border="0">
+            <img src="img/img8.jpg" alt="" border="0">
+          </li>
+          <li>
+            <img src="img/img1.jpg" alt="" border="0">
+            <img src="img/img2.jpg" alt="" border="0">
+            <img src="img/img3.jpg" alt="" border="0">
+            <img src="img/img4.jpg" alt="" border="0">
+            <img src="img/img5.jpg" alt="" border="0">
+            <img src="img/img6.jpg" alt="" border="0">
+            <img src="img/img7.jpg" alt="" border="0">
+            <img src="img/img8.jpg" alt="" border="0">
+          </li>
+          <li>
+            <img src="img/img1.jpg" alt="" border="0">
+            <img src="img/img2.jpg" alt="" border="0">
+            <img src="img/img3.jpg" alt="" border="0">
+            <img src="img/img4.jpg" alt="" border="0">
+            <img src="img/img5.jpg" alt="" border="0">
+            <img src="img/img6.jpg" alt="" border="0">
+            <img src="img/img7.jpg" alt="" border="0">
+            <img src="img/img8.jpg" alt="" border="0">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.Partners -->
+
+<!-- Testimonial -->
+<div id="testimonial">
+  <div class="container">
+    <h1>Testimonial</h1>
+    <div class="testimonial-pad">
+      <!-- Slideshow  -->
+      <ul class="rslides" id="slider">
+        <li>
+          <div class="testi-img"><img src="img/testi-img.png" alt="" ></div>
+          <div class="testi-txt quot-r">
+            <span class="quot-l"></span>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+          </div>
+        </li>
+        <li>
+          <div class="testi-img"><img src="img/testi-img.png" alt="" ></div>
+          <div class="testi-txt quot-r">
+            <span class="quot-l"></span>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+          </div>
+        </li>
+        <li>
+          <div class="testi-img"><img src="img/testi-img.png" alt="" ></div>
+          <div class="testi-txt quot-r">
+            <span class="quot-l"></span>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- /.Testimonial -->
+
+<!-- TODO Add your site or application content here -->
 <div class="container" ng-view=""></div>
+
+<!-- FOOTER -->
+<footer>
+  <section class="f-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4  col-md-3  col-sm-12 f-logo"><img src="img/f-logo.png" alt="YipTV"></div>
+        <div class="col-lg-8  col-md-9  col-sm-12">
+          <div class="f-nav">
+            <h2>Our Company</h2>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Leadership</a></li>
+            </ul>
+          </div>
+          <div class="f-nav">
+            <h2>Support</h2>
+            <ul>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="f-nav social">
+            <h2>Connect With Us</h2>
+            <a href="#"><img src="img/ico-fb.png" alt="Facebook" title="Facebook"></a><a href="#"><img src="img/ico-tw.png" alt="Twitter" title="Twitter"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="f-btm">
+    Use of the YipTV service and this Web site constitutes acceptance of our <span><a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</span><span class="copyright">&copy; 2013-2015 YipTV</span>
+  </section>
+</footer>
 
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -63,7 +244,10 @@
   });
 
   $(function () {
-    $("#slider").responsiveSlides({  });
+    $("#slider").responsiveSlides({
+      timeout: 5000,
+      pager: true
+    });
   });
 </script>
 </body>
