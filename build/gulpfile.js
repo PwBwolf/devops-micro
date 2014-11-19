@@ -100,13 +100,13 @@ gulp.task('html', ['scripts', 'partials'], function () {
 
 // Copy _and_ optimise images.
 gulp.task('images', function () {
-    return gulp.src('../client/app/images/**/*') // Get images from specified dir and all subdirs.
+    return gulp.src('../client/app/img/**/*') // Get images from specified dir and all subdirs.
         .pipe($.imagemin({		// $.cache() sometimes causes errors so it has been removed.
             optimizationLevel: 3,
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest('dist/images/'))
+        .pipe(gulp.dest('dist/img/'))
         .pipe($.size());
 });
 
@@ -188,13 +188,13 @@ gulp.task('watch', ['connect', 'serve'], function () {
         '../client/app/*.html',
         '.tmp/styles/**/*.css',
         '../client/app/scripts/**/*.js',
-        '../client/app/images/**/*'
+        '../client/app/img/**/*'
     ]).on('change', function (file) {
         server.changed(file.path);
     });
 
     gulp.watch('../client/app/styles/**/*.css', ['styles']);
     gulp.watch('../client/app/scripts/**/*.js', ['scripts']);
-    gulp.watch('../client/app/images/**/*', ['images']);
-    gulp.watch('bower.json', ['wiredep']);
+    gulp.watch('../client/app/img/**/*', ['images']);
+    //gulp.watch('bower.json', ['wiredep']);
 });
