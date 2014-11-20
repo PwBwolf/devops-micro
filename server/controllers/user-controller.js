@@ -1,13 +1,21 @@
 'use strict';
 
-exports.signup = function(req, res) {
+exports.signUp = function(req, res) {
 
 };
 
-exports.login = function(req, res) {
+exports.signIn = function(req, res) {
 
 };
 
-exports.logout = function(req, res) {
+exports.signOut = function(req, res) {
 
 };
+
+exports.saveVisitor = function(req, res) {
+
+};
+
+exports.doesEmailExists = function(req, res) {
+
+}

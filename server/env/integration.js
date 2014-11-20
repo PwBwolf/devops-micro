@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-    environment: 'production',
+    environment: 'integration',
     port: 80
 };
