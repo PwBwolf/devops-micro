@@ -7,6 +7,7 @@ angular.module('YipTV', [
   'ngRoute',
   'pascalprecht.translate'
 ])
+  // Translation configuration
   .config(function ($translateProvider) {
     $translateProvider.useStaticFilesLoader({
       prefix: '/translation/',
@@ -18,13 +19,14 @@ angular.module('YipTV', [
     $translateProvider.use(window.navigator.language);
     //$translateProvider.rememberLanguage(true);
   })
-//.config(function ($routeProvider) {
-//  $routeProvider
-//    .when('/', {
-//      templateUrl: 'views/main.html',
-//      controller: 'MainController'
-//    })
-//    .otherwise({
-//      redirectTo: '/'
-//    });
-//});
+  // Routing configuration
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: ''
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  });
