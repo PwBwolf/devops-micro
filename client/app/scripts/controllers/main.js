@@ -2,6 +2,6 @@
 
 angular.module('YipTV')
   .controller('MainController', function ($scope, Page) {
-    this.Page = Page;
-    Page.title = "Welcome to YipTV"; // TODO Localise this
+    this.Page = Page; // Make the page available to the HTML
+    Page.title = "HOMEPAGE_TITLE"; // TODO Localise this
   });

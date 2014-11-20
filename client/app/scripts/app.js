@@ -4,15 +4,27 @@ angular.module('YipTV', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'pascalprecht.translate'
 ])
-  //.config(function ($routeProvider) {
-  //  $routeProvider
-  //    .when('/', {
-  //      templateUrl: 'views/main.html',
-  //      controller: 'MainController'
-  //    })
-  //    .otherwise({
-  //      redirectTo: '/'
-  //    });
-  //});
+  .config(function ($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+      prefix: '/translation/',
+      suffix: '.json'
+    });
+    //$translateProvider.useLocalStorage();
+    $translateProvider.preferredLanguage(window.navigator.language);
+    $translateProvider.fallbackLanguage('en-US');
+    $translateProvider.use(window.navigator.language);
+    //$translateProvider.rememberLanguage(true);
+  })
+//.config(function ($routeProvider) {
+//  $routeProvider
+//    .when('/', {
+//      templateUrl: 'views/main.html',
+//      controller: 'MainController'
+//    })
+//    .otherwise({
+//      redirectTo: '/'
+//    });
+//});
