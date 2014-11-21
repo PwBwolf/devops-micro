@@ -1,10 +1,7 @@
 'use strict';
 
 angular.module('YipTV')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainController', function ($scope, Page) {
+    this.Page = Page; // Make the page available to the HTML
+    Page.title = "HOMEPAGE_TITLE"; // TODO Localise this
   });
