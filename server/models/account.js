@@ -11,7 +11,7 @@ var Account = new Schema({
     createdAt: Date,
     referralCode: String,
     primaryCard: {
-        _id: ObjectId,
+        id: String,
         type: String,
         name: String,
         last4Digits: String,
@@ -19,7 +19,7 @@ var Account = new Schema({
     },
     cardHistory: [
         {
-            _id: ObjectId,
+            id: String,
             type: String,
             name: String,
             last4Digits: String,

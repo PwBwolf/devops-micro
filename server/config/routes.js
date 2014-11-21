@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-var UserController = require('./controllers/user-controller');
+var UserController = require('./../controllers/user-controller');
 
 var routes = [
     { path: '/sign-up', httpMethod: 'POST', middleware: [UserController.signUp] },

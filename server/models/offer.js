@@ -8,6 +8,3 @@ var Offer = new Schema({
 });
 
 mongoose.model('Offer', Offer);
-
-
-

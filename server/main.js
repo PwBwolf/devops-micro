@@ -1,21 +1,23 @@
 'use strict';
 
-// we default to 'development' if the actual environment value is not set
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var express = require('express'),
+    http = require('http'),
+    passport = require('passport'),
+    mongoose = require('mongoose'),
+    logger = require('mean-logger'),
+    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+    config = require('./config/config'),
+    port = process.env.PORT || config.port,
+    app = module.exports = express(),
+    modelsPath = config.root + '/models';
 
-var express = require('express');
-var config = require('./config');
-var port = process.env.PORT || config.port;
-var app = express();
-var server = null;
+require('./config/models')(modelsPath);
+require('./config/express')(app, passport, env);
+require('./config/passport')(passport);
+require('./config/routes')(app);
 
-if (config.environment === 'development') {
-    app.use(express.static(config.root + '/client'));
-}
-
-require('./express')(app);
-require('./routes')(app);
-
-app.listen(port, function () {
-    console.log('YiPTV Server listening on port ' + port);
+http.createServer(app).listen(port, function () {
+    console.log('YipTV server listening on port ' + port);
 });
+
+logger.init(app, passport, mongoose);
