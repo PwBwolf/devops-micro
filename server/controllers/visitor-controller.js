@@ -1,3 +1,5 @@
-/**
- * Created by achinth on 11/21/14.
- */
+'use strict';
+
+exports.saveVisitor = function(req, res) {
+    return res.send(200);
+};

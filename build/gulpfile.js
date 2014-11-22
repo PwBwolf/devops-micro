@@ -1,6 +1,6 @@
 'use strict';
 // generated on 2014-11-12 using generator-gulp-webapp 0.1.0
-// Note: The serve tasks have not beemn validated to work. Only gulp build works.
+// Note: The serve tasks have not been validated to work. Only gulp build works.
 
 var gulp = require('gulp');
 
@@ -8,14 +8,14 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
-    return gulp.src('../client/app/styles/main.css')
+    return gulp.src('../client/styles/main.css')
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.size());
 });
 
 gulp.task('scripts', function () {
-    return gulp.src('../client/app/scripts/**/*.js')
+    return gulp.src('../client/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter(require('jshint-stylish')))
         .pipe($.size());
@@ -25,8 +25,8 @@ gulp.task('html', ['styles', 'scripts'], function () {
     var jsFilter = $.filter('../client/**/*.js');
     var cssFilter = $.filter('../client/**/*.css');
 
-    return gulp.src(['../client/app/*.html', '../client/app/views/**/*.html'])
-        .pipe($.useref.assets({searchPath: '{.tmp,../client/app}'}))
+    return gulp.src(['../client/app/*.html', '../client/views/**/*.html'])
+        .pipe($.useref.assets({searchPath: '{.tmp,../client}'}))
         .pipe(jsFilter)
         .pipe($.uglify())
         .pipe(jsFilter.restore())
@@ -41,7 +41,7 @@ gulp.task('html', ['styles', 'scripts'], function () {
 });
 
 gulp.task('images', function () {
-    return gulp.src('../client/app/images/**/*')
+    return gulp.src('../clientimages/**/*')
         .pipe($.cache($.imagemin({
             optimizationLevel: 3,
             progressive: true,
@@ -64,7 +64,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('extras', function () {
-    return gulp.src(['../client/app/*.*', '!../client/app/*.html'], { dot: true })
+    return gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
         .pipe(gulp.dest('dist'));
 });
 
@@ -101,11 +101,11 @@ gulp.task('serve', ['connect'], function () {
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
 
-    gulp.src('../client/app/*.html')
+    gulp.src('../client/*.html')
         .pipe(wiredep({
-            directory: '../client/app/bower_components'
+            directory: '../client/bower_components'
         }))
-        .pipe(gulp.dest('../client/app'));
+        .pipe(gulp.dest('../client'));
 });
 
 gulp.task('watch', ['connect', 'serve'], function () {
@@ -114,16 +114,16 @@ gulp.task('watch', ['connect', 'serve'], function () {
     // watch for changes
 
     gulp.watch([
-        '../client/app/*.html',
+        '../client/*.html',
         '.tmp/styles/**/*.css',
-        '../client/app/scripts/**/*.js',
-        '../client/app/images/**/*'
+        '../client/scripts/**/*.js',
+        '../client/images/**/*'
     ]).on('change', function (file) {
         server.changed(file.path);
     });
 
-    gulp.watch('../client/app/styles/**/*.css', ['styles']);
-    gulp.watch('../client/app/scripts/**/*.js', ['scripts']);
-    gulp.watch('../client/app/images/**/*', ['images']);
+    gulp.watch('../client/styles/**/*.css', ['styles']);
+    gulp.watch('../client/scripts/**/*.js', ['scripts']);
+    gulp.watch('../client/images/**/*', ['images']);
     gulp.watch('bower.json', ['wiredep']);
 });
