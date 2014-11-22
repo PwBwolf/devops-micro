@@ -5,7 +5,6 @@ angular.module('YipTV')
     return {
       restrict: 'A',
       link: function (scope, element) {
-        console.log("FLEXSLIDER STARTED")
         element.flexslider({
           animation: "slide",
           controlNav:false
