@@ -13,10 +13,11 @@ angular.module('YipTV', [
       prefix: '/translation/',
       suffix: '.json'
     });
+    var language = window.navigator.language.toLowerCase();
     //$translateProvider.useLocalStorage();
-    $translateProvider.preferredLanguage(window.navigator.language);
-    $translateProvider.fallbackLanguage('en-US');
-    $translateProvider.use(window.navigator.language);
+    $translateProvider.preferredLanguage(language);
+    $translateProvider.fallbackLanguage('en-us');
+    $translateProvider.use(language);
     //$translateProvider.rememberLanguage(true);
   })
   // Routing configuration
@@ -47,14 +48,14 @@ angular.module('YipTV', [
         controller: 'SettingsController'
       })
       .when('/payments', {
-        templateUrl: 'views/payment.html',
+        templateUrl: 'views/payments.html',
         controller: 'SettingsController'
       })
       .when('/home', {
         templateUrl: 'views/home.html',
         controller: 'SubscriptionListController'
       })
-      .when('/view/{channelId}', {
+      .when('/view/{:channelId}', {
         templateUrl: 'views/channel.html',
         controller: 'ChannelController'
       })
