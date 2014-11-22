@@ -34,6 +34,14 @@ angular.module('YipTV', [
         templateUrl: 'views/sign_in.html',
         controller: 'SessionController'
       })
+      .when('/forgot-password', {
+        templateUrl: 'views/forgot_password.html',
+        controller: 'SessionController'
+      })
+      .when('/reset-password', {
+        templateUrl: 'views/reset_password.html',
+        controller: 'SessionController'
+      })
       .otherwise({
         redirectTo: '/'
       });
