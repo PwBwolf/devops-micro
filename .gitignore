@@ -3,6 +3,7 @@ build/dist
 build/.tmp
 client/.sass-cache
 client/bower_components
+logs/
 .idea
 npm-debug.log
 erl_crash.dump

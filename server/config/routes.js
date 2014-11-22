@@ -2,39 +2,35 @@
 
 var _ = require('lodash'),
     path = require('path'),
+    AppCtrl = require('./../controllers/app-controller'),
     AuthCtrl = require('./../controllers/auth-controller'),
     VisitorCtrl = require('./../controllers/visitor-controller'),
     config = require('./../config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
-    { path: '/partials/*', httpMethod: 'GET',
-        middleware: [function (req, res) {
-            var requestedView = path.join('./', req.url);
-            res.render(requestedView);
-        }]
-    },
-    { path: '/api/sign-up', httpMethod: 'POST', middleware: [AuthCtrl.signUp] },
-    { path: '/api/sign-in', httpMethod: 'POST', middleware: [AuthCtrl.signIn] },
-    { path: '/api/sign-out', httpMethod: 'POST', middleware: [AuthCtrl.signOut] },
-    { path: '/api/save-visitor', httpMethod: 'POST', middleware: [VisitorCtrl.saveVisitor] },
-    { path: '/api/email-check', httpMethod: 'GET', middleware: [AuthCtrl.doesEmailExists] },
-    {
-        path: '/*', httpMethod: 'GET',
-        middleware: [function (req, res) {
-            var role = userRoles.public, email = '';
-            if (req.user) {
-                role = req.user.role;
-                email = req.user.email;
-            }
-            res.cookie('user', JSON.stringify({
-                'email': email,
-                'role': role
-            }));
-            res.sendFile(config.root + '/client/index.html');
-        }]
-    }
-];
+        {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
+        {path: '/api/sign-up', httpMethod: 'POST', middleware: [AuthCtrl.signUp]},
+        {path: '/api/sign-in', httpMethod: 'POST', middleware: [AuthCtrl.signIn]},
+        {path: '/api/sign-out', httpMethod: 'POST', middleware: [AuthCtrl.signOut]},
+        {path: '/api/save-visitor', httpMethod: 'POST', middleware: [VisitorCtrl.saveVisitor]},
+        {path: '/api/email-check', httpMethod: 'GET', middleware: [AuthCtrl.doesEmailExists]},
+        {
+            path: '/*', httpMethod: 'GET',
+            middleware: [function (req, res) {
+                var role = userRoles.public, email = '';
+                if (req.user) {
+                    role = req.user.role;
+                    email = req.user.email;
+                }
+                res.cookie('user', JSON.stringify({
+                    'email': email,
+                    'role': role
+                }));
+                res.sendFile(config.root + '/client/index.html');
+            }]
+        }
+    ];
 
 module.exports = function (app) {
     _.each(routes, function (route) {
@@ -68,7 +64,7 @@ function ensureAuthorized(req, res, next) {
     } else {
         role = req.user.role;
     }
-    accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;
+    accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
     if (!(accessLevel.bitMask & role.bitMask)) {
         return res.send(403);
     }

@@ -8,7 +8,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     favicon = require('serve-favicon');
 
-module.exports = function (app, passport) {
+module.exports = function (app, passport, logger) {
     app.set('showStackError', true);
     app.locals.pretty = true;
     app.set('views', config.root + '/client');
@@ -18,11 +18,7 @@ module.exports = function (app, passport) {
     app.use(cookieParser());
     app.use(favicon(config.root + '/client/img/favicon.ico'));
     app.use(express.static(config.root + '/client'));
-    if (config.environment === 'development') {
-        app.use(morgan('dev'));
-    } else {
-        app.use(morgan('combined'));
-    }
+    app.use(morgan({ 'stream': logger.stream }));
     app.use(passport.initialize());
     app.use(passport.session());
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-exports.test = function(req, res) {
+exports.getUserProfile = function(req, res) {
     return res.send(200);
 };
 
