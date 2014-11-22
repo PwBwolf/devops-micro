@@ -1,6 +1,7 @@
 (function (app) {
     'use strict';
-    app.controller('MainCtrl', ['$scope', function ($scope) {
+
+    app.controller('homeCtrl', ['$scope', function ($scope) {
 
   }]);
 }(angular.module('app')));

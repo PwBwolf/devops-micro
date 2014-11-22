@@ -31,7 +31,7 @@ var _ = require('lodash'),
                 'email': email,
                 'role': role
             }));
-            res.sendFile(config.root + '/client/app/index.html');
+            res.sendFile(config.root + '/client/index.html');
         }]
     }
 ];

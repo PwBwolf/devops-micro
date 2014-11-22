@@ -6,38 +6,56 @@
 
         $routeProvider.when('/',
             {
-                templateUrl: 'home',
-                controller: 'HomeCtrl',
-                access: access.user
+                templateUrl: 'views/home.html',
+                controller: 'homeCtrl',
+                access: access.anon
             })
             .when('/sign-in',
             {
-                templateUrl: 'sign-in',
-                controller: 'SignInCtrl',
+                templateUrl: 'views/sign-in.html',
+                controller: 'homeCtrl',
                 access: access.anon
             })
             .when('/sign-up',
             {
-                templateUrl: 'sign-up',
-                controller: 'SignUpCtrl',
+                templateUrl: 'views/sign-up.html',
+                controller: 'homeCtrl',
                 access: access.anon
             })
-            .when('/user',
+            .when('/forgot-password',
             {
-                templateUrl: 'user',
-                controller: 'UserCtrl',
+                templateUrl: 'views/forgot-password.html',
+                controller: 'homeCtrl',
+                access: access.anon
+            })
+            .when('/reset-password',
+            {
+                templateUrl: 'views/reset-password.html',
+                controller: 'homeCtrl',
+                access: access.anon
+            })
+            .when('/user-home',
+            {
+                templateUrl: 'views/user-home.html',
+                controller: 'homeCtrl',
                 access: access.user
             })
-            .when('/admin',
+            .when('/settings',
             {
-                templateUrl: 'admin',
-                controller: 'AdminCtrl',
-                access: access.admin
+                templateUrl: 'views/settings.html',
+                controller: 'homeCtrl',
+                access: access.user
+            })
+            .when('/change-credit-card',
+            {
+                templateUrl: 'views/change-credit-card.html',
+                controller: 'homeCtrl',
+                access: access.anon
             })
             .when('/not-found',
             {
-                templateUrl: 'not-found',
-                controller: 'NotFoundCtrl',
+                templateUrl: 'views/not-found.html',
+                controller: 'homeCtrl',
                 access: access.public
             })
             .otherwise(

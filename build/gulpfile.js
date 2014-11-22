@@ -13,13 +13,13 @@ var $ = require('gulp-load-plugins')({
 gulp.task('wiredep2', function () {
   var wiredep = require('wiredep').stream;
 
-  gulp.src('../client/app/*.html')
+  gulp.src('../client/*.html')
     .pipe(wiredep({
-      directory: '../client/app/bower_components',
+      directory: '../client/bower_components',
       bowerJson: require('../client/bower.json'),
       exclude: ['bootstrap'],
       ignorePath: /^\/|\.\.\//,
-      src: '../client/app/*.html'
+      src: '../client/*.html'
     }))
     .pipe(gulp.dest('dist'));
 });
@@ -27,7 +27,7 @@ gulp.task('wiredep2', function () {
 // Run all css through Autoprefixer (https://github.com/postcss/autoprefixer-core)
 // Note: This is a pretty opinionated task. See link for more.
 gulp.task('styles', function () {
-    return gulp.src('../client/app/styles/main.css')
+    return gulp.src('../client/styles/main.css')
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.size());
@@ -35,7 +35,7 @@ gulp.task('styles', function () {
 
 // Run all scripts through jshint
 gulp.task('scripts', function () {
-    return gulp.src('../client/app/scripts/**/*.js')
+    return gulp.src('../client/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter(require('jshint-stylish')))
         .pipe($.size());
@@ -45,14 +45,14 @@ gulp.task('scripts', function () {
 // Also combine them into a single module for pre-loading. (https://www.npmjs.org/package/gulp-ng-html2js)
 // And then dump them inside .tmp
 gulp.task('partials', function () {
-  return gulp.src('../client/app/**/*.html') // Read all our partials
+  return gulp.src('../client/**/*.html') // Read all our partials
     .pipe($.minifyHtml({
       empty: true,
       spare: true,
       quotes: true
     }))
     .pipe($.ngHtml2js({		// Convert HTML to injectable JavaScript
-      moduleName: 'YipTV'	// Note: This should correspond to our main module name in our app.
+      moduleName: 'app'	// Note: This should correspond to our main module name in our app.
     }))
     .pipe(gulp.dest('.tmp'))// Dump everything in .tmp when done
     .pipe($.size());
@@ -68,7 +68,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
   var cssFilter = $.filter('**/*.css');	// Filter out each CSS file
   var assets;
 
-  return gulp.src('../client/app/*.html')	// Read index.html
+  return gulp.src('../client/*.html')	// Read index.html
     .pipe($.inject(gulp.src('.tmp/views/**/*.js'), {	// Inject each processed partial output by the partials task
       read: false,
       starttag: '<!-- inject:partials -->',
@@ -100,7 +100,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
 
 // Copy _and_ optimise images.
 gulp.task('images', function () {
-    return gulp.src('../client/app/img/**/*') // Get images from specified dir and all subdirs.
+    return gulp.src('../client/img/**/*') // Get images from specified dir and all subdirs.
         .pipe($.imagemin({		// $.cache() sometimes causes errors so it has been removed.
             optimizationLevel: 3,
             progressive: true,
@@ -121,7 +121,7 @@ gulp.task('fonts', function () {
 
 // Copy non-html files in project root including .htaccess, robots.txt, etc.
 gulp.task('extras', function () {
-    return gulp.src(['../client/app/*.*', '!../client/app/*.html'], { dot: true })
+    return gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
         .pipe(gulp.dest('dist'));
 });
 
@@ -153,9 +153,9 @@ gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
         .use(require('connect-livereload')({ port: 35729 }))
-        .use(connect.static('../client/app'))
+        .use(connect.static('../client'))
         .use(connect.static('../client/.tmp'))
-        .use(connect.directory('../client/app'));
+        .use(connect.directory('../client'));
 
     require('http').createServer(app)
         .listen(9000)
@@ -172,11 +172,11 @@ gulp.task('serve', ['connect'], function () {
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
 
-    gulp.src('../client/app/*.html')
+    gulp.src('../client/*.html')
         .pipe(wiredep({
-            directory: '../client/app/bower_components'
+            directory: '../client/bower_components'
         }))
-        .pipe(gulp.dest('../client/app'));
+        .pipe(gulp.dest('../client'));
 });
 
 gulp.task('watch', ['connect', 'serve'], function () {
@@ -185,16 +185,16 @@ gulp.task('watch', ['connect', 'serve'], function () {
     // watch for changes
 
     gulp.watch([
-        '../client/app/*.html',
+        '../client/*.html',
         '.tmp/styles/**/*.css',
-        '../client/app/scripts/**/*.js',
-        '../client/app/img/**/*'
+        '../client/scripts/**/*.js',
+        '../client/img/**/*'
     ]).on('change', function (file) {
         server.changed(file.path);
     });
 
-    gulp.watch('../client/app/styles/**/*.css', ['styles']);
-    gulp.watch('../client/app/scripts/**/*.js', ['scripts']);
-    gulp.watch('../client/app/img/**/*', ['images']);
+    gulp.watch('../client/styles/**/*.css', ['styles']);
+    gulp.watch('../client/scripts/**/*.js', ['scripts']);
+    gulp.watch('../client/img/**/*', ['images']);
     //gulp.watch('bower.json', ['wiredep']);
 });

@@ -16,7 +16,7 @@ module.exports = function (app, passport) {
     app.use(bodyParser.json());
     app.use(methodOverride());
     app.use(cookieParser());
-    app.use(favicon(config.root + '/client/images/favicon.ico'));
+    app.use(favicon(config.root + '/client/img/favicon.ico'));
     app.use(express.static(config.root + '/client'));
     if (config.environment === 'development') {
         app.use(morgan('dev'));

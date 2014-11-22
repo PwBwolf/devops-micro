@@ -64,7 +64,7 @@ border-radius:0px;
 .testi-txt {float:right;width:70%; position:relative; padding:25px 0 25px 75px; }
 .testi-txt .quot-l { position:absolute; top:0px; left:0px; width:57px; height:41px; background:url(../img/quot-ico-l.png) no-repeat top center; }
 .testi-txt.quot-r { background:url(../img/quot-ico-r.png) no-repeat bottom right; }
-.testimonial-pad span{position:absolute;top:20px;left:18px;background:url(../images/orange-quot-ico.png) no-repeat top left;width:17px;}
+.testimonial-pad span{position:absolute;top:20px;left:18px;width:17px;}
 .rslides{float:left;position:relative;list-style:none;overflow:hidden;width:92%;padding:0;margin:0 2% 0 6%;}
 .rslides li{-webkit-backface-visibility:hidden;position:absolute;display:none;width:100%;left:0;top:0;font-size:14px;color:#666666;line-height:22px;padding:0px;margin:0px;}
 .rslides li p{float:left;width:100%;font-size:16px;color:#808285;line-height:24px;padding:0px 0 5px;margin:0px; font-family: 'gotham-bookgotham-book';  }
@@ -116,9 +116,9 @@ footer .f-btm a:hover { color:#25abb4; text-decoration:none;}
 .testi-txt {float:right;width:70%; position:relative; padding:25px 0 25px 75px; }
 .testi-txt .quot-l { position:absolute; top:0px; left:0px; width:57px; height:41px; background:url(../img/quot-ico-l.png) no-repeat top center; }
 .testi-txt.quot-r { background:url(../img/quot-ico-r.png) no-repeat bottom right; }
-.testimonial-pad span{position:absolute;top:20px;left:18px;background:url(../images/orange-quot-ico.png) no-repeat top left;width:17px;}
+.testimonial-pad span{position:absolute;top:20px;left:18px;width:17px;}
 .btm-bg { position:absolute; bottom:0px; left:0px; float:left; width:100%; background:url(../img/cont-btm-bg.png) repeat-x bottom center; height:13px; }
-.video-box { float:left; background:#3fd8d5; width:100%; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; } 
+.video-box { float:left; background:#3fd8d5; width:100%; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; }
 .img-video { float:left; width:80.5%; margin-left:-80px; }
 .video-txt { float:left; width:26%; font-family: 'gotham-lightgotham-light'; font-size:18px; color:#FFFFFF; line-height:26px; padding:4% 0px 0px 3%; margin:0px 0px 0px 0px; }
 .video-txt span { display:block; color: #262c3a; font-family: "radikalthin"; font-size: 30px; padding: 0px 0px 0px 0px; margin:0px 0px 10% 0px; }
