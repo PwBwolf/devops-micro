@@ -9,7 +9,7 @@ var express = require('express'),
     config = require('./config/config'),
     port = process.env.PORT || config.port,
     app = module.exports = express(),
-    modelsPath = config.root + '/models';
+    modelsPath = config.root + '/server/models';
 
 require('./config/models')(modelsPath);
 require('./config/express')(app, passport, env);
