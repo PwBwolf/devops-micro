@@ -4,3 +4,8 @@ build/.tmp
 client/.sass-cache
 client/app/bower_components
 client/test/bower_components
+.idea
+npm-debug.log
+erl_crash.dump
+*.iml
+
