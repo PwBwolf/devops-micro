@@ -42,6 +42,22 @@ angular.module('YipTV', [
         templateUrl: 'views/reset_password.html',
         controller: 'SessionController'
       })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsController'
+      })
+      .when('/payments', {
+        templateUrl: 'views/payment.html',
+        controller: 'SettingsController'
+      })
+      .when('/home', {
+        templateUrl: 'views/home.html',
+        controller: 'SubscriptionListController'
+      })
+      .when('/view/{channelId}', {
+        templateUrl: 'views/channel.html',
+        controller: 'ChannelController'
+      })
       .otherwise({
         redirectTo: '/'
       });
