@@ -26,6 +26,14 @@ angular.module('YipTV', [
         templateUrl: 'views/main.html',
         controller: ''
       })
+      .when('/signup', {
+        templateUrl: 'views/sign_up.html',
+        controller: 'SessionController'
+      })
+      .when('/signin', {
+        templateUrl: 'views/sign_in.html',
+        controller: 'SessionController'
+      })
       .otherwise({
         redirectTo: '/'
       });
