@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['appSvc', 'loggerSvc', '$scope', '$translate', 'webStorage', function (appSvc, loggerSvc, $scope, $translate, webStorage) {
+    app.controller('mainCtrl', ['appSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', function (appSvc, loggerSvc, webStorage, $scope, $translate, $location) {
         activate();
 
         function activate() {
@@ -14,7 +14,8 @@
         }
 
         function loadLanguage() {
-            var language = webStorage.local.get('language');
+            $scope.currentRoute = $location.path();
+            var language = $location.search().lang || webStorage.local.get('language');
             if (language) {
                 $translate.use(language);
             }
@@ -22,7 +23,7 @@
 
         $scope.changeLanguage = function() {
             var currentLanguage = $translate.use();
-            var newLanguage = currentLanguage == 'en' ? 'es' : 'en';
+            var newLanguage = currentLanguage === 'en' ? 'es' : 'en';
             $translate.use(newLanguage);
             webStorage.local.add('language', newLanguage);
         };
