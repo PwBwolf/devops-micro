@@ -44,9 +44,9 @@
             </div>
             <div class="collapse navbar-collapse pull-right right-box home" id="bs-example-navbar-collapse-1">
                 <div class="right-nav">
-                    <div class="language"><a href="#">Spanish</a></div>
+                    <div class="language"><a href="#" ng-click="changeLanguage()" translate="OTHER_LANGUAGE"></a></div>
                     <span class="phone" ng-bind="appConfig.customerCareNumber"></span>
-                    <a href="/sign-in" class="btn-sign">Sign In</a><a href="/sign-up" class="btn-sign">Sign Up</a>
+                    <a href="/sign-in" class="btn-sign" translate="SIGN_IN"></a><a href="/sign-up" class="btn-sign" translate="SIGN_UP"></a>
                 </div>
             </div>
         </nav>
@@ -107,6 +107,7 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script src="bower_components/toastr/toastr.js"></script>
 <script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
 
 <!-- endbower -->
 <!-- endbuild -->
@@ -114,6 +115,9 @@
 <script src="scripts/config/app.js"></script>
 <script src="scripts/config/routing.js"></script>
 <script src="scripts/config/routes.js"></script>
+<script src="scripts/translate/en.js"></script>
+<script src="scripts/translate/es.js"></script>
+<script src="scripts/config/translate.js"></script>
 <script src="scripts/services/app-service.js"></script>
 <script src="scripts/services/auth-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
