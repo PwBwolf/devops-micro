@@ -46,7 +46,7 @@ var Account = new Schema({
             offer: {}
         }
     ]
-});
+}, { collection: 'Accounts' });
 
 mongoose.model('Account', Account);
 

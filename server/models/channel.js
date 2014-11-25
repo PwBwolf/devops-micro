@@ -33,9 +33,6 @@ var Channel = new Schema({
         }
     },
     disabled: Boolean
-});
+}, { collection: 'Channels' });
 
 mongoose.model('Channel', Channel);
-
-
-

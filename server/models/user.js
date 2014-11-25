@@ -34,7 +34,7 @@ var User = new Schema({
             zip: String
         }
     }
-});
+}, { collection: 'Users' });
 
 // Bcrypt middleware on UserSchema
 User.pre('save', function (next) {

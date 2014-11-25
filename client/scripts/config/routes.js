@@ -13,49 +13,79 @@
             .when('/sign-in',
             {
                 templateUrl: 'views/sign-in.html',
-                controller: 'homeCtrl',
+                controller: 'signInCtrl',
                 access: access.anon
             })
             .when('/sign-up',
             {
                 templateUrl: 'views/sign-up.html',
-                controller: 'homeCtrl',
+                controller: 'signUpCtrl',
                 access: access.anon
             })
             .when('/forgot-password',
             {
                 templateUrl: 'views/forgot-password.html',
-                controller: 'homeCtrl',
+                controller: 'forgotPasswordCtrl',
                 access: access.anon
             })
             .when('/reset-password',
             {
                 templateUrl: 'views/reset-password.html',
-                controller: 'homeCtrl',
+                controller: 'resetPasswordCtrl',
                 access: access.anon
             })
             .when('/user-home',
             {
                 templateUrl: 'views/user-home.html',
-                controller: 'homeCtrl',
+                controller: 'userHomeCtrl',
                 access: access.user
             })
             .when('/settings',
             {
                 templateUrl: 'views/settings.html',
-                controller: 'homeCtrl',
+                controller: 'settingsCtrl',
                 access: access.user
             })
             .when('/change-credit-card',
             {
                 templateUrl: 'views/change-credit-card.html',
-                controller: 'homeCtrl',
+                controller: 'changeCreditCardCtrl',
                 access: access.anon
+            })
+            .when('/about-us',
+            {
+                templateUrl: 'views/about-us.html',
+                controller: 'aboutUsCtrl',
+                access: access.public
+            })
+            .when('/leadership',
+            {
+                templateUrl: 'views/leadership.html',
+                controller: 'leadershipCtrl',
+                access: access.public
+            })
+            .when('/contact-us',
+            {
+                templateUrl: 'views/contact-us.html',
+                controller: 'contactUsCtrl',
+                access: access.public
+            })
+            .when('/privacy-policy',
+            {
+                templateUrl: 'views/privacy-policy.html',
+                controller: 'privacyPolicyCtrl',
+                access: access.public
+            })
+            .when('/terms-of-use',
+            {
+                templateUrl: 'views/terms-of-use.html',
+                controller: 'termsOfUseCtrl',
+                access: access.public
             })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',
-                controller: 'homeCtrl',
+                controller: 'notFoundCtrl',
                 access: access.public
             })
             .otherwise(

@@ -11,7 +11,7 @@ var Package = new Schema({
     durationType: String,
     durationValue: Number,
     disabled: Boolean
-});
+}, { collection: 'Packages' });
 
 mongoose.model('Package', Package);
 
