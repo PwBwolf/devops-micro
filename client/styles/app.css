@@ -1,3 +1,37 @@
+body {
+    margin: 0;
+    padding: 0px;
+    font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 980px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .container {
+        width: 980px;
+    }
+}
+
+@media (min-width: 1300px) {
+    .container {
+        width: 1250px;
+    }
+}
+
 header {
     float: left;
     width: 100%;
@@ -383,6 +417,7 @@ a.btn-signup {
     position: absolute;
     top: 20px;
     left: 18px;
+    background: url(../images/orange-quot-ico.png) no-repeat top left;
     width: 17px;
 }
 
@@ -513,15 +548,10 @@ footer .f-nav h2 {
     font-weight: 500;
 }
 
-footer .f-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
 footer .f-nav li {
     background: none;
-    margin: 3px 0; /*font-family: 'gotham-lightgotham-light';*/
+    margin: 3px 0;
+    font-family: 'gotham-lightgotham-light';
     font-size: 14px;
     line-height: 22px
 }
@@ -562,6 +592,137 @@ footer .f-btm a:hover {
 
 .copyright {
     display: block;
+}
+
+/* flexslider CSS */
+.flexslider .slides > li {
+    float: left;
+    margin: 0px;
+}
+
+.flexslider .slides img {
+    max-width: 199px;
+    float: left;
+    margin: 0 1.8% 4%;
+}
+
+.flexslider {
+    float: left;
+    margin: 0px;
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    background: none;
+    zoom: 1;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -o-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.carousel li {
+    margin-right: 0;
+}
+
+.flex-direction-nav a {
+    width: 30px;
+    height: 40px;
+    margin: -40px 0 0;
+    opacity: 1;
+    color: rgba(0, 0, 0, 0);
+    background: url(../img/slide-arrow.png) no-repeat 0px 0px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    -webkit-transition: all 0s ease;
+    -moz-transition: all 0s ease;
+    transition: all 0s ease;
+}
+
+.flex-direction-nav .flex-prev {
+    left: -50px;
+}
+
+.flex-direction-nav .flex-next {
+    right: -50px;
+    text-align: right;
+    background-position: -30px 0;
+}
+
+.flexslider:hover .flex-prev {
+    opacity: 1;
+    left: -50px;
+}
+
+.flexslider:hover .flex-next {
+    opacity: 1;
+    right: -50px;
+}
+
+.flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover {
+    opacity: 1;
+}
+
+.flex-direction-nav a:before {
+    font-family: "flexslider-icon";
+    font-size: 40px;
+    line-height: 1;
+    display: inline-block;
+    content: '';
+    color: rgba() 0, 0, 0, 0;
+}
+
+.flex-direction-nav a.flex-next:before {
+    content: '';
+    color: rgba() 0, 0, 0, 0;
+}
+
+.flex-control-nav {
+    bottom: -20px;
+}
+
+.flex-control-nav li {
+    margin: 0 5px;
+}
+
+.flex-control-paging li a {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #ffffff;
+    display: block;
+    background: #666;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-indent: -9999px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -o-border-radius: 12px;
+    border-radius: 12px;
+    -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    -moz-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    -o-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.flex-control-paging li a:hover, .flex-control-paging li a.flex-active {
+    background: #ffffff;
+}
+
+#flexslider1.flexslider {
+    width: 90%;
+    margin: 0 5%;
+}
+
+#flexslider1 .slides img {
+    width: 100%;
+    max-width: 21%;
+    display: block;
+    float: left;
+    margin: 0 2% 40px;
 }
 
 /* Inner Page CSS */
@@ -667,7 +828,6 @@ footer .f-btm a:hover {
     background: #FFFFFF;
     width: 98%;
     height: 44px;
-    line-height: 69px;
     font-family: 'radikallight';
     font-size: 20px;
     color: #000000;
@@ -806,6 +966,7 @@ footer .f-btm a:hover {
     position: absolute;
     top: 20px;
     left: 18px;
+    background: url(../images/orange-quot-ico.png) no-repeat top left;
     width: 17px;
 }
 
@@ -860,7 +1021,6 @@ footer .f-btm a:hover {
     font-family: "radikallight";
     font-size: 20px;
     height: 44px;
-    line-height: 69px;
     margin: 10px 0 6%;
     padding: 0 1%;
     width: 98%;
@@ -873,7 +1033,6 @@ footer .f-btm a:hover {
     font-family: "radikallight";
     font-size: 20px;
     height: 44px;
-    line-height: 69px;
     margin: 10px 0 1%;
     padding: 0 1%;
     width: 98%;
@@ -886,7 +1045,6 @@ footer .f-btm a:hover {
     font-family: "radikallight";
     font-size: 20px;
     height: 44px;
-    line-height: 69px;
     margin: 10px 0 1%;
     padding: 0 1%;
     width: 98%;
@@ -1085,52 +1243,6 @@ a.subscription:hover {
     padding: 55% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
     background-size: 170px;
-}
-
-.toast-error {
-    background-color: #D43F3A;
-}
-
-.toast-success {
-    background-color: #1CAF9A;
-}
-
-.toast-warning {
-    background-color: #412c89;
-}
-
-.toast-bottom-full-width {
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    text-align: center;
-}
-
-.fade-animation.ng-enter {
-    -webkit-transition: 1s linear all;
-    transition: 1s linear all;
-    opacity: 0;
-}
-
-.fade-animation.ng-enter.ng-enter-active {
-    opacity: 1;
-}
-
-.fade-animation.ng-enter-stagger {
-    -webkit-transition-delay: 0.1s;
-    transition-delay: 0.1s;
-    -webkit-transition-duration: 0s;
-    transition-duration: 0s;
-}
-
-.fade-animation.ng-hide-remove {
-    transition: all linear 1s;
-    display: block !important;
-    opacity: 0;
-}
-
-.fade-animation.ng-hide-remove.ng-hide-remove-active {
-    opacity: 1;
 }
 
 .embed-responsive.embed-responsive-16by9 {
@@ -1877,4 +1989,3 @@ a.subscription:hover {
         background-position: 26% 0;
     }
 }
-
