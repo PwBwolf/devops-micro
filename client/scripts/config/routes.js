@@ -34,10 +34,10 @@
                 controller: 'resetPasswordCtrl',
                 access: access.anon
             })
-            .when('/user-home',
+            .when('/my-account',
             {
-                templateUrl: 'views/user-home.html',
-                controller: 'userHomeCtrl',
+                templateUrl: 'views/my-account.html',
+                controller: 'myAccountCtrl',
                 access: access.user
             })
             .when('/settings',
