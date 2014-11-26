@@ -1,19 +1,32 @@
 <div class="contentarea">
-  <div class="setting-box1">
-    <h1><span>SIGN IN</span></h1>
-    <div class="container">
-      <div class="forgot-box">
-        EMAIL <br>
-        <input type="text" class="txtbox-error" >
-        <span class="error-msg">ENTERED EMAIL IS INVALID</span>
-        <br><br>PASSWORD <br>
-        <input type="text" class="txtbox2" >
-        <br><div class="chkbox"><input type="checkbox" name="1" class="styled" /> REMEMBER ME </div>
-        <br><br>
-        <input type="button" value="Sign In" class="btn-submit">
-        <br><br><div class="btm-link"><a href="forgot-password.html" class="forgot">FORGOT PASSWORD?</a> <span>|</span> NOT REGISTERED YET? <a href="sign-up.html">SIGN UP</a></div>
-      </div>
+    <div class="setting-box1">
+        <h1><span class="heading" translate="SIGN_IN_HEADING">Sign In</span></h1>
+
+        <div class="container">
+            <div class="forgot-box">
+                <form name="form" id="form" ng-submit="signIn()" novalidate>
+                    <span class="label" translate="SIGN_IN_EMAIL">Email</span><br>
+                    <input type="text" class="txtbox2" ng-model="mv.email" required email/>
+                    <span class="error-msg" translate="SIGN_IN_EMAIL_INVALID">Enter a valid email</span>
+                    <span class="error-msg" translate="SIGN_IN_EMAIL_REQUIRED">Enter your email</span>
+                    <br><br>
+                    <span class="label" translate="SIGN_IN_PASSWORD">Password</span><br>
+                    <input type="password" class="txtbox2" ng-model="mv.password" required/>
+                    <span class="error-msg" translate="SIGN_IN_PASSWORD_REQUIRED">Enter your email</span>
+                    <br>
+                    <!--<div class="chkbox"><input type="checkbox" name="1" class="styled"/> REMEMBER ME</div>-->
+                    <br><br>
+                    <button type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
+                        Sign In</button>
+                    <br><br>
+                    <div class="btm-link">
+                        <a href="/forgot-password" class="forgot" translate="SIGN_IN_FORGOT_PASSWORD">Forgot Password?</a>
+                        <span>|</span><span class="not-registered" translate="SIGN_IN_NOT_REGISTERED">Not Registered Yet?</span>
+                        <a href="/sign-up" translate="SIGN_IN_SIGN_UP">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="btm-bg">&nbsp;</div>
+    <div class="btm-bg">&nbsp;</div>
 </div>

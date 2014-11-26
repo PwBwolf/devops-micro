@@ -1,16 +1,34 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['appSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', function (appSvc, loggerSvc, webStorage, $scope, $translate, $location) {
+    app.controller('mainCtrl', ['appSvc', 'userSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', function (appSvc, userSvc, loggerSvc, webStorage, $scope, $translate, $location, $route) {
+
+        $scope.user = userSvc.user;
+        $scope.userRoles = userSvc.userRoles;
+        $scope.accessLevels = userSvc.accessLevels;
+
         activate();
 
         function activate() {
+            getAppConfig();
+            loadUserProfile();
+            loadLanguage();
+        }
+
+        function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
             }).error(function () {
                 loggerSvc.logError('Error fetching application config');
             });
-            loadLanguage();
+        }
+
+        function loadUserProfile() {
+            userSvc.getUserProfile(function () {
+                $route.reload();
+            }, function () {
+                $route.reload();
+            });
         }
 
         function loadLanguage() {
@@ -29,4 +47,3 @@
         };
     }]);
 }(angular.module('app')));
-

@@ -8,7 +8,7 @@
             {
                 templateUrl: 'views/home.html',
                 controller: 'homeCtrl',
-                access: access.anon
+                access: access.public
             })
             .when('/sign-in',
             {
@@ -99,13 +99,12 @@
             return {
                 'responseError': function (response) {
                     if (response.config.url.toLowerCase().indexOf('/api') < 0 && (response.status === 401 || response.status === 403)) {
-                        var authSvc = $injector.get('authSvc');
-                        authSvc.clearUser();
+                        var userSvc = $injector.get('userSvc');
+                        userSvc.clearUser();
                         $location.path('/sign-in');
                         $location.url($location.path());
                         return $q.reject(response);
-                    }
-                    else {
+                    } else {
                         return $q.reject(response);
                     }
                 }
@@ -113,10 +112,10 @@
         }]);
     }]);
 
-    app.run(['$rootScope', '$location', '$http', 'authSvc', function ($rootScope, $location, $http, authSvc) {
+    app.run(['$rootScope', '$location', '$http', 'userSvc', function ($rootScope, $location, $http, userSvc) {
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            if (next.access && !authSvc.authorize(next.access)) {
-                if (authSvc.isLoggedIn()) {
+            if (next.access && !userSvc.authorize(next.access)) {
+                if (userSvc.isSignedIn()) {
                     $location.path('/');
                     $location.url($location.path());
                 } else {

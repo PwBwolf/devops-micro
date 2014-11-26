@@ -47,14 +47,16 @@
             <div class="collapse navbar-collapse pull-right right-box home" id="bs-example-navbar-collapse-1">
                 <div class="right-nav">
                     <div class="language"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
-                    <span class="phone" ng-bind="appConfig.customerCareNumber"></span>
-                    <a href="/sign-in" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a><a href="/sign-up" class="btn-sign" translate="INDEX_SIGN_UP">Sign Up</a>
+                    <span class="phone" ng-bind="appConfig.customerCareNumber">800-123-1234</span>
+                    <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>
+                    <a href="/sign-up" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_UP">Sign Up</a>
+                    <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">My Account</a>
                 </div>
             </div>
         </nav>
     </div>
 </header>
-<div ng-view="" class="fade-animation" autoscroll="true"></div>
+<div ng-view class="fade-animation" autoscroll="true"></div>
 <footer>
     <section class="f-top">
         <div class="container">
@@ -97,17 +99,17 @@
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
 <script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/flexslider/jquery.flexslider.js"></script>
 <script src="bower_components/ResponsiveSlides/responsiveslides.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script src="bower_components/toastr/toastr.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <!-- endbower -->
@@ -115,20 +117,24 @@
 <!-- build:js scripts/scripts.js -->
 <script src="scripts/config/app.js"></script>
 <script src="scripts/config/routing.js"></script>
+<script src="scripts/config/interceptor.js"></script>
 <script src="scripts/config/routes.js"></script>
+<script src="scripts/directives/access-level.js"></script>
+<script src="scripts/directives/flex-slider.js"></script>
+<script src="scripts/directives/responsive-slides.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>
 <script src="scripts/services/app-service.js"></script>
-<script src="scripts/services/auth-service.js"></script>
+<script src="scripts/services/user-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
-<script src="scripts/directives/flex-slider.js"></script>
-<script src="scripts/directives/responsive-slides.js"></script>
+<script src="scripts/services/token-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/not-found-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
 <script src="scripts/controllers/sign-in-controller.js"></script>
+<script src="scripts/controllers/my-account-controller.js"></script>
 <script src="scripts/controllers/about-us-controller.js"></script>
 <script src="scripts/controllers/leadership-controller.js"></script>
 <script src="scripts/controllers/contact-us-controller.js"></script>

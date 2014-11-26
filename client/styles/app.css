@@ -352,6 +352,33 @@ a.btn-signup {
     margin: 0px 1.5% 48px;
 }
 
+.fade-animation.ng-enter {
+    -webkit-transition: 1s linear all;
+    transition: 1s linear all;
+    opacity: 0;
+}
+
+.fade-animation.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.fade-animation.ng-enter-stagger {
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+}
+
+.fade-animation.ng-hide-remove {
+    transition: all linear 1s;
+    display: block !important;
+    opacity: 0;
+}
+
+.fade-animation.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+
 #testimonial {
     float: left;
     width: 100%;
@@ -417,7 +444,6 @@ a.btn-signup {
     position: absolute;
     top: 20px;
     left: 18px;
-    background: url(../images/orange-quot-ico.png) no-repeat top left;
     width: 17px;
 }
 
@@ -966,7 +992,6 @@ footer .f-btm a:hover {
     position: absolute;
     top: 20px;
     left: 18px;
-    background: url(../images/orange-quot-ico.png) no-repeat top left;
     width: 17px;
 }
 
@@ -1057,11 +1082,25 @@ footer .f-btm a:hover {
 }
 
 .btm-link span {
-    font-size: 35px;
     font-family: "radikalthin";
     font-weight: normal;
     padding: 0px 10px 0px 10px;
     margin: 0px 0px 0px 0px;
+}
+
+.heading {
+    text-transform: uppercase;
+}
+
+.label {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: uppercase;
+}
+
+.upper {
+    text-transform: uppercase;
 }
 
 .btm-link a {
@@ -1108,6 +1147,12 @@ footer .f-btm a:hover {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     color: #f92b26;
+    text-transform: uppercase;
+}
+
+.not-registered {
+    font-family: 'radikallight';
+    font-size: 16px;
 }
 
 .txt-center {

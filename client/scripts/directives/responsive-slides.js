@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.directive('yipResponsiveSlides', [function () {
+    app.directive('responsiveSlides', [function () {
         return {
             restrict: 'A',
             link: function (scope, element) {

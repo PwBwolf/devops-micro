@@ -1,32 +1,27 @@
 'use strict';
 
 var _ = require('lodash'),
-    path = require('path'),
+    jwt = require('jwt-simple'),
     AppCtrl = require('./../controllers/app-controller'),
-    AuthCtrl = require('./../controllers/auth-controller'),
-    VisitorCtrl = require('./../controllers/visitor-controller'),
+    UserCtrl = require('./../controllers/user-controller'),
     config = require('./../config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
-        {path: '/api/sign-up', httpMethod: 'POST', middleware: [AuthCtrl.signUp]},
-        {path: '/api/sign-in', httpMethod: 'POST', middleware: [AuthCtrl.signIn]},
-        {path: '/api/sign-out', httpMethod: 'POST', middleware: [AuthCtrl.signOut]},
-        {path: '/api/save-visitor', httpMethod: 'POST', middleware: [VisitorCtrl.saveVisitor]},
-        {path: '/api/email-check', httpMethod: 'GET', middleware: [AuthCtrl.doesEmailExists]},
+        {path: '/api/sign-up', httpMethod: 'POST', middleware: [UserCtrl.signUp]},
+        {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
+        {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
+        {path: '/api/is-email-unique', httpMethod: 'GET', middleware: [UserCtrl.isEmailUnique]},
+        {
+            path: '/api/get-user-profile',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.getUserProfile],
+            accessLevel: accessLevels.user
+        },
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
-                var role = userRoles.public, email = '';
-                if (req.user) {
-                    role = req.user.role;
-                    email = req.user.email;
-                }
-                res.cookie('user', JSON.stringify({
-                    'email': email,
-                    'role': role
-                }));
                 res.sendFile(config.root + '/client/index.html');
             }]
         }
@@ -59,14 +54,23 @@ function ensureAuthorized(req, res, next) {
     var role,
         accessLevel;
 
-    if (!req.user) {
+    var token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+    if (!token) {
         role = userRoles.anon;
     } else {
-        role = req.user.role;
+        var decodedToken = jwt.decode(token, config.secretToken);
+        if (decodedToken.expiry <= Date.now()) {
+            res.send(401, 'TokenExpired');
+        } else {
+            req.email = decodedToken.email;
+            req.role = role = decodedToken.role;
+            console.log(role);
+            console.log(req.role);
+        }
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(403);
+        return res.send(401, 'NoAccess');
     }
     return next();
 }
