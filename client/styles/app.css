@@ -160,6 +160,17 @@ a.btn-signup {
     background-color: #fff;
 }
 
+.textarea2 {
+    height: 241px;
+}
+
+.btn-small {
+    font-size: 17px !important;
+    border-radius: 5px !important;
+    padding: 8px !important;
+    padding-bottom: 11px !important;
+}
+
 .banner {
     float: left;
     width: 100%;
@@ -851,7 +862,7 @@ footer .f-btm a:hover {
 }
 
 .forgot-box {
-    width: 700px;
+    width: 900px;
     font-family: 'radikallight';
     font-size: 16px;
     color: #FFFFFF;
@@ -880,6 +891,7 @@ footer .f-btm a:hover {
     border: 0px;
     padding: 0px 1%;
     margin: 10px 0px 80px 0px;
+    border-radius: 5px;
 }
 
 .btn-submit {
@@ -975,6 +987,41 @@ footer .f-btm a:hover {
     line-height: 20px;
 }
 
+.content-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.content-sublist {
+    list-style-type: circle;
+    padding-left: 20px;
+}
+
+.about-name {
+    color: #3cd3d3;
+    font-size: 19px;
+}
+
+.aboutus {
+    margin-top: -70px;
+}
+
+.about-desc {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.about-box {
+    float: left;
+    width: 100%;
+    font-family: 'gotham-lightgotham-light';
+    font-size: 19px;
+    color: #FFFFFF;
+    background: url(../img/box-shadow1.png) bottom center no-repeat;
+    padding: 80px 0px 60px 0px;
+    margin: 0px;
+}
+
 .testi-img {
     float: left;
     width: 175px;
@@ -1059,6 +1106,10 @@ footer .f-btm a:hover {
     margin: 0px 0px 10% 0px;
 }
 
+#contactUsDescription {
+    height: 250px;
+}
+
 .txtbox1 {
     background: #FFFFFF;
     border: 0 none;
@@ -1069,6 +1120,7 @@ footer .f-btm a:hover {
     margin: 10px 0 6%;
     padding: 0 1%;
     width: 98%;
+    border-radius: 5px;
 }
 
 .txtbox2 {
@@ -1081,6 +1133,7 @@ footer .f-btm a:hover {
     margin: 10px 0 1%;
     padding: 0 1%;
     width: 98%;
+    border-radius: 5px;
 }
 
 .txtbox-error {
@@ -1094,6 +1147,7 @@ footer .f-btm a:hover {
     margin: 10px 0 1%;
     padding: 0 1%;
     width: 98%;
+    border-radius: 5px;
 }
 
 .btm-link {
@@ -1190,7 +1244,7 @@ footer .f-btm a:hover {
 .frm-left {
     float: left;
     width: 65%;
-    padding: 5% 3% 0px 0px;
+    padding: 5% 0% 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
@@ -1204,7 +1258,7 @@ footer .f-btm a:hover {
 .frm-left1 {
     float: left;
     width: 49.5%;
-    padding: 5% 3% 0px 0px;
+    padding: 5% 0% 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
@@ -1232,7 +1286,7 @@ footer .f-btm a:hover {
     line-height: 69px;
     margin: 10px 0px 0px 0px;
     padding: 0 1%;
-    width: 47%;
+    width: 49%;
 }
 
 .selectbox1 {
@@ -1243,9 +1297,9 @@ footer .f-btm a:hover {
     font-size: 20px;
     height: 44px;
     line-height: 69px;
-    margin: 10px 0px 0px 4%;
+    margin: 10px 0px 0px 0%;
     padding: 0 1%;
-    width: 46%;
+    width: 48%;
 }
 
 a.credit-card {
@@ -1316,7 +1370,19 @@ a.subscription:hover {
 }
 
 /*  Media CSS  */
+
+@media screen and (max-width: 707px) {
+    .textarea2 {
+        height: 219px;
+    }
+}
+
 @media (max-width: 1365px) {
+
+    .textarea2 {
+        height: 219px;
+    }
+
     .banner .banner-wrap {
         width: 100%;
     }
@@ -1563,6 +1629,10 @@ a.subscription:hover {
 
     .forgot-box {
         width: 100%;
+        margin-top: 0px;
+    }
+
+    .aboutus {
         margin-top: 0px;
     }
 

@@ -7,6 +7,8 @@
             INDEX_SIGN_IN: 'Sign In',
             INDEX_SIGN_UP: 'Sign Up',
             INDEX_MY_ACCOUNT: 'My Account',
+            INDEX_SETTINGS: 'Settings',
+            INDEX_SIGN_OUT: 'Sign Out',
             INDEX_OUR_COMPANY: 'Our Company',
             INDEX_ABOUT_US: 'About Us',
             INDEX_LEADERSHIP: 'Leadership',
