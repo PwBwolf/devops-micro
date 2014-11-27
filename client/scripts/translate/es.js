@@ -7,6 +7,8 @@
             INDEX_SIGN_IN: 'SSign In',
             INDEX_SIGN_UP: 'SSign Up',
             INDEX_MY_ACCOUNT: 'SMy Account',
+            INDEX_SETTINGS: 'SSettings',
+            INDEX_SIGN_OUT: 'SSign Out',
             INDEX_OUR_COMPANY: 'SOur Company',
             INDEX_ABOUT_US: 'SAbout Us',
             INDEX_LEADERSHIP: 'SLeadership',
