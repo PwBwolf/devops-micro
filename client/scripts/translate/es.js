@@ -36,6 +36,7 @@
             SIGN_IN_PASSWORD_REQUIRED: 'SEnter your password',
             SIGN_IN_SUBMIT_BUTTON: 'SSign In',
             SIGN_IN_FORGOT_PASSWORD: 'SForgot Password?',
+            SIGN_IN_RESET_PASSWORD: 'SReset Password',
             SIGN_IN_NOT_REGISTERED: 'SNot Registered Yet?',
             SIGN_IN_SIGN_UP: 'SSign Up',
             TERMS_OF_USE_HEADING: 'STerms of Use',

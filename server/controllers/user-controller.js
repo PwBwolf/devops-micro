@@ -46,7 +46,6 @@ exports.signOut = function (req, res) {
 };
 
 exports.getUserProfile = function (req, res) {
-    console.log(req.role);
     return res.send({email: req.email, role: req.role.title, firstName: 'YipTV', lastName: 'Admin'});
 };
 

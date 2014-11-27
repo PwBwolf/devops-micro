@@ -379,6 +379,26 @@ a.btn-signup {
     opacity: 1;
 }
 
+.toast-error {
+    background-color: #D43F3A;
+}
+
+.toast-success {
+    background-color: #1CAF9A;
+}
+
+.toast-warning {
+    background-color: #412c89;
+}
+
+.toast-bottom-full-width {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
 #testimonial {
     float: left;
     width: 100%;
@@ -1065,6 +1085,7 @@ footer .f-btm a:hover {
 
 .txtbox-error {
     background: #FFFFFF;
+    border: 2px solid;
     border-color: rgb(228, 29, 29);
     color: #000000;
     font-family: "radikallight";

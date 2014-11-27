@@ -7,15 +7,14 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.signIn(
-                    $scope.mv,
+                    $scope.user,
                     function () {
                         $location.path('/my-account');
                         $scope.saving = false;
                     },
                     function (response) {
-                        console.dir(response);
-                        if (response === 'EmailNotConfirmed') {
-                            loggerSvc.logError('Sign In failed as email is not yet confirmed');
+                        if (response === 'UnverifiedAccount') {
+                            loggerSvc.logError('Sign In failed as your account has not been verified yet');
                         } else {
                             loggerSvc.logError('Sign In failed');
                         }
