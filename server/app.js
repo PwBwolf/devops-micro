@@ -5,7 +5,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var express = require('express'),
     http = require('http'),
     mongoose = require('mongoose'),
-    passport = require('passport'),
     config = require('./config/config'),
     logger = require('./config/logger'),
     port = process.env.PORT || config.port,
@@ -15,8 +14,7 @@ var express = require('express'),
 
 require('./config/logger');
 require('./config/models')(modelsPath);
-require('./config/express')(app, passport, logger);
-require('./config/passport')(passport);
+require('./config/express')(app, logger);
 require('./config/routes')(app);
 
 http.createServer(app).listen(port, function () {

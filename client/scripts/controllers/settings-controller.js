@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['$scope', function ($scope) {
+    app.controller('settingsCtrl', ['$scope', function ($scope) {
 
     }]);
 }(angular.module('app')));

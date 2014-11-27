@@ -3,5 +3,6 @@
 module.exports = {
     environment: 'development',
     port: 3000,
-    db: 'mongodb://localhost/yiptv'
+    db: 'mongodb://localhost/yiptv',
+    secretToken: 'yip#tv@dev#712'
 };

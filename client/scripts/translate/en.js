@@ -6,6 +6,7 @@
             INDEX_OTHER_LANGUAGE: 'Español',
             INDEX_SIGN_IN: 'Sign In',
             INDEX_SIGN_UP: 'Sign Up',
+            INDEX_MY_ACCOUNT: 'My Account',
             INDEX_OUR_COMPANY: 'Our Company',
             INDEX_ABOUT_US: 'About Us',
             INDEX_LEADERSHIP: 'Leadership',
@@ -27,11 +28,23 @@
             HOME_TESTIMONIAL_1: '1 Lorem ipsum dolor sit amet, te nusquam epicurei intellegebat vix. Qui id probo conceptam consetetur. Tale delicata no pro. Cum an habemus definitiones, utinam scripta quaeque cu pri, diam graecis corpora an sit. Dissentiunt accommodare instructior ea usu.',
             HOME_TESTIMONIAL_2: '2 Lorem ipsum dolor sit amet, te nusquam epicurei intellegebat vix. Qui id probo conceptam consetetur. Tale delicata no pro. Cum an habemus definitiones, utinam scripta quaeque cu pri, diam graecis corpora an sit. Dissentiunt accommodare instructior ea usu.',
             HOME_TESTIMONIAL_3: '3 Lorem ipsum dolor sit amet, te nusquam epicurei intellegebat vix. Qui id probo conceptam consetetur. Tale delicata no pro. Cum an habemus definitiones, utinam scripta quaeque cu pri, diam graecis corpora an sit. Dissentiunt accommodare instructior ea usu.',
+            SIGN_IN_HEADING: 'Sign In',
+            SIGN_IN_EMAIL: 'Email',
+            SIGN_IN_EMAIL_REQUIRED: 'Enter your email',
+            SIGN_IN_EMAIL_INVALID: 'Enter a valid email',
+            SIGN_IN_PASSWORD: 'Password',
+            SIGN_IN_PASSWORD_REQUIRED: 'Enter your password',
+            SIGN_IN_SUBMIT_BUTTON: 'Sign In',
+            SIGN_IN_FORGOT_PASSWORD: 'Forgot Password?',
+            SIGN_IN_RESET_PASSWORD: 'Reset Password',
+            SIGN_IN_NOT_REGISTERED: 'Not Registered Yet?',
+            SIGN_IN_SIGN_UP: 'Sign Up',
             TERMS_OF_USE_HEADING: 'Terms of Use',
             PRIVACY_POLICY_HEADING: 'Privacy Policy',
             LEADERSHIP_HEADING: 'Leadership',
             ABOUT_US_HEADING: 'About Us',
             CONTACT_US_HEADING: 'Contact Us'
+
         });
     }]);
 }(angular.module('app')));

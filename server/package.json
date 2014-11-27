@@ -8,16 +8,14 @@
     "body-parser": "~1.0.2",
     "cookie-parser": "^1.3.3",
     "express": "~4.9.1",
-    "express-jwt": "^0.2.2",
     "feed": "^0.2.6",
     "json": "0.0.14",
-    "jsonwebtoken": "~0.4.0",
+    "jwt-simple": "^0.2.0",
     "lodash": "^2.4.1",
     "method-override": "^2.3.0",
+    "moment": "^2.8.4",
     "mongoose": "~3.8.8",
     "morgan": "^1.0.1",
-    "passport": "^0.2.1",
-    "passport-local": "^1.0.0",
     "serve-favicon": "^2.1.7",
     "winston": "^0.8.3"
   }

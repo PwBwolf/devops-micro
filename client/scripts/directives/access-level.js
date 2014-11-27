@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.directive('yipAccessLevel', ['authSvc', function (authSvc) {
+    app.directive('accessLevel', ['userSvc', function (userSvc) {
         return {
             restrict: 'A',
 
@@ -10,7 +10,7 @@
                     userRole,
                     accessLevel;
 
-                $scope.user = authSvc.user;
+                $scope.user = userSvc.user;
 
                 $scope.$watch('user', function (user) {
                     if (user.role) {
@@ -28,7 +28,7 @@
 
                 function updateCss() {
                     if (userRole && accessLevel) {
-                        if (!authSvc.authorize(accessLevel, userRole)) {
+                        if (!userSvc.authorize(accessLevel, userRole)) {
                             element.css('display', 'none');
                         } else {
                             element.css('display', prevDisplay);
