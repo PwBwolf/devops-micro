@@ -70,7 +70,7 @@ function ensureAuthorized(req, res, next) {
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(401, 'NoAccess');
+        return res.status(401).body('NoAccess');
     }
     return next();
 }

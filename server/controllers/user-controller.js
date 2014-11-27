@@ -2,10 +2,12 @@
 
 var mongoose = require('mongoose'),
     jwt = require('jwt-simple'),
+    logger = require('../config/logger'),
     moment = require('moment'),
     config = require('../config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    Visitor = mongoose.model('Visitor');
 
 exports.signUp = function (req, res) {
     return res.send(200);
@@ -50,5 +52,30 @@ exports.getUserProfile = function (req, res) {
 };
 
 exports.isEmailUnique = function (req, res) {
-    return res.send(200);
+    User.findOne({ email: req.query.email }).exec().then(function (user) {
+        if(!user) {
+            Visitor.findOne({email: req.query.email}).exec().then(function(visitor) {
+               if(!visitor) {
+                   var visitorObj = new Visitor({email: req.query.email, firstName: req.query.firstName, lastName: req.query.lastName});
+                   visitorObj.save();
+               } else {
+                   if(req.query.firstName) {
+                       visitor.firstName = req.query.firstName;
+                   }
+                   if(req.query.lastName) {
+                       visitor.lastName = req.query.lastName;
+                   }
+                   if(req.query.firstName || req.query.lastName) {
+                       visitor.save();
+                   }
+               }
+            });
+            return res.send(true);
+        } else {
+            return res.send(false);
+        }
+    }, function(error){
+        logger.error(error);
+        return res.send(500);
+    });
 };

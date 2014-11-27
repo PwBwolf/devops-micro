@@ -8,7 +8,7 @@ var Account = new Schema({
     users: [{type: Schema.Types.ObjectId, ref: 'User'}],
     disabled: Boolean,
     deleted: Boolean,
-    createdAt: Date,
+    createdAt: {type: Date, required: true},
     referralCode: String,
     primaryCard: {
         id: String,

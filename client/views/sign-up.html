@@ -1,48 +1,132 @@
 <div class="contentarea">
-  <div class="setting-box1">
-    <h1><span>SIGN UP</span></h1>
-    <div class="container">
-      <div class="signup-box">
-        <div class="frm">
-          <div class="frm-left1">
-            FIRST NAME
-            <br><input type="text" class="txtbox2" >
-          </div>
-          <div class="frm-right1">
-            LAST NAME
-            <br><input type="text" class="txtbox1" ></div>
+    <div class="setting-box1">
+        <h1><span translate="SIGN_UP_HEADING">Sign Up</span></h1>
+
+        <div class="container">
+            <div class="signup-box">
+                <form name="form" id="form" ng-submit="signUp()" novalidate>
+                    <div class="frm">
+                        <div class="frm-left1">
+                            <span class="label-text" translate="SIGN_UP_FIRST_NAME">First Name</span>
+                            <br><input id="firstName" name="firstName" ng-model="user.firstName" type="text"
+                                       class="txtbox2">
+
+                            <div class="error-msg" ng-show="form.firstName.$dirty && form.firstName.$error.required"
+                                 translate="SIGN_UP_FIRST_NAME_REQUIRED">Enter your first name
+                            </div>
+                        </div>
+                        <div class="frm-right1">
+                            <span class="label-text" translate="SIGN_UP_LAST_NAME">Last Name</span>
+                            <br><input type="text" id="lastName" name="lastName" ng-model="user.lastName"
+                                       class="txtbox1">
+
+                            <div class="error-msg" ng-show="form.lastName.$dirty && form.lastName.$error.required"
+                                 translate="SIGN_UP_LAST_NAME_REQUIRED">Enter your last name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frm-btn"><span class="label-text" translate="SIGN_UP_EMAIL">Email</span><br>
+                        <input type="email" required is-email-unique id="email" name="email" ng-model="user.email"
+                               class="txtbox2">
+
+                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.required"
+                             translate="SIGN_UP_EMAIL_REQUIRED">Enter your email address
+                        </div>
+                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.email"
+                             translate="SIGN_UP_EMAIL_INVALID">Enter a valid email address
+                        </div>
+                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.isEmailUnique"
+                             translate="SIGN_UP_EMAIL_EXISTS">Email already registered
+                        </div>
+                        <div class="frm-btn"><span class="label-text" translate="SIGN_UP_PASSWORD">Password</span><br>
+                            <input type="password" name="password" id="password" ng-model="user.password"
+                                   class="txtbox2">
+                        </div>
+                        <div class="frm-btn"><span class="label-text"
+                                                   translate="SIGN_UP_CONFIRM_PASSWORD">Confirm Password</span><br>
+                            <input type="password" name="confirmPassword" id="confirmPassword"
+                                   ng-model="user.confirmPassword" class="txtbox2"></div>
+                        <div class="frm">
+                            <div class="frm-left">
+                                <span class="label-text"
+                                      translate="SIGN_UP_CREDIT_CARD_NUMBER">Credit Card Number</span>
+                                <br><input type="text" id="creditCardNumber" name="creditCardNumber"
+                                           ng-model="user.creditCardNumber" class="txtbox2">
+                            </div>
+                            <div class="frm-right">
+                                <span class="label-text" translate="SIGN_UP_CVV">CVV</span>
+                                <br><input type="text" id="cvv" name="cvv" ng-model="user.cvv" class="txtbox1"></div>
+                        </div>
+                        <div class="frm">
+                            <div class="frm-left">
+                                <span class="label-text" translate="SIGN_UP_EXPIRY_DATE">Expiry Date</span>
+                                <br><select id="expiryMonth" name="expiryMonth" ng-model="user.expiryMonth"
+                                            class="selectbox">
+                                <option value="" translate="SIGN_UP_MONTH">Month</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                                <select id="expiryYear" name="expiryYear" ng-model="user.expiryYear" class="selectbox1">
+                                    <option value="" translate="SIGN_UP_YEAR" selected>Year</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                    <option value="2030">2030</option>
+                                    <option value="2031">2031</option>
+                                    <option value="2032">2032</option>
+                                    <option value="2033">2033</option>
+                                    <option value="2034">2034</option>
+                                    <option value="2035">2035</option>
+                                </select>
+                            </div>
+                            <div class="frm-right">
+                                <span class="label-text" translate="SIGN_UP_ZIP_CODE">Zip Code</span>
+                                <br><input type="text" id="zipCode" name="zipCode" ng-model="user.zipCode"
+                                           class="txtbox1">
+                            </div>
+                        </div>
+                        <div class="frm-btn btm-link" translate="SIGN_UP_DISCLAIMER">By clicking "SIGN UP" below, you
+                            are
+                            agreeing to YipTV<br><a
+                                href="/terms-of-use" translate="SIGN_UP_TERMS_OF_USE">Terms of Use</a> <span
+                                translate="SIGN_UP_AND">and</span> <a href="/privacy-policy">PRIVACY POLICY</a>
+                        </div>
+                        <div class="frm-btn">
+                            <button ng-disabled="saving" type="submit" class="btn-submit"
+                                    translate="SIGN_UP_SUBMIT_BUTTON">Sign Up
+                            </button>
+                        </div>
+                        <div class="frm-btn btm-link"><span
+                            translate="SIGN_UP_HAVE_ACCOUNT">Already have an account? </span><a href="/sign-in"
+                                                                                                translate="SIGN_UP_SIGN_IN">Sign
+                            In</a></div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="frm-btn">EMAIL <br>
-          <input type="text" class="txtbox-error" >
-          <span class="error-msg">ENTERED EMAIL IS INVALID</span></div>
-        <div class="frm-btn">PASSWORD <br>
-          <input type="text" class="txtbox2" ></div>
-        <div class="frm">
-          <div class="frm-left">
-            CREDIT CARD NUMBER
-            <br><input type="text" class="txtbox2" >
-          </div>
-          <div class="frm-right">
-            CVV
-            <br><input type="text" class="txtbox1" ></div>
-        </div>
-        <div class="frm">
-          <div class="frm-left">
-            EXPIRY DATE
-            <br><select class="selectbox"><option>Select</option></select> <select class="selectbox1"><option>Select</option></select>
-          </div>
-          <div class="frm-right">
-            ZIPCODE
-            <br><input type="text" class="txtbox1" >
-          </div>
-        </div>
-        <div class="frm-btn btm-link">BY CLICKING "SIGN UP" BELOW, YOU ARE AGREEING TO THE YIPTV<br><a href="/terms-of-use">TERMS AND CONDITIONS</a> AND <a href="/privacy-policy">PRIVACY POLICY</a> </div>
-        <div class="frm-btn">
-          <input type="button" value="Sign UP" class="btn-submit">
-        </div>
-        <div class="frm-btn btm-link">ALREADY HAVE AN ACCOUNT ? <a href="/sign-in">SIGN IN</a></div>
-      </div>
+        <div class="btm-bg">&nbsp;</div>
     </div>
-  </div>
-  <div class="btm-bg">&nbsp;</div>
 </div>

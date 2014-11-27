@@ -871,6 +871,16 @@ footer .f-btm a:hover {
     margin-top: -48px;
 }
 
+.signin-box {
+    width: 700px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #FFFFFF;
+    padding: 0px;
+    margin: auto;
+    margin-top: -48px;
+}
+
 .signup-box {
     width: 700px;
     font-family: 'radikallight';
@@ -1167,7 +1177,7 @@ footer .f-btm a:hover {
     text-transform: uppercase;
 }
 
-.label {
+.label-text {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
