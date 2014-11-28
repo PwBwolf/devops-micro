@@ -3,7 +3,7 @@
 
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate',
-        'pascalprecht.translate', 'webStorageModule'
+        'pascalprecht.translate', 'webStorageModule', 'angularPayments'
     ]);
     angular.module('app').value('_', window._);
     angular.module('app').value('toastr', window.toastr);

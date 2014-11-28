@@ -1,23 +1,20 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['$scope', function ($scope) {
+    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', function (userSvc, loggerSvc, $scope, $location) {
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                userSvc.signIn(
+                userSvc.signUp(
                     $scope.user,
                     function () {
-                        $location.path('/my-account');
+                        loggerSvc.logSuccess('User signed up successfully. Check your email inbox for confirmation email.');
+                        $location.path('/');
                         $scope.saving = false;
                     },
-                    function (response) {
-                        if (response === 'UnverifiedAccount') {
-                            loggerSvc.logError('Sign In failed as your account has not been verified yet');
-                        } else {
-                            loggerSvc.logError('Sign In failed');
-                        }
+                    function () {
+                        loggerSvc.logError('User sign up failed');
                         $scope.saving = false;
                     });
             } else {
@@ -26,8 +23,16 @@
         };
 
         function setFormDirty() {
+            $scope.form.firstName.$dirty = true;
+            $scope.form.lastName.$dirty = true;
             $scope.form.email.$dirty = true;
             $scope.form.password.$dirty = true;
+            $scope.form.confirmPassword.$dirty = true;
+            $scope.form.cardNumber.$dirty = true;
+            $scope.form.cvv.$dirty = true;
+            $scope.form.expiryYear.$dirty = true;
+            $scope.form.expiryMonth.$dirty = true;
+            $scope.form.zipCode.$dirty = true;
         }
 
     }]);
