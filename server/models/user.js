@@ -1,14 +1,19 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    crypto = require('crypto');
 
 var User = new Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
-    passwordHash: {type: String, required: true},
-    passwordSalt: {type: String, required: true},
+    hashedPassword: {type: String, required: true},
+    salt: {type: String, required: true},
+    role: { type: {
+        bitMask: { type: Number, required: true },
+        title: {type: String, required: true }
+    }, required: true },
     activate: Boolean,
     disabled: Boolean,
     deleted: Boolean,
@@ -36,34 +41,67 @@ var User = new Schema({
     }
 }, { collection: 'Users' });
 
-// Bcrypt middleware on UserSchema
-User.pre('save', function (next) {
-    var user = this;
-
-    if (!user.isModified('password')) return next();
-
-    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-        if (err) return next(err);
-
-        bcrypt.hash(user.password, salt, function (err, hash) {
-            if (err) return next(err);
-            user.password = hash;
-            next();
-        });
+UserSchema.virtual('password')
+    .set(function (password) {
+        this._password = password;
+        this.salt = this.makeSalt();
+        this.hashedPassword = this.encryptPassword(password);
+    })
+    .get(function () {
+        return this._password;
     });
+
+var validatePresenceOf = function (value) {
+    return value && value.length;
+};
+
+UserSchema.path('firstName').validate(function (firstName) {
+    return firstName.length;
+}, 'First Name cannot be blank');
+
+UserSchema.path('lastName').validate(function (lastName) {
+    return lastName.length;
+}, 'Last Name cannot be blank');
+
+UserSchema.path('email').validate(function (email) {
+    return email.length;
+}, 'Email cannot be blank');
+
+UserSchema.path('role').validate(function (role) {
+    return role.length;
+}, 'Role cannot be blank');
+
+UserSchema.path('hashedPassword').validate(function (hashedPassword) {
+    return hashedPassword.length;
+}, 'Password cannot be blank');
+
+UserSchema.pre('save', function (next) {
+    if (!this.isNew) {
+        return next();
+    }
+    if (!validatePresenceOf(this.password)) {
+        return next(new Error('Invalid password'));
+    } else {
+        return next();
+    }
 });
 
-//Password verification
-User.methods.comparePassword = function (password, cb) {
-    bcrypt.compare(password, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
+UserSchema.methods = {
+    authenticate: function (plainText) {
+        return this.encryptPassword(plainText) === this.hashedPassword;
+    },
+
+    makeSalt: function () {
+        return crypto.randomBytes(16).toString('base64');
+    },
+
+    encryptPassword: function (password) {
+        if (!password || !this.salt) {
+            return '';
         }
-        cb(isMatch);
-    });
+        var salt = new Buffer(this.salt, 'base64');
+        return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+    }
 };
 
 mongoose.model('User', User);
-
-
-

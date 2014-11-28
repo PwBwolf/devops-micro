@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     jwt = require('jwt-simple'),
+    uuid = require('node-uuid'),
     logger = require('../config/logger'),
     moment = require('moment'),
     config = require('../config/config'),
@@ -10,7 +11,19 @@ var mongoose = require('mongoose'),
     Visitor = mongoose.model('Visitor');
 
 exports.signUp = function (req, res) {
-    return res.send(200);
+    User.findOne({ email: req.body.email }).exec().then(function (user) {
+        if(!user) {
+            var userObj = new User(req.body);
+            userObj.role = userRoles.user;
+            userObj.createdAt = (new Date()).toUTCString();
+            userObj.verificationCode = uuid.v4();
+        } else {
+            return res.send(500);
+        }
+    }, function(error){
+        logger.error(error);
+        return res.send(500);
+    });
 };
 
 exports.signIn = function (req, res) {
