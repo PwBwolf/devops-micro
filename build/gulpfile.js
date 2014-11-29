@@ -119,6 +119,14 @@ gulp.task('fonts', function () {
     .pipe($.size());
 });
 
+// Copy over fonts used by the design team
+gulp.task('webfonts', function () {
+    return gulp.src('../client/styles/fonts/*')
+        .pipe($.flatten())
+        .pipe(gulp.dest('dist/styles/fonts'))
+        .pipe($.size());
+});
+
 // Copy non-html files in project root including .htaccess, robots.txt, etc.
 gulp.task('extras', function () {
     return gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
@@ -135,7 +143,7 @@ gulp.task('clean', function () {
 });
 
 // The entry point to the gulpfile
-gulp.task('build', ['html', 'images', 'fonts', 'extras']);
+gulp.task('build', ['html', 'images', 'fonts', 'extras', 'webfonts']);
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
 gulp.task('default', ['clean'], function () {
