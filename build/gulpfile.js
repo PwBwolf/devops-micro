@@ -73,7 +73,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
       read: false,
       starttag: '<!-- inject:partials -->',
       addRootSlash: false,
-      addPrefix: '../../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+      addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
     }))
     .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
     .pipe($.rev())	// Rev the files by prefixing them with the file hash
@@ -119,6 +119,14 @@ gulp.task('fonts', function () {
     .pipe($.size());
 });
 
+// Copy over fonts used by the design team
+gulp.task('webfonts', function () {
+    return gulp.src('../client/styles/fonts/*')
+        .pipe($.flatten())
+        .pipe(gulp.dest('dist/styles/fonts'))
+        .pipe($.size());
+});
+
 // Copy non-html files in project root including .htaccess, robots.txt, etc.
 gulp.task('extras', function () {
     return gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
@@ -135,7 +143,7 @@ gulp.task('clean', function () {
 });
 
 // The entry point to the gulpfile
-gulp.task('build', ['html', 'images', 'fonts', 'extras']);
+gulp.task('build', ['html', 'images', 'fonts', 'extras', 'webfonts']);
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
 gulp.task('default', ['clean'], function () {
@@ -148,10 +156,11 @@ gulp.task('default', ['clean'], function () {
 
 
 // Serve and connect related (Not used and not validated to be working.) - Varun Naik, November 13 2014
-
+var historyApiFallback = require('connect-history-api-fallback');
 gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
+        .use(historyApiFallback)
         .use(require('connect-livereload')({ port: 35729 }))
         .use(connect.static('../client'))
         .use(connect.static('../client/.tmp'))
