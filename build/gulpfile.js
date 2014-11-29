@@ -156,10 +156,11 @@ gulp.task('default', ['clean'], function () {
 
 
 // Serve and connect related (Not used and not validated to be working.) - Varun Naik, November 13 2014
-
+var historyApiFallback = require('connect-history-api-fallback');
 gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
+        .use(historyApiFallback)
         .use(require('connect-livereload')({ port: 35729 }))
         .use(connect.static('../client'))
         .use(connect.static('../client/.tmp'))
