@@ -10,10 +10,10 @@
                 element.on('blur', function () {
                     if (element.val()) {
                         scope.$apply(function () {
-                            userSvc.isUsernameUnique(
-                                element.val(),
+                            userSvc.isEmailUnique(
+                                element.val(), $('#firstName').val(), $('#lastName').val(),
                                 function (data) {
-                                    ctrl.$setValidity('isEmailUnique', ('true' === data));
+                                    ctrl.$setValidity('isEmailUnique', data);
                                     return element.val();
                                 },
                                 function () {

@@ -2,9 +2,9 @@
 
 var _ = require('lodash'),
     jwt = require('jwt-simple'),
-    AppCtrl = require('./../controllers/app-controller'),
-    UserCtrl = require('./../controllers/user-controller'),
-    config = require('./../config/config'),
+    AppCtrl = require('../controllers/app-controller'),
+    UserCtrl = require('../controllers/user-controller'),
+    config = require('../config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
@@ -70,7 +70,7 @@ function ensureAuthorized(req, res, next) {
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(401, 'NoAccess');
+        return res.status(401).send('NoAccess');
     }
     return next();
 }

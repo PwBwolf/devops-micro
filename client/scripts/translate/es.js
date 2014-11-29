@@ -6,7 +6,7 @@
             INDEX_OTHER_LANGUAGE: 'English',
             INDEX_SIGN_IN: 'SSign In',
             INDEX_SIGN_UP: 'SSign Up',
-            INDEX_MY_ACCOUNT: 'SMy Account',
+            INDEX_MY_ACCOUNT: 'SLIVE TV',
             INDEX_SETTINGS: 'SSettings',
             INDEX_SIGN_OUT: 'SSign Out',
             INDEX_OUR_COMPANY: 'SOur Company',

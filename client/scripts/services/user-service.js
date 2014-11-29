@@ -59,20 +59,16 @@
                 return user.role.title !== userRoles.anon.title;
             },
 
-            isEmailUnique: function (email, success, error) {
+            isEmailUnique: function (email, firstName, lastName, success, error) {
                 $http({
                     method: 'GET',
                     url: '/api/is-email-unique',
-                    params: { email: email.toLowerCase() }
+                    params: { email: email.toLowerCase(), firstName: firstName, lastName: lastName }
                 }).success(success).error(error);
             },
 
             signUp: function (user, success, error) {
-                $http({
-                    url: '/api/sign-up',
-                    method: 'POST',
-                    data: { 'email': user.email.toLowerCase(), 'password': user.password, 'confirmPassword': user.confirmPassword, 'firstName': user.firstName, 'lastName': user.lastName }
-                }).success(success).error(error);
+                $http.post('/api/sign-up', user).success(success).error(error);
             },
 
             signIn: function (user, success, error) {
