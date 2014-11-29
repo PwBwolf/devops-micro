@@ -7,4 +7,5 @@ Configure your machine for testing/development
    * Edit the nginx conf file at `config/nginx/sites-enabled/yiptv.com` and change the paths on lines 14, 22, 23 to match **your** machine's configuration.
    * Copy the nginx conf file at `config/nginx/sites-enabled/yiptv.com` to `/etc/nginx/sites-enabled`
    * Reload your nginx server, `/etc/init.d/nginx reload` or `service nginx reload` depending on your flavour of Linux.
+   * cd to the server directory `cd ../server` and do `node app.js` to start the Node server for the API
    * If you type in http://yiptv.com now you will be directed (after accepting the self-signed certificate) to the production version of the system.
