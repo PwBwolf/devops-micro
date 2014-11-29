@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', function (userSvc, loggerSvc, $scope, $location) {
+    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
 
         $scope.signIn = function () {
             if ($scope.form.$valid) {
@@ -14,9 +14,9 @@
                     },
                     function (response) {
                         if (response === 'UnverifiedAccount') {
-                            loggerSvc.logError('Sign In failed as your account has not been verified yet');
+                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED_NOT_VERIFIED') || 'Sign In failed as your account has not been verified yet');
                         } else {
-                            loggerSvc.logError('Sign In failed');
+                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED') || 'Sign In failed');
                         }
                         $scope.saving = false;
                     });

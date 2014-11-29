@@ -34,9 +34,9 @@
                         <div class="error-msg" ng-show="form.password.$dirty && form.password.$error.complexity" translate="SIGN_UP_PASSWORD_NOT_COMPLEX">Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character</div>
                     </div>
                     <div class="frm-btn"><span class="label-text" translate="SIGN_UP_CONFIRM_PASSWORD">Confirm Password</span><br>
-                        <input type="password" maxlength="20" name="confirmPassword" id="confirmPassword" ng-model="user.confirmPassword" class="txtbox2" required ng-class="{'txtbox-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
+                        <input type="password" required maxlength="20" same-as="user.password" name="confirmPassword" id="confirmPassword" ng-model="user.confirmPassword" class="txtbox2" ng-class="{'txtbox-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
                         <div class="error-msg" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="SIGN_UP_CONFIRM_PASSWORD_REQUIRED">Confirm your password</div>
-                        <div class="error-msg" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.sameAs" translate="SIGN_UP_CONFIRM_PASSWORD_NO_MATCH">Passwords do not match</div>
+                        <div class="error-msg" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="SIGN_UP_CONFIRM_PASSWORD_NO_MATCH">Passwords do not match</div>
                     </div>
                     <div class="frm">
                         <div class="frm-left">

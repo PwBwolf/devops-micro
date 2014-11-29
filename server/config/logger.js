@@ -23,8 +23,19 @@ var logger = new winston.Logger({
             colorize: true
         })
     ],
+    exceptionHandlers: [
+        new winston.transports.File({
+            filename: config.root + '/logs/exceptions.log',
+            maxsize: 5242880,
+            maxFiles: 50
+        })
+    ],
     exitOnError: false
 });
+
+logger.logError = function(err) {
+    logger.error(JSON.stringify(err));
+}
 
 module.exports = logger;
 

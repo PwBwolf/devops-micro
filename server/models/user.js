@@ -23,6 +23,7 @@ var User = new Schema({
     resetPasswordCode: String,
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
+        defaultLanguage: {type: String, required: true, lowercase: true},
         favoriteChannels: [{type: Schema.Types.ObjectId, ref: 'Channel'}],
         defaultChannel: {type: Schema.Types.ObjectId, ref: 'Channel'},
         timezone: String
@@ -41,7 +42,7 @@ var User = new Schema({
     }
 }, { collection: 'Users' });
 
-UserSchema.virtual('password')
+User.virtual('password')
     .set(function (password) {
         this._password = password;
         this.salt = this.makeSalt();
@@ -55,27 +56,27 @@ var validatePresenceOf = function (value) {
     return value && value.length;
 };
 
-UserSchema.path('firstName').validate(function (firstName) {
+User.path('firstName').validate(function (firstName) {
     return firstName.length;
 }, 'First Name cannot be blank');
 
-UserSchema.path('lastName').validate(function (lastName) {
+User.path('lastName').validate(function (lastName) {
     return lastName.length;
 }, 'Last Name cannot be blank');
 
-UserSchema.path('email').validate(function (email) {
+User.path('email').validate(function (email) {
     return email.length;
 }, 'Email cannot be blank');
 
-UserSchema.path('role').validate(function (role) {
+User.path('role').validate(function (role) {
     return role.length;
 }, 'Role cannot be blank');
 
-UserSchema.path('hashedPassword').validate(function (hashedPassword) {
+User.path('hashedPassword').validate(function (hashedPassword) {
     return hashedPassword.length;
 }, 'Password cannot be blank');
 
-UserSchema.pre('save', function (next) {
+User.pre('save', function (next) {
     if (!this.isNew) {
         return next();
     }
@@ -86,7 +87,7 @@ UserSchema.pre('save', function (next) {
     }
 });
 
-UserSchema.methods = {
+User.methods = {
     authenticate: function (plainText) {
         return this.encryptPassword(plainText) === this.hashedPassword;
     },

@@ -22,6 +22,13 @@
                 controller: 'signUpCtrl',
                 access: access.anon
             })
+            .
+            when('/sign-up-success',
+            {
+                templateUrl: 'views/sign-up-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/forgot-password',
             {
                 templateUrl: 'views/forgot-password.html',
@@ -55,13 +62,13 @@
             .when('/about-us',
             {
                 templateUrl: 'views/about-us.html',
-                controller: 'aboutUsCtrl',
+                controller: 'commonCtrl',
                 access: access.public
             })
             .when('/leadership',
             {
                 templateUrl: 'views/leadership.html',
-                controller: 'leadershipCtrl',
+                controller: 'commonCtrl',
                 access: access.public
             })
             .when('/contact-us',
@@ -73,19 +80,19 @@
             .when('/privacy-policy',
             {
                 templateUrl: 'views/privacy-policy.html',
-                controller: 'privacyPolicyCtrl',
+                controller: 'commonCtrl',
                 access: access.public
             })
             .when('/terms-of-use',
             {
                 templateUrl: 'views/terms-of-use.html',
-                controller: 'termsOfUseCtrl',
+                controller: 'commonCtrl',
                 access: access.public
             })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',
-                controller: 'notFoundCtrl',
+                controller: 'commonCtrl',
                 access: access.public
             })
             .otherwise(

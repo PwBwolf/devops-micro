@@ -5,6 +5,7 @@ client/.sass-cache
 client/bower_components
 logs/
 .idea
+.DS_Store
 npm-debug.log
 erl_crash.dump
 *.iml

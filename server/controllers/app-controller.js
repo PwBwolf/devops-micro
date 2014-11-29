@@ -6,11 +6,12 @@ var mongoose = require('mongoose'),
 
 module.exports = {
     getAppConfig: function (req, res) {
-        AppConfig.findOne({}, { _id: 0}).exec().then(function (config) {
+        AppConfig.findOne({}, { _id: 0}, function (err, config) {
+            if(err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
             return res.json(config);
-        }, function(error){
-            logger.error(error);
-            return res.send(500);
         });
     }
 };
