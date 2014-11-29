@@ -14,9 +14,6 @@ server {
         root /home/varun/projects/y/YipTV/build/dist;   # UPDATE PATH
         index index.html;
 
-        # Make site accessible from https://yiptv.com/
-        server_name yiptv.com;
-
         # TLS
         ssl                         on;
         ssl_certificate             /home/varun/projects/y/YipTV/build/config/yiptv.crt;  # UPDATE PATH
