@@ -73,7 +73,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
       read: false,
       starttag: '<!-- inject:partials -->',
       addRootSlash: false,
-      addPrefix: '../../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+      addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
     }))
     .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
     .pipe($.rev())	// Rev the files by prefixing them with the file hash
