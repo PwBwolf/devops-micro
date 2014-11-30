@@ -13,6 +13,11 @@ Development:
 Deployment:
 ------
 
+* Finish the steps in development to prepare your PC to make a build
 * There are four deployment environments: Production, Staging, QA, Integration
-* To deploy to an environment create a build for it using `gulp build <envname>` - for example, `gulp build staging`
+* To create a build for an environment do `gulp build <envname>` - for example, `gulp build staging` (Type `gulp` for help and syntax)
+* Configure the target server if not done already:
+* First configure nginx and set up SSL as described in config/readme.md
+* Then copy the contents of dist/ to the target server. Ensure nginx can serve these files (see previous point)
+* TODO Deployment of node server using forever
 
