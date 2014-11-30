@@ -14,7 +14,7 @@ var User = new Schema({
         bitMask: { type: Number, required: true },
         title: {type: String, required: true }
     }, required: true },
-    activate: Boolean,
+    activated: Boolean,
     disabled: Boolean,
     deleted: Boolean,
     createdAt: {type: Date, required: true},

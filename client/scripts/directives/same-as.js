@@ -22,6 +22,9 @@
                     ctrl.$setValidity('sameAs', value === ctrl.$viewValue);
                 });
                 ctrl.$parsers.push(function (value) {
+                    if(!value) {
+                        return false;
+                    }
                     var isValid = value === scope.$eval(attrs.sameAs);
                     ctrl.$setValidity('sameAs', isValid);
                     return isValid ? value : undefined;

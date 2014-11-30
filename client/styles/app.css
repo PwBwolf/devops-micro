@@ -91,11 +91,11 @@ header {
     border-bottom: 1px dashed #262c3a;
     color: #262c3a;
     line-height: 20px !important;
-    margin: 0px 0 0px 25px !important;
+    margin: 0px 0 0px 5px !important;
 }
 
 .language a:hover {
-    margin: 0px 0 1px 25px;
+    margin: 0px 0 1px 5px;
 }
 
 .phone {
@@ -169,6 +169,11 @@ a.btn-signup {
     border-radius: 5px !important;
     padding: 8px !important;
     padding-bottom: 11px !important;
+}
+
+.welcome-user {
+    font-weight: bold;
+    margin-top: 15px;
 }
 
 .banner {
@@ -1927,11 +1932,11 @@ a.subscription:hover {
     }
 
     .language a {
-        margin: 0 !important
+        margin: 0 0 0 5px !important
     }
 
     .language a:hover {
-        margin: 0 0 1px !important
+        margin: 0 0 1px 5px !important
     }
 
     .banner img {

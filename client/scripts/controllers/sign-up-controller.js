@@ -5,22 +5,21 @@
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
-                $scope.user.preferences = { defaultLanguage: $scope.language || 'en' };
+                $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
                 $scope.saving = true;
                 userSvc.signUp(
-                    $scope.user,
+                    $scope.mv,
                     function () {
                         $location.path('/sign-up-success');
                         $scope.saving = false;
                     },
                     function (error) {
-                        console.log(error);
                         if(error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS') || 'This email is already registered with YipTV. Please use another email address.');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') || 'User sign up failed');
-                            $scope.saving = false;
                         }
+                        $scope.saving = false;
                     });
             } else {
                 setFormDirty();
@@ -35,8 +34,7 @@
             $scope.form.confirmPassword.$dirty = true;
             $scope.form.cardNumber.$dirty = true;
             $scope.form.cvv.$dirty = true;
-            $scope.form.expiryYear.$dirty = true;
-            $scope.form.expiryMonth.$dirty = true;
+            $scope.form.expiryDate.$dirty = true;
             $scope.form.zipCode.$dirty = true;
         }
 
