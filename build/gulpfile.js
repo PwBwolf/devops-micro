@@ -159,6 +159,13 @@ gulp.task('default', ['clean'], function () {
 var historyApiFallback = require('connect-history-api-fallback');
 gulp.task('connect', function () {
     var connect = require('connect');
+
+    // Start the Node server to provide the API
+    var server = require('gulp-express');
+    server.run({
+        file: '../server/app.js'
+    });
+
     var app = connect()
         .use(historyApiFallback)
         .use(require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]']))

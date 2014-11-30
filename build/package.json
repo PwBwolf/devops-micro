@@ -27,13 +27,12 @@
     "jshint-stylish": "^0.4.0",
     "main-bower-files": "^2.4.0",
     "opn": "^0.1.1",
-    "wiredep": "^1.8.5"
+    "wiredep": "^1.8.5",
+    "connect-history-api-fallback": "0.0.5",
+    "gulp-express": "^0.1.1",
+    "connect-modrewrite": "^0.7.9"
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "dependencies": {
-    "connect-history-api-fallback": "0.0.5",
-    "connect-modrewrite": "^0.7.9"
   }
 }
