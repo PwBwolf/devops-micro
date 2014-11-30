@@ -33,6 +33,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "connect-history-api-fallback": "0.0.5"
+    "connect-history-api-fallback": "0.0.5",
+    "connect-modrewrite": "^0.7.9"
   }
 }
