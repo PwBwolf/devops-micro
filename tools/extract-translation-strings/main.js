@@ -25,7 +25,7 @@ var parser = new htmlparser.Parser({
     },
     onclosetag: function () {
         if (translate !== null) {
-            translations[translate] = translationString.replace(/(\r\n|\n|\r|\s+)/gm, ' ').replace('\'', '&#39;').trim();
+            translations[translate] = translationString.replace(/(\r\n|\n|\r|\s+)/gm, ' ').replace(/'/g, '&#39;').trim();
         }
     }
 });
@@ -56,7 +56,7 @@ var writeToFile = function (outputFile) {
     fs.writeFile(outputFile, '', function (err, data) {
         if (!err) {
             for (translation in translations) {
-                fs.appendFile(outputFile, translation + ': \'' + translations[translation] + '\'\n', function (err) {
+                fs.appendFile(outputFile, translation + ': \'' + translations[translation] + '\',\n', function (err) {
                     if (!err) {
                         console.log('Translation added to file successfully');
                     }
