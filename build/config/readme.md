@@ -1,5 +1,6 @@
 To deploy to a server
 -----
+   * Ensure you have nginx, mongodb, and node installed. For CentOS/Redhat/Fedora: `sudo yum install nginx mongodb nodejs`
    * Edit the appropriate nginx conf file for your environment and change the paths on lines 14, 22, 23 to match the server's configuration
    * Copy the nginx conf file to the /etc/nginx/sites-enabled directory
    * Ensure you have appropriate certificates for your environment
