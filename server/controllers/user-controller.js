@@ -46,9 +46,9 @@ exports.signUp = function (req, res) {
                 if (err) {
                     callback(err);
                 }
-                userObj.Account = accountObj;
-                userObj.save(function(err) {
-                    if(err) {
+                userObj.account = accountObj;
+                userObj.save(function (err) {
+                    if (err) {
                         callback(err);
                     }
                     callback(null, userObj, accountObj);
@@ -64,8 +64,8 @@ exports.signUp = function (req, res) {
                 subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
                 html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
             };
-            email.sendEmail(mailOptions, function(err){
-                if(err) {
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
                     logger.logError(err);
                 }
             });
@@ -82,7 +82,7 @@ exports.signUp = function (req, res) {
 };
 
 exports.signIn = function (req, res) {
-    User.findOne({email: req.body.email}, function(err, user) {
+    User.findOne({email: req.body.email}, function (err, user) {
 
     });
     if (req.body.email === 'admin@yiptv.com' && req.body.password === 'admin') {
@@ -128,34 +128,36 @@ exports.isEmailUnique = function (req, res) {
             logger.logError(err);
             return res.send(false);
         }
-        if (!user && validator.isEmail(req.query.email)) {
-            Visitor.findOne({email: req.query.email}, function (err, visitor) {
-                if (err) {
-                    logger.error(JSON.stringify(err));
-                }
-                if (!visitor) {
-                    var visitorObj = new Visitor({email: req.query.email, firstName: req.query.firstName, lastName: req.query.lastName});
-                    visitorObj.save(function (err) {
-                        if (err) {
-                            logger.error(JSON.stringify(err));
-                        }
-                    });
-                } else {
-                    if (req.query.firstName) {
-                        visitor.firstName = req.query.firstName;
+        if (!user) {
+            if (validator.isEmail(req.query.email)) {
+                Visitor.findOne({email: req.query.email}, function (err, visitor) {
+                    if (err) {
+                        logger.error(JSON.stringify(err));
                     }
-                    if (req.query.lastName) {
-                        visitor.lastName = req.query.lastName;
-                    }
-                    if (req.query.firstName || req.query.lastName) {
-                        visitor.save(function (err) {
+                    if (!visitor) {
+                        var visitorObj = new Visitor({email: req.query.email, firstName: req.query.firstName, lastName: req.query.lastName});
+                        visitorObj.save(function (err) {
                             if (err) {
-                                logger.logError(err);
+                                logger.error(JSON.stringify(err));
                             }
                         });
+                    } else {
+                        if (req.query.firstName) {
+                            visitor.firstName = req.query.firstName;
+                        }
+                        if (req.query.lastName) {
+                            visitor.lastName = req.query.lastName;
+                        }
+                        if (req.query.firstName || req.query.lastName) {
+                            visitor.save(function (err) {
+                                if (err) {
+                                    logger.logError(err);
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
             return res.send(true);
         } else {
             return res.send(false);

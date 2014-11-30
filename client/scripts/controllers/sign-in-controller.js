@@ -7,7 +7,7 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.signIn(
-                    $scope.user,
+                    $scope.mv,
                     function () {
                         $location.path('/my-account');
                         $scope.saving = false;
