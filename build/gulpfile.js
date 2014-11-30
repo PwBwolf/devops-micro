@@ -62,7 +62,8 @@ gulp.task('partials', function () {
 // https://www.npmjs.org/package/gulp-<taskname>
 // eg. Documentation for $.useref is at https://www.npmjs.org/package/gulp-useref
 
-gulp.task('html', ['scripts', 'partials'], function () {
+// Prepare for production/staging
+gulp.task('html', ['partials'], function () {
   var htmlFilter = $.filter('*.html'); 	// Filter out each HTML file
   var jsFilter = $.filter('**/*.js');		// Filter out each JS file
   var cssFilter = $.filter('**/*.css');	// Filter out each CSS file
@@ -78,6 +79,7 @@ gulp.task('html', ['scripts', 'partials'], function () {
     .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
     .pipe($.rev())	// Rev the files by prefixing them with the file hash
     .pipe(jsFilter)	// Take only the Javascript files
+    .pipe(stripDebug()) // Strip out console.log and other statements
     .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
     .pipe($.uglify())	// Minify the Javascript, strip out comments
     .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
@@ -96,6 +98,43 @@ gulp.task('html', ['scripts', 'partials'], function () {
     .pipe(htmlFilter.restore()) // Restore non-html files back to the stream
     .pipe(gulp.dest('dist'))
     .pipe($.size());
+});
+
+// Prepare for development
+gulp.task('htmlDev', ['scripts', 'partials'], function () {
+    var htmlFilter = $.filter('*.html'); 	// Filter out each HTML file
+    var jsFilter = $.filter('**/*.js');		// Filter out each JS file
+    var cssFilter = $.filter('**/*.css');	// Filter out each CSS file
+    var assets;
+
+    return gulp.src('../client/*.html')	// Read index.html
+        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), {	// Inject each processed partial output by the partials task
+            read: false,
+            starttag: '<!-- inject:partials -->',
+            addRootSlash: false,
+            addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+        }))
+        .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
+        .pipe($.rev())	// Rev the files by prefixing them with the file hash
+        .pipe(jsFilter)	// Take only the Javascript files
+        .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
+        .pipe($.uglify())	// Minify the Javascript, strip out comments
+        .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
+        .pipe(cssFilter)	// Take only the CSS files
+        .pipe($.csso())		// Minify the CSS using CSSO
+        .pipe(cssFilter.restore())	// Restore non-CSS files back to the stream
+        .pipe(assets.restore())	// Restore all other files (we were only working on concatenated CSS/JS till now)
+        .pipe($.useref())	// Finish replacing all CSS and JS links with our processed, concatenated, minified files
+        .pipe($.revReplace())
+        .pipe(htmlFilter)
+        .pipe($.minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(htmlFilter.restore()) // Restore non-html files back to the stream
+        .pipe(gulp.dest('dist'))
+        .pipe($.size());
 });
 
 // Copy _and_ optimise images.
@@ -142,17 +181,41 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-// The entry point to the gulpfile
-gulp.task('build', ['html', 'images', 'fonts', 'extras', 'webfonts']);
+gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts']);
+gulp.task('buildIntegration', ['htmlDev', 'images', 'fonts', 'extras', 'webfonts']);
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
-gulp.task('default', ['clean'], function () {
+gulp.task('default', function () {
     gulp.start('build');
 });
 
+gulp.task('build', function() {
+    console.log('-------------------------------------------------------------------');
+    console.log('The `gulp` and `gulp build` tasks are not used in this project.');
+    console.log();
+    console.log('Development:');
+    console.log('`gulp watch` starts a server with client and server livereload.');
+    console.log('`gulp serve` starts a server with server livereload.');
+    console.log();
+    console.log('Deployment:');
+    console.log('`gulp production` creates a client build suitable for production.');
+    console.log('`gulp qa` creates a client build suitable for qa.');
+    console.log('`gulp integration` creates a client build suitable for integration.');
+    console.log('`gulp staging` creates a client build suitable for staging.');
+    console.log('-------------------------------------------------------------------');
+});
 
+gulp.task('production', ['clean'], function () {
+    gulp.start('buildProduction');
+});
 
+gulp.task('staging', ['production']); // Staging is currently an alias for production
 
+gulp.task('integration', ['clean'], function () {
+    gulp.start('buildIntegration');
+});
+
+gulp.task('qa', ['integration']); // QA is currently an alias for integration
 
 
 // Serve and connect related (Not used and not validated to be working.) - Varun Naik, November 13 2014
