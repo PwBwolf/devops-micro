@@ -161,14 +161,16 @@ gulp.task('connect', function () {
     var connect = require('connect');
 
     // Start the Node server to provide the API
-    var server = require('gulp-express');
-    server.run({
-        file: '../server/app.js'
-    });
+    var nodemon = require('gulp-nodemon');
+    nodemon({ cwd: '../server', script: 'app.js', ignore: ['node_modules/*'], ext: 'js' })
+        .on('restart', function () {
+            console.log('Node server restarted!')
+        });
+
 
     var app = connect()
         .use(historyApiFallback)
-        .use(require('connect-modrewrite')(['/api/(.*)$ http://localhost:3000/api/$1 [P]']))
+        .use(require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]']))
         .use(require('connect-livereload')({ port: 35729 }))
         .use(connect.static('../client'))
         .use(connect.static('../client/.tmp'))
