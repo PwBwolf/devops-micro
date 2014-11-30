@@ -1,6 +1,6 @@
 {
-  "name": "YipTVServer",
-  "description": "The YIP TV API server. Exposes the required endpoints so any client may access.",
+  "name": "YipTV-Server",
+  "description": "YipTV Server",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
