@@ -44,7 +44,11 @@ exports.signUp = function (req, res) {
             var accountObj = new Account({primaryUser: userObj, users: [userObj], createdAt: (new Date()).toUTCString()});
             accountObj.save(function (err) {
                 if (err) {
-                    callback(err);
+                    logger.logError(err);
+                    // if account creation fails delete user as well
+                    userObj.remove(function (err) {
+                        callback(err);
+                    });
                 }
                 userObj.account = accountObj;
                 userObj.save(function (err) {
@@ -70,6 +74,15 @@ exports.signUp = function (req, res) {
                 }
             });
             callback(null, userObj, accountObj);
+        },
+        // delete user from visitor
+        function (userObj, accountObj, callback) {
+            Visitor.findOne({email: userObj.email}, function (err, visitor) {
+                if(visitor) {
+                    visitor.remove();
+                }
+                callback(null, userObj, accountObj);
+            });
         }
 
     ], function (err) {
@@ -82,35 +95,28 @@ exports.signUp = function (req, res) {
 };
 
 exports.signIn = function (req, res) {
-    User.findOne({email: req.body.email}, function (err, user) {
-
-    });
-    if (req.body.email === 'admin@yiptv.com' && req.body.password === 'admin') {
+    User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            console.log('usernotfound');
+            return res.status(401).send('SignInFailed');
+        }
+        if (!user.authenticate(req.body.password)) {
+            return res.status(401).send('SignInFailed');
+        }
+        if (!user.activated) {
+            return res.status(401).send('UnverifiedAccount');
+        }
         var token = jwt.encode({
             email: req.body.email,
             role: userRoles.user,
             expiry: moment().add(7, 'days').valueOf()
         }, config.secretToken);
-        return res.json({user: req.email, token: token});
-    }
-    return res.json(401, 'SignInFailed');
-    /*passport.authenticate('local', function (err, user) {
-     if (err) {
-     return res.send(500, err.message);
-     }
-     if (!user) {
-     return res.send(401, 'Login failed');
-     }
-     req.logIn(user, function (err) {
-     if (err) {
-     return res.send(500, err.message);
-     }
-     if (req.body.rememberMe) {
-     req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-     }
-     return res.json(200, { 'role': user.role, 'email': user.email });
-     });
-     })(req, res);*/
+        return res.json({token: token});
+    });
 };
 
 exports.signOut = function (req, res) {
@@ -119,7 +125,16 @@ exports.signOut = function (req, res) {
 };
 
 exports.getUserProfile = function (req, res) {
-    return res.send({email: req.email, role: req.role.title, firstName: 'YipTV', lastName: 'Admin'});
+    User.findOne({email: req.email}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            res.status(500).end();
+        }
+        if (!user) {
+            res.status(500).end();
+        }
+        return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName});
+    });
 };
 
 exports.isEmailUnique = function (req, res) {

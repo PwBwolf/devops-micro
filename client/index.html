@@ -45,13 +45,14 @@
             </div>
             <div class="collapse navbar-collapse pull-right right-box home" id="bs-example-navbar-collapse-1">
                 <div class="right-nav">
-                    <div class="language"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
+                    <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
                     <span class="phone" ng-bind="appConfig.customerCareNumber">800-123-1234</span>
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>
                     <a href="/sign-up" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_UP">Sign Up</a>
                     <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">LIVE TV</a>
                     <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
+                    <div class="welcome-user"><span translate="INDEX_WELCOME">Welcome</span> {{user.firstName}} {{user.lastName}}!</div>
                 </div>
             </div>
         </nav>
@@ -90,7 +91,7 @@
     </section>
     <section class="f-btm">
         <span translate="INDEX_DISCLAIMER">Use of the YipTV service and this Web site constitutes acceptance of our </span>
-        <span><a href="/terms-of-use" translate="INDEX_TERMS_OF_USE">Terms of Use</a> <span translate="INDEX_AND">and</span><a href="/privacy-policy" translate="INDEX_PRIVACY_POLICY">Privacy Policy</a>.</span><span class="copyright">&copy; 2013-2015 YipTV</span>
+        <span><a href="/terms-of-use" translate="INDEX_TERMS_OF_USE">Terms of Use</a> <span translate="INDEX_AND">and</span> <a href="/privacy-policy" translate="INDEX_PRIVACY_POLICY">Privacy Policy</a>.</span><span class="copyright">&copy; 2013-2015 YipTV</span>
     </section>
 </footer>
 <!--[if lt IE 9]>
