@@ -22,11 +22,16 @@
                 controller: 'signUpCtrl',
                 access: access.anon
             })
-            .
-            when('/sign-up-success',
+            .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
                 controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/verify-user',
+            {
+                templateUrl: 'views/verify-user.html',
+                controller: 'verifyUserCtrl',
                 access: access.anon
             })
             .when('/forgot-password',
