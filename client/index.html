@@ -52,7 +52,7 @@
                     <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">LIVE TV</a>
                     <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
-                    <div class="welcome-user"><span translate="INDEX_WELCOME">Welcome</span> {{user.firstName}} {{user.lastName}}!</div>
+                    <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> {{user.firstName}} {{user.lastName}}!</div>
                 </div>
             </div>
         </nav>
@@ -91,7 +91,7 @@
     </section>
     <section class="f-btm">
         <span translate="INDEX_DISCLAIMER">Use of the YipTV service and this Web site constitutes acceptance of our </span>
-        <span><a href="/terms-of-use" translate="INDEX_TERMS_OF_USE">Terms of Use</a> <span translate="INDEX_AND">and</span> <a href="/privacy-policy" translate="INDEX_PRIVACY_POLICY">Privacy Policy</a>.</span><span class="copyright">&copy; 2013-2015 YipTV</span>
+        <span><a href="/terms-of-use" translate="INDEX_TERMS_OF_USE">Terms of Use</a> <span translate="INDEX_AND">and</span> <a href="/privacy-policy" translate="INDEX_PRIVACY_POLICY">Privacy Policy</a>.</span><span class="copyright" translate="INDEX_COPYRIGHT">&copy; 2013-2015 YipTV</span>
     </section>
 </footer>
 <!--[if lt IE 9]>
@@ -146,6 +146,7 @@
 <script src="scripts/controllers/change-credit-card-controller.js"></script>
 <script src="scripts/controllers/common-controller.js"></script>
 <script src="scripts/controllers/contact-us-controller.js"></script>
+<script src="scripts/controllers/verify-user-controller.js"></script>
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->

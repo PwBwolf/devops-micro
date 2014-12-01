@@ -13,6 +13,7 @@ var _ = require('lodash'),
         {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
         {path: '/api/is-email-unique', httpMethod: 'GET', middleware: [UserCtrl.isEmailUnique]},
+        {path: '/api/verify-user', httpMethod: 'GET', middleware: [UserCtrl.verifyUser]},
         {
             path: '/api/get-user-profile',
             httpMethod: 'GET',

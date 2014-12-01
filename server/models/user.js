@@ -19,8 +19,8 @@ var User = new Schema({
     deleted: Boolean,
     createdAt: {type: Date, required: true},
     lastLoginTime: Date,
-    verificationCode: String,
-    resetPasswordCode: String,
+    verificationCode: {type: String, sparse: true },
+    resetPasswordCode: { type: String, sparse: true },
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},

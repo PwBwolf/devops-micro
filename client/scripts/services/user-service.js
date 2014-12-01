@@ -92,6 +92,14 @@
             clearUser: function () {
                 changeUser(noUser());
                 tokenSvc.clearToken();
+            },
+
+            verifyUser: function (code, success, error) {
+                $http({
+                    url: '/api/verify-user',
+                    method: 'GET',
+                    params: {code: code}
+                }).success(success).error(error);
             }
         };
     }]);

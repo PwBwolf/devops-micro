@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['appSvc', 'userSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', function (appSvc, userSvc, loggerSvc, webStorage, $scope, $translate, $location, $route) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -17,6 +17,10 @@
         }
 
         function getAppConfig() {
+            var routeList = ['/verify-user', '/reset-password'];
+            if(_.contains(routeList, $location.path())) {
+                tokenSvc.clearToken();
+            }
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
             }).error(function () {

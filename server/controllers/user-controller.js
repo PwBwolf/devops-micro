@@ -61,7 +61,7 @@ exports.signUp = function (req, res) {
         },
         // send verification email
         function (userObj, accountObj, callback) {
-            var verificationUrl = config.url + 'verify-account?code=' + userObj.verificationCode;
+            var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: userObj.email,
@@ -78,13 +78,20 @@ exports.signUp = function (req, res) {
         // delete user from visitor
         function (userObj, accountObj, callback) {
             Visitor.findOne({email: userObj.email}, function (err, visitor) {
+                if (err) {
+                    callback(err);
+                }
                 if(visitor) {
-                    visitor.remove();
+                    visitor.remove(function(err) {
+                        if(err) {
+                            logger.logError(err);
+                        }
+                        callback(null, userObj, accountObj);
+                    });
                 }
                 callback(null, userObj, accountObj);
             });
         }
-
     ], function (err) {
         if (err) {
             logger.logError(err);
@@ -101,7 +108,6 @@ exports.signIn = function (req, res) {
             return res.status(500).end();
         }
         if (!user) {
-            console.log('usernotfound');
             return res.status(401).send('SignInFailed');
         }
         if (!user.authenticate(req.body.password)) {
@@ -128,12 +134,34 @@ exports.getUserProfile = function (req, res) {
     User.findOne({email: req.email}, function (err, user) {
         if (err) {
             logger.logError(err);
-            res.status(500).end();
+            return res.status(500).end();
         }
         if (!user) {
-            res.status(500).end();
+            return res.status(500).end();
         }
         return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName});
+    });
+};
+
+exports.verifyUser = function (req, res) {
+    console.log('code:' + req.query.code);
+    User.findOne({verificationCode: req.query.code}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            return res.status(401).send('UserNotFound');
+        }
+        user.activated = true;
+        user.verificationCode = undefined;
+        user.save(function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            return res.status(200).end();
+        });
     });
 };
 

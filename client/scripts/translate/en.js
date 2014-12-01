@@ -21,6 +21,7 @@
             INDEX_DISCLAIMER: 'Use of the YipTV service and this Web site constitutes acceptance of our ',
             INDEX_WELCOME: 'Welcome',
             INDEX_SWITCH_TO: 'Switch to',
+            INDEX_COPYRIGHT: '© 2013-2015 YipTV',
             HOME_UNLIMITED_CHANNELS: 'Unlimited Channels',
             HOME_MONTH: 'month',
             HOME_WATCH_LIVE: 'Watch live news, sports & events from around the world',
@@ -271,7 +272,11 @@
             ABOUT_US_BA4_DESCRIPTION: 'Commercial Director Bryan Buckley is an acclaimed award winning advertising and production executive directing over 40 Super Bowl commercials and dubbed as "The King of Superbowl" by the New York Times. Bryan&#39;s career began in 1994 with his inception of ESPNs now benchmark "This is Sportscenter" campaign. Since then, Bryan has received virtually every honor, award, and accolade in the industry securing his spot atop "best of" lists in the US and internationally. Mr. Buckley is Co-Founder of Hungryman Productions, one of the world&#39;s largest and leading creative production agencies and has been named Commercial Director of the Year by the Directors Guild of America.',
             CONTACT_US_HEADING: 'Contact Us',
             NOT_FOUND_HEADING: 'Page Not Found',
-            NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.'
+            NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
+            VERIFY_USER_HEADING_SUCCESS: 'Success',
+            VERIFY_USER_HEADING_ERROR: 'Error',
+            VERIFY_USER_MESSAGE_SUCCESS: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
+            VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact YipTV Customer Care.'
         });
     }]);
 }(angular.module('app')));
