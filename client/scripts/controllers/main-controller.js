@@ -17,10 +17,6 @@
         }
 
         function getAppConfig() {
-            var routeList = ['/verify-user', '/reset-password'];
-            if(_.contains(routeList, $location.path())) {
-                tokenSvc.clearToken();
-            }
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
             }).error(function () {
@@ -29,11 +25,16 @@
         }
 
         function loadUserProfile() {
-            userSvc.getUserProfile(function () {
-                $route.reload();
-            }, function () {
-                $route.reload();
-            });
+            var routeList = ['/verify-user', '/reset-password'];
+            if(_.contains(routeList, $location.path())) {
+                tokenSvc.clearToken();
+            } else {
+                userSvc.getUserProfile(function () {
+                    $route.reload();
+                }, function () {
+                    $route.reload();
+                });
+            }
         }
 
         function configSeo() {
