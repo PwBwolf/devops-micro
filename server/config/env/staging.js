@@ -4,5 +4,6 @@ module.exports = {
     environment: 'staging',
     port: 80,
     db: 'mongodb://localhost/yiptv',
-    secretToken: 'yip#tv@dev#346'
+    imageUrl: 'http://staging.yiptv.net/img/',
+    secretToken: 'yip#tv@staging#346'
 };
