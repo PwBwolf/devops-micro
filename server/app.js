@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'integration';
 
 var express = require('express'),
     http = require('http'),
