@@ -100,6 +100,14 @@
                     method: 'GET',
                     params: {code: code}
                 }).success(success).error(error);
+            },
+
+            forgotPassword: function(email, success, error) {
+                $http({
+                    url: '/api/forgot-password',
+                    method: 'GET',
+                    params: {email: email}
+                }).success(success).error(error);
             }
         };
     }]);

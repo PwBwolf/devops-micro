@@ -81,9 +81,9 @@ exports.signUp = function (req, res) {
                 if (err) {
                     callback(err);
                 }
-                if(visitor) {
-                    visitor.remove(function(err) {
-                        if(err) {
+                if (visitor) {
+                    visitor.remove(function (err) {
+                        if (err) {
                             logger.logError(err);
                         }
                         callback(null, userObj, accountObj);
@@ -144,7 +144,6 @@ exports.getUserProfile = function (req, res) {
 };
 
 exports.verifyUser = function (req, res) {
-    console.log('code:' + req.query.code);
     User.findOne({verificationCode: req.query.code}, function (err, user) {
         if (err) {
             logger.logError(err);
@@ -161,6 +160,39 @@ exports.verifyUser = function (req, res) {
                 return res.status(500).end();
             }
             return res.status(200).end();
+        });
+    });
+};
+
+exports.forgotPassword = function (req, res) {
+    User.findOne({email: req.query.email}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        user.resetPasswordCode = uuid.v4();
+        user.save(function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            var resetUrl = config.url + 'reset-password?code=' + user.resetPasswordCode;
+            var mailOptions = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: user.email,
+                subject: config.resetPasswordEmailSubject[user.preferences.defaultLanguage],
+                html: sf(config.resetPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
+            };
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                return res.status(200).end();
+            });
         });
     });
 };

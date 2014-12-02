@@ -357,7 +357,15 @@
             VERIFY_USER_HEADING_SUCCESS: 'Success',
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
-            VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact YipTV Customer Care.'
+            VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact YipTV Customer Care.',
+            FORGOT_PASSWORD_HEADING: 'Forgot Password',
+            FORGOT_PASSWORD_EMAIL: 'Enter your email and we will send a link to reset your password',
+            FORGOT_PASSWORD_BUTTON: 'Submit',
+            FORGOT_PASSWORD_EMAIL_INVALID: 'Enter a valid email',
+            FORGOT_PASSWORD_EMAIL_REQUIRED: 'Enter your email',
+            FORGOT_PASSWORD_ERROR: 'Error sending reset password link',
+            FORGOT_PASSWORD_SUCCESS_HEADING: 'Success',
+            FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Password reset link and instructions have been sent to your email address'
         });
     }]);
 }(angular.module('app')));
