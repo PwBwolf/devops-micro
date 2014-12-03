@@ -47,6 +47,8 @@
             SIGN_IN_SIGN_UP: 'Sign Up',
             SIGN_IN_FAILED_NOT_VERIFIED: 'Sign In failed as your account has not been verified yet',
             SIGN_IN_FAILED: 'Sign In failed',
+            SIGN_IN_NO_VERIFICATION_EMAIL: 'Did not receive verification email?',
+            SIGN_IN_RESEND_VERIFICATION: 'Request again',
             SIGN_UP_HEADING: 'Sign Up',
             SIGN_UP_FIRST_NAME: 'First Name',
             SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
@@ -365,7 +367,19 @@
             FORGOT_PASSWORD_EMAIL_REQUIRED: 'Enter your email',
             FORGOT_PASSWORD_ERROR: 'Error sending reset password link',
             FORGOT_PASSWORD_SUCCESS_HEADING: 'Success',
-            FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Password reset link and instructions have been sent to your email address'
+            FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Password reset link and instructions have been sent to your email address',
+            RESET_PASSWORD_HEADING: 'Reset Password',
+            RESET_PASSWORD_NEW_PASSWORD: 'New Password',
+            RESET_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'Confirm your password',
+            RESET_PASSWORD_CONFIRM_PASSWORD: 'Confirm Password',
+            RESET_PASSWORD_NEW_PASSWORD_NOT_COMPLEX: 'Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character',
+            RESET_PASSWORD_NEW_PASSWORD_REQUIRED: 'Enter your password',
+            RESET_PASSWORD_CONFIRM_PASSWORD_NO_MATCH: 'Passwords do not match',
+            RESET_PASSWORD_BUTTON: 'Submit',
+            RESET_PASSWORD_SUCCESS_HEADING: 'Password Changed',
+            RESET_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
+            RESET_PASSWORD_ERROR: 'Unable to change your password. Please contact YipTV customer care.',
+            RESET_PASSWORD_USER_ERROR: 'The reset password link has expired and is no longer valid'
         });
     }]);
 }(angular.module('app')));

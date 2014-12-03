@@ -47,6 +47,8 @@
             SIGN_IN_SIGN_UP: 'SSign Up',
             SIGN_IN_FAILED_NOT_VERIFIED: 'SSign In failed as your account has not been verified yet',
             SIGN_IN_FAILED: 'SSign In failed',
+            SIGN_IN_NO_VERIFICATION_EMAIL: 'SDid not receive verification email?',
+            SIGN_IN_RESEND_VERIFICATION: 'SRequest again',
             SIGN_UP_HEADING: 'SSign Up',
             SIGN_UP_FIRST_NAME: 'SFirst Name',
             SIGN_UP_FIRST_NAME_REQUIRED: 'SEnter your first name',
@@ -355,7 +357,7 @@
             NOT_FOUND_HEADING: 'SPage Not Found',
             NOT_FOUND_MESSAGE: 'SThe page you are looking for does not exist.',
             VERIFY_USER_HEADING_SUCCESS: 'SSuccess',
-            VERIFY_USER_HEADING_ERROR: 'EError',
+            VERIFY_USER_HEADING_ERROR: 'SError',
             VERIFY_USER_MESSAGE_SUCCESS: 'SYour account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             VERIFY_USER_MESSAGE_ERROR: 'SUnable to verify your account or account is already verified. Please contact YipTV Customer Care.',
             FORGOT_PASSWORD_EMAIL: 'SEnter your email and we will send a link to reset your password',
@@ -364,7 +366,18 @@
             FORGOT_PASSWORD_EMAIL_REQUIRED: 'SEnter your email',
             FORGOT_PASSWORD_ERROR: 'SError sending reset password link',
             FORGOT_PASSWORD_SUCCESS_HEADING: 'SSuccess',
-            FORGOT_PASSWORD_SUCCESS_MESSAGE: 'SPassword reset link and instructions have been sent to your email address'
+            FORGOT_PASSWORD_SUCCESS_MESSAGE: 'SPassword reset link and instructions have been sent to your email address',
+            RESET_PASSWORD_NEW_PASSWORD: 'SNew Password',
+            RESET_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'SConfirm your password',
+            RESET_PASSWORD_CONFIRM_PASSWORD: 'SConfirm Password',
+            RESET_PASSWORD_NEW_PASSWORD_NOT_COMPLEX: 'SPassword needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character',
+            RESET_PASSWORD_NEW_PASSWORD_REQUIRED: 'SEnter your password',
+            RESET_PASSWORD_CONFIRM_PASSWORD_NO_MATCH: 'SPasswords do not match',
+            RESET_PASSWORD_BUTTON: 'SSubmit',
+            RESET_PASSWORD_SUCCESS_HEADING: 'SPassword Changed',
+            RESET_PASSWORD_SUCCESS_MESSAGE: 'SYour password has been changed successfully.',
+            RESET_PASSWORD_ERROR: 'SUnable to change your password. Please contact YipTV customer care.',
+            RESET_PASSWORD_USER_ERROR: 'SThe reset password link has expired and is no longer valid'
         });
     }]);
 }(angular.module('app')));

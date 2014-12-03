@@ -10,8 +10,8 @@
         activate();
 
         function activate() {
-            getAppConfig();
             loadUserProfile();
+            getAppConfig();
             loadLanguage();
             configSeo();
         }

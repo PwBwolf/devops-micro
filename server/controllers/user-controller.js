@@ -116,6 +116,12 @@ exports.signIn = function (req, res) {
         if (!user.activated) {
             return res.status(401).send('UnverifiedAccount');
         }
+        user.lastSignedInDate = (new Date()).toUTCString();
+        user.save(function(err) {
+            if(err) {
+                logger.logError(err);
+            }
+        });
         var token = jwt.encode({
             email: req.body.email,
             role: userRoles.user,
@@ -183,8 +189,8 @@ exports.forgotPassword = function (req, res) {
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: user.email,
-                subject: config.resetPasswordEmailSubject[user.preferences.defaultLanguage],
-                html: sf(config.resetPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
+                subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
+                html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
             };
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
@@ -193,6 +199,39 @@ exports.forgotPassword = function (req, res) {
                 }
                 return res.status(200).end();
             });
+        });
+    });
+};
+
+exports.resetPassword = function (req, res) {
+    console.log(req.body.code);
+    User.findOne({resetPasswordCode: req.body.code}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        user.resetPasswordCode = undefined;
+        user.password = req.body.newPassword;
+        user.save(function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            var mailOptions = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: user.email,
+                subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+            };
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
+                    logger.logError(err);
+                }
+            });
+            return res.status(200).end();
         });
     });
 };

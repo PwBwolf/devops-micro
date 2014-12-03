@@ -20,6 +20,3 @@ require('./config/routes')(app);
 http.createServer(app).listen(port, function () {
     console.log('YipTV server listening on port ' + port);
 });
-
-
-
