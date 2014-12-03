@@ -27,7 +27,7 @@
             HOME_WATCH_LIVE: 'Watch live news, sports & events from around the world',
             HOME_WATCH_ANY_DEVICE: 'Watch on your TV, Tablet, Phone PC, Game System and more.',
             HOME_NO_CONTRACTS: 'No Contracts, Cancel Any Time',
-            HOME_WATCH_ANY_SCREEN: 'Watch on any screen, anywhere, any time.',
+            HOME_WATCH_ANY_SCREEN: 'Watch on any screen, anywhere, any time!',
             HOME_NO_CABLE_BOX: 'No cable box needed. No bulky dish on the roof. Yip TV plays your channels through your broadband Internet connection.',
             HOME_JOIN_REVOLUTION: '>> Join the revolution',
             HOME_TESTIMONIALS: 'Testimonials',
