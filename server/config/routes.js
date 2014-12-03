@@ -15,6 +15,7 @@ var _ = require('lodash'),
         {path: '/api/is-email-unique', httpMethod: 'GET', middleware: [UserCtrl.isEmailUnique]},
         {path: '/api/verify-user', httpMethod: 'GET', middleware: [UserCtrl.verifyUser]},
         {path: '/api/forgot-password', httpMethod: 'GET', middleware: [UserCtrl.forgotPassword]},
+        {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {
             path: '/api/get-user-profile',
             httpMethod: 'GET',

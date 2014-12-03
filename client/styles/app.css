@@ -912,7 +912,7 @@ footer .f-btm a:hover {
     color: #FFFFFF;
     padding: 0px;
     margin: auto;
-    margin-top: -48px;
+    margin-top: -80px;
 }
 
 .signup-box {
@@ -1734,6 +1734,10 @@ a.subscription:hover {
         width: 100%;
     }
 
+    .signin-box {
+        width: 100%;
+    }
+
     .setting-box, .setting-box1 {
         padding: 10% 0;
     }
@@ -1897,6 +1901,12 @@ a.subscription:hover {
     }
 
     .signup-box {
+        width: 100%;
+        font-size: 17px;
+        margin-top: 0px;
+    }
+
+    .signin-box {
         width: 100%;
         font-size: 17px;
         margin-top: 0px;

@@ -15,6 +15,14 @@
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <style>
+        .ng-hide {
+            display: none !important;
+        }
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/flexslider/flexslider.css"/>
     <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
@@ -26,7 +34,7 @@
     <!-- endbuild -->
     <title ng-bind="appConfig.appName">YipTV</title>
 </head>
-<body>
+<body ng-cloak>
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -52,7 +60,7 @@
                     <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">LIVE TV</a>
                     <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
-                    <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> {{user.firstName}} {{user.lastName}}!</div>
+                    <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </div>
             </div>
         </nav>
@@ -147,6 +155,7 @@
 <script src="scripts/controllers/common-controller.js"></script>
 <script src="scripts/controllers/contact-us-controller.js"></script>
 <script src="scripts/controllers/verify-user-controller.js"></script>
+<script src="scripts/controllers/change-password-controller.js"></script>
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->

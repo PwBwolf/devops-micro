@@ -52,6 +52,12 @@
                 controller: 'resetPasswordCtrl',
                 access: access.anon
             })
+            .when('/reset-password-success',
+            {
+                templateUrl: 'views/reset-password-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/my-account',
             {
                 templateUrl: 'views/my-account.html',
@@ -68,7 +74,13 @@
             {
                 templateUrl: 'views/change-credit-card.html',
                 controller: 'changeCreditCardCtrl',
-                access: access.anon
+                access: access.user
+            })
+            .when('/change-password',
+            {
+                templateUrl: 'views/change-password.html',
+                controller: 'changePasswordCtrl',
+                access: access.user
             })
             .when('/about-us',
             {

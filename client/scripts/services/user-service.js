@@ -106,8 +106,12 @@
                 $http({
                     url: '/api/forgot-password',
                     method: 'GET',
-                    params: {email: email}
+                    params: {email: email.toLowerCase()}
                 }).success(success).error(error);
+            },
+
+            resetPassword: function(data, success, error) {
+                $http.post('/api/reset-password', data).success(success).error(error);
             }
         };
     }]);

@@ -6,7 +6,7 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.forgotPassword(
-                    $scope.mv,
+                    $scope.mv.email,
                     function () {
                         $location.path('/forgot-password-success');
                         $scope.saving = false;

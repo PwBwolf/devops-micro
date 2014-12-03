@@ -14,8 +14,7 @@ app.directive('complexPassword', [function() {
                 if ((password.length >= 8) && (characterGroupCount > 3)) {
                     ctrl.$setValidity('complexity', true);
                     return password;
-                }
-                else {
+                } else {
                     ctrl.$setValidity('complexity', false);
                     return undefined;
                 }
