@@ -192,7 +192,7 @@ gulp.task('clear', function (done) {
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+    return gulp.src(['.tmp', 'dist/client', 'dist/server'], { read: false }).pipe($.clean());
 });
 
 gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
