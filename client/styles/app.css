@@ -2201,7 +2201,7 @@ a.subscription:hover {
         padding: 0 0 0 0;
     }
 
-    .btm-link span {
+    .btm-link .separator {
         display: none;
     }
 
