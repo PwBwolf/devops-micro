@@ -150,7 +150,7 @@ exports.getUserProfile = function (req, res) {
 };
 
 exports.verifyUser = function (req, res) {
-    User.findOne({verificationCode: req.query.code}, function (err, user) {
+    User.findOne({verificationCode: req.body.code}, function (err, user) {
         if (err) {
             logger.logError(err);
             return res.status(500).end();
@@ -171,7 +171,7 @@ exports.verifyUser = function (req, res) {
 };
 
 exports.forgotPassword = function (req, res) {
-    User.findOne({email: req.query.email}, function (err, user) {
+    User.findOne({email: req.body.email}, function (err, user) {
         if (err) {
             logger.logError(err);
             return res.status(500).end();
@@ -195,16 +195,14 @@ exports.forgotPassword = function (req, res) {
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
                     logger.logError(err);
-                    return res.status(500).end();
                 }
-                return res.status(200).end();
             });
+            return res.status(200).end();
         });
     });
 };
 
 exports.resetPassword = function (req, res) {
-    console.log(req.body.code);
     User.findOne({resetPasswordCode: req.body.code}, function (err, user) {
         if (err) {
             logger.logError(err);
@@ -277,4 +275,47 @@ exports.isEmailUnique = function (req, res) {
             return res.send(false);
         }
     });
+};
+
+exports.resendVerification = function (req, res) {
+    User.findOne({email: req.body.email}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        if(user.activated) {
+            return res.status(409).send('AccountActivated');
+        }
+        user.verificationCode = uuid.v4();
+        user.save(function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
+            var mailOptions = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: user.email,
+                subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
+                html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
+            };
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
+                    logger.logError(err);
+                }
+            });
+            res.status(200).end();
+        });
+    });
+};
+
+exports.changeCreditCard = function(req, res) {
+    return res.status(200).end();
+};
+
+exports.changePassword = function(req, res) {
+    return res.status(200).end();
 };

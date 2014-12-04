@@ -377,7 +377,16 @@
             RESET_PASSWORD_SUCCESS_HEADING: 'SPassword Changed',
             RESET_PASSWORD_SUCCESS_MESSAGE: 'SYour password has been changed successfully.',
             RESET_PASSWORD_ERROR: 'SUnable to change your password. Please contact YipTV customer care.',
-            RESET_PASSWORD_USER_ERROR: 'SThe reset password link has expired and is no longer valid'
+            RESET_PASSWORD_USER_ERROR: 'SThe reset password link has expired and is no longer valid',
+            RESEND_VERIFICATION_HEADING: 'SResend Verification Email',
+            RESEND_VERIFICATION_EMAIL: 'SEnter your email and we will send a link to verify your account',
+            RESEND_VERIFICATION_EMAIL_INVALID: 'SEnter a valid email',
+            RESEND_VERIFICATION_EMAIL_REQUIRED: 'SEnter your email',
+            RESEND_VERIFICATION_BUTTON: 'SSubmit',
+            RESEND_VERIFICATION_SUCCESS_HEADING: 'SSuccess',
+            RESEND_VERIFICATION_SUCCESS_MESSAGE: 'SWe have sent you the account verification link. Please check your email.',
+            RESEND_VERIFICATION_USER_ERROR: 'SAccount not found or account already activated',
+            RESEND_VERIFICATION_ERROR: 'SError sending account verification link'
         });
     }]);
 }(angular.module('app')));

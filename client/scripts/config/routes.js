@@ -58,6 +58,18 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
+            .when('/resend-verification',
+            {
+                templateUrl: 'views/resend-verification.html',
+                controller: 'resendVerificationCtrl',
+                access: access.anon
+            })
+            .when('/resend-verification-success',
+            {
+                templateUrl: 'views/resend-verification-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/my-account',
             {
                 templateUrl: 'views/my-account.html',
