@@ -3,6 +3,7 @@
 // Note: The serve tasks have not beemn validated to work. Only gulp build works.
 
 var gulp = require('gulp');
+var fs = require('fs-extended');
 
 // load plugins
 var $ = require('gulp-load-plugins')({
@@ -187,8 +188,11 @@ gulp.task('clear', function (done) {
     return $.cache.clearAll(done);
 });
 
-gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist/client', 'dist/server'], { read: false }).pipe($.clean());
+gulp.task('clean', function (cb) {
+    fs.emptyDirSync(".tmp");
+    fs.emptyDirSync("dist/client");
+    fs.emptyDirSync("dist/server");
+    cb();
 });
 
 function setEnvironment(env) {
