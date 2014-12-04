@@ -13,13 +13,26 @@ var _ = require('lodash'),
         {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
         {path: '/api/is-email-unique', httpMethod: 'GET', middleware: [UserCtrl.isEmailUnique]},
-        {path: '/api/verify-user', httpMethod: 'GET', middleware: [UserCtrl.verifyUser]},
-        {path: '/api/forgot-password', httpMethod: 'GET', middleware: [UserCtrl.forgotPassword]},
+        {path: '/api/verify-user', httpMethod: 'POST', middleware: [UserCtrl.verifyUser]},
+        {path: '/api/forgot-password', httpMethod: 'POST', middleware: [UserCtrl.forgotPassword]},
+        {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {
             path: '/api/get-user-profile',
             httpMethod: 'GET',
             middleware: [UserCtrl.getUserProfile],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/change-password',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.changePassword],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/change-credit-card',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.changeCreditCard],
             accessLevel: accessLevels.user
         },
         {
