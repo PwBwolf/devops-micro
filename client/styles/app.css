@@ -607,6 +607,15 @@ a.btn-signup {
     outline: none;
 }
 
+.about-text {
+    font-weight: bold;
+}
+
+.align-text {
+    display: inline-block;
+    text-align: justify;
+}
+
 footer {
     float: left;
     width: 100%;
