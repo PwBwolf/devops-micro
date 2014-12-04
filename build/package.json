@@ -1,6 +1,13 @@
 {
   "name": "build",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "private": true,
+  "author": "YipTV",
+  "description": "Next generation IPTV!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YipTV/YipTV.git"
+  },
   "devDependencies": {
     "connect": "^2.14.4",
     "connect-history-api-fallback": "0.0.5",
@@ -31,7 +38,12 @@
     "jshint-stylish": "^0.4.0",
     "main-bower-files": "^2.4.0",
     "opn": "^0.1.1",
-    "wiredep": "^1.8.5"
+    "wiredep": "^1.8.5",
+    "gulp-replace-task": "^0.1.0",
+    "gulp-bump": "^0.1.11",
+    "semver": "^4.1.0",
+    "gulp-tag-version": "^1.2.1",
+    "gulp-git": "^0.5.5"
   },
   "engines": {
     "node": ">=0.10.0"
