@@ -9,6 +9,7 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files']
 });
 var replace = require('gulp-replace-task');
+var tag_version = require('gulp-tag-version');
 
 // inject bower components
 gulp.task('wiredep2', function () {
@@ -59,10 +60,6 @@ gulp.task('partials', function () {
     .pipe($.size());
 });
 
-// Hint: Documentation for many of the tasks below can be found at the following URL:
-// https://www.npmjs.org/package/gulp-<taskname>
-// eg. Documentation for $.useref is at https://www.npmjs.org/package/gulp-useref
-
 // Copy only routing.js to the dist folder
 gulp.task('roles', function() {
     return gulp.src('../client/scripts/config/routing.js')
@@ -87,9 +84,8 @@ gulp.task('html', ['partials', 'roles'], function () {
     .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
     .pipe($.rev())	// Rev the files by prefixing them with the file hash
     .pipe(jsFilter)	// Take only the Javascript files
-//    .pipe(stripDebug()) // Strip out console.log and other statements
     .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
-    //.pipe($.uglify())	// Minify the Javascript, strip out comments
+    .pipe($.uglify())	// Minify the Javascript, strip out comments
     .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
     .pipe(cssFilter)	// Take only the CSS files
     .pipe($.csso())		// Minify the CSS using CSSO
@@ -195,31 +191,52 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist/client', 'dist/server'], { read: false }).pipe($.clean());
 });
 
-gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
+function setEnvironment(env) {
     gulp.src('../server/app.js')
         .pipe(replace({
             patterns: [
                 {
                     match: 'development',
-                    replacement: 'production'
+                    replacement: env
                 }
             ],
             usePrefix: false
         }))
         .pipe(gulp.dest('dist/server'));
+}
+
+function commitAndTag() {
+    gulp.src('./version.json')
+        .pipe(tag_version());
+}
+
+gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
+    setEnvironment('production');
 });
 gulp.task('buildIntegration', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
-    gulp.src('../server/app.js')
-        .pipe(replace({
-            patterns: [
-                {
-                    match: 'development',
-                    replacement: 'integration'
-                }
-            ],
-            usePrefix: false
-        }))
-        .pipe(gulp.dest('dist/server'));
+    setEnvironment('integration');
+    commitAndTag();
+});
+
+gulp.task('patch', function() {
+    gulp.src('./version.json')
+        .pipe($.bump())
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
+});
+
+gulp.task('feature', function() {
+    gulp.src('./version.json')
+        .pipe($.bump({type: "minor"}))
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
+});
+
+gulp.task('release', function() {
+    gulp.src('./version.json')
+        .pipe($.bump({type: "major"}))
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
 });
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
