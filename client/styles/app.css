@@ -616,6 +616,10 @@ a.btn-signup {
     text-align: justify;
 }
 
+.underline-text {
+    text-decoration: underline;
+}
+
 footer {
     float: left;
     width: 100%;
