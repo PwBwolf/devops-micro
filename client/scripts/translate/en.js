@@ -422,7 +422,22 @@
             RESEND_VERIFICATION_SUCCESS_HEADING: 'Email Sent',
             RESEND_VERIFICATION_SUCCESS_MESSAGE: 'We have sent you the account verification link. Please check your email.',
             RESEND_VERIFICATION_USER_ERROR: 'Account not found or account already activated',
-            RESEND_VERIFICATION_ERROR: 'Error sending account verification link'
+            RESEND_VERIFICATION_ERROR: 'Error sending account verification link',
+            CHANGE_PASSWORD_HEADING: 'CHANGE PASSWORD',
+            CHANGE_PASSWORD_CURRENT_PASSWORD: 'ENTER CURRENT PASSWORD',
+            CHANGE_PASSWORD_NEW_PASSWORD: 'ENTER NEW PASSWORD',
+            CHANGE_PASSWORD_RE_TYPE_PASSWORD: 'RE-ENTER NEW PASSWORD',
+            CHANGE_PASSWORD_BUTTON: 'Submit',
+            CHANGE_PASSWORD_SUCCESS_HEADING: 'Password Changed',
+            CHANGE_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
+            CHANGE_PASSWORD_CURRENT_PASSWORD_REQUIRED: 'Enter your current password',
+            CHANGE_PASSWORD_NEW_PASSWORD_REQUIRED: 'Enter new password',
+            CHANGE_PASSWORD_NEW_PASSWORD_NOT_COMPLEX: 'Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character',
+            CHANGE_PASSWORD_NEW_PASSWORD_SAME: 'Password same as old password, enter new password',
+            CHANGE_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'Confirm your password',
+            CHANGE_PASSWORD_CONFIRM_PASSWORD_NO_MATCH: 'passwords donot match',
+            CHANGE_PASSWORD_ERROR: 'Error occured while changing the password',
+            CHANGE_PASSWORD_USER_ERROR: 'You have entered a wrong password'
         });
     }]);
 }(angular.module('app')));

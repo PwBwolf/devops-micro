@@ -94,6 +94,12 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
+            .when('/change-password-success',
+            {
+                templateUrl: 'views/change-password-success.html',
+                controller: 'changePasswordCtrl',
+                access: access.user
+            })
             .when('/about-us',
             {
                 templateUrl: 'views/about-us.html',
