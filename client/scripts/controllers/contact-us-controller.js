@@ -1,12 +1,12 @@
 (function (app) {
     'use strict';
 
-    app.controller('contactUsCtrl', ['$scope', 'AppSvc', function ($scope, AppSvc) {
+    app.controller('contactUsCtrl', ['$scope', 'appSvc', 'loggerSvc', '$filter', function ($scope, appSvc, loggerSvc, $filter) {
         $scope.contactUs = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 appSvc.contactUs(
-                    $scope.mv,
+                    $scope.cu,
                     function success () {
                         loggerSvc.logSuccess($filter('translate')('CONTACT_US_SUCCEEDED') || 'Contact us succeeded!');
                         $scope.saving = false;
