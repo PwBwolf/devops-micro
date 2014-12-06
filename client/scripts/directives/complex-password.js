@@ -5,11 +5,11 @@ app.directive('complexPassword', [function() {
     return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
-            ctrl.$parsers.unshift(function(password) {
+            ctrl.$parsers.push(function(password) {
                 var hasUpperCase = /[A-Z]/.test(password);
                 var hasLowerCase = /[a-z]/.test(password);
                 var hasNumbers = /\d/.test(password);
-                var hasNonAlphas = /\W/.test(password);
+                var hasNonAlphas = /\W|_/.test(password);
                 var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
                 if ((password.length >= 8) && (characterGroupCount > 3)) {
                     ctrl.$setValidity('complexity', true);
