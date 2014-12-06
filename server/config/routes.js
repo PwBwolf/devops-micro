@@ -19,24 +19,9 @@ var _ = require('lodash'),
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {path: '/api/save-contact-us', httpMethod: 'POST', middleware: [ContactUsCtrl.saveContactUs]},
-        {
-            path: '/api/get-user-profile',
-            httpMethod: 'GET',
-            middleware: [UserCtrl.getUserProfile],
-            accessLevel: accessLevels.user
-        },
-        {
-            path: '/api/change-password',
-            httpMethod: 'POST',
-            middleware: [UserCtrl.changePassword],
-            accessLevel: accessLevels.user
-        },
-        {
-            path: '/api/change-credit-card',
-            httpMethod: 'POST',
-            middleware: [UserCtrl.changeCreditCard],
-            accessLevel: accessLevels.user
-        },
+        {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
+        {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
+        {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
