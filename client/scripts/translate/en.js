@@ -422,7 +422,22 @@
             RESEND_VERIFICATION_SUCCESS_HEADING: 'Email Sent',
             RESEND_VERIFICATION_SUCCESS_MESSAGE: 'We have sent you the account verification link. Please check your email.',
             RESEND_VERIFICATION_USER_ERROR: 'Account not found or account already activated',
-            RESEND_VERIFICATION_ERROR: 'Error sending account verification link'
+            RESEND_VERIFICATION_ERROR: 'Error sending account verification link',
+            CONTACT_US_NAME: 'Name',
+            CONTACT_US_CHOOSE_INTEREST: 'Choose Interest',
+            CONTACT_US_INTEREST_SELECT: 'Select',
+            CONTACT_US_INTEREST_INVESTOR: 'Become a YipTV investor',
+            CONTACT_US_INTEREST_BROADCAST: 'Broadcast your network',
+            CONTACT_US_INTEREST_ADVERTISE: 'Request advertising services',
+            CONTACT_US_INTEREST_LIVE_EVENT: 'Request live event management &amp; services',
+            CONTACT_US_INTEREST_QUESTION: 'Submit a question',
+            CONTACT_US_EMAIL_ADDRESS: 'Email Address',
+            CONTACT_US_EMAIL_TELEPHONE: 'Telephone',
+            CONTACT_US_YM_ID: 'YM ID',
+            CONTACT_US_SKYPE_ID: 'Skype ID',
+            CONTACT_US_HOW_ASSIST: 'How can our team assist you?',
+            CONTACT_US_HOW_COUNTRY: 'Country',
+            CONTACT_US_SUBMIT_BUTTON: 'Submit'
         });
     }]);
 }(angular.module('app')));
