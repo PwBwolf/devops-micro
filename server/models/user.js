@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
     crypto = require('crypto');
 
 var User = new Schema({
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
+    firstName: {type: String, required: true, trim: true},
+    lastName: {type: String, required: true, trim: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
     hashedPassword: {type: String, required: true},
     salt: {type: String, required: true},

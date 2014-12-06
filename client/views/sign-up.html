@@ -8,13 +8,13 @@
                     <div class="frm">
                         <div class="frm-left1">
                             <span class="label-text" translate="SIGN_UP_FIRST_NAME">First Name</span>
-                            <br><input autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="txtbox2" required ng-class="{'txtbox-error': form.firstName.$dirty && form.firstName.$invalid}">
+                            <br><input autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="txtbox2" required ng-class="{'txtbox-error': form.firstName.$dirty && form.firstName.$invalid}">
 
                             <div class="error-msg" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="SIGN_UP_FIRST_NAME_REQUIRED">Enter your first name</div>
                         </div>
                         <div class="frm-right1">
-                            <span class="label-text" maxlength="20" translate="SIGN_UP_LAST_NAME">Last Name</span>
-                            <br><input autocomplete="off" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="txtbox1" required ng-class="{'txtbox-error': form.lastName.$dirty && form.lastName.$invalid}">
+                            <span class="label-text" translate="SIGN_UP_LAST_NAME">Last Name</span>
+                            <br><input autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="txtbox1" required ng-class="{'txtbox-error': form.lastName.$dirty && form.lastName.$invalid}">
 
                             <div class="error-msg" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="SIGN_UP_LAST_NAME_REQUIRED">Enter your last name</div>
                         </div>
@@ -25,7 +25,7 @@
 
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED">Enter your email address</div>
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.email" translate="SIGN_UP_EMAIL_INVALID">Enter a valid email address</div>
-                        <div class="error-msg" ng-show="form.email.$dirty && !form.email.$error.required && !form.email.$error.email && form.email.$error.isEmailUnique" translate="SIGN_UP_EMAIL_EXISTS">Email already registered</div>
+                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.isEmailUnique" translate="SIGN_UP_EMAIL_EXISTS">Email already registered</div>
                     </div>
                     <div class="frm-btn"><span class="label-text" translate="SIGN_UP_PASSWORD">Password</span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="txtbox2" ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}">
@@ -46,7 +46,7 @@
                         </div>
                         <div class="frm-right">
                             <span class="label-text" translate="SIGN_UP_CVV">CVV</span>
-                            <br><input autocomplete="off" type="text" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}">
+                            <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}">
                             <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="SIGN_UP_CVV_REQUIRED">Enter your CVV</div>
                             <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.cvc" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
                         </div>

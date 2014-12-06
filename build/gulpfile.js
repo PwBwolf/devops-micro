@@ -3,11 +3,14 @@
 // Note: The serve tasks have not beemn validated to work. Only gulp build works.
 
 var gulp = require('gulp');
+var fs = require('fs-extended');
 
 // load plugins
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files']
 });
+var replace = require('gulp-replace-task');
+var tag_version = require('gulp-tag-version');
 
 // inject bower components
 gulp.task('wiredep2', function () {
@@ -58,14 +61,17 @@ gulp.task('partials', function () {
     .pipe($.size());
 });
 
-// Hint: Documentation for many of the tasks below can be found at the following URL:
-// https://www.npmjs.org/package/gulp-<taskname>
-// eg. Documentation for $.useref is at https://www.npmjs.org/package/gulp-useref
+// Copy only routing.js to the dist folder
+gulp.task('roles', function() {
+    return gulp.src('../client/scripts/config/routing.js')
+        .pipe($.uglify())
+        .pipe(gulp.dest('dist/client/scripts/config'))
+});
 
 // Prepare for production/staging
-gulp.task('html', ['partials'], function () {
+gulp.task('html', ['partials', 'roles'], function () {
   var htmlFilter = $.filter('*.html'); 	// Filter out each HTML file
-  var jsFilter = $.filter('**/*.js');		// Filter out each JS file
+  var jsFilter = $.filter('**/*.js');	// Filter out each JS file
   var cssFilter = $.filter('**/*.css');	// Filter out each CSS file
   var assets;
 
@@ -79,7 +85,6 @@ gulp.task('html', ['partials'], function () {
     .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
     .pipe($.rev())	// Rev the files by prefixing them with the file hash
     .pipe(jsFilter)	// Take only the Javascript files
-    .pipe(stripDebug()) // Strip out console.log and other statements
     .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
     .pipe($.uglify())	// Minify the Javascript, strip out comments
     .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
@@ -96,7 +101,7 @@ gulp.task('html', ['partials'], function () {
       quotes: true
     }))
     .pipe(htmlFilter.restore()) // Restore non-html files back to the stream
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/client'))
     .pipe($.size());
 });
 
@@ -145,7 +150,7 @@ gulp.task('images', function () {
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest('dist/img/'))
+        .pipe(gulp.dest('dist/client/img/'))
         .pipe($.size());
 });
 
@@ -154,7 +159,7 @@ gulp.task('fonts', function () {
     return gulp.src($.mainBowerFiles({paths: '../client'}))
     .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
     .pipe($.flatten())
-    .pipe(gulp.dest('dist/fonts'))
+    .pipe(gulp.dest('dist/client/fonts'))
     .pipe($.size());
 });
 
@@ -162,14 +167,20 @@ gulp.task('fonts', function () {
 gulp.task('webfonts', function () {
     return gulp.src('../client/styles/fonts/*')
         .pipe($.flatten())
-        .pipe(gulp.dest('dist/styles/fonts'))
+        .pipe(gulp.dest('dist/client/styles/fonts'))
         .pipe($.size());
 });
 
 // Copy non-html files in project root including .htaccess, robots.txt, etc.
 gulp.task('extras', function () {
     return gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/client'));
+});
+
+// Copy server directory in project root to the dist folder
+gulp.task('server', function() {
+    return gulp.src('../server/**/*', {dot: true})
+        .pipe(gulp.dest('dist/server'));
 });
 
 // Sometimes clearing the cache is the only way to fix path errors in the image task when building
@@ -177,12 +188,60 @@ gulp.task('clear', function (done) {
     return $.cache.clearAll(done);
 });
 
-gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+gulp.task('clean', function (cb) {
+    fs.emptyDirSync(".tmp");
+    fs.emptyDirSync("dist/client");
+    fs.emptyDirSync("dist/server");
+    cb();
 });
 
-gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts']);
-gulp.task('buildIntegration', ['htmlDev', 'images', 'fonts', 'extras', 'webfonts']);
+function setEnvironment(env) {
+    gulp.src('../server/app.js')
+        .pipe(replace({
+            patterns: [
+                {
+                    match: 'development',
+                    replacement: env
+                }
+            ],
+            usePrefix: false
+        }))
+        .pipe(gulp.dest('dist/server'));
+}
+
+function commitAndTag() {
+    gulp.src('./version.json')
+        .pipe(tag_version());
+}
+
+gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
+    setEnvironment('production');
+});
+gulp.task('buildIntegration', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
+    setEnvironment('integration');
+    commitAndTag();
+});
+
+gulp.task('patch', function() {
+    gulp.src('./version.json')
+        .pipe($.bump())
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
+});
+
+gulp.task('feature', function() {
+    gulp.src('./version.json')
+        .pipe($.bump({type: "minor"}))
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
+});
+
+gulp.task('release', function() {
+    gulp.src('./version.json')
+        .pipe($.bump({type: "major"}))
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('dist/client'));
+});
 
 // Note that gulp build will _not_ clean first. Use simply `gulp` to clean and build.
 gulp.task('default', function () {

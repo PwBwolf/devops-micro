@@ -95,23 +95,19 @@
             },
 
             verifyUser: function (code, success, error) {
-                $http({
-                    url: '/api/verify-user',
-                    method: 'GET',
-                    params: {code: code}
-                }).success(success).error(error);
+                $http.post('/api/verify-user', {code: code}).success(success).error(error);
             },
 
             forgotPassword: function(email, success, error) {
-                $http({
-                    url: '/api/forgot-password',
-                    method: 'GET',
-                    params: {email: email.toLowerCase()}
-                }).success(success).error(error);
+                $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
             },
 
             resetPassword: function(data, success, error) {
                 $http.post('/api/reset-password', data).success(success).error(error);
+            },
+
+            resendVerification: function(email, success, error) {
+                $http.post('/api/resend-verification', {email: email.toLowerCase()}).success(success).error(error);
             }
         };
     }]);

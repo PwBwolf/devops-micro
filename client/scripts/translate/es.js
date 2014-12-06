@@ -48,7 +48,7 @@
             SIGN_IN_FAILED_NOT_VERIFIED: 'SSign In failed as your account has not been verified yet',
             SIGN_IN_FAILED: 'SSign In failed',
             SIGN_IN_NO_VERIFICATION_EMAIL: 'SDid not receive verification email?',
-            SIGN_IN_RESEND_VERIFICATION: 'SRequest again',
+            SIGN_IN_RESEND_VERIFICATION: 'SRequest Again',
             SIGN_UP_HEADING: 'SSign Up',
             SIGN_UP_FIRST_NAME: 'SFirst Name',
             SIGN_UP_FIRST_NAME_REQUIRED: 'SEnter your first name',
@@ -399,7 +399,7 @@
             FORGOT_PASSWORD_EMAIL_INVALID: 'SEnter a valid email',
             FORGOT_PASSWORD_EMAIL_REQUIRED: 'SEnter your email',
             FORGOT_PASSWORD_ERROR: 'SError sending reset password link',
-            FORGOT_PASSWORD_SUCCESS_HEADING: 'SSuccess',
+            FORGOT_PASSWORD_SUCCESS_HEADING: 'SEmail Sent',
             FORGOT_PASSWORD_SUCCESS_MESSAGE: 'SPassword reset link and instructions have been sent to your email address',
             RESET_PASSWORD_NEW_PASSWORD: 'SNew Password',
             RESET_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'SConfirm your password',
@@ -411,7 +411,16 @@
             RESET_PASSWORD_SUCCESS_HEADING: 'SPassword Changed',
             RESET_PASSWORD_SUCCESS_MESSAGE: 'SYour password has been changed successfully.',
             RESET_PASSWORD_ERROR: 'SUnable to change your password. Please contact YipTV customer care.',
-            RESET_PASSWORD_USER_ERROR: 'SThe reset password link has expired and is no longer valid'
+            RESET_PASSWORD_USER_ERROR: 'SThe reset password link has expired and is no longer valid',
+            RESEND_VERIFICATION_HEADING: 'SResend Verification Email',
+            RESEND_VERIFICATION_EMAIL: 'SEnter your email and we will send a link to verify your account',
+            RESEND_VERIFICATION_EMAIL_INVALID: 'SEnter a valid email',
+            RESEND_VERIFICATION_EMAIL_REQUIRED: 'SEnter your email',
+            RESEND_VERIFICATION_BUTTON: 'SSubmit',
+            RESEND_VERIFICATION_SUCCESS_HEADING: 'SEmail Sent',
+            RESEND_VERIFICATION_SUCCESS_MESSAGE: 'SWe have sent you the account verification link. Please check your email.',
+            RESEND_VERIFICATION_USER_ERROR: 'SAccount not found or account already activated',
+            RESEND_VERIFICATION_ERROR: 'SError sending account verification link'
         });
     }]);
 }(angular.module('app')));

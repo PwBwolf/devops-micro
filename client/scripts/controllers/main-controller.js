@@ -42,8 +42,9 @@
         }
 
         function loadLanguage() {
-            var language = $location.search().lang || webStorage.local.get('language') || 'en';
+            var language = $location.search().lang || webStorage.local.get('language') || window.navigator.language.split('-')[0] || 'en';
             $translate.use(language);
+            webStorage.local.add('language', language);
             $scope.language = language;
         }
 

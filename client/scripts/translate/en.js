@@ -48,7 +48,7 @@
             SIGN_IN_FAILED_NOT_VERIFIED: 'Sign In failed as your account has not been verified yet',
             SIGN_IN_FAILED: 'Sign In failed',
             SIGN_IN_NO_VERIFICATION_EMAIL: 'Did not receive verification email?',
-            SIGN_IN_RESEND_VERIFICATION: 'Request again',
+            SIGN_IN_RESEND_VERIFICATION: 'Request Again',
             SIGN_UP_HEADING: 'Sign Up',
             SIGN_UP_FIRST_NAME: 'First Name',
             SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
@@ -400,7 +400,7 @@
             FORGOT_PASSWORD_EMAIL_INVALID: 'Enter a valid email',
             FORGOT_PASSWORD_EMAIL_REQUIRED: 'Enter your email',
             FORGOT_PASSWORD_ERROR: 'Error sending reset password link',
-            FORGOT_PASSWORD_SUCCESS_HEADING: 'Success',
+            FORGOT_PASSWORD_SUCCESS_HEADING: 'Email Sent',
             FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Password reset link and instructions have been sent to your email address',
             RESET_PASSWORD_HEADING: 'Reset Password',
             RESET_PASSWORD_NEW_PASSWORD: 'New Password',
@@ -413,7 +413,16 @@
             RESET_PASSWORD_SUCCESS_HEADING: 'Password Changed',
             RESET_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
             RESET_PASSWORD_ERROR: 'Unable to change your password. Please contact YipTV customer care.',
-            RESET_PASSWORD_USER_ERROR: 'The reset password link has expired and is no longer valid'
+            RESET_PASSWORD_USER_ERROR: 'The reset password link has expired and is no longer valid',
+            RESEND_VERIFICATION_HEADING: 'Resend Verification Email',
+            RESEND_VERIFICATION_EMAIL: 'Enter your email and we will send a link to verify your account',
+            RESEND_VERIFICATION_EMAIL_INVALID: 'Enter a valid email',
+            RESEND_VERIFICATION_EMAIL_REQUIRED: 'Enter your email',
+            RESEND_VERIFICATION_BUTTON: 'Submit',
+            RESEND_VERIFICATION_SUCCESS_HEADING: 'Email Sent',
+            RESEND_VERIFICATION_SUCCESS_MESSAGE: 'We have sent you the account verification link. Please check your email.',
+            RESEND_VERIFICATION_USER_ERROR: 'Account not found or account already activated',
+            RESEND_VERIFICATION_ERROR: 'Error sending account verification link'
         });
     }]);
 }(angular.module('app')));

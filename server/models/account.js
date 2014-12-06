@@ -49,6 +49,3 @@ var Account = new Schema({
 }, { collection: 'Accounts' });
 
 mongoose.model('Account', Account);
-
-
-

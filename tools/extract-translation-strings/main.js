@@ -52,8 +52,8 @@ else {
 }
 
 var writeToFile = function (outputFile) {
-    var translation = null;
     fs.writeFile(outputFile, '', function (err, data) {
+        var translation = null;
         if (!err) {
             for (translation in translations) {
                 fs.appendFile(outputFile, translation + ': \'' + translations[translation] + '\',\n', function (err) {
