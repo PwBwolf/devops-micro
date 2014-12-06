@@ -68,7 +68,7 @@ header {
 }
 
 .right-box a:hover, .right-box a.active {
-    border-bottom: none;
+    border-bottom-color: transparent;
     color: #8e3055;
 }
 
