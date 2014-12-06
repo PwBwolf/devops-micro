@@ -437,7 +437,12 @@
             CONTACT_US_SKYPE_ID: 'Skype ID',
             CONTACT_US_HOW_ASSIST: 'How can our team assist you?',
             CONTACT_US_HOW_COUNTRY: 'Country',
-            CONTACT_US_SUBMIT_BUTTON: 'Submit'
+            CONTACT_US_SUBMIT_BUTTON: 'Submit',
+            CONTACT_US_NAME_REQUIRED: 'Enter your name',
+            CONTACT_US_INTEREST_REQUIRED: 'Select your reason for contacting us',
+            CONTACT_US_EMAIL_REQUIRED: 'Enter your email',
+            CONTACT_US_ASSIST_REQUIRED: 'Tell us how we can help you',
+            CONTACT_EMAIL_INVALID: 'Enter your email'
         });
     }]);
 }(angular.module('app')));

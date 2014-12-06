@@ -1,16 +1,17 @@
 <div class="contentarea">
-    <form class="setting-box1" ng-submit="contactUs()" novalidate>
+    <form  name="form" id="form" class="setting-box1" ng-submit="contactUs()" novalidate>
         <h1><span>CONTACT US</span></h1>
         <div class="container">
             <div class="forgot-box">
                 <div class="frm">
                     <div class="frm-left1">
                         <span class="label-text" translate="CONTACT_US_NAME">Name</span>
-                        <input type="text" class="txtbox2" name="name" value="">
+                        <input type="text" autofocus class="txtbox2" ng-model="name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
+                        <div ng-show="form.name.$dirty && form.name.$error.required" class="error-msg" translate="CONTACT_US_NAME_REQUIRED">Enter your name</div>
                     </div>
                     <div class="frm-right1">
                         <span class="label-text" translate="CONTACT_US_CHOOSE_INTEREST">Choose Interest</span>
-                        <select class="txtbox2" name="interest">
+                        <select class="txtbox2" name="interest" required ng-model="interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
                         <option value="" translate="CONTACT_US_INTEREST_SELECT">Select</option>
                         <option value="11" translate="CONTACT_US_INTEREST_INVESTOR">Become a YiPTV investor</option>
                         <option value="14" translate="CONTACT_US_INTEREST_BROADCAST">Broadcast your network</option>
@@ -18,11 +19,14 @@
                         <option value="15" translate="CONTACT_US_INTEREST_LIVE_EVENT">Request Live Event Management &amp; Services</option>
                         <option value="16" translate="CONTACT_US_INTEREST_QUESTION">Submit a question</option>
                     </select>
+                        <div ng-show="form.interest.$dirty && form.interest.$error.required" class="error-msg" translate="CONTACT_US_INTEREST_REQUIRED">Select your reason for contacting us</div>
                     </div>
                     <div class="frm">
                         <div class="frm-left1">
                             <span class="label-text" translate="CONTACT_US_EMAIL_ADDRESS">Email Address</span>
-                            <input type="text" class="txtbox2" name="email" value="">
+                            <input type="email" required maxlength="50" class="txtbox2" name="email" value="" ng-model="email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                            <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
+                            <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_EMAIL_INVALID">Enter your email</div>
                             <div class="frm">
                                 <br><span class="label-text" translate="CONTACT_US_EMAIL_TELEPHONE">Telephone</span>
                                 <br><input type="text" class="txtbox2" name="telephone" value="">
@@ -38,7 +42,8 @@
                         </div>
                         <div class="frm-right1">
                             <span class="label-text" translate="CONTACT_US_HOW_ASSIST">How can our team assist you?</span>
-                            <br><textarea class="txtbox2 textarea2" id="contactUsDescription"></textarea>
+                            <br><textarea class="txtbox2 textarea2" name="assist" id="contactUsDescription" ng-model="assist" required ng-class="{'txtbox-error': form.assist.$dirty && form.assist.$invalid}"></textarea>
+                            <div ng-show="form.assist.$dirty && form.assist.$error.required" class="error-msg" translate="CONTACT_US_ASSIST_REQUIRED">Tell us how we can help you</div>
                         </div>
                     </div>
                     <div class="frm">
