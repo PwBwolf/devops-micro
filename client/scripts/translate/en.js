@@ -432,7 +432,7 @@
             CONTACT_US_INTEREST_LIVE_EVENT: 'Request live event management &amp; services',
             CONTACT_US_INTEREST_QUESTION: 'Submit a question',
             CONTACT_US_EMAIL_ADDRESS: 'Email Address',
-            CONTACT_US_EMAIL_TELEPHONE: 'Telephone',
+            CONTACT_US_TELEPHONE: 'Telephone',
             CONTACT_US_YM_ID: 'YM ID',
             CONTACT_US_SKYPE_ID: 'Skype ID',
             CONTACT_US_HOW_ASSIST: 'How can our team assist you?',
@@ -443,6 +443,8 @@
             CONTACT_US_EMAIL_REQUIRED: 'Enter your email',
             CONTACT_US_ASSIST_REQUIRED: 'Tell us how we can help you',
             CONTACT_EMAIL_INVALID: 'Enter your email',
+            CONTACT_US_TELEPHONE_REQUIRED: 'Enter your telephone number',
+            CONTACT_TELEPHONE_INVALID: 'Telephone number is invalid',
             CONTACT_US_FAILED: 'There was an error submitting your form. Please try again later.',
             CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!'
         });

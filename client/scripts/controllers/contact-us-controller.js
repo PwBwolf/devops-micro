@@ -24,6 +24,7 @@
             $scope.form.name.$dirty = true;
             $scope.form.interest.$dirty = true;
             $scope.form.email.$dirty = true;
+            $scope.form.telephone.$dirty = true;
             $scope.form.assist.$dirty = true;
         }
     }]);
