@@ -442,7 +442,9 @@
             CONTACT_US_INTEREST_REQUIRED: 'Select your reason for contacting us',
             CONTACT_US_EMAIL_REQUIRED: 'Enter your email',
             CONTACT_US_ASSIST_REQUIRED: 'Tell us how we can help you',
-            CONTACT_EMAIL_INVALID: 'Enter your email'
+            CONTACT_EMAIL_INVALID: 'Enter your email',
+            CONTACT_US_FAILED: 'There was an error submitting your form. Please try again later.',
+            CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!'
         });
     }]);
 }(angular.module('app')));

@@ -1,22 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.controller('contactUsCtrl', ['$scope', function ($scope) {
+    app.controller('contactUsCtrl', ['$scope', 'AppSvc', function ($scope, AppSvc) {
         $scope.contactUs = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                userSvc.signIn(
+                appSvc.contactUs(
                     $scope.mv,
-                    function () {
-                        $location.path('/my-account');
+                    function success () {
+                        loggerSvc.logSuccess($filter('translate')('CONTACT_US_SUCCEEDED') || 'Contact us succeeded!');
                         $scope.saving = false;
                     },
-                    function (response) {
-                        if (response === 'UnverifiedAccount') {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED_NOT_VERIFIED') || 'Sign In failed as your account has not been verified yet');
-                        } else {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED') || 'Sign In failed');
-                        }
+                    function error () {
+                        loggerSvc.logError($filter('translate')('CONTACT_US_FAILED') || 'Contact us failed.');
                         $scope.saving = false;
                     });
             } else {

@@ -26,7 +26,7 @@
                             <span class="label-text" translate="CONTACT_US_EMAIL_ADDRESS">Email Address</span>
                             <input type="email" required maxlength="50" class="txtbox2" name="email" value="" ng-model="email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
                             <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
-                            <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_EMAIL_INVALID">Enter your email</div>
+                            <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_EMAIL_INVALID">Email is invalid</div>
                             <div class="frm">
                                 <br><span class="label-text" translate="CONTACT_US_EMAIL_TELEPHONE">Telephone</span>
                                 <br><input type="text" class="txtbox2" name="telephone" value="">
@@ -304,6 +304,7 @@
                     </div>
 
 
+                </div>
                 </div>
             </div>
         </div>
