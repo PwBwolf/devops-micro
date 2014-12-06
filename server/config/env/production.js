@@ -6,5 +6,6 @@ module.exports = {
     db: 'mongodb://localhost/yiptv',
     url: 'http://yiptv.com/',
     imageUrl: 'http://yiptv.com/img/',
-    secretToken: 'yip#tv@prod#848'
+    secretToken: 'yip#tv@prod#848',
+    contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com'
 };
