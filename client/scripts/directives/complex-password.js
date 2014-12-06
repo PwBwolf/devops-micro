@@ -11,13 +11,6 @@ app.directive('complexPassword', [function() {
                 var hasNumbers = /\d/.test(password);
                 var hasNonAlphas = /\W|_/.test(password);
                 var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
-                /*if ((password.length >= 8) && (characterGroupCount > 3)) {
-                    ctrl.$setValidity('complexity', true);
-                    return password;
-                } else {
-                    ctrl.$setValidity('complexity', false);
-                    return undefined;
-                }*/
                 ctrl.$setValidity('complexity', (password.length >= 8) && (characterGroupCount > 3));
                 return password;
             });

@@ -421,21 +421,21 @@
             RESEND_VERIFICATION_SUCCESS_MESSAGE: 'SWe have sent you the account verification link. Please check your email.',
             RESEND_VERIFICATION_USER_ERROR: 'SAccount not found or account already activated',
             RESEND_VERIFICATION_ERROR: 'SError sending account verification link',
-            CHANGE_PASSWORD_HEADING: 'SCHANGE PASSWORD',
-            CHANGE_PASSWORD_CURRENT_PASSWORD: 'SENTER CURRENT PASSWORD',
-            CHANGE_PASSWORD_NEW_PASSWORD: 'SENTER NEW PASSWORD',
-            CHANGE_PASSWORD_RE_TYPE_PASSWORD: 'SRE-ENTER NEW PASSWORD',
+            CHANGE_PASSWORD_HEADING: 'SChange password',
+            CHANGE_PASSWORD_CURRENT_PASSWORD: 'SEnter current password',
+            CHANGE_PASSWORD_NEW_PASSWORD: 'SEnter new password',
+            CHANGE_PASSWORD_CONFIRM_PASSWORD: 'SConfirm new password',
             CHANGE_PASSWORD_BUTTON: 'SSubmit',
-            CHANGE_PASSWORD_SUCCESS_HEADING: 'SPassword Changed',
-            CHANGE_PASSWORD_SUCCESS_MESSAGE: 'SYour password has been changed successfully.',
             CHANGE_PASSWORD_CURRENT_PASSWORD_REQUIRED: 'SEnter your current password',
             CHANGE_PASSWORD_NEW_PASSWORD_REQUIRED: 'SEnter new password',
             CHANGE_PASSWORD_NEW_PASSWORD_NOT_COMPLEX: 'SPassword needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character',
             CHANGE_PASSWORD_NEW_PASSWORD_SAME: 'SPassword same as old password, enter new password',
             CHANGE_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'SConfirm your password',
             CHANGE_PASSWORD_CONFIRM_PASSWORD_NO_MATCH: 'Spasswords donot match',
+            CHANGE_PASSWORD_SUCCESS_HEADING: 'SPassword Changed',
+            CHANGE_PASSWORD_SUCCESS_MESSAGE: 'SYour password has been changed successfully.',
             CHANGE_PASSWORD_ERROR: 'SError occured while changing the password',
-            CHANGE_PASSWORD_USER_ERROR: 'SYou have entered a wrong password'
+            CHANGE_PASSWORD_INCORRECT_PASSWORD: 'You have entered a wrong password'
         });
     }]);
 }(angular.module('app')));
