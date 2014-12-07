@@ -255,6 +255,7 @@ gulp.task('build', function() {
     console.log('Development:');
     console.log('`gulp watch` starts a server with client and server livereload.');
     console.log('`gulp serve` starts a server with server livereload.');
+    console.log('Note: It is also possible to start the server bypassing gulp.')
     console.log();
     console.log('Deployment:');
     console.log('`gulp production` creates a client build suitable for production.');
