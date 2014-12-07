@@ -446,7 +446,9 @@
             CONTACT_US_TELEPHONE_REQUIRED: 'Enter your telephone number',
             CONTACT_TELEPHONE_INVALID: 'Telephone number is invalid',
             CONTACT_US_ERROR: 'Error submitting your message and contact details.',
-            CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!'
+            CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!',
+            CONTACT_US_SUCCESS_HEADING: 'Success',
+            CONTACT_US_SUCCESS_MESSAGE: 'Your message has been received successfully.'
         });
     }]);
 }(angular.module('app')));

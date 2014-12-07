@@ -112,6 +112,12 @@
                 controller: 'contactUsCtrl',
                 access: access.public
             })
+            .when('/contact-us-success',
+            {
+                templateUrl: 'views/contact-us-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/privacy-policy',
             {
                 templateUrl: 'views/privacy-policy.html',
