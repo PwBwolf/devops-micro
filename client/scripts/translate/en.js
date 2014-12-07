@@ -387,7 +387,6 @@
             ABOUT_US_BA3_DESCRIPTION: 'Dan Lovatt has over 30 years of experience in multi-national telecommunication and telecommunications manufacturing in the United States as well as Internationally. Most Recently, Dan served as Chief Executive Officer for PCCW Global where he was responsible for managing the Company&#39;s International Business outside of their home Market of China. Prior to PCCW, he worked as the International CFO for Lucent Technologies as well a number of Services Partners, Content Providers, Telecom Authorities and Governmental Agencies where he held various management positions.',
             ABOUT_US_BA4_NAME: 'Bryan Buckley, Board Advisor',
             ABOUT_US_BA4_DESCRIPTION: 'Commercial Director Bryan Buckley is an acclaimed award winning advertising and production executive directing over 40 Super Bowl commercials and dubbed as "The King of Superbowl" by the New York Times. Bryan&#39;s career began in 1994 with his inception of ESPNs now benchmark "This is Sportscenter" campaign. Since then, Bryan has received virtually every honor, award, and accolade in the industry securing his spot atop "best of" lists in the US and internationally. Mr. Buckley is Co-Founder of Hungryman Productions, one of the world&#39;s largest and leading creative production agencies and has been named Commercial Director of the Year by the Directors Guild of America.',
-            CONTACT_US_HEADING: 'Contact Us',
             NOT_FOUND_HEADING: 'Page Not Found',
             NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
             VERIFY_USER_HEADING_SUCCESS: 'Success',
@@ -438,6 +437,7 @@
             CHANGE_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
             CHANGE_PASSWORD_ERROR: 'Error occured while changing the password',
             CHANGE_PASSWORD_INCORRECT_PASSWORD: 'You have entered a wrong password',
+            CONTACT_US_HEADING: 'Contact Us',
             CONTACT_US_NAME: 'Name',
             CONTACT_US_CHOOSE_INTEREST: 'Choose Interest',
             CONTACT_US_INTEREST_SELECT: 'Select',
@@ -463,7 +463,23 @@
             CONTACT_US_ERROR: 'Error submitting your message and contact details.',
             CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!',
             CONTACT_US_SUCCESS_HEADING: 'Success',
-            CONTACT_US_SUCCESS_MESSAGE: 'Your message has been received successfully.'
+            CONTACT_US_SUCCESS_MESSAGE: 'Your message has been received successfully.',
+            CHANGE_CREDIT_CARD_HEADING: 'Credit card',
+            CHANGE_CREDIT_CARD_MESSAGE: 'Please re-enter your credit card details',
+            CHANGE_CREDIT_CARD_CC_NUMBER: 'Credit card number',
+            CHANGE_CREDIT_CARD_CC_NUMBER_REQUIRED: 'Enter your credit card number',
+            CHANGE_CREDIT_CARD_CC_NUMBER_ERROR: 'Enter a valid credit card number',
+            CHANGE_CREDIT_CARD_CVV_REQUIRED: 'Enter your CVV',
+            CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR: 'Enter a valid CVV',
+            CHANGE_CREDIT_CARD_CVV: 'cvv',
+            CHANGE_CREDIT_CARD_EXPIRY_DATE: 'Expiry date',
+            CHANGE_CREDIT_CARD_EXPIRY_DATE_REQUIRED: 'Enter your card expiry date',
+            CHANGE_CREDIT_CARD_EXPIRY_DATE_INVALID: 'Enter a valid card expiry date',
+            CHANGE_CREDIT_CARD_ZIPCODE: 'Zipcode',
+            CHANGE_CREDIT_CARD_ZIP_CODE_REQUIRED: 'Enter your zip code',
+            CHANGE_CREDIT_CARD_ZIP_CODE_INVALID: 'Enter a valid zip code',
+            CHANGE_CREDIT_CARD_SUBMIT_BUTTON: 'Submit'
+
         });
     }]);
 }(angular.module('app')));

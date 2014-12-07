@@ -620,6 +620,10 @@ a.btn-signup {
     text-decoration: underline;
 }
 
+.uppercase-text {
+    text-transform: uppercase;
+}
+
 footer {
     float: left;
     width: 100%;
