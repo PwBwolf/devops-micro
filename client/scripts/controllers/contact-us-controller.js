@@ -6,7 +6,7 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 appSvc.contactUs(
-                    $scope.cu,
+                    $scope.mv,
                     function success () {
                         loggerSvc.logSuccess($filter('translate')('CONTACT_US_SUCCEEDED') || 'Contact us succeeded!');
                         $scope.saving = false;
