@@ -5,14 +5,14 @@
         $scope.contactUs = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                appSvc.contactUs(
+                appSvc.saveContactUs(
                     $scope.mv,
                     function success () {
                         loggerSvc.logSuccess($filter('translate')('CONTACT_US_SUCCEEDED') || 'Contact us succeeded!');
                         $scope.saving = false;
                     },
                     function error () {
-                        loggerSvc.logError($filter('translate')('CONTACT_US_FAILED') || 'Contact us failed.');
+                        loggerSvc.logError($filter('translate')('CONTACT_US_ERROR') || 'Error submitting your message and contact details.');
                         $scope.saving = false;
                     });
             } else {

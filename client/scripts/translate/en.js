@@ -445,7 +445,7 @@
             CONTACT_EMAIL_INVALID: 'Enter your email',
             CONTACT_US_TELEPHONE_REQUIRED: 'Enter your telephone number',
             CONTACT_TELEPHONE_INVALID: 'Telephone number is invalid',
-            CONTACT_US_FAILED: 'There was an error submitting your form. Please try again later.',
+            CONTACT_US_ERROR: 'Error submitting your message and contact details.',
             CONTACT_US_SUCCEEDED: 'Your form has been submitted successfully!'
         });
     }]);
