@@ -19,11 +19,11 @@
                 $scope.saving = true;
                 appSvc.saveContactUs(
                     $scope.mv,
-                    function success() {
+                    function () {
                         $location.path('/contact-us-success');
                         $scope.saving = false;
                     },
-                    function error() {
+                    function () {
                         loggerSvc.logError($filter('translate')('CONTACT_US_ERROR') || 'Error submitting your request');
                         $scope.saving = false;
                     });
