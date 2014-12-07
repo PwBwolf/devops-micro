@@ -1,50 +1,56 @@
 <div class="contentarea">
-    <div class="setting-box1">
+    <form  name="form" id="form" class="setting-box1" ng-submit="contactUs()" novalidate>
         <h1><span>CONTACT US</span></h1>
         <div class="container">
             <div class="forgot-box">
                 <div class="frm">
                     <div class="frm-left1">
-                        <br>NAME
-                        <br><input type="text" class="txtbox2" name="name" value="">
+                        <span class="label-text" translate="CONTACT_US_NAME">Name</span>
+                        <input type="text" autofocus class="txtbox2" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
+                        <div ng-show="form.name.$dirty && form.name.$error.required" class="error-msg" translate="CONTACT_US_NAME_REQUIRED">Enter your name</div>
                     </div>
                     <div class="frm-right1">
-                        <br>Choose Interest *
-                        <br><select class="txtbox2" name="interest">
-                        <option value="">Select</option>
-                        <option value="11">Become an YiPTV Investor</option>
-                        <option value="14">Broadcast your network</option>
-                        <option value="12">Request Advertising Services</option>
-                        <option value="15">Request Live Event Management &amp; Services</option>
-                        <option value="16">Submit a question</option>
+                        <span class="label-text" translate="CONTACT_US_CHOOSE_INTEREST">Choose Interest</span>
+                        <select class="txtbox2" name="interest" required ng-model="mv.interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
+                        <option value="" translate="CONTACT_US_INTEREST_SELECT">Select</option>
+                        <option value="11" translate="CONTACT_US_INTEREST_INVESTOR">Become a YiPTV investor</option>
+                        <option value="14" translate="CONTACT_US_INTEREST_BROADCAST">Broadcast your network</option>
+                        <option value="12" translate="CONTACT_US_INTEREST_ADVERTISE">Request Advertising Services</option>
+                        <option value="15" translate="CONTACT_US_INTEREST_LIVE_EVENT">Request Live Event Management &amp; Services</option>
+                        <option value="16" translate="CONTACT_US_INTEREST_QUESTION">Submit a question</option>
                     </select>
+                        <div ng-show="form.interest.$dirty && form.interest.$error.required" class="error-msg" translate="CONTACT_US_INTEREST_REQUIRED">Select your reason for contacting us</div>
                     </div>
                     <div class="frm">
                         <div class="frm-left1">
-                            EMAIL ADDRESS *
-                            <br><input type="text" class="txtbox2" name="email" value="">
+                            <span class="label-text" translate="CONTACT_US_EMAIL_ADDRESS">Email Address</span>
+                            <input type="email" required maxlength="50" class="txtbox2" name="email" value="" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                            <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
+                            <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_EMAIL_INVALID">Email is invalid</div>
                             <div class="frm">
-                                <br>TELEPHONE *
-                                <br><input type="text" class="txtbox2" name="telephone" value="">
+                                <br><span class="label-text" translate="CONTACT_US_TELEPHONE">Telephone</span>
+                                <br><input type="tel" required class="txtbox2" name="telephone" value="" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+                                <div ng-show="form.telephone.$dirty && form.telephone.$error.required" class="error-msg" translate="CONTACT_US_TELEPHONE_REQUIRED">Enter your telephone number</div>
                             </div>
                             <div class="frm-left1">
-                                YM ID
-                                <br><input type="text" class="txtbox2" name="ym_id" value="">
+                                <span class="label-text" translate="CONTACT_US_YM_ID">YM ID</span>
+                                <br><input type="text" class="txtbox2" name="ym_id" value="" ng-model="mv.ymId">
                             </div>
                             <div class="frm-right1">
-                                SKYPE ID
-                                <br><input type="text" class="txtbox2" name="skype_id" value="">
+                                <span class="label-text" translate="CONTACT_US_SKYPE_ID">Skype ID</span>
+                                <br><input type="text" class="txtbox2" name="skype_id" value="" ng-model="mv.skypeId">
                             </div>
                         </div>
                         <div class="frm-right1">
-                            HOW OUR TEAM CAN ASSIST YOU  *
-                            <br><textarea class="txtbox2 textarea2" id="contactUsDescription"></textarea>
+                            <span class="label-text" translate="CONTACT_US_HOW_ASSIST">How can our team assist you?</span>
+                            <br><textarea class="txtbox2 textarea2" name="assist" id="contactUsDescription" ng-model="mv.details" required ng-class="{'txtbox-error': form.assist.$dirty && form.assist.$invalid}"></textarea>
+                            <div ng-show="form.assist.$dirty && form.assist.$error.required" class="error-msg" translate="CONTACT_US_ASSIST_REQUIRED">Tell us how we can help you</div>
                         </div>
                     </div>
                     <div class="frm">
-                        <div class="frm-left1">
-                            COUNTRY
-                            <br> <select class="txtbox2" id="country_select" name="country">
+                        <div class="">
+                            <span class="label-text" translate="CONTACT_US_HOW_COUNTRY">Country</span>
+                            <br> <select class="txtbox2" id="country_select" name="country" ng-init="mv.country = 221" ng-model="mv.country">
                             <option value="0">N/A</option>
                             <option value="1">AFGHANISTAN</option>
                             <option value="2">ALBANIA</option>
@@ -280,24 +286,14 @@
                             <option value="232">ZIMBABWE</option>
                         </select>
                         </div>
-                        <div class="frm-right1">
-
-                            CAPTCHA
-                            <br><input type="text" class="txtbox1 halftxt" name="captcha" value="">
-
-                            <div class="captcha-right">
-
-                                <img id="captcha" src="http://www.yiptv.com/captcha" class="margin-top-medium">
-                                <a href="#" id="refresh" class="btn-submit btn-small">Refresh</a>
-                            </div>
-                        </div>
                     </div>
-                    <div class="frm-btn"><input type="button" value="Submit" class="btn-submit"></div>
-
-
+                    <div class="frm-btn">
+                        <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="btn-submit">
+                            Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <div class="btm-bg">&nbsp;</div>
 </div>
