@@ -97,7 +97,7 @@
             .when('/change-password-success',
             {
                 templateUrl: 'views/change-password-success.html',
-                controller: 'changePasswordCtrl',
+                controller: 'commonCtrl',
                 access: access.user
             })
             .when('/about-us',
