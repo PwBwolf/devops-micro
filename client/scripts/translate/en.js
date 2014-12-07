@@ -422,6 +422,7 @@
             RESEND_VERIFICATION_SUCCESS_MESSAGE: 'We have sent you the account verification link. Please check your email.',
             RESEND_VERIFICATION_USER_ERROR: 'Account not found or account already activated',
             RESEND_VERIFICATION_ERROR: 'Error sending account verification link'
+
         });
     }]);
 }(angular.module('app')));
