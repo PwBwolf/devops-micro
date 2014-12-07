@@ -1,7 +1,7 @@
 ﻿(function (app) {
     'use strict';
 
-    app.directive('yipNotSameAs', [function () {
+    app.directive('notSameAs', [function () {
         return {
             require: 'ngModel',
             restrict: 'A',
