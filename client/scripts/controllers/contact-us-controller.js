@@ -1,18 +1,30 @@
 (function (app) {
     'use strict';
 
-    app.controller('contactUsCtrl', ['$scope', 'appSvc', 'loggerSvc', '$filter', '$location', function ($scope, appSvc, loggerSvc, $filter, $location) {
-        $scope.contactUs = function () {
+    app.controller('contactUsCtrl', ['appSvc', 'loggerSvc', '$scope', '$filter', '$location', function (appSvc, loggerSvc, $scope, $filter, $location) {
+
+        activate();
+
+        function activate() {
+            appSvc.getCountries().success(function (data) {
+                $scope.countries = data;
+                $scope.mv = {country: 'United States'};
+            }).error(function () {
+                loggerSvc.logError($filter('translate')('CONTACT_US_COUNTRY_LOAD_ERROR') || 'Error loading country list');
+            });
+        }
+
+        $scope.saveContactUs = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 appSvc.saveContactUs(
                     $scope.mv,
-                    function success () {
+                    function success() {
                         $location.path('/contact-us-success');
                         $scope.saving = false;
                     },
-                    function error () {
-                        loggerSvc.logError($filter('translate')('CONTACT_US_ERROR') || 'Error submitting your message and contact details.');
+                    function error() {
+                        loggerSvc.logError($filter('translate')('CONTACT_US_ERROR') || 'Error submitting your request');
                         $scope.saving = false;
                     });
             } else {
@@ -25,7 +37,7 @@
             $scope.form.interest.$dirty = true;
             $scope.form.email.$dirty = true;
             $scope.form.telephone.$dirty = true;
-            $scope.form.assist.$dirty = true;
+            $scope.form.details.$dirty = true;
         }
     }]);
 }(angular.module('app')));
