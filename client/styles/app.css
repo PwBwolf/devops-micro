@@ -1167,7 +1167,7 @@ footer .f-btm a:hover {
     margin: 0px 0px 10% 0px;
 }
 
-#contactUsDescription {
+#details {
     height: 250px;
 }
 
@@ -1297,6 +1297,13 @@ footer .f-btm a:hover {
     float: left;
     width: 100%;
     padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.frm1 {
+    float: left;
+    width: 100%;
+    padding: 5% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 

@@ -10,6 +10,7 @@ var _ = require('lodash'),
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
+        {path: '/api/get-countries', httpMethod: 'GET', middleware: [AppCtrl.getCountries]},
         {path: '/api/sign-up', httpMethod: 'POST', middleware: [UserCtrl.signUp]},
         {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
