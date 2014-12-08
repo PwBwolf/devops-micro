@@ -13,7 +13,7 @@ module.exports = function (app, logger) {
     app.locals.pretty = true;
     app.set('views', config.root + '/client');
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({ type: 'application/*+json' }));
     app.use(methodOverride());
     app.use(cookieParser());
     app.use(favicon(config.root + '/client/img/favicon.ico'));
