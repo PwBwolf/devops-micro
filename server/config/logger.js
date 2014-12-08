@@ -37,6 +37,14 @@ logger.logError = function(err) {
     logger.error(JSON.stringify(err));
 }
 
+logger.logDebug = function(msg) {
+    logger.debug(msg);
+}
+
+logger.logInfo = function(msg) {
+    logger.info(msg);
+}
+
 module.exports = logger;
 
 module.exports.stream = {

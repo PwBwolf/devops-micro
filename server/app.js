@@ -16,7 +16,13 @@ require('./config/logger');
 require('./config/models')(modelsPath);
 require('./config/express')(app, logger);
 require('./config/routes')(app);
+require('./database/fixtures')();
 
 http.createServer(app).listen(port, function () {
     console.log('YipTV server listening on port ' + port);
+
+    // initialize the email daemon
+    require('./daemons/emailer');
+
+    console.log('all done...');
 });

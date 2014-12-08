@@ -319,3 +319,9 @@ exports.changeCreditCard = function(req, res) {
 exports.changePassword = function(req, res) {
     return res.status(200).end();
 };
+
+exports.getUsers = function() {
+    return User.find().exec();
+}
+
+config.emailerEnabledFor['user'] = module.exports.getUsers;

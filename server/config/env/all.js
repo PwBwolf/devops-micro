@@ -11,6 +11,7 @@ module.exports = {
         fromEmail: 'noreply@yiptv.com',
         fromName: 'YipTV'
     },
+    emailerEnabledFor: {},
     accountVerificationEmailSubject: {
         en: 'Welcome to YipTV',
         es: 'SWelcome to YipTV'
