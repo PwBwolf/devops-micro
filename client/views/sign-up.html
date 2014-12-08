@@ -21,7 +21,7 @@
                     </div>
                     <div class="frm-btn">
                         <span class="label-text" translate="SIGN_UP_EMAIL">Email</span><br>
-                        <input autocomplete="off" type="email" maxlength="50" required is-email-unique id="email" name="email" ng-model="mv.email" class="txtbox2" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                        <input autocomplete="off" type="email" maxlength="50" required is-email-unique id="email" first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="txtbox2" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
 
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED">Enter your email address</div>
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.email" translate="SIGN_UP_EMAIL_INVALID">Enter a valid email address</div>

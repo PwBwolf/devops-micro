@@ -1,7 +1,7 @@
 ﻿(function (app) {
     'use strict';
 
-    app.directive('isEmailUnique', ['userSvc', '$', function (userSvc, $) {
+    app.directive('isEmailUnique', ['userSvc', function (userSvc) {
         return {
             require: 'ngModel',
             restrict: 'A',
@@ -11,7 +11,7 @@
                     ctrl.$setValidity('isEmailUnique', true);
                     if (ctrl.$valid) {
                         userSvc.isEmailUnique(
-                            element.val(), $('#firstName').val(), $('#lastName').val(),
+                            element.val(), scope.$eval(attrs.firstName), scope.$eval(attrs.lastName),
                             function (data) {
                                 ctrl.$setValidity('isEmailUnique', data);
                             },
