@@ -25,6 +25,8 @@
     "validator": "^3.22.1",
     "winston": "^0.8.3",
     "cron": "^1.0.5",
-    "mongoose-function": "^0.1.0"
+    "mongoose-function": "^0.1.0",
+    "q": "^1.1.2",
+    "node-rules": "^2.2.3"
   }
 }

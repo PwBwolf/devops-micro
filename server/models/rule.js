@@ -8,6 +8,7 @@ var Rule = new Schema({
     name: String,
     description: String,
     priority: Number,
+    enabled: Boolean,
     condition: Function,
     consequence: Function
 });

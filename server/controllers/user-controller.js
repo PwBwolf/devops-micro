@@ -2,6 +2,8 @@
 
 var mongoose = require('mongoose'),
     sf = require('sf'),
+    Q = require('q'),
+    _ = require('lodash'),
     validator = require('validator'),
     async = require('async'),
     jwt = require('jwt-simple'),
@@ -320,8 +322,21 @@ exports.changePassword = function(req, res) {
     return res.status(200).end();
 };
 
-exports.getUsers = function() {
-    return User.find().exec();
+exports.getFreeUsers = function() {
+    var def = Q.defer();
+    User.find().exec().then(function(users) {
+        if(users) {
+            for(var i = 0; i < users.length; i++) {
+                users[i] = _.assign({type: 'user'}, users[i]._doc);
+            }
+            def.resolve(users);
+        } else {
+            def.resolve([]);
+        }
+    }, function(err) {
+        def.reject(err);
+    });
+    return def.promise;
 }
 
-config.emailerEnabledFor['user'] = module.exports.getUsers;
+config.emailerEnabledFor['free-users'] = module.exports.getFreeUsers;

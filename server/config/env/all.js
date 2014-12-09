@@ -12,6 +12,7 @@ module.exports = {
         fromName: 'YipTV'
     },
     emailerEnabledFor: {},
+    ruleMatchProcessor: {},
     accountVerificationEmailSubject: {
         en: 'Welcome to YipTV',
         es: 'SWelcome to YipTV'
