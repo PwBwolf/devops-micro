@@ -119,8 +119,8 @@ exports.signIn = function (req, res) {
             return res.status(401).send('UnverifiedAccount');
         }
         user.lastSignedInDate = (new Date()).toUTCString();
-        user.save(function(err) {
-            if(err) {
+        user.save(function (err) {
+            if (err) {
                 logger.logError(err);
             }
         });
@@ -145,7 +145,7 @@ exports.getUserProfile = function (req, res) {
             return res.status(500).end();
         }
         if (!user) {
-            return res.status(500).end();
+            return res.status(404).send('UserNotFound');
         }
         return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName});
     });
@@ -158,7 +158,7 @@ exports.verifyUser = function (req, res) {
             return res.status(500).end();
         }
         if (!user) {
-            return res.status(401).send('UserNotFound');
+            return res.status(404).send('UserNotFound');
         }
         user.activated = true;
         user.verificationCode = undefined;
@@ -201,6 +201,21 @@ exports.forgotPassword = function (req, res) {
             });
             return res.status(200).end();
         });
+    });
+};
+
+exports.checkResetCode = function(req, res) {
+    console.log(req.query.code);
+    User.findOne({resetPasswordCode: req.query.code}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        console.dir(user);
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        return res.status(200).end();
     });
 };
 
@@ -288,7 +303,7 @@ exports.resendVerification = function (req, res) {
         if (!user) {
             return res.status(404).send('UserNotFound');
         }
-        if(user.activated) {
+        if (user.activated) {
             return res.status(409).send('AccountActivated');
         }
         user.verificationCode = uuid.v4();
@@ -314,11 +329,41 @@ exports.resendVerification = function (req, res) {
     });
 };
 
-exports.changeCreditCard = function(req, res) {
-    return res.status(200).end();
+exports.changePassword = function (req, res) {
+    User.findOne({email: req.email}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        if (!user.authenticate(req.body.currentPassword)) {
+            return res.status(401).send('Unauthorized');
+        }
+        user.password = req.body.newPassword;
+        user.save(function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            var mailOptions = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: user.email,
+                subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+            };
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
+                    logger.logError(err);
+                }
+            });
+            return res.status(200).end();
+        });
+    });
 };
 
-exports.changePassword = function(req, res) {
+exports.changeCreditCard = function (req, res) {
     return res.status(200).end();
 };
 

@@ -1,301 +1,71 @@
 <div class="contentarea">
     <div class="setting-box1">
-        <h1><span>CONTACT US</span></h1>
+        <h1><span translate="CONTACT_US_HEADING">Contact Us</span></h1>
+
         <div class="container">
             <div class="forgot-box">
-                <div class="frm">
-                    <div class="frm-left1">
-                        <br>NAME
-                        <br><input type="text" class="txtbox2" name="name" value="">
-                    </div>
-                    <div class="frm-right1">
-                        <br>Choose Interest *
-                        <br><select class="txtbox2" name="interest">
-                        <option value="">Select</option>
-                        <option value="11">Become an YiPTV Investor</option>
-                        <option value="14">Broadcast your network</option>
-                        <option value="12">Request Advertising Services</option>
-                        <option value="15">Request Live Event Management &amp; Services</option>
-                        <option value="16">Submit a question</option>
-                    </select>
-                    </div>
+                <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="frm">
                         <div class="frm-left1">
-                            EMAIL ADDRESS *
-                            <br><input type="text" class="txtbox2" name="email" value="">
-                            <div class="frm">
-                                <br>TELEPHONE *
-                                <br><input type="text" class="txtbox2" name="telephone" value="">
-                            </div>
+                            <span class="label-text" translate="CONTACT_US_NAME">Name</span>
+                            <input autocomplete="off" maxlength="30" type="text" autofocus class="txtbox2" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
+
+                            <div ng-show="form.name.$dirty && form.name.$error.required" class="error-msg" translate="CONTACT_US_NAME_REQUIRED">Enter your name</div>
+                        </div>
+                        <div class="frm-right1">
+                            <span class="label-text" translate="CONTACT_US_INTEREST">Interest</span>
+                            <select class="txtbox2" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
+                                <option value="" translate="CONTACT_US_INTEREST_SELECT">Select</option>
+                                <option value="Become a YipTV investor" translate="CONTACT_US_INTEREST_INVESTOR">Become a YipTV investor</option>
+                                <option value="Broadcast your network" translate="CONTACT_US_INTEREST_BROADCAST">Broadcast your network</option>
+                                <option value="Request Advertising Services" translate="CONTACT_US_INTEREST_ADVERTISE">Request Advertising Services</option>
+                                <option value="Request Live Event Management And Services" translate="CONTACT_US_INTEREST_LIVE_EVENT">Request Live Event Management &amp; Services</option>
+                                <option value="Submit a question" translate="CONTACT_US_INTEREST_QUESTION">Submit a question</option>
+                            </select>
+
+                            <div ng-show="form.interest.$dirty && form.interest.$error.required" class="error-msg" translate="CONTACT_US_INTEREST_REQUIRED">Select your reason for contacting us</div>
+                        </div>
+                        <div class="frm">
                             <div class="frm-left1">
-                                YM ID
-                                <br><input type="text" class="txtbox2" name="ym_id" value="">
+                                <span class="label-text" translate="CONTACT_US_EMAIL">Email</span>
+                                <input autocomplete="off" type="email" required maxlength="50" class="txtbox2" name="email" id="email" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+
+                                <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
+                                <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
+                                <div class="frm">
+                                    <br><span class="label-text" translate="CONTACT_US_TELEPHONE">Telephone</span>
+                                    <br><input autocomplete="off" type="tel" maxlength="15" required class="txtbox2" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+
+                                    <div ng-show="form.telephone.$dirty && form.telephone.$error.required" class="error-msg" translate="CONTACT_US_TELEPHONE_REQUIRED">Enter your telephone number</div>
+                                </div>
+                                <div class="frm-left1">
+                                    <span class="label-text" translate="CONTACT_US_YM_ID">YM ID</span>
+                                    <br><input maxlength="50" autocomplete="off" type="text" class="txtbox2" name="ymId" id="ymId" ng-model="mv.ymId">
+                                </div>
+                                <div class="frm-right1">
+                                    <span class="label-text" maxlength="50" translate="CONTACT_US_SKYPE_ID">Skype ID</span>
+                                    <br><input autocomplete="off" type="text" class="txtbox2" name="skypeId" id="skypeId" value="" ng-model="mv.skypeId">
+                                </div>
                             </div>
                             <div class="frm-right1">
-                                SKYPE ID
-                                <br><input type="text" class="txtbox2" name="skype_id" value="">
+                                <span class="label-text" translate="CONTACT_US_DETAILS">How can we assist you?</span>
+                                <br><textarea maxlength="1000" class="txtbox2 textarea2" name="details" id="details" ng-model="mv.details" value="" required ng-class="{'txtbox-error': form.details.$dirty && form.details.$invalid}"></textarea>
+
+                                <div ng-show="form.details.$dirty && form.details.$error.required" class="error-msg" translate="CONTACT_US_DETAILS_REQUIRED">Tell us how we can help you</div>
                             </div>
                         </div>
-                        <div class="frm-right1">
-                            HOW OUR TEAM CAN ASSIST YOU  *
-                            <br><textarea class="txtbox2 textarea2" id="contactUsDescription"></textarea>
-                        </div>
-                    </div>
-                    <div class="frm">
-                        <div class="frm-left1">
-                            COUNTRY
-                            <br> <select class="txtbox2" id="country_select" name="country">
-                            <option value="0">N/A</option>
-                            <option value="1">AFGHANISTAN</option>
-                            <option value="2">ALBANIA</option>
-                            <option value="3">ALGERIA</option>
-                            <option value="4">AMERICAN SAMOA</option>
-                            <option value="5">ANDORRA</option>
-                            <option value="6">ANGOLA</option>
-                            <option value="7">ANGUILLA</option>
-                            <option value="8">ANTARCTICA</option>
-                            <option value="9">ANTIGUA AND BARBUDA</option>
-                            <option value="10">ARGENTINA</option>
-                            <option value="11">ARMENIA</option>
-                            <option value="12">ARUBA</option>
-                            <option value="13">AUSTRALIA</option>
-                            <option value="14">AUSTRIA</option>
-                            <option value="15">AZERBAIJAN</option>
-                            <option value="16">BAHAMAS</option>
-                            <option value="17">BAHRAIN</option>
-                            <option value="18">BANGLADESH</option>
-                            <option value="19">BARBADOS</option>
-                            <option value="20">BELARUS</option>
-                            <option value="21">BELGIUM</option>
-                            <option value="22">BELIZE</option>
-                            <option value="23">BENIN</option>
-                            <option value="24">BERMUDA</option>
-                            <option value="25">BHUTAN</option>
-                            <option value="26">BOLIVIA</option>
-                            <option value="27">BOSNIA AND HERZEGOVINA</option>
-                            <option value="28">BOTSWANA</option>
-                            <option value="29">BOUVET ISLAND</option>
-                            <option value="30">BRAZIL</option>
-                            <option value="31">BRITISH INDIAN OCEAN TERRITORY</option>
-                            <option value="32">BRUNEI DARUSSALAM</option>
-                            <option value="33">BULGARIA</option>
-                            <option value="34">BURKINA FASO</option>
-                            <option value="35">BURUNDI</option>
-                            <option value="36">CAMBODIA</option>
-                            <option value="37">CAMEROON</option>
-                            <option value="38">CANADA</option>
-                            <option value="39">CAPE VERDE</option>
-                            <option value="40">CAYMAN ISLANDS</option>
-                            <option value="41">CENTRAL AFRICAN REPUBLIC</option>
-                            <option value="42">CHAD</option>
-                            <option value="43">CHILE</option>
-                            <option value="44">CHINA</option>
-                            <option value="45">COLOMBIA</option>
-                            <option value="46">COMOROS</option>
-                            <option value="47">CONGO</option>
-                            <option value="48">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
-                            <option value="49">COOK ISLANDS</option>
-                            <option value="50">COSTA RICA</option>
-                            <option value="51">COTE D'IVOIRE</option>
-                            <option value="52">CROATIA</option>
-                            <option value="53">CUBA</option>
-                            <option value="54">CYPRUS</option>
-                            <option value="55">CZECH REPUBLIC</option>
-                            <option value="56">DENMARK</option>
-                            <option value="57">DJIBOUTI</option>
-                            <option value="58">DOMINICA</option>
-                            <option value="59">DOMINICAN REPUBLIC</option>
-                            <option value="60">ECUADOR</option>
-                            <option value="61">EGYPT</option>
-                            <option value="62">EL SALVADOR</option>
-                            <option value="63">EQUATORIAL GUINEA</option>
-                            <option value="64">ERITREA</option>
-                            <option value="65">ESTONIA</option>
-                            <option value="66">ETHIOPIA</option>
-                            <option value="67">FALKLAND ISLANDS (MALVINAS)</option>
-                            <option value="68">FAROE ISLANDS</option>
-                            <option value="69">FIJI</option>
-                            <option value="70">FINLAND</option>
-                            <option value="71">FRANCE</option>
-                            <option value="72">FRENCH GUIANA</option>
-                            <option value="73">FRENCH POLYNESIA</option>
-                            <option value="74">FRENCH SOUTHERN TERRITORIES</option>
-                            <option value="75">GABON</option>
-                            <option value="76">GAMBIA</option>
-                            <option value="77">GEORGIA</option>
-                            <option value="78">GERMANY</option>
-                            <option value="79">GHANA</option>
-                            <option value="80">GIBRALTAR</option>
-                            <option value="81">GREECE</option>
-                            <option value="82">GREENLAND</option>
-                            <option value="83">GRENADA</option>
-                            <option value="84">GUADELOUPE</option>
-                            <option value="85">GUAM</option>
-                            <option value="86">GUATEMALA</option>
-                            <option value="87">GUINEA</option>
-                            <option value="88">GUINEA-BISSAU</option>
-                            <option value="89">GUYANA</option>
-                            <option value="90">HAITI</option>
-                            <option value="91">HEARD ISLAND AND MCDONALD ISLANDS</option>
-                            <option value="92">HOLY SEE (VATICAN CITY STATE)</option>
-                            <option value="93">HONDURAS</option>
-                            <option value="94">HONG KONG</option>
-                            <option value="95">HUNGARY</option>
-                            <option value="96">ICELAND</option>
-                            <option value="97">INDIA</option>
-                            <option value="98">INDONESIA</option>
-                            <option value="99">IRAN, ISLAMIC REPUBLIC OF</option>
-                            <option value="100">IRAQ</option>
-                            <option value="101">IRELAND</option>
-                            <option value="102">ISRAEL</option>
-                            <option value="103">ITALY</option>
-                            <option value="104">JAMAICA</option>
-                            <option value="105">JAPAN</option>
-                            <option value="106">JORDAN</option>
-                            <option value="107">KAZAKHSTAN</option>
-                            <option value="108">KENYA</option>
-                            <option value="109">KIRIBATI</option>
-                            <option value="110">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
-                            <option value="111">KOREA, REPUBLIC OF</option>
-                            <option value="112">KUWAIT</option>
-                            <option value="113">KYRGYZSTAN</option>
-                            <option value="114">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
-                            <option value="115">LATVIA</option>
-                            <option value="116">LEBANON</option>
-                            <option value="117">LESOTHO</option>
-                            <option value="118">LIBERIA</option>
-                            <option value="119">LIBYAN ARAB JAMAHIRIYA</option>
-                            <option value="120">LIECHTENSTEIN</option>
-                            <option value="121">LITHUANIA</option>
-                            <option value="122">LUXEMBOURG</option>
-                            <option value="123">MACAO</option>
-                            <option value="124">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
-                            <option value="125">MADAGASCAR</option>
-                            <option value="126">MALAWI</option>
-                            <option value="127">MALAYSIA</option>
-                            <option value="128">MALDIVES</option>
-                            <option value="129">MALI</option>
-                            <option value="130">MALTA</option>
-                            <option value="131">MARSHALL ISLANDS</option>
-                            <option value="132">MARTINIQUE</option>
-                            <option value="133">MAURITANIA</option>
-                            <option value="134">MAURITIUS</option>
-                            <option value="135">MAYOTTE</option>
-                            <option value="136">MEXICO</option>
-                            <option value="137">MICRONESIA, FEDERATED STATES OF</option>
-                            <option value="138">MOLDOVA, REPUBLIC OF</option>
-                            <option value="139">MONACO</option>
-                            <option value="140">MONGOLIA</option>
-                            <option value="141">MONTSERRAT</option>
-                            <option value="142">MOROCCO</option>
-                            <option value="143">MOZAMBIQUE</option>
-                            <option value="144">MYANMAR</option>
-                            <option value="145">NAMIBIA</option>
-                            <option value="146">NAURU</option>
-                            <option value="147">NEPAL</option>
-                            <option value="148">NETHERLANDS</option>
-                            <option value="149">NETHERLANDS ANTILLES</option>
-                            <option value="150">NEW CALEDONIA</option>
-                            <option value="151">NEW ZEALAND</option>
-                            <option value="152">NICARAGUA</option>
-                            <option value="153">NIGER</option>
-                            <option value="154">NIGERIA</option>
-                            <option value="155">NIUE</option>
-                            <option value="156">NORFOLK ISLAND</option>
-                            <option value="157">NORTHERN MARIANA ISLANDS</option>
-                            <option value="158">NORWAY</option>
-                            <option value="159">OMAN</option>
-                            <option value="160">PAKISTAN</option>
-                            <option value="161">PALAU</option>
-                            <option value="162">PALESTINIAN TERRITORY, OCCUPIED</option>
-                            <option value="163">PANAMA</option>
-                            <option value="164">PAPUA NEW GUINEA</option>
-                            <option value="165">PARAGUAY</option>
-                            <option value="166">PERU</option>
-                            <option value="167">PHILIPPINES</option>
-                            <option value="168">PITCAIRN</option>
-                            <option value="169">POLAND</option>
-                            <option value="170">PORTUGAL</option>
-                            <option value="171">PUERTO RICO</option>
-                            <option value="172">QATAR</option>
-                            <option value="173">REUNION</option>
-                            <option value="174">ROMANIA</option>
-                            <option value="175">RUSSIAN FEDERATION</option>
-                            <option value="176">RWANDA</option>
-                            <option value="177">SAINT KITTS AND NEVIS</option>
-                            <option value="178">SAINT LUCIA</option>
-                            <option value="179">SAINT VINCENT AND THE GRENADINES</option>
-                            <option value="180">SAMOA</option>
-                            <option value="181">SAN MARINO</option>
-                            <option value="182">SAO TOME AND PRINCIPE</option>
-                            <option value="183">SAUDI ARABIA</option>
-                            <option value="184">SENEGAL</option>
-                            <option value="185">SERBIA AND MONTENEGRO CS</option>
-                            <option value="186">SERBIA AND MONTENEGRO YU</option>
-                            <option value="187">SEYCHELLES</option>
-                            <option value="188">SIERRA LEONE</option>
-                            <option value="189">SINGAPORE</option>
-                            <option value="190">SLOVAKIA</option>
-                            <option value="191">SLOVENIA</option>
-                            <option value="192">SOLOMON ISLANDS</option>
-                            <option value="193">SOMALIA</option>
-                            <option value="194">SOUTH AFRICA</option>
-                            <option value="195">SPAIN</option>
-                            <option value="196">SRI LANKA</option>
-                            <option value="197">SUDAN</option>
-                            <option value="198">SURINAME</option>
-                            <option value="199">SWAZILAND</option>
-                            <option value="200">SWEDEN</option>
-                            <option value="201">SWITZERLAND</option>
-                            <option value="202">SYRIAN ARAB REPUBLIC</option>
-                            <option value="203">TAIWAN</option>
-                            <option value="204">TAJIKISTAN</option>
-                            <option value="205">TANZANIA, UNITED REPUBLIC OF</option>
-                            <option value="206">THAILAND</option>
-                            <option value="207">TIMOR-LESTE</option>
-                            <option value="208">TOGO</option>
-                            <option value="209">TOKELAU</option>
-                            <option value="210">TONGA</option>
-                            <option value="211">TRINIDAD AND TOBAGO</option>
-                            <option value="212">TUNISIA</option>
-                            <option value="213">TURKEY</option>
-                            <option value="214">TURKMENISTAN</option>
-                            <option value="215">TURKS AND CAICOS ISLANDS</option>
-                            <option value="216">TUVALU</option>
-                            <option value="217">UGANDA</option>
-                            <option value="218">UKRAINE</option>
-                            <option value="219">UNITED ARAB EMIRATES</option>
-                            <option value="220">UNITED KINGDOM</option>
-                            <option value="221" selected="selected">UNITED STATES</option>
-                            <option value="222">UNITED STATES MINOR OUTLYING ISLANDS</option>
-                            <option value="223">URUGUAY</option>
-                            <option value="224">UZBEKISTAN</option>
-                            <option value="225">VANUATU</option>
-                            <option value="226">VENEZUELA</option>
-                            <option value="227">VIET NAM</option>
-                            <option value="228">VIRGIN ISLANDS, BRITISH</option>
-                            <option value="229">VIRGIN ISLANDS, U.S.</option>
-                            <option value="230">YEMEN</option>
-                            <option value="231">ZAMBIA</option>
-                            <option value="232">ZIMBABWE</option>
+                        <div class="frm1">
+                            <span class="label-text" translate="CONTACT_US_COUNTRY">Country</span>
+                            <br> <select class="txtbox2" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries">
                         </select>
                         </div>
-                        <div class="frm-right1">
-
-                            CAPTCHA
-                            <br><input type="text" class="txtbox1 halftxt" name="captcha" value="">
-
-                            <div class="captcha-right">
-
-                                <img id="captcha" src="http://www.yiptv.com/captcha" class="margin-top-medium">
-                                <a href="#" id="refresh" class="btn-submit btn-small">Refresh</a>
-                            </div>
+                        <div class="frm-btn">
+                            <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="btn-submit">
+                                Submit
+                            </button>
                         </div>
                     </div>
-                    <div class="frm-btn"><input type="button" value="Submit" class="btn-submit"></div>
-
-
-                </div>
+                </form>
             </div>
         </div>
     </div>

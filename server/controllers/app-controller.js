@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     logger = require('../config/logger'),
+    Country = mongoose.model('Country'),
     AppConfig = mongoose.model('AppConfig');
 
 module.exports = {
@@ -12,6 +13,15 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.json(config);
+        });
+    },
+    getCountries: function(req, res) {
+        Country.find({}, function(err, countries) {
+            if(err) {
+                logger.logError(err)
+                return res.status(500).end();
+            }
+            return res.json(countries);
         });
     }
 };

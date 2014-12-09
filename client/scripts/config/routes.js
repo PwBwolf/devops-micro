@@ -94,6 +94,12 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
+            .when('/change-password-success',
+            {
+                templateUrl: 'views/change-password-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/about-us',
             {
                 templateUrl: 'views/about-us.html',
@@ -111,6 +117,12 @@
                 templateUrl: 'views/contact-us.html',
                 controller: 'contactUsCtrl',
                 access: access.public
+            })
+            .when('/contact-us-success',
+            {
+                templateUrl: 'views/contact-us-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
             })
             .when('/privacy-policy',
             {

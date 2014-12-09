@@ -5,11 +5,13 @@ var _ = require('lodash'),
     AppCtrl = require('../controllers/app-controller'),
     UserCtrl = require('../controllers/user-controller'),
     EmailCtrl = require('../controllers/email-controller'),
+    ContactUsCtrl = require('../controllers/contact-us-controller'),
     config = require('../config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
+        {path: '/api/get-countries', httpMethod: 'GET', middleware: [AppCtrl.getCountries]},
         {path: '/api/sign-up', httpMethod: 'POST', middleware: [UserCtrl.signUp]},
         {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
@@ -18,24 +20,11 @@ var _ = require('lodash'),
         {path: '/api/forgot-password', httpMethod: 'POST', middleware: [UserCtrl.forgotPassword]},
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
-        {
-            path: '/api/get-user-profile',
-            httpMethod: 'GET',
-            middleware: [UserCtrl.getUserProfile],
-            accessLevel: accessLevels.user
-        },
-        {
-            path: '/api/change-password',
-            httpMethod: 'POST',
-            middleware: [UserCtrl.changePassword],
-            accessLevel: accessLevels.user
-        },
-        {
-            path: '/api/change-credit-card',
-            httpMethod: 'POST',
-            middleware: [UserCtrl.changeCreditCard],
-            accessLevel: accessLevels.user
-        },
+        {path: '/api/save-contact-us', httpMethod: 'POST', middleware: [ContactUsCtrl.saveContactUs]},
+        {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
+        {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
+        {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
+        {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {

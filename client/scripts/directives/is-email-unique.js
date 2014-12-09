@@ -7,21 +7,20 @@
             restrict: 'A',
 
             link: function (scope, element, attrs, ctrl) {
-                element.on('blur', function () {
-                    if (element.val()) {
-                        scope.$apply(function () {
-                            userSvc.isEmailUnique(
-                                element.val(), $('#firstName').val(), $('#lastName').val(),
-                                function (data) {
-                                    ctrl.$setValidity('isEmailUnique', data);
-                                    return element.val();
-                                },
-                                function () {
-                                    ctrl.$setValidity('isEmailUnique', false);
-                                    return element.val();
-                                });
-                        });
+                ctrl.$parsers.push(function (viewValue) {
+                    ctrl.$setValidity('isEmailUnique', true);
+                    if (ctrl.$valid) {
+                        userSvc.isEmailUnique(
+                            element.val(), scope.$eval(attrs.firstName), scope.$eval(attrs.lastName),
+                            function (data) {
+                                ctrl.$setValidity('isEmailUnique', data);
+                            },
+                            function () {
+                                ctrl.$setValidity('isEmailUnique', false);
+                            }
+                        );
                     }
+                    return viewValue;
                 });
             }
         };
