@@ -5,7 +5,9 @@
         $translateProvider.translations('en', {
             INDEX_OTHER_LANGUAGE: 'Español',
             INDEX_SIGN_IN: 'Sign In',
-            INDEX_SIGN_UP: 'Sign Up',
+            INDEX_JOIN_NOW: 'Join Now',
+            INDEX_TRY_FREE: 'Try for 30 Days',
+            INDEX_REFER_FRIEND: 'Refer a Friend',
             INDEX_MY_ACCOUNT: 'LIVE TV',
             INDEX_SETTINGS: 'Settings',
             INDEX_SIGN_OUT: 'Sign Out',
@@ -17,6 +19,7 @@
             INDEX_AND: 'and',
             INDEX_PRIVACY_POLICY: 'Privacy Policy',
             INDEX_CONTACT_US: 'Contact Us',
+            INDEX_TALK_TO_US: 'Talk To Us',
             INDEX_CONNECT_WITH_US: 'Connect With Us',
             INDEX_DISCLAIMER: 'Use of the YipTV service and this Web site constitutes acceptance of our ',
             INDEX_WELCOME: 'Welcome',
@@ -476,7 +479,8 @@
             CHANGE_PASSWORD_SUCCESS_HEADING: 'Password Changed',
             CHANGE_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
             CHANGE_PASSWORD_ERROR: 'Error occurred while changing the password',
-            CHANGE_PASSWORD_INCORRECT_PASSWORD: 'Current Password entered is incorrect'
+            CHANGE_PASSWORD_INCORRECT_PASSWORD: 'Current Password entered is incorrect',
+            TALK_TO_US_HEADING: 'Talk To Us'
         });
     }]);
 }(angular.module('app')));

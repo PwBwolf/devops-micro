@@ -64,7 +64,7 @@ header {
     color: #000000;
     line-height: 20px;
     padding: 0px;
-    margin: 0px 0 0px 25px;
+    margin: 0px 0 0px 10px;
 }
 
 .right-box a:hover, .right-box a.active {
@@ -74,10 +74,6 @@ header {
 
 .right-box.home {
     padding: 5px 0px 0px;
-}
-
-.right-box.home a {
-    line-height: 39px;
 }
 
 .language {
@@ -108,7 +104,7 @@ header {
 a.btn-sign {
     background: #FFFFFF;
     text-align: center;
-    width: 117px;
+    padding: 10px;
     border: 1px solid #6f2079;
 }
 
@@ -1838,9 +1834,7 @@ a.subscription:hover {
         margin-left: 12px;
     }
 
-    a.btn-sign {
-        width: 100px;
-    }
+
 
     .banner-caption img {
         right: -20px;
@@ -1984,10 +1978,8 @@ a.subscription:hover {
 
     .right-box a {
         margin-left: 17px;
-    }
-
-    a.btn-sign {
-        width: 90px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .language {
@@ -2162,7 +2154,7 @@ a.subscription:hover {
     }
 
     .right-box a {
-        margin: 0 10px;
+        margin: 5px 10px;
     }
 
     .banner {

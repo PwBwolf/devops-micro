@@ -4,6 +4,8 @@
 
         <div class="container">
             <div class="signup-box">
+                <span class="label-text" ng-show="userType == 'free'">You are signing up as a free user. Your credit card will be used for verification purpose only.</span>
+                <span class="label-text" ng-show="userType == 'paid'">You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.</span>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
                     <div class="frm">
                         <div class="frm-left1">

@@ -5,7 +5,9 @@
         $translateProvider.translations('es', {
             INDEX_OTHER_LANGUAGE: 'English',
             INDEX_SIGN_IN: 'SSign In',
-            INDEX_SIGN_UP: 'SSign Up',
+            INDEX_JOIN_NOW: 'SJoin Now',
+            INDEX_TRY_FREE: 'STry for 30 Days',
+            INDEX_REFER_FRIEND: 'SRefer a Friend',
             INDEX_MY_ACCOUNT: 'SLIVE TV',
             INDEX_SETTINGS: 'SSettings',
             INDEX_SIGN_OUT: 'SSign Out',
@@ -17,6 +19,7 @@
             INDEX_AND: 'Sand',
             INDEX_PRIVACY_POLICY: 'SPrivacy Policy',
             INDEX_CONTACT_US: 'SContact Us',
+            INDEX_TALK_TO_US: 'STalk To Us',
             INDEX_CONNECT_WITH_US: 'SConnect With Us',
             INDEX_DISCLAIMER: 'SUse of the YipTV service and this Web site constitutes acceptance of our',
             INDEX_WELCOME: 'SWelcome',
@@ -393,6 +396,7 @@
             VERIFY_USER_HEADING_ERROR: 'SError',
             VERIFY_USER_MESSAGE_SUCCESS: 'SYour account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             VERIFY_USER_MESSAGE_ERROR: 'SUnable to verify your account or account is already verified. Please contact YipTV Customer Care.',
+            FORGOT_PASSWORD_HEADING: 'SForgot Password',
             FORGOT_PASSWORD_EMAIL: 'SEnter your email and we will send a link to reset your password',
             FORGOT_PASSWORD_BUTTON: 'SSubmit',
             FORGOT_PASSWORD_EMAIL_INVALID: 'SEnter a valid email',
@@ -462,7 +466,7 @@
             CHANGE_CREDIT_CARD_ZIP_CODE_REQUIRED: 'Enter your zip code',
             CHANGE_CREDIT_CARD_ZIP_CODE_INVALID: 'Enter a valid zip code',
             CHANGE_CREDIT_CARD_SUBMIT_BUTTON: 'Submit',
-
+            TALK_TO_US_HEADING: 'Talk To Us'
         });
     }]);
 }(angular.module('app')));

@@ -94,6 +94,12 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
+            .when('/refer-friend',
+            {
+                templateUrl: 'views/refer-friend.html',
+                controller: 'referFriendCtrl',
+                access: access.public
+            })
             .when('/change-password-success',
             {
                 templateUrl: 'views/change-password-success.html',
@@ -133,6 +139,12 @@
             .when('/terms-of-use',
             {
                 templateUrl: 'views/terms-of-use.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/talk-to-us',
+            {
+                templateUrl: 'views/talk-to-us.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
