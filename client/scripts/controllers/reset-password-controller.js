@@ -3,6 +3,23 @@
 
     app.controller('resetPasswordCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
         $scope.mv = {code: $location.search().code};
+        checkResetCode();
+
+        function checkResetCode() {
+            userSvc.checkResetCode(
+                $scope.mv.code,
+                function () {
+                    $scope.codeError = false;
+                },
+                function (response) {
+                    if (response === 'UserNotFound') {
+                        $scope.codeError = true;
+                    } else {
+                        loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
+                    }
+                }
+            );
+        }
 
         $scope.resetPassword = function () {
             if($scope.mv.code) {
@@ -21,7 +38,8 @@
                                 loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
                             }
                             $scope.saving = false;
-                        });
+                        }
+                    );
                 } else {
                     setFormDirty();
                 }

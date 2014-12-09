@@ -7,7 +7,7 @@
             currentUser = noUser();
 
         function noUser() {
-            return { id: '', email: '', role: userRoles.anon, firstName: '', lastName: ''};
+            return {id: '', email: '', role: userRoles.anon, firstName: '', lastName: ''};
         }
 
         function changeUser(user) {
@@ -63,7 +63,7 @@
                 $http({
                     method: 'GET',
                     url: '/api/is-email-unique',
-                    params: { email: email.toLowerCase(), firstName: firstName, lastName: lastName }
+                    params: {email: email.toLowerCase(), firstName: firstName, lastName: lastName}
                 }).success(success).error(error);
             },
 
@@ -84,7 +84,7 @@
 
             signOut: function (success, error) {
                 $http.post('/api/sign-out', null).success(function () {
-                    changeUser({ email: '', role: userRoles.public });
+                    changeUser({email: '', role: userRoles.public});
                     success();
                 }).error(error);
             },
@@ -98,20 +98,28 @@
                 $http.post('/api/verify-user', {code: code}).success(success).error(error);
             },
 
-            forgotPassword: function(email, success, error) {
+            forgotPassword: function (email, success, error) {
                 $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
             },
 
-            resetPassword: function(data, success, error) {
+            resetPassword: function (data, success, error) {
                 $http.post('/api/reset-password', data).success(success).error(error);
             },
 
-            changePassword: function(data, success, error) {
+            changePassword: function (data, success, error) {
                 $http.post('/api/change-password', data).success(success).error(error);
             },
 
-            resendVerification: function(email, success, error) {
+            resendVerification: function (email, success, error) {
                 $http.post('/api/resend-verification', {email: email.toLowerCase()}).success(success).error(error);
+            },
+
+            checkResetCode: function (code, success, error) {
+                $http({
+                    url: '/api/check-reset-code',
+                    method: 'GET',
+                    params: {code: code}
+                }).success(success).error(error);
             }
         };
     }]);

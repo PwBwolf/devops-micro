@@ -143,7 +143,7 @@ exports.getUserProfile = function (req, res) {
             return res.status(500).end();
         }
         if (!user) {
-            return res.status(404).end();
+            return res.status(404).send('UserNotFound');
         }
         return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName});
     });
@@ -156,7 +156,7 @@ exports.verifyUser = function (req, res) {
             return res.status(500).end();
         }
         if (!user) {
-            return res.status(401).send('UserNotFound');
+            return res.status(404).send('UserNotFound');
         }
         user.activated = true;
         user.verificationCode = undefined;
@@ -199,6 +199,21 @@ exports.forgotPassword = function (req, res) {
             });
             return res.status(200).end();
         });
+    });
+};
+
+exports.checkResetCode = function(req, res) {
+    console.log(req.query.code);
+    User.findOne({resetPasswordCode: req.query.code}, function (err, user) {
+        if (err) {
+            logger.logError(err);
+            return res.status(500).end();
+        }
+        console.dir(user);
+        if (!user) {
+            return res.status(404).send('UserNotFound');
+        }
+        return res.status(200).end();
     });
 };
 
