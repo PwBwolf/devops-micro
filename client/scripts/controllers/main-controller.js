@@ -19,8 +19,10 @@
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
+                $scope.showHeader = true;
             }).error(function () {
                 loggerSvc.logError('Error fetching application config');
+                $scope.showHeader = false;
             });
         }
 

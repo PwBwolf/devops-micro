@@ -3,8 +3,12 @@
 
     app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
 
+        $scope.userType = $location.search().type;
+
+
         $scope.signUp = function () {
             if ($scope.form.$valid) {
+                $scope.mv.type = $scope.userType;
                 $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
                 $scope.saving = true;
                 userSvc.signUp(

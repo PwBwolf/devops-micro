@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
     logger = require('../config/logger'),
-    email = require('../utils/email'),
+    email = require('../services/email'),
     config = require('../config/config'),
     sf = require('sf'),
     ContactUs = mongoose.model('ContactUs');

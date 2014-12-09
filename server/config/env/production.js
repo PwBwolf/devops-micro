@@ -7,5 +7,6 @@ module.exports = {
     url: 'http://yiptv.com/',
     imageUrl: 'http://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
-    contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com'
+    contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',
+    cloudSpongDomainKey: 'NEED_TO_BUY'
 };
