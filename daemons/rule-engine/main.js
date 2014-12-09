@@ -3,18 +3,29 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var CronJob = require('cron').CronJob;
-var moment = require('moment');
 var config = require('./config');
-var email = require('./services/email');
+var mongoose = require('mongoose');
+var db = mongoose.connect(config.db);
+
+/* Load all the models */
+require('./models')(__dirname + '/models');
+
+/* Load the rule engine */
 var RuleEngine = require('./rule-engine');
 
-// all the document types that emailer has been enabled for
-var emailerEnabledFor = config.factProviders;
+/* Load all available providers */
+require('./fact-providers/user-provider');
+
+/* Load all available post processors */
+require('./post-processors/freeuser-processor');
+
+// all the fact providers that have been configured to provide facts
+var factProviders = config.factProviders;
 
 console.log('Starting Emailer daemon...');
-new CronJob('0 0 0 * * *', function(){
-        for(var docType in emailerEnabledFor) {
-            emailerEnabledFor[docType]().then(function(docs) {
+new CronJob('* * * * * *', function(){
+        for(var docType in factProviders) {
+            factProviders[docType]().then(function(docs) {
                 if(docs && docs.length > 0) {
                     RuleEngine.applyRules(docs);
                 }

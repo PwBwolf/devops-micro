@@ -6,7 +6,7 @@ var Rule = mongoose.model('Rule');
 var RuleEngine = require('node-rules');
 var RuleEnforcer = null;
 
-require('../database/rules')().then(function() {
+require('./rules')().then(function() {
     Rule.find({enabled: true}, function(err, rules) {
         if(err) {
             console.log('Did not find any rules!!');
@@ -26,7 +26,7 @@ module.exports.applyRules = function(docs) {
             if(result && result.process) {
                 delete result.result;
                 delete result.process;
-                config.ruleMatchProcessor[result.postProcessorKey](result);
+                config.postProcessors[result.postProcessorKey](result);
             }
         });
     });

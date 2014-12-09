@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var moment = require('moment');
 var Rule = mongoose.model('Rule');
 var Q = require('q');
-var logger = require('../config/logger');
 
 function buildRules() {
     var def = Q.defer();
@@ -149,7 +148,7 @@ function saveRule(ruleData) {
     var rule = new Rule(ruleData);
     rule.save(function(err, rule) {
         if(err) {
-            logger.logError(err);
+            console.log(err);
             def.reject(err);
         } else {
             def.resolve();

@@ -18,6 +18,7 @@ module.exports.getFreeUsers = function() {
             def.resolve([]);
         }
     }, function(err) {
+        console.log(err);
         def.reject(err);
     });
     return def.promise;

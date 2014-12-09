@@ -1,5 +1,5 @@
 var config = require('../config');
-var email = require('../utils/email');
+var email = require('../services/email');
 var sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
