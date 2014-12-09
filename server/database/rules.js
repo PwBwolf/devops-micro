@@ -33,6 +33,30 @@ function buildRules() {
                 }
         },
         {
+            "name": "free-user-21-reminder",
+            "description": "Send a reminder email to a free user after 21 days",
+            "priority": 1,
+            "enabled":true,
+            "condition":
+                function(fact, cb) {
+                    var moment = require('moment');
+                    if(fact.type === 'user') {
+                        var created = fact.createdAt;
+                        if(moment().diff(created, 'days') === 21) {
+                            cb(true);
+                            return;
+                        }
+                    }
+                    cb(false);
+                },
+            "consequence":
+                function(cb) {
+                    this.process = true;
+                    this.postProcessorKey = "freeUser21";
+                    cb();
+                }
+        },
+        {
             "name": "free-user-28-reminder",
             "description": "Send a reminder email to a free user after 28 days",
             "priority": 1,
@@ -53,30 +77,6 @@ function buildRules() {
                 function(cb) {
                     this.process = true;
                     this.postProcessorKey = "freeUser28";
-                    cb();
-                }
-        },
-        {
-            "name": "free-user-29-reminder",
-            "description": "Send a reminder email to a free user after 29 days",
-            "priority": 1,
-            "enabled":true,
-            "condition":
-                function(fact, cb) {
-                    var moment = require('moment');
-                    if(fact.type === 'user') {
-                        var created = fact.createdAt;
-                        if(moment().diff(created, 'days') === 29) {
-                            cb(true);
-                            return;
-                        }
-                    }
-                    cb(false);
-                },
-            "consequence":
-                function(cb) {
-                    this.process = true;
-                    this.postProcessorKey = "freeUser29";
                     cb();
                 }
         },
