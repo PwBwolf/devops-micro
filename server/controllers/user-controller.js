@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     sf = require('sf'),
-    Q = require('q'),
     _ = require('lodash'),
     validator = require('validator'),
     async = require('async'),
@@ -366,22 +365,3 @@ exports.changePassword = function (req, res) {
 exports.changeCreditCard = function (req, res) {
     return res.status(200).end();
 };
-
-exports.getFreeUsers = function() {
-    var def = Q.defer();
-    User.find().exec().then(function(users) {
-        if(users) {
-            for(var i = 0; i < users.length; i++) {
-                users[i] = _.assign({type: 'user'}, users[i]._doc);
-            }
-            def.resolve(users);
-        } else {
-            def.resolve([]);
-        }
-    }, function(err) {
-        def.reject(err);
-    });
-    return def.promise;
-}
-
-config.emailerEnabledFor['free-users'] = module.exports.getFreeUsers;

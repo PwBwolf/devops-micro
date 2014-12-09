@@ -1,6 +1,5 @@
-var config = require('../config/config');
+var config = require('../config');
 var email = require('../utils/email');
-var logger = require('../config/logger');
 var sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
@@ -14,7 +13,7 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
     email.sendEmail(mailOptions, function (err) {
         console.log('email sent...');
         if (err) {
-            logger.logError(err);
+            console.log(err);
         }
     });
 }
@@ -59,10 +58,8 @@ module.exports.send31DaySuspensionEmail = function(user) {
     console.log('email sent...');
 };
 
-config.ruleMatchProcessor['freeUser14'] = module.exports.send14DayReminderEmail;
-config.ruleMatchProcessor['freeUser21'] = module.exports.send21DayReminderEmail;
-config.ruleMatchProcessor['freeUser28'] = module.exports.send28DayReminderEmail;
-config.ruleMatchProcessor['freeUser30'] = module.exports.send30DayReminderEmail;
-config.ruleMatchProcessor['freeUser31'] = module.exports.send31DaySuspensionEmail;
-
-
+config.postProcessors['freeUser14'] = module.exports.send14DayReminderEmail;
+config.postProcessors['freeUser21'] = module.exports.send21DayReminderEmail;
+config.postProcessors['freeUser28'] = module.exports.send28DayReminderEmail;
+config.postProcessors['freeUser30'] = module.exports.send30DayReminderEmail;
+config.postProcessors['freeUser31'] = module.exports.send31DaySuspensionEmail;
