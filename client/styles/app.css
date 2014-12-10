@@ -1165,6 +1165,7 @@ footer .f-btm a:hover {
 
 #details {
     height: 250px;
+    resize: none;
 }
 
 .txtbox1 {
