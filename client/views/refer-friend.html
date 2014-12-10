@@ -1,16 +1,19 @@
 <div class="contentarea">
     <div class="setting-box1">
-        <h1><span translate="REFER_FRIEND_HEADING">Refer A Friend</span></h1>
+        <h1><span>Refer A Friend</span></h1>
 
         <div class="container">
             <div class="signin-box">
-                <form id="form" name="form">
+                <form name="form" id="form" ng-submit="importContacts()" novalidate>
                     <!-- CloudSponge - any link with a class="cs_import" will start the import process -->
-                    <p class="text-center"><a class="cs_import btn-import" translat="REFER_FRIEND_IMPORT_EMAIL">Import Emails from Contact List</a></p>
+                    <p class="text-center"><a id="importCloudSponge" class="cs_import btn-import" >Import Emails from Contact List</a></p>
                     <!-- This textarea will be populated with the contacts returned by CloudSponge -->
                     <p class="text-center">OR</p>
-                    <span class="label-text">Enter your friends' email address</span>
+                    <p class="text-center"><span class="label-text">Enter your friends' email address</span></p>
                     <textarea id="emailList" class="txtbox2 textarea2"></textarea>
+                    <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
+                        Send Invite</button>
+                    <br><br>
                 </form>
             </div>
         </div>
@@ -22,7 +25,8 @@
         domain_key: angular.element(document.querySelector('[ng-controller="mainCtrl"]')).scope().appConfig.cloudSpongeDomainKey,
         textarea_id: 'emailList',
         include: ['email'],
-        mobileRender: true
+        mobile_render: true,
+        sources: ['gmail', 'yahoo', 'facebook', 'linkedin', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook']
 
     };
     (function (u) {
