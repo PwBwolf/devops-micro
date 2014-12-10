@@ -344,6 +344,8 @@
             SIGN_UP_PRIVACY_POLICY: 'Privacy Policy',
             SIGN_UP_USER_EXISTS: 'This email is already registered with YipTV. Please use another email address.',
             SIGN_UP_FAILED: 'User sign up failed',
+            SIGN_UP_MESSAGE_FREE: 'You are signing up as a free user. Your credit card will be used for verification purpose only.',
+            SIGN_UP_MESSAGE_PAID: 'You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.',
             SIGN_UP_SUCCESS_HEADING: 'Congrats!',
             SIGN_UP_SUCCESS_MESSAGE: 'You are successfully signed up with YipTV. Please click the button or link in the email we have just sent you to verify your account.',
             TERMS_OF_USE_HEADING: 'Terms of Use',
