@@ -967,6 +967,27 @@ footer .f-btm a:hover {
     margin: 0px;
 }
 
+a.btn-import {
+    background: #0ac4bb;
+    width: 98%;
+    height: 54px;
+    line-height: 56px;
+    font-family: 'radikalregular';
+    font-size: 25px;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0px;
+}
+
+a.btn-import:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
 .video-shadow {
     float: left;
     width: 100%;
@@ -1165,6 +1186,12 @@ footer .f-btm a:hover {
 
 #details {
     height: 250px;
+    resize: none;
+}
+
+#emailList {
+    height: 250px;
+    resize: none;
 }
 
 .txtbox1 {
@@ -2092,6 +2119,12 @@ a.subscription:hover {
         height: 60px;
         line-height: 60px;
         font-size: 20px;
+    }
+
+    a.btn-import {
+        height: 60px;
+        line-height: 60px;
+        font-size: 16px;
     }
 
     .link-box .shadow {

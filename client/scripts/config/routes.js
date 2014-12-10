@@ -142,12 +142,6 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/talk-to-us',
-            {
-                templateUrl: 'views/talk-to-us.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',
