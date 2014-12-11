@@ -4,6 +4,8 @@
 
 var gulp = require('gulp');
 var fs = require('fs-extended');
+var argv = require('yargs').argv;
+var Q = require('q');
 
 // load plugins
 var $ = require('gulp-load-plugins')({
@@ -181,6 +183,50 @@ gulp.task('extras', function () {
 gulp.task('server', function() {
     return gulp.src('../server/**/*', {dot: true})
         .pipe(gulp.dest('dist/server'));
+});
+
+/*****************************************************************/
+/*                       Daemon tasks                            */
+/*****************************************************************/
+function copyDaemon(source, destination) {
+    var def = Q.defer();
+    gulp.src(source, {dot: true})
+        .pipe(gulp.dest(destination));
+    def.resolve();
+    return def.promise;
+}
+
+function cleanDaemon(name) {
+    fs.emptyDirSync("daemons-dist/" + name);
+}
+
+gulp.task('daemon:rule-engine', function() {
+    cleanDaemon('rule-engine');
+    copyDaemon(['../daemons/rule-engine/**/*', '!../daemons/rule-engine/main.js', '!../daemons/start.sh'], 'daemons-dist/rule-engine').then(function() {
+        gulp.src('../daemons/rule-engine/main.js')
+            .pipe(replace({
+                patterns: [
+                    {
+                        match: 'development',
+                        replacement: argv.env
+                    }
+                ],
+                usePrefix: false
+            }))
+            .pipe(gulp.dest('daemons-dist/rule-engine'));
+
+        gulp.src('../daemons/start.sh')
+            .pipe(replace({
+                patterns: [
+                    {
+                        match: '#--rule-engine#',
+                        replacement: ''
+                    }
+                ],
+                usePrefix: false
+            }))
+            .pipe(gulp.dest('daemons-dist'));
+    });
 });
 
 // Sometimes clearing the cache is the only way to fix path errors in the image task when building

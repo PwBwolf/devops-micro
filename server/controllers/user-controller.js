@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     sf = require('sf'),
+    _ = require('lodash'),
     validator = require('validator'),
     async = require('async'),
     jwt = require('jwt-simple'),
