@@ -11,7 +11,7 @@
                     <p class="text-center">OR</p>
                     <p class="text-center"><span class="label-text">Enter your friends' email address</span></p>
                     <textarea id="emailList" class="txtbox2 textarea2"></textarea>
-                    <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
+                    <button ng-disabled="saving" type="submit" class="btn-submit">
                         Send Invite</button>
                     <br><br>
                 </form>
@@ -27,7 +27,6 @@
         include: ['email'],
         mobile_render: true,
         sources: ['gmail', 'yahoo', 'facebook', 'linkedin', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook']
-
     };
     (function (u) {
         var d = document, s = 'script', a = d.createElement(s), m = d.getElementsByTagName(s)[0];
