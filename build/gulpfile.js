@@ -217,8 +217,14 @@ function commitAndTag() {
 gulp.task('buildProduction', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
     setEnvironment('production');
 });
+
 gulp.task('buildIntegration', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
     setEnvironment('integration');
+    commitAndTag();
+});
+
+gulp.task('buildQA', ['html', 'images', 'fonts', 'extras', 'webfonts', 'server'], function(){
+    setEnvironment('test');
     commitAndTag();
 });
 
@@ -275,7 +281,9 @@ gulp.task('integration', ['clean'], function () {
     gulp.start('buildIntegration');
 });
 
-gulp.task('qa', ['integration']); // QA is currently an alias for integration
+gulp.task('qa', ['clean'], function(){
+    gulp.start('buildQA');
+});
 
 
 // Serve and connect related (Not used and not validated to be working.) - Varun Naik, November 13 2014
