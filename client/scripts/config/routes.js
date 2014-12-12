@@ -16,7 +16,7 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up',
+            .when('/sign-up/:type',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
