@@ -1,9 +1,9 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$routeParams', function (userSvc, loggerSvc, $scope, $location, $filter, $routeParams) {
 
-        $scope.userType = $location.search().type;
+        $scope.userType = $routeParams.type;
 
 
         $scope.signUp = function () {
