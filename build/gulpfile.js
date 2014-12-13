@@ -153,23 +153,23 @@ function commitAndTag() {
         .pipe(tag_version());
 }
 
-function bumpVersion() {
+function bumpVersion(versionFile, destination) {
     var bumpType = 'patch';
     if(argv.deployType === 'feature') {
         bumpType = 'minor';
     } else if(argv.deployType === 'release') {
         bumpType = 'major';
     }
-    gulp.src('./version.json')
+    gulp.src('./' + versionFile + '.json')
         .pipe($.bump({type: bumpType}))
         .pipe(gulp.dest('./'))
-        .pipe(gulp.dest('dist/client'));
+        .pipe(gulp.dest(destination));
 }
 
 gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], postDeploy);
 
 gulp.task('deploy', ['clean'], function(){
-    bumpVersion();
+    bumpVersion('version', 'dist/client');
     environment = argv.env || 'integration';
     deployType = argv.deployType || 'patch';
     tagBuild = argv.tag || true;
@@ -182,4 +182,50 @@ gulp.task('clean', function (cb) {
     fs.emptyDirSync("dist/client");
     fs.emptyDirSync("dist/server");
     cb();
+});
+
+/*****************************************************************/
+/*                       Daemon tasks                            */
+/*****************************************************************/
+function copyDaemon(source, destination) {
+    var def = Q.defer();
+    gulp.src(source, {dot: true})
+        .pipe(gulp.dest(destination));
+    def.resolve();
+    return def.promise;
+}
+
+function cleanDaemon(name) {
+    fs.emptyDirSync("daemons-dist/" + name);
+}
+
+gulp.task('daemon:deploy', function() {
+    var daemon = argv.name;
+    cleanDaemon(daemon);
+    bumpVersion('rule-engine-version', 'daemons-dist');
+    copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], 'daemons-dist/'+daemon).then(function() {
+        gulp.src('../server/daemons/'+daemon+'/'+daemon+'-main.js')
+            .pipe(replace({
+                patterns: [
+                    {
+                        match: 'development',
+                        replacement: argv.env
+                    }
+                ],
+                usePrefix: false
+            }))
+            .pipe(gulp.dest('daemons-dist/'+daemon));
+
+        gulp.src('../server/daemons/start.sh')
+            .pipe(replace({
+                patterns: [
+                    {
+                        match: '#--'+daemon+'#',
+                        replacement: ''
+                    }
+                ],
+                usePrefix: false
+            }))
+            .pipe(gulp.dest('daemons-dist'));
+    });
 });
