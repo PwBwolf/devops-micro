@@ -14,7 +14,11 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            var props =  {environment: process.env.NODE_ENV, cloudSpongeDomainKey: config.cloudSpongeDomainKey};
+            var props =  {
+                environment: process.env.NODE_ENV,
+                cloudSpongeDomainKey: config.cloudSpongeDomainKey,
+                aioUrl: config.aioUrl
+            };
             appConfig = _.assign(appConfig._doc, props);
             return res.json(appConfig);
         });

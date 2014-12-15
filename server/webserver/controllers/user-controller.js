@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     sf = require('sf'),
-    _ = require('lodash'),
     validator = require('validator'),
     async = require('async'),
     jwt = require('jwt-simple'),
@@ -42,7 +41,12 @@ exports.signUp = function (req, res) {
         },
         // create account in db
         function (userObj, callback) {
-            var accountObj = new Account({primaryUser: userObj, users: [userObj], createdAt: (new Date()).toUTCString()});
+            var accountObj = new Account({
+                type: userObj.type,
+                primaryUser: userObj,
+                users: [userObj],
+                createdAt: (new Date()).toUTCString()
+            });
             accountObj.save(function (err) {
                 if (err) {
                     logger.logError(err);
