@@ -3,7 +3,7 @@ angular.module('angularPayments', []);angular.module('angularPayments')
     .factory('Common', [function(){
 
         var ret = {};
-
+        var custom = {};
 
         // expiry is a string "mm / yy[yy]"
         ret['parseExpiry'] = function(value){

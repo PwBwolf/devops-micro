@@ -169,7 +169,9 @@ function bumpVersion(versionFile, destination) {
 gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], postDeploy);
 
 gulp.task('deploy', ['clean'], function(){
-    bumpVersion('version', 'dist/client');
+    if(argv.deployType) {
+        bumpVersion('version', 'dist/client');
+    }
     environment = argv.env || 'integration';
     deployType = argv.deployType || 'patch';
     tagBuild = argv.tag || true;
@@ -202,7 +204,9 @@ function cleanDaemon(name) {
 gulp.task('daemon:deploy', function() {
     var daemon = argv.name;
     cleanDaemon(daemon);
-    bumpVersion('rule-engine-version', 'daemons-dist');
+    if(argv.deployType) {
+        bumpVersion('rule-engine-version', 'daemons-dist');
+    }
     copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], 'daemons-dist/'+daemon).then(function() {
         gulp.src('../server/daemons/'+daemon+'/'+daemon+'-main.js')
             .pipe(replace({

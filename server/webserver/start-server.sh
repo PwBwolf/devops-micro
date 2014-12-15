@@ -6,5 +6,5 @@
 # run npm update to install any new node modules
 npm update
 
-# now start the node server and redirect logs to server.log
+# now start the node server and redirect logs to /var/log/yip-server.log. (devops user must own this file)
 /etc/init.d/yip-server start
