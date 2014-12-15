@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Service script for the Yip server running under Forever.
+# service yip-server
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -20,13 +20,23 @@ forever=/usr/local/bin/forever
 
 start() {
   echo "Starting $NAME node instance: "
-  $forever start --uid $NAME -l $logfile -a -d $SOURCE_DIR/$SOURCE_FILE
+  if [[ "$USER" == "$user" ]]
+  then
+        $forever start --uid $NAME -l $logfile -a -d $SOURCE_DIR/$SOURCE_FILE
+  else
+        daemon --user=$user $forever start --uid $NAME -l $logfile -a -d $SOURCE_DIR/$SOURCE_FILE
+  fi
   RETVAL=$?
 }
 
 stop() {
   echo -n "Shutting down $NAME node instance : "
-  $forever stop $NAME
+  if [[ "$USER" == "$user" ]]
+  then
+        $forever stop $NAME
+  else
+        daemon --user=$user $forever stop $NAME
+  fi
   RETVAL=$?
 }
 
