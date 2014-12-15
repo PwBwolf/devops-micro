@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', '$window', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route, $window) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -44,7 +44,8 @@
         }
 
         function loadLanguage() {
-            var language = $location.search().lang || webStorage.local.get('language') || window.navigator.language.split('-')[0] || 'en';
+            var userLang = window.navigator.language || window.navigator.userLanguage;
+            var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
             $translate.use(language);
             webStorage.local.add('language', language);
             $scope.language = language;
@@ -56,6 +57,10 @@
             $translate.use(newLanguage);
             webStorage.local.add('language', newLanguage);
             $scope.language = newLanguage;
+        };
+
+        $scope.openAio = function() {
+            $window.open($scope.appConfig.aioUrl);
         };
     }]);
 }(angular.module('app')));

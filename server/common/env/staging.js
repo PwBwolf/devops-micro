@@ -8,5 +8,6 @@ module.exports = {
     imageUrl: 'http://staging.yiptv.net/img/',
     secretToken: 'yip#tv@staging#346',
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
-    cloudSpongeDomainKey: '5FLQG2YJF2SGQ2JY4GCH'
+    cloudSpongeDomainKey: '5FLQG2YJF2SGQ2JY4GCH',
+    aioUrl: 'http://yiptv.net'
 };

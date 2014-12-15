@@ -69,8 +69,6 @@ function ensureAuthorized(req, res, next) {
         } else {
             req.email = decodedToken.email;
             req.role = role = decodedToken.role;
-            console.log(role);
-            console.log(req.role);
         }
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
