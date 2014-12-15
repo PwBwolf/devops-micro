@@ -7,7 +7,10 @@
             restrict: 'A',
 
             link: function (scope, element, attrs, ctrl) {
-                ctrl.$parsers.push(function (viewValue) {
+                ctrl.$parsers.push(checkEmailUnique);
+                element.bind('blur', checkEmailUnique);
+
+                function checkEmailUnique(viewValue) {
                     ctrl.$setValidity('isEmailUnique', true);
                     if (ctrl.$valid) {
                         userSvc.isEmailUnique(
@@ -21,8 +24,10 @@
                         );
                     }
                     return viewValue;
-                });
+                }
             }
         };
+
+
     }]);
 }(angular.module('app')));

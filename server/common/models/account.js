@@ -10,6 +10,7 @@ var Account = new Schema({
     deleted: Boolean,
     createdAt: {type: Date, required: true},
     referralCode: String,
+    type: {type: String, required: true},
     primaryCard: {
         id: String,
         type: String,

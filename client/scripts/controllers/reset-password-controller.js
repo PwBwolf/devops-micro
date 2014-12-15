@@ -10,6 +10,7 @@
                 $scope.mv.code,
                 function () {
                     $scope.codeError = false;
+                    $scope.showPage = true;
                 },
                 function (response) {
                     if (response === 'UserNotFound') {
@@ -17,6 +18,7 @@
                     } else {
                         loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
                     }
+                    $scope.showPage = true;
                 }
             );
         }

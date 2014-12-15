@@ -58,7 +58,7 @@
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>
                     <a href="/sign-up/paid" access-level="accessLevels.anon" class="btn-sign1" translate="INDEX_JOIN_NOW">Join Now</a>
                     <a href="/sign-up/free" access-level="accessLevels.anon" class="btn-sign2" translate="INDEX_TRY_FREE">Try for 30 Days</a>
-                    <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">LIVE TV</a>
+                    <a ng-click="openAio()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_WATCH_NOW">Watch Now</a>
                     <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
