@@ -1,5 +1,5 @@
 {
-    "type": "countries",
+    "type": "Countries",
     "docs": [
         {"name": "Aland Islands", "code": "AX"},
         {"name": "Afghanistan", "code": "AF"},

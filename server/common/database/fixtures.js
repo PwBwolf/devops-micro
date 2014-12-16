@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
     fs       = require('fs-extended');
 
 var models = {
-    "countries": mongoose.model('Country'),
-    "app-config": mongoose.model('AppConfig')
+    "Countries": mongoose.model('Country'),
+    "AppConfig": mongoose.model('AppConfig')
 }
 
 module.exports = function() {
