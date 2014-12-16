@@ -2,7 +2,12 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    config = require('../../common/config/config'),
+    autoIncrement = require('mongoose-auto-increment'),
+    connection = mongoose.createConnection(config.db);
+
+autoIncrement.initialize(connection);
 
 var User = new Schema({
     firstName: {type: String, required: true, trim: true},
@@ -10,6 +15,7 @@ var User = new Schema({
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
     hashedPassword: {type: String, required: true},
     salt: {type: String, required: true},
+    key: {type: Number, required: true},
     role: { type: {
         bitMask: { type: Number, required: true },
         title: {type: String, required: true }
@@ -106,4 +112,5 @@ User.methods = {
     }
 };
 
-mongoose.model('User', User);
+User.plugin(autoIncrement.plugin, { model: 'User', field: 'key', startAt: 100 });
+connection.model('User', User);
