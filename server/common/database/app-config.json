@@ -1,4 +1,6 @@
 {
-    appName: 'YipTV',
-    customerCareNumber: '800-123-1234'
+    "type": "app-config",
+    "docs": [
+        { "appName": "YipTV", "customerCareNumber": "800-123-4567" }
+    ]
 }
