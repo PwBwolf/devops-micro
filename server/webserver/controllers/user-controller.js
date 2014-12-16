@@ -9,6 +9,8 @@ var mongoose = require('mongoose'),
     logger = require('../../common/config/logger'),
     moment = require('moment'),
     config = require('../../common/config/config'),
+    Hashids = require('hashids'),
+    hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
     User = mongoose.model('User'),
@@ -46,7 +48,11 @@ exports.signUp = function (req, res) {
                 primaryUser: userObj,
                 users: [userObj],
                 createdAt: (new Date()).toUTCString()
+
             });
+            if(userObj.type === 'paid') {
+                accountObj.referralCode = hashids.encode(userObj.key, 5);
+            }
             accountObj.save(function (err) {
                 if (err) {
                     logger.logError(err);

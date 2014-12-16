@@ -18,7 +18,7 @@
                             <br><span class="label-text" translate="CHANGE_CREDIT_CARD_CVV">cvv</span>
                             <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}"></div>
                         <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="CHANGE_CREDIT_CARD_CVV_REQUIRED">Enter your CVV</div>
-                        <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.cvc" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
+                        <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
                     </div>
                     <div class="frm">
                         <div class="frm-left">
