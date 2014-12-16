@@ -1,62 +1,71 @@
-<div bootstrap-carousel class="slide">
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <div class="banner">
-                <div class="banner-wrap">
-                    <div class="banner-caption">
-                        <h2><span class="divide">$</span>14.99 <span class="divide" translate="HOME_PER_MONTH">/ month</span></h2>
+<div class="banner">
+    <div class="banner-wrap">
+        <div id="carousel-banner" class="carousel slide" bootstrap-carousel>
+            <ul class="carousel-inner">
+                <li class="item active">
+                    <img src="img/banner.jpg" alt="...">
 
-                        <h1 translate="HOME_UNLIMITED_CHANNELS">Unlimited Channels</h1>
-                        <span class="header-tag" translate="HOME_JOIN_REVOLUTION"> >> Join the revolution </span>
+                    <div class="carousel-caption">
                         <img src="img/guarantee-img.png" alt="">
+
+                        <div class="caption-txt">
+                            <h2 class="bdr"><sub>$</sub>14.99 <span class="divide" translate="HOME_PER_MONTH">/ month</span></h2>
+
+                            <h1>Unlimited <span>Channels</span></h1>
+                            <span class="header-tag"> <a href="#"> >> Join the revolution </a></span>
+                        </div>
                     </div>
-                    <img src="img/banner.jpg" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="banner">
-                <div class="banner-wrap">
-                    <div class="banner-caption"><span class="banner2-text" translate="HOME_AGENT_OF_CHANGE">BE AN AGENT OF CHANGE</span>
+                </li>
+                <li class="item">
+                    <img src="img/banner2.jpg" alt="...">
 
-                        <h1 class="green-text" translate="HOME_REFER_FRIEND">Refer a friend</h1>
+                    <div class="carousel-caption">
+                        <div class="caption-txt1">
+                            <h1>BE AN AGENT OF CHANGE</h1>
+                            <img src="img/guarantee-img2.png" alt="">
 
-                        <h1 translate="HOME_AND_GET">And get</h1>
-                        <span class="header-tag" translate="HOME_ONE_MONTH_FREE"> >> One month free</span>
-                        <img class="banner2-image" src="img/guarantee-img2.png" alt="">
+                            <h2 class="bdr">REFER A FRIEND</h2>
+
+                            <h2>ANd GET</h2>
+                            <span class="header-tag"> <a href="#">>> One Month Free </a></span>
+                        </div>
                     </div>
-                    <img src="img/banner2.jpg" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="banner">
-                <div class="banner-wrap">
-                    <div class="banner-caption"><span class="banner3-text green-text" translate="HOME_WATCH_ANY_SCREEN">Watch on any screen, anywhere, any time.<br></span>
+                </li>
+                <li class="item">
+                    <img src="img/banner3.jpg" alt="...">
 
-                        <h4 class="banner3-text2" translate="HOME_NO_CABLE_BOX">No cable box needed. No bulky dish on the roof. YipTV plays
-                            your channels through your broadband Internet connection.</h4>
-                        <span class="header-tag" translate="HOME_ONE_MONTH_FREE"> >> One month free</span>
+                    <div class="carousel-caption">
+                        <div class="caption-txt3">
+                            <h1>Watch on any screen, anywhere, any time.</h1>
+
+                            <p>No cable box needed. No bulky dish on the roof, YipTV plays your channels through your broadband Internet connection.</p>
+                            <span class="header-tag"><a href="#"> >> Join the revolution</a></span>
+                        </div>
                     </div>
-                    <img src="img/banner3.jpg" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="banner">
-                <div class="banner-wrap">
-                    <div class="banner-caption">
-                        <h1 class="green-text" translate="HOME_CHECK_OUT">Check out </h1>
+                </li>
+                <li class="item">
+                    <img src="img/banner4.jpg" alt="...">
 
-                        <h1 translate="HOME_THE">The</h1>
+                    <div class="carousel-caption">
+                        <div class="caption-txt2">
+                            <img src="img/free-trial.png" alt="">
 
-                        <h1 class="green-text" translate="HOME_REVOLUTION">Revolution</h1>
-                        <span class="header-tag" translate="HOME_TRY_FOR_THIRTY_DAYS"> >> Try for 30 days</span>
-                        <img class="banner4-image" src="img/free-trial.png" alt="">
+                            <h1 class="bdr">Check out the</h1>
+
+                            <h2>Revolution</h2>
+                            <span class="header-tag"> <a href="#">>> Try for 30 days</a> </span>
+                        </div>
                     </div>
-                    <img src="img/banner4.jpg" alt="">
-                </div>
-            </div>
+                </li>
+            </ul>
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-banner" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-banner" data-slide-to="1"></li>
+                <li data-target="#carousel-banner" data-slide-to="2"></li>
+                <li data-target="#carousel-banner" data-slide-to="3"></li>
+            </ol>
+            <a class="left carousel-control" href="#carousel-banner" role="button" data-slide="prev"></a>
+            <a class="right carousel-control" href="#carousel-banner" role="button" data-slide="next"></a>
         </div>
     </div>
 </div>
@@ -90,9 +99,9 @@
 <div class="link-box">
     <div class="shadow">
         <div class="container">
-            <div id="flexslider1" class="flexslider carousel" flex-slider>
-                <ul class="slides">
-                    <li>
+            <div id="carousel-gallery" class="carousel slide" bootstrap-carousel>
+                <ul class="carousel-inner">
+                    <li class="item active">
                         <img src="img/img1.jpg" alt="" border="0">
                         <img src="img/img2.jpg" alt="" border="0">
                         <img src="img/img3.jpg" alt="" border="0">
@@ -102,7 +111,7 @@
                         <img src="img/img7.jpg" alt="" border="0">
                         <img src="img/img8.jpg" alt="" border="0">
                     </li>
-                    <li>
+                    <li class="item">
                         <img src="img/img1.jpg" alt="" border="0">
                         <img src="img/img2.jpg" alt="" border="0">
                         <img src="img/img3.jpg" alt="" border="0">
@@ -112,7 +121,7 @@
                         <img src="img/img7.jpg" alt="" border="0">
                         <img src="img/img8.jpg" alt="" border="0">
                     </li>
-                    <li>
+                    <li class="item">
                         <img src="img/img1.jpg" alt="" border="0">
                         <img src="img/img2.jpg" alt="" border="0">
                         <img src="img/img3.jpg" alt="" border="0">
@@ -123,6 +132,13 @@
                         <img src="img/img8.jpg" alt="" border="0">
                     </li>
                 </ul>
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-gallery" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-gallery" data-slide-to="1"></li>
+                    <li data-target="#carousel-gallery" data-slide-to="2"></li>
+                </ol>
+                <a class="left carousel-control" href="#carousel-gallery" role="button" data-slide="prev"></a>
+                <a class="right carousel-control" href="#carousel-gallery" role="button" data-slide="next"></a>
             </div>
         </div>
     </div>
@@ -132,32 +148,42 @@
         <h1 translate="HOME_TESTIMONIALS">Testimonials</h1>
 
         <div class="testimonial-pad">
-            <ul class="rslides" id="slider" responsive-slides>
-                <li>
-                    <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
-                    <div class="testi-txt quot-r">
-                        <span class="quot-l"></span>
+            <div id="carousel-testimonial" class="carousel slide" bootstrap-carousel>
+                <ul class="carousel-inner">
+                    <li class="item active">
+                        <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
+                        <div class="carousel-caption quot-r">
+                            <span class="quot-l"></span>
 
-                        <p translate="HOME_TESTIMONIAL_1">1 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
-                    <div class="testi-txt quot-r">
-                        <span class="quot-l"></span>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
+                        <div class="carousel-caption quot-r">
+                            <span class="quot-l"></span>
 
-                        <p translate="HOME_TESTIMONIAL_2">2 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
-                    <div class="testi-txt quot-r">
-                        <span class="quot-l"></span>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="testi-img"><img src="img/testi-img.png" alt=""></div>
+                        <div class="carousel-caption quot-r">
+                            <span class="quot-l"></span>
 
-                        <p translate="HOME_TESTIMONIAL_3">3 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                    </div>
-                </li>
-            </ul>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+                        </div>
+                    </li>
+                </ul>
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-testimonial" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-testimonial" data-slide-to="1"></li>
+                    <li data-target="#carousel-testimonial" data-slide-to="2"></li>
+                </ol>
+                <a class="left carousel-control" href="#carousel-testimonial" role="button" data-slide="prev"></a>
+                <a class="right carousel-control" href="#carousel-testimonial" role="button" data-slide="next"></a>
+            </div>
         </div>
     </div>
+</div>
 </div>
