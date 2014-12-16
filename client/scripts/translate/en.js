@@ -129,7 +129,6 @@
             INDEX_AND: 'and',
             INDEX_PRIVACY_POLICY: 'Privacy Policy',
             INDEX_CONTACT_US: 'Contact Us',
-            INDEX_TALK_TO_US: 'Talk To Us',
             INDEX_CONNECT_WITH_US: 'Connect With Us',
             INDEX_DISCLAIMER: 'Use of the YipTV service and this Web site constitutes acceptance of our ',
             INDEX_WELCOME: 'Welcome',

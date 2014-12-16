@@ -6,7 +6,7 @@
             restrict: 'A',
             link: function (scope, element) {
                 element.carousel({
-                    interval: 3000
+                    interval: 5000
                 });
             }
         };

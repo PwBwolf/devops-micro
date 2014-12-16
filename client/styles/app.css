@@ -114,11 +114,13 @@ a.btn-sign {
     width: 140px;
     border: 1px solid #6f2079;
     line-height: 39px;
+    cursor: pointer;
 }
 
 a.btn-sign:hover {
     background: url(../img/btn-bg.jpg) repeat-y #6f2079;
     color: #ffffff;
+    cursor: pointer;
 }
 
 a.btn-sign1 {
@@ -996,7 +998,7 @@ footer .f-btm a:hover {
     color: #FFFFFF;
     padding: 0px;
     margin: auto;
-    margin-top: -80px;
+    margin-top: -55px;
 }
 
 .txtbox {
