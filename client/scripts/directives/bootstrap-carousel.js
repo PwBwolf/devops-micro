@@ -4,9 +4,9 @@
     app.directive('bootstrapCarousel', [function () {
         return {
             restrict: 'A',
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
                 element.carousel({
-                    interval: 5000
+                    interval: attrs.bootstrapCarousel
                 });
             }
         };
