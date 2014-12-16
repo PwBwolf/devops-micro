@@ -9,7 +9,7 @@
                         <div class="frm-left">
                             <br>
                             <span class="label-text" translate="CHANGE_CREDIT_CARD_CC_NUMBER">Card Number</span>
-                            <br><input type="text" name="cardNumber" ng-model="mv.cardNumber" autocomplete="off" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+                            <br><input autofocus type="text" name="cardNumber" ng-model="mv.cardNumber" autocomplete="off" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
 
                             <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="CHANGE_CREDIT_CARD_CC_NUMBER_REQUIRED">Enter your credit card number</div>
                             <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="CHANGE_CREDIT_CARD_CC_NUMBER_ERROR">Enter a valid credit card number</div>
