@@ -151,6 +151,12 @@ function postDeploy(cb) {
             git.push('origin', 'v'+version, function(err) {
                 if(err) {
                     console.log('Could not push the release to github. Please run git push origin v'+version + ' to make the release');
+                } else {
+                    git.push('origin', 'master', function(err) {
+                        if(err) {
+                            console.log('Could not push the updated version file to master');
+                        }
+                    });
                 }
             });
         });
@@ -201,12 +207,14 @@ function checkAndPrepareDist(distDir, module) {
     if(!fs.existsSync('./'+distDir+'/.git')) {
         git.init({cwd: './'+distDir}, function(err) {
             if(!err) {
-                console.log(fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}));
-                git.addRemote(argv.env, fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}), {cwd: './'+distDir}, function(err) {
-                    if(err) {
-                        console.log('something went wrong:', err);
-                    }
-                });
+                var serverRemotes = fs.readJSONSync('./config/'+module+'-remote.json'));
+                for(var remote in serverRemotes) {
+                    git.addRemote(remote, serverRemotes[remote], {cwd: './'+distDir}, function(err) {
+                        if(err) {
+                            console.log('something went wrong:', err);
+                        }
+                    });
+                }
             }
         });
     }
