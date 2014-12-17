@@ -199,11 +199,19 @@ gulp.task('deploy', ['clean'], function(){
     if(argv.tag) {
         if(argv.tag !== 'false' && argv.tag !== 'true') {
             checkoutFromTag().then(function() {
+                gulp.src('./version.json')
+                    .pipe(gulp.dest('./'))
+                    .pipe(gulp.dest(destination));
                 gulp.start('doDeploy');
             }, function(err){
                 console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
                 console.log(err);
             });
+        } else {
+            gulp.src('./version.json')
+                .pipe(gulp.dest('./'))
+                .pipe(gulp.dest(destination));
+            gulp.start('doDeploy');
         }
     } else if(argv.env === 'integration') {
         if(argv.deployType) {
