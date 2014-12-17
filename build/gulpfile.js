@@ -201,19 +201,26 @@ gulp.task('deploy', ['clean'], function(){
             checkoutFromTag().then(function() {
                 gulp.start('doDeploy');
                 gulp.src('./version.json')
-                    .pipe(gulp.dest(destination));
+                    .pipe(gulp.dest('dist/client'));
             }, function(err){
                 console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
                 console.log(err);
             });
         } else {
-            gulp.src('./version.json')
-                .pipe(gulp.dest(destination));
+            if(argv.deployType) {
+                bumpVersion('version', 'dist/client');
+            } else {
+                gulp.src('./version.json')
+                    .pipe(gulp.dest('dist/client'));
+            }
             gulp.start('doDeploy');
         }
     } else if(argv.env === 'integration') {
         if(argv.deployType) {
             bumpVersion('version', 'dist/client');
+        } else {
+            gulp.src('./version.json')
+                .pipe(gulp.dest('dist/client'));
         }
         gulp.start('doDeploy');
     } else {
