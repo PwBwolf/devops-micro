@@ -131,7 +131,7 @@ gulp.task('server', function(cb) {
     cb();
 });
 
-function postDeploy() {
+function postDeploy(cb) {
     gulp.src('../server/webserver/app.js')
         .pipe(replace({
             patterns: [
@@ -143,14 +143,18 @@ function postDeploy() {
             usePrefix: false
         }))
         .pipe(gulp.dest('dist/server/webserver'));
+
     if(argv.tag) {
-        commitAndTag();
+        commitAndTag(cb);
+    } else {
+        cb();
     }
 }
 
-function commitAndTag() {
+function commitAndTag(cb) {
     gulp.src('./version.json')
         .pipe(tag_version());
+    cb();
 }
 
 function bumpVersion(versionFile, destination) {
@@ -172,12 +176,23 @@ gulp.task('deploy', ['clean'], function(){
     if(argv.deployType) {
         bumpVersion('version', 'dist/client');
     }
-    environment = argv.env || 'integration';
-    deployType = argv.deployType || 'patch';
-    tagBuild = argv.tag || true;
 
     gulp.start('doDeploy');
+
+    checkAndPrepareDist();
 });
+
+function checkAndPrepareDist() {
+    if(!fs.existsSync('dist')) {
+        git.init({cwd: './dist'}, function(err) {
+            if(!err) {
+                git.addRemote(argv.env, fs.readFileSync('.config/'+argv.env+'/git-remote'), {cwd: './dist'}, function(err) {
+                    console.log('Any error:', err);
+                });
+            }
+        });
+    }
+}
 
 gulp.task('clean', function (cb) {
     fs.emptyDirSync(".tmp");
