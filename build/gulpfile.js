@@ -146,18 +146,29 @@ function postDeploy(cb) {
         .pipe(gulp.dest('dist/server/webserver'));
 
     if(argv.tag) {
-        commitAndTag(cb);
+        var version = fs.readJSONSync('./version.json').version;
+        commitAndTag(version).then(function() {
+            git.push('origin', 'v'+version, function(err) {
+                if(err) {
+                    console.log('Could not push the release to github. Please run git push origin v'+version + ' to make the release');
+                }
+            });
+        });
     } else {
         cb();
     }
 }
 
-function commitAndTag(cb) {
+function commitAndTag(version) {
+    var def = Q.defer();
     gulp.src('./version.json')
         .pipe(git.add())
-        .pipe(git.commit('committing new version'))
+        .pipe(git.commit('committing version ' + version))
         .pipe(tag_version());
-    cb();
+    setTimeout(function(){
+        def.resolve();
+    }, 2000)
+    return def.promise;
 }
 
 function bumpVersion(versionFile, destination) {
