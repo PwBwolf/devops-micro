@@ -11,6 +11,7 @@ var argv = require('yargs').argv;
 var Q = require('q');
 var replace = require('gulp-replace-task');
 var tag_version = require('gulp-tag-version');
+var git = require('gulp-git');
 
 /**
  * Process and minify all our AngularJs views
@@ -170,7 +171,10 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], postDeploy);
+gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], function(cb){
+    postDeploy(cb);
+    checkAndPrepareDist('dist', 'yip-server');
+});
 
 gulp.task('deploy', ['clean'], function(){
     if(argv.deployType) {
@@ -178,16 +182,17 @@ gulp.task('deploy', ['clean'], function(){
     }
 
     gulp.start('doDeploy');
-
-    checkAndPrepareDist();
 });
 
-function checkAndPrepareDist() {
-    if(!fs.existsSync('dist')) {
-        git.init({cwd: './dist'}, function(err) {
+function checkAndPrepareDist(distDir, module) {
+    if(!fs.existsSync('./'+distDir+'/.git')) {
+        git.init({cwd: './'+distDir}, function(err) {
             if(!err) {
-                git.addRemote(argv.env, fs.readFileSync('.config/'+argv.env+'/git-remote'), {cwd: './dist'}, function(err) {
-                    console.log('Any error:', err);
+                console.log(fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}));
+                git.addRemote(argv.env, fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}), {cwd: './'+distDir}, function(err) {
+                    if(err) {
+                        console.log('something went wrong:', err);
+                    }
                 });
             }
         });
@@ -246,5 +251,7 @@ gulp.task('daemon:deploy', function() {
                 usePrefix: false
             }))
             .pipe(gulp.dest('daemons-dist'));
+
+        checkAndPrepareDist('daemons-dist', 'daemons');
     });
 });
