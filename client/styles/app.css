@@ -713,6 +713,10 @@ a.btn-signup {
     font-size: 17px;
 }
 
+#carousel-banner .carousel-caption .caption-txt2 .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag {
+    font-size: 17px;
+}
+
 #carousel-banner .carousel-caption .caption-txt2 h1 {
     font-size: 52px;
     line-height: 40px;
@@ -775,7 +779,7 @@ a.btn-signup {
 
 #carousel-banner .carousel-caption .caption-txt3 .header-tag {
     font-family: 'radikalregular';
-    font-size: 16px;
+    font-size: 17px;
     color: #3fd8d4;
     text-align: right;
     float: right;
@@ -1070,6 +1074,10 @@ footer .f-nav {
     padding: 0 30px 0 35px;
     border-left: 1px solid #bfbdbe;
     min-height: 130px;
+}
+
+footer .f-nav br {
+    line-height: 45px;
 }
 
 footer .f-nav h2 {
