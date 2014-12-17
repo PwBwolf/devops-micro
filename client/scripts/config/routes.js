@@ -8,7 +8,7 @@
             {
                 templateUrl: 'views/home.html',
                 controller: 'homeCtrl',
-                access: access.public
+                access: access.anon
             })
             .when('/sign-in',
             {
@@ -70,10 +70,10 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/my-account',
+            .when('/user-home',
             {
-                templateUrl: 'views/my-account.html',
-                controller: 'myAccountCtrl',
+                templateUrl: 'views/user-home.html',
+                controller: 'userHomeCtrl',
                 access: access.user
             })
             .when('/settings',
@@ -176,7 +176,7 @@
         $rootScope.$on('$routeChangeStart', function (event, next) {
             if (next.access && !userSvc.authorize(next.access)) {
                 if (userSvc.isSignedIn()) {
-                    $location.path('/');
+                    $location.path('/user-home');
                     $location.url($location.path());
                 } else {
                     $location.path('/sign-in');
