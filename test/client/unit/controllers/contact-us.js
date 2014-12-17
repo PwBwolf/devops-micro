@@ -13,13 +13,11 @@ describe('Controller: contactUsCtrl', function () {
         httpBackend;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $q, loggerSvc, appSvc, $httpBackend) {
+    beforeEach(inject(function ($controller, $rootScope, appSvc, $httpBackend, $http) {
         scope = $rootScope.$new();
         controller = $controller;
-        q = $q;
-        loggerService = loggerSvc;
+        loggerService = {};
         httpBackend = $httpBackend;
-        httpBackend.when("GET","/api/getCountries").respond(200,['USA', 'SPAIN']);
         appService = appSvc;
     }));
 
@@ -31,6 +29,15 @@ describe('Controller: contactUsCtrl', function () {
     }
 
     it('should attach a list of the countries', function () {
+        httpBackend.when("GET","/api/get-countries").respond(200,['USA', 'SPAIN']);
         setupController();
+        httpBackend.flush();
+        expect(scope.countries.length).toBe(2);
+        expect(scope.mv.country).toBe('United States');
     });
+
+    it('should show appropriate error message on error', function () {
+        httpBackend.when("GET","/api/get-countries").respond(404,[]);
+    });
+
 });
