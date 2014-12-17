@@ -128,7 +128,7 @@
             {
                 templateUrl: 'views/contact-us-success.html',
                 controller: 'commonCtrl',
-                access: access.anon
+                access: access.public
             })
             .when('/privacy-policy',
             {

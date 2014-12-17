@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="frm-right1">
                                     <span class="label-text" maxlength="50" translate="CONTACT_US_SKYPE_ID">Skype ID</span>
-                                    <br><input autocomplete="off" type="text" class="txtbox2" name="skypeId" id="skypeId" value="" ng-model="mv.skypeId">
+                                    <br><input autocomplete="off" maxlength="50" type="text" class="txtbox2" name="skypeId" id="skypeId" value="" ng-model="mv.skypeId">
                                 </div>
                             </div>
                             <div class="frm-right1">
@@ -59,6 +59,7 @@
                             <br> <select class="txtbox2" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries">
                         </select>
                         </div>
+                        <div class="frm">&nbsp;</div>
                         <div class="frm-btn">
                             <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="btn-submit">
                                 Submit

@@ -9,5 +9,6 @@ module.exports = {
     secretToken: 'yip#tv@dev#712',
     contactUsEmailList: 'achinth@gmail.com, achinth@yiptv.com, varun@yiptv.com',
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
-    aioUrl: 'http://yiptv.net'
+    aioUrl: 'http://yiptv.net',
+    aioApiKey: 'xxxx'
 };
