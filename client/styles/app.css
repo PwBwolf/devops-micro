@@ -2860,7 +2860,7 @@ a.subscription:hover {
     }
 
     a.credit-card, a.credit-card:hover, a.user-password, a.user-password:hover, a.subscription, a.subscription:hover {
-        padding: 50% 0 20%;
+        padding: 75% 0 20%;
     }
 
     .frm-left, .frm-right, .frm-left1, .frm-right1 {

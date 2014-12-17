@@ -12,8 +12,9 @@
                 return $http.get('/api/get-countries');
             },
 
-            saveContactUs: function (contactUsData, success, error) {
-                $http.post('/api/save-contact-us', contactUsData).success(success).error(error);
+            saveContactUs: function (data, success, error) {
+                data.details = data.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;');
+                $http.post('/api/save-contact-us', data).success(success).error(error);
             }
         };
     }]);
