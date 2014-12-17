@@ -9,7 +9,7 @@
                 userSvc.signIn(
                     $scope.mv,
                     function () {
-                        $location.path('/my-account');
+                        $location.path('/user-home');
                         $scope.saving = false;
                     },
                     function (response) {
