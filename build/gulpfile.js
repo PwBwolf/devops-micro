@@ -154,6 +154,8 @@ function postDeploy(cb) {
 
 function commitAndTag(cb) {
     gulp.src('./version.json')
+        .pipe(git.add())
+        .pipe(git.commit('committing new version'))
         .pipe(tag_version());
     cb();
 }
