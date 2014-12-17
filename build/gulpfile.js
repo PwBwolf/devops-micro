@@ -11,6 +11,7 @@ var argv = require('yargs').argv;
 var Q = require('q');
 var replace = require('gulp-replace-task');
 var tag_version = require('gulp-tag-version');
+var git = require('gulp-git');
 
 /**
  * Process and minify all our AngularJs views
@@ -131,7 +132,7 @@ gulp.task('server', function(cb) {
     cb();
 });
 
-function postDeploy() {
+function postDeploy(cb) {
     gulp.src('../server/webserver/app.js')
         .pipe(replace({
             patterns: [
@@ -143,14 +144,31 @@ function postDeploy() {
             usePrefix: false
         }))
         .pipe(gulp.dest('dist/server/webserver'));
+
     if(argv.tag) {
-        commitAndTag();
+        var version = fs.readJSONSync('./version.json').version;
+        commitAndTag(version).then(function() {
+            git.push('origin', 'v'+version, function(err) {
+                if(err) {
+                    console.log('Could not push the release to github. Please run git push origin v'+version + ' to make the release');
+                }
+            });
+        });
+    } else {
+        cb();
     }
 }
 
-function commitAndTag() {
+function commitAndTag(version) {
+    var def = Q.defer();
     gulp.src('./version.json')
+        .pipe(git.add())
+        .pipe(git.commit('committing version ' + version))
         .pipe(tag_version());
+    setTimeout(function(){
+        def.resolve();
+    }, 2000)
+    return def.promise;
 }
 
 function bumpVersion(versionFile, destination) {
@@ -166,18 +184,33 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], postDeploy);
+gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], function(cb){
+    postDeploy(cb);
+    checkAndPrepareDist('dist', 'yip-server');
+});
 
 gulp.task('deploy', ['clean'], function(){
     if(argv.deployType) {
         bumpVersion('version', 'dist/client');
     }
-    environment = argv.env || 'integration';
-    deployType = argv.deployType || 'patch';
-    tagBuild = argv.tag || true;
 
     gulp.start('doDeploy');
 });
+
+function checkAndPrepareDist(distDir, module) {
+    if(!fs.existsSync('./'+distDir+'/.git')) {
+        git.init({cwd: './'+distDir}, function(err) {
+            if(!err) {
+                console.log(fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}));
+                git.addRemote(argv.env, fs.readFileSync('./config/'+argv.env+'/'+module+'-remote', {encoding: 'utf8'}), {cwd: './'+distDir}, function(err) {
+                    if(err) {
+                        console.log('something went wrong:', err);
+                    }
+                });
+            }
+        });
+    }
+}
 
 gulp.task('clean', function (cb) {
     fs.emptyDirSync(".tmp");
@@ -231,5 +264,7 @@ gulp.task('daemon:deploy', function() {
                 usePrefix: false
             }))
             .pipe(gulp.dest('daemons-dist'));
+
+        checkAndPrepareDist('daemons-dist', 'daemons');
     });
 });
