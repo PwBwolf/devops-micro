@@ -1,5 +1,7 @@
 build/node_modules
 build/dist
+build/daemons-dist/
+daemons/rule-engine/node_modules
 build/.tmp
 client/.sass-cache
 client/bower_components

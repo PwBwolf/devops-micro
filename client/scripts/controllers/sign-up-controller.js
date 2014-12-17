@@ -1,14 +1,13 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$routeParams', function (userSvc, loggerSvc, $scope, $location, $filter, $routeParams) {
 
-        $scope.userType = $location.search().type;
-
+        $scope.userType = $routeParams.type;
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
-                $scope.mv.type = $scope.userType;
+                $scope.mv.type = $routeParams.type;
                 $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
                 $scope.saving = true;
                 userSvc.signUp(

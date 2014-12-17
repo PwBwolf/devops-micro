@@ -11,16 +11,16 @@
                 userSvc.verifyUser(
                     code,
                     function () {
-                        $scope.heading = $filter('translate')('VERIFY_USER_HEADING_SUCCESS') || 'Success';
-                        $scope.message = $filter('translate')('VERIFY_USER_MESSAGE_SUCCESS') || 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.';
+                        $scope.heading = 'VERIFY_USER_HEADING_SUCCESS';
+                        $scope.message = 'VERIFY_USER_MESSAGE_SUCCESS';
                     },
                     function () {
-                        $scope.heading = $filter('translate')('VERIFY_USER_HEADING_ERROR') || 'Error';
-                        $scope.message = $filter('translate')('VERIFY_USER_MESSAGE_ERROR') || 'Unable to verify your account or account is already verified. Please contact YipTV Customer Care';
+                        $scope.heading = 'VERIFY_USER_HEADING_ERROR';
+                        $scope.message = 'VERIFY_USER_MESSAGE_ERROR';
                     });
             } else {
-                $scope.heading = $filter('translate')('VERIFY_USER_HEADING_ERROR') || 'Error';
-                $scope.message = $filter('translate')('VERIFY_USER_MESSAGE_ERROR') || 'Unable to verify your account or account is already verified. Please contact YipTV Customer Care';
+                $scope.heading = 'VERIFY_USER_HEADING_ERROR';
+                $scope.message = 'VERIFY_USER_MESSAGE_ERROR';
             }
         }
     }]);

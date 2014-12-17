@@ -76,6 +76,12 @@ header {
     padding: 5px 0px 0px;
 }
 
+.header-tag {
+    color: #3FD8D4;
+    font-size: 13px;
+    font-family: 'gotham-bookgotham-book' !important;
+}
+
 .language {
     float: left;
     width: 100%;
@@ -99,18 +105,39 @@ header {
     background: url(../img/img-phone.png) no-repeat;
     padding: 0px 0px 5px 35px;
     margin: 0px;
+    vertical-align: middle;
 }
 
 a.btn-sign {
     background: #FFFFFF;
     text-align: center;
-    padding: 10px;
+    width: 140px;
     border: 1px solid #6f2079;
+    line-height: 39px;
+    cursor: pointer;
 }
 
 a.btn-sign:hover {
     background: url(../img/btn-bg.jpg) repeat-y #6f2079;
     color: #ffffff;
+    cursor: pointer;
+}
+
+a.btn-sign1 {
+    background: url(../img/btn-bg.jpg) repeat-y #6f2079;
+    color: #fff !important;
+    text-align: center;
+    width: 140px;
+    line-height: 39px;
+}
+
+a.btn-sign2 {
+    background: #061733;
+    color: #fff !important;
+    text-align: center;
+    width: 140px;
+    border: 1px solid #6f2079;
+    line-height: 39px;
 }
 
 a.btn-signup {
@@ -194,7 +221,7 @@ a.btn-signup {
 .banner-caption {
     position: absolute;
     top: 175px;
-    right: 5%;
+    right: 3%;
     z-index: 99;
     width: 485px;
     font-family: 'bebasregular';
@@ -239,7 +266,8 @@ a.btn-signup {
 
 .banner-caption h2 span.divide {
     font-family: 'radikalthin';
-    font-size: 64px;
+    font-size: 24px;
+    font-weight: bolder;
     padding: 0 0 0 5px;
     color: #3fd8d4;
 }
@@ -252,10 +280,46 @@ a.btn-signup {
     right: 0px;
 }
 
+.green-text {
+    color: #3FD8D4 !important;
+}
+
+.banner2-text {
+    line-height: 2;
+    color: #fff;
+    font-family: 'gotham-bookgotham-book';
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.banner2-image {
+    top: 35px !important;
+    right: 70px !important;
+}
+
+.banner3-text {
+    text-align: right;
+    line-height: 1;
+    color: #fff;
+    font-family: 'gotham-bookgotham-book';
+    font-size: 28px;
+}
+
+.banner3-text2 {
+    line-height: 20px;
+    color: #fff;
+    font-family: 'gotham-bookgotham-book';
+    font-size: 15px;
+}
+
+.banner4-image {
+    right: 90px !important;
+}
+
 .service {
     float: left;
     width: 100%;
-    background: url(../img/bdr-line.png) no-repeat top center #1f232e;
+    background: url(../img/bdr-line.png) no-repeat top center #3FD8D4;
     padding: 20px 0px 20px 0px;
     margin: 0px;
     font-family: 'radikallight';
@@ -268,7 +332,6 @@ a.btn-signup {
     width: 100%;
     min-height: 226px;
     background: url(../img/divider-line.png) top right no-repeat;
-    color: #FFFFFF;
     padding: 20px 10% 20px 10%;
     margin: 0px;
 }
@@ -278,7 +341,6 @@ a.btn-signup {
     width: 100%;
     min-height: 226px;
     background: none;
-    color: #FFFFFF;
     padding: 20px 10% 20px 10%;
     margin: 0px;
 }
@@ -671,6 +733,7 @@ footer .f-nav li a:hover {
 footer .f-nav.social a {
     float: left;
     margin-right: 5px;
+    padding-bottom: 10px;
 }
 
 footer .f-btm {
@@ -935,7 +998,7 @@ footer .f-btm a:hover {
     color: #FFFFFF;
     padding: 0px;
     margin: auto;
-    margin-top: -80px;
+    margin-top: -55px;
 }
 
 .txtbox {
@@ -965,6 +1028,27 @@ footer .f-btm a:hover {
     border-radius: 10px;
     padding: 0px;
     margin: 0px;
+}
+
+a.btn-import {
+    background: #0ac4bb;
+    width: 98%;
+    height: 54px;
+    line-height: 56px;
+    font-family: 'radikalregular';
+    font-size: 25px;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0px;
+}
+
+a.btn-import:hover {
+    color: #FFFFFF;
+    text-decoration: none;
 }
 
 .video-shadow {
@@ -1165,6 +1249,12 @@ footer .f-btm a:hover {
 
 #details {
     height: 250px;
+    resize: none;
+}
+
+#emailList {
+    height: 250px;
+    resize: none;
 }
 
 .txtbox1 {
@@ -1485,12 +1575,6 @@ a.subscription:hover {
 
 /*  Media CSS  */
 
-@media screen and (max-width: 707px) {
-    .textarea2 {
-        height: 219px;
-    }
-}
-
 @media (max-width: 1365px) {
 
     .textarea2 {
@@ -1514,18 +1598,10 @@ a.subscription:hover {
         width: 100%;
     }
 
-    .img-video {
-        margin-left: -15px;
-        width: 80.5%;
-    }
-
     .img-video img {
         width: 100%;
     }
 
-}
-
-@media (max-width: 1365px) {
     .img-video {
         margin-left: -15px;
         width: 75%;
@@ -1575,10 +1651,6 @@ a.subscription:hover {
 
     #myCarousel2.carousel, #myCarousel2.carousel .item {
         height: 300px;
-    }
-
-    #myCarousel.carousel, #myCarousel.carousel .item {
-        height: 394px;
     }
 
     #flexslider1 .slides img {
@@ -1654,7 +1726,7 @@ a.subscription:hover {
     }
 
     .banner-caption h2 span.divide {
-        font-size: 44px;
+        font-size: 24px;
     }
 
     .service {
@@ -1834,8 +1906,6 @@ a.subscription:hover {
         margin-left: 12px;
     }
 
-
-
     .banner-caption img {
         right: -20px;
     }
@@ -1949,6 +2019,41 @@ a.subscription:hover {
     a.credit-card, a.credit-card:hover, a.user-password, a.user-password:hover, a.subscription, a.subscription:hover {
         padding: 30% 0 10%;
     }
+
+    .banner2-text {
+        font-size: 20px !important;
+        line-height: 1;
+    }
+
+    .banner3-text {
+        font-size: 20px !important;
+        line-height: 1;
+    }
+}
+
+@media screen and (max-width: 707px) {
+    .textarea2 {
+        height: 219px;
+    }
+
+    .banner2-text {
+        font-size: 18px !important;
+        line-height: 1;
+    }
+
+    .banner3-text {
+        font-size: 18px !important;
+        line-height: 20px;
+    }
+
+    .banner3-text2 {
+        font-size: 12px !important;
+        line-height: 1;
+    }
+
+    .banner-caption h1 {
+        line-height: 30px;
+    }
 }
 
 @media screen and (max-width: 639px) {
@@ -1967,6 +2072,18 @@ a.subscription:hover {
 
     .f-logo img {
         width: 80px;
+    }
+
+    a.btn-sign {
+        width: 130px;
+    }
+
+    a.btn-sign1 {
+        width: 130px;
+    }
+
+    a.btn-sign2 {
+        width: 130px;
     }
 
     .right-box {
@@ -2025,10 +2142,16 @@ a.subscription:hover {
 
     .banner-caption h2 sub {
         font-size: 16px;
+        bottom: .01em !important;
     }
 
     .banner-caption h2 span.divide {
-        font-size: 40px;
+        font-size: 16px;
+    }
+
+    .banner3-text2 {
+        font-size: 13px !important;
+        line-height: 20px !important;
     }
 
     .revolution-box {
@@ -2092,6 +2215,12 @@ a.subscription:hover {
         height: 60px;
         line-height: 60px;
         font-size: 20px;
+    }
+
+    a.btn-import {
+        height: 60px;
+        line-height: 60px;
+        font-size: 16px;
     }
 
     .link-box .shadow {
@@ -2173,6 +2302,7 @@ a.subscription:hover {
 
     .banner-caption h1 {
         background: rgba(36, 196, 190, .8);
+        color: #FFF;
         float: left;
         width: 70%;
         margin: 0 15%;
@@ -2192,7 +2322,7 @@ a.subscription:hover {
 
     .banner-caption h2 span.divide {
         line-height: 28px;
-        font-size: 28px;
+        font-size: 16px;
     }
 
     .banner-caption img {
@@ -2236,6 +2366,25 @@ a.subscription:hover {
 
     .embed-responsive.embed-responsive-16by9 {
         padding-bottom: 57%;
+    }
+
+    .banner2-text {
+        font-size: 30px !important;
+        background: #000 !important;
+        color: rgba(36, 196, 190, .8) !important;
+    }
+
+    .green-text {
+        color: rgba(36, 196, 190, .8) !important;
+        background: #000 !important;
+    }
+
+    .banner4-image {
+        visibility: hidden;
+    }
+
+    .banner2-image {
+        visibility: hidden;
     }
 
 }

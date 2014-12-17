@@ -4,8 +4,8 @@
 
         <div class="container">
             <div class="signup-box">
-                <span class="label-text" ng-show="userType == 'free'">You are signing up as a free user. Your credit card will be used for verification purpose only.</span>
-                <span class="label-text" ng-show="userType == 'paid'">You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.</span>
+                <span class="label-text" ng-show="userType == 'free'" translate="SIGN_UP_MESSAGE_FREE">You are signing up as a free user. Your credit card will be used for verification purpose only.</span>
+                <span class="label-text" ng-show="userType == 'paid'" translate="SIGN_UP_MESSAGE_PAID">You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.</span>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
                     <div class="frm">
                         <div class="frm-left1">
@@ -50,7 +50,7 @@
                             <span class="label-text" translate="SIGN_UP_CVV">CVV</span>
                             <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}">
                             <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="SIGN_UP_CVV_REQUIRED">Enter your CVV</div>
-                            <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.cvc" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
+                            <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
                         </div>
                     </div>
                     <div class="frm">

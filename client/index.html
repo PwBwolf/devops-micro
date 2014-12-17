@@ -43,7 +43,7 @@
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -51,14 +51,14 @@
                 </button>
                 <div class="logo"><a href="/"><img src="img/logo.png" alt="YipTV" title="YipTV"></a></div>
             </div>
-            <div ng-show="showHeader" class="collapse navbar-collapse pull-right right-box home" id="bs-example-navbar-collapse-1">
+            <div ng-show="showHeader" class="collapse navbar-collapse pull-right right-box home" id="navbar-collapse-1">
                 <div class="right-nav">
                     <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
-                    <a href="/refer-friend" access-level="accessLevels.public" class="btn-sign" translate="INDEX_REFER_FRIEND">Sign In</a>
+                    <a href="/refer-friend" access-level="accessLevels.public" class="btn-sign" translate="INDEX_REFER_FRIEND">Refer a Friend</a>
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>
-                    <a href="/sign-up?type=paid" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_JOIN_NOW">Join Now</a>
-                    <a href="/sign-up?type=free" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_TRY_FREE">Try for 30 Days</a>
-                    <a href="/my-account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_MY_ACCOUNT">LIVE TV</a>
+                    <a href="/sign-up/paid" access-level="accessLevels.anon" class="btn-sign1" translate="INDEX_JOIN_NOW">Join Now</a>
+                    <a href="/sign-up/free" access-level="accessLevels.anon" class="btn-sign2" translate="INDEX_TRY_FREE">Try for 30 Days</a>
+                    <a ng-click="openAio()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_WATCH_NOW">Watch Now</a>
                     <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
@@ -84,16 +84,16 @@
                     <div class="f-nav">
                         <h2 translate="INDEX_SUPPORT">Support</h2>
                         <ul>
+                            <li><a href="/contact-us" translate="INDEX_CONTACT_US">Contact Us</a></li>
                             <li><a href="/terms-of-use" translate="INDEX_TERMS_OF_USE">Terms of Use</a></li>
                             <li><a href="/privacy-policy" translate="INDEX_PRIVACY_POLICY">Privacy Policy</a></li>
-                            <li><a href="/contact-us" translate="INDEX_CONTACT_US">Contact Us</a></li>
-                            <li><a href="/talk-to-us" translate="INDEX_TALK_TO_US">Talk To Us</a></li>
                         </ul>
                     </div>
                     <div class="f-nav social">
                         <h2 translate="INDEX_CONNECT_WITH_US">Connect With Us</h2>
                         <a href="https://www.facebook.com/pages/Yiptv/670093559720356" target="_blank"><img src="img/ico-fb.png" alt="Facebook" title="Facebook"></a>
                         <a href="https://twitter.com/yiptv" target="_blank"><img src="img/ico-tw.png" alt="Twitter" title="Twitter"></a>
+                        <span class="phone" ng-bind="appConfig.customerCareNumber"></span>
                     </div>
                 </div>
             </div>
@@ -123,10 +123,11 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
 <script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/angular-payments/lib/angular-payments.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:js scripts/scripts.js -->
+<!-- due to bugs in angular-payments modified version is used -->
+<script src="scripts/lib/angular-payments.js"></script>
 <script src="scripts/config/app.js"></script>
 <script src="scripts/config/routing.js"></script>
 <script src="scripts/config/interceptor.js"></script>
@@ -137,6 +138,7 @@
 <script src="scripts/directives/complex-password.js"></script>
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
+<script src="scripts/directives/bootstrap-carousel.js"></script>
 <script src="scripts/directives/flex-slider.js"></script>
 <script src="scripts/directives/responsive-slides.js"></script>
 <script src="scripts/translate/en.js"></script>

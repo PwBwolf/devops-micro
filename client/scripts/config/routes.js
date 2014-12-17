@@ -16,7 +16,7 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up',
+            .when('/sign-up/:type',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
@@ -139,12 +139,6 @@
             .when('/terms-of-use',
             {
                 templateUrl: 'views/terms-of-use.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/talk-to-us',
-            {
-                templateUrl: 'views/talk-to-us.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
