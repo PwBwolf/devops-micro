@@ -207,7 +207,7 @@ function checkAndPrepareDist(distDir, module) {
     if(!fs.existsSync('./'+distDir+'/.git')) {
         git.init({cwd: './'+distDir}, function(err) {
             if(!err) {
-                var serverRemotes = fs.readJSONSync('./config/'+module+'-remote.json'));
+                var serverRemotes = fs.readJSONSync('./config/'+module+'-remote.json');
                 for(var remote in serverRemotes) {
                     git.addRemote(remote, serverRemotes[remote], {cwd: './'+distDir}, function(err) {
                         if(err) {
