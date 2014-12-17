@@ -203,18 +203,25 @@ gulp.task('deploy', ['clean'], function(){
     gulp.start('doDeploy');
 });
 
+function addRemote(remote, serverRemotes, distDir) {
+    var def = Q.defer();
+    git.addRemote(remote, serverRemotes[remote], {cwd: './'+distDir}, function(err) {
+        if(err) {
+            console.log('something went wrong:', err);
+        }
+        def.resolve();
+    });
+    return def.promise;
+}
+
 function checkAndPrepareDist(distDir, module) {
     if(!fs.existsSync('./'+distDir+'/.git')) {
         git.init({cwd: './'+distDir}, function(err) {
             if(!err) {
                 var serverRemotes = fs.readJSONSync('./config/'+module+'-remote.json');
-                for(var remote in serverRemotes) {
-                    git.addRemote(remote, serverRemotes[remote], {cwd: './'+distDir}, function(err) {
-                        if(err) {
-                            console.log('something went wrong:', err);
-                        }
-                    });
-                }
+                addRemote('integration', serverRemotes, distDir).then(function(){
+                    addRemote('test', serverRemotes, distDir);
+                });
             }
         });
     }
