@@ -145,7 +145,7 @@ function postDeploy(cb) {
         }))
         .pipe(gulp.dest('dist/server/webserver'));
 
-    if(argv.tag) {
+    if(argv.tag && argv.tag === 'true') {
         var version = fs.readJSONSync('./version.json').version;
         commitAndTag(version).then(function() {
             git.push('origin', 'v'+version, function(err) {
@@ -196,12 +196,37 @@ gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], functio
 });
 
 gulp.task('deploy', ['clean'], function(){
-    if(argv.deployType) {
-        bumpVersion('version', 'dist/client');
+    if(argv.tag) {
+        if(argv.tag !== 'false' && argv.tag !== 'true') {
+            checkoutFromTag().then(function() {
+                gulp.start('doDeploy');
+            }, function(err){
+                console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
+                console.log(err);
+            });
+        }
+    } else if(argv.env === 'integration') {
+        if(argv.deployType) {
+            bumpVersion('version', 'dist/client');
+        }
+        gulp.start('doDeploy');
+    } else {
+        console.log('Deploying to an environment other than integration requires a tag!');
+        console.log('Usage: gulp deploy --env test|staging|production --tag x.x.xx');
     }
-
-    gulp.start('doDeploy');
 });
+
+function checkoutFromTag() {
+    var def = Q.defer();
+    git.checkout('v'+argv.tag, function(err) {
+        if(!err) {
+            def.resolve();
+        } else {
+            def.reject(err);
+        }
+    });
+    return def.promise;
+}
 
 function addRemote(remote, serverRemotes, distDir) {
     var def = Q.defer();
