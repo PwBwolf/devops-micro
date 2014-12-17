@@ -3,6 +3,7 @@ build/dist
 build/.tmp
 client/.sass-cache
 client/bower_components
+test/client/unit/node_modules
 logs/
 .idea
 .DS_Store
