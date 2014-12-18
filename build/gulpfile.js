@@ -333,3 +333,56 @@ gulp.task('daemon:deploy', function() {
         checkAndPrepareDist('daemons-dist', 'daemons');
     });
 });
+
+/*****************************************************************/
+/*                        Development                            */
+/*****************************************************************/
+var historyApiFallback = require('connect-history-api-fallback');
+gulp.task('connect', function () {
+    var connect = require('connect');
+
+    // Start the Node server to provide the API
+    var nodemon = require('gulp-nodemon');
+    nodemon({ cwd: '../server/webserver', script: 'app.js', ext: 'js' })
+        .on('restart', function () {
+            console.log('Node server restarted!')
+        });
+
+
+    var app = connect()
+        .use(historyApiFallback)
+        .use(require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]']))
+        .use(require('connect-livereload')({ port: 35729 }))
+        .use(connect.static('../client'))
+        .use(connect.static('../client/.tmp'))
+        .use(connect.directory('../client'));
+
+    require('http').createServer(app)
+        .listen(9000)
+        .on('listening', function () {
+            console.log('Started connect web server on http://localhost:9000');
+        });
+});
+
+gulp.task('serve', ['connect'], function () {
+    require('opn')('http://localhost:9000');
+});
+
+gulp.task('watch', ['connect', 'serve'], function () {
+    var server = $.livereload();
+
+    // watch for changes
+    gulp.watch([
+        '../client/*.html',
+        '.tmp/styles/**/*.css',
+        '../client/scripts/**/*.js',
+        '../client/img/**/*'
+    ]).on('change', function (file) {
+        server.changed(file.path);
+    });
+
+    gulp.watch('../client/styles/**/*.css', ['styles']);
+    gulp.watch('../client/scripts/**/*.js', ['scripts']);
+    gulp.watch('../client/img/**/*', ['images']);
+    //gulp.watch('bower.json', ['wiredep']);
+});
