@@ -12,6 +12,7 @@ var Q = require('q');
 var replace = require('gulp-replace-task');
 var tag_version = require('gulp-tag-version');
 var git = require('gulp-git');
+var connect = require('gulp-connect');
 
 /**
  * Process and minify all our AngularJs views
@@ -332,4 +333,56 @@ gulp.task('daemon:deploy', function() {
 
         checkAndPrepareDist('daemons-dist', 'daemons');
     });
+});
+
+/*****************************************************************/
+/*                        Development                            */
+/*****************************************************************/
+gulp.task('connect', function () {
+    fs.createDirSync('../logs');
+    // Start the Node server to provide the API
+    var nodemon = require('gulp-nodemon');
+    nodemon({ cwd: '../server/webserver', script: 'app.js', ext: 'js' });
+
+    connect.server({
+        root: '../../client',
+        livereload: true,
+        port: 9000,
+        middleware: function (connect, opt) {
+            return [
+                require('connect-history-api-fallback'),
+                require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]'])
+            ]
+        }
+    });
+});
+
+gulp.task('serve', ['connect', 'watch'], function () {
+    setTimeout(function(){
+        require('opn')('http://localhost:9000');
+    }, 2000);
+});
+
+gulp.task('reload-html', function(){
+    gulp.src('../../client/**/*.html')
+        .pipe(connect.reload());
+});
+gulp.task('reload-js', function(){
+    gulp.src('../../client/scripts/**/*.js')
+        .pipe(connect.reload());
+});
+gulp.task('reload-css', function(){
+    gulp.src('../../client/styles/**/*.css')
+        .pipe(connect.reload());
+});
+gulp.task('reload-images', function(){
+    gulp.src('../../client/images/**/*')
+        .pipe(connect.reload());
+});
+
+gulp.task('watch', function () {
+    gulp.watch(['../../client/**/*.html'], ['reload-html']);
+    gulp.watch(['../../client/scripts/**/*.js'], ['reload-js']);
+    gulp.watch(['../../client/styles/**/*.css'], ['reload-css']);
+    gulp.watch(['../../client/img/**/*'], ['reload-images']);
 });
