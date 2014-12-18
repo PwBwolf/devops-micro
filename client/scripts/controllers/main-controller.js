@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', '$window', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route, $window) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', '$window', '$filter', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route, $window, $filter) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -21,7 +21,7 @@
                 $scope.appConfig = response;
                 $scope.showHeader = true;
             }).error(function () {
-                loggerSvc.logError('Error fetching application config');
+                loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG') || 'Error fetching application configuration');
                 $scope.showHeader = false;
             });
         }
@@ -60,7 +60,11 @@
         };
 
         $scope.openAio = function() {
-            $window.open($scope.appConfig.aioUrl);
+            userSvc.getAioToken(function(response) {
+                $window.open($scope.appConfig.aioUrl + '/app/login.php?username=' + encodeURIComponent(response.username) + '&sso_token=' + response.sso_token);
+            }, function() {
+                loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO') || 'Unable to open video portal');
+            });
         };
     }]);
 }(angular.module('app')));

@@ -160,6 +160,8 @@
             LEADERSHIP_BA3_DESCRIPTION: 'Dan Lovatt has over 30 years of experience in multi-national telecommunication and telecommunications manufacturing in the United States as well as Internationally. Most Recently, Dan served as Chief Executive Officer for PCCW Global where he was responsible for managing the Company&#39;s International Business outside of their home Market of China. Prior to PCCW, he worked as the International CFO for Lucent Technologies as well a number of Services Partners, Content Providers, Telecom Authorities and Governmental Agencies where he held various management positions.',
             LEADERSHIP_BA4_NAME: 'Bryan Buckley, Board Advisor',
             LEADERSHIP_BA4_DESCRIPTION: 'Commercial Director Bryan Buckley is an acclaimed award winning advertising and production executive directing over 40 Super Bowl commercials and dubbed as "The King of Superbowl" by the New York Times. Bryan&#39;s career began in 1994 with his inception of ESPNs now benchmark "This is Sportscenter" campaign. Since then, Bryan has received virtually every honor, award, and accolade in the industry securing his spot atop "best of" lists in the US and internationally. Mr. Buckley is Co-Founder of Hungryman Productions, one of the world&#39;s largest and leading creative production agencies and has been named Commercial Director of the Year by the Directors Guild of America.',
+            MAIN_ERROR_APP_CONFIG: 'Error fetching application configuration',
+            MAIN_ERROR_AIO_SSO: 'Error opening video portal',
             NOT_FOUND_HEADING: 'Page Not Found',
             NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
             PRIVACY_POLICY_HEADING: 'Privacy Policy',

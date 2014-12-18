@@ -120,6 +120,13 @@
                     method: 'GET',
                     params: {code: code}
                 }).success(success).error(error);
+            },
+
+            getAioToken: function(success, error) {
+                $http({
+                    url: '/api/get-aio-token',
+                    method: 'GET'
+                }).success(success).error(error);
             }
         };
     }]);

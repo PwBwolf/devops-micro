@@ -16,6 +16,7 @@ var User = new Schema({
     hashedPassword: {type: String, required: true},
     salt: {type: String, required: true},
     key: {type: Number, required: true},
+    aioAccountId: Number,
     role: { type: {
         bitMask: { type: Number, required: true },
         title: {type: String, required: true }
