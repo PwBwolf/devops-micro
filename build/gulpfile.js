@@ -145,6 +145,18 @@ function postDeploy(cb) {
         }))
         .pipe(gulp.dest('dist/server/webserver'));
 
+    gulp.src('../server/common/database/fixtures.js')
+        .pipe(replace({
+            patterns: [
+                {
+                    match: 'development',
+                    replacement: argv.env
+                }
+            ],
+            usePrefix: false
+        }))
+        .pipe(gulp.dest('dist/server/common/database'));
+
     if(argv.tag && argv.tag === 'true') {
         var version = fs.readJSONSync('./version.json').version;
         commitAndTag(version).then(function() {

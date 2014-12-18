@@ -7,7 +7,7 @@
 npm update
 
 # run the script to reload the fixtures to the database
-cwd = `pwd`
+cwd=`pwd`
 cd ../common/database
 node fixtures.js
 cd $cwd
