@@ -16,7 +16,6 @@ require('../common/config/logger');
 require('../common/config/models')(modelsPath);
 require('./express')(app, logger);
 require('./routes')(app);
-require('../common/database/fixtures')();
 
 http.createServer(app).listen(port, function () {
     console.log('YipTV server listening on port ' + port);
