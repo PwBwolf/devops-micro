@@ -11,6 +11,6 @@ var Rule = new Schema({
     enabled: Boolean,
     condition: Function,
     consequence: Function
-});
+}, {collection: 'Rules'});
 
 mongoose.model('Rule', Rule);
