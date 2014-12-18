@@ -12,6 +12,7 @@ var Q = require('q');
 var replace = require('gulp-replace-task');
 var tag_version = require('gulp-tag-version');
 var git = require('gulp-git');
+var connect = require('gulp-connect');
 
 /**
  * Process and minify all our AngularJs views
@@ -337,52 +338,51 @@ gulp.task('daemon:deploy', function() {
 /*****************************************************************/
 /*                        Development                            */
 /*****************************************************************/
-var historyApiFallback = require('connect-history-api-fallback');
 gulp.task('connect', function () {
-    var connect = require('connect');
-
+    fs.createDirSync('../logs');
     // Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
-    nodemon({ cwd: '../server/webserver', script: 'app.js', ext: 'js' })
-        .on('restart', function () {
-            console.log('Node server restarted!')
-        });
+    nodemon({ cwd: '../server/webserver', script: 'app.js', ext: 'js' });
 
-
-    var app = connect()
-        .use(historyApiFallback)
-        .use(require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]']))
-        .use(require('connect-livereload')({ port: 35729 }))
-        .use(connect.static('../client'))
-        .use(connect.static('../client/.tmp'))
-        .use(connect.directory('../client'));
-
-    require('http').createServer(app)
-        .listen(9000)
-        .on('listening', function () {
-            console.log('Started connect web server on http://localhost:9000');
-        });
-});
-
-gulp.task('serve', ['connect'], function () {
-    require('opn')('http://localhost:9000');
-});
-
-gulp.task('watch', ['connect', 'serve'], function () {
-    var server = $.livereload();
-
-    // watch for changes
-    gulp.watch([
-        '../client/*.html',
-        '.tmp/styles/**/*.css',
-        '../client/scripts/**/*.js',
-        '../client/img/**/*'
-    ]).on('change', function (file) {
-        server.changed(file.path);
+    connect.server({
+        root: '../../client',
+        livereload: true,
+        port: 9000,
+        middleware: function (connect, opt) {
+            return [
+                require('connect-history-api-fallback'),
+                require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]'])
+            ]
+        }
     });
+});
 
-    gulp.watch('../client/styles/**/*.css', ['styles']);
-    gulp.watch('../client/scripts/**/*.js', ['scripts']);
-    gulp.watch('../client/img/**/*', ['images']);
-    //gulp.watch('bower.json', ['wiredep']);
+gulp.task('serve', ['connect', 'watch'], function () {
+    setTimeout(function(){
+        require('opn')('http://localhost:9000');
+    }, 2000);
+});
+
+gulp.task('reload-html', function(){
+    gulp.src('../../client/**/*.html')
+        .pipe(connect.reload());
+});
+gulp.task('reload-js', function(){
+    gulp.src('../../client/scripts/**/*.js')
+        .pipe(connect.reload());
+});
+gulp.task('reload-css', function(){
+    gulp.src('../../client/styles/**/*.css')
+        .pipe(connect.reload());
+});
+gulp.task('reload-images', function(){
+    gulp.src('../../client/images/**/*')
+        .pipe(connect.reload());
+});
+
+gulp.task('watch', function () {
+    gulp.watch(['../../client/**/*.html'], ['reload-html']);
+    gulp.watch(['../../client/scripts/**/*.js'], ['reload-js']);
+    gulp.watch(['../../client/styles/**/*.css'], ['reload-css']);
+    gulp.watch(['../../client/img/**/*'], ['reload-images']);
 });
