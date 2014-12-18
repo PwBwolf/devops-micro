@@ -10,5 +10,10 @@ module.exports = {
     contactUsEmailList: 'achinth@gmail.com, achinth@yiptv.com, varun@yiptv.com',
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
     aioUrl: 'http://yiptv.net',
-    aioApiKey: 'xxxx'
+    aioUserPin: '1234',
+    aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
+    aioFreePackageId: 63,
+    aioUnlimitedPackageId: 64,
+    yipFreePackageId: 1,
+    yipUnlimitedPackageId: 2
 };

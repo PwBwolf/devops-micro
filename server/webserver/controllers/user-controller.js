@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
+    aio = require('../../common/services/aio'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
     User = mongoose.model('User'),
     Account = mongoose.model('Account'),
@@ -61,14 +62,45 @@ module.exports = {
                         userObj.remove(function (err) {
                             callback(err);
                         });
+                    } else {
+                        userObj.account = accountObj;
+                        userObj.save(function (err) {
+                            if (err) {
+                                callback(err);
+                            }
+                            callback(null, userObj, accountObj);
+                        });
                     }
-                    userObj.account = accountObj;
-                    userObj.save(function (err) {
-                        if (err) {
-                            callback(err);
-                        }
-                        callback(null, userObj, accountObj);
-                    });
+                });
+            },
+            // create user in AIO
+            function (userObj, accountObj, callback) {
+                var packages = userObj.type === 'free' ? [config.aioFreePackageId] : [config.aioUnlimitedPackageId];
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
+                    if (err) {
+                        logger.logError(err);
+                        // if AIO user creation fails delete user and account from our DB
+                        accountObj.remove(function (err) {
+                            if (err) {
+                                logger.logError(JSON.stringify(err));
+                            }
+                        });
+                        userObj.remove(function (err) {
+                            if (err) {
+                                logger.logError(JSON.stringify(err));
+                            }
+                        });
+                        callback(err);
+                    } else {
+                        userObj.aioAccountId = data.account;
+                        userObj.save(function (err) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
                 });
             },
             // send verification email
@@ -82,7 +114,7 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError(err);
+                        logger.logError(JSON.stringify(err));
                     }
                 });
                 callback(null, userObj, accountObj);
@@ -375,5 +407,15 @@ module.exports = {
 
     changeCreditCard: function (req, res) {
         return res.status(200).end();
+    },
+
+    getAioToken: function (req, res) {
+        aio.getToken(req.email, function (err, data) {
+            if (err) {
+                logger.logError(JSON.stringify(err));
+                return res.status(500).end();
+            }
+            return res.send(data);
+        });
     }
 };
