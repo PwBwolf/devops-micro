@@ -59,11 +59,11 @@
                 return user.role.title !== userRoles.anon.title;
             },
 
-            isEmailUnique: function (email, firstName, lastName, success, error) {
+            isEmailUnique: function (email, success, error) {
                 $http({
                     method: 'GET',
                     url: '/api/is-email-unique',
-                    params: {email: email.toLowerCase(), firstName: firstName, lastName: lastName}
+                    params: {email: email.toLowerCase()}
                 }).success(success).error(error);
             },
 

@@ -75,7 +75,7 @@ module.exports = {
             },
             // create user in AIO
             function (userObj, accountObj, callback) {
-                var packages = userObj.type === 'free' ? [config.aioFreePackageId] : [config.aioUnlimitedPackageId];
+                var packages = userObj.type === 'free' ? config.aioFreePackages : config.aioUnlimitedPackages;
                 aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                     if (err) {
                         logger.logError(err);
@@ -299,40 +299,7 @@ module.exports = {
                 logger.logError(err);
                 return res.send(false);
             }
-            if (!user) {
-                if (validator.isEmail(req.query.email)) {
-                    Visitor.findOne({email: req.query.email}, function (err, visitor) {
-                        if (err) {
-                            logger.error(JSON.stringify(err));
-                        }
-                        if (!visitor) {
-                            var visitorObj = new Visitor({email: req.query.email, firstName: req.query.firstName, lastName: req.query.lastName});
-                            visitorObj.save(function (err) {
-                                if (err) {
-                                    logger.error(JSON.stringify(err));
-                                }
-                            });
-                        } else {
-                            if (req.query.firstName) {
-                                visitor.firstName = req.query.firstName;
-                            }
-                            if (req.query.lastName) {
-                                visitor.lastName = req.query.lastName;
-                            }
-                            if (req.query.firstName || req.query.lastName) {
-                                visitor.save(function (err) {
-                                    if (err) {
-                                        logger.logError(err);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-                return res.send(true);
-            } else {
-                return res.send(false);
-            }
+            return res.send(!user);
         });
     },
 

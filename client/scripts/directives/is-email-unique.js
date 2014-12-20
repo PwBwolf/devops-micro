@@ -12,17 +12,15 @@
 
                 function checkEmailUnique(viewValue) {
                     ctrl.$setValidity('isEmailUnique', true);
-                    if (ctrl.$valid) {
-                        userSvc.isEmailUnique(
-                            element.val(), scope.$eval(attrs.firstName), scope.$eval(attrs.lastName),
-                            function (data) {
-                                ctrl.$setValidity('isEmailUnique', data);
-                            },
-                            function () {
-                                ctrl.$setValidity('isEmailUnique', false);
-                            }
-                        );
-                    }
+                    userSvc.isEmailUnique(
+                        element.val(),
+                        function (data) {
+                            ctrl.$setValidity('isEmailUnique', data);
+                        },
+                        function () {
+                            ctrl.$setValidity('isEmailUnique', false);
+                        }
+                    );
                     return viewValue;
                 }
             }

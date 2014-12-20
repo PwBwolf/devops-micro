@@ -12,8 +12,8 @@ module.exports = {
     aioUrl: 'http://yiptv.net',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePackageId: 63,
-    aioUnlimitedPackageId: 64,
+    aioFreePackages: [{'packageid' : 27}, {'packageid' : 62}],
+    aioUnlimitedPackages: [{'packageid' : 1}, {'packageid' : 27}, {'packageid' : 62}],
     yipFreePackageId: 1,
     yipUnlimitedPackageId: 2
 };

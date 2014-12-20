@@ -6,7 +6,7 @@
             restrict: 'A',
             link: function (scope, element, attrs) {
                 element.carousel({
-                    interval: attrs.bootstrapCarousel
+                    interval: attrs.interval
                 });
             }
         };

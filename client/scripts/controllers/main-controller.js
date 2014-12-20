@@ -61,7 +61,7 @@
 
         $scope.openAio = function() {
             userSvc.getAioToken(function(response) {
-                $window.open($scope.appConfig.aioUrl + '/app/login.php?username=' + encodeURIComponent(response.username) + '&sso_token=' + response.sso_token);
+                $window.open($scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token);
             }, function() {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO') || 'Unable to open video portal');
             });
