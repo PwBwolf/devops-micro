@@ -26,6 +26,7 @@ module.exports = function(config) {
         '../../../client/bower_components/angular-resource/angular-resource.js',
         '../../../client/bower_components/angular-translate/angular-translate.js',
         '../../../client/bower_components/toastr/toastr.js',
+        '../../../client/bower_components/fastclick/lib/fastclick.js',
         'node_modules/angular-mocks/angular-mocks.js',
         '../../../client/scripts/**/*.js',
         'controllers/*.js'
