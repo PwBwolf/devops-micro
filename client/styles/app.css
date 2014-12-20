@@ -1037,7 +1037,7 @@ sub {
 }
 
 .about-text {
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .align-text {
