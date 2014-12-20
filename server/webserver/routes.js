@@ -11,6 +11,7 @@ var _ = require('lodash'),
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
         {path: '/api/get-countries', httpMethod: 'GET', middleware: [AppCtrl.getCountries]},
+        {path: '/api/save-visitor', httpMethod: 'POST', middleware: [AppCtrl.saveVisitor]},
         {path: '/api/sign-up', httpMethod: 'POST', middleware: [UserCtrl.signUp]},
         {path: '/api/sign-in', httpMethod: 'POST', middleware: [UserCtrl.signIn]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut]},
@@ -24,6 +25,7 @@ var _ = require('lodash'),
         {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
         {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
         {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
+        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
