@@ -15,5 +15,6 @@ module.exports = {
     aioFreePackageId: 63,
     aioUnlimitedPackageId: 64,
     yipFreePackageId: 1,
-    yipUnlimitedPackageId: 2
+    yipUnlimitedPackageId: 2,
+    cleanup: ['Account', 'User', 'ContactUs', 'Visitor']
 };

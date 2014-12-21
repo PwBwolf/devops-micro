@@ -122,6 +122,14 @@ gulp.task('extras', function () {
 });
 
 /**
+ * Copy all the tools in the project a tools directory
+ */
+gulp.task('tools', function () {
+    return gulp.src(['../tools/*.*'], { dot: true })
+        .pipe(gulp.dest('dist/tools'));
+});
+
+/**
  * Copy the files and directories specific to the NodeJS server.
  * We will copy the common and webserver directories along with the package.json located in the parent server
  * directory.
@@ -146,7 +154,7 @@ function postDeploy(cb) {
         }))
         .pipe(gulp.dest('dist/server/webserver'));
 
-    gulp.src('../server/common/database/fixtures.js')
+    gulp.src(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'])
         .pipe(replace({
             patterns: [
                 {
@@ -203,7 +211,7 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server'], function(cb){
+gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -282,6 +290,7 @@ gulp.task('clean', function (cb) {
     fs.emptyDirSync(".tmp");
     fs.emptyDirSync("dist/client");
     fs.emptyDirSync("dist/server");
+    fs.emptyDirSync("dist/tools");
     cb();
 });
 
