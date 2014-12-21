@@ -8,7 +8,7 @@ if(!process.env.MONGO_PWD) {
 module.exports = {
     environment: 'production',
     port: 3000,
-    db: 'mongodb://' + process.env.MONGO_PWD + 'localhost/yiptv',
+    db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
     url: 'http://yiptv.com/',
     imageUrl: 'http://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
