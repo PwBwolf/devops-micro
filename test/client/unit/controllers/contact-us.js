@@ -9,12 +9,18 @@ describe('Controller: contactUsCtrl', function () {
         scope,
         appService,
         httpBackend,
-        location;
+        location,
+        loggerService;
 
-    // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, appSvc, $httpBackend, $location) {
-        scope = $rootScope.$new();
-        controller = $controller;
+    function initController() {
+        controller('contactUsCtrl', {
+            $scope: scope,
+            appSvc: appService,
+            loggerSvc: loggerService
+        });
+    }
+
+    function initForm () {
         scope.form = {
             $valid: false,
             name: {
@@ -38,30 +44,50 @@ describe('Controller: contactUsCtrl', function () {
             interest: 'Submit a question',
             email: 'varunv@yiptv.com',
             telephone: '',
-            details: 'I want to know about different subscription packages'
-        }
-        httpBackend = $httpBackend;
-        appService = appSvc;
-        location = $location;
-    }));
-
-    function setupController() {
-        controller('contactUsCtrl', {
-            $scope: scope,
-            appSvc: appService
-        });
+            details: 'I want to know about different subscriptions'
+        };
     }
 
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function ($controller, $rootScope, appSvc, $httpBackend, $location, loggerSvc) {
+        scope = $rootScope.$new();
+        controller = $controller;
+        httpBackend = $httpBackend;
+        appService = appSvc;
+        loggerService = loggerSvc;
+        location = $location;
+        initController();
+    }));
+
     it('should attach a list of the countries', function () {
-        httpBackend.when("GET", "/api/get-countries").respond(200, ['USA', 'SPAIN']);
-        setupController();
-        httpBackend.flush();
-        expect(scope.countries.length).toBe(2);
-        expect(scope.mv.country).toBe('United States');
+        var countries = ['USA', 'Spain', 'Mexico', 'Canada', 'UK'];
+        for(var i=0; i<5; i++) {
+            httpBackend.when("GET", "/api/get-countries").respond(200, countries);
+            initController();
+            httpBackend.flush();
+            expect(scope.countries.length).toBe(countries.length);
+            expect(scope.mv.country).toBe('United States');
+            countries.splice(0, 1);
+        }
+    });
+
+    it('should log proper error message on error fetching the countries', function () {
+        var errorResponses = [404, 401, 501];
+        spyOn(loggerService,'logError');
+        for(var i=0; i<3; i++) {
+            httpBackend.when("GET", "/api/get-countries").respond(errorResponses[i], []);
+            initController();
+            httpBackend.flush();
+            expect(scope.countries).toBe(undefined);
+            expect(scope.mv).toBe(undefined);
+            expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
+        }
     });
 
     it('should set the form dirty', function () {
-        setupController();
+        httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        httpBackend.flush();
+        initForm();
         scope.saveContactUs();
         expect(scope.form.name.$dirty).toBe(true);
         expect(scope.form.interest.$dirty).toBe(true);
@@ -70,15 +96,33 @@ describe('Controller: contactUsCtrl', function () {
         expect(scope.form.details.$dirty).toBe(true);
     });
 
-    it('should send the form data to server', function () {
-        httpBackend.when("GET", "/api/get-countries").respond(200, ['USA', 'SPAIN']);
-        setupController();
-        httpBackend.when("POST", '/api/save-contact-us').respond(200, []);
+    it('should send the contact us form data to server', function () {
+        httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        httpBackend.flush();
+        initForm();
         scope.form.$valid = true;
+        httpBackend.when("POST", '/api/save-contact-us').respond(200, []);
         scope.saveContactUs();
         httpBackend.flush();
         expect(scope.saving).toBe(false);
         expect(location.path()).toBe('/contact-us-success');
+    });
+
+    it('should log proper error message on save contact us form post error', function () {
+        httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        httpBackend.flush();
+        initForm();
+        scope.form.$valid = true;
+        var errorResponses = [404, 401, 501];
+        spyOn(loggerService,'logError');
+        for(var i=0; i<3; i++) {
+            httpBackend.when("POST", '/api/save-contact-us').respond(errorResponses[i], []);
+            scope.saveContactUs();
+            httpBackend.flush();
+            expect(scope.saving).toBe(false);
+            expect(location.path()).toBe('/');
+            expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
+        }
     });
 
 });
