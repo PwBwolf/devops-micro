@@ -52,9 +52,7 @@ module.exports = {
                     createdAt: (new Date()).toUTCString()
 
                 });
-                if (userObj.type === 'paid') {
-                    accountObj.referralCode = hashids.encode(userObj.key, 5);
-                }
+                accountObj.referralCode = hashids.encode(userObj.key, 5);
                 accountObj.save(function (err) {
                     if (err) {
                         logger.logError(err);

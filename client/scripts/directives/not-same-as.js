@@ -6,15 +6,13 @@
             require: 'ngModel',
             restrict: 'A',
             link: function (scope, elem, attrs, ctrl) {
-                // if ngModel is not defined, we do nothing
                 if (!ctrl) {
                     return;
                 }
-                if (!attrs['notSameAs']) {
+                if (!attrs.notSameAs) {
                     return;
                 }
                 scope.$watch(attrs.notSameAs, function (value) {
-                    // the second value is not set yet, we do nothing
                     if (ctrl.$viewValue === undefined || ctrl.$viewValue === '') {
                         return;
                     }

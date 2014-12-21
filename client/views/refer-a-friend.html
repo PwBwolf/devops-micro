@@ -1,0 +1,64 @@
+<div class="contentarea">
+    <div class="friend-banner">
+        <div class="friend-banner-wrap">
+            <div class="friend-banner-left">
+                <img src="img/friend-banner.jpg" alt="">
+
+                <div class="friend-title-pad">
+                    <div class="friend-title">
+                        <h2>Sharing is <span>caring</span></h2>
+
+                        <div>Refer - a - friend</div>
+                    </div>
+                </div>
+                <div class="friend-btm-pad">
+                    <h2>Hello JOHN DOE,</h2>
+
+                    <p>Your referral url is: <span>www.yiptv.com/refer/234xtb</span></p>
+                    <a href="#">COPY REFERRAL URL</a>
+                </div>
+            </div>
+            <div class="friend-banner-right">
+                <div class="friend-right-box">
+                    <h1>REFER NOW AND GET <span>ONE MONTH FREE</span></h1>
+
+                    <div class="friend-social">You can import your contacts from
+                        <ul>
+                            <li><a href="#"><img src="img/f-gmail.png" alt="" border="0"><br>GMail</a></li>
+                            <li class="no-bdr"><a href="#"><img src="img/f-linkedin.png" alt="" border="0"><br>LinkedIn</a></li>
+                            <li class="no-bdr1"><a href="#"><img src="img/f-yahoo.png" alt="" border="0"><br>Yahoo!</a></li>
+                            <li class="no-bdr no-bdr1"><a href="#"><img src="img/f-facebook.png" alt="" border="0"><br>Facebook</a></li>
+                        </ul>
+                    </div>
+                    <a href="#" class="cs_import btn-import">IMPORT CONTACT LIST</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form-wrap">
+        <div class="container">
+            <h1> OR ENTER FRIEND’s EMAIL ADDRESS</h1>
+
+            <div class="form-pad">
+                <textarea id="emailList"></textarea>
+                <input type="submit" value="SEND INVITE">
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>
+<script>
+    window.csPageOptions = {
+        textarea_id: 'emailList',
+        include: ['email'],
+        mobile_render: true,
+        sources: ['gmail', 'linkedin', 'yahoo', 'facebook']
+    };
+    (function (u) {
+        var d = document, s = 'script', a = d.createElement(s), m = d.getElementsByTagName(s)[0];
+        a.async = 1;
+        a.src = u;
+        m.parentNode.insertBefore(a, m);
+    })('//api.cloudsponge.com/widget/6155963e82b72493baa22224b7869f8579c2f67c.js');
+</script>
+
