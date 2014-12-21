@@ -5,7 +5,6 @@
         return {
             require: 'ngModel',
             restrict: 'A',
-
             link: function (scope, elem, attrs, ctrl) {
                 // if ngModel is not defined, we do nothing
                 if (!ctrl) {
