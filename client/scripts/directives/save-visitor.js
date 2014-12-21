@@ -5,7 +5,6 @@
         return {
             require: 'ngModel',
             restrict: 'A',
-
             link: function (scope, element, attrs, ctrl) {
                 element.bind('blur', saveVisitor);
 

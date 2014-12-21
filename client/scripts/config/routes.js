@@ -76,10 +76,10 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
-            .when('/settings',
+            .when('/account',
             {
-                templateUrl: 'views/settings.html',
-                controller: 'settingsCtrl',
+                templateUrl: 'views/account.html',
+                controller: 'accountCtrl',
                 access: access.user
             })
             .when('/change-credit-card',
@@ -139,6 +139,12 @@
             .when('/terms-of-use',
             {
                 templateUrl: 'views/terms-of-use.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/under-construction',
+            {
+                templateUrl: 'views/under-construction.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

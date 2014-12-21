@@ -58,7 +58,7 @@
                     <a href="/sign-up/paid" access-level="accessLevels.anon" class="btn-sign1" translate="INDEX_JOIN_NOW">Join Now</a>
                     <a href="/sign-up/free" access-level="accessLevels.anon" class="btn-sign2" translate="INDEX_TRY_FREE">Try for 30 Days</a>
                     <a ng-click="openAio()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_WATCH_NOW">Watch Now</a>
-                    <a href="/settings" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SETTINGS">Settings</a>
+                    <a href="/account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_ACCOUNT">Account</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </div>
@@ -138,6 +138,7 @@
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
 <script src="scripts/directives/bootstrap-carousel.js"></script>
+<script src="scripts/directives/goto.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>
@@ -152,7 +153,7 @@
 <script src="scripts/controllers/forgot-password-controller.js"></script>
 <script src="scripts/controllers/reset-password-controller.js"></script>
 <script src="scripts/controllers/user-home-controller.js"></script>
-<script src="scripts/controllers/settings-controller.js"></script>
+<script src="scripts/controllers/account-controller.js"></script>
 <script src="scripts/controllers/change-credit-card-controller.js"></script>
 <script src="scripts/controllers/common-controller.js"></script>
 <script src="scripts/controllers/contact-us-controller.js"></script>
