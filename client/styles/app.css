@@ -111,7 +111,7 @@ header {
 a.btn-sign {
     background: #FFFFFF;
     text-align: center;
-    width: 140px;
+    width: 150px;
     border: 1px solid #6f2079;
     line-height: 39px;
     cursor: pointer;
@@ -127,7 +127,7 @@ a.btn-sign1 {
     background: url(../img/btn-bg.jpg) repeat-y #6f2079;
     color: #fff !important;
     text-align: center;
-    width: 140px;
+    width: 150px;
     line-height: 39px;
 }
 
@@ -135,7 +135,7 @@ a.btn-sign2 {
     background: #061733;
     color: #fff !important;
     text-align: center;
-    width: 140px;
+    width: 150px;
     border: 1px solid #6f2079;
     line-height: 39px;
 }
@@ -677,7 +677,7 @@ a.btn-signup {
 }
 
 #carousel-banner .carousel-caption .caption-txt1 h1 {
-    font-size: 52px;
+    font-size: 40px;
     line-height: 40px;
     color: #ffffff;
     padding: 0 0 25px;
@@ -718,7 +718,7 @@ a.btn-signup {
 }
 
 #carousel-banner .carousel-caption .caption-txt2 h1 {
-    font-size: 52px;
+    font-size: 40px;
     line-height: 40px;
     color: #ffffff;
     padding: 0 0 25px 0;
@@ -1037,7 +1037,7 @@ sub {
 }
 
 .about-text {
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .align-text {
@@ -2501,6 +2501,10 @@ a.subscription:hover {
     #carousel-testimonial .carousel-caption .quot-l, #carousel-testimonial .carousel-caption.quot-r {
         background-size: 30px auto;
     }
+
+    .right-box a {
+        margin: 0 5px 10px
+    }
 }
 
 @media screen and (max-width: 707px) {
@@ -2537,6 +2541,30 @@ a.subscription:hover {
 
     #carousel-banner .carousel-caption .caption-txt1 h1 {
         padding-bottom: 0px;
+    }
+
+    a.btn-sign {
+        width: 130px;
+    }
+
+    a.btn-sign1 {
+        width: 130px;
+    }
+
+    a.btn-sign2 {
+        width: 130px;
+    }
+
+    .right-box {
+        padding: 15px 0 0px;
+        text-align: center;
+        width: 100%;
+        position: relative;
+    }
+
+    .right-box a {
+        margin: 0 5px 10px;
+        font-size: 13px;
     }
 }
 
@@ -2581,6 +2609,7 @@ a.subscription:hover {
         margin-left: 17px;
         margin-top: 5px;
         margin-bottom: 5px;
+        font-size: 13px;
     }
 
     .language {
