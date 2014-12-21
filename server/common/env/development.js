@@ -15,5 +15,6 @@ module.exports = {
     aioFreePackages: [{'packageid' : 27}, {'packageid' : 62}],
     aioUnlimitedPackages: [{'packageid' : 1}, {'packageid' : 27}, {'packageid' : 62}],
     yipFreePackageId: 1,
-    yipUnlimitedPackageId: 2
+    yipUnlimitedPackageId: 2,
+    cleanup: ['Account', 'User', 'ContactUs', 'Visitor']
 };
