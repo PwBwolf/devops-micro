@@ -1895,6 +1895,10 @@ a.subscription:hover {
     color: #0ac4bb;
 }
 
+.friend-banner-left .friend-title h2 span.firstPart {
+    color: #000;
+}
+
 .friend-banner-left .friend-title div {
     float: right;
     margin: 0px;
@@ -1938,6 +1942,11 @@ a.subscription:hover {
     color: #262c3a;
 }
 
+.friend-btm-pad p span.firstPart {
+    font-family: 'radikallight';
+    color: #262c3a;
+}
+
 .friend-btm-pad a {
     float: left;
     display: inline-block;
@@ -1950,6 +1959,7 @@ a.subscription:hover {
     height: 36px;
     padding: 0 15px;
     margin-left: 20px;
+    text-transform: uppercase;
 }
 
 .friend-banner-right {
@@ -1988,6 +1998,10 @@ a.subscription:hover {
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
     background: none;
+}
+
+.friend-right-box h1 span.firstPart {
+    color: #fff;
 }
 
 .friend-right-box .btn-import {
@@ -2100,7 +2114,7 @@ a.subscription:hover {
     color: #8d8d8d;
 }
 
-.form-pad input[type="submit"] {
+.form-pad button {
     background: #262c3a;
     font-family: 'radikalmedium';
     font-size: 14px;
@@ -2109,6 +2123,7 @@ a.subscription:hover {
     width: 180px;
     line-height: 36px;
     height: 36px;
+    text-transform: uppercase;
 }
 
 /*  Media CSS  */
