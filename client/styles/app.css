@@ -1815,6 +1815,317 @@ a.subscription:hover {
     background-position: 98% 50%;
 }
 
+.sign-in {
+    float: right;
+    width: 120px;
+    margin: 15px 0 0px 25px;
+}
+
+.sign-in a {
+    display: block;
+    background: url(../img/btn-bg.jpg) repeat-y #6f2079;
+    font-family: 'gotham-bookgotham-book';
+    font-size: 15px;
+    color: #ffffff;
+    line-height: 39px;
+    text-align: center;
+    border: 1px solid #6f2079;
+    padding: 0px;
+    margin: 0px;
+}
+
+.sign-in a:hover {
+    background: #FFFFFF;
+    text-align: center;
+    color: #000000;
+}
+
+.friend-banner {
+    float: left;
+    width: 100%;
+    position: relative;
+    background: #262c3a;
+}
+
+.friend-banner-wrap {
+    position: relative;
+    max-width: 1366px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.friend-banner-left {
+    float: left;
+    width: 67%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    z-index: 9;
+}
+
+.friend-banner-left img {
+    float: left;
+    width: 100%;
+    z-index: 9;
+}
+
+.friend-title-pad {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 55px 45px;
+    background: url(../img/friend-tit-bg.png) bottom left;
+}
+
+.friend-banner-left .friend-title {
+    float: left;
+}
+
+.friend-banner-left .friend-title h2 {
+    font-family: 'radikalregular';
+    font-size: 45px;
+    color: #262c3a;
+    text-transform: uppercase;
+    border-bottom: 2px solid #262c3a;
+    margin: 0 0 5px;
+}
+
+.friend-banner-left .friend-title h2 span {
+    color: #0ac4bb;
+}
+
+.friend-banner-left .friend-title h2 span.firstPart {
+    color: #000;
+}
+
+.friend-banner-left .friend-title div {
+    float: right;
+    margin: 0px;
+    font-family: 'radikalmedium';
+    font-size: 15px;
+    color: #262c3a;
+    line-height: 15px;
+    text-transform: uppercase;
+    text-align: right;
+}
+
+.friend-btm-pad {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 40px 45px 30px;
+    background: rgba(255, 255, 255, .6);
+}
+
+.friend-btm-pad h2 {
+    font-family: 'radikalregular';
+    font-size: 22px;
+    color: #262c3a;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.friend-btm-pad p {
+    float: left;
+    font-family: 'radikallight';
+    font-size: 19px;
+    color: #262c3a;
+    padding: 0px;
+    margin: 8px 0 0;
+    line-height: 20px;
+}
+
+.friend-btm-pad p span {
+    font-family: 'radikalmedium';
+    color: #262c3a;
+}
+
+.friend-btm-pad p span.firstPart {
+    font-family: 'radikallight';
+    color: #262c3a;
+}
+
+.friend-btm-pad a {
+    float: left;
+    display: inline-block;
+    background: #262c3a;
+    font-family: 'radikalmedium';
+    font-size: 14px;
+    color: #ffffff;
+    border: none;
+    line-height: 36px;
+    height: 36px;
+    padding: 0 15px;
+    margin-left: 20px;
+    text-transform: uppercase;
+}
+
+.friend-banner-right {
+    float: right;
+    width: 33%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    z-index: 10;
+}
+
+.friend-right-box {
+    float: left;
+    width: 100%;
+    background: #262c3a;
+    padding: 35px 5% 40px 5%;
+    margin: 0px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.friend-right-box h1 {
+    font-size: 26px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 35px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    background: none;
+    font-family: inherit;
+}
+
+.friend-right-box h1 span {
+    display: block;
+    font-size: 21px;
+    color: #0ac4bb;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    background: none;
+}
+
+.friend-right-box h1 span.firstPart {
+    color: #fff;
+}
+
+.friend-right-box .btn-import {
+    display: inline-block;
+    background: #0ac4bb;
+    width: 96%;
+    line-height: 38px;
+    font-family: 'radikalregular';
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    margin: 0px 2%;
+}
+
+.friend-right-box .friend-social {
+    float: left;
+    width: 100%;
+    font-size: 13px;
+    color: #f1f2f2;
+    text-align: center;
+    border-top: 1px solid #92959c;
+    border-bottom: 1px solid #92959c;
+    padding: 10px 0px 10px 0px;
+    margin: 20px 0px 20px 0px;
+}
+
+.friend-right-box .friend-social ul {
+    float: left;
+    width: 90%;
+    list-style-type: none;
+    padding: 10px 0px 10px 0px;
+    margin: 0px 5%;
+}
+
+.friend-right-box .friend-social ul li {
+    float: left;
+    background: url(../img/fs-side.png) right no-repeat;
+    list-style-type: none;
+    font-size: 13px;
+    color: #f1f2f2;
+    text-align: center;
+    width: 48%;
+    padding: 5% 13% 0% 13%;
+    margin: 0px 1%;
+}
+
+.friend-right-box .friend-social ul li.no-bdr, .friend-right-box .friend-social ul li.no-bdr1 a {
+    background: none;
+}
+
+.friend-right-box .friend-social ul li img {
+    padding: 5px 0px 5px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.friend-right-box .friend-social ul li a {
+    float: left;
+    background: url(../img/fs-btmline.png) center bottom no-repeat;
+    font-size: 17px;
+    color: #f1f2f2;
+    padding: 0px 0% 19px 0%;
+    margin: 0px 0px 0px 0px;
+}
+
+#form-wrap {
+    float: left;
+    width: 100%;
+    background: #e6e6e6;
+    padding: 50px 0px 55px;
+}
+
+#form-wrap h1 {
+    float: left;
+    width: 100%;
+    font-family: 'radikalmedium';
+    font-size: 18px;
+    color: #262c3a;
+    text-align: center;
+    padding: 0 0 30px;
+    margin: 0px;
+    line-height: 25px;
+    background: none;
+}
+
+.form-pad {
+    float: left;
+    width: 100%;
+    padding: 0px 8%;
+    text-align: center;
+}
+
+.form-pad textarea {
+    float: left;
+    width: 100%;
+    height: 175px;
+    padding: 3% 4% 2%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #ffffff;
+    margin-bottom: 40px;
+    font-family: 'radikallight';
+    text-align: left;
+    font-size: 16px;
+    line-height: 22px;
+    color: #8d8d8d;
+}
+
+.form-pad button {
+    background: #262c3a;
+    font-family: 'radikalmedium';
+    font-size: 14px;
+    color: #ffffff;
+    border: none;
+    width: 180px;
+    line-height: 36px;
+    height: 36px;
+    text-transform: uppercase;
+}
+
 /*  Media CSS  */
 
 @media (max-width: 1365px) {
@@ -2017,6 +2328,20 @@ a.subscription:hover {
     #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
         font-size: 38px;
     }
+
+    .friend-title-pad { padding: 40px 30px; }
+    .friend-banner-left .friend-title h2 { font-size: 30px; }
+    .friend-btm-pad { padding:30px 20px 20px 30px; }
+    .friend-btm-pad h2 { font-size:20px; margin: 0 0 -3px; }
+    .friend-btm-pad p { font-size:16px; }
+    .friend-btm-pad p a { margin-left: 10px; padding:0 10px; }
+
+    .friend-right-box { padding:25px 5% 20px; }
+    .friend-right-box h1 { font-size:20px; line-height:22px; }
+    .friend-right-box h1 span { font-size: 18px; }
+    .friend-right-box .friend-social { margin: 8px 0; padding: 6px 0; }
+    .friend-right-box .friend-social ul { padding:0; }
+    .friend-right-box .btn-import { margin:0px; width:100%; font-size: 15px; }
 }
 
 @media screen and (max-width: 999px) {
@@ -2356,6 +2681,13 @@ a.subscription:hover {
         background-position: -40px 0;
     }
 
+    .friend-banner-left, .friend-banner-right { width:100%; }
+    .friend-title-pad { padding:4%; }
+    .friend-btm-pad { padding:3% 2% 3% 4%; }
+    .friend-btm-pad h2 { margin:0px; }
+    .friend-btm-pad p { width:100%; margin:5px 0 0; }
+    .friend-btm-pad a { margin:7px 0 0 0; }
+    .form-pad { padding: 0 2%; }
 }
 
 @media screen and (max-width: 767px) {
@@ -2505,6 +2837,12 @@ a.subscription:hover {
     .right-box a {
         margin: 0 5px 10px
     }
+
+    .sign-in { position:absolute; top:0px; right:0px; }
+    .friend-btm-pad h2 { font-size:18px; }
+    .friend-btm-pad p { font-size:15px; }
+    .friend-banner-left .friend-title h2 { font-size:24px; }
+    .friend-banner-left .friend-title div { font-size:13px; line-height:13px; }
 }
 
 @media screen and (max-width: 707px) {
@@ -3024,6 +3362,14 @@ a.subscription:hover {
     .header-tag {
         background: none !important;
     }
+
+    .friend-banner-left .friend-title h2 { font-size:20px; }
+    .friend-btm-pad h2 { font-size:16px; }
+    .friend-btm-pad p { font-size:14px; line-height: 16px; }
+    .friend-btm-pad p span { display:block; font-size:15px; }
+    .friend-right-box .friend-social ul { margin:0%; width:100%; }
+    .friend-right-box .friend-social ul li { padding: 5% 10% 0;}
+    .friend-right-box .friend-social ul li a { width:100%; }
 
 }
 

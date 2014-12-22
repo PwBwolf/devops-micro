@@ -1,0 +1,64 @@
+<div class="contentarea">
+    <div class="friend-banner">
+        <div class="friend-banner-wrap">
+            <div class="friend-banner-left">
+                <img src="img/friend-banner.jpg" alt="">
+
+                <div class="friend-title-pad">
+                    <div class="friend-title">
+                        <h2><span translate="RAF_SHARING_IS" class="firstPart">Sharing is</span> <span translate="RAF_CARING">caring</span></h2>
+
+                        <div translate="RAF_REFER_A_FRIEND">Refer - a - friend</div>
+                    </div>
+                </div>
+                <div class="friend-btm-pad">
+                    <h2><span translate="RAF_HELLO">Hello</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}},"></span></h2>
+
+                    <p><span translate="RAF_YOUR_REFERRAL_LINK" class="firstPart">Your referral url is:</span> <span class="secondPart" ng-bind="referralLink"></span></p>
+                    <a href="#" clip-copy="referralLink" clip-click-fallback="fallback(copy)">{{ "RAF_COPY_LINK" | translate }}</a>
+                </div>
+            </div>
+            <div class="friend-banner-right">
+                <div class="friend-right-box">
+                    <h1><span translate="RAF_REFER_NOW" class="firstPart">REFER NOW AND GET</span> <span translate="RAF_ONE_MONTH_FREE">ONE MONTH FREE</span></h1>
+
+                    <div class="friend-social"><span translate="RAF_YOU_CAN_IMPORT">You can import your contacts from</span>
+                        <ul>
+                            <li><img src="img/f-gmail.png" alt="" border="0"><br>GMail</li>
+                            <li class="no-bdr"><img src="img/f-linkedin.png" alt="" border="0"><br>LinkedIn</li>
+                            <li class="no-bdr1"><img src="img/f-yahoo.png" alt="" border="0"><br>Yahoo!</li>
+                            <li class="no-bdr no-bdr1"><img src="img/f-facebook.png" alt="" border="0"><br>Facebook</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="cs_import btn-import" translate="RAF_IMPORT_CONTACT_LIST">Import Contact List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form-wrap">
+        <div class="container">
+            <h1 translate="RAF_ENTER_FRIENDS_EMAIL"> Or Enter Friends' Email Address</h1>
+
+            <div class="form-pad">
+                <textarea id="emailList"></textarea>
+                <button type="submit" goto="/under-construction" translate="RAF_SEND_INVITE">Send Invite</button>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>
+<script>
+    window.csPageOptions = {
+        textarea_id: 'emailList',
+        include: ['email'],
+        mobile_render: true,
+        sources: ['gmail', 'linkedin', 'yahoo', 'facebook']
+    };
+    (function (u) {
+        var d = document, s = 'script', a = d.createElement(s), m = d.getElementsByTagName(s)[0];
+        a.async = 1;
+        a.src = u;
+        m.parentNode.insertBefore(a, m);
+    })('//api.cloudsponge.com/widget/6155963e82b72493baa22224b7869f8579c2f67c.js');
+</script>
+

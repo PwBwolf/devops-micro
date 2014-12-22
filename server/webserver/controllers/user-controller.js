@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     sf = require('sf'),
-    validator = require('validator'),
     async = require('async'),
     jwt = require('jwt-simple'),
     uuid = require('node-uuid'),
@@ -52,9 +51,7 @@ module.exports = {
                     createdAt: (new Date()).toUTCString()
 
                 });
-                if (userObj.type === 'paid') {
-                    accountObj.referralCode = hashids.encode(userObj.key, 5);
-                }
+                accountObj.referralCode = hashids.encode(userObj.key, 5);
                 accountObj.save(function (err) {
                     if (err) {
                         logger.logError(err);
@@ -181,7 +178,7 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        User.findOne({email: req.email}, function (err, user) {
+        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -189,7 +186,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName});
+            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, type: user.type, referralCode: user.account.referralCode });
         });
     },
 

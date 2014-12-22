@@ -94,11 +94,11 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
-            .when('/refer-friend',
+            .when('/refer-a-friend',
             {
-                templateUrl: 'views/refer-friend.html',
-                controller: 'referFriendCtrl',
-                access: access.public
+                templateUrl: 'views/refer-a-friend.html',
+                controller: 'referAFriendCtrl',
+                access: access.user
             })
             .when('/change-password-success',
             {
@@ -185,6 +185,7 @@
                     $location.path('/user-home');
                     $location.url($location.path());
                 } else {
+                    $rootScope.redirectTo = $location.url();
                     $location.path('/sign-in');
                     $location.url($location.path());
                 }

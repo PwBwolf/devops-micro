@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$window', function (userSvc, loggerSvc, $scope, $location, $filter, $window) {
+    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$window', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter, $window) {
 
         $scope.signIn = function () {
             if ($scope.form.$valid) {
@@ -9,7 +9,12 @@
                 userSvc.signIn(
                     $scope.mv,
                     function () {
-                        $location.path('/user-home');
+                        if($rootScope.redirectTo) {
+                            $location.path($rootScope.redirectTo);
+                            $rootScope.redirectTo = undefined;
+                        } else {
+                            $location.path('/user-home');
+                        }
                         $scope.saving = false;
                     },
                     function (response) {
