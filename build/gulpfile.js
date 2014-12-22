@@ -116,9 +116,12 @@ gulp.task('fonts', function () {
 /**
  * Copy non-html files in project root including .htaccess, robots.txt, etc.
  */
-gulp.task('extras', function () {
-    return gulp.src(['../client/*.*', '../client/dependencies', '!../client/*.html'], { dot: true })
+gulp.task('extras', function (cb) {
+    gulp.src(['../client/*.*', '!../client/*.html'], { dot: true })
         .pipe(gulp.dest('dist/client'));
+    gulp.src('../client/dependencies/*.*', { dot: true })
+        .pipe(gulp.dest('dist/client/dependencies'));
+    cb();
 });
 
 /**
