@@ -11,7 +11,7 @@ server {
     keepalive_timeout   70;
 
     # SSL configuration
-    ssl_certificate             /etc/nginx/ssl/gd_bundle-g2-g1.crt;
+    ssl_certificate             /etc/nginx/ssl/yiptv_com_bundle.crt;
     ssl_certificate_key         /etc/nginx/ssl/yiptv_com.key;
     ssl_verify_depth            3;
     ssl_protocols               SSLv2 SSLv3 TLSv1;
