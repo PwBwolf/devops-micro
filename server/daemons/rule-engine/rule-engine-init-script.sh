@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Service script for Yip rule engine application running under Forever.
+# service yip-rule-engine
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
