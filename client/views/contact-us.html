@@ -31,7 +31,7 @@
                                 <input autocomplete="off" type="text" is-email required maxlength="50" class="txtbox2" name="email" id="email" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
 
                                 <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
-                                <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
+                                <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
                                 <div class="frm">
                                     <br><span class="label-text" translate="CONTACT_US_TELEPHONE">Telephone</span>
                                     <br><input autocomplete="off" type="tel" maxlength="15" required class="txtbox2" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
