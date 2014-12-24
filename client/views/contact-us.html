@@ -28,7 +28,7 @@
                         <div class="frm">
                             <div class="frm-left1">
                                 <span class="label-text" translate="CONTACT_US_EMAIL">Email</span>
-                                <input autocomplete="off" type="email" required maxlength="50" class="txtbox2" name="email" id="email" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                                <input autocomplete="off" type="text" is-email required maxlength="50" class="txtbox2" name="email" id="email" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
 
                                 <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
                                 <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
