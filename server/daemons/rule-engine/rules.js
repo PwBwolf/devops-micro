@@ -15,7 +15,7 @@ function buildRules() {
             "condition":
                 function(fact, cb) {
                     var moment = require('moment');
-                    if(fact.type === 'user') {
+                    if(fact.doctype === 'user') {
                         var created = fact.createdAt;
                         if(moment().diff(created, 'days') === 14) {
                             cb(true);
@@ -39,7 +39,7 @@ function buildRules() {
             "condition":
                 function(fact, cb) {
                     var moment = require('moment');
-                    if(fact.type === 'user') {
+                    if(fact.doctype === 'user') {
                         var created = fact.createdAt;
                         if(moment().diff(created, 'days') === 21) {
                             cb(true);
@@ -63,7 +63,7 @@ function buildRules() {
             "condition":
                 function(fact, cb) {
                     var moment = require('moment');
-                    if(fact.type === 'user') {
+                    if(fact.doctype === 'user') {
                         var created = fact.createdAt;
                         if(moment().diff(created, 'days') === 28) {
                             cb(true);
@@ -87,7 +87,7 @@ function buildRules() {
             "condition":
                 function(fact, cb) {
                     var moment = require('moment');
-                    if(fact.type === 'user') {
+                    if(fact.doctype === 'user') {
                         var created = fact.createdAt;
                         if(moment().diff(created, 'days') === 30) {
                             cb(true);
@@ -111,7 +111,7 @@ function buildRules() {
             "condition":
                 function(fact, cb) {
                     var moment = require('moment');
-                    if(fact.type === 'user') {
+                    if(fact.doctype === 'user') {
                         var created = fact.createdAt;
                         if(moment().diff(created, 'days') === 31) {
                             cb(true);

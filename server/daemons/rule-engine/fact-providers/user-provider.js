@@ -8,10 +8,10 @@ User = mongoose.model('User');
 
 module.exports.getFreeUsers = function() {
     var def = Q.defer();
-    User.find().exec().then(function(users) {
+    User.find({type: "free"}).exec().then(function(users) {
         if(users) {
             for(var i = 0; i < users.length; i++) {
-                users[i] = _.assign({type: 'user'}, users[i]._doc);
+                users[i] = _.assign({doctype: 'user'}, users[i]._doc);
             }
             def.resolve(users);
         } else {
