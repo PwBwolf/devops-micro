@@ -60,8 +60,9 @@
         };
 
         $scope.openAio = function() {
+            var aio = window.open('', '_blank');
             userSvc.getAioToken(function(response) {
-                $window.open($scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token);
+                aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
             }, function() {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO') || 'Unable to open video portal');
             });

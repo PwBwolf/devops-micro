@@ -41,7 +41,12 @@ module.exports = {
                 logger.error(JSON.stringify(err));
             }
             if (!visitor) {
-                var visitorObj = new Visitor({email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName});
+                var visitorObj = new Visitor({
+                    email: req.body.email,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    createdAt: (new Date()).toUTCString()
+                });
                 visitorObj.save(function (err) {
                     if (err) {
                         logger.error(JSON.stringify(err));
@@ -55,6 +60,7 @@ module.exports = {
                     visitor.lastName = req.body.lastName;
                 }
                 if (req.body.firstName || req.body.lastName) {
+                    visitor.updatedAt = (new Date()).toUTCString();
                     visitor.save(function (err) {
                         if (err) {
                             logger.logError(err);

@@ -6,7 +6,7 @@
             <div class="signin-box">
                 <form name="form" id="form" ng-submit="signIn()" novalidate>
                     <span class="label-text" translate="SIGN_IN_EMAIL">Email</span><br>
-                    <input autofocus name="email" id="email" maxlength="50" autocomplete="off" type="email" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
+                    <input autofocus name="text" is-email id="email" maxlength="50" autocomplete="off" type="email" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
 
                     <div ng-show="form.email.$dirty && form.email.$error.email" class="error-msg" translate="SIGN_IN_EMAIL_INVALID">Enter a valid email</div>
                     <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="SIGN_IN_EMAIL_REQUIRED">Enter your email</div>
