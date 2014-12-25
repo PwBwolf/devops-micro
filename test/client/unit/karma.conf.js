@@ -27,6 +27,8 @@ module.exports = function(config) {
         '../../../client/bower_components/angular-translate/angular-translate.js',
         '../../../client/bower_components/toastr/toastr.js',
         '../../../client/bower_components/fastclick/lib/fastclick.js',
+        '../../../client/bower_components/zeroclipboard/dist/ZeroClipboard.js',
+        '../../../client/bower_components/ng-clip/src/ngClip.js',
         'node_modules/angular-mocks/angular-mocks.js',
         '../../../client/scripts/**/*.js',
         'controllers/*.js'
