@@ -7,7 +7,7 @@
                 //Todo : add credit card api call to submit credit card details
             }
             else {
-                setFormDirty()
+                setFormDirty();
             }
         }
 

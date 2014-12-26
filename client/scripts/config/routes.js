@@ -22,6 +22,12 @@
                 controller: 'signUpCtrl',
                 access: access.anon
             })
+            .when('/invite/:referralCode',
+            {
+                templateUrl: 'views/redirect.html',
+                controller: 'inviteCtrl',
+                access: access.anon
+            })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
@@ -178,16 +184,37 @@
         }]);
     }]);
 
-    app.run(['$rootScope', '$location', '$http', 'userSvc', function ($rootScope, $location, $http, userSvc) {
+    app.run(['_', '$rootScope', '$location', '$http', 'userSvc', 'tokenSvc', function (_, $rootScope, $location, $http, userSvc, tokenSvc) {
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            if (next.access && !userSvc.authorize(next.access)) {
-                if (userSvc.isSignedIn()) {
-                    $location.path('/user-home');
-                    $location.url($location.path());
+
+            if(!$rootScope.profileCallCompleted) {
+                var routeList = ['/verify-user', '/reset-password', '/invite'];
+                if (_.contains(routeList, $location.path())) {
+                    tokenSvc.clearToken();
+                    $rootScope.profileCallCompleted = true;
                 } else {
-                    $rootScope.redirectTo = $location.url();
-                    $location.path('/sign-in');
-                    $location.url($location.path());
+                    userSvc.getUserProfile(function () {
+                        $rootScope.profileCallCompleted = true;
+                        authRedirect();
+                    }, function () {
+                        $rootScope.profileCallCompleted = true;
+                        authRedirect();
+                    });
+                }
+            } else {
+                authRedirect();
+            }
+
+            function authRedirect() {
+                if (next.access && !userSvc.authorize(next.access)) {
+                    if (userSvc.isSignedIn()) {
+                        $location.path('/user-home');
+                        $location.url($location.path());
+                    } else {
+                        $rootScope.redirectTo = $location.url();
+                        $location.path('/sign-in');
+                        $location.url($location.path());
+                    }
                 }
             }
         });
