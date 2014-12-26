@@ -18,6 +18,43 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
     });
 }
 
+function sendSuspensionEmail(user) {
+
+    // suspend this users account
+
+    // send an email
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.trialPeriodCompleteSubject[user.preferences.defaultLanguage],
+        html: sf(config.trialPeriodComplete[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'cancel-subscription')
+    };
+
+    email.sendEmail(mailOptions, function (err) {
+        console.log('email sent...');
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+function sendReacquireEmail(user) {
+    // send an email
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.reacquireUserSubject[user.preferences.defaultLanguage],
+        html: sf(config.reacquireUser[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'reactivate')
+    };
+
+    email.sendEmail(mailOptions, function (err) {
+        console.log('email sent...');
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
 module.exports.send14DayReminderEmail = function(user) {
     // first lets delete the postProcessorKey
     delete user.postProcessorKey;
@@ -54,8 +91,16 @@ module.exports.send31DaySuspensionEmail = function(user) {
     // first lets delete the postProcessorKey
     delete user.postProcessorKey;
 
-    // now send email to this user
-    console.log('email sent...');
+    // suspend this user's account and send an email
+    sendSuspensionEmail(user);
+};
+
+module.exports.send32DayReacquireEmail = function(user) {
+    // first lets delete the postProcessorKey
+    delete user.postProcessorKey;
+
+    // suspend this user's account and send an email
+    sendReacquireEmail(user);
 };
 
 config.postProcessors['freeUser14'] = module.exports.send14DayReminderEmail;
@@ -63,3 +108,4 @@ config.postProcessors['freeUser21'] = module.exports.send21DayReminderEmail;
 config.postProcessors['freeUser28'] = module.exports.send28DayReminderEmail;
 config.postProcessors['freeUser30'] = module.exports.send30DayReminderEmail;
 config.postProcessors['freeUser31'] = module.exports.send31DaySuspensionEmail;
+config.postProcessors['freeUser32'] = module.exports.send32DayReacquireEmail;
