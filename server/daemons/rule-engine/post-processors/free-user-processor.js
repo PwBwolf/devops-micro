@@ -27,7 +27,7 @@ function sendSuspensionEmail(user) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.trialPeriodCompleteSubject[user.preferences.defaultLanguage],
-        html: sf(config.trialPeriodComplete[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'cancel-subscription')
+        html: sf(config.trialPeriodComplete[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'subscribe')
     };
 
     email.sendEmail(mailOptions, function (err) {
