@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('commonCtrl', ['$scope', function ($scope) {
+    app.controller('commonCtrl', [function () {
 
     }]);
 }(angular.module('app')));

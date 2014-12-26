@@ -3,7 +3,7 @@
 
     app.controller('changePasswordCtrl', ['$scope', 'userSvc', 'loggerSvc', '$location', '$filter', function ($scope, userSvc, loggerSvc, $location, $filter) {
 
-        $scope.changePassword = function(){
+        $scope.changePassword = function () {
             if ($scope.form.$valid) {
                 userSvc.changePassword(
                     $scope.mv,
@@ -12,13 +12,12 @@
                     },
                     function (response) {
                         if (response === 'Unauthorized') {
-                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_INCORRECT_PASSWORD') || 'You have entered a wrong password');
+                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_INCORRECT_PASSWORD'));
                         } else {
-                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_ERROR') || 'Error occurred while changing password');
+                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_ERROR'));
                         }
                     });
-            }
-            else {
+            } else {
                 setFormDirty();
             }
         };

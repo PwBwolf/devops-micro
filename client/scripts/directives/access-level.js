@@ -4,7 +4,6 @@
     app.directive('accessLevel', ['userSvc', function (userSvc) {
         return {
             restrict: 'A',
-
             link: function ($scope, element, attrs) {
                 var prevDisplay = element.css('display'),
                     userRole,

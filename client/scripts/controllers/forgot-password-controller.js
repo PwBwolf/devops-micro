@@ -2,6 +2,7 @@
     'use strict';
 
     app.controller('forgotPasswordCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
+
         $scope.forgotPassword = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
@@ -15,7 +16,7 @@
                         if(response === 'UserNotFound') {
                             $location.path('/forgot-password-success');
                         } else {
-                            loggerSvc.logError($filter('translate')('FORGOT_PASSWORD_ERROR') || 'Error sending reset password link');
+                            loggerSvc.logError($filter('translate')('FORGOT_PASSWORD_ERROR'));
                         }
                         $scope.saving = false;
                     });

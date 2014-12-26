@@ -40,8 +40,12 @@
             <h1 translate="RAF_ENTER_FRIENDS_EMAIL"> Or Enter Friends' Email Address</h1>
 
             <div class="form-pad">
-                <textarea id="emailList"></textarea>
-                <button type="submit" goto="/under-construction" translate="RAF_SEND_INVITE">Send Invite</button>
+                <form name="form" id="form" novalidate ng-submit="sendRafEmails()">
+                    <textarea id="emailList" name="emailList" ng-model="mv.emailList" value="" required ng-class="{'txtbox-error': form.emailList.$dirty && form.emailList.$invalid}"></textarea>
+
+                    <div ng-show="form.emailList.$dirty && form.emailList.$error.required" class="error-msg" translate=" RAF_EMAIL_LIST_REQUIRED">Enter at least a single email address</div>
+                    <button id="sendInvite" name="sendInvite" type="submit" translate="RAF_SEND_INVITE">Send Invite</button>
+                </form>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
     app.controller('inviteCtrl', ['$rootScope', '$routeParams', '$location', function ($rootScope, $routeParams, $location) {
 
         $rootScope.referredBy = $routeParams.referralCode;
-        //redirect();
+        redirect();
 
         function redirect() {
             $location.path('/sign-up/paid');

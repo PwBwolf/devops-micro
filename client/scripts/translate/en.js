@@ -298,6 +298,8 @@
             RAF_SEND_INVITE: 'Send Invite',
             RAF_YOUR_REFERRAL_LINK: 'Your referral link:',
             RAF_COPY_LINK_MOBILE: 'Copy the below link',
+            RAF_EMAIL_SEND_ERROR: 'Unable to send YipTV invites to your friends',
+            RAF_EMAIL_LIST_REQUIRED: 'Enter at least a single email address',
             REDIRECT_MESSAGE: 'Redirecting...',
             RESEND_VERIFICATION_HEADING: 'Resend Verification Email',
             RESEND_VERIFICATION_EMAIL: 'Enter your email and we will send a link to verify your account',

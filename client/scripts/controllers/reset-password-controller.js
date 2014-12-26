@@ -2,6 +2,7 @@
     'use strict';
 
     app.controller('resetPasswordCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
+
         $scope.mv = {code: $location.search().code};
         checkResetCode();
 
@@ -35,9 +36,9 @@
                         },
                         function (response) {
                             if (response === 'UserNotFound') {
-                                loggerSvc.logError($filter('translate')('RESET_PASSWORD_USER_ERROR') || 'The reset password link has expired and is no longer valid');
+                                loggerSvc.logError($filter('translate')('RESET_PASSWORD_USER_ERROR'));
                             } else {
-                                loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
+                                loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR'));
                             }
                             $scope.saving = false;
                         }
@@ -46,7 +47,7 @@
                     setFormDirty();
                 }
             } else {
-                loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
+                loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR'));
             }
         };
 
