@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$scope', '$translate', '$location', '$route', '$window', '$filter', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $scope, $translate, $location, $route, $window, $filter) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -10,7 +10,6 @@
         activate();
 
         function activate() {
-            loadUserProfile();
             getAppConfig();
             loadLanguage();
             configSeo();
@@ -24,19 +23,6 @@
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG') || 'Error fetching application configuration');
                 $scope.showHeader = false;
             });
-        }
-
-        function loadUserProfile() {
-            var routeList = ['/verify-user', '/reset-password'];
-            if(_.contains(routeList, $location.path())) {
-                tokenSvc.clearToken();
-            } else {
-                userSvc.getUserProfile(function () {
-                    $route.reload();
-                }, function () {
-                    $route.reload();
-                });
-            }
         }
 
         function configSeo() {
@@ -59,11 +45,11 @@
             $scope.language = newLanguage;
         };
 
-        $scope.openAio = function() {
+        $scope.openAio = function () {
             var aio = window.open('', '_blank');
-            userSvc.getAioToken(function(response) {
+            userSvc.getAioToken(function (response) {
                 aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
-            }, function() {
+            }, function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO') || 'Unable to open video portal');
             });
         };

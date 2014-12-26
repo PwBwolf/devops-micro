@@ -298,6 +298,7 @@
             RAF_SEND_INVITE: 'Send Invite',
             RAF_YOUR_REFERRAL_LINK: 'Your referral link:',
             RAF_COPY_LINK_MOBILE: 'Copy the below link',
+            REDIRECT_MESSAGE: 'Redirecting...',
             RESEND_VERIFICATION_HEADING: 'Resend Verification Email',
             RESEND_VERIFICATION_EMAIL: 'Enter your email and we will send a link to verify your account',
             RESEND_VERIFICATION_EMAIL_INVALID: 'Enter a valid email',

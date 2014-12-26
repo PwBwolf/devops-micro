@@ -2,7 +2,7 @@
     'use strict';
 
     app.controller('referAFriendCtrl', ['$scope', '$filter', function ($scope, $filter) {
-        $scope.referralLink = $scope.appConfig.url + 'refer-a-friend/' + $scope.user.referralCode;
+        $scope.referralLink = $scope.appConfig.url + 'invite/' + $scope.user.referralCode;
 
         $scope.getReferralLink = function() {
             return $scope.referralLink;
