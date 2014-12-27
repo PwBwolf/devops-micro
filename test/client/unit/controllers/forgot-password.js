@@ -9,13 +9,18 @@ describe('Controller: forgotPasswordCtrl', function () {
         scope,
         httpBackend,
         location,
-        loggerService,
-        errorMessage = 'error'; //Message returned by mock translate filter
+        loggerService;
 
     beforeEach(module(function($provide, $filterProvider) {
         //translate filter mock
         function mockTranslateFilter(value) {
-            return errorMessage;
+            switch (value) {
+                case 'FORGOT_PASSWORD_ERROR':
+                    return 'Error sending reset password link';
+                    break;
+                default:
+                    return '';
+            }
         }
 
         $provide.value('translate', mockTranslateFilter);
@@ -88,21 +93,6 @@ describe('Controller: forgotPasswordCtrl', function () {
     it('should log appropriate error message on internal server error', function () {
         mockForgotPasswordForm();
         mockModelView();
-        scope.form.$valid = true;
-        spyOn(loggerService, 'logError');
-        errorMessage = 'Error sending reset password link'; //error message returned by mock translate filter
-        scope.forgotPassword();
-        httpBackend.when('POST', '/api/forgot-password').respond(500, 'internalServerError');
-        httpBackend.flush();
-        expect(location.path()).toBe('/');
-        expect(loggerService.logError).toHaveBeenCalledWith('Error sending reset password link');
-        expect(scope.saving).toBe(false);
-    });
-
-    it('should log fallback error message if translate filter fails on internal server error', function () {
-        mockForgotPasswordForm();
-        mockModelView();
-        errorMessage = undefined; //mocking translate filter failure
         scope.form.$valid = true;
         spyOn(loggerService, 'logError');
         scope.forgotPassword();
