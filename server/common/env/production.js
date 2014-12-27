@@ -9,7 +9,7 @@ module.exports = {
     environment: 'production',
     port: 3000,
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
-    url: 'http://yiptv.com/',
+    url: 'https://yiptv.com/',
     imageUrl: 'http://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
     contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',

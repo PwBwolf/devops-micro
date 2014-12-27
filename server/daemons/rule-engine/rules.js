@@ -126,6 +126,30 @@ function buildRules() {
                     this.postProcessorKey = "freeUser31";
                     cb();
                 }
+        },
+        {
+            "name": "free-user-32-reacquire",
+            "description": "Try and reacquire the user on the 32nd day",
+            "priority": 1,
+            "enabled":true,
+            "condition":
+                function(fact, cb) {
+                    var moment = require('moment');
+                    if(fact.doctype === 'user') {
+                        var created = fact.createdAt;
+                        if(moment().startOf('day').diff(moment(created).startOf('day'), 'days') === 32) {
+                            cb(true);
+                            return;
+                        }
+                    }
+                    cb(false);
+                },
+            "consequence":
+                function(cb) {
+                    this.process = true;
+                    this.postProcessorKey = "freeUser32";
+                    cb();
+                }
         }
     ]
 
