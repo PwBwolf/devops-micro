@@ -745,7 +745,7 @@ a.btn-signup {
     width: auto;
     position: absolute;
     top: 25px;
-    right: 10%;
+    left: 510px;
 }
 
 #carousel-banner .carousel-caption .caption-txt2 .bdr {
@@ -2174,8 +2174,9 @@ a.subscription:hover {
 @media (max-width: 1320px) {
 
     #carousel-banner .caption-txt2 {
-        margin-left: 0px;
-        padding: 10px 0 0;
+        margin-left: 10px;
+        padding: 20px;
+        width: 90%;
     }
 
     #carousel-banner .caption-txt3 {
@@ -2213,7 +2214,9 @@ a.subscription:hover {
     }
 
     #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 20px;
+        top: 40px;
+        left: 420px;
+        width: 150px;
     }
 
     #carousel-banner .guarantee-img1 {
@@ -2334,6 +2337,12 @@ a.subscription:hover {
 
     #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
         font-size: 38px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt2 img {
+        top: 80px;
+        left: 260px;
+        width: 140px;
     }
 
     .friend-title-pad {
@@ -2728,6 +2737,12 @@ a.subscription:hover {
         bottom: 0px;
     }
 
+    #carousel-banner .carousel-caption .caption-txt2 img {
+        top: 25px;
+        left: 250px;
+        width: 140px;
+    }
+
     #carousel-banner .carousel-control {
         width: 20px;
     }
@@ -2919,6 +2934,12 @@ a.subscription:hover {
         width: 110px;
         left: 265px;
         top: 40px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt2 img {
+        top: 15px;
+        left: 250px;
+        width: 120px;
     }
 
     .right-box a {
@@ -3471,6 +3492,12 @@ a.subscription:hover {
     #carousel-banner .carousel-caption .caption-txt1 img {
         top: 40px;
         left: 200px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt2 img {
+        top: 15px;
+        left: 220px;
+        width: 100px;
     }
 
     .header-tag {
