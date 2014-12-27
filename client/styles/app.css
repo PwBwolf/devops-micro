@@ -666,8 +666,8 @@ a.btn-signup {
 
 #carousel-banner .caption-txt1 {
     float: left;
-    width: 64%;
-    margin-left: 32%;
+    width: 74%;
+    margin-left: 22%;
     background: rgba(0, 0, 0, 0.5);
     padding: 20px;
 }
@@ -703,9 +703,8 @@ a.btn-signup {
 #carousel-banner .carousel-caption .caption-txt1 img {
     float: right;
     width: auto;
-    position: relative;
-    top: -15px;
-    right: 0;
+    top: 75px;
+    left: 450px;
 }
 
 #carousel-banner .carousel-caption .caption-txt1 .bdr {
@@ -2183,15 +2182,6 @@ a.subscription:hover {
         width: 90%;
     }
 
-    #carousel-banner .guarantee-img1 {
-        left: 480px;
-        float: right;
-        width: 150px;
-        position: absolute;
-        top: 52px;
-        right: 10%;
-    }
-
     #carousel-banner .carousel-caption .caption-txt1 h1 {
         font-size: 42px;
         padding-bottom: 10px;
@@ -2224,6 +2214,15 @@ a.subscription:hover {
 
     #carousel-banner .carousel-caption .caption-txt2 img {
         top: 20px;
+    }
+
+    #carousel-banner .guarantee-img1 {
+        left: 480px;
+        float: right;
+        width: 150px;
+        position: absolute;
+        top: 52px;
+        right: 10%;
     }
 }
 
@@ -2306,9 +2305,22 @@ a.subscription:hover {
         top: 50px;
     }
 
+    #carousel-banner .caption-txt1 {
+        float: left;
+        width: 84%;
+        margin-left: 12%;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt1 img {
+        top: 75px;
+        left: 350px;
+    }
+
     #carousel-banner img.guarantee-img1 {
         width: 130px;
-        left: 365px;
+        left: 360px;
         top: 60px;
     }
 
@@ -2619,6 +2631,12 @@ a.subscription:hover {
         width: 90%;
     }
 
+    #carousel-banner img.guarantee-img1 {
+        width: 120px;
+        left: 275px;
+        top: 35px;
+    }
+
     #carousel-banner .carousel-caption {
         top: 25px;
     }
@@ -2645,7 +2663,13 @@ a.subscription:hover {
         line-height: 24px;
     }
 
-    #carousel-banner .carousel-caption img, #carousel-banner .carousel-caption .caption-txt1 img, #carousel-banner .carousel-caption .caption-txt2 img {
+    #carousel-banner .guarantee-img1 {
+        width: 120px;
+        left: 280px;
+        top: 35px;
+    }
+
+    #carousel-banner .guarantee-img2 {
         width: 120px;
         left: 280px;
         top: 35px;
@@ -2685,7 +2709,9 @@ a.subscription:hover {
     }
 
     #carousel-banner .carousel-caption .caption-txt1 img {
-        right: 10%;
+        top: 65px;
+        left: 220px;
+        width: 120px;
     }
 
     #carousel-banner .carousel-caption .caption-txt .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag, #carousel-banner .carousel-caption .caption-txt3 .header-tag {
@@ -2889,6 +2915,12 @@ a.subscription:hover {
         background-size: 30px auto;
     }
 
+    #carousel-banner img.guarantee-img1 {
+        width: 110px;
+        left: 265px;
+        top: 40px;
+    }
+
     .right-box a {
         margin: 0 5px 10px
     }
@@ -2945,10 +2977,16 @@ a.subscription:hover {
         top: 10px;
     }
 
-    #carousel-banner .carousel-caption img, #carousel-banner .carousel-caption .caption-txt1 img, #carousel-banner .carousel-caption .caption-txt2 img {
+    #carousel-banner .guarantee-img1 {
         width: 100px;
         left: 265px;
         top: 45px;
+    }
+
+    #carousel-banner .guarantee-img2 {
+        width: 100px;
+        left: 225px;
+        top: 65px;
     }
 
     #carousel-banner .carousel-caption .caption-txt1 h1 {
@@ -3232,22 +3270,20 @@ a.subscription:hover {
         top: 70px;
     }
 
-    #carousel-banner .caption-txt, #carousel-banner .carousel-caption .caption-txt1, #carousel-banner .carousel-caption .caption-txt3, #carousel-banner .caption-txt2 {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px 2%;
-        width: 88%;
-        margin: 0px;
-    }
-
     #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
         padding: 8px 0 10px;
     }
 
-    #carousel-banner .carousel-caption .caption-txt2 img, #carousel-banner .carousel-caption img, #carousel-banner .carousel-caption .caption-txt1 img {
-        position: absolute;
-        top: 6px;
+    #carousel-banner .carousel-caption .caption-txt1 img {
+        top: 42px;
+        left: 220px;
     }
 
+    #carousel-banner img.guarantee-img1 {
+        width: 110px;
+        left: 280px;
+        top: 20px;
+    }
 }
 
 @media screen and (max-width: 479px) {
@@ -3377,12 +3413,6 @@ a.subscription:hover {
         max-width: 160% !important;
     }
 
-    #carousel-banner .carousel-caption .caption-txt2 img, #carousel-banner .carousel-caption img, #carousel-banner .carousel-caption .caption-txt1 img {
-        width: 90px;
-        top: 4px;
-        left: 200px;
-    }
-
     #carousel-banner .carousel-caption {
         top: 50px;
     }
@@ -3430,6 +3460,17 @@ a.subscription:hover {
         font-size: 20px;
         line-height: 22px;
         padding: 7px 0 7px
+    }
+
+    #carousel-banner img.guarantee-img1 {
+        width: 80px;
+        left: 235px;
+        top: 28px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt1 img {
+        top: 40px;
+        left: 200px;
     }
 
     .header-tag {
