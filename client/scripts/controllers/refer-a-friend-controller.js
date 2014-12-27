@@ -16,7 +16,7 @@
         $scope.sendRafEmails = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                userSvc.sendRafEmails($scope.mv.emailList, function () {
+                userSvc.sendRafEmails($scope.mv, function () {
                     $scope.saving = false;
                     $location.path('/refer-a-friend-success');
                 }, function () {
