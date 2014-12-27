@@ -20,7 +20,7 @@
                 $scope.appConfig = response;
                 $scope.showHeader = true;
             }).error(function () {
-                loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG') || 'Error fetching application configuration');
+                loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
                 $scope.showHeader = false;
             });
         }
@@ -50,7 +50,7 @@
             userSvc.getAioToken(function (response) {
                 aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
             }, function () {
-                loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO') || 'Unable to open video portal');
+                loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
             });
         };
     }]);

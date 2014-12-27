@@ -19,9 +19,9 @@
                     },
                     function (response) {
                         if (response === 'UnverifiedAccount') {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED_NOT_VERIFIED') || 'Sign In failed as your account has not been verified yet');
+                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED_NOT_VERIFIED'));
                         } else {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED') || 'Sign In failed');
+                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED'));
                         }
                         $scope.saving = false;
                     });

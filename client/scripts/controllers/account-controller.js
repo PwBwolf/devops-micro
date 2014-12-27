@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('accountCtrl', ['$scope', function ($scope) {
+    app.controller('accountCtrl', [function () {
 
     }]);
 }(angular.module('app')));

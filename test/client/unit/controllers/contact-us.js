@@ -10,7 +10,24 @@ describe('Controller: contactUsCtrl', function () {
         appService,
         httpBackend,
         location,
-        loggerService;
+        loggerService,
+        errorMessage = 'error'; //Message returned by mock translate filter
+
+    beforeEach(module(function ($provide, $filterProvider) {
+        //translate filter mock
+        function mockTranslateFilter(value) {
+            return errorMessage;
+        }
+
+        $provide.value('translate', mockTranslateFilter);
+
+        $filterProvider.register('translate', function (translate) {
+            return function (text) {
+                return translate(text);
+            };
+        });
+
+    }));
 
     function initController() {
         controller('contactUsCtrl', {
@@ -20,7 +37,7 @@ describe('Controller: contactUsCtrl', function () {
         });
     }
 
-    function initForm () {
+    function mockContactUsForm() {
         scope.form = {
             $valid: false,
             name: {
@@ -39,6 +56,9 @@ describe('Controller: contactUsCtrl', function () {
                 $dirty: false
             }
         };
+    }
+
+    function mockModelView() {
         scope.mv = {
             name: 'Varun',
             interest: 'Submit a question',
@@ -59,35 +79,61 @@ describe('Controller: contactUsCtrl', function () {
         initController();
     }));
 
-    it('should attach a list of the countries', function () {
+    it('should attach a list of the 5 countries', function () {
         var countries = ['USA', 'Spain', 'Mexico', 'Canada', 'UK'];
-        for(var i=0; i<5; i++) {
-            httpBackend.when("GET", "/api/get-countries").respond(200, countries);
-            initController();
-            httpBackend.flush();
-            expect(scope.countries.length).toBe(countries.length);
-            expect(scope.mv.country).toBe('United States');
-            countries.splice(0, 1);
-        }
+        httpBackend.when("GET", "/api/get-countries").respond(200, countries);
+        initController();
+        httpBackend.flush();
+        expect(scope.countries.length).toBe(countries.length);
+        expect(scope.mv.country).toBe('United States');
     });
 
-    it('should log proper error message on error fetching the countries', function () {
-        var errorResponses = [404, 401, 501];
-        spyOn(loggerService,'logError');
-        for(var i=0; i<3; i++) {
-            httpBackend.when("GET", "/api/get-countries").respond(errorResponses[i], []);
-            initController();
-            httpBackend.flush();
-            expect(scope.countries).toBe(undefined);
-            expect(scope.mv).toBe(undefined);
-            expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
-        }
+    it('should attach a list of the 3 countries', function () {
+        var countries = ['USA', 'Spain', 'Mexico'];
+        httpBackend.when("GET", "/api/get-countries").respond(200, countries);
+        initController();
+        httpBackend.flush();
+        expect(scope.countries.length).toBe(countries.length);
+        expect(scope.mv.country).toBe('United States');
+    });
+
+    it('should attach a list of the 2 countries', function () {
+        var countries = ['USA', 'Spain'];
+        httpBackend.when("GET", "/api/get-countries").respond(200, countries);
+        initController();
+        httpBackend.flush();
+        expect(scope.countries.length).toBe(countries.length);
+        expect(scope.mv.country).toBe('United States');
+    });
+
+
+    it('should log appropriate error message on error fetching the countries', function () {
+        errorMessage = 'Error loading country list'; //error message returned by mock translate filter
+        spyOn(loggerService, 'logError');
+        httpBackend.when("GET", "/api/get-countries").respond(500, []);
+        initController();
+        httpBackend.flush();
+        expect(scope.countries).toBe(undefined);
+        expect(scope.mv).toBe(undefined);
+        expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
+    });
+
+    it('should log fallback error message if translate filter fails on error fetching the countries', function () {
+        errorMessage = undefined; //mocking translate filter failure
+        spyOn(loggerService, 'logError');
+        httpBackend.when("GET", "/api/get-countries").respond(500, []);
+        initController();
+        httpBackend.flush();
+        expect(scope.countries).toBe(undefined);
+        expect(scope.mv).toBe(undefined);
+        expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
     });
 
     it('should set the form dirty', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
         httpBackend.flush();
-        initForm();
+        mockContactUsForm();
+        mockModelView();
         scope.saveContactUs();
         expect(scope.form.name.$dirty).toBe(true);
         expect(scope.form.interest.$dirty).toBe(true);
@@ -96,10 +142,11 @@ describe('Controller: contactUsCtrl', function () {
         expect(scope.form.details.$dirty).toBe(true);
     });
 
-    it('should send the contact us form data to server', function () {
+    it('should redirect to contact us success page on contact us form post success', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
         httpBackend.flush();
-        initForm();
+        mockContactUsForm();
+        mockModelView();
         scope.form.$valid = true;
         httpBackend.when("POST", '/api/save-contact-us').respond(200, []);
         scope.saveContactUs();
@@ -108,21 +155,36 @@ describe('Controller: contactUsCtrl', function () {
         expect(location.path()).toBe('/contact-us-success');
     });
 
-    it('should log proper error message on save contact us form post error', function () {
+    it('should log appropriate error message on save contact us form post error', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
         httpBackend.flush();
-        initForm();
+        mockContactUsForm();
+        mockModelView();
+        errorMessage = 'Error submitting your request'; //error message returned by mock translate filter
         scope.form.$valid = true;
-        var errorResponses = [404, 401, 501];
-        spyOn(loggerService,'logError');
-        for(var i=0; i<3; i++) {
-            httpBackend.when("POST", '/api/save-contact-us').respond(errorResponses[i], []);
-            scope.saveContactUs();
-            httpBackend.flush();
-            expect(scope.saving).toBe(false);
-            expect(location.path()).toBe('/');
-            expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
-        }
+        spyOn(loggerService, 'logError');
+        httpBackend.when("POST", '/api/save-contact-us').respond(500, []);
+        scope.saveContactUs();
+        httpBackend.flush();
+        expect(scope.saving).toBe(false);
+        expect(location.path()).toBe('/');
+        expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
+    });
+
+    it('should log fallback error message if translate filter fails on save contact us form post error', function () {
+        httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        httpBackend.flush();
+        mockContactUsForm();
+        mockModelView();
+        errorMessage = undefined; //mocking translate filter failure
+        scope.form.$valid = true;
+        spyOn(loggerService, 'logError');
+        httpBackend.when("POST", '/api/save-contact-us').respond(500, []);
+        scope.saveContactUs();
+        httpBackend.flush();
+        expect(scope.saving).toBe(false);
+        expect(location.path()).toBe('/');
+        expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
     });
 
 });

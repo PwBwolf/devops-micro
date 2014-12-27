@@ -40,25 +40,50 @@
             <h1 translate="RAF_ENTER_FRIENDS_EMAIL"> Or Enter Friends' Email Address</h1>
 
             <div class="form-pad">
-                <textarea id="emailList"></textarea>
-                <button type="submit" goto="/under-construction" translate="RAF_SEND_INVITE">Send Invite</button>
+                <form name="form" id="form" novalidate ng-submit="sendRafEmails()">
+                    <textarea id="emailList" name="emailList" ng-model="mv.emailList" value="" required ng-class="{'txtbox-error': form.emailList.$dirty && form.emailList.$invalid}"></textarea>
+
+                    <div ng-show="form.emailList.$dirty && form.emailList.$error.required" class="error-msg" translate=" RAF_EMAIL_LIST_REQUIRED">Enter at least a single email address</div>
+                    <button id="sendInvite" name="sendInvite" type="submit" translate="RAF_SEND_INVITE">Send Invite</button>
+                </form>
             </div>
         </div>
     </div>
     <div class="btm-bg">&nbsp;</div>
 </div>
+<script src="//api.cloudsponge.com/widget/6155963e82b72493baa22224b7869f8579c2f67c.js"></script>
 <script>
+    var owner_email, owner_first_name, owner_last_name;
+    var appendInTextarea = true;  // whether to append to existing contacts in the textarea
+    var emailSep = ", ";  // email address separator to use in textarea
+    function populateTextArea(contacts, source, owner) {
+        var contact, name, email, entry;
+        var emails = [];
+        var textarea = document.getElementById('emailList');
+        if (appendInTextarea && textarea.value.strip().length > 0) {
+            emails = textarea.value.split(emailSep);
+        }
+        for (var i = 0; i < contacts.length; i++) {
+            contact = contacts[i];
+            name = contact.fullName();
+            email = contact.selectedEmail();
+            entry = name + "<" + email +">";
+            if (emails.indexOf(entry) < 0) {
+                emails.push(entry);
+            }
+        }
+        textarea.value = emails.join(emailSep);
+        owner_email = (owner && owner.email && owner.email[0] && owner.email[0].address) || "";
+        owner_first_name = (owner && owner.first_name) || "";
+        owner_last_name = (owner && owner.last_name) || "";
+        var input = $('#emailList');
+        input.trigger('input');
+    }
+
     window.csPageOptions = {
-        textarea_id: 'emailList',
         include: ['email'],
         mobile_render: true,
-        sources: ['gmail', 'linkedin', 'yahoo', 'facebook']
+        sources: ['gmail', 'linkedin', 'yahoo', 'facebook'],
+        afterSubmitContacts: populateTextArea
     };
-    (function (u) {
-        var d = document, s = 'script', a = d.createElement(s), m = d.getElementsByTagName(s)[0];
-        a.async = 1;
-        a.src = u;
-        m.parentNode.insertBefore(a, m);
-    })('//api.cloudsponge.com/widget/6155963e82b72493baa22224b7869f8579c2f67c.js');
 </script>
-

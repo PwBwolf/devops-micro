@@ -5,7 +5,6 @@
         var token;
 
         return {
-
             setToken: function (isPersistent, accessToken) {
                 this.clearToken();
                 token = accessToken;

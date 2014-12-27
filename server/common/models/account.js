@@ -11,6 +11,7 @@ var Account = new Schema({
     createdAt: {type: Date, required: true},
     referralCode: String,
     type: {type: String, required: true},
+    referredBy: String,
     primaryCard: {
         id: String,
         type: String,

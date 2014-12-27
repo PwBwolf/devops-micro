@@ -10,7 +10,7 @@
                 $scope.countries = data;
                 $scope.mv = {country: 'United States'};
             }).error(function () {
-                loggerSvc.logError($filter('translate')('CONTACT_US_COUNTRY_LOAD_ERROR') || 'Error loading country list');
+                loggerSvc.logError($filter('translate')('CONTACT_US_COUNTRY_LOAD_ERROR'));
             });
         }
 
@@ -24,7 +24,7 @@
                         $scope.saving = false;
                     },
                     function () {
-                        loggerSvc.logError($filter('translate')('CONTACT_US_ERROR') || 'Error submitting your request');
+                        loggerSvc.logError($filter('translate')('CONTACT_US_ERROR'));
                         $scope.saving = false;
                     });
             } else {
