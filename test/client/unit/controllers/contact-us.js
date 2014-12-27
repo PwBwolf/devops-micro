@@ -10,13 +10,21 @@ describe('Controller: contactUsCtrl', function () {
         appService,
         httpBackend,
         location,
-        loggerService,
-        errorMessage = 'error'; //Message returned by mock translate filter
+        loggerService;
 
     beforeEach(module(function ($provide, $filterProvider) {
         //translate filter mock
         function mockTranslateFilter(value) {
-            return errorMessage;
+            switch (value) {
+                case 'CONTACT_US_ERROR':
+                    return 'Error submitting your request';
+                    break;
+                case 'CONTACT_US_COUNTRY_LOAD_ERROR':
+                    return 'Error loading country list';
+                    break;
+                default:
+                    return '';
+            }
         }
 
         $provide.value('translate', mockTranslateFilter);
@@ -108,18 +116,6 @@ describe('Controller: contactUsCtrl', function () {
 
 
     it('should log appropriate error message on error fetching the countries', function () {
-        errorMessage = 'Error loading country list'; //error message returned by mock translate filter
-        spyOn(loggerService, 'logError');
-        httpBackend.when("GET", "/api/get-countries").respond(500, []);
-        initController();
-        httpBackend.flush();
-        expect(scope.countries).toBe(undefined);
-        expect(scope.mv).toBe(undefined);
-        expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
-    });
-
-    it('should log fallback error message if translate filter fails on error fetching the countries', function () {
-        errorMessage = undefined; //mocking translate filter failure
         spyOn(loggerService, 'logError');
         httpBackend.when("GET", "/api/get-countries").respond(500, []);
         initController();
@@ -160,23 +156,6 @@ describe('Controller: contactUsCtrl', function () {
         httpBackend.flush();
         mockContactUsForm();
         mockModelView();
-        errorMessage = 'Error submitting your request'; //error message returned by mock translate filter
-        scope.form.$valid = true;
-        spyOn(loggerService, 'logError');
-        httpBackend.when("POST", '/api/save-contact-us').respond(500, []);
-        scope.saveContactUs();
-        httpBackend.flush();
-        expect(scope.saving).toBe(false);
-        expect(location.path()).toBe('/');
-        expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
-    });
-
-    it('should log fallback error message if translate filter fails on save contact us form post error', function () {
-        httpBackend.expect("GET", "/api/get-countries").respond(200, []);
-        httpBackend.flush();
-        mockContactUsForm();
-        mockModelView();
-        errorMessage = undefined; //mocking translate filter failure
         scope.form.$valid = true;
         spyOn(loggerService, 'logError');
         httpBackend.when("POST", '/api/save-contact-us').respond(500, []);

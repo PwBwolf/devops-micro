@@ -17,7 +17,7 @@
                     if (response === 'UserNotFound') {
                         $scope.codeError = true;
                     } else {
-                        loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR') || 'Unable to change your password. Please contact YipTV customer care.');
+                        loggerSvc.logError($filter('translate')('RESET_PASSWORD_ERROR'));
                     }
                     $scope.showPage = true;
                 }
