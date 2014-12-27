@@ -14,7 +14,7 @@
                         if (response === 'Unauthorized') {
                             loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_INCORRECT_PASSWORD') || 'You have entered a wrong password');
                         } else {
-                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_ERROR') || 'Error occured while changing password');
+                            loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_ERROR') || 'Error occurred while changing password');
                         }
                     });
             }
