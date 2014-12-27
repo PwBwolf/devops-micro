@@ -17,18 +17,22 @@ var User = new Schema({
     salt: {type: String, required: true},
     key: {type: Number, required: true},
     aioAccountId: Number,
-    role: { type: {
-        bitMask: { type: Number, required: true },
-        title: {type: String, required: true }
-    }, required: true },
-    type: {type: String, required: true},
+    role: {
+        type: {
+            bitMask: {type: Number, required: true},
+            title: {type: String, required: true}
+        },
+        required: true
+    },
+    type: String,
+    referredBy: String,
     activated: Boolean,
     disabled: Boolean,
     deleted: Boolean,
     createdAt: {type: Date, required: true},
     lastLoginTime: Date,
-    verificationCode: {type: String, sparse: true },
-    resetPasswordCode: { type: String, sparse: true },
+    verificationCode: {type: String, sparse: true},
+    resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
@@ -48,7 +52,7 @@ var User = new Schema({
             zip: String
         }
     }
-}, { collection: 'Users' });
+}, {collection: 'Users'});
 
 User.virtual('password')
     .set(function (password) {
@@ -113,5 +117,5 @@ User.methods = {
     }
 };
 
-User.plugin(autoIncrement.plugin, { model: 'User', field: 'key', startAt: 100 });
+User.plugin(autoIncrement.plugin, {model: 'User', field: 'key', startAt: 100});
 connection.model('User', User);

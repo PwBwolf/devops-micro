@@ -106,6 +106,12 @@
                 controller: 'referAFriendCtrl',
                 access: access.user
             })
+            .when('/refer-a-friend-success',
+            {
+                templateUrl: 'views/refer-a-friend-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/change-password-success',
             {
                 templateUrl: 'views/change-password-success.html',

@@ -4,6 +4,7 @@
     app.directive('complexPassword', [function () {
         return {
             require: 'ngModel',
+            restrict: 'A',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$parsers.unshift(function (password) {
                     var hasUpperCase = /[A-Z]/.test(password);

@@ -19,7 +19,6 @@ var mongoose = require('mongoose'),
 
 module.exports = {
     signUp: function (req, res) {
-
         async.waterfall([
             // create user in db
             function (callback) {
@@ -46,6 +45,7 @@ module.exports = {
             function (userObj, callback) {
                 var accountObj = new Account({
                     type: userObj.type,
+                    referredBy: userObj.referredBy,
                     primaryUser: userObj,
                     users: [userObj],
                     createdAt: (new Date()).toUTCString()
@@ -60,6 +60,8 @@ module.exports = {
                             callback(err);
                         });
                     } else {
+                        userObj.referredBy = undefined;
+                        userObj.type = undefined;
                         userObj.account = accountObj;
                         userObj.save(function (err) {
                             if (err) {
@@ -164,7 +166,7 @@ module.exports = {
                 }
             });
             var token = jwt.encode({
-                email: req.body.email,
+                email: req.body.email.toLowerCase(),
                 role: userRoles.user,
                 expiry: moment().add(7, 'days').valueOf()
             }, config.secretToken);
@@ -380,6 +382,31 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.send(data);
+        });
+    },
+
+    sendRafEmails: function(req, res) {
+        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            var rafUrl = config.url + 'invite/' + user.account.referralCode;
+            var mailOptions = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: req.body.emailList,
+                subject: config.referAFriendEmailSubject,
+                html: sf(config.referAFriendEmailBody, config.imageUrl, rafUrl)
+            };
+            email.sendEmail(mailOptions, function (err) {
+                if (err) {
+                    logger.logError(err);
+                }
+            });
+            return res.status(200).end();
         });
     }
 };

@@ -4,6 +4,7 @@
     app.directive('notSameAs', [function () {
         return {
             require: 'ngModel',
+            restrict: 'A',
             scope: {
                 otherModelValue: '=notSameAs'
             },

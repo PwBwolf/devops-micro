@@ -2,9 +2,10 @@
     'use strict';
 
     app.controller('changeCreditCardCtrl', ['$scope', function ($scope) {
+
         $scope.changeCreditCard = function () {
             if($scope.form.$valid) {
-                //Todo : add credit card api call to submit credit card details
+
             }
             else {
                 setFormDirty();

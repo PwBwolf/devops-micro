@@ -4,6 +4,7 @@
     app.directive('sameAs', [function () {
         return {
             require: 'ngModel',
+            restrict: 'A',
             scope: {
                 otherModelValue: '=sameAs'
             },
