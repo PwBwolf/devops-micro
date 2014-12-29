@@ -6,6 +6,7 @@
             require: 'ngModel',
             restrict: 'A',
             link: function (scope, element, attrs, ctrl) {
+
                 ctrl.$parsers.push(checkEmailUnique);
                 element.bind('blur', checkEmailUnique);
 

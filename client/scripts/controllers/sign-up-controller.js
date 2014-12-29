@@ -1,13 +1,11 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams) {
-
-        $scope.userType = $routeParams.type;
+    app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
-                $scope.mv.type = $routeParams.type;
+                $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
                 $scope.saving = true;
