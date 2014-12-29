@@ -4,8 +4,8 @@
 
         <div class="container">
             <div class="signup-box">
-                <span class="label-text" ng-show="userType == 'free'" translate="SIGN_UP_MESSAGE_FREE">You are signing up as a free user. Your credit card will be used for verification purpose only.</span>
-                <span class="label-text" ng-show="userType == 'paid'" translate="SIGN_UP_MESSAGE_PAID">You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.</span>
+                <span class="label-text" translate="SIGN_UP_MESSAGE">You are signing up as a paid user. Your credit card will be charged $14.99 on sign up.</span>
+
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
                     <div class="frm">
                         <div class="frm-left1">
@@ -31,11 +31,13 @@
                     </div>
                     <div class="frm-btn"><span class="label-text" translate="SIGN_UP_PASSWORD">Password</span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="txtbox2" ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}">
+
                         <div class="error-msg" ng-show="form.password.$dirty && form.password.$error.required" translate="SIGN_UP_PASSWORD_REQUIRED">Enter your password</div>
                         <div class="error-msg" ng-show="form.password.$dirty && !form.password.$error.required && form.password.$error.complexity" translate="SIGN_UP_PASSWORD_NOT_COMPLEX">Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character</div>
                     </div>
                     <div class="frm-btn"><span class="label-text" translate="SIGN_UP_CONFIRM_PASSWORD">Confirm Password</span><br>
                         <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="txtbox2" ng-class="{'txtbox-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
+
                         <div class="error-msg" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="SIGN_UP_CONFIRM_PASSWORD_REQUIRED">Confirm your password</div>
                         <div class="error-msg" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="SIGN_UP_CONFIRM_PASSWORD_NO_MATCH">Passwords do not match</div>
                     </div>
@@ -43,12 +45,14 @@
                         <div class="frm-left">
                             <span class="label-text" translate="SIGN_UP_CARD_NUMBER">Credit Card Number</span>
                             <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+
                             <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED">Enter your credit card number</div>
                             <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR">Enter a valid credit card number</div>
                         </div>
                         <div class="frm-right">
                             <span class="label-text" translate="SIGN_UP_CVV">CVV</span>
                             <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}">
+
                             <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="SIGN_UP_CVV_REQUIRED">Enter your CVV</div>
                             <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
                         </div>
@@ -65,6 +69,7 @@
                         <div class="frm-right1">
                             <span class="label-text" translate="SIGN_UP_ZIP_CODE">Zip Code</span>
                             <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="txtbox1" ng-class="{'txtbox-error': form.zipCode.$dirty && form.zipCode.$invalid}">
+
                             <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED">Enter your zip code</div>
                             <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID">Enter a valid zip code</div>
                         </div>

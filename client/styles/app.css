@@ -618,7 +618,7 @@ a.btn-signup {
     width: auto;
     position: absolute;
     top: 38px;
-    left: 400px;
+    left: 420px;
 }
 
 #carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
@@ -658,17 +658,17 @@ a.btn-signup {
 
 #carousel-banner .caption-txt {
     float: left;
-    padding: 30px;
+    padding: 30px 20px;
     margin-left: 12%;
     width: 80%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 #carousel-banner .caption-txt1 {
     float: left;
     width: 74%;
     margin-left: 22%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     padding: 20px;
 }
 
@@ -677,7 +677,7 @@ a.btn-signup {
     padding: 20px 15px;
     width: 75%;
     margin-left: 20%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.0);
 }
 
 #carousel-banner .carousel-caption .caption-txt1 h1 {
@@ -756,7 +756,7 @@ a.btn-signup {
 #carousel-banner .caption-txt3 {
     float: left;
     width: 92%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.1);
     padding: 20px;
 }
 
@@ -2274,7 +2274,7 @@ a.subscription:hover {
 
     #carousel-banner .caption-txt {
         float: left;
-        padding: 30px;
+        padding: 30px 20px;
         margin-left: 8%;
         width: 85%;
         background: rgba(0, 0, 0, 0.5);
@@ -2723,7 +2723,7 @@ a.subscription:hover {
         width: 120px;
     }
 
-    #carousel-banner .carousel-caption .caption-txt .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag, #carousel-banner .carousel-caption .caption-txt3 .header-tag {
+    #carousel-banner .carousel-caption .caption-txt .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag, #carousel-banner .carousel-caption .caption-txt2 .header-tag, #carousel-banner .carousel-caption .caption-txt3 .header-tag {
         font-size: 13px;
         line-height: 20px;
         font-weight: normal;
@@ -3540,5 +3540,23 @@ a.subscription:hover {
 @media screen and (max-width: 359px) {
     .phone {
         background-position: 26% 0;
+    }
+
+    #carousel-banner img.guarantee-img1 {
+        width: 60px;
+        left: 210px;
+        top: 88px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt1 img {
+        top: 45px;
+        left: 168px;
+        width: 100px;
+    }
+
+    #carousel-banner .carousel-caption .caption-txt2 img {
+        top: 15px;
+        left: 170px;
+        width: 100px;
     }
 }

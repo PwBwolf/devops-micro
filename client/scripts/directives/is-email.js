@@ -6,6 +6,7 @@
             require: 'ngModel',
             restrict: 'A',
             link: function (scope, elm, attrs, ctrl) {
+
                 ctrl.$parsers.unshift(function (email) {
                     var isEmail = /[\w-]+@([\w-]+\.)+[\w-]+/.test(email);
                     ctrl.$setValidity('isEmail', isEmail);

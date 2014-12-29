@@ -16,22 +16,34 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up/:type',
+            .when('/sign-up/paid',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
                 access: access.anon
             })
-            .when('/invite/:referralCode',
+            .when('/sign-up/free',
             {
-                templateUrl: 'views/redirect.html',
-                controller: 'inviteCtrl',
+                templateUrl: 'views/free-sign-up.html',
+                controller: 'freeSignUpCtrl',
                 access: access.anon
             })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
                 controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/free-sign-up-success',
+            {
+                templateUrl: 'views/free-sign-up-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/invite/:referralCode',
+            {
+                templateUrl: 'views/redirect.html',
+                controller: 'inviteCtrl',
                 access: access.anon
             })
             .when('/verify-user',

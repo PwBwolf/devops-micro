@@ -10,7 +10,11 @@
 
                 function saveVisitor(viewValue) {
                     if (ctrl.$valid) {
-                        appSvc.saveVisitor({email: element.val(), firstName: scope.$eval(attrs.firstName), lastName: scope.$eval(attrs.lastName)});
+                        appSvc.saveVisitor({email: element.val(), firstName: scope.$eval(attrs.firstName), lastName: scope.$eval(attrs.lastName)}, function() {
+                            ctrl.$setValidity('saveVisitor', true);
+                        }, function() {
+                            ctrl.$setValidity('saveVisitor', true);
+                        });
                     }
                     return viewValue;
                 }
