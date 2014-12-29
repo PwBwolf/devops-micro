@@ -219,7 +219,7 @@ gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server', 'tools']
     checkAndPrepareDist('dist', 'yip-server');
 });
 
-gulp.task('deploy', ['clean'], function(){
+gulp.task('deploy', ['test', 'clean'], function(){
     if(argv.tag) {
         if(argv.tag !== 'false' && argv.tag !== 'true') {
             checkoutFromTag().then(function() {
@@ -397,4 +397,28 @@ gulp.task('watch', function () {
     gulp.watch(['../../client/scripts/**/*.js'], ['reload-js']);
     gulp.watch(['../../client/styles/**/*.css'], ['reload-css']);
     gulp.watch(['../../client/img/**/*'], ['reload-images']);
+});
+
+
+/*****************************************************************/
+/*                            Testing                            */
+/*****************************************************************/
+
+var karma = require('gulp-karma');
+
+var testFiles = [
+    '../test/client/**/*.js'
+];
+
+gulp.task('test', function() {
+    // Be sure to return the stream
+    return gulp.src('./dummy.js')
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', function(err) {
+            // Make sure failed tests cause gulp to exit non-zero
+            throw err;
+        });
 });

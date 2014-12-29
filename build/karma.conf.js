@@ -15,23 +15,20 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        '../../../client/bower_components/jquery/jquery.js',
-        '../../../client/bower_components/angular/angular.js',
-        '../../../client/bower_components/angular-webstorage/angular-webstorage.js',
-        '../../../client/bower_components/angular-sanitize/angular-sanitize.js',
-        '../../../client/bower_components/angular-route/angular-route.js',
-        '../../../client/bower_components/angular-animate/angular-animate.js',
-        '../../../client/bower_components/angular-cookies/angular-cookies.js',
-        '../../../client/bower_components/angular-payments/lib/angular-payments.js',
-        '../../../client/bower_components/angular-resource/angular-resource.js',
-        '../../../client/bower_components/angular-translate/angular-translate.js',
-        '../../../client/bower_components/toastr/toastr.js',
-        '../../../client/bower_components/fastclick/lib/fastclick.js',
-        '../../../client/bower_components/zeroclipboard/dist/ZeroClipboard.js',
-        '../../../client/bower_components/ng-clip/src/ngClip.js',
-        'node_modules/angular-mocks/angular-mocks.js',
-        '../../../client/scripts/**/*.js',
-        'controllers/*.js'
+        '../client/bower_components/jquery/jquery.js',
+        '../client/bower_components/angular/angular.js',
+        '../client/bower_components/angular-webstorage/angular-webstorage.js',
+        '../client/bower_components/angular-sanitize/angular-sanitize.js',
+        '../client/bower_components/angular-route/angular-route.js',
+        '../client/bower_components/angular-animate/angular-animate.js',
+        '../client/bower_components/angular-translate/angular-translate.js',
+        '../client/bower_components/toastr/toastr.js',
+        '../client/bower_components/fastclick/lib/fastclick.js',
+        '../client/bower_components/zeroclipboard/dist/ZeroClipboard.js',
+        '../client/bower_components/ng-clip/src/ngClip.js',
+        './node_modules/angular-mocks/angular-mocks.js',
+        '../client/scripts/**/*.js',
+        '../test/client/unit/controllers/*.js'
     ],
 
 
@@ -66,7 +63,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
 
     // start these browsers
@@ -80,6 +77,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };
