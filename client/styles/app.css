@@ -2281,7 +2281,7 @@ a.subscription:hover {
 
     #carousel-banner .carousel-caption1 img {
         width: 150px;
-        left: 370px;
+        left: 380px;
     }
 
     #carousel-banner .carousel-indicators {
@@ -2920,6 +2920,7 @@ a.subscription:hover {
 
     .header-tag {
         background: none !important;
+        font-size: 10px;
     }
 
     .friend-banner-left .friend-title h2 {
@@ -2989,6 +2990,10 @@ a.subscription:hover {
 
     #carousel-banner .carousel-caption1 img {
         width: 80px;
-        left: 140px;
+        left: 150px;
+    }
+
+    .header-tag {
+        font-size: 8px;
     }
 }
