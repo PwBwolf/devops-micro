@@ -81,6 +81,13 @@ describe('Controller: signInCtrl', function () {
         httpBackend = $httpBackend;
         loggerService = loggerSvc;
         location = $location;
+
+        scope.appConfig =
+        {
+            "appName" : "YipTV",
+            "customerCareNumber" : "800-123-1111"
+        };
+
         controller('signInCtrl', {
             $scope: scope,
             $rootScope: rootScope,
@@ -104,7 +111,7 @@ describe('Controller: signInCtrl', function () {
         scope.signIn();
         setTimeout(function() {
             expect(location.path()).toBe('/user-home');
-        }, 10);
+        }, 100);
         expect(scope.saving).toBe(false);
     });
 
@@ -117,7 +124,7 @@ describe('Controller: signInCtrl', function () {
         scope.signIn();
         setTimeout(function() {
             expect(location.path()).toBe('/refer-a-friend');
-        }, 10);
+        }, 100);
         expect(rootScope.redirectTo).toBe(undefined);
         expect(scope.saving).toBe(false);
     });
