@@ -218,102 +218,8 @@ a.btn-signup {
     z-index: 9;
 }
 
-.banner-caption {
-    position: absolute;
-    top: 175px;
-    right: 3%;
-    z-index: 99;
-    width: 485px;
-    font-family: 'bebasregular';
-}
-
-.banner-caption h1 {
-    font-size: 32px;
-    line-height: 40px;
-    color: #ffffff;
-    padding: 0 0 15px;
-    margin: 0px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.banner-caption h1 span {
-    font-size: 26px;
-    padding-left: 6px;
-}
-
-.banner-caption h2 {
-    font-size: 48px;
-    line-height: 55px;
-    color: #3fd8d4;
-    padding: 0 0 5px;
-    margin: 0px;
-    text-transform: none;
-    letter-spacing: 1px;
-}
-
-.banner-caption h2 sub {
-    font-size: 30px;
-    line-height: 40px;
-    padding-right: 3px;
-}
-
-.banner-caption h2 span {
-    font-family: 'radikalregular';
-    font-size: 20px;
-    color: #b9babe;
-}
-
-.banner-caption h2 span.divide {
-    font-family: 'radikalthin';
-    font-size: 24px;
-    font-weight: bolder;
-    padding: 0 0 0 5px;
-    color: #3fd8d4;
-}
-
-.banner-caption img {
-    float: right;
-    width: auto;
-    position: absolute;
-    top: -15px;
-    right: 0px;
-}
-
 .green-text {
     color: #3FD8D4 !important;
-}
-
-.banner2-text {
-    line-height: 2;
-    color: #fff;
-    font-family: 'gotham-bookgotham-book';
-    font-size: 28px;
-    text-transform: uppercase;
-}
-
-.banner2-image {
-    top: 35px !important;
-    right: 70px !important;
-}
-
-.banner3-text {
-    text-align: right;
-    line-height: 1;
-    color: #fff;
-    font-family: 'gotham-bookgotham-book';
-    font-size: 28px;
-}
-
-.banner3-text2 {
-    line-height: 20px;
-    color: #fff;
-    font-family: 'gotham-bookgotham-book';
-    font-size: 15px;
-}
-
-.banner4-image {
-    right: 90px !important;
 }
 
 .service {
@@ -558,74 +464,11 @@ a.btn-signup {
     width: 17px;
 }
 
-#carousel-banner .carousel-caption {
-    position: absolute;
-    top: 105px;
-    left: 45%;
-    right: 0%;
-    width: 55%;
-    font-family: 'bebasregular';
-    text-align: left;
-    z-index: 99;
-}
-
-#carousel-banner .carousel-caption h1 {
-    font-size: 32px;
-    line-height: 40px;
-    color: #ffffff;
-    padding: 0 0 15px;
-    margin: 0px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption h1 span {
-    font-size: 30px;
-    padding-left: 6px;
-}
-
-#carousel-banner .carousel-caption h2 {
-    font-size: 48px;
-    line-height: 55px;
-    color: #3fd8d4;
-    padding: 0 0 5px;
-    margin: 0px;
-    text-transform: none;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption h2 sub {
-    font-size: 30px;
-    line-height: 40px;
-    padding-right: 3px;
-}
-
-#carousel-banner .carousel-caption h2 span {
-    font-family: 'radikalregular';
-    font-size: 20px;
-    color: #b9babe;
-}
-
-#carousel-banner .carousel-caption h2 span.divide {
-    font-family: 'radikalthin';
-    font-size: 24px;
-    padding: 0 0 0 5px;
-    color: #3fd8d4;
-}
-
-#carousel-banner .carousel-caption img {
-    float: right;
-    width: auto;
-    position: absolute;
-    top: 38px;
-    left: 420px;
-}
-
 #carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
     background-image: none;
 }
 
-#carousel-banner .carousel-caption .caption-txt .bdr {
+#carousel-banner .carousel-caption1 .caption-txt .bdr {
     border-bottom: 1px solid #4E525D;
     width: 100%;
 }
@@ -644,150 +487,6 @@ a.btn-signup {
     height: 12px;
     margin: 0px 3px;
     background-color: #3c4250;
-}
-
-#carousel-banner .carousel-caption .caption-txt h1 {
-    font-size: 32px;
-    line-height: 40px;
-    color: #ffffff;
-    padding: 10px 0 15px;
-    margin: 0px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .caption-txt {
-    float: left;
-    padding: 30px 20px;
-    margin-left: 12%;
-    width: 80%;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-#carousel-banner .caption-txt1 {
-    float: left;
-    width: 74%;
-    margin-left: 22%;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-}
-
-#carousel-banner .caption-txt2 {
-    float: left;
-    padding: 20px 15px;
-    width: 75%;
-    margin-left: 20%;
-    background: rgba(0,0,0,0.0);
-}
-
-#carousel-banner .carousel-caption .caption-txt1 h1 {
-    font-size: 40px;
-    line-height: 40px;
-    color: #ffffff;
-    padding: 0 0 25px;
-    margin: 0px 0px 0px 0px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption .caption-txt1 h2 {
-    font-size: 34px;
-    line-height: 50px;
-    color: #3fd8d4;
-    padding: 0px 0px 10px 0px;
-    margin: 10px 0px 0px 0;
-    text-transform: none;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption .caption-txt1 img {
-    float: right;
-    width: auto;
-    top: 75px;
-    left: 450px;
-}
-
-#carousel-banner .carousel-caption .caption-txt1 .bdr {
-    border-bottom: 1px solid #4E525D;
-    width: 80%;
-}
-
-#carousel-banner .carousel-caption .caption-txt .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag {
-    font-size: 17px;
-}
-
-#carousel-banner .carousel-caption .caption-txt2 .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag {
-    font-size: 17px;
-}
-
-#carousel-banner .carousel-caption .caption-txt2 h1 {
-    font-size: 40px;
-    line-height: 40px;
-    color: #ffffff;
-    padding: 0 0 25px 0;
-    margin: 0px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption .caption-txt2 h2 {
-    font-size: 52px;
-    line-height: 50px;
-    color: #3fd8d4;
-    padding: 4px 0px 20px 0px;
-    margin: 10px 0px 0px 0;
-    text-transform: none;
-    letter-spacing: 1px;
-}
-
-#carousel-banner .carousel-caption .caption-txt2 img {
-    float: right;
-    width: auto;
-    position: absolute;
-    top: 25px;
-    left: 510px;
-}
-
-#carousel-banner .carousel-caption .caption-txt2 .bdr {
-    border-bottom: 1px solid #4E525D;
-    width: 100%;
-}
-
-#carousel-banner .caption-txt3 {
-    float: left;
-    width: 92%;
-    background: rgba(0,0,0,0.1);
-    padding: 20px;
-}
-
-#carousel-banner .carousel-caption .caption-txt3 h1 {
-    font-family: "radikalthin";
-    font-size: 34px;
-    color: #3fd8d4;
-    font-weight: normal;
-    padding: 10px 0 20px;
-    text-transform: none;
-    text-align: right;
-    line-height: 40px;
-}
-
-#carousel-banner .carousel-caption .caption-txt3 p {
-    font-family: 'gotham-lightgotham-light';
-    font-size: 22px;
-    color: #ffffff;
-    font-weight: normal;
-    padding: 0 0 5px;
-    text-transform: none;
-    text-align: right;
-    line-height: 32px;
-}
-
-#carousel-banner .carousel-caption .caption-txt3 .header-tag {
-    font-family: 'radikalregular';
-    font-size: 17px;
-    color: #3fd8d4;
-    text-align: right;
-    float: right;
 }
 
 #carousel-banner .carousel-indicators {
@@ -838,6 +537,100 @@ a.btn-signup {
     right: 10px;
     text-align: right;
     background: url(../img/slide-arrow.png) no-repeat -30px 0;
+}
+
+#carousel-banner .carousel-caption1 {
+    position: absolute;
+    top: 105px;
+    left: 25%;
+    width: 55%;
+    font-family: 'bebasregular';
+    text-align: left;
+    z-index: 99;
+}
+
+#carousel-banner .caption-txt1 {
+    float: left;
+    padding: 30px 20px;
+    margin-left: 12%;
+    width: 80%;
+    background: rgba(0, 0, 0, 0);
+}
+
+#carousel-banner .carousel-caption1 h1 {
+    font-size: 32px;
+    line-height: 40px;
+    color: #3FD8D4;
+    padding: 10px 0 15px;
+    margin: 0px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#carousel-banner .carousel-caption1 h1 span {
+    font-size: 30px;
+    padding-left: 6px;
+}
+
+#carousel-banner .carousel-caption1 h2 {
+    font-size: 48px;
+    line-height: 55px;
+    color: #3FD8D4;
+    padding: 0 0 5px;
+    margin: 0px;
+    text-transform: none;
+    letter-spacing: 1px;
+}
+
+#carousel-banner .carousel-caption1 h2 sub {
+    font-size: 30px;
+    line-height: 40px;
+    padding-right: 3px;
+}
+
+#carousel-banner .carousel-caption1 h2 span {
+    font-family: 'radikalregular';
+    font-size: 20px;
+    color: #3fd8d4;
+}
+
+#carousel-banner .carousel-caption1 h2 span.divide {
+    font-family: 'radikalthin';
+    font-size: 24px;
+    padding: 0 0 0 5px;
+    color: #3fd8d4;
+}
+
+#carousel-banner .carousel-caption1 img {
+    float: right;
+    width: auto;
+    position: absolute;
+    top: 23px;
+    left: 420px;
+}
+
+#carousel-banner .caption-txt2 {
+    float: left;
+    width: 74%;
+    margin-left: 22%;
+    background: rgba(0, 0, 0, 0);
+    padding: 20px;
+}
+
+#carousel-banner .caption-txt3 {
+    float: left;
+    padding: 20px 15px;
+    width: 75%;
+    margin-left: 20%;
+    background: rgba(0, 0, 0, 0);
+}
+
+#carousel-banner .caption-txt4 {
+    float: left;
+    padding: 20px 15px;
+    width: 75%;
+    margin-left: 20%;
+    background: rgba(0, 0, 0, 0);
 }
 
 .header-tag a {
@@ -2147,15 +1940,6 @@ a.subscription:hover {
         width: 100%;
     }
 
-    .banner-caption {
-        top: 80px;
-    }
-
-    .banner-caption img {
-        max-width: 178px;
-        width: 100%;
-    }
-
     .img-video img {
         width: 100%;
     }
@@ -2173,60 +1957,6 @@ a.subscription:hover {
 
 @media (max-width: 1320px) {
 
-    #carousel-banner .caption-txt2 {
-        margin-left: 10px;
-        padding: 20px;
-        width: 90%;
-    }
-
-    #carousel-banner .caption-txt3 {
-        width: 90%;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h1 {
-        font-size: 42px;
-        padding-bottom: 10px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h2 {
-        font-size: 30px;
-        line-height: 40px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 h1 {
-        font-size: 28px;
-        line-height: 30px;
-        padding-top: 0px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 p {
-        font-size: 20px;
-        line-height: 28px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h1 {
-        font-size: 44px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h2 {
-        font-size: 44px;
-        line-height: 44px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 40px;
-        left: 420px;
-        width: 150px;
-    }
-
-    #carousel-banner .guarantee-img1 {
-        left: 480px;
-        float: right;
-        width: 150px;
-        position: absolute;
-        top: 52px;
-        right: 10%;
-    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -2237,6 +1967,30 @@ a.subscription:hover {
 
     .watch h1 {
         font-size: 26px;
+    }
+
+    #carousel-testimonial .carousel-inner {
+        width: 88%;
+        padding: 0;
+        margin: 0 6%;
+    }
+
+    #carousel-testimonial .carousel-control.left {
+        margin-left: 30px;
+    }
+
+    #carousel-testimonial .carousel-control.right {
+        margin-right: 30px;
+    }
+
+    #carousel-gallery li img {
+        margin: 0 1% 30px;
+        max-width: 23%;
+    }
+
+    #carousel-banner .carousel-indicators {
+        width: 65%;
+        bottom: 10px;
     }
 
     .img-revolution img {
@@ -2270,79 +2024,6 @@ a.subscription:hover {
 
     a.credit-card, a.credit-card:hover, a.user-password, a.user-password:hover, a.subscription, a.subscription:hover {
         padding: 70% 0 0;
-    }
-
-    #carousel-banner .caption-txt {
-        float: left;
-        padding: 30px 20px;
-        margin-left: 8%;
-        width: 85%;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    #carousel-testimonial .carousel-inner {
-        width: 88%;
-        padding: 0;
-        margin: 0 6%;
-    }
-
-    #carousel-testimonial .carousel-control.left {
-        margin-left: 30px;
-    }
-
-    #carousel-testimonial .carousel-control.right {
-        margin-right: 30px;
-    }
-
-    #carousel-gallery li img {
-        margin: 0 1% 30px;
-        max-width: 23%;
-    }
-
-    #carousel-banner .carousel-indicators {
-        width: 65%;
-        bottom: 10px;
-    }
-
-    #carousel-banner .carousel-caption {
-        top: 50px;
-    }
-
-    #carousel-banner .caption-txt1 {
-        float: left;
-        width: 84%;
-        margin-left: 12%;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 20px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 img {
-        top: 75px;
-        left: 350px;
-    }
-
-    #carousel-banner img.guarantee-img1 {
-        width: 130px;
-        left: 360px;
-        top: 60px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 h1 {
-        font-size: 24px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 p, #carousel-banner .carousel-caption .caption-txt3 .header-tag {
-        font-size: 16px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
-        font-size: 38px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 80px;
-        left: 260px;
-        width: 140px;
     }
 
     .friend-title-pad {
@@ -2403,38 +2084,6 @@ a.subscription:hover {
 @media screen and (max-width: 999px) {
     a.language {
         margin-left: 17px;
-    }
-
-    .banner-caption {
-        top: 40px;
-        width: 50%;
-    }
-
-    .banner-caption img {
-        max-width: 100px;
-        width: 100%;
-        top: 0px;
-    }
-
-    .banner-caption h1 {
-        font-size: 26px;
-        padding: 0px;
-    }
-
-    .banner-caption h1 span {
-        font-size: 20px;
-    }
-
-    .banner-caption h2 {
-        font-size: 36px;
-    }
-
-    .banner-caption h2 sub {
-        font-size: 20px;
-    }
-
-    .banner-caption h2 span.divide {
-        font-size: 24px;
     }
 
     .service {
@@ -2630,104 +2279,9 @@ a.subscription:hover {
         background-position: -38px 0;
     }
 
-    #carousel-banner .carousel-caption {
-        left: 40%;
-        width: 60%;
-    }
-
-    #carousel-banner .caption-txt, #carousel-banner .carousel-caption .caption-txt1 {
-        margin-left: 5%;
-        width: 90%;
-    }
-
-    #carousel-banner img.guarantee-img1 {
-        width: 120px;
-        left: 275px;
-        top: 35px;
-    }
-
-    #carousel-banner .carousel-caption {
-        top: 25px;
-    }
-
-    #carousel-banner .carousel-caption h2 {
-        font-size: 32px;
-        line-height: 32px;
-    }
-
-    #carousel-banner .carousel-caption h2 sub {
-        font-size: 16px;
-        line-height: 20px;
-        bottom: 0px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt h1 {
-        font-size: 24px;
-        line-height: 24px;
-        padding: 5px 0;
-    }
-
-    #carousel-banner .carousel-caption h1 span {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .guarantee-img1 {
-        width: 120px;
-        left: 280px;
-        top: 35px;
-    }
-
-    #carousel-banner .guarantee-img2 {
-        width: 120px;
-        left: 280px;
-        top: 35px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
-        font-size: 25px;
-        line-height: 30px;
-        padding: 5px 0 8px;
-        margin: 0px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 h1 {
-        font-size: 20px;
-        padding: 0px 0 10px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 p {
-        font-size: 15px;
-        line-height: 20px;
-        padding: 0px;
-        margin: 0px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h1 {
-        font-size: 26px;
-        line-height: 30px;
-        padding-bottom: 5px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h2 {
-        font-size: 22px;
-        line-height: 25px;
-        margin-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 img {
-        top: 65px;
-        left: 220px;
-        width: 120px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt .header-tag, #carousel-banner .carousel-caption .caption-txt1 .header-tag, #carousel-banner .carousel-caption .caption-txt2 .header-tag, #carousel-banner .carousel-caption .caption-txt3 .header-tag {
-        font-size: 13px;
-        line-height: 20px;
-        font-weight: normal;
-        background: none !important;
+    #carousel-banner .carousel-caption1 img {
+        width: 150px;
+        left: 370px;
     }
 
     #carousel-banner .carousel-indicators {
@@ -2735,12 +2289,6 @@ a.subscription:hover {
         text-align: center;
         left: 0px;
         bottom: 0px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 25px;
-        left: 250px;
-        width: 140px;
     }
 
     #carousel-banner .carousel-control {
@@ -2789,10 +2337,6 @@ a.subscription:hover {
 @media screen and (max-width: 767px) {
     .right-box a {
         margin-left: 12px;
-    }
-
-    .banner-caption img {
-        right: -20px;
     }
 
     .service {
@@ -2893,16 +2437,6 @@ a.subscription:hover {
         padding: 30% 0 10%;
     }
 
-    .banner2-text {
-        font-size: 20px !important;
-        line-height: 1;
-    }
-
-    .banner3-text {
-        font-size: 20px !important;
-        line-height: 1;
-    }
-
     #carousel-testimonial .carousel-inner {
         width: 94%;
         padding: 0;
@@ -2914,6 +2448,46 @@ a.subscription:hover {
         float: none;
         height: auto;
         width: 175px;
+    }
+
+    #carousel-banner .caption-txt1 {
+        float: left;
+        padding: 30px 20px;
+        margin-left: 12%;
+        width: 80%;
+        background: rgba(0, 0, 0, 0);
+    }
+
+    #carousel-banner .carousel-caption1 h1 {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption1 h1 span {
+        font-size: 22px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 {
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 sub {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span {
+        font-size: 12px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span.divide {
+        font-size: 18px;
+    }
+
+    #carousel-banner .carousel-caption1 img {
+        width: 120px;
+        left: 300px;
     }
 
     #carousel-testimonial .carousel-caption {
@@ -2928,18 +2502,6 @@ a.subscription:hover {
 
     #carousel-testimonial .carousel-caption .quot-l, #carousel-testimonial .carousel-caption.quot-r {
         background-size: 30px auto;
-    }
-
-    #carousel-banner img.guarantee-img1 {
-        width: 110px;
-        left: 265px;
-        top: 40px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 15px;
-        left: 250px;
-        width: 120px;
     }
 
     .right-box a {
@@ -2973,45 +2535,6 @@ a.subscription:hover {
 @media screen and (max-width: 707px) {
     .textarea2 {
         height: 219px;
-    }
-
-    .banner2-text {
-        font-size: 18px !important;
-        line-height: 1;
-    }
-
-    .banner3-text {
-        font-size: 18px !important;
-        line-height: 20px;
-    }
-
-    .banner3-text2 {
-        font-size: 12px !important;
-        line-height: 1;
-    }
-
-    .banner-caption h1 {
-        line-height: 30px;
-    }
-
-    #carousel-banner .carousel-caption {
-        top: 10px;
-    }
-
-    #carousel-banner .guarantee-img1 {
-        width: 100px;
-        left: 265px;
-        top: 45px;
-    }
-
-    #carousel-banner .guarantee-img2 {
-        width: 100px;
-        left: 225px;
-        top: 65px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h1 {
-        padding-bottom: 0px;
     }
 
     a.btn-sign {
@@ -3097,45 +2620,6 @@ a.subscription:hover {
 
     .banner img {
         width: 70%;
-    }
-
-    .banner-caption {
-        top: 15px;
-        width: 54%;
-    }
-
-    .banner-caption img {
-        max-width: 80px;
-        width: 100%;
-        top: 0px;
-    }
-
-    .banner-caption h1 {
-        font-size: 22px;
-        padding: 0px;
-    }
-
-    .banner-caption h1 span {
-        font-size: 16px;
-    }
-
-    .banner-caption h2 {
-        font-size: 28px;
-        line-height: 30px;
-    }
-
-    .banner-caption h2 sub {
-        font-size: 16px;
-        bottom: .01em !important;
-    }
-
-    .banner-caption h2 span.divide {
-        font-size: 16px;
-    }
-
-    .banner3-text2 {
-        font-size: 13px !important;
-        line-height: 20px !important;
     }
 
     .revolution-box {
@@ -3270,6 +2754,44 @@ a.subscription:hover {
         bottom: -20px;
     }
 
+    #carousel-banner .carousel-caption1 {
+        top: 50px;
+    }
+
+    #carousel-banner .carousel-caption1 h1 {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 0;
+    }
+
+    #carousel-banner .carousel-caption1 h1 span {
+        font-size: 18px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 {
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 sub {
+        font-size: 28px;
+        line-height: 28px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span {
+        font-size: 8px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span.divide {
+        font-size: 12px;
+        padding: 0 0 0 5px;
+    }
+
+    #carousel-banner .carousel-caption1 img {
+        width: 90px;
+        left: 250px;
+    }
+
     .link-box .shadow {
         padding: 40px 0 55px;
     }
@@ -3279,31 +2801,7 @@ a.subscription:hover {
     }
 
     .banner img {
-        width: 150%;
-        max-width: 150% !important;
-    }
-
-    #carousel-banner .carousel-caption {
-        float: left;
-        left: 10%;
-        padding: 0;
-        width: 90%;
-        top: 70px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
-        padding: 8px 0 10px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 img {
-        top: 42px;
-        left: 220px;
-    }
-
-    #carousel-banner img.guarantee-img1 {
-        width: 110px;
-        left: 280px;
-        top: 20px;
+        width: 100%;
     }
 }
 
@@ -3326,42 +2824,6 @@ a.subscription:hover {
 
     .banner img {
         width: 154%;
-    }
-
-    .banner-caption {
-        top: 35px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .banner-caption h1 {
-        background: rgba(36, 196, 190, .8);
-        color: #FFF;
-        float: left;
-        width: 70%;
-        margin: 0 15%;
-        text-align: center;
-        line-height: 30px;
-    }
-
-    .banner-caption h2 {
-        background: rgba(0, 0, 0, .8);
-        float: left;
-        width: 70%;
-        margin: 10px 15%;
-        text-align: center;
-        line-height: 30px;
-        padding: 0px;
-    }
-
-    .banner-caption h2 span.divide {
-        line-height: 28px;
-        font-size: 16px;
-    }
-
-    .banner-caption img {
-        top: 85px;
-        right: -14px;
     }
 
     a.credit-card, a.credit-card:hover, a.user-password, a.user-password:hover, a.subscription, a.subscription:hover {
@@ -3402,27 +2864,50 @@ a.subscription:hover {
         padding-bottom: 57%;
     }
 
-    .banner2-text {
-        font-size: 30px !important;
-        background: #000 !important;
-        color: rgba(36, 196, 190, .8) !important;
-    }
-
     .green-text {
         color: rgba(36, 196, 190, .8) !important;
         background: #000 !important;
     }
 
-    .banner4-image {
-        visibility: hidden;
-    }
-
-    .banner2-image {
-        visibility: hidden;
-    }
-
     #carousel-gallery .carousel-control {
         top: 120%;
+    }
+
+    #carousel-banner .carousel-caption1 {
+        top: 0px;
+    }
+
+    #carousel-banner .carousel-caption1 h1 {
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    #carousel-banner .carousel-caption1 h1 span {
+        font-size: 12px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 sub {
+        font-size: 22px;
+        line-height: 22px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span {
+        font-size: 2px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span.divide {
+        font-size: 10px;
+        padding: 0 0 0 5px;
+    }
+
+    #carousel-banner .carousel-caption1 img {
+        width: 80px;
+        left: 190px;
     }
 
     .right-box a {
@@ -3430,74 +2915,7 @@ a.subscription:hover {
     }
 
     .banner img {
-        width: 160%;
-        max-width: 160% !important;
-    }
-
-    #carousel-banner .carousel-caption {
-        top: 50px;
-    }
-
-    #carousel-banner .carousel-caption h2 {
-        font-size: 28px;
-        line-height: 28px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt h1, #carousel-banner .carousel-caption h1 span {
-        font-size: 20px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h1 {
-        font-size: 20px;
-        padding-top: 5px;
-        line-height: 25px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 h2 {
-        font-size: 18px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 {
-        padding: 3px 3%;
-        width: 91%;
-        margin-left: -2%;
-        margin-top: -20px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 h1 {
-        font-size: 18px;
-        line-height: 18px;
-        padding-bottom: 5px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt3 p {
-        font-size: 14px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 h1, #carousel-banner .carousel-caption .caption-txt2 h2 {
-        font-size: 20px;
-        line-height: 22px;
-        padding: 7px 0 7px
-    }
-
-    #carousel-banner img.guarantee-img1 {
-        width: 80px;
-        left: 235px;
-        top: 28px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt1 img {
-        top: 40px;
-        left: 200px;
-    }
-
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 15px;
-        left: 220px;
-        width: 100px;
+        width: 100%;
     }
 
     .header-tag {
@@ -3534,29 +2952,43 @@ a.subscription:hover {
     .friend-right-box .friend-social ul li a {
         width: 100%;
     }
-
 }
 
-@media screen and (max-width: 359px) {
+@media screen and (max-width: 399px) {
     .phone {
         background-position: 26% 0;
     }
 
-    #carousel-banner img.guarantee-img1 {
-        width: 60px;
-        left: 210px;
-        top: 88px;
+    #carousel-banner .carousel-caption1 h1 {
+        font-size: 10px;
+        line-height: 14px;
     }
 
-    #carousel-banner .carousel-caption .caption-txt1 img {
-        top: 45px;
-        left: 168px;
-        width: 100px;
+    #carousel-banner .carousel-caption1 h1 span {
+        font-size: 8px;
     }
 
-    #carousel-banner .carousel-caption .caption-txt2 img {
-        top: 15px;
-        left: 170px;
-        width: 100px;
+    #carousel-banner .carousel-caption1 h2 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 sub {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span {
+        font-size: 2px;
+    }
+
+    #carousel-banner .carousel-caption1 h2 span.divide {
+        font-size: 6px;
+        padding: 0 0 0 5px;
+    }
+
+    #carousel-banner .carousel-caption1 img {
+        width: 80px;
+        left: 140px;
     }
 }
