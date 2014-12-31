@@ -66,7 +66,7 @@
             CONTACT_US_SUCCESS_HEADING: 'Request Submitted',
             CONTACT_US_SUCCESS_MESSAGE: 'Your request has been submitted successfully.',
             FREE_SIGN_UP_HEADING: 'Sign Up',
-            FREE_SIGN_UP_MESSAGE: 'You are signing up as a free 30-day trial user',
+            FREE_SIGN_UP_MESSAGE: 'You are signing up as a free 30-day trial user.',
             FREE_SIGN_UP_FIRST_NAME: 'First Name',
             FREE_SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
             FREE_SIGN_UP_LAST_NAME_REQUIRED: 'Enter your last name',
