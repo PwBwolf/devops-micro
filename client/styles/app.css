@@ -560,7 +560,7 @@ a.btn-signup {
 #carousel-banner .carousel-caption1 h1 {
     font-size: 32px;
     line-height: 40px;
-    color: #3FD8D4;
+    color: #000;
     padding: 10px 0 15px;
     margin: 0px;
     text-transform: uppercase;
@@ -575,7 +575,7 @@ a.btn-signup {
 #carousel-banner .carousel-caption1 h2 {
     font-size: 48px;
     line-height: 55px;
-    color: #3FD8D4;
+    color: #000;
     padding: 0 0 5px;
     margin: 0px;
     text-transform: none;
@@ -591,18 +591,22 @@ a.btn-signup {
 #carousel-banner .carousel-caption1 h2 span {
     font-family: 'radikalregular';
     font-size: 20px;
-    color: #3fd8d4;
+    color: #000;
 }
 
 #carousel-banner .carousel-caption1 h2 span.divide {
     font-family: 'radikalthin';
     font-size: 24px;
     padding: 0 0 0 5px;
-    color: #3fd8d4;
+    color: #000;
 }
 
 #carousel-banner .carousel-caption1 .header-tag {
     font-size: 17px;
+}
+
+#carousel-banner .carousel-caption1 .header-tag a {
+    color: #000 !important;
 }
 
 #carousel-banner .carousel-caption1 img {
@@ -634,7 +638,7 @@ a.btn-signup {
 #carousel-banner .carousel-caption2 h1 {
     font-size: 32px;
     line-height: 40px;
-    color: #3FD8D4;
+    color: #000;
     padding: 10px 0 15px;
     margin: 0px;
     text-transform: uppercase;
@@ -644,7 +648,7 @@ a.btn-signup {
 #carousel-banner .carousel-caption2 h2 {
     font-size: 48px;
     line-height: 55px;
-    color: #3FD8D4;
+    color: #000;
     padding: 0 0 5px;
     margin: 0px;
     text-transform: none;
@@ -655,20 +659,106 @@ a.btn-signup {
     font-size: 17px;
 }
 
+#carousel-banner .carousel-caption2 .header-tag a {
+    color: #000 !important;
+}
+
+#carousel-banner .carousel-caption3 {
+    position: absolute;
+    top: 10px;
+    left: 55%;
+    width: 40%;
+    font-family: 'bebasregular';
+    text-align: left;
+    z-index: 99;
+}
+
 #carousel-banner .caption-txt3 {
     float: left;
-    padding: 20px 15px;
-    width: 75%;
-    margin-left: 20%;
+    margin-left: 22%;
+    width: 80%;
     background: rgba(0, 0, 0, 0);
+}
+
+#carousel-banner .carousel-caption3 h1 {
+    font-family: "radikalthin";
+    font-size: 34px;
+    color: #000;
+    font-weight: 400;
+    text-transform: none;
+    text-align: right;
+    line-height: 40px;
+    margin-top: 10px;
+}
+
+#carousel-banner .carousel-caption3 p {
+    font-family: 'gotham-lightgotham-light';
+    font-size: 22px;
+    color: #000;
+    font-weight: 400;
+    text-transform: none;
+    text-align: right;
+    line-height: 32px;
+}
+
+#carousel-banner .carousel-caption3 .header-tag {
+    font-size: 17px;
+    text-align: right;
+    float: right;
+}
+
+#carousel-banner .carousel-caption3 .header-tag a {
+    color: #000 !important;
+}
+
+#carousel-banner .carousel-caption4 {
+    position: absolute;
+    top: 10px;
+    left: 55%;
+    width: 40%;
+    font-family: 'bebasregular';
+    text-align: left;
+    z-index: 99;
+    top: 40px;
 }
 
 #carousel-banner .caption-txt4 {
     float: left;
-    padding: 20px 15px;
-    width: 75%;
-    margin-left: 20%;
+    margin-left: 22%;
+    width: 80%;
     background: rgba(0, 0, 0, 0);
+}
+
+#carousel-banner .carousel-caption4 h1 {
+    font-size: 40px;
+    color: #000;
+    font-weight: 400;
+    text-transform: none;
+    text-align: right;
+    line-height: 40px;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+#carousel-banner .carousel-caption4 h2 {
+    font-size: 52px;
+    color: #000;
+    font-weight: 400;
+    text-transform: none;
+    text-align: right;
+    line-height: 52px;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+#carousel-banner .carousel-caption4 .header-tag {
+    font-size: 17px;
+    text-align: right;
+    float: right;
+}
+
+#carousel-banner .carousel-caption4 .header-tag a {
+    color: #000 !important;
 }
 
 .header-tag a {
@@ -2361,6 +2451,31 @@ a.subscription:hover {
         line-height: 36px;
     }
 
+    #carousel-banner .carousel-caption3 {
+        top: 0;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 30px;
+        line-height: 30px;
+        padding-bottom: 0;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 36px;
+        line-height: 36px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 44px;
+        line-height: 44px;
+    }
+
     #carousel-banner .carousel-control {
         width: 20px;
     }
@@ -2583,6 +2698,16 @@ a.subscription:hover {
         font-size: 13px;
     }
 
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 15px;
+        line-height: 15px;
+    }
+
     #carousel-testimonial .carousel-caption {
         width: 98%;
         padding: 15px 0 15px 65px;
@@ -2652,6 +2777,16 @@ a.subscription:hover {
     .right-box a {
         margin: 0 5px 10px;
         font-size: 13px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 36px;
+        line-height: 36px;
     }
 }
 
@@ -2881,12 +3016,44 @@ a.subscription:hover {
     }
 
     #carousel-banner .carousel-caption1 .header-tag {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     #carousel-banner .carousel-caption1 img {
         width: 90px;
         left: 250px;
+    }
+
+    #carousel-banner .carousel-caption2 .header-tag {
+        font-size: 12px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    #carousel-banner .carousel-caption3 .header-tag {
+        font-size: 12px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 26px;
+        line-height: 26px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    #carousel-banner .carousel-caption4 .header-tag {
+        font-size: 12px;
     }
 
     .link-box .shadow {
@@ -3025,6 +3192,34 @@ a.subscription:hover {
         font-size: 10px;
     }
 
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 10px;
+        line-height: 10px;
+    }
+
+    #carousel-banner .carousel-caption3 .header-tag {
+        font-size: 10px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 26px;
+        line-height: 26px;
+    }
+
+    #carousel-banner .carousel-caption4 .header-tag {
+        font-size: 10px;
+    }
+
     .right-box a {
         margin: 0 5px 10px;
     }
@@ -3123,6 +3318,34 @@ a.subscription:hover {
     }
 
     #carousel-banner .carousel-caption2 .header-tag {
+        font-size: 8px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 13px;
+        line-height: 13px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 9px;
+        line-height: 9px;
+    }
+
+    #carousel-banner .carousel-caption3 .header-tag {
+        font-size: 8px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption4 .header-tag {
         font-size: 8px;
     }
 }
