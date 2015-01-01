@@ -116,13 +116,13 @@
             {
                 templateUrl: 'views/refer-a-friend.html',
                 controller: 'referAFriendCtrl',
-                access: access.user
+                access: access.public
             })
             .when('/refer-a-friend-success',
             {
                 templateUrl: 'views/refer-a-friend-success.html',
                 controller: 'commonCtrl',
-                access: access.user
+                access: access.public
             })
             .when('/change-password-success',
             {
