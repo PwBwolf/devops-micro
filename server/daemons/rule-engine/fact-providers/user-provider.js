@@ -5,20 +5,45 @@ var config = require('../../../common/config/config');
 
 // models
 User = mongoose.model('User');
+Account = mongoose.model('Account');
+
+function populateAccount(account) {
+    var def = Q.defer();
+    account.populate('primaryUser', function(err, populatedAccount){
+        if(!err) {
+            populatedAccount.primaryUser = _.assign({doctype: 'user'}, populatedAccount.primaryUser._doc);
+            console.log(populatedAccount);
+            def.resolve(populatedAccount);
+        } else {
+            def.reject(err);
+        }
+    });
+    return def.promise;
+}
 
 module.exports.getFreeUsers = function() {
     var def = Q.defer();
-    User.find({type: "free"}).exec().then(function(users) {
+    Account.find({type: "free"}).exec().then(function(accounts) {
         if(users) {
-            for(var i = 0; i < users.length; i++) {
-                users[i] = _.assign({doctype: 'user'}, users[i]._doc);
+            var accountPromises = [];
+            var userList = [];
+            for(var i = 0; i < accounts.length; i++) {
+                var accountPromise = populateAccount(accounts[i]);
+                accountPromises.push(accountPromise);
+                accountPromise.then(function(account) {
+                   userList.push(account.primaryUser);
+                }, function (err) {
+                    console.log('Something went wrong when retrieving user info for account:', err);
+                });
             }
-            def.resolve(users);
+            Q.all(accountPromises).then(function() {
+                def.resolve(userList);
+            });
         } else {
             def.resolve([]);
         }
     }, function(err) {
-        console.log(err);
+        console.log('Something went wrong when retrieving free accounts:', err);
         def.reject(err);
     });
     return def.promise;
