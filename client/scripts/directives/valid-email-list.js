@@ -8,9 +8,10 @@
             link: function (scope, elm, attrs, ctrl) {
 
                 ctrl.$parsers.unshift(function (emailList) {
+                    var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
                     var emails = emailList.split(',');
                     for (var i = 0; i < emails.length; i++) {
-                        var isEmail = /^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emails[i].trim());
+                        var isEmail = regex.test(emails[i].trim());
                         if (!isEmail) {
                             ctrl.$setValidity('validEmailList', false);
                             return emailList;

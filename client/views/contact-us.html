@@ -14,7 +14,7 @@
                         </div>
                         <div class="frm-right1">
                             <span class="label-text" translate="CONTACT_US_INTEREST">Interest</span>
-                            <select class="txtbox2" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
+                            <select class="txtbox2 txtboxdd" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
                                 <option value="" translate="CONTACT_US_INTEREST_SELECT">Select</option>
                                 <option value="Become a YipTV investor" translate="CONTACT_US_INTEREST_INVESTOR">Become a YipTV investor</option>
                                 <option value="Broadcast your network" translate="CONTACT_US_INTEREST_BROADCAST">Broadcast your network</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="frm1">
                             <span class="label-text" translate="CONTACT_US_COUNTRY">Country</span>
-                            <br> <select class="txtbox2" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries">
+                            <br> <select class="txtbox2 txtboxdd" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries">
                         </select>
                         </div>
                         <div class="frm">&nbsp;</div>

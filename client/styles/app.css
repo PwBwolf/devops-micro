@@ -1449,6 +1449,11 @@ a.btn-import:hover {
     border-radius: 5px;
 }
 
+.txtboxdd {
+    -webkit-appearance: menulist-button;
+    padding: 0 0 0 1%;
+}
+
 .txtbox-error {
     background: #FFFFFF;
     border: 2px solid;
