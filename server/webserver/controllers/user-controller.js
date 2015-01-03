@@ -22,7 +22,7 @@ module.exports = {
         async.waterfall([
             // create user in db
             function (callback) {
-                User.findOne({email: req.body.email}, function (err, user) {
+                User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
                     if (err) {
                         callback('Error');
                     } else if (!user) {
@@ -118,7 +118,7 @@ module.exports = {
             },
             // delete user from visitor
             function (userObj, accountObj, callback) {
-                Visitor.findOne({email: userObj.email}, function (err, visitor) {
+                Visitor.findOne({email: userObj.email.toLowerCase()}, function (err, visitor) {
                     if (err) {
                         callback(err);
                     }
@@ -212,7 +212,7 @@ module.exports = {
     },
 
     forgotPassword: function (req, res) {
-        User.findOne({email: req.body.email}, function (err, user) {
+        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -291,7 +291,7 @@ module.exports = {
     },
 
     isEmailUnique: function (req, res) {
-        User.findOne({email: req.query.email}, function (err, user) {
+        User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.send(false);
@@ -301,7 +301,7 @@ module.exports = {
     },
 
     resendVerification: function (req, res) {
-        User.findOne({email: req.body.email}, function (err, user) {
+        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
