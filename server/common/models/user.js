@@ -2,12 +2,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    crypto = require('crypto'),
-    config = require('../../common/config/config'),
-    autoIncrement = require('mongoose-auto-increment'),
-    connection = mongoose.createConnection(config.db);
-
-autoIncrement.initialize(connection);
+    crypto = require('crypto');
 
 var User = new Schema({
     firstName: {type: String, required: true, trim: true},
@@ -15,8 +10,6 @@ var User = new Schema({
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
     hashedPassword: {type: String, required: true},
     salt: {type: String, required: true},
-    key: {type: Number, required: true},
-    aioAccountId: Number,
     role: {
         type: {
             bitMask: {type: Number, required: true},
@@ -24,8 +17,6 @@ var User = new Schema({
         },
         required: true
     },
-    type: String,
-    referredBy: String,
     activated: Boolean,
     disabled: Boolean,
     deleted: Boolean,
@@ -68,26 +59,6 @@ var validatePresenceOf = function (value) {
     return value && value.length;
 };
 
-User.path('firstName').validate(function (firstName) {
-    return firstName.length;
-}, 'First Name cannot be blank');
-
-User.path('lastName').validate(function (lastName) {
-    return lastName.length;
-}, 'Last Name cannot be blank');
-
-User.path('email').validate(function (email) {
-    return email.length;
-}, 'Email cannot be blank');
-
-User.path('role').validate(function (role) {
-    return role.length;
-}, 'Role cannot be blank');
-
-User.path('hashedPassword').validate(function (hashedPassword) {
-    return hashedPassword.length;
-}, 'Password cannot be blank');
-
 User.pre('save', function (next) {
     if (!this.isNew) {
         return next();
@@ -117,5 +88,4 @@ User.methods = {
     }
 };
 
-User.plugin(autoIncrement.plugin, {model: 'User', field: 'key', startAt: 100});
-connection.model('User', User);
+mongoose.model('User', User);

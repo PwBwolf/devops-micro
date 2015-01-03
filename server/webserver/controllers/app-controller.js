@@ -4,12 +4,15 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     logger = require('../../common/config/logger'),
     config = require('../../common/config/config'),
+    ContactUs = mongoose.model('ContactUs'),
+    Referrer = mongoose.model('Referrer'),
     Visitor = mongoose.model('Visitor'),
     Country = mongoose.model('Country'),
     AppConfig = mongoose.model('AppConfig'),
+    Hashids = require('hashids'),
+    hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
-    sf = require('sf'),
-    ContactUs = mongoose.model('ContactUs');
+    sf = require('sf');
 
 module.exports = {
     getAppConfig: function (req, res) {
@@ -87,8 +90,8 @@ module.exports = {
             details: req.body.details,
             createdAt: (new Date()).toUTCString()
         });
-        contactUs.save(function(err){
-            if(err) {
+        contactUs.save(function (err) {
+            if (err) {
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -104,6 +107,53 @@ module.exports = {
                 }
             });
             return res.status(200).end();
+        });
+    },
+
+    sendRafEmails: function (req, res) {
+        Referrer.findOne({email: req.body.email}, function (err, referrer) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!referrer) {
+                referrer = new Referrer({
+                    email: req.body.email,
+                    createdAt: (new Date()).toUTCString()
+                });
+                referrer.save(function(err){
+                    if (err) {
+                        logger.logError(err);
+                        return res.status(500).end();
+                    }
+                    referrer.referralCode = hashids.encode(referrer.key, 5);
+                    referrer.save(function(err){
+                        if (err) {
+                            logger.logError(err);
+                            return res.status(500).end();
+                        }
+                        sendEmail();
+                    });
+                });
+            } else {
+                sendEmail();
+            }
+
+            function sendEmail() {
+                var rafUrl = config.url + 'invite/' + referrer.referralCode;
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: req.body.emailList,
+                    subject: config.referAFriendEmailSubject,
+                    html: sf(config.referAFriendEmailBody, config.imageUrl, rafUrl)
+                };
+                email.sendEmail(mailOptions, function (err) {
+                    if (err) {
+                        logger.logError(err);
+                    }
+                });
+                return res.status(200).end();
+            }
         });
     }
 };
