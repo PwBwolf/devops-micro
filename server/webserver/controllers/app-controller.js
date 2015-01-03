@@ -42,7 +42,7 @@ module.exports = {
     },
 
     saveVisitor: function (req, res) {
-        Visitor.findOne({email: req.body.email}, function (err, visitor) {
+        Visitor.findOne({email: req.body.email.toLowerCase()}, function (err, visitor) {
             if (err) {
                 logger.error(JSON.stringify(err));
             }
@@ -111,7 +111,7 @@ module.exports = {
     },
 
     sendRafEmails: function (req, res) {
-        Referrer.findOne({email: req.body.email}, function (err, referrer) {
+        Referrer.findOne({email: req.body.email.toLowerCase()}, function (err, referrer) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
