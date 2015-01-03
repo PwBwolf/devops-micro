@@ -8,8 +8,6 @@ var mongoose = require('mongoose'),
     logger = require('../../common/config/logger'),
     moment = require('moment'),
     config = require('../../common/config/config'),
-    Hashids = require('hashids'),
-    hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
     aio = require('../../common/services/aio'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
@@ -19,6 +17,8 @@ var mongoose = require('mongoose'),
 
 module.exports = {
     signUp: function (req, res) {
+        var type,
+            referredBy;
         async.waterfall([
             // create user in db
             function (callback) {
@@ -26,6 +26,8 @@ module.exports = {
                     if (err) {
                         callback('Error');
                     } else if (!user) {
+                        type = req.body.type;
+                        referredBy = req.body.referredBy;
                         var userObj = new User(req.body);
                         userObj.role = userRoles.user;
                         userObj.createdAt = (new Date()).toUTCString();
@@ -44,14 +46,12 @@ module.exports = {
             // create account in db
             function (userObj, callback) {
                 var accountObj = new Account({
-                    type: userObj.type,
-                    referredBy: userObj.referredBy,
+                    type: type,
+                    referredBy: referredBy,
                     primaryUser: userObj,
                     users: [userObj],
                     createdAt: (new Date()).toUTCString()
-
                 });
-                accountObj.referralCode = hashids.encode(userObj.key, 5);
                 accountObj.save(function (err) {
                     if (err) {
                         logger.logError(err);
@@ -60,8 +60,6 @@ module.exports = {
                             callback(err);
                         });
                     } else {
-                        userObj.referredBy = undefined;
-                        userObj.type = undefined;
                         userObj.account = accountObj;
                         userObj.save(function (err) {
                             if (err) {
@@ -91,8 +89,8 @@ module.exports = {
                         });
                         callback(err);
                     } else {
-                        userObj.aioAccountId = data.account;
-                        userObj.save(function (err) {
+                        accountObj.aioAccountId = data.account;
+                        accountObj.save(function (err) {
                             if (err) {
                                 callback(err);
                             } else {
@@ -382,31 +380,6 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.send(data);
-        });
-    },
-
-    sendRafEmails: function(req, res) {
-        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            var rafUrl = config.url + 'invite/' + user.account.referralCode;
-            var mailOptions = {
-                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                to: req.body.emailList,
-                subject: config.referAFriendEmailSubject,
-                html: sf(config.referAFriendEmailBody, config.imageUrl, rafUrl)
-            };
-            email.sendEmail(mailOptions, function (err) {
-                if (err) {
-                    logger.logError(err);
-                }
-            });
-            return res.status(200).end();
         });
     }
 };

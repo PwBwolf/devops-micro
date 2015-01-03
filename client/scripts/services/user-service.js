@@ -128,10 +128,6 @@
                     url: '/api/get-aio-token',
                     method: 'GET'
                 }).success(success).error(error);
-            },
-
-            sendRafEmails: function(emailList, success, error) {
-                $http.post('/api/send-raf-emails', emailList).success(success).error(error);
             }
         };
     }]);

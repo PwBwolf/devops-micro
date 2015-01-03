@@ -9,9 +9,9 @@ var Account = new Schema({
     disabled: Boolean,
     deleted: Boolean,
     createdAt: {type: Date, required: true},
-    referralCode: String,
     type: {type: String, required: true},
     referredBy: String,
+    aioAccountId: Number,
     primaryCard: {
         id: String,
         type: String,
