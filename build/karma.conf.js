@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         '../client/bower_components/jquery/jquery.js',
+        '../client/bower_components/lodash/dist/lodash.js',
         '../client/bower_components/angular/angular.js',
         '../client/bower_components/angular-webstorage/angular-webstorage.js',
         '../client/bower_components/angular-sanitize/angular-sanitize.js',
@@ -63,7 +64,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch:  false,
 
 
     // start these browsers
