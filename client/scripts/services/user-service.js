@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.factory('userSvc', ['tokenSvc', '$http', '_', function (tokenSvc, $http, _) {
+    app.factory('userSvc', ['tokenSvc', '_', '$http', '$rootScope', function (tokenSvc, _, $http, $rootScope) {
         var accessLevels = routing.accessLevels,
             userRoles = routing.userRoles,
             currentUser = noUser();
@@ -12,6 +12,7 @@
 
         function changeUser(user) {
             _.extend(currentUser, user);
+            $rootScope.$broadcast('UserChanged');
         }
 
         function getUserRole(roleName) {
@@ -127,10 +128,6 @@
                     url: '/api/get-aio-token',
                     method: 'GET'
                 }).success(success).error(error);
-            },
-
-            sendRafEmails: function(emailList, success, error) {
-                $http.post('/api/send-raf-emails', emailList).success(success).error(error);
             }
         };
     }]);

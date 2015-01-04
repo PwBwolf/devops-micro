@@ -1,22 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.controller('referAFriendCtrl', ['userSvc', 'loggerSvc', '$scope', '$filter', '$location', function (userSvc, loggerSvc, $scope, $filter, $location) {
+    app.controller('referAFriendCtrl', ['appSvc', 'loggerSvc', '$scope', '$filter', '$location', function (appSvc, loggerSvc, $scope, $filter, $location) {
 
-        $scope.referralLink = $scope.appConfig.url + 'invite/' + $scope.user.referralCode;
+        $scope.mv = {email: $scope.user.email};
 
-        $scope.getReferralLink = function () {
-            return $scope.referralLink;
-        };
-
-        $scope.fallback = function (copy) {
-            window.prompt($filter('translate')('RAF_COPY_LINK_MOBILE'), copy);
-        };
+        $scope.$on('UserChanged', function () {
+            $scope.mv.email = $scope.user.email;
+        });
 
         $scope.sendRafEmails = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                userSvc.sendRafEmails($scope.mv, function () {
+                appSvc.sendRafEmails($scope.mv, function () {
                     $scope.saving = false;
                     $location.path('/refer-a-friend-success');
                 }, function () {
@@ -29,6 +25,7 @@
         };
 
         function setFormDirty() {
+            $scope.form.email.$dirty = true;
             $scope.form.emailList.$dirty = true;
         }
 
