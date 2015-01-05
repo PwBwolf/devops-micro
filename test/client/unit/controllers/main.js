@@ -25,15 +25,15 @@ describe('Controller: mainCtrl', function () {
         locationMock = jasmine.createSpyObj('location', ['path', 'search']);
         locationMock.location = "";
 
-        locationMock.path.and.callFake(function(path) {
+        locationMock.path.and.callFake(function (path) {
             if (path !== undefined) {
                 this.location = path;
             }
             return this.location;
         });
 
-        locationMock.search.and.callFake(function() {
-            this.location = JSON.stringify(urlParams);
+        locationMock.search.and.callFake(function () {
+            this.location = urlParams;
             return this.location;
         });
 
@@ -41,7 +41,7 @@ describe('Controller: mainCtrl', function () {
         translateMock.language = "en";
 
         translateMock.use.and.callFake(function (language) {
-            if(language !== undefined){
+            if (language !== undefined) {
                 this.language = language;
             }
             return this.language;
@@ -69,7 +69,7 @@ describe('Controller: mainCtrl', function () {
         userServiceMock.user = 'varun';
         userServiceMock.response = null;
         userServiceMock.setResponse = function (status, body) {
-            this.response = {
+            userServiceMock.response = {
                 status: status,
                 body: body
             }
@@ -88,11 +88,11 @@ describe('Controller: mainCtrl', function () {
             'super-admin': { bitMask: 8 }
         };
         userServiceMock.getAioToken.and.callFake(function (success, error) {
-            if(this.response.status === 200) {
-                success(this.response.body);
+            if (userServiceMock.response.status === 200) {
+                success(userServiceMock.response.body);
             }
             else {
-                error(this.response.body);
+                error(userServiceMock.response.body);
             }
         });
 
@@ -180,28 +180,24 @@ describe('Controller: mainCtrl', function () {
         });
 
         it('Should set the language to lang param in url', function () {
-            urlParams = {lang: 'es-ES'};
+            urlParams = {lang: 'es'};
             initController();
             httpBackend.expect('GET', '/api/get-app-config').respond(200);
             httpBackend.flush();
-            setTimeout(function () {
-                expect(translate.use()).toEqual('es');
-                expect(webstorage.local.get('language')).toEqual('es');
-                expect(scope.language).toEqual('es');
-            }, 1000);
+            expect(translate.use()).toEqual('es');
+            expect(webstorage.local.get('language')).toEqual('es');
+            expect(scope.language).toEqual('es');
         });
 
         it('Should set the language to language value in local storage', function () {
             urlParams = {};
-            webstorage.local.add('language', 'et-EE');
+            webstorage.local.add('language', 'et');
             initController();
             httpBackend.expect('GET', '/api/get-app-config').respond(200);
             httpBackend.flush();
-            setTimeout(function () {
-                expect(translate.use()).toEqual('et');
-                expect(webstorage.local.get('language')).toEqual('et');
-                expect(scope.language).toEqual('et');
-            }, 100);
+            expect(translate.use()).toEqual('et');
+            expect(webstorage.local.get('language')).toEqual('et');
+            expect(scope.language).toEqual('et');
         });
 
     });
@@ -241,7 +237,7 @@ describe('Controller: mainCtrl', function () {
             userServiceMock.setResponse(200, {username: 'varun', sso_token: 'hdeihf2i3e123'});
             scope.openAio();
             setTimeout(function () {
-                expect(window.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token);
+                expect(window.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + userServiceMock.response.username + '&sso_token=' + userServiceMock.response.sso_token);
             }, 100);
         });
 
