@@ -9,12 +9,9 @@
 
                 ctrl.$parsers.unshift(function (emailList) {
                     var emails = emailList.split(',');
-                    console.dir(emails);
                     for (var i = 0; i < emails.length; i++) {
                         var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
-                        console.log(emails[i].trim());
                         var isEmail = regex.test(emails[i].trim());
-                        console.log(isEmail);
                         if (!isEmail) {
                             ctrl.$setValidity('validEmailList', false);
                             return emailList;
