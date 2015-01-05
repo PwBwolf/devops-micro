@@ -296,7 +296,7 @@
             RAF_MY_EMAIL: 'My Email',
             RAF_EMAIL_REQUIRED: 'Enter your email',
             RAF_EMAIL_INVALID: 'Enter a valid email',
-            RAF_IMPORT_CONTACT_LIST: 'Import From My Contact List',
+            RAF_IMPORT_CONTACT_LIST: 'Import My Contact List',
             RAF_OR: 'or',
             RAF_ENTER_FRIENDS_EMAIL: 'Enter Friends\' Email Addresses Separated By Commas',
             RAF_SEND_INVITE: 'Send Invite',
