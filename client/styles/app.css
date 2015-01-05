@@ -183,7 +183,7 @@ a.btn-sign:hover {
     float: left;
     width: 100%;
     min-height: 226px;
-    background: url(../img/divider-line.png) top right no-repeat;
+    border-right: 1px solid #000;
     padding: 20px 10% 20px 10%;
     margin: 0px;
 }
@@ -1116,6 +1116,7 @@ a.btn-import:hover {
     footer .f-nav {
         border: none;
         border-right: 1px solid #bfbdbe;
+        padding: 0 20px 0 30px;
     }
 
     footer .f-nav.social {
@@ -1222,6 +1223,7 @@ a.btn-import:hover {
         width: 90%;
         padding: 20px 0;
         margin: 0 5% 10px;
+        border-right: none;
         border-bottom: 1px solid #2f3442;
     }
 
@@ -1234,7 +1236,7 @@ a.btn-import:hover {
     }
 
     footer .f-nav {
-        padding: 0 20px 0 25px;
+        padding: 0 10px 0 15px;
     }
 
     footer .f-nav h2 {
@@ -1357,8 +1359,12 @@ a.btn-import:hover {
     }
 
     .right-box a {
-        margin: 0 5px 10px;
+        margin: 0 5px 5px;
         font-size: 13px;
+    }
+
+    footer .f-nav {
+        padding: 0 5px 0 5px;
     }
 
     #carousel-banner .carousel-caption2 h1 {
