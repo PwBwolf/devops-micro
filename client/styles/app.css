@@ -94,7 +94,6 @@ a.btn-sign {
     width: 150px;
     line-height: 39px;
     cursor: pointer;
-    text-align: right;
     color: #8a8b8a;
 }
 
@@ -398,80 +397,115 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption3 {
     position: absolute;
-    top: 10px;
-    left: 55%;
-    width: 40%;
+    background-color: rgba(255,255,255,0.5);
+    height: 1000px;
     font-family: 'bebasregular';
     text-align: left;
     z-index: 99;
+    left: 200px;
 }
 
 #carousel-banner .caption-txt3 {
-    float: left;
-    margin-left: 22%;
-    width: 80%;
-    background: rgba(0, 0, 0, 0);
+    padding: 10px;
 }
 
 #carousel-banner .carousel-caption3 h1 {
-    font-family: "radikalthin";
-    font-size: 34px;
-    color: #000;
-    font-weight: 400;
-    text-transform: none;
-    text-align: right;
+    font-family: 'radikalregular';
+    font-size: 40px;
     line-height: 40px;
-    margin-top: 10px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption3 h2 {
+    font-family: 'radikalregular';
+    font-size: 60px;
+    line-height: 60px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption3 h3 {
+    font-family: 'radikalregular';
+    font-size: 25px;
+    line-height: 25px;
+    color: #000;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption3 button {
+    font-size: 22px;
+    background-color: #A03269;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    margin: 10px 0;
+    font-family: 'radikalregular';
 }
 
 #carousel-banner .carousel-caption3 p {
-    font-family: 'gotham-lightgotham-light';
-    font-size: 22px;
+    font-family: 'radikalregular';
+    font-size: 14px;
+    line-height: 14px;
     color: #000;
-    font-weight: 400;
-    text-transform: none;
-    text-align: right;
-    line-height: 32px;
+    padding: 5px 0;
+    margin: 0px;
 }
 
 #carousel-banner .carousel-caption4 {
     position: absolute;
-    top: 10px;
-    left: 55%;
-    width: 40%;
+    background-color: rgba(255,255,255,0.5);
+    height: 1000px;
     font-family: 'bebasregular';
     text-align: left;
     z-index: 99;
-    top: 40px;
+    left: 200px;
 }
 
 #carousel-banner .caption-txt4 {
-    float: left;
-    margin-left: 22%;
-    width: 80%;
-    background: rgba(0, 0, 0, 0);
+    padding: 10px;
 }
 
 #carousel-banner .carousel-caption4 h1 {
-    font-size: 40px;
-    color: #000;
-    font-weight: 400;
-    text-transform: none;
-    text-align: right;
-    line-height: 40px;
-    margin-top: 10px;
-    text-transform: uppercase;
+    font-family: 'radikalregular';
+    font-size: 50px;
+    line-height: 50px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
 }
 
 #carousel-banner .carousel-caption4 h2 {
-    font-size: 52px;
+    font-family: 'radikalregular';
+    font-size: 25px;
+    line-height: 25px;
     color: #000;
-    font-weight: 400;
-    text-transform: none;
-    text-align: right;
-    line-height: 52px;
-    margin-top: 10px;
-    text-transform: uppercase;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption4 button {
+    font-size: 22px;
+    background-color: #A03269;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    margin: 10px 0;
+    font-family: 'radikalregular';
+}
+
+#carousel-banner .carousel-caption4 p {
+    font-family: 'radikalregular';
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    padding: 5px 0;
+    margin: 0px;
 }
 
 .about-text {
@@ -1112,6 +1146,19 @@ a.btn-import:hover {
         bottom: 0px;
     }
 
+    #carousel-banner .carousel-control {
+        width: 20px;
+    }
+
+    #carousel-banner .carousel-control.left {
+        left: 5px;
+    }
+
+    #carousel-banner .carousel-control.right {
+        right: 5px;
+        background-position: -40px 0;
+    }
+
     #carousel-banner .carousel-caption1 h1 {
         font-size: 36px;
         line-height: 36px;
@@ -1127,17 +1174,37 @@ a.btn-import:hover {
         line-height: 16px;
     }
 
-    #carousel-banner .carousel-control {
-        width: 20px;
+    #carousel-banner .carousel-caption3 {
+        left: 150px;
     }
 
-    #carousel-banner .carousel-control.left {
-        left: 5px;
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 36px;
+        line-height: 36px;
     }
 
-    #carousel-banner .carousel-control.right {
-        right: 5px;
-        background-position: -40px 0;
+    #carousel-banner .carousel-caption3 h2 {
+        font-size: 54px;
+        line-height: 54px;
+    }
+
+    #carousel-banner .carousel-caption3 h3 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption4 {
+        left: 130px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 36px;
+        line-height: 36px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 20px;
+        line-height: 20px;
     }
 }
 
@@ -1236,6 +1303,43 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption2 h2 {
         font-size: 14px;
         line-height: 14px;
+    }
+
+    #carousel-banner .carousel-caption3 {
+        left: 110px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    #carousel-banner .carousel-caption3 h2 {
+        font-size: 48px;
+        line-height: 48px;
+    }
+
+    #carousel-banner .carousel-caption3 h3 {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption4 {
+        left: 110px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption4 button {
+        margin: 0;
     }
 }
 
@@ -1389,6 +1493,62 @@ a.btn-import:hover {
         font-size: 12px;
         line-height: 12px;
     }
+
+    #carousel-banner .carousel-caption3 {
+        left: 90px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption3 h2 {
+        font-size: 36px;
+        line-height: 36px;
+    }
+
+    #carousel-banner .carousel-caption3 h3 {
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    #carousel-banner .carousel-caption3 button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    #carousel-banner .carousel-caption4 {
+        left: 90px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 24px;
+        line-height: 24px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 14px;
+        line-height: 14px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 button {
+        font-size: 14px;
+        padding: 10px 20px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption4 p {
+        font-size: 12px;
+        line-height: 12px;
+    }
 }
 
 @media screen and (max-width: 479px) {
@@ -1466,6 +1626,61 @@ a.btn-import:hover {
         font-size: 10px;
         line-height: 10px;
     }
+
+    #carousel-banner .carousel-caption3 {
+        left: 70px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption3 h2 {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    #carousel-banner .carousel-caption3 h3 {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    #carousel-banner .carousel-caption3 button {
+        font-size: 10px;
+        padding: 10px 20px;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 10px;
+        line-height: 10px;
+    }
+
+    #carousel-banner .carousel-caption4 {
+        left: 70px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 18px;
+        line-height: 18px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 12px;
+        line-height: 12px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 button {
+        font-size: 10px;
+        padding: 10px 20px;
+    }
+
+    #carousel-banner .carousel-caption4 p {
+        font-size: 10px;
+        line-height: 10px;
+    }
 }
 
 @media screen and (max-width: 399px) {
@@ -1481,9 +1696,66 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption1 button {
         font-size: 8px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption1 p {
         font-size: 8px;
+    }
+
+    #carousel-banner .carousel-caption3 {
+        left: 60px;
+    }
+
+    #carousel-banner .carousel-caption3 h1 {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    #carousel-banner .carousel-caption3 h2 {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #carousel-banner .carousel-caption3 h3 {
+        font-size: 10px;
+        line-height: 10px;
+    }
+
+    #carousel-banner .carousel-caption3 button {
+        font-size: 8px;
+        padding: 10px 20px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption3 p {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption4 {
+        left: 50px;
+    }
+
+    #carousel-banner .carousel-caption4 h1 {
+        font-size: 12px;
+        line-height: 12px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 h2 {
+        font-size: 10px;
+        line-height: 10px;
+        padding: 2px;
+    }
+
+    #carousel-banner .carousel-caption4 button {
+        font-size: 8px;
+        padding: 10px 20px;
+    }
+
+    #carousel-banner .carousel-caption4 p {
+        font-size: 8px;
+        line-height: 8px;
     }
 }
