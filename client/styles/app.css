@@ -171,7 +171,7 @@ a.btn-sign:hover {
 .service {
     float: left;
     width: 100%;
-    background: url(../img/bdr-line.png) no-repeat top center #e2d3e4;
+    background-color: #fff;
     padding: 20px 0px 20px 0px;
     margin: 0px;
     font-family: 'radikallight';
@@ -182,7 +182,7 @@ a.btn-sign:hover {
 .service-box {
     float: left;
     width: 100%;
-    min-height: 226px;
+    min-height: 260px;
     border-right: 1px solid #000;
     padding: 20px 10% 20px 10%;
     margin: 0px;
@@ -200,11 +200,13 @@ a.btn-sign:hover {
 .service-box p {
     width: 195px;
     margin: 0px auto;
+    color: #613e73;
 }
 
 .service-box-last p {
     width: 140px;
     margin: 0px auto;
+    color: #613e73;
 }
 
 .service-box img, .service-box-last img {
@@ -306,7 +308,7 @@ a.btn-sign:hover {
     position: absolute;
     background-color: rgba(255,255,255,0.5);
     height: 1000px;
-    font-family: 'bebasregular';
+    font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
 }
@@ -316,7 +318,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption1 h1 {
-    font-family: 'radikalregular';
     font-size: 50px;
     line-height: 50px;
     color: #613e73;
@@ -336,7 +337,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption1 p {
-    font-family: 'radikalregular';
     font-size: 14px;
     line-height: 14px;
     color: #000;
@@ -348,7 +348,7 @@ a.btn-sign:hover {
     position: absolute;
     background-color: rgba(255,255,255,0.5);
     height: 1000px;
-    font-family: 'bebasregular';
+    font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
 }
@@ -358,7 +358,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption2 h1 {
-    font-family: 'radikalregular';
     font-size: 50px;
     line-height: 50px;
     color: #613e73;
@@ -367,7 +366,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption2 h2 {
-    font-family: 'radikalregular';
     font-size: 25px;
     line-height: 25px;
     color: #000;
@@ -387,7 +385,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption2 p {
-    font-family: 'radikalregular';
     font-size: 14px;
     line-height: 14px;
     color: #000;
@@ -399,7 +396,7 @@ a.btn-sign:hover {
     position: absolute;
     background-color: rgba(255,255,255,0.5);
     height: 1000px;
-    font-family: 'bebasregular';
+    font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
     left: 200px;
@@ -410,7 +407,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption3 h1 {
-    font-family: 'radikalregular';
     font-size: 40px;
     line-height: 40px;
     color: #613e73;
@@ -419,7 +415,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption3 h2 {
-    font-family: 'radikalregular';
     font-size: 60px;
     line-height: 60px;
     color: #613e73;
@@ -428,7 +423,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption3 h3 {
-    font-family: 'radikalregular';
     font-size: 25px;
     line-height: 25px;
     color: #000;
@@ -448,7 +442,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption3 p {
-    font-family: 'radikalregular';
     font-size: 14px;
     line-height: 14px;
     color: #000;
@@ -460,7 +453,7 @@ a.btn-sign:hover {
     position: absolute;
     background-color: rgba(255,255,255,0.5);
     height: 1000px;
-    font-family: 'bebasregular';
+    font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
     left: 200px;
@@ -471,7 +464,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption4 h1 {
-    font-family: 'radikalregular';
     font-size: 50px;
     line-height: 50px;
     color: #613e73;
@@ -480,7 +472,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption4 h2 {
-    font-family: 'radikalregular';
     font-size: 25px;
     line-height: 25px;
     color: #000;
@@ -500,7 +491,6 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption4 p {
-    font-family: 'radikalregular';
     font-size: 14px;
     line-height: 14px;
     color: #000;
@@ -1493,6 +1483,7 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption2 button {
         font-size: 14px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption2 p {
@@ -1522,6 +1513,7 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption3 button {
         font-size: 14px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption3 p {
@@ -1578,6 +1570,12 @@ a.btn-import:hover {
         width: 100%;
     }
 
+    a.btn-import {
+        font-size: 12px;
+        padding: 5px 5px;
+        margin: 0;
+    }
+
     .btm-link {
         font-size: 14px;
     }
@@ -1603,6 +1601,7 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption1 button {
         font-size: 10px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption1 p {
@@ -1655,6 +1654,7 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption3 button {
         font-size: 10px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption3 p {
@@ -1681,6 +1681,7 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption4 button {
         font-size: 10px;
         padding: 10px 20px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption4 p {

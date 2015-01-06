@@ -46,7 +46,7 @@
         };
 
         $scope.openAio = function () {
-            var aio = window.open('', '_blank');
+            var aio = $window.open('', '_blank');
             userSvc.getAioToken(function (response) {
                 aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
             }, function () {
