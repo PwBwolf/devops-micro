@@ -14,6 +14,12 @@ module.exports = {
     secretToken: 'yip#tv@prod#848',
     contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',
     cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',
-    aioUrl: 'http://yiptv.net',
-    aioApiKey: 'xxxx'
+    aioUrl: '',
+    aioUserPin: '1234',
+    aioApiKey: '',
+    aioFreePackages: [{'packageid' : 0}, {'packageid' : 0}],
+    aioUnlimitedPackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}],
+    yipFreePackageId: 0,
+    yipUnlimitedPackageId: 0,
+    cleanup: []
 };
