@@ -40,8 +40,10 @@
 <script src="//api.cloudsponge.com/address_books.js"></script>
 <script>
 
-    var appendInTextarea = true;  // whether to append to existing contacts in the textarea
-    var emailSep = ', ';  // email address separator to use in textarea
+    var key = {'localhost': 'LJZY53MYH2K7YQKX3TZD', 'int.yiptv.net': 'BNDQ7QY3HH38QG45E3P8', 'test.yiptv.net': 'KT5XZEDX6A32PFZCKZ3Y', 'staging.yiptv.net': '5FLQG2YJF2SGQ2JY4GCH', 'yiptv.com': 'GMQU3G2VW72CLFRVWS2N' };
+    var domain = location.hostname;
+    var appendInTextarea = true;
+    var emailSep = ', ';
 
     function populateTextArea(contacts) {
         var email;
@@ -62,10 +64,8 @@
         input.trigger('change');
     }
 
-    var key = angular.element(document.querySelector('[ng-controller="mainCtrl"]')).scope().appConfig.cloudSpongeDomainKey
-
     window.csPageOptions = {
-        domain_key: key,
+        domain_key: key[domain],
         mobile_render: true,
         sources: ['gmail', 'linkedin', 'yahoo', 'facebook', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook'],
         afterSubmitContacts: populateTextArea
