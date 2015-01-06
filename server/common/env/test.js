@@ -12,7 +12,7 @@ module.exports = {
     url: 'https://test.yiptv.net/',
     imageUrl: 'https://test.yiptv.net/img/',
     secretToken: 'yip#tv@test#275',
-    contactUsEmailList: 'bashkaran@yiptv.com',
+    contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
     cloudSpongeDomainKey: 'KT5XZEDX6A32PFZCKZ3Y',
     aioUrl: 'http://yiptv.net',
     aioUserPin: '1234',
