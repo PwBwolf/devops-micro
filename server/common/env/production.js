@@ -13,7 +13,7 @@ module.exports = {
     imageUrl: 'http://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
     contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',
-    cloudSpongDomainKey: 'NEED_TO_BUY',
+    cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',
     aioUrl: 'http://yiptv.net',
     aioApiKey: 'xxxx'
 };

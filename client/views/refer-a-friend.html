@@ -37,11 +37,13 @@
     </div>
     <div class="btm-bg">&nbsp;</div>
 </div>
-<script src="//api.cloudsponge.com/widget/6155963e82b72493baa22224b7869f8579c2f67c.js"></script>
+<script src="//api.cloudsponge.com/address_books.js"></script>
 <script>
+
     var appendInTextarea = true;  // whether to append to existing contacts in the textarea
     var emailSep = ', ';  // email address separator to use in textarea
-    function populateTextArea(contacts, source, owner) {
+
+    function populateTextArea(contacts) {
         var email;
         var emails = [];
         var textarea = document.getElementById('emailList');
@@ -60,7 +62,10 @@
         input.trigger('change');
     }
 
+    var key = angular.element(document.querySelector('[ng-controller="mainCtrl"]')).scope().appConfig.cloudSpongeDomainKey
+
     window.csPageOptions = {
+        domain_key: key,
         mobile_render: true,
         sources: ['gmail', 'linkedin', 'yahoo', 'facebook', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook'],
         afterSubmitContacts: populateTextArea
