@@ -103,7 +103,7 @@ describe('Controller: mainCtrl', function () {
     }));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, userSvc, appSvc, $httpBackend, $location, loggerSvc, $window, $translate, webStorage) {
+    beforeEach(inject(function ($controller, $rootScope, userSvc, appSvc, $httpBackend, $location, loggerSvc, $translate, webStorage) {
         scope = $rootScope.$new();
         controller = $controller;
         httpBackend = $httpBackend;
@@ -234,10 +234,12 @@ describe('Controller: mainCtrl', function () {
             initController();
             httpBackend.expect('GET', '/api/get-app-config').respond(200, { aioUrl: 'www.yiptv.com'});
             httpBackend.flush();
+            expect(scope.appConfig).toEqual({ aioUrl: 'www.yiptv.com'});
+            spyOn(window, 'open');
             userServiceMock.setResponse(200, {username: 'varun', sso_token: 'hdeihf2i3e123'});
             scope.openAio();
             setTimeout(function () {
-                expect(window.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + userServiceMock.response.username + '&sso_token=' + userServiceMock.response.sso_token);
+                expect(windowMock.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + userServiceMock.response.body.username + '&sso_token=' + userServiceMock.response.body.sso_token);
             }, 100);
         });
 
