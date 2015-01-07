@@ -172,30 +172,24 @@ gulp.task('server', function(cb) {
     cb();
 });
 
-function postDeploy(cb) {
-    gulp.src('../server/webserver/app.js')
+function replaceAndCopy(source, destination, text, replacementText) {
+    gulp.src(source)
         .pipe(replace({
             patterns: [
                 {
-                    match: 'development',
-                    replacement: argv.env
+                    match: text,
+                    replacement: replacementText
                 }
             ],
             usePrefix: false
         }))
-        .pipe(gulp.dest('dist/server/webserver'));
+        .pipe(gulp.dest(destination));
+}
 
-    gulp.src(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'])
-        .pipe(replace({
-            patterns: [
-                {
-                    match: 'development',
-                    replacement: argv.env
-                }
-            ],
-            usePrefix: false
-        }))
-        .pipe(gulp.dest('dist/server/common/database'));
+function postDeploy(cb) {
+    replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
+    replaceAndCopy(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'], 'dist/server/common/database', 'development', argv.env);
+    replaceAndCopy('../tools/notify-build.js', 'dist/tools', 'development', argv.env);
 
     if(argv.tag && argv.tag === 'true') {
         var version = fs.readJSONSync('./version.json').version;

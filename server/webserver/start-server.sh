@@ -14,3 +14,7 @@ cd $cwd
 
 # now start the node server and redirect logs to /var/log/yip-server.log. (devops user must own this file)
 /etc/init.d/yip-server start
+
+# send email notifying new build
+cd ..
+node ../tools/notify-build.js
