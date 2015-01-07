@@ -7,7 +7,7 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: sf(config.reminderEmailSubject[user.preferences.defaultLanguage], subjectDays),
-        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays)
+        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'subscribe')
     };
 
     email.sendEmail(mailOptions, function (err) {
@@ -60,7 +60,7 @@ module.exports.send14DayReminderEmail = function(user) {
     delete user.postProcessorKey;
 
     // now send email to this user
-    sendReminderEmail(user, 'in 15 days', 'last 15 days');
+    sendReminderEmail(user, 'in 16 days', 'last 14 days');
 };
 
 module.exports.send21DayReminderEmail = function(user) {
@@ -68,7 +68,7 @@ module.exports.send21DayReminderEmail = function(user) {
     delete user.postProcessorKey;
 
     // now send email to this user
-    sendReminderEmail(user, 'in 7 days', 'last 7 days');
+    sendReminderEmail(user, 'in 9 days', 'last 21 days');
 };
 
 module.exports.send28DayReminderEmail = function(user) {
@@ -76,7 +76,7 @@ module.exports.send28DayReminderEmail = function(user) {
     delete user.postProcessorKey;
 
     // now send email to this user
-    sendReminderEmail(user, 'in 2 days', 'last 2 days');
+    sendReminderEmail(user, 'in 2 days', 'last 28 days');
 };
 
 module.exports.send30DayReminderEmail = function(user) {
@@ -84,7 +84,7 @@ module.exports.send30DayReminderEmail = function(user) {
     delete user.postProcessorKey;
 
     // now send email to this user
-    sendReminderEmail(user, 'tomorrow', 'last day');
+    sendReminderEmail(user, 'today', 'past month');
 };
 
 module.exports.send31DaySuspensionEmail = function(user) {
