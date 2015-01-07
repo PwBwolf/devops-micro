@@ -247,7 +247,11 @@ gulp.task('doDeploy', [argv.env === 'integration' ? 'webapp-nominify' : 'webapp'
     checkAndPrepareDist('dist', 'yip-server');
 });
 
-gulp.task('deploy', ['test', 'clean'], function(){
+gulp.task('dummy', function(cb) {
+    cb();
+});
+
+gulp.task('deploy', [argv.env === 'integration' ? 'test' : 'dummy', 'clean'], function(){
     if(argv.tag) {
         if(argv.tag !== 'false' && argv.tag !== 'true') {
             checkoutFromTag().then(function() {
