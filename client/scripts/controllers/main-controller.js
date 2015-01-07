@@ -18,10 +18,8 @@
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
-                $scope.showHeader = true;
             }).error(function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
-                $scope.showHeader = false;
             });
         }
 
