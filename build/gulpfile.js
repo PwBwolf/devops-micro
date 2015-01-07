@@ -84,6 +84,34 @@ gulp.task('webapp', ['partials', 'roles'], function () {
 });
 
 /**
+ * Prepare the web application.
+ * Process the js files along with the partials and copy them all to the
+ * destination dist directory
+ */
+gulp.task('webapp-nominify', ['partials', 'roles'], function () {
+    var jsFilter = $.filter('**/*.js');	// Filter out each JS file
+    var assets;
+
+    return gulp.src('../client/*.html')	// Read index.html
+        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), {	// Inject each processed partial output by the partials task
+            read: false,
+            starttag: '<!-- inject:partials -->',
+            addRootSlash: false,
+            addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+        }))
+        .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
+        .pipe($.rev())	// Rev the files by prefixing them with the file hash
+        .pipe(jsFilter)	// Take only the Javascript files
+        .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
+        .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
+        .pipe(assets.restore())	// Restore all other files (we were only working on concatenated CSS/JS till now)
+        .pipe($.useref())	// Finish replacing all CSS and JS links with our processed, concatenated, minified files
+        .pipe($.revReplace())
+        .pipe(gulp.dest('dist/client'))
+        .pipe($.size());
+});
+
+/**
  * Process all the images.
  * Read each image, optimize it and save it in the destination folder.
  */
@@ -214,7 +242,7 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', ['webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
+gulp.task('doDeploy', [argv.env === 'integration' ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
