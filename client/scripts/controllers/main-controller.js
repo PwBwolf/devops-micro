@@ -30,7 +30,7 @@
         }
 
         function loadLanguage() {
-            var userLang = window.navigator.language || window.navigator.userLanguage;
+            var userLang = $window.navigator.language || $window.navigator.userLanguage;
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
             $translate.use(language);
             webStorage.local.add('language', language);
