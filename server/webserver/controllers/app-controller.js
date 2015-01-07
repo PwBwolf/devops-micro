@@ -24,8 +24,7 @@ module.exports = {
             var props = {
                 environment: process.env.NODE_ENV,
                 url: config.url,
-                aioUrl: config.aioUrl,
-                cloudSpongeDomainKey: config.cloudSpongeDomainKey
+                aioUrl: config.aioUrl
             };
             appConfig = _.assign(appConfig._doc, props);
             return res.json(appConfig);
