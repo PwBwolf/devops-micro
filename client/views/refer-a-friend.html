@@ -9,7 +9,8 @@
                 <br><br><br>
 
                 <form name="form" id="form" novalidate ng-submit="sendRafEmails()">
-                    <a href="#" class="btn-import cs_import" translate="RAF_IMPORT_CONTACT_LIST">Import From My Contact List</a>
+                    <a href="#" id="importLink" class="btn-import cs_import" translate="RAF_IMPORT_CONTACT_LIST">Import From My Contact List</a>
+                    <a href="#" id="loadingIndicator" style="display: none" class="btn-import" translate="RAF_LOADING">Loading...</a>
                     <br><br>
                     <span class="label-text" translate="RAF_OR">or</span>
                     <br><br>
@@ -37,9 +38,8 @@
     </div>
     <div class="btm-bg">&nbsp;</div>
 </div>
-<script src="//api.cloudsponge.com/address_books.js"></script>
 <script>
-
+    window.cloudsponge = undefined;
     var key = {'localhost': 'LJZY53MYH2K7YQKX3TZD', 'int.yiptv.net': 'BNDQ7QY3HH38QG45E3P8', 'test.yiptv.net': 'KT5XZEDX6A32PFZCKZ3Y', 'staging.yiptv.net': '5FLQG2YJF2SGQ2JY4GCH', 'yiptv.com': 'GMQU3G2VW72CLFRVWS2N' };
     var domain = location.hostname;
     var appendInTextarea = true;
@@ -68,6 +68,21 @@
         domain_key: key[domain],
         mobile_render: true,
         sources: ['gmail', 'linkedin', 'yahoo', 'facebook', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook'],
-        afterSubmitContacts: populateTextArea
+        afterSubmitContacts: populateTextArea,
+        afterInit: function() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('importLink').style.display = 'inline';
+            cloudsponge.launch();
+        }
+    };
+
+    document.getElementById('importLink').onclick = function() {
+        var scriptTag = document.createElement('script');
+        scriptTag.setAttribute('type', 'text/javascript');
+        scriptTag.setAttribute('src', '//api.cloudsponge.com/address_books.js');
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(scriptTag, firstScript);
+        document.getElementById('importLink').style.display = 'none';
+        document.getElementById('loadingIndicator').style.display = 'inline';
     };
 </script>

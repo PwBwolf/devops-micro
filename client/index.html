@@ -33,7 +33,7 @@
     <!-- endbuild -->
     <title ng-bind="appConfig.appName">YipTV</title>
 </head>
-<body ng-cloak>
+<body>
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -50,8 +50,8 @@
                 </button>
                 <div class="logo"><a href="/"><img src="img/logo.png" alt="YipTV" title="YipTV"></a></div>
             </div>
-            <div ng-show="showHeader" class="collapse navbar-collapse pull-right right-box home" id="navbar-collapse-1">
-                <div class="right-nav">
+            <div class="collapse navbar-collapse pull-right right-box home" id="navbar-collapse-1">
+                <div ng-cloak access-level="accessLevels.public" class="right-nav">
                     <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
                     <a href="/refer-a-friend" access-level="accessLevels.public" class="btn-sign" translate="INDEX_REFER_FRIEND">Refer a Friend</a>
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>

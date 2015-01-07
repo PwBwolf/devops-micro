@@ -299,6 +299,7 @@
             RAF_EMAIL_REQUIRED: 'Ingrese su Email',
             RAF_EMAIL_INVALID: 'Ingrese un Email valido',
             RAF_IMPORT_CONTACT_LIST: 'Importacion de Mi Lista de Contactos',
+            RAF_LOADING: 'Loading...',
             RAF_OR: 'o',
             RAF_ENTER_FRIENDS_EMAIL: 'Ingrese Email de Amigos Separado por Comas',
             RAF_SEND_INVITE: 'Enviar Invitacion',
