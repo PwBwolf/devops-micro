@@ -13,7 +13,13 @@ module.exports = {
     imageUrl: 'http://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
     contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',
-    cloudSpongDomainKey: 'NEED_TO_BUY',
-    aioUrl: 'http://yiptv.net',
-    aioApiKey: 'xxxx'
+    cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',
+    aioUrl: '',
+    aioUserPin: '1234',
+    aioApiKey: '',
+    aioFreePackages: [{'packageid' : 0}, {'packageid' : 0}],
+    aioUnlimitedPackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}],
+    yipFreePackageId: 0,
+    yipUnlimitedPackageId: 0,
+    cleanup: []
 };
