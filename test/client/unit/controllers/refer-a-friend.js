@@ -25,7 +25,10 @@ describe('Controller: referAFriendCtrl', function () {
     }
 
     function mockModelView() {
-        scope.mv = {};
+        scope.mv = {
+            email: 'varunv@yiptv.com',
+            emailList: 'achinth@yiptv.com, vivek@yiptv.com'
+        };
     }
 
     beforeEach(module(function ($provide, $filterProvider) {

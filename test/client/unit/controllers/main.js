@@ -14,9 +14,11 @@ describe('Controller: mainCtrl', function () {
         appService,
         translate,
         webstorage,
+        window,
         locationMock,
         translateMock,
-        userServiceMock;
+        userServiceMock,
+        windowServiceMock;
 
     var urlParams = {};
 
@@ -96,14 +98,29 @@ describe('Controller: mainCtrl', function () {
             }
         });
 
+        windowServiceMock = jasmine.createSpyObj('window', ['open']);
+        windowServiceMock.name = '';
+        windowServiceMock.location = {
+            href: ''
+        };
+        windowServiceMock.navigator = {
+            language: 'en-US'
+        };
+        windowServiceMock.open.and.callFake(function (url, name) {
+            windowServiceMock.location.href = url;
+            windowServiceMock.name = name;
+            return windowServiceMock;
+        });
+
         $provide.value('userSvc', userServiceMock);
         $provide.value('$location', locationMock);
         $provide.value('translate', translateMock);
+        $provide.value('$window', windowServiceMock);
 
     }));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, userSvc, appSvc, $httpBackend, $location, loggerSvc, $translate, webStorage) {
+    beforeEach(inject(function ($controller, $rootScope, userSvc, appSvc, $httpBackend, $location, loggerSvc, $translate, webStorage, $window) {
         scope = $rootScope.$new();
         controller = $controller;
         httpBackend = $httpBackend;
@@ -113,6 +130,7 @@ describe('Controller: mainCtrl', function () {
         appService = appSvc;
         translate = $translate;
         webstorage = webStorage;
+        window = $window;
     }));
 
     function initController() {
@@ -123,7 +141,8 @@ describe('Controller: mainCtrl', function () {
             appSvc: appService,
             $translate: translate,
             $location: location,
-            webstorage: webstorage
+            webstorage: webstorage,
+            $window: window
         });
     }
 
@@ -235,12 +254,9 @@ describe('Controller: mainCtrl', function () {
             httpBackend.expect('GET', '/api/get-app-config').respond(200, { aioUrl: 'www.yiptv.com'});
             httpBackend.flush();
             expect(scope.appConfig).toEqual({ aioUrl: 'www.yiptv.com'});
-            spyOn(window, 'open');
             userServiceMock.setResponse(200, {username: 'varun', sso_token: 'hdeihf2i3e123'});
             scope.openAio();
-            setTimeout(function () {
-                expect(windowMock.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + userServiceMock.response.body.username + '&sso_token=' + userServiceMock.response.body.sso_token);
-            }, 100);
+            expect(window.location.href).toEqual(scope.appConfig.aioUrl + '/app/login.php?username=' + userServiceMock.response.body.username + '&sso_token=' + userServiceMock.response.body.sso_token);
         });
 
         it('Should log appropriate error message on error', function () {
