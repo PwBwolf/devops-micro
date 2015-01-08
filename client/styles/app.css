@@ -18,7 +18,7 @@ header {
     float: left;
     width: 100%;
     padding: 10px 0;
-    background: #fff;
+    background: #f4f1ec;
 }
 
 .logo {
@@ -89,7 +89,7 @@ header {
 }
 
 a.btn-sign {
-    background: #fff;
+    background: #f4f1ec;
     text-align: center;
     width: 150px;
     line-height: 39px;
@@ -254,7 +254,6 @@ a.btn-sign:hover {
     z-index: 99;
 }
 
-
 .user-home-box .caption h1 {
     font-size: 40px;
     background: none;
@@ -349,7 +348,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption1 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -389,7 +388,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption2 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -437,7 +436,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption3 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -494,7 +493,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption4 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -645,6 +644,7 @@ footer .f-btm a:hover {
 .carousel li {
     margin-right: 0;
 }
+
 .content-area {
     float: left;
     width: 100%;
@@ -828,6 +828,7 @@ a.btn-import:hover {
     width: 100%;
     background: url(../img/cont-btm-bg.png) repeat-x bottom center;
     height: 13px;
+    z-index: 99;
 }
 
 .top-bg {
@@ -836,6 +837,7 @@ a.btn-import:hover {
     width: 100%;
     background: url(../img/cont-top-bg.png) repeat-x bottom center;
     height: 13px;
+    z-index: 99;
 }
 
 #details {
@@ -1432,6 +1434,7 @@ a.btn-import:hover {
     .user-home-box .caption {
         left: 1%;
     }
+
     .navbar-toggle {
         margin-right: 0px;
     }

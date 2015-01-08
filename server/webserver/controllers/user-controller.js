@@ -24,7 +24,7 @@ module.exports = {
             function (callback) {
                 User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
                     if (err) {
-                        callback('Error');
+                        callback(err);
                     } else if (!user) {
                         type = req.body.type;
                         referredBy = req.body.referredBy;
@@ -32,11 +32,12 @@ module.exports = {
                         userObj.role = userRoles.user;
                         userObj.createdAt = (new Date()).toUTCString();
                         userObj.verificationCode = uuid.v4();
-                        userObj.save(function (err) {
-                            if (err) {
-                                callback(err);
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                callback(err1);
+                            } else {
+                                callback(null, userObj);
                             }
-                            callback(null, userObj);
                         });
                     } else {
                         callback('UserExists');
@@ -54,18 +55,19 @@ module.exports = {
                 });
                 accountObj.save(function (err) {
                     if (err) {
-                        logger.logError(err);
                         // if account creation fails delete user as well
-                        userObj.remove(function (err) {
-                            callback(err);
+                        userObj.remove(function (err1) {
+                            logger.logError(err1);
                         });
+                        callback(err);
                     } else {
                         userObj.account = accountObj;
-                        userObj.save(function (err) {
-                            if (err) {
-                                callback(err);
+                        userObj.save(function (err2) {
+                            if (err2) {
+                                callback(err2);
+                            } else {
+                                callback(null, userObj, accountObj);
                             }
-                            callback(null, userObj, accountObj);
                         });
                     }
                 });
@@ -75,24 +77,23 @@ module.exports = {
                 var packages = userObj.type === 'free' ? config.aioFreePackages : config.aioUnlimitedPackages;
                 aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                     if (err) {
-                        logger.logError(err);
                         // if AIO user creation fails delete user and account from our DB
-                        accountObj.remove(function (err) {
-                            if (err) {
-                                logger.logError(JSON.stringify(err));
+                        accountObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError(JSON.stringify(err1));
                             }
                         });
-                        userObj.remove(function (err) {
-                            if (err) {
-                                logger.logError(JSON.stringify(err));
+                        userObj.remove(function (err2) {
+                            if (err2) {
+                                logger.logError(JSON.stringify(err2));
                             }
                         });
                         callback(err);
                     } else {
                         accountObj.aioAccountId = data.account;
-                        accountObj.save(function (err) {
-                            if (err) {
-                                callback(err);
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                callback(err3);
                             } else {
                                 callback(null, userObj, accountObj);
                             }
@@ -121,16 +122,16 @@ module.exports = {
                 Visitor.findOne({email: userObj.email.toLowerCase()}, function (err, visitor) {
                     if (err) {
                         callback(err);
-                    }
-                    if (visitor) {
-                        visitor.remove(function (err) {
-                            if (err) {
+                    } else if (visitor) {
+                        visitor.remove(function (err1) {
+                            if (err1) {
                                 logger.logError(err);
                             }
                             callback(null, userObj, accountObj);
                         });
+                    } else {
+                        callback(null, userObj, accountObj);
                     }
-                    callback(null, userObj, accountObj);
                 });
             }
         ], function (err) {
@@ -186,7 +187,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: user.type });
+            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: user.type});
         });
     },
 
