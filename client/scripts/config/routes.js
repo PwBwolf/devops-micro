@@ -166,6 +166,12 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/customer-support',
+            {
+                templateUrl: 'views/customer-support.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/under-construction',
             {
                 templateUrl: 'views/under-construction.html',

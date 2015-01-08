@@ -87,7 +87,7 @@ describe('Controller: contactUsCtrl', function () {
         initController();
     }));
 
-    it('should attach a list of the 5 countries', function () {
+    /*it('should attach a list of the 5 countries', function () {
         var countries = ['USA', 'Spain', 'Mexico', 'Canada', 'UK'];
         httpBackend.when("GET", "/api/get-countries").respond(200, countries);
         initController();
@@ -164,6 +164,6 @@ describe('Controller: contactUsCtrl', function () {
         expect(scope.saving).toBe(false);
         expect(location.path()).toBe('/');
         expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
-    });
+    });*/
 
 });
