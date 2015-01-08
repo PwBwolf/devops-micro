@@ -1702,12 +1702,36 @@ a.btn-import:hover {
 
     #carousel-banner .carousel-caption1 button {
         font-size: 8px;
-        padding: 10px 20px;
+        padding: 5px 20px;
         margin: 0;
     }
 
     #carousel-banner .carousel-caption1 p {
         font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption2 h1 {
+        font-size: 12px;
+        line-height: 12px;
+        padding: 2px 0;
+    }
+
+    #carousel-banner .carousel-caption2 h2 {
+        font-size: 8px;
+        line-height: 8px;
+        padding: 2px 0;
+    }
+
+    #carousel-banner .carousel-caption2 button {
+        font-size: 8px;
+        padding: 5px 20px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption2 p {
+        font-size: 8px;
+        line-height: 8px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -1731,7 +1755,7 @@ a.btn-import:hover {
 
     #carousel-banner .carousel-caption3 button {
         font-size: 8px;
-        padding: 10px 20px;
+        padding: 5px 20px;
         margin: 0;
     }
 
@@ -1758,7 +1782,7 @@ a.btn-import:hover {
 
     #carousel-banner .carousel-caption4 button {
         font-size: 8px;
-        padding: 10px 20px;
+        padding: 5px 20px;
     }
 
     #carousel-banner .carousel-caption4 p {
