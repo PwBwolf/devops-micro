@@ -186,7 +186,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, type: user.type, referralCode: user.account.referralCode });
+            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: user.type });
         });
     },
 
