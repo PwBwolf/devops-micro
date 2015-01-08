@@ -8,7 +8,7 @@ var User = new Schema({
     firstName: {type: String, required: true, trim: true},
     lastName: {type: String, required: true, trim: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
-    telephone: {type: String, required: true},
+    telephone: {type: String},
     hashedPassword: {type: String, required: true},
     salt: {type: String, required: true},
     role: {
