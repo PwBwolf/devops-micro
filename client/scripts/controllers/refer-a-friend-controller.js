@@ -3,10 +3,14 @@
 
     app.controller('referAFriendCtrl', ['appSvc', 'loggerSvc', '$scope', '$filter', '$location', function (appSvc, loggerSvc, $scope, $filter, $location) {
 
-        $scope.mv = {email: $scope.user.email};
+        init();
+
+        function init() {
+            $scope.mv = {email: $scope.user.email};
+        }
 
         $scope.$on('UserChanged', function () {
-            $scope.mv.email = $scope.user.email;
+            init();
         });
 
         $scope.sendRafEmails = function () {
