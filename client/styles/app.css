@@ -546,7 +546,6 @@ a.btn-sign:hover {
 }
 
 .align-text {
-    display: inline-block;
     text-align: justify;
 }
 
@@ -803,6 +802,13 @@ a.btn-import:hover {
 
 .about-us {
     margin-top: -70px;
+}
+
+.about-us-img {
+    float: left;
+    padding: 0 10px 5px 0;
+    width: 160px;
+    height: 160px;
 }
 
 .about-desc {
