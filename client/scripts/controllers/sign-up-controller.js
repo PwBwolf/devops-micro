@@ -33,6 +33,7 @@
             $scope.form.firstName.$dirty = true;
             $scope.form.lastName.$dirty = true;
             $scope.form.email.$dirty = true;
+            $scope.form.telephone.$dirty = true;
             $scope.form.password.$dirty = true;
             $scope.form.confirmPassword.$dirty = true;
             $scope.form.cardNumber.$dirty = true;
