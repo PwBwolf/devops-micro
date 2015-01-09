@@ -7,7 +7,9 @@
         activate();
 
         function init() {
-            $scope.mv = {email: $scope.user.email, name: $scope.user.firstName + ' ' + $scope.user.lastName, telephone: $scope.user.telephone};
+            if($scope.user.email) {
+                $scope.mv = {email: $scope.user.email, name: $scope.user.firstName + ' ' + $scope.user.lastName, telephone: $scope.user.telephone};
+            }
         }
 
         $scope.$on('UserChanged', function () {
