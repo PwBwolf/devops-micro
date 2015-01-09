@@ -17,7 +17,7 @@
                         <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
                         <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
                         <br><br><span class="label-text" translate="CONTACT_US_TELEPHONE">Telephone</span>
-                        <br><input autocomplete="off" type="text" is-us-phone-number maxlength="15" required class="txtbox2" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+                        <br><input autocomplete="off" type="text" is-us-phone-number maxlength="12" required class="txtbox2" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
 
                         <div ng-show="form.telephone.$dirty && form.telephone.$error.required" class="error-msg" translate="CONTACT_US_TELEPHONE_REQUIRED">Enter your telephone number</div>
                         <div ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-msg" translate="CONTACT_US_TELEPHONE_INVALID">Enter a valid US telephone number</div>

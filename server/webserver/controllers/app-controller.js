@@ -87,7 +87,7 @@ module.exports = {
             skypeId: req.body.skypeId,
             country: req.body.country,
             interest: req.body.interest,
-            details: req.body.details,
+            details: req.body.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;'),
             createdAt: (new Date()).toUTCString()
         });
         contactUs.save(function (err) {
