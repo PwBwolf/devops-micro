@@ -826,6 +826,17 @@ a.btn-import:hover {
     margin: 0px;
 }
 
+.numbered-header {
+    color: #A03269;
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.para-header {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
 .btm-bg {
     position: absolute;
     bottom: 0px;
