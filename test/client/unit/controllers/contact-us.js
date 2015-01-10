@@ -105,10 +105,9 @@ describe('Controller: contactUsCtrl', function () {
     });
 
     it('should set the mv if user.email is defined on controller init()', function () {
-        var mv = {email: mockUser.email, name: mockUser.firstName + ' ' + mockUser.lastName, telephone: mockUser.telephone};
         scope.user = mockUser;
         initController();
-        expect(scope.mv).toEqual(mv);
+        expect(scope.mv).toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
     });
 
     it('should attach a list of the 5 countries', function () {
@@ -192,5 +191,19 @@ describe('Controller: contactUsCtrl', function () {
         expect(location.path()).toBe('/');
         expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
     });
+
+    it('should set scope.mv to hold new user credential on user change', function () {
+        var mv = {email: mockUser.email, name: mockUser.firstName + ' ' + mockUser.lastName, telephone: mockUser.telephone};
+        scope.user = mockUser;
+        initController();
+        expect(scope.mv).toEqual(mv);
+        scope.user.email = 'achinth@yiptv.com';
+        scope.user.firstName = 'Achinth';
+        scope.user.lastName = 'Gurkhi';
+        scope.user.telephone = '394356270';
+        expect(scope.mv).not.toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
+        scope.$broadcast('UserChanged');
+        expect(scope.mv).toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
+    })
 
 });
