@@ -145,7 +145,7 @@
             INDEX_CONNECT_WITH_US: 'Connect With Us',
             INDEX_DISCLAIMER: 'Use of the YipTV service and this Web site constitutes acceptance of our ',
             INDEX_WELCOME: 'Welcome',
-            INDEX_SWITCH_TO: 'Cambiar a',
+            INDEX_SWITCH_TO: 'Switch to',
             INDEX_COPYRIGHT: '© 2013-2015 YipTV',
             LEADERSHIP_HEADING: 'Leadership',
             LEADERSHIP_DESCRIPTION: 'Our management team is an experienced group, and we’ve disrupted old industries before, but we still think like young people. We get to the point and stay focused on what matters most to customers. When we listed out the things we wanted for our own families in a distributor of TV channels, we realized that no company did all of those things yet. Then we knew we had to try to build that company ourselves. So we did. Our Board of Directors is comprised of industry giants and brilliant minds. We’re lucky to have them. Ditto for our investors. Our team may be distinguished, but no one here takes themselves too seriously. That’s how you build a company that people want to join. Here’s a little bit more about our collective backgrounds.',

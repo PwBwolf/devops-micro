@@ -145,7 +145,7 @@
             INDEX_CONNECT_WITH_US: 'Conectar con Nosotros',
             INDEX_DISCLAIMER: 'El uso del servicio YipTV y este sitio web implica la aceptacion de nuestra',
             INDEX_WELCOME: 'Bienvenida',
-            INDEX_SWITCH_TO: 'Switch to',
+            INDEX_SWITCH_TO: 'Cambiar a',
             INDEX_COPYRIGHT: '© 2013-2015 YipTV',
             LEADERSHIP_HEADING: 'Liderazgo',
             LEADERSHIP_DESCRIPTION: 'Nuestro equipo de gestion es un grupo experimentado, y hemos interrumpido industrias viejas antes, pero todavia pensamos como los jovenes. Llegamos al punto y nos mantenemos enfocado en lo que mas importa a los clientes. Cuando nosotros escribimos una lista conteniendo las cosas que queriamos para nuestras propias familias en un distribuidor de canales de television, nos dimos cuenta de que ninguna empresa habia realizado esas cosas todavia. Entonces nos dimos cuenta de que teniamos que tratar de construir esa compania a nosotros mismos. Y eso es lo que hemos hecho. Nuestro Consejo de Administracion esta integrado por gigantes en la industria y mentes brillantes. Tenemos suerte de tenerlos. Igualmente nuestros inversores. Nuestro equipo se puede distinguir, pero aqui nadie toma demasiado en serio. Asi se construye una empresa que la gente quiere unirse a. Aqui les presentamos mas informacion acerca de nuestros fondos colectivos.',
