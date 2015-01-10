@@ -7,19 +7,26 @@
             restrict: 'A',
             link: function (scope, elm, attrs, ctrl) {
 
-                ctrl.$parsers.unshift(function (emailList) {
-                    var emails = emailList.split(',');
-                    for (var i = 0; i < emails.length; i++) {
-                        var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
-                        var isEmail = regex.test(emails[i].trim());
-                        if (!isEmail) {
-                            ctrl.$setValidity('validEmailList', false);
-                            return emailList;
+                function validate(emailList) {
+                    if(emailList) {
+                        var emails = emailList.split(',');
+                        for (var i = 0; i < emails.length; i++) {
+                            var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+                            var isEmail = regex.test(emails[i].trim());
+                            if (!isEmail) {
+                                ctrl.$setValidity('validEmailList', false);
+                                return emailList;
+                            }
                         }
+                        ctrl.$setValidity('validEmailList', true);
+                    } else {
+                        ctrl.$setValidity('validEmailList', true);
                     }
-                    ctrl.$setValidity('validEmailList', true);
                     return emailList;
-                });
+                }
+
+                ctrl.$parsers.unshift(validate);
+                ctrl.$formatters.unshift(validate);
             }
         };
     }]);

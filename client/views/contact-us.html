@@ -8,7 +8,7 @@
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="frm">
                         <span class="label-text" translate="CONTACT_US_NAME">Name</span>
-                        <input autocomplete="off" maxlength="30" type="text" autofocus class="txtbox2" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
+                        <input autocomplete="off" maxlength="41" type="text" autofocus class="txtbox2" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
 
                         <div ng-show="form.name.$dirty && form.name.$error.required" class="error-msg" translate="CONTACT_US_NAME_REQUIRED">Enter your name</div>
                         <br><br><span class="label-text" translate="CONTACT_US_EMAIL">Email</span>

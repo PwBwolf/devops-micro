@@ -893,7 +893,7 @@ a.btn-import:hover {
 
 .txtboxdd {
     -webkit-appearance: menulist-button;
-    padding: 0 0 0 1%;
+    padding: 0 0 0 1% !important;
 }
 
 .txtbox-error {

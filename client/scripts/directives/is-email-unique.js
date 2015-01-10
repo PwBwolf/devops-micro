@@ -7,10 +7,7 @@
             restrict: 'A',
             link: function (scope, element, attrs, ctrl) {
 
-                ctrl.$parsers.push(checkEmailUnique);
-                element.bind('blur', checkEmailUnique);
-
-                function checkEmailUnique(viewValue) {
+                function validate(viewValue) {
                     ctrl.$setValidity('isEmailUnique', true);
                     userSvc.isEmailUnique(
                         element.val(),
@@ -23,6 +20,9 @@
                     );
                     return viewValue;
                 }
+
+                ctrl.$parsers.push(validate);
+                element.bind('blur', validate);
             }
         };
 
