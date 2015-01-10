@@ -4,18 +4,23 @@ var htmlparser = require('htmlparser2'),
     fs = require('fs'),
     translations = {},
     translate = null,
-    translationString = '';
+    translationString = '',
+    innerTags = [];
 
 
 var parser = new htmlparser.Parser({
     onopentag: function (name, attribs) {
         if (attribs.translate) {
             translationString = '';
-            console.log(attribs.translate);
             translate = attribs.translate;
         }
-        else {
-            translate = null;
+        else if (translate) {
+            var attrs = '';
+            for(var attrib in attribs) {
+                attrs += ' ' + attrib + '="' + attribs[attrib] + '"';
+            };
+            innerTags.push('<'+ name + attrs +'>');
+            translationString += '<'+ name + attrs +'>';
         }
     },
     ontext: function (text) {
@@ -23,9 +28,16 @@ var parser = new htmlparser.Parser({
             translationString += text;
         }
     },
-    onclosetag: function () {
+    onclosetag: function (tagname) {
         if (translate !== null) {
-            translations[translate] = translationString.replace(/(\r\n|\n|\r|\s+)/gm, ' ').replace(/'/g, '&#39;').trim();
+            if(innerTags.length) {
+                innerTags.splice(innerTags.length-1, 1);
+                translationString += '</'+ tagname +'>';
+            }
+            else {
+                translations[translate] = translationString.replace(/(\r\n|\n|\r|\s+)/gm, ' ').replace(/'/g, '&#39;').trim();
+                translate = null;
+            }
         }
     }
 });

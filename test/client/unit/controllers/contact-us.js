@@ -62,6 +62,9 @@ describe('Controller: contactUsCtrl', function () {
             },
             details: {
                 $dirty: false
+            },
+            country: {
+                $dirty: false
             }
         };
     }
@@ -72,9 +75,17 @@ describe('Controller: contactUsCtrl', function () {
             interest: 'Submit a question',
             email: 'varunv@yiptv.com',
             telephone: '',
-            details: 'I want to know about different subscriptions'
+            details: 'I want to know about different subscriptions',
+            country: 'India'
         };
     }
+
+    var mockUser = {
+        email: 'varunv@yiptv.com',
+        firstName: 'varun',
+        lastName: 'verma',
+        telephone: '48374194632'
+    };
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, $rootScope, appSvc, $httpBackend, $location, loggerSvc) {
@@ -84,10 +95,22 @@ describe('Controller: contactUsCtrl', function () {
         appService = appSvc;
         loggerService = loggerSvc;
         location = $location;
-        initController();
+        scope.user = {};
+        scope.mv = {};
     }));
 
-    /*it('should attach a list of the 5 countries', function () {
+    it('mv should be {} if user.email is undefined on controller init()', function () {
+        initController();
+        expect(scope.mv).toEqual({});
+    });
+
+    it('should set the mv if user.email is defined on controller init()', function () {
+        scope.user = mockUser;
+        initController();
+        expect(scope.mv).toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
+    });
+
+    it('should attach a list of the 5 countries', function () {
         var countries = ['USA', 'Spain', 'Mexico', 'Canada', 'UK'];
         httpBackend.when("GET", "/api/get-countries").respond(200, countries);
         initController();
@@ -121,12 +144,13 @@ describe('Controller: contactUsCtrl', function () {
         initController();
         httpBackend.flush();
         expect(scope.countries).toBe(undefined);
-        expect(scope.mv).toBe(undefined);
+        expect(scope.mv).toEqual({});
         expect(loggerService.logError).toHaveBeenCalledWith('Error loading country list');
     });
 
     it('should set the form dirty', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        initController();
         httpBackend.flush();
         mockContactUsForm();
         mockModelView();
@@ -140,6 +164,7 @@ describe('Controller: contactUsCtrl', function () {
 
     it('should redirect to contact us success page on contact us form post success', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        initController();
         httpBackend.flush();
         mockContactUsForm();
         mockModelView();
@@ -153,6 +178,7 @@ describe('Controller: contactUsCtrl', function () {
 
     it('should log appropriate error message on save contact us form post error', function () {
         httpBackend.expect("GET", "/api/get-countries").respond(200, []);
+        initController();
         httpBackend.flush();
         mockContactUsForm();
         mockModelView();
@@ -164,6 +190,20 @@ describe('Controller: contactUsCtrl', function () {
         expect(scope.saving).toBe(false);
         expect(location.path()).toBe('/');
         expect(loggerService.logError).toHaveBeenCalledWith('Error submitting your request');
-    });*/
+    });
+
+    it('should set scope.mv to hold new user credential on user change', function () {
+        var mv = {email: mockUser.email, name: mockUser.firstName + ' ' + mockUser.lastName, telephone: mockUser.telephone};
+        scope.user = mockUser;
+        initController();
+        expect(scope.mv).toEqual(mv);
+        scope.user.email = 'achinth@yiptv.com';
+        scope.user.firstName = 'Achinth';
+        scope.user.lastName = 'Gurkhi';
+        scope.user.telephone = '394356270';
+        expect(scope.mv).not.toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
+        scope.$broadcast('UserChanged');
+        expect(scope.mv).toEqual({email: scope.user.email, name: scope.user.firstName + ' ' + scope.user.lastName, telephone: scope.user.telephone});
+    })
 
 });
