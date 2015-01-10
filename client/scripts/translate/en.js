@@ -105,7 +105,7 @@
             FORGOT_PASSWORD_ERROR: 'Error sending reset password link',
             FORGOT_PASSWORD_SUCCESS_HEADING: 'Email Sent',
             FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Password reset link and instructions have been sent to your email address',
-            HOME_LOT_OF_CHANNELS: 'Lot of Channels,',
+            HOME_LOTS_OF_CHANNELS: 'Lots of Channels,',
             HOME_ZERO_CONTRACTS: 'Zero Contracts,',
             HOME_NO_HASSLES: 'No Hassles.',
             HOME_GET_MONTH_FREE: 'Get a Month FREE!',
