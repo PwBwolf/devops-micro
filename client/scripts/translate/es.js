@@ -105,7 +105,7 @@
             FORGOT_PASSWORD_ERROR: 'Error al enviar el enlace de restablecimiento de contrasena',
             FORGOT_PASSWORD_SUCCESS_HEADING: 'Email Enviado',
             FORGOT_PASSWORD_SUCCESS_MESSAGE: 'Enlace de restablecimiento de contrasena y instrucciones han sido enviado a su direccion de email',
-            HOME_LOT_OF_CHANNELS: 'Muchos Canales',
+            HOME_LOTS_OF_CHANNELS: 'Muchos Canales',
             HOME_ZERO_CONTRACTS: 'Zero Contratos',
             HOME_NO_HASSLES: 'Sin Molestias',
             HOME_GET_MONTH_FREE: 'Recibe un Mes GRATIS!',
