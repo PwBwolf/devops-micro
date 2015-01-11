@@ -101,9 +101,9 @@ module.exports.send32DayReacquireEmail = function(user) {
     sendReacquireEmail(user);
 };
 
-config.postProcessors.freeUser14 = module.exports.send14DayReminderEmail;
-config.postProcessors.freeUser21 = module.exports.send21DayReminderEmail;
-config.postProcessors.freeUser28 = module.exports.send28DayReminderEmail;
-config.postProcessors.freeUser30 = module.exports.send30DayReminderEmail;
-config.postProcessors.freeUser31 = module.exports.send31DaySuspensionEmail;
-config.postProcessors.freeUser32 = module.exports.send32DayReacquireEmail;
+config.postProcessors['freeUser14'] = module.exports.send14DayReminderEmail;
+config.postProcessors['freeUser21'] = module.exports.send21DayReminderEmail;
+config.postProcessors['freeUser28'] = module.exports.send28DayReminderEmail;
+config.postProcessors['freeUser30'] = module.exports.send30DayReminderEmail;
+config.postProcessors['freeUser31'] = module.exports.send31DaySuspensionEmail;
+config.postProcessors['freeUser32'] = module.exports.send32DayReacquireEmail;

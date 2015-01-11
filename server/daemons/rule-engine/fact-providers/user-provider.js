@@ -21,7 +21,7 @@ function populateAccount(account) {
 
 module.exports.getFreeUsers = function() {
     var def = Q.defer();
-    Account.find({type: "free"}).exec().then(function(accounts) {
+    Account.find({type: 'free'}).exec().then(function(accounts) {
         if(accounts) {
             var accountPromises = [];
             var userList = [];
@@ -45,6 +45,6 @@ module.exports.getFreeUsers = function() {
         def.reject(err);
     });
     return def.promise;
-}
+};
 
 config.factProviders['free-users'] = module.exports.getFreeUsers;
