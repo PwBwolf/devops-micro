@@ -12,7 +12,7 @@ require('./rules')().then(function() {
         if(err) {
             console.log('Did not find any rules!!');
         } else {
-            console.log('about to setup the enforcer');
+            console.log('Setting up the enforcer...');
             for(var i = 0; i < rules.length; i++) {
                 rules[i] = _.assign(rules[i], {'on': 1});
             }

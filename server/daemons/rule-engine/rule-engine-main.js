@@ -8,14 +8,13 @@ var CronJob = require('cron').CronJob,
     db = mongoose.connect(config.db),
     modelsPath = config.root + '/server/common/models';
 
-
 require('../../common/config/models')(modelsPath);
 var RuleEngine = require('./rule-engine');
 require('./fact-providers/user-provider');
 require('./post-processors/free-user-processor');
 var factProviders = config.factProviders;
 
-console.log('Starting Emailer daemon...');
+console.log('Starting e-mailer daemon...');
 new CronJob('0 0 0 * * *', function(){
         for(var docType in factProviders) {
             factProviders[docType]().then(function(docs) {
