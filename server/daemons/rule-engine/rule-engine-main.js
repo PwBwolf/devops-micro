@@ -15,7 +15,7 @@ require('./post-processors/free-user-processor');
 var factProviders = config.factProviders;
 
 console.log('Starting e-mailer daemon...');
-new CronJob('* * * * * *', function(){
+new CronJob('0 0 0 * * *', function(){
         for(var docType in factProviders) {
             factProviders[docType]().then(function(docs) {
                 if(docs && docs.length > 0) {
