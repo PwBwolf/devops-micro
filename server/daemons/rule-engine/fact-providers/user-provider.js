@@ -1,11 +1,10 @@
-var _ = require('lodash');
-var mongoose = require('mongoose');
-var Q = require('q');
-var config = require('../../../common/config/config');
+'use strict';
 
-// models
-User = mongoose.model('User');
-Account = mongoose.model('Account');
+var _ = require('lodash'),
+    mongoose = require('mongoose'),
+    Q = require('q'),
+    config = require('../../../common/config/config'),
+    Account = mongoose.model('Account');
 
 function populateAccount(account) {
     var def = Q.defer();
