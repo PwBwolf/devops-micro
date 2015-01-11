@@ -1,18 +1,19 @@
-var mongoose = require('mongoose');
-var moment = require('moment');
-var Rule = mongoose.model('Rule');
-var Q = require('q');
+'use strict';
+
+var mongoose = require('mongoose'),
+    Rule = mongoose.model('Rule'),
+    Q = require('q');
 
 function buildRules() {
     var def = Q.defer();
     var ruleData = [
         {
-            "name": "free-user-14-reminder",
-            "description": "Send a reminder email to a free user after 14 days",
-            "priority": 1,
-            "enabled":true,
-            "on": 1,
-            "condition":
+            'name': 'free-user-14-reminder',
+            'description': 'Send a reminder email to a free user after 14 days',
+            'priority': 1,
+            'enabled':true,
+            'on': 1,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -24,19 +25,19 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser14";
+                    this.postProcessorKey = 'freeUser14';
                     cb();
                 }
         },
         {
-            "name": "free-user-21-reminder",
-            "description": "Send a reminder email to a free user after 21 days",
-            "priority": 1,
-            "enabled":true,
-            "condition":
+            'name': 'free-user-21-reminder',
+            'description': 'Send a reminder email to a free user after 21 days',
+            'priority': 1,
+            'enabled':true,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -48,19 +49,19 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser21";
+                    this.postProcessorKey = 'freeUser21';
                     cb();
                 }
         },
         {
-            "name": "free-user-28-reminder",
-            "description": "Send a reminder email to a free user after 28 days",
-            "priority": 1,
-            "enabled":true,
-            "condition":
+            'name': 'free-user-28-reminder',
+            'description': 'Send a reminder email to a free user after 28 days',
+            'priority': 1,
+            'enabled':true,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -72,19 +73,19 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser28";
+                    this.postProcessorKey = 'freeUser28';
                     cb();
                 }
         },
         {
-            "name": "free-user-30-reminder",
-            "description": "Send a reminder email to a free user after 30 days",
-            "priority": 1,
-            "enabled":true,
-            "condition":
+            'name': 'free-user-30-reminder',
+            'description': 'Send a reminder email to a free user after 30 days',
+            'priority': 1,
+            'enabled':true,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -96,19 +97,19 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser30";
+                    this.postProcessorKey = 'freeUser30';
                     cb();
                 }
         },
         {
-            "name": "free-user-31-deactivation",
-            "description": "Process user de-activation on the 31st day and send notification email",
-            "priority": 1,
-            "enabled":true,
-            "condition":
+            'name': 'free-user-31-deactivation',
+            'description': 'Process user de-activation on the 31st day and send notification email',
+            'priority': 1,
+            'enabled':true,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -120,19 +121,19 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser31";
+                    this.postProcessorKey = 'freeUser31';
                     cb();
                 }
         },
         {
-            "name": "free-user-32-reacquire",
-            "description": "Try and reacquire the user on the 32nd day",
-            "priority": 1,
-            "enabled":true,
-            "condition":
+            'name': 'free-user-32-reacquire',
+            'description': 'Try and reacquire the user on the 32nd day',
+            'priority': 1,
+            'enabled':true,
+            'condition':
                 function(fact, cb) {
                     var moment = require('moment');
                     if(fact.doctype === 'user') {
@@ -144,16 +145,16 @@ function buildRules() {
                     }
                     cb(false);
                 },
-            "consequence":
+            'consequence':
                 function(cb) {
                     this.process = true;
-                    this.postProcessorKey = "freeUser32";
+                    this.postProcessorKey = 'freeUser32';
                     cb();
                 }
         }
-    ]
+    ];
 
-    Rule.collection.remove(function(err, result) {
+    Rule.collection.remove(function() {
         var rulePromises = [];
         for(var i = 0; i < ruleData.length; i++) {
             rulePromises.push(saveRule(ruleData[i]));
@@ -163,14 +164,13 @@ function buildRules() {
             def.resolve();
         });
     });
-
     return def.promise;
 }
 
 function saveRule(ruleData) {
     var def = Q.defer();
     var rule = new Rule(ruleData);
-    rule.save(function(err, rule) {
+    rule.save(function(err) {
         if(err) {
             console.log(err);
             def.reject(err);
@@ -183,4 +183,4 @@ function saveRule(ruleData) {
 
 module.exports = function() {
     return buildRules();
-}
+};

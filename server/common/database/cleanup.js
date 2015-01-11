@@ -2,9 +2,9 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var mongoose   = require('mongoose'),
-    Q          = require('q'),
-    config     = require('../config/config'),
+var mongoose = require('mongoose'),
+    Q = require('q'),
+    config = require('../config/config'),
     modelsPath = '../models',
     db = mongoose.connect(config.db);
 
@@ -39,6 +39,6 @@ function cleanup() {
     } else {
         console.log('Cleanup not allowed or not configured for this environment! This incident will be reported');
     }
-};
+}
 
 cleanup();
