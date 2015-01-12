@@ -64,7 +64,7 @@
                 $http({
                     method: 'GET',
                     url: '/api/is-email-unique',
-                    params: {email: email.toLowerCase()}
+                    params: {email: email.toLowerCase().trim()}
                 }).success(success).error(error);
             },
 
