@@ -837,6 +837,22 @@ a.btn-import:hover {
     font-family: 'gotham-bookgotham-book';
 }
 
+.tous-sub-header {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.tous-main-header {
+    color: #A03269;
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.tous-bold-text {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
 .btm-bg {
     position: absolute;
     bottom: 0px;
