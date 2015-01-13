@@ -21,6 +21,51 @@ header {
     background: #f4f1ec;
 }
 
+input[type="checkbox"]{
+    margin-left: 10px;
+    display: none;
+
+}
+
+label:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 17px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #A03269;
+    border-radius: 3px;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 40px;
+    margin-right: 15px;
+    font-size: 15px;
+}
+.checkbox label {
+    margin-bottom: 10px;
+}
+
+.checkbox label:before {
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
 .navbar-header {
     width: 100%;
 }
@@ -1698,7 +1743,6 @@ a.btn-import:hover {
     }
 
     .btm-link a {
-        display: block;
         padding: 0 0 0 0;
     }
 
