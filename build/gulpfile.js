@@ -236,7 +236,7 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', [argv.no-minify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
+gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
     buildDaemon('dist/server/daemons');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
