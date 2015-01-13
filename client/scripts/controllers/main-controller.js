@@ -58,7 +58,7 @@
                         if(aio && !aio.closed) {
                             aio.close();
                             $rootScope.modal = {}
-                            $rootScope.modal.title = 'YipTV';
+                            $rootScope.modal.title = $scope.appConfig.appName;
                             $rootScope.modal.body = $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
                             $modal.open({
                                 templateUrl: 'modalWindow',
