@@ -100,16 +100,22 @@
                 controller: 'accountCtrl',
                 access: access.user
             })
+            .when('/cancel-subscription',
+            {
+                templateUrl: 'views/cancel-subscription.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/upgrade-subscription',
             {
-                templateUrl: 'views/customer-support.html',
+                templateUrl: 'views/upgrade-subscription.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
             .when('/change-credit-card',
             {
                 templateUrl: 'views/change-credit-card.html',
-                controller: 'changeCreditCardCtrl',
+                controller: 'commonCtrl',
                 access: access.user
             })
             .when('/change-password',
@@ -175,6 +181,12 @@
             .when('/customer-support',
             {
                 templateUrl: 'views/customer-support.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/error',
+            {
+                templateUrl: 'views/error.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

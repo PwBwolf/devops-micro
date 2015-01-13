@@ -375,7 +375,8 @@ module.exports = {
     },
 
     getAioToken: function (req, res) {
-        aio.getToken(req.email, function (err, data) {
+        var user = req.email ? req.email : 'guest';
+        aio.getToken(user, function (err, data) {
             if (err) {
                 logger.logError(JSON.stringify(err));
                 return res.status(500).end();
