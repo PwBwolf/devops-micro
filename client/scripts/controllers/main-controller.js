@@ -1,7 +1,13 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter) {
+    app.controller('modalCtrl', function ($scope, $modalInstance) {
+        $scope.ok = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -47,8 +53,24 @@
             var aio = $window.open('', '_blank');
             userSvc.getAioToken(function (response) {
                 aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                if (response.username.toLowerCase() === 'guest') {
+                    $window.setTimeout(function () {
+                        if(aio && !aio.closed) {
+                            aio.close();
+                            $rootScope.modal = {}
+                            $rootScope.modal.title = 'YipTV';
+                            $rootScope.modal.body = $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
+                            $modal.open({
+                                templateUrl: 'modalWindow',
+                                controller: 'modalCtrl',
+                                size: 'sm'
+                            });
+                        }
+                    }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
+                }
             }, function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
+                aio.location.href = $scope.appConfig.url + 'error';
             });
         };
     }]);

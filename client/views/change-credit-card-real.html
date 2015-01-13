@@ -1,0 +1,49 @@
+<div class="content-area">
+    <div class="top-bg">&nbsp;</div>
+    <div class="setting-box">
+        <h1><span translate="CHANGE_CREDIT_CARD_HEADING">Change Credit Card</span></h1>
+
+        <div class="container">
+            <div class="forgot-box">
+                <form name="form" id="form" ng-submit="changeCreditCard()" novalidate>
+                    <div class="frm">
+                        <div class="frm-left">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_CC_NUMBER">Card Number</span>
+                            <br><input autofocus type="text" name="cardNumber" ng-model="mv.cardNumber" autocomplete="off" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+
+                            <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="CHANGE_CREDIT_CARD_CC_NUMBER_REQUIRED">Enter your credit card number</div>
+                            <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="CHANGE_CREDIT_CARD_CC_NUMBER_ERROR">Enter a valid credit card number</div>
+                        </div>
+                        <div class="frm-right">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_CVV">cvv</span>
+                            <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}"></div>
+                        <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="CHANGE_CREDIT_CARD_CVV_REQUIRED">Enter your CVV</div>
+                        <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
+                    </div>
+                    <div class="frm">
+                        <div class="frm-left">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE">Expiry Date</span>
+                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
+
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE_REQUIRED">Enter your card expiry date</div>
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE_INVALID">Enter a valid card expiry date</div>
+                        </div>
+                        <div class="frm-right">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_ZIP_CODE">Zip Code</span>
+                            <br>
+                            <input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="txtbox1" ng-class="{'txtbox-error': form.zipCode.$dirty && form.zipCode.$invalid}">
+
+                            <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.required" translate="CHANGE_CREDIT_CARD_ZIP_CODE_REQUIRED">Enter your zip code</div>
+                            <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="CHANGE_CREDIT_CARD_ZIP_CODE_INVALID">Enter a valid zip code</div>
+                        </div>
+                    </div>
+                    <div class="frm">&nbsp;</div>
+                    <div class="frm-btn">
+                        <button type="submit" class="btn-submit" translate="CHANGE_CREDIT_CARD_SUBMIT_BUTTON">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>
