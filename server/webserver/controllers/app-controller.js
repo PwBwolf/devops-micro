@@ -24,7 +24,8 @@ module.exports = {
             var props = {
                 environment: process.env.NODE_ENV,
                 url: config.url,
-                aioUrl: config.aioUrl
+                aioUrl: config.aioUrl,
+                freePreviewTime: config.freePreviewTime
             };
             appConfig = _.assign(appConfig._doc, props);
             return res.json(appConfig);
