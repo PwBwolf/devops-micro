@@ -1,5 +1,5 @@
 {
     "integration": "ssh://devops@int.yiptv.net/optdev/devops/distributions",
-    "ci": "ssh://devops@172.16.10.8/optdev/devops/distributions",
+    "ci": "/optdev/devops/distributions",
     "test": "ssh://devops@test.yiptv.net/devops/distributions"
 }
