@@ -237,6 +237,7 @@ function bumpVersion(versionFile, destination) {
 }
 
 gulp.task('doDeploy', [argv.env === 'integration' ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
+    buildDaemon('dist/server/daemons');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -338,17 +339,14 @@ function copyDaemon(source, destination) {
     return def.promise;
 }
 
-function cleanDaemon(name) {
-    fs.emptyDirSync("daemons-dist/" + name);
+function cleanDaemon(destDir, name) {
+    fs.emptyDirSync(destDir + "/" + name);
 }
 
-gulp.task('daemon:deploy', function() {
-    var daemon = argv.name;
-    cleanDaemon(daemon);
-    if(argv.deployType) {
-        bumpVersion('rule-engine-version', 'daemons-dist');
-    }
-    copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], 'daemons-dist/'+daemon).then(function() {
+function buildDaemon(destDir, cb) {
+    var daemon = argv.name || 'rule-engine';
+    cleanDaemon(destDir, daemon);
+    copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], destDir + '/' + daemon).then(function() {
         gulp.src('../server/daemons/'+daemon+'/'+daemon+'-main.js')
             .pipe(replace({
                 patterns: [
@@ -359,7 +357,7 @@ gulp.task('daemon:deploy', function() {
                 ],
                 usePrefix: false
             }))
-            .pipe(gulp.dest('daemons-dist/'+daemon));
+            .pipe(gulp.dest(destDir + '/' + daemon));
 
         gulp.src('../server/daemons/start.sh')
             .pipe(replace({
@@ -371,10 +369,18 @@ gulp.task('daemon:deploy', function() {
                 ],
                 usePrefix: false
             }))
-            .pipe(gulp.dest('daemons-dist'));
+            .pipe(gulp.dest(destDir));
 
-        checkAndPrepareDist('daemons-dist', 'daemons');
+        cb();
     });
+}
+
+gulp.task('daemon:deploy', function(cb) {
+    buildDaemon('daemons-dist', cb);
+    if(argv.deployType) {
+        bumpVersion('rule-engine-version', 'daemons-dist');
+    }
+    checkAndPrepareDist('daemons-dist', 'daemons');
 });
 
 /*****************************************************************/

@@ -4,7 +4,7 @@
 /etc/init.d/yip-server stop
 
 # run npm update to install any new node modules
-npm update
+# npm update
 
 # run the script to reload the fixtures to the database
 cwd=`pwd`
