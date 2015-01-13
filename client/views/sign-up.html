@@ -82,7 +82,10 @@
                             <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID">Enter a valid zip code</div>
                         </div>
                     </div>
-                    <div class="frm-btn btm-link"><span translate="SIGN_UP_DISCLAIMER">By clicking "SIGN UP" below, you are agreeing to YipTV</span><br><a href="/terms-of-use" target="_blank" translate="SIGN_UP_TERMS_OF_USE">Terms of Use</a> <span translate="SIGN_UP_AND">and</span> <a href="/privacy-policy" translate="SIGN_UP_PRIVACY_POLICY" target="_blank">Privacy Policy</a></div>
+                    <div class="frm-btn btm-link">
+                        <input type="checkbox" class="checkbox" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER">I agree to the YipTV</span><a href="/terms-of-use" target="_blank" translate="SIGN_UP_TERMS_OF_USE">Terms of Use</a> <span translate="SIGN_UP_AND">and</span> <a href="/privacy-policy" translate="SIGN_UP_PRIVACY_POLICY" target="_blank">Privacy Policy</a></label>
+                        <div class="error-msg" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED">In order to use YipTV services you need to accept our Terms of Use and Privacy Policy</div>
+                    </div>
                     <div class="frm-btn">
                         <button ng-disabled="saving" type="submit" class="btn-submit" translate="SIGN_UP_SUBMIT_BUTTON">Sign Up</button>
                     </div>

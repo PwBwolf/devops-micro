@@ -3,6 +3,8 @@
 
     app.controller('signUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
+        $scope.mv = {disclaimer: true};
+
         $scope.signUp = function () {
             if ($scope.form.$valid) {
                 $scope.mv.type = 'paid';
@@ -40,6 +42,7 @@
             $scope.form.cvv.$dirty = true;
             $scope.form.expiryDate.$dirty = true;
             $scope.form.zipCode.$dirty = true;
+            $scope.form.disclaimer.$dirty = true;
         }
 
     }]);
