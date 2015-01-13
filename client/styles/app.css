@@ -21,12 +21,23 @@ header {
     background: #f4f1ec;
 }
 
+.navbar-header {
+    width: 100%;
+}
+
 .logo {
     float: left;
 }
 
 .logo img {
-    width: 80%;
+    width: 85px;
+    height: 78px;
+}
+
+.logo-text {
+    padding-left: 10px;
+    color: #8a8b8a;
+    font-weight: bold;
 }
 
 .f-logo img {
@@ -59,8 +70,7 @@ header {
 }
 
 .language {
-    float: left;
-    width: 100%;
+    float: right;
     padding: 0px 0 16px;
     text-align: right;
 }
@@ -1167,6 +1177,10 @@ a.btn-import:hover {
 
 @media screen and (max-width: 999px) {
 
+    .right-box {
+        text-align: center;
+    }
+
     a.language {
         margin-left: 17px;
     }
@@ -1292,6 +1306,10 @@ a.btn-import:hover {
 
     .user-home-box .caption {
         left: 10%;
+    }
+
+    .language {
+        margin-right: -60px;
     }
 
     .right-box a {
@@ -1442,6 +1460,14 @@ a.btn-import:hover {
         position: relative;
     }
 
+    .language {
+        font-size: 13px;
+    }
+
+    .logo-text {
+        font-size: 13px;
+    }
+
     .right-box a {
         margin: 0 5px 5px;
         font-size: 13px;
@@ -1472,15 +1498,6 @@ a.btn-import:hover {
         margin-right: 0px;
     }
 
-    .logo {
-        width: 100%;
-        text-align: center;
-    }
-
-    .logo img {
-        width: 80px;
-    }
-
     .f-logo img {
         width: 80px;
     }
@@ -1501,10 +1518,6 @@ a.btn-import:hover {
         margin-top: 5px;
         margin-bottom: 5px;
         font-size: 13px;
-    }
-
-    .language {
-        text-align: center;
     }
 
     .language a {
@@ -1649,6 +1662,11 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 479px) {
+
+    .logo-text {
+        display: none;
+    }
+
     .phone {
         float: left;
         text-align: center;
