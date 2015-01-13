@@ -308,7 +308,11 @@ function checkAndPrepareDist(distDir, module) {
             if(!err) {
                 var serverRemotes = fs.readJSONSync('./config/'+module+'-remote.json');
                 addRemote('integration', serverRemotes, distDir).then(function(){
-                    addRemote('test', serverRemotes, distDir);
+                    addRemote('test', serverRemotes, distDir).then(function(){
+                        if(serverRemotes['ci']) {
+                            addRemote('ci', serverRemotes, distDir);
+                        }
+                    });
                 });
             }
         });

@@ -32,7 +32,7 @@ module.exports = {
     },
 
     getCountries: function (req, res) {
-        Country.find({}, {_id: false}, function (err, countries) {
+        Country.find({}, {_id: false},  {sort: {name: 1}}, function (err, countries) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -87,7 +87,7 @@ module.exports = {
             skypeId: req.body.skypeId,
             country: req.body.country,
             interest: req.body.interest,
-            details: req.body.details,
+            details: req.body.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;'),
             createdAt: (new Date()).toUTCString()
         });
         contactUs.save(function (err) {
@@ -99,7 +99,7 @@ module.exports = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.contactUsEmailList,
                 subject: config.contactUsEmailSubject,
-                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.ymId, contactUs.skypeId, contactUs.country, contactUs.interest, contactUs.details)
+                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
             };
             email.sendEmail(mailOptions, function (err) {
                 if (err) {

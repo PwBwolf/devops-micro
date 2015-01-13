@@ -1,5 +1,10 @@
 'use strict';
 
+if(!process.env.MONGO_PWD) {
+    console.log('MongoDB password not set! Exiting...');
+    process.exit(1);
+}
+
 module.exports = {
     environment: 'staging',
     port: 3000,

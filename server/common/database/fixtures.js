@@ -2,31 +2,31 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var mongoose   = require('mongoose'),
-    crawler    = require('walk'),
-    fs         = require('fs-extended'),
-    Q          = require('q'),
-    config     = require('../config/config'),
+var mongoose = require('mongoose'),
+    crawler = require('walk'),
+    fs = require('fs-extended'),
+    Q = require('q'),
+    config = require('../config/config'),
     modelsPath = config.root + '/server/common/models',
-    db         = mongoose.connect(config.db);
+    db = mongoose.connect(config.db);
 
 require('../config/models')(modelsPath);
 
 var models = {
-    "Countries": mongoose.model('Country'),
-    "AppConfig": mongoose.model('AppConfig')
-}
+    'Countries': mongoose.model('Country'),
+    'AppConfig': mongoose.model('AppConfig')
+};
 
 function processFixture(fqn) {
     var def = Q.defer();
     var collectionContent = fs.readJSONSync(__dirname + '/' + fqn);
     if(models[collectionContent.type]) {
-        models[collectionContent.type].collection.remove(function(err, result){
+        models[collectionContent.type].collection.remove(function(err){
             if(err) {
                 console.log('Could not delete '+collectionContent.type+' first...file not processed');
                 def.reject();
             } else {
-                models[collectionContent.type].collection.insert(collectionContent.docs, {}, function(err, docs) {
+                models[collectionContent.type].collection.insert(collectionContent.docs, {}, function(err) {
                     if(err) {
                         console.log('Something went wrong when inserting ' + fqn + ' to the database!');
                         def.reject();
@@ -42,7 +42,7 @@ function processFixture(fqn) {
 var options = {
     followLinks: false,
     listeners: {
-        files: function(root, files, next) {
+        files: function(root, files) {
             var fixturePromises = [];
             for(var i = 0; i < files.length; i++) {
                 if(files[i].name.indexOf('.json') > -1) {

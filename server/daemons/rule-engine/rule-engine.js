@@ -1,19 +1,20 @@
-var Q = require('q');
-var _ = require('lodash');
-var config = require('../../common/config/config');
-var mongoose = require('mongoose');
-var Rule = mongoose.model('Rule');
-var RuleEngine = require('node-rules');
-var RuleEnforcer = null;
+'use strict';
+
+var _ = require('lodash'),
+    config = require('../../common/config/config'),
+    mongoose = require('mongoose'),
+    Rule = mongoose.model('Rule'),
+    RuleEngine = require('node-rules'),
+    RuleEnforcer = null;
 
 require('./rules')().then(function() {
     Rule.find({enabled: true}, function(err, rules) {
         if(err) {
             console.log('Did not find any rules!!');
         } else {
-            console.log('about to setup the enforcer');
+            console.log('Setting up the enforcer...');
             for(var i = 0; i < rules.length; i++) {
-                rules[i] = _.assign(rules[i], {"on": 1});
+                rules[i] = _.assign(rules[i], {'on': 1});
             }
             RuleEnforcer = new RuleEngine(rules);
         }
@@ -30,4 +31,4 @@ module.exports.applyRules = function(docs) {
             }
         });
     });
-}
+};

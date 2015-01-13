@@ -1,21 +1,19 @@
 <div class="content-area">
-    <div class="setting-box">
-        <h1><span translate="USER_HOME_HEADING">Welcome</span></h1>
+    <div class="user-home-box">
+        <div class="user-home-wrap">
+            <img src="img/banner4.jpg" alt="...">
 
-        <div class="container">
-            <div class="sign-in-box">
-                <div class="frm-btn">
-                    <button class="btn-submit" ng-click="openAio()" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
+            <div class="caption">
+                <div style="position:relative;margin: 0 auto">
+                    <button ng-click="openAio()" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
+                    <br>
+                    <button goto="/account" type="button" translate="USER_HOME_ACCOUNT">Account</button>
+                    <br>
+                    <button goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND">Refer a Friend</button>
+                    <br>
+                    <button goto="/contact-us" type="button" translate="USER_HOME_CONTACT_US">Contact Us</button>
                 </div>
-                <div class="frm-btn">
-                    <button class="btn-submit" goto="/account" type="button" translate="USER_HOME_ACCOUNT">Account</button>
-                </div>
-                <div class="frm-btn">
-                    <button class="btn-submit" goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND">Refer a Friend</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-    <div class="btm-bg">&nbsp;</div>
 </div>

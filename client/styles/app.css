@@ -18,7 +18,7 @@ header {
     float: left;
     width: 100%;
     padding: 10px 0;
-    background: #ffffff;
+    background: #f4f1ec;
 }
 
 .logo {
@@ -89,7 +89,7 @@ header {
 }
 
 a.btn-sign {
-    background: #FFFFFF;
+    background: #f4f1ec;
     text-align: center;
     width: 150px;
     line-height: 39px;
@@ -234,6 +234,48 @@ a.btn-sign:hover {
     color: #fff;
 }
 
+.user-home-box {
+    background-color: #131825;
+}
+
+.user-home-wrap {
+    width: 1350px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-home-box .caption {
+    top: 0px;
+    left: 25%;
+    position: absolute;
+    height: 100%;
+    font-family: 'radikalthin';
+    z-index: 99;
+}
+
+.user-home-box .caption h1 {
+    font-size: 40px;
+    background: none;
+    line-height: 40px;
+    color: #613e73;
+    padding: 0px;
+    margin: 20px;
+    text-align: left;
+}
+
+.user-home-box .caption button {
+    font-size: 22px;
+    background-color: #A03269;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    margin: 20px;
+    font-family: 'radikalregular';
+    width: 340px;
+}
+
 #carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
     background-image: none;
 }
@@ -306,7 +348,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption1 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -346,7 +388,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption2 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -394,7 +436,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption3 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -451,7 +493,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption4 {
     position: absolute;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
@@ -500,10 +542,10 @@ a.btn-sign:hover {
 
 .about-text {
     font-weight: bolder;
+    font-family: 'gotham-bookgotham-book';
 }
 
 .align-text {
-    display: inline-block;
     text-align: justify;
 }
 
@@ -601,10 +643,10 @@ footer .f-btm a:hover {
 .carousel li {
     margin-right: 0;
 }
+
 .content-area {
     float: left;
     width: 100%;
-    background: #161922;
     padding: 0px;
     margin: 0px;
     position: relative;
@@ -635,7 +677,7 @@ footer .f-btm a:hover {
 }
 
 .content-area h1 span {
-    background: #1d222d;
+    background: #fff;
     padding: 0px 2% 0px 2%;
     margin: 0px;
 }
@@ -650,13 +692,13 @@ footer .f-btm a:hover {
     width: 100%;
     font-family: 'gotham-lightgotham-light';
     font-size: 19px;
-    color: #FFFFFF;
+    color: #000;
     padding: 80px 0;
     margin: 0px;
 }
 
 .setting-box a {
-    color: #FFFFFF;
+    color: #000;
 }
 
 .setting-box a:hover {
@@ -667,7 +709,7 @@ footer .f-btm a:hover {
     width: 900px;
     font-family: 'radikallight';
     font-size: 16px;
-    color: #FFFFFF;
+    color: #000;
     padding: 0px;
     margin: auto;
     margin-top: -48px;
@@ -677,7 +719,7 @@ footer .f-btm a:hover {
     width: 700px;
     font-family: 'radikallight';
     font-size: 16px;
-    color: #FFFFFF;
+    color: #000;
     padding: 0px;
     margin: auto;
     margin-top: -80px;
@@ -687,7 +729,7 @@ footer .f-btm a:hover {
     width: 700px;
     font-family: 'radikallight';
     font-size: 16px;
-    color: #FFFFFF;
+    color: #000;
     padding: 0px;
     margin: auto;
     margin-top: -55px;
@@ -699,7 +741,7 @@ footer .f-btm a:hover {
     height: 44px;
     font-family: 'radikallight';
     font-size: 20px;
-    color: #000000;
+    color: #000;
     border: 0px;
     padding: 0px 1%;
     margin: 10px 0px 80px 0px;
@@ -713,7 +755,7 @@ footer .f-btm a:hover {
     line-height: 56px;
     font-family: 'radikalregular';
     font-size: 25px;
-    color: #FFFFFF;
+    color: #fff;
     text-align: center;
     text-transform: uppercase;
     border: 0px;
@@ -729,7 +771,7 @@ a.btn-import {
     line-height: 42px;
     font-family: 'radikalregular';
     font-size: 16px;
-    color: #FFFFFF;
+    color: #fff;
     text-align: center;
     text-transform: uppercase;
     border: 0px;
@@ -739,7 +781,7 @@ a.btn-import {
 }
 
 a.btn-import:hover {
-    color: #FFFFFF;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -762,8 +804,15 @@ a.btn-import:hover {
     margin-top: -70px;
 }
 
+.about-us-img {
+    float: left;
+    padding: 0 10px 5px 0;
+    width: 160px;
+    height: 160px;
+}
+
 .about-desc {
-    color: #ffffff;
+    color: #000;
     font-size: 16px;
 }
 
@@ -772,10 +821,36 @@ a.btn-import:hover {
     width: 100%;
     font-family: 'gotham-lightgotham-light';
     font-size: 19px;
-    color: #FFFFFF;
-    background: url(../img/box-shadow1.png) bottom center no-repeat;
+    color: #000;
     padding: 80px 0px 60px 0px;
     margin: 0px;
+}
+
+.numbered-header {
+    color: #A03269;
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.para-header {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.tous-sub-header {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.tous-main-header {
+    color: #A03269;
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.tous-bold-text {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
 }
 
 .btm-bg {
@@ -786,6 +861,16 @@ a.btn-import:hover {
     width: 100%;
     background: url(../img/cont-btm-bg.png) repeat-x bottom center;
     height: 13px;
+    z-index: 99;
+}
+
+.top-bg {
+    position: absolute;
+    float: left;
+    width: 100%;
+    background: url(../img/cont-top-bg.png) repeat-x bottom center;
+    height: 13px;
+    z-index: 99;
 }
 
 #details {
@@ -824,7 +909,7 @@ a.btn-import:hover {
 
 .txtboxdd {
     -webkit-appearance: menulist-button;
-    padding: 0 0 0 1%;
+    padding: 0 0 0 1% !important;
 }
 
 .txtbox-error {
@@ -1057,6 +1142,10 @@ a.btn-import:hover {
     .banner .banner-wrap {
         width: 100%;
     }
+
+    .user-home-wrap {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -1200,6 +1289,11 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 767px) {
+
+    .user-home-box .caption {
+        left: 10%;
+    }
+
     .right-box a {
         margin-left: 12px;
     }
@@ -1369,6 +1463,11 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 639px) {
+
+    .user-home-box .caption {
+        left: 1%;
+    }
+
     .navbar-toggle {
         margin-right: 0px;
     }
@@ -1691,6 +1790,16 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 399px) {
+    .user-home-box .caption {
+        left: 1%;
+    }
+
+    .user-home-box .caption button {
+        font-size: 14px;
+        padding: 10px;
+        width: 250px;
+    }
+
     .phone {
         background-position: 26% 0;
     }

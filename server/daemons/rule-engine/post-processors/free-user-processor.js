@@ -1,13 +1,31 @@
-var config = require('../../../common/config/config');
-var email = require('../../../common/services/email');
-var sf = require('sf');
+'use strict';
+
+var config = require('../../../common/config/config'),
+    email = require('../../../common/services/email'),
+    sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: sf(config.reminderEmailSubject[user.preferences.defaultLanguage], subjectDays),
-        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'subscribe')
+        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'upgrade-subscription')
+    };
+
+    email.sendEmail(mailOptions, function (err) {
+        console.log('email sent...');
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+function sendLastReminderEmail(user) {
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.lastReminderEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.lastReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
 
     email.sendEmail(mailOptions, function (err) {
@@ -20,14 +38,13 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
 
 function sendSuspensionEmail(user) {
 
-    // suspend this users account
+    // TODO: suspend this users account
 
-    // send an email
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
-        subject: config.trialPeriodCompleteSubject[user.preferences.defaultLanguage],
-        html: sf(config.trialPeriodComplete[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'subscribe')
+        subject: config.trialPeriodCompleteEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
 
     email.sendEmail(mailOptions, function (err) {
@@ -39,12 +56,11 @@ function sendSuspensionEmail(user) {
 }
 
 function sendReacquireEmail(user) {
-    // send an email
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
-        subject: config.reacquireUserSubject[user.preferences.defaultLanguage],
-        html: sf(config.reacquireUser[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'reactivate')
+        subject: config.reacquireUserEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.reacquireUserEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
 
     email.sendEmail(mailOptions, function (err) {
@@ -56,50 +72,32 @@ function sendReacquireEmail(user) {
 }
 
 module.exports.send14DayReminderEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // now send email to this user
-    sendReminderEmail(user, 'in 16 days', 'last 14 days');
+    sendReminderEmail(user, '16', '14');
 };
 
 module.exports.send21DayReminderEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // now send email to this user
-    sendReminderEmail(user, 'in 9 days', 'last 21 days');
+    sendReminderEmail(user, '9', '21');
 };
 
 module.exports.send28DayReminderEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // now send email to this user
-    sendReminderEmail(user, 'in 2 days', 'last 28 days');
+    sendReminderEmail(user, '2', '28');
 };
 
 module.exports.send30DayReminderEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // now send email to this user
-    sendReminderEmail(user, 'today', 'past month');
+    sendLastReminderEmail(user);
 };
 
 module.exports.send31DaySuspensionEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // suspend this user's account and send an email
     sendSuspensionEmail(user);
 };
 
 module.exports.send32DayReacquireEmail = function(user) {
-    // first lets delete the postProcessorKey
     delete user.postProcessorKey;
-
-    // suspend this user's account and send an email
     sendReacquireEmail(user);
 };
 

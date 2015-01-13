@@ -3,12 +3,25 @@
 
     app.controller('contactUsCtrl', ['appSvc', 'loggerSvc', '$scope', '$filter', '$location', function (appSvc, loggerSvc, $scope, $filter, $location) {
 
+        init();
         activate();
+
+        function init() {
+            if($scope.user.email) {
+                $scope.mv = {email: $scope.user.email, name: $scope.user.firstName + ' ' + $scope.user.lastName, telephone: $scope.user.telephone};
+            } else {
+                $scope.mv = {};
+            }
+        }
+
+        $scope.$on('UserChanged', function () {
+            init();
+        });
 
         function activate() {
             appSvc.getCountries().success(function (data) {
                 $scope.countries = data;
-                $scope.mv = {country: 'United States'};
+                $scope.mv.country = 'United States';
             }).error(function () {
                 loggerSvc.logError($filter('translate')('CONTACT_US_COUNTRY_LOAD_ERROR'));
             });
@@ -38,6 +51,7 @@
             $scope.form.email.$dirty = true;
             $scope.form.telephone.$dirty = true;
             $scope.form.details.$dirty = true;
+            $scope.form.country.$dirty = true;
         }
     }]);
 }(angular.module('app')));

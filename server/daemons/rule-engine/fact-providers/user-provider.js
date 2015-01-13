@@ -1,11 +1,10 @@
-var _ = require('lodash');
-var mongoose = require('mongoose');
-var Q = require('q');
-var config = require('../../../common/config/config');
+'use strict';
 
-// models
-User = mongoose.model('User');
-Account = mongoose.model('Account');
+var _ = require('lodash'),
+    mongoose = require('mongoose'),
+    Q = require('q'),
+    config = require('../../../common/config/config'),
+    Account = mongoose.model('Account');
 
 function populateAccount(account) {
     var def = Q.defer();
@@ -22,7 +21,7 @@ function populateAccount(account) {
 
 module.exports.getFreeUsers = function() {
     var def = Q.defer();
-    Account.find({type: "free"}).exec().then(function(accounts) {
+    Account.find({type: 'free'}).exec().then(function(accounts) {
         if(accounts) {
             var accountPromises = [];
             var userList = [];
@@ -46,6 +45,6 @@ module.exports.getFreeUsers = function() {
         def.reject(err);
     });
     return def.promise;
-}
+};
 
 config.factProviders['free-users'] = module.exports.getFreeUsers;

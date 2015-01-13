@@ -100,6 +100,12 @@
                 controller: 'accountCtrl',
                 access: access.user
             })
+            .when('/upgrade-subscription',
+            {
+                templateUrl: 'views/customer-support.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/change-credit-card',
             {
                 templateUrl: 'views/change-credit-card.html',
@@ -163,6 +169,12 @@
             .when('/terms-of-use',
             {
                 templateUrl: 'views/terms-of-use.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/customer-support',
+            {
+                templateUrl: 'views/customer-support.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

@@ -1,4 +1,5 @@
 <div class="content-area">
+    <div class="top-bg">&nbsp;</div>
     <div class="setting-box">
         <h1><span translate="FREE_SIGN_UP_HEADING">Sign Up</span></h1>
 
@@ -28,6 +29,13 @@
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.required" translate="FREE_SIGN_UP_EMAIL_REQUIRED">Enter your email address</div>
                         <div class="error-msg" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="FREE_SIGN_UP_EMAIL_INVALID">Enter a valid email address</div>
                         <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.isEmailUnique" translate="FREE_SIGN_UP_EMAIL_EXISTS">Email already registered</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE">Telephone</span><br>
+                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="txtbox2" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+
+                        <div class="error-msg" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED">Enter your telephone number</div>
+                        <div class="error-msg" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID">Enter a valid US telephone number</div>
                     </div>
                     <div class="frm-btn"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD">Password</span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="txtbox2" ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}">
