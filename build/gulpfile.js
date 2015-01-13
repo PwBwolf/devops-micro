@@ -214,7 +214,6 @@ function postDeploy(cb) {
             if(err) {
                 console.log('Could not push the updated version file to master');
             }
-            cb();
         });
     }
     else {
