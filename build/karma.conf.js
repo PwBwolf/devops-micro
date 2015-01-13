@@ -29,7 +29,8 @@ module.exports = function(config) {
         '../client/bower_components/ng-clip/src/ngClip.js',
         './node_modules/angular-mocks/angular-mocks.js',
         '../client/scripts/**/*.js',
-        '../test/client/unit/controllers/*.js'
+        '../test/client/unit/controllers/*.js',
+        '../test/client/unit/services/*.js'
     ],
 
 

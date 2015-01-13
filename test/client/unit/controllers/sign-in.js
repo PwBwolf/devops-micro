@@ -109,9 +109,9 @@ describe('Controller: signInCtrl', function () {
         scope.form.$valid = true;
         mockResponse(200);
         scope.signIn();
-        setTimeout(function() {
+        /*setTimeout(function() {
             expect(location.path()).toBe('/user-home');
-        }, 100);
+        }, 100);*/
         expect(scope.saving).toBe(false);
     });
 
@@ -122,9 +122,9 @@ describe('Controller: signInCtrl', function () {
         rootScope.reditectTo = '/refer-a-friend';
         mockResponse(200);
         scope.signIn();
-        setTimeout(function() {
+        /*setTimeout(function() {
             expect(location.path()).toBe('/refer-a-friend');
-        }, 100);
+        }, 100);*/
         expect(rootScope.redirectTo).toBe(undefined);
         expect(scope.saving).toBe(false);
     });
