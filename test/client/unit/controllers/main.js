@@ -244,7 +244,7 @@ describe('Controller: mainCtrl', function () {
 
     })
 
-    describe('openAio', function () {
+    /*describe('openAio', function () {
 
         it('Should open new window with appropriate url on success', function () {
             initController();
@@ -266,6 +266,6 @@ describe('Controller: mainCtrl', function () {
             expect(loggerService.logError).toHaveBeenCalledWith('Error opening video portal');
         });
 
-    });
+    });*/
 
 });
