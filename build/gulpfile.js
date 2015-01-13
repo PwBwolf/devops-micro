@@ -191,8 +191,8 @@ function postDeploy(cb) {
     replaceAndCopy(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'], 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/notify-build.js', 'dist/tools', 'development', argv.env);
 
+    var version = fs.readJSONSync('./version.json').version;
     if(argv.tag && argv.tag === 'true') {
-        var version = fs.readJSONSync('./version.json').version;
         commitAndTag(version).then(function() {
             git.push('origin', 'v'+version, function(err) {
                 if(err) {
@@ -206,7 +206,18 @@ function postDeploy(cb) {
                 }
             });
         });
-    } else {
+    } else if(argv.deployType) {
+        gulp.src('./version.json')
+            .pipe(git.add())
+            .pipe(git.commit('committing version ' + version));
+        git.push('origin', 'master', function(err) {
+            if(err) {
+                console.log('Could not push the updated version file to master');
+            }
+            cb();
+        });
+    }
+    else {
         cb();
     }
 }
