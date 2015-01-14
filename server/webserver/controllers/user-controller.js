@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     config = require('../../common/config/config'),
     email = require('../../common/services/email'),
     aio = require('../../common/services/aio'),
+    billing = require('../../common/services/billing'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
     User = mongoose.model('User'),
     Account = mongoose.model('Account'),
@@ -72,9 +73,48 @@ module.exports = {
                     }
                 });
             },
+            /*// create user in freeside
+            function (userObj, accountObj, callback) {
+                var address1 = type === 'free' ? 'trial' : userObj.address1;
+                var address2 = type === 'free' ? 'trial' : userObj.address2;
+                var city = type === 'free' ? 'West Palm Beach' : userObj.city;
+                var state = type === 'free' ? 'FL' : userObj.state;
+                var zip = type === 'free' ? '00000' : req.body.zipCode;
+                var country = 'US';
+                var payBy = type === 'free' ? null : 'CARD';
+                var payInfo = type === 'free' ? null : req.body.cardNumber;
+                var payDate = type === 'free' ? null : req.body.expiryDate;
+                var payCvv = type === 'free' ? null : req.body.cvv;
+                var payName = type === 'free' ? null : req.body.cardName;
+                billing.createUser(userObj.firstName, userObj.lastName, address1, address2, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function(err, customerNumber){
+                    if(err) {
+                        // if freeside user creation fails delete user and account from our DB
+                        accountObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError(JSON.stringify(err1));
+                            }
+                        });
+                        userObj.remove(function (err2) {
+                            if (err2) {
+                                logger.logError(JSON.stringify(err2));
+                            }
+                        });
+                        callback(err);
+                    } else {
+                        accountObj.freeSideCustomerNumber = customerNumber;
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },*/
             // create user in AIO
             function (userObj, accountObj, callback) {
-                var packages = userObj.type === 'free' ? config.aioFreePackages : config.aioUnlimitedPackages;
+                var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
                 aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                     if (err) {
                         // if AIO user creation fails delete user and account from our DB
