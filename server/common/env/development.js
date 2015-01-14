@@ -2,6 +2,7 @@
 
 module.exports = {
     environment: 'development',
+    cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     db: 'mongodb://localhost/yiptv',
     url: 'http://localhost:3000/',
@@ -15,8 +16,5 @@ module.exports = {
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
     aioFreePackages: [{'packageid' : 27}, {'packageid' : 62}],
-    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 27}, {'packageid' : 62}],
-    yipFreePackageId: 1,
-    yipUnlimitedPackageId: 2,
-    cleanup: ['Account', 'User', 'ContactUs', 'Visitor']
+    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 27}, {'packageid' : 62}]
 };

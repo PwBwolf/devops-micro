@@ -49,13 +49,32 @@
                         <div class="error-msg" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="SIGN_UP_CONFIRM_PASSWORD_REQUIRED">Confirm your password</div>
                         <div class="error-msg" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="SIGN_UP_CONFIRM_PASSWORD_NO_MATCH">Passwords do not match</div>
                     </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_BILLING_INFO">Billing Information. Need help? Call </span> <span ng-bind="appConfig.customerCareNumber"></span><br>
+                    </div>
+
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_CARD_NAME">Name as on Credit Card</span>
+                        <br><input autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="txtbox2" ng-class="{'txtbox-error': form.cardName.$dirty && form.cardName.$invalid}">
+
+                        <div class="error-msg" ng-show="form.cardName.$dirty && form.cardName.$error.required" translate="SIGN_UP_CARD_NAME_REQUIRED">Enter your name as on your credit card</div>
+                    </div>
+
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_CARD_NUMBER">Credit Card Number</span>
+                        <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+
+                        <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED">Enter your credit card number</div>
+                        <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR">Enter a valid credit card number</div>
+                    </div>
                     <div class="frm">
                         <div class="frm-left">
-                            <span class="label-text" translate="SIGN_UP_CARD_NUMBER">Credit Card Number</span>
-                            <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+                            <span class="label-text" translate="SIGN_UP_EXPIRY_DATE">Expiration Date (MM/YYYY)</span>
+                            <br>
+                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
 
-                            <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED">Enter your credit card number</div>
-                            <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR">Enter a valid credit card number</div>
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="SIGN_UP_EXPIRY_DATE_REQUIRED">Enter your card expiry date</div>
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="SIGN_UP_EXPIRY_DATE_INVALID">Enter a valid card expiry date</div>
                         </div>
                         <div class="frm-right">
                             <span class="label-text" translate="SIGN_UP_CVV">CVV</span>
@@ -65,25 +84,37 @@
                             <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
                         </div>
                     </div>
-                    <div class="frm">
-                        <div class="frm-left1">
-                            <span class="label-text" translate="SIGN_UP_EXPIRY_DATE">Expiration Date (MM/YYYY)</span>
-                            <br>
-                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_ADDRESS">Billing Address</span>
+                        <br><input autocomplete="off" type="text" id="address" name="address" ng-model="mv.address" maxlength="80" required class="txtbox2" ng-class="{'txtbox-error': form.address.$dirty && form.address.$invalid}">
 
-                            <div class="error-msg" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="SIGN_UP_EXPIRY_DATE_REQUIRED">Enter your card expiry date</div>
-                            <div class="error-msg" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="SIGN_UP_EXPIRY_DATE_INVALID">Enter a valid card expiry date</div>
-                        </div>
-                        <div class="frm-right1">
-                            <span class="label-text" translate="SIGN_UP_ZIP_CODE">Zip Code</span>
-                            <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="txtbox1" ng-class="{'txtbox-error': form.zipCode.$dirty && form.zipCode.$invalid}">
+                        <div class="error-msg" ng-show="form.address.$dirty && form.address.$error.required" translate="SIGN_UP_ADDRESS_REQUIRED">Enter address as on your credit card</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_CITY">City</span>
+                        <br><input autocomplete="off" type="text" id="city" name="city" maxlength="80" required ng-model="mv.city" class="txtbox1" ng-class="{'txtbox-error': form.city.$dirty && form.city.$invalid}">
 
-                            <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED">Enter your zip code</div>
-                            <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID">Enter a valid zip code</div>
-                        </div>
+                        <div class="error-msg" ng-show="form.city.$dirty && form.city.$error.required" translate="SIGN_UP_CITY_REQUIRED">Enter city as on your credit card</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_STATE">State</span>
+                        <br>
+                        <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="txtbox2 txtboxdd" ng-class="{'txtbox-error': form.state.$dirty && form.state.$invalid}">
+                            <option value="" translate="SIGN_UP_STATE_SELECT">Select One</option>
+                        </select>
+
+                        <div class="error-msg" ng-show="form.state.$dirty && form.state.$error.required" translate="SIGN_UP_STATE_REQUIRED">Enter state as on your credit card</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="SIGN_UP_ZIP_CODE">Zip Code</span>
+                        <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="txtbox1" ng-class="{'txtbox-error': form.zipCode.$dirty && form.zipCode.$invalid}">
+
+                        <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED">Enter your zip code</div>
+                        <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID">Enter a valid zip code</div>
                     </div>
                     <div class="frm-btn btm-link">
                         <input type="checkbox" class="checkbox" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER">I agree to the YipTV</span><a href="/terms-of-use" target="_blank" translate="SIGN_UP_TERMS_OF_USE">Terms of Use</a> <span translate="SIGN_UP_AND">and</span> <a href="/privacy-policy" translate="SIGN_UP_PRIVACY_POLICY" target="_blank">Privacy Policy</a></label>
+
                         <div class="error-msg" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED">In order to use YipTV services you need to accept our Terms of Use and Privacy Policy</div>
                     </div>
                     <div class="frm-btn">

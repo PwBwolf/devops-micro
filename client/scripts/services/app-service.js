@@ -12,6 +12,10 @@
                 return $http.get('/api/get-countries');
             },
 
+            getStates: function () {
+                return $http.get('/api/get-states');
+            },
+
             saveContactUs: function (data, success, error) {
                 $http.post('/api/save-contact-us', data).success(success).error(error);
             },

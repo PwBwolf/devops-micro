@@ -8,6 +8,7 @@ var _ = require('lodash'),
     Referrer = mongoose.model('Referrer'),
     Visitor = mongoose.model('Visitor'),
     Country = mongoose.model('Country'),
+    State = mongoose.model('State'),
     AppConfig = mongoose.model('AppConfig'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
@@ -39,6 +40,16 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.json(countries);
+        });
+    },
+
+    getStates: function (req, res) {
+        State.find({}, {_id: false},  {sort: {name: 1}}, function (err, states) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            return res.json(states);
         });
     },
 

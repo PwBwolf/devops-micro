@@ -5,26 +5,30 @@ var config = require('../config/config'),
     xmlrpc = require('xmlrpc');
 
 module.exports = {
-    createUser: function(firstName, lastName, address1, address2, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
+    createUser: function(firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideUrl);
+        console.log(email);
         client.methodCall('FS.API.new_customer',
             [   'secret', config.freeSideApiKey,
                 'agentnum', 1,
+                'refnum', 1,
                 'first', firstName,
                 'last', lastName,
-                'address1', address1,
-                'address2', address2,
+                'company', '',
+                'address1', address,
                 'city', city,
+                'county', '',
                 'state', state,
                 'zip', zip,
                 'country', country,
                 'daytime', telephone,
+                'invoicing_list', email,
+                'postal_invoicing', 0,
                 'payby', payBy,
                 'payinfo', payInfo,
-                'paycvv', payCvv,
                 'paydate', payDate,
-                'payname', payName,
-                'invoicelist', email
+                'paycvv', payCvv,
+                'payname', payName
             ], function (err, response) {
             if (err) {
                 logger.logError(JSON.stringify(err));
