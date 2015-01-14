@@ -14,6 +14,7 @@ require('../config/models')(modelsPath);
 
 var models = {
     'Countries': mongoose.model('Country'),
+    'States': mongoose.model('State'),
     'AppConfig': mongoose.model('AppConfig')
 };
 

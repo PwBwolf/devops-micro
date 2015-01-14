@@ -75,18 +75,17 @@ module.exports = {
             },
             // create user in freeside
             function (userObj, accountObj, callback) {
-                var address1 = type === 'free' ? 'trial' : userObj.address1;
-                var address2 = type === 'free' ? 'trial' : userObj.address2;
-                var city = type === 'free' ? 'West Palm Beach' : userObj.city;
-                var state = type === 'free' ? 'FL' : userObj.state;
+                var address = type === 'free' ? 'Trial' : req.body.address;
+                var city = type === 'free' ? 'West Palm Beach' : req.body.city;
+                var state = type === 'free' ? 'FL' : req.body.state;
                 var zip = type === 'free' ? '00000' : req.body.zipCode;
                 var country = 'US';
-                var payBy = type === 'free' ? null : 'CARD';
-                var payInfo = type === 'free' ? null : req.body.cardNumber;
-                var payDate = type === 'free' ? null : req.body.expiryDate;
-                var payCvv = type === 'free' ? null : req.body.cvv;
-                var payName = type === 'free' ? null : req.body.cardName;
-                billing.createUser(userObj.firstName, userObj.lastName, address1, address2, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function(err, customerNumber){
+                var payBy = type === 'free' ? 'BILL' : 'CARD';
+                var payInfo = type === 'free' ? '' : req.body.cardNumber;
+                var payDate = type === 'free' ? '' : req.body.expiryDate;
+                var payCvv = type === 'free' ? '' : req.body.cvv;
+                var payName = type === 'free' ? '' : req.body.cardName;
+                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function(err, customerNumber){
                     if(err) {
                         // if freeside user creation fails delete user and account from our DB
                         accountObj.remove(function (err1) {

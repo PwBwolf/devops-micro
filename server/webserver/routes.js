@@ -10,6 +10,7 @@ var _ = require('lodash'),
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
         {path: '/api/get-countries', httpMethod: 'GET', middleware: [AppCtrl.getCountries]},
+        {path: '/api/get-states', httpMethod: 'GET', middleware: [AppCtrl.getStates]},
         {path: '/api/save-visitor', httpMethod: 'POST', middleware: [AppCtrl.saveVisitor]},
         {path: '/api/save-contact-us', httpMethod: 'POST', middleware: [AppCtrl.saveContactUs]},
         {path: '/api/send-raf-emails', httpMethod: 'POST', middleware: [AppCtrl.sendRafEmails]},
