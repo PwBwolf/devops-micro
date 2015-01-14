@@ -35,7 +35,7 @@ label:before {
     margin-left: 17px;
     position: absolute;
     left: 0;
-    bottom: 1px;
+    top: 3px;
     background-color: #A03269;
     border-radius: 3px;
     box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
@@ -46,7 +46,6 @@ label {
     cursor: pointer;
     position: relative;
     padding-left: 40px;
-    margin-right: 15px;
     font-size: 15px;
 }
 .checkbox label {
