@@ -12,6 +12,7 @@
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
+        var aio;
 
         activate();
 
@@ -50,7 +51,7 @@
         };
 
         $scope.openAio = function () {
-            var aio = $window.open('', '_blank');
+            aio = $window.open('', '_blank');
             userSvc.getAioToken(function (response) {
                 aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
                 if (response.username.toLowerCase() === 'guest') {
@@ -72,6 +73,12 @@
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
                 aio.location.href = $scope.appConfig.url + 'error';
             });
+        };
+
+        $window.onunload = function() {
+            if (aio && !aio.closed) {
+                aio.close();
+            }
         };
     }]);
 }(angular.module('app')));

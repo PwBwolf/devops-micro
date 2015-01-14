@@ -67,9 +67,9 @@
                     </div>
                     <div class="frm">
                         <div class="frm-left1">
-                            <span class="label-text" translate="SIGN_UP_EXPIRY_DATE">Expiration Date (MM/YYYY)</span>
+                            <span class="label-text" translate="SIGN_UP_EXPIRY_DATE">Expiration Date</span>
                             <br>
-                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
+                            <input autocomplete="off" placeholder="MM/YYYY" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
 
                             <div class="error-msg" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="SIGN_UP_EXPIRY_DATE_REQUIRED">Enter your card expiry date</div>
                             <div class="error-msg" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="SIGN_UP_EXPIRY_DATE_INVALID">Enter a valid card expiry date</div>

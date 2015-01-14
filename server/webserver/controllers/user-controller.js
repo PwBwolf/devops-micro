@@ -73,7 +73,7 @@ module.exports = {
                     }
                 });
             },
-            /*// create user in freeside
+            // create user in freeside
             function (userObj, accountObj, callback) {
                 var address1 = type === 'free' ? 'trial' : userObj.address1;
                 var address2 = type === 'free' ? 'trial' : userObj.address2;
@@ -111,7 +111,7 @@ module.exports = {
                         });
                     }
                 });
-            },*/
+            },
             // create user in AIO
             function (userObj, accountObj, callback) {
                 var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;

@@ -333,7 +333,7 @@
             SIGN_UP_CVV: 'CVV',
             SIGN_UP_CVV_REQUIRED: 'Introduzca codigo CVV',
             SIGN_UP_CARD_NUMBER_CVV_ERROR: 'Introduzca codigo CVV valido',
-            SIGN_UP_EXPIRY_DATE: 'Fecha de expiracion (MM/YYYY)',
+            SIGN_UP_EXPIRY_DATE: 'Fecha de expiracion',
             SIGN_UP_EXPIRY_DATE_REQUIRED: 'Introduzca fecha de expiracion de su tarjeta de credito',
             SIGN_UP_EXPIRY_DATE_INVALID: 'Introduzca fecha de expiracion valida',
             SIGN_UP_ZIP_CODE: 'Codigo postal',

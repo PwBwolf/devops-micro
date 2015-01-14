@@ -7,6 +7,7 @@ if(!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'production',
+    cleanup: [],
     port: 3000,
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
     url: 'https://yiptv.com/',
@@ -20,8 +21,5 @@ module.exports = {
     aioUserPin: '1234',
     aioApiKey: '',
     aioFreePackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}],
-    aioPaidPackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}, , {'packageid' : 0}],
-    yipFreePackageId: 0,
-    yipUnlimitedPackageId: 0,
-    cleanup: []
+    aioPaidPackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}, , {'packageid' : 0}]
 };

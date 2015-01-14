@@ -333,7 +333,7 @@
             SIGN_UP_CVV: 'CVV',
             SIGN_UP_CVV_REQUIRED: 'Enter your CVV',
             SIGN_UP_CARD_NUMBER_CVV_ERROR: 'Enter a valid CVV',
-            SIGN_UP_EXPIRY_DATE: 'Expiration Date (MM/YYYY)',
+            SIGN_UP_EXPIRY_DATE: 'Expiration Date',
             SIGN_UP_EXPIRY_DATE_REQUIRED: 'Enter your card expiry date',
             SIGN_UP_EXPIRY_DATE_INVALID: 'Enter a valid card expiry date',
             SIGN_UP_ZIP_CODE: 'Zip Code',

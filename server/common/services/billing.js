@@ -9,7 +9,7 @@ module.exports = {
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.new_customer',
             [   'secret', config.freeSideApiKey,
-                'agentnum', 1,
+                'agentnum', 2,
                 'first', firstName,
                 'last', lastName,
                 'address1', address1,
@@ -18,12 +18,12 @@ module.exports = {
                 'state', state,
                 'zip', zip,
                 'country', country,
-                'daytime', telephone,
+                /*'daytime', telephone,
                 'payby', payBy,
                 'payinfo', payInfo,
                 'paycvv', payCvv,
                 'paydate', payDate,
-                'payname', payName,
+                'payname', payName,*/
                 'invoicelist', email
             ], function (err, response) {
             if (err) {
