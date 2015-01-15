@@ -10,21 +10,19 @@ describe('Controller: signInCtrl', function () {
         httpBackend,
         location,
         loggerService,
-        rootScope,
-        response = {};
-
-    var mockResponse = function (status, message) {
-        response.status = status;
-        response.message = message;
-    };
+        rootScope;
 
     var mockUserService = {
+        response: {
+            statusCode: null,
+            message: null
+        },
         signIn : function (user, success, error) {
-            if(response.statusCode === 200) {
-                success(response.message);
+            if(this.response.statusCode === 200) {
+                success(this.response.message);
             }
             else {
-                error(response.message);
+                error(this.response.message);
             }
         }
     };
@@ -42,15 +40,25 @@ describe('Controller: signInCtrl', function () {
             }
         }
 
-        $provide.value('translate', mockTranslateFilter);
-
         $filterProvider.register('translate', function (translate) {
             return function (text) {
                 return translate(text);
             };
         });
 
+        var locationMock = jasmine.createSpyObj('location', ['path']);
+        locationMock.location = "";
+
+        locationMock.path.and.callFake(function (path) {
+            if (path !== undefined) {
+                locationMock.location = path;
+            }
+            return locationMock.location;
+        });
+
+        $provide.value('translate', mockTranslateFilter);
         $provide.value('userSvc', mockUserService);
+        $provide.value('$location', locationMock);
 
     }));
 
@@ -82,12 +90,6 @@ describe('Controller: signInCtrl', function () {
         loggerService = loggerSvc;
         location = $location;
 
-        scope.appConfig =
-        {
-            "appName" : "YipTV",
-            "customerCareNumber" : "800-123-1111"
-        };
-
         controller('signInCtrl', {
             $scope: scope,
             $rootScope: rootScope,
@@ -107,11 +109,9 @@ describe('Controller: signInCtrl', function () {
         mockSignInForm();
         mockModelView();
         scope.form.$valid = true;
-        mockResponse(200);
+        mockUserService.response.statusCode = 200;
         scope.signIn();
-        /*setTimeout(function() {
-            expect(location.path()).toBe('/user-home');
-        }, 100);*/
+        expect(location.path).toHaveBeenCalledWith('/user-home');
         expect(scope.saving).toBe(false);
     });
 
@@ -119,12 +119,10 @@ describe('Controller: signInCtrl', function () {
         mockSignInForm();
         mockModelView();
         scope.form.$valid = true;
-        rootScope.reditectTo = '/refer-a-friend';
-        mockResponse(200);
+        rootScope.redirectTo = '/refer-a-friend';
+        mockUserService.response.statusCode = 200;
         scope.signIn();
-        /*setTimeout(function() {
-            expect(location.path()).toBe('/refer-a-friend');
-        }, 100);*/
+        expect(location.path).toHaveBeenCalledWith('/refer-a-friend');
         expect(rootScope.redirectTo).toBe(undefined);
         expect(scope.saving).toBe(false);
     });
@@ -134,7 +132,8 @@ describe('Controller: signInCtrl', function () {
         mockModelView();
         spyOn(loggerService, 'logError');
         scope.form.$valid = true;
-        mockResponse(401, 'UnverifiedAccount');
+        mockUserService.response.statusCode = 401;
+        mockUserService.response.message = 'UnverifiedAccount';
         scope.signIn();
         expect(scope.saving).toBe(false);
         expect(loggerService.logError).toHaveBeenCalledWith('Sign In failed as your account has not been verified yet');
@@ -146,7 +145,8 @@ describe('Controller: signInCtrl', function () {
         spyOn(loggerService, 'logError');
         scope.form.$valid = true;
         rootScope.reditectTo = '/refer-a-friend';
-        mockResponse(401, 'SignInFailed');
+        mockUserService.response.statusCode = 401;
+        mockUserService.response.message = 'SignInFailed';
         scope.signIn();
         expect(scope.saving).toBe(false);
         expect(loggerService.logError).toHaveBeenCalledWith('Sign In failed');
@@ -158,7 +158,7 @@ describe('Controller: signInCtrl', function () {
         spyOn(loggerService, 'logError');
         scope.form.$valid = true;
         rootScope.reditectTo = '/refer-a-friend';
-        mockResponse(500);
+        mockUserService.response.statusCode = 500;
         scope.signIn();
         expect(scope.saving).toBe(false);
         expect(loggerService.logError).toHaveBeenCalledWith('Sign In failed');
@@ -170,7 +170,8 @@ describe('Controller: signInCtrl', function () {
         spyOn(loggerService, 'logError');
         scope.form.$valid = true;
         rootScope.reditectTo = '/refer-a-friend';
-        mockResponse(404, 'UserNotFound');
+        mockUserService.response.statusCode = 404;
+        mockUserService.response.message = 'UserNotFound';
         scope.signIn();
         expect(scope.saving).toBe(false);
         expect(loggerService.logError).toHaveBeenCalledWith('Sign In failed');
