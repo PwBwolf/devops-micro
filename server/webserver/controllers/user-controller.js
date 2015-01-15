@@ -73,7 +73,36 @@ module.exports = {
                     }
                 });
             },
-            // create user in freeside
+            // create user in AIO
+            function (userObj, accountObj, callback) {
+                var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
+                    if (err) {
+                        // if AIO user creation fails delete user and account from our DB
+                        accountObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError(JSON.stringify(err1));
+                            }
+                        });
+                        userObj.remove(function (err2) {
+                            if (err2) {
+                                logger.logError(JSON.stringify(err2));
+                            }
+                        });
+                        callback(err);
+                    } else {
+                        accountObj.aioAccountId = data.account;
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // create user in FreeSide
             function (userObj, accountObj, callback) {
                 var address = type === 'free' ? 'Trial' : req.body.address;
                 var city = type === 'free' ? 'West Palm Beach' : req.body.city;
@@ -101,35 +130,6 @@ module.exports = {
                         callback(err);
                     } else {
                         accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // create user in AIO
-            function (userObj, accountObj, callback) {
-                var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
-                    if (err) {
-                        // if AIO user creation fails delete user and account from our DB
-                        accountObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError(JSON.stringify(err1));
-                            }
-                        });
-                        userObj.remove(function (err2) {
-                            if (err2) {
-                                logger.logError(JSON.stringify(err2));
-                            }
-                        });
-                        callback(err);
-                    } else {
-                        accountObj.aioAccountId = data.account;
                         accountObj.save(function (err3) {
                             if (err3) {
                                 callback(err3);
