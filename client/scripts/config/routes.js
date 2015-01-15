@@ -196,10 +196,16 @@
                 controller: 'allUsersCtrl',
                 access: access.admin
             })
-            .when('/admin/all-users',
+            .when('/admin/user-details',
             {
-                templateUrl: 'views/all-users.html',
-                controller: 'allUsersCtrl',
+                templateUrl: 'views/user-details.html',
+                controller: 'userDetailsCtrl',
+                access: access.admin
+            })
+            .when('/admin/change-password',
+            {
+                templateUrl: 'views/admin-change-password.html',
+                controller: 'adminChangePasswordCtrl',
                 access: access.admin
             })
             .when('/error',

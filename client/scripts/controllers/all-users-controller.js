@@ -4,6 +4,9 @@
     app.controller('allUsersCtrl', ['adminSvc', 'loggerSvc', 'ngTableParams', '$scope', '$filter', function (adminSvc, loggerSvc, ngTableParams, $scope, $filter) {
 
         $scope.users = [];
+        $scope.email = $filter('translate')('ALL_USERS_EMAIL');
+        $scope.name = $filter('translate')('ALL_USERS_NAME');
+        $scope.type = $filter('translate')('ALL_USERS_TYPE');
         activate();
 
         $scope.tableParams = new ngTableParams({

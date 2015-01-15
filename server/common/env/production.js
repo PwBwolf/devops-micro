@@ -11,7 +11,7 @@ module.exports = {
     port: 3000,
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@10.100.10.4/yiptv',
     url: 'https://yiptv.com/',
-    imageUrl: 'http://yiptv.com/img/',
+    imageUrl: 'https://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
     contactUsEmailList: 'support@yiptv.com',
     cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',

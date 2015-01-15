@@ -30,6 +30,7 @@ var _ = require('lodash'),
         {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
         {path: '/api/admin/get-all-users', httpMethod: 'GET', middleware: [AdminCtrl.getAllUsers], accessLevel: accessLevels.admin},
         {path: '/api/admin/get-user-details', httpMethod: 'GET', middleware: [AdminCtrl.getUserDetails], accessLevel: accessLevels.admin},
+        {path: '/api/admin/change-password', httpMethod: 'POST', middleware: [AdminCtrl.changePassword], accessLevel: accessLevels.admin},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
@@ -75,7 +76,6 @@ function ensureAuthorized(req, res, next) {
         } else {
             req.email = decodedToken.email;
             req.role = role = decodedToken.role;
-            console.log(decodedToken.role);
         }
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
