@@ -4,6 +4,7 @@ var _ = require('lodash'),
     jwt = require('jwt-simple'),
     AppCtrl = require('./controllers/app-controller'),
     UserCtrl = require('./controllers/user-controller'),
+    AdminCtrl = require('./controllers/admin-controller'),
     config = require('../common/config/config'),
     userRoles = require('../../client/scripts/config/routing').userRoles,
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
@@ -23,10 +24,12 @@ var _ = require('lodash'),
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
+        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken]},
         {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
         {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
         {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
-        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken]},
+        {path: '/api/admin/get-all-users', httpMethod: 'GET', middleware: [AdminCtrl.getAllUsers], accessLevel: accessLevels.admin},
+        {path: '/api/admin/get-user-details', httpMethod: 'GET', middleware: [AdminCtrl.getUserDetails], accessLevel: accessLevels.admin},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
@@ -72,6 +75,7 @@ function ensureAuthorized(req, res, next) {
         } else {
             req.email = decodedToken.email;
             req.role = role = decodedToken.role;
+            console.log(decodedToken.role);
         }
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;

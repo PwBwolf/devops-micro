@@ -2,8 +2,8 @@
     'use strict';
 
     var config = {
-        roles: ['anon', 'user', 'admin', 'super-admin'],
-        accessLevels: { 'public': '*', 'anon': ['anon'], 'user': ['user', 'admin', 'super-admin'], 'admin': ['admin', 'super-admin'], 'super-admin': ['super-admin'] }
+        roles: ['anon', 'user', 'admin', 'superAdmin'],
+        accessLevels: { 'public': '*', 'anon': ['anon'], 'user': ['user', 'admin', 'superAdmin'], 'admin': ['admin', 'superAdmin'], 'superAdmin': ['superAdmin'] }
     };
 
     exports.userRoles = buildRoles(config.roles);
