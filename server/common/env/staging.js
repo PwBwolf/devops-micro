@@ -20,6 +20,6 @@ module.exports = {
     freeSideUrl: '',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePackages: [{'packageid' : 27}, {'packageid' : 62}],
-    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 27}, {'packageid' : 62}]
+    aioFreePackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 27}],
+    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 62}, {'packageid' : 27}]
 };
