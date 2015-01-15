@@ -48,6 +48,7 @@
             $translate.use(newLanguage);
             webStorage.local.add('language', newLanguage);
             $scope.language = newLanguage;
+            $rootScope.$broadcast('LanguageChanged');
         };
 
         $scope.openAio = function () {
