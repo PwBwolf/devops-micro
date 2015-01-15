@@ -191,8 +191,8 @@ function postDeploy(cb) {
     replaceAndCopy(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'], 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/notify-build.js', 'dist/tools', 'development', argv.env);
 
+    var version = fs.readJSONSync('./version.json').version;
     if(argv.tag && argv.tag === 'true') {
-        var version = fs.readJSONSync('./version.json').version;
         commitAndTag(version).then(function() {
             git.push('origin', 'v'+version, function(err) {
                 if(err) {
@@ -206,7 +206,17 @@ function postDeploy(cb) {
                 }
             });
         });
-    } else {
+    } else if(argv.deployType) {
+        gulp.src('./version.json')
+            .pipe(git.add())
+            .pipe(git.commit('committing version ' + version));
+        git.push('origin', 'master', function(err) {
+            if(err) {
+                console.log('Could not push the updated version file to master');
+            }
+        });
+    }
+    else {
         cb();
     }
 }
@@ -236,7 +246,8 @@ function bumpVersion(versionFile, destination) {
         .pipe(gulp.dest(destination));
 }
 
-gulp.task('doDeploy', [argv.env === 'integration' ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
+gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function(cb){
+    buildDaemon('dist/server/daemons');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -245,7 +256,7 @@ gulp.task('dummy', function(cb) {
     cb();
 });
 
-gulp.task('deploy', [argv.env === 'integration' ? 'test' : 'dummy', 'clean'], function(){
+gulp.task('deploy', [argv.env === 'integration' ? 'dummy' : 'dummy', 'clean'], function(){
     if(argv.tag) {
         if(argv.tag !== 'false' && argv.tag !== 'true') {
             checkoutFromTag().then(function() {
@@ -338,17 +349,14 @@ function copyDaemon(source, destination) {
     return def.promise;
 }
 
-function cleanDaemon(name) {
-    fs.emptyDirSync("daemons-dist/" + name);
+function cleanDaemon(destDir, name) {
+    fs.emptyDirSync(destDir + "/" + name);
 }
 
-gulp.task('daemon:deploy', function() {
-    var daemon = argv.name;
-    cleanDaemon(daemon);
-    if(argv.deployType) {
-        bumpVersion('rule-engine-version', 'daemons-dist');
-    }
-    copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], 'daemons-dist/'+daemon).then(function() {
+function buildDaemon(destDir, cb) {
+    var daemon = argv.name || 'rule-engine';
+    cleanDaemon(destDir, daemon);
+    copyDaemon(['../server/daemons/'+daemon+'/**/*', '!../server/daemons/'+daemon+'/'+daemon+'-main.js', '!../server/daemons/start.sh'], destDir + '/' + daemon).then(function() {
         gulp.src('../server/daemons/'+daemon+'/'+daemon+'-main.js')
             .pipe(replace({
                 patterns: [
@@ -359,7 +367,7 @@ gulp.task('daemon:deploy', function() {
                 ],
                 usePrefix: false
             }))
-            .pipe(gulp.dest('daemons-dist/'+daemon));
+            .pipe(gulp.dest(destDir + '/' + daemon));
 
         gulp.src('../server/daemons/start.sh')
             .pipe(replace({
@@ -371,10 +379,18 @@ gulp.task('daemon:deploy', function() {
                 ],
                 usePrefix: false
             }))
-            .pipe(gulp.dest('daemons-dist'));
+            .pipe(gulp.dest(destDir));
 
-        checkAndPrepareDist('daemons-dist', 'daemons');
+        cb();
     });
+}
+
+gulp.task('daemon:deploy', function(cb) {
+    buildDaemon('daemons-dist', cb);
+    if(argv.deployType) {
+        bumpVersion('rule-engine-version', 'daemons-dist');
+    }
+    checkAndPrepareDist('daemons-dist', 'daemons');
 });
 
 /*****************************************************************/

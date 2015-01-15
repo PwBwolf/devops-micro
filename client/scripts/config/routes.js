@@ -100,16 +100,22 @@
                 controller: 'accountCtrl',
                 access: access.user
             })
+            .when('/cancel-subscription',
+            {
+                templateUrl: 'views/cancel-subscription.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/upgrade-subscription',
             {
-                templateUrl: 'views/customer-support.html',
+                templateUrl: 'views/upgrade-subscription.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
             .when('/change-credit-card',
             {
                 templateUrl: 'views/change-credit-card.html',
-                controller: 'changeCreditCardCtrl',
+                controller: 'commonCtrl',
                 access: access.user
             })
             .when('/change-password',
@@ -175,6 +181,36 @@
             .when('/customer-support',
             {
                 templateUrl: 'views/customer-support.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/admin',
+            {
+                templateUrl: 'views/admin.html',
+                controller: 'commonCtrl',
+                access: access.admin
+            })
+            .when('/admin/all-users',
+            {
+                templateUrl: 'views/all-users.html',
+                controller: 'allUsersCtrl',
+                access: access.admin
+            })
+            .when('/admin/user-details',
+            {
+                templateUrl: 'views/user-details.html',
+                controller: 'userDetailsCtrl',
+                access: access.admin
+            })
+            .when('/admin/change-password',
+            {
+                templateUrl: 'views/admin-change-password.html',
+                controller: 'adminChangePasswordCtrl',
+                access: access.admin
+            })
+            .when('/error',
+            {
+                templateUrl: 'views/error.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

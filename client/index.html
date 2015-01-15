@@ -25,6 +25,7 @@
     </style>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
@@ -48,17 +49,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="logo"><a href="/"><img src="img/logo.png" alt="YipTV" title="YipTV"></a></div>
+                <div class="logo"><a href="/"><img src="img/logo.png" alt="YipTV" title="YipTV"></a><span class="logo-text" translate="INDEX_JOIN_TV_EVOLUTION">Join the TV Evolution!</span></div>
+                <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
             </div>
             <div class="collapse navbar-collapse pull-right right-box home" id="navbar-collapse-1">
                 <div ng-cloak access-level="accessLevels.public" class="right-nav">
-                    <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
                     <a href="/refer-a-friend" access-level="accessLevels.public" class="btn-sign" translate="INDEX_REFER_FRIEND">Refer a Friend</a>
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>
                     <a href="/sign-up/paid" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_JOIN_NOW">Join Now</a>
                     <a href="/sign-up/free" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_TRY_FREE">Try for 30 Days</a>
                     <a ng-click="openAio()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_WATCH_NOW">Watch Now</a>
+                    <a ng-click="openAio()" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_FREE_PREVIEW">Free Preview</a>
                     <a href="/account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_ACCOUNT">Account</a>
+                    <a href="/admin" access-level="accessLevels.admin" class="btn-sign" translate="INDEX_ADMIN">Admin</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </div>
@@ -121,8 +124,9 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
 <script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
-<script src="bower_components/ng-clip/src/ngClip.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/ng-table/dist/ng-table.js"></script>
 
 <!-- endbower -->
 <!-- endbuild -->
@@ -152,6 +156,7 @@
 <script src="scripts/services/user-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
+<script src="scripts/services/admin-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
@@ -169,6 +174,9 @@
 <script src="scripts/controllers/resend-verification-controller.js"></script>
 <script src="scripts/controllers/refer-a-friend-controller.js"></script>
 <script src="scripts/controllers/invite-controller.js"></script>
+<script src="scripts/controllers/all-users-controller.js"></script>
+<script src="scripts/controllers/user-details-controller.js"></script>
+<script src="scripts/controllers/admin-change-password-controller.js"></script>
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
@@ -184,6 +192,17 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+</script>
+<script type="text/ng-template" id="modalWindow">
+    <div class="modal-header">
+        <h3 class="modal-title" ng-bind="modal.title"></h3>
+    </div>
+    <div class="modal-body" ng-bind="modal.body">
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn-submit" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
+    </div>
 </script>
 </body>
 </html>

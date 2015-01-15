@@ -12,6 +12,7 @@ var Account = new Schema({
     type: {type: String, required: true},
     referredBy: String,
     aioAccountId: Number,
+    freeSideCustomerNumber: Number,
     primaryCard: {
         id: String,
         type: String,

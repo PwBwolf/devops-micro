@@ -16,8 +16,4 @@
     app.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('httpRequestInterceptor');
     }]);
-
-    app.config(['ngClipProvider', function(ngClipProvider) {
-        ngClipProvider.setPath('dependencies/ZeroClipboard.swf');
-    }]);
 }(angular.module('app')));

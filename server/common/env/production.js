@@ -7,19 +7,19 @@ if(!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'production',
+    cleanup: [],
     port: 3000,
-    db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
+    db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@10.100.10.4/yiptv',
     url: 'https://yiptv.com/',
-    imageUrl: 'http://yiptv.com/img/',
+    imageUrl: 'https://yiptv.com/img/',
     secretToken: 'yip#tv@prod#848',
-    contactUsEmailList: 'tribs@yiptv.com, carmen@yiptv.com',
+    contactUsEmailList: 'support@yiptv.com',
     cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',
-    aioUrl: '',
+    aioUrl: 'http://content.yiptv.com',
+    freeSideApiKey: 'yip-freeside-prod',
+    freeSideUrl: 'http://65.17.209.235:8008/',
     aioUserPin: '1234',
-    aioApiKey: '',
-    aioFreePackages: [{'packageid' : 0}, {'packageid' : 0}],
-    aioUnlimitedPackages: [{'packageid' : 0}, {'packageid' : 0}, {'packageid' : 0}],
-    yipFreePackageId: 0,
-    yipUnlimitedPackageId: 0,
-    cleanup: []
+    aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
+    aioFreePackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 27}],
+    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 62}, {'packageid' : 27}]
 };

@@ -25,8 +25,8 @@ module.exports = function(config) {
         '../client/bower_components/angular-translate/angular-translate.js',
         '../client/bower_components/toastr/toastr.js',
         '../client/bower_components/fastclick/lib/fastclick.js',
-        '../client/bower_components/zeroclipboard/dist/ZeroClipboard.js',
-        '../client/bower_components/ng-clip/src/ngClip.js',
+        '../client/bower_components/angular-bootstrap/ui-bootstrap.js',
+        '../client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         './node_modules/angular-mocks/angular-mocks.js',
         '../client/scripts/**/*.js',
         '../test/client/unit/controllers/*.js',
@@ -70,11 +70,11 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     plugins: [
-          'karma-chrome-launcher',
-          'karma-jasmine'
+          'karma-jasmine',
+          'karma-phantomjs-launcher'
     ],
 
     // Continuous Integration mode

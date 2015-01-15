@@ -43,7 +43,6 @@
             accessLevels: accessLevels,
             userRoles: userRoles,
             user: currentUser,
-
             getUserProfile: getUserProfile,
 
             authorize: function (accessLevel, role) {

@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     config = require('../../common/config/config'),
     email = require('../../common/services/email'),
     aio = require('../../common/services/aio'),
+    billing = require('../../common/services/billing'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
     User = mongoose.model('User'),
     Account = mongoose.model('Account'),
@@ -72,9 +73,47 @@ module.exports = {
                     }
                 });
             },
+            // create user in freeside
+            function (userObj, accountObj, callback) {
+                var address = type === 'free' ? 'Trial' : req.body.address;
+                var city = type === 'free' ? 'West Palm Beach' : req.body.city;
+                var state = type === 'free' ? 'FL' : req.body.state;
+                var zip = type === 'free' ? '00000' : req.body.zipCode;
+                var country = 'US';
+                var payBy = type === 'free' ? 'BILL' : 'CARD';
+                var payInfo = type === 'free' ? '' : req.body.cardNumber;
+                var payDate = type === 'free' ? '' : req.body.expiryDate;
+                var payCvv = type === 'free' ? '' : req.body.cvv;
+                var payName = type === 'free' ? '' : req.body.cardName;
+                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function(err, customerNumber){
+                    if(err) {
+                        // if freeside user creation fails delete user and account from our DB
+                        accountObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError(JSON.stringify(err1));
+                            }
+                        });
+                        userObj.remove(function (err2) {
+                            if (err2) {
+                                logger.logError(JSON.stringify(err2));
+                            }
+                        });
+                        callback(err);
+                    } else {
+                        accountObj.freeSideCustomerNumber = customerNumber;
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
             // create user in AIO
             function (userObj, accountObj, callback) {
-                var packages = userObj.type === 'free' ? config.aioFreePackages : config.aioUnlimitedPackages;
+                var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
                 aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                     if (err) {
                         // if AIO user creation fails delete user and account from our DB
@@ -166,7 +205,7 @@ module.exports = {
             });
             var token = jwt.encode({
                 email: req.body.email.toLowerCase(),
-                role: userRoles.user,
+                role: user.role,
                 expiry: moment().add(7, 'days').valueOf()
             }, config.secretToken);
             return res.json({token: token});
@@ -179,7 +218,7 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
+        User.findOne({email: req.email}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -375,7 +414,8 @@ module.exports = {
     },
 
     getAioToken: function (req, res) {
-        aio.getToken(req.email, function (err, data) {
+        var user = req.email ? req.email : 'guest';
+        aio.getToken(user, function (err, data) {
             if (err) {
                 logger.logError(JSON.stringify(err));
                 return res.status(500).end();

@@ -34,13 +34,13 @@ describe('Service: userSvc', function () {
         anon: { bitMask: 1 },
         user: { bitMask: 14 },
         admin: { bitMask: 12 },
-        'super-admin': { bitMask: 8 }
+        superAdmin: { bitMask: 8 }
     };
 
     var userRoles = { anon: { bitMask: 1, title: 'anon' },
         user: { bitMask: 2, title: 'user' },
         admin: { bitMask: 4, title: 'admin' },
-        'super-admin': { bitMask: 8, title: 'super-admin' } };
+        superAdmin: { bitMask: 8, title: 'superAdmin' } };
 
     beforeEach(inject(function (userSvc, $httpBackend, tokenSvc) {
         userService = userSvc;
@@ -61,8 +61,8 @@ describe('Service: userSvc', function () {
             expect(result).toEqual(accessLevels.user.bitMask & userService.user.role.bitMask);
             result = userService.authorize(accessLevels.admin);
             expect(result).toEqual(accessLevels.admin.bitMask & userService.user.role.bitMask);
-            result = userService.authorize(accessLevels['super-admin']);
-            expect(result).toEqual(accessLevels['super-admin'].bitMask & userService.user.role.bitMask);
+            result = userService.authorize(accessLevels.superAdmin);
+            expect(result).toEqual(accessLevels.superAdmin.bitMask & userService.user.role.bitMask);
         });
 
         it('should return bitwise and of role.bitmask and accessLevel.bitmask', function () {
@@ -74,8 +74,8 @@ describe('Service: userSvc', function () {
             expect(result).toEqual(accessLevels.user.bitMask & userRoles.user.bitMask);
             result = userService.authorize(accessLevels.admin, userRoles.user);
             expect(result).toEqual(accessLevels.admin.bitMask & userRoles.user.bitMask);
-            result = userService.authorize(accessLevels['super-admin'], userRoles.user);
-            expect(result).toEqual(accessLevels['super-admin'].bitMask & userRoles.user.bitMask);
+            result = userService.authorize(accessLevels.superAdmin, userRoles.user);
+            expect(result).toEqual(accessLevels.superAdmin.bitMask & userRoles.user.bitMask);
         });
 
     });
@@ -108,7 +108,7 @@ describe('Service: userSvc', function () {
             result = userService.isSignedIn(user);
             expect(result).toBe(true);
 
-            user.role = userRoles['super-admin'];
+            user.role = userRoles.superAdmin;
             result = userService.isSignedIn(user);
             expect(result).toBe(true);
         });
