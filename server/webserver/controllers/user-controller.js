@@ -205,7 +205,7 @@ module.exports = {
             });
             var token = jwt.encode({
                 email: req.body.email.toLowerCase(),
-                role: userRoles.user,
+                role: user.role,
                 expiry: moment().add(7, 'days').valueOf()
             }, config.secretToken);
             return res.json({token: token});
@@ -218,7 +218,7 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
+        User.findOne({email: req.email}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();

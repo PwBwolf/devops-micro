@@ -80,14 +80,14 @@ describe('Controller: mainCtrl', function () {
             anon: { bitMask: 1, title: 'anon' },
             user: { bitMask: 2, title: 'user' },
             admin: { bitMask: 4, title: 'admin' },
-            'super-admin': { bitMask: 8, title: 'super-admin' }
+            superAdmin: { bitMask: 8, title: 'superAdmin' }
         };
         userServiceMock.accessLevels = {
             public: { bitMask: 15 },
             anon: { bitMask: 1 },
             user: { bitMask: 14 },
             admin: { bitMask: 12 },
-            'super-admin': { bitMask: 8 }
+            superAdmin: { bitMask: 8 }
         };
         userServiceMock.getAioToken.and.callFake(function (success, error) {
             if (userServiceMock.response.status === 200) {

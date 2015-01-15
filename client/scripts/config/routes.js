@@ -184,6 +184,24 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/admin',
+            {
+                templateUrl: 'views/admin.html',
+                controller: 'commonCtrl',
+                access: access.admin
+            })
+            .when('/admin/all-users',
+            {
+                templateUrl: 'views/all-users.html',
+                controller: 'allUsersCtrl',
+                access: access.admin
+            })
+            .when('/admin/all-users',
+            {
+                templateUrl: 'views/all-users.html',
+                controller: 'allUsersCtrl',
+                access: access.admin
+            })
             .when('/error',
             {
                 templateUrl: 'views/error.html',
