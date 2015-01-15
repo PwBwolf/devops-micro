@@ -22,7 +22,7 @@
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('FREE_SIGN_UP_USER_EXISTS'));
                         } else {
-                            loggerSvc.logError($filter('translate')('FREE_SIGN_UP_FAILED'));
+                            loggerSvc.logError($filter('translate')('FREE_SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
                         $scope.saving = false;
                     });
