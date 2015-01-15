@@ -256,7 +256,7 @@ gulp.task('dummy', function(cb) {
     cb();
 });
 
-gulp.task('deploy', [argv.env === 'integration' ? 'test' : 'dummy', 'clean'], function(){
+gulp.task('deploy', [argv.env === 'integration' ? 'dummy' : 'dummy', 'clean'], function(){
     if(argv.tag) {
         if(argv.tag !== 'false' && argv.tag !== 'true') {
             checkoutFromTag().then(function() {
