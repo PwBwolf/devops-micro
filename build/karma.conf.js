@@ -23,6 +23,7 @@ module.exports = function(config) {
         '../client/bower_components/angular-route/angular-route.js',
         '../client/bower_components/angular-animate/angular-animate.js',
         '../client/bower_components/angular-translate/angular-translate.js',
+        '../client/bower_components/ng-table/dist/ng-table.js',
         '../client/bower_components/toastr/toastr.js',
         '../client/bower_components/fastclick/lib/fastclick.js',
         '../client/bower_components/angular-bootstrap/ui-bootstrap.js',
