@@ -25,6 +25,7 @@
     </style>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
@@ -60,6 +61,7 @@
                     <a ng-click="openAio()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_WATCH_NOW">Watch Now</a>
                     <a ng-click="openAio()" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_FREE_PREVIEW">Free Preview</a>
                     <a href="/account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_ACCOUNT">Account</a>
+                    <a href="/admin" access-level="accessLevels.admin" class="btn-sign" translate="INDEX_ADMIN">Admin</a>
                     <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </div>
@@ -124,6 +126,7 @@
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/ng-table/dist/ng-table.js"></script>
 
 <!-- endbower -->
 <!-- endbuild -->
@@ -153,6 +156,7 @@
 <script src="scripts/services/user-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
+<script src="scripts/services/admin-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
@@ -170,6 +174,7 @@
 <script src="scripts/controllers/resend-verification-controller.js"></script>
 <script src="scripts/controllers/refer-a-friend-controller.js"></script>
 <script src="scripts/controllers/invite-controller.js"></script>
+<script src="scripts/controllers/all-users-controller.js"></script>
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
