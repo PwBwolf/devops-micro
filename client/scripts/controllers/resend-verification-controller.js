@@ -13,10 +13,10 @@
                         $scope.saving = false;
                     },
                     function (response) {
-                        if (response === 'UserNotFound' || response === 'AccountActivated') {
+                        if (response === 'UserNotFound' || response === 'UserActivated') {
                             loggerSvc.logError($filter('translate')('RESEND_VERIFICATION_USER_ERROR'));
                         } else {
-                            loggerSvc.logError($filter('translate')('RESEND_VERIFICATION_ERROR'));
+                            loggerSvc.logError($filter('translate')('RESEND_VERIFICATION_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                         }
                         $scope.saving = false;
                     });

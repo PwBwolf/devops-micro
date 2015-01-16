@@ -18,9 +18,7 @@ var User = new Schema({
         },
         required: true
     },
-    activated: Boolean,
-    disabled: Boolean,
-    deleted: Boolean,
+    status: {type: String, required: true},
     createdAt: {type: Date, required: true},
     lastLoginTime: Date,
     verificationCode: {type: String, sparse: true},
