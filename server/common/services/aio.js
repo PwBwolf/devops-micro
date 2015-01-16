@@ -48,11 +48,25 @@ module.exports = {
         });
     },
 
-    updateUserPackage: function () {
-
-    },
-
-    updateUserStatus: function () {
-
+    updateUserStatus: function (username, isActive, callback) {
+        var client = new Client();
+        var args = {
+            data: {username: username, active: isActive},
+            headers: {'Content-Type': 'application/json', 'Authorization': 'apikey ' + config.aioApiKey},
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.post(config.aioUrl + '/ws/UpdateCustomerStatus.php', args, function (data) {
+            logger.logInfo(data);
+            var jsonData = JSON.parse(data);
+            if (jsonData.responseCode !== 0) {
+                callback(jsonData.message);
+            } else {
+                callback(null, jsonData);
+            }
+        }).on('error', function (err) {
+            logger.logError(JSON.stringify(err));
+            callback(err);
+        });
     }
 };
