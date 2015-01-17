@@ -12,12 +12,8 @@
                         $location.path('/forgot-password-success');
                         $scope.saving = false;
                     },
-                    function (response) {
-                        if(response === 'UserNotFound') {
-                            $location.path('/forgot-password-success');
-                        } else {
-                            loggerSvc.logError($filter('translate')('FORGOT_PASSWORD_ERROR'));
-                        }
+                    function () {
+                        loggerSvc.logError($filter('translate')('FORGOT_PASSWORD_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                         $scope.saving = false;
                     });
             } else {

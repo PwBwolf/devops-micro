@@ -33,6 +33,7 @@ module.exports = {
                         userObj.role = userRoles.user;
                         userObj.createdAt = (new Date()).toUTCString();
                         userObj.verificationCode = uuid.v4();
+                        userObj.status = 'registered';
                         userObj.save(function (err1) {
                             if (err1) {
                                 callback(err1);
@@ -73,44 +74,6 @@ module.exports = {
                     }
                 });
             },
-            // create user in freeside
-            function (userObj, accountObj, callback) {
-                var address = type === 'free' ? 'Trial' : req.body.address;
-                var city = type === 'free' ? 'West Palm Beach' : req.body.city;
-                var state = type === 'free' ? 'FL' : req.body.state;
-                var zip = type === 'free' ? '00000' : req.body.zipCode;
-                var country = 'US';
-                var payBy = type === 'free' ? 'BILL' : 'CARD';
-                var payInfo = type === 'free' ? '' : req.body.cardNumber;
-                var payDate = type === 'free' ? '' : req.body.expiryDate;
-                var payCvv = type === 'free' ? '' : req.body.cvv;
-                var payName = type === 'free' ? '' : req.body.cardName;
-                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function(err, customerNumber){
-                    if(err) {
-                        // if freeside user creation fails delete user and account from our DB
-                        accountObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError(JSON.stringify(err1));
-                            }
-                        });
-                        userObj.remove(function (err2) {
-                            if (err2) {
-                                logger.logError(JSON.stringify(err2));
-                            }
-                        });
-                        callback(err);
-                    } else {
-                        accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
             // create user in AIO
             function (userObj, accountObj, callback) {
                 var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
@@ -133,6 +96,45 @@ module.exports = {
                         accountObj.save(function (err3) {
                             if (err3) {
                                 callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // create user in FreeSide
+            function (userObj, accountObj, callback) {
+                var address = type === 'free' ? 'Trial' : req.body.address;
+                var city = type === 'free' ? 'West Palm Beach' : req.body.city;
+                var state = type === 'free' ? 'FL' : req.body.state;
+                var zip = type === 'free' ? '00000' : req.body.zipCode;
+                var country = 'US';
+                var payBy = type === 'free' ? 'BILL' : 'CARD';
+                var payInfo = type === 'free' ? '' : req.body.cardNumber;
+                var payDate = type === 'free' ? '' : req.body.expiryDate;
+                var payCvv = type === 'free' ? '' : req.body.cvv;
+                var payName = type === 'free' ? '' : req.body.cardName;
+                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
+                    if (err) {
+                        // if freeside user creation fails mark status as failed in our DB and set status as inactive in AIO
+                        userObj.status = 'failed';
+                        userObj.save(function (err2) {
+                            if (err2) {
+                                logger.logError(JSON.stringify(err2));
+                            }
+                        });
+                        aio.updateUserStatus(userObj.email, false, function (err3) {
+                            if (err3) {
+                                logger.logError(JSON.stringify(err3));
+                            }
+                        });
+                        callback(err);
+                    } else {
+                        accountObj.freeSideCustomerNumber = customerNumber;
+                        accountObj.save(function (err4) {
+                            if (err4) {
+                                callback(err4);
                             } else {
                                 callback(null, userObj, accountObj);
                             }
@@ -194,8 +196,14 @@ module.exports = {
             if (!user.authenticate(req.body.password)) {
                 return res.status(401).send('SignInFailed');
             }
-            if (!user.activated) {
-                return res.status(401).send('UnverifiedAccount');
+            if (user.status === 'failed') {
+                return res.status(409).send('FailedAccount');
+            }
+            if (user.status === 'registered') {
+                return res.status(409).send('UnverifiedAccount');
+            }
+            if (user.status !== 'active') {
+                return res.status(409).send('UserError');
             }
             user.lastSignedInDate = (new Date()).toUTCString();
             user.save(function (err) {
@@ -239,7 +247,13 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            user.activated = true;
+            if (user.status === 'active') {
+                return res.status(409).send('UserVerified');
+            }
+            if (user.status !== 'registered') {
+                return res.status(409).send('UserError');
+            }
+            user.status = 'active';
             user.verificationCode = undefined;
             user.save(function (err) {
                 if (err) {
@@ -259,6 +273,9 @@ module.exports = {
             }
             if (!user) {
                 return res.status(404).send('UserNotFound');
+            }
+            if (user.status !== 'active') {
+                return res.status(409).send('UserError');
             }
             user.resetPasswordCode = uuid.v4();
             user.save(function (err) {
@@ -284,15 +301,16 @@ module.exports = {
     },
 
     checkResetCode: function (req, res) {
-        console.log(req.query.code);
         User.findOne({resetPasswordCode: req.query.code}, function (err, user) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            console.dir(user);
             if (!user) {
                 return res.status(404).send('UserNotFound');
+            }
+            if (user.status !== 'active') {
+                return res.status(409).send('UserError');
             }
             return res.status(200).end();
         });
@@ -306,6 +324,9 @@ module.exports = {
             }
             if (!user) {
                 return res.status(404).send('UserNotFound');
+            }
+            if (user.status !== 'active') {
+                return res.status(409).send('UserError');
             }
             user.resetPasswordCode = undefined;
             user.password = req.body.newPassword;
@@ -349,8 +370,11 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (user.activated) {
-                return res.status(409).send('AccountActivated');
+            if(user.status === 'active') {
+                return res.status(409).send('UserActivated');
+            }
+            if (user.status !== 'registered') {
+                return res.status(409).send('UserError');
             }
             user.verificationCode = uuid.v4();
             user.save(function (err) {

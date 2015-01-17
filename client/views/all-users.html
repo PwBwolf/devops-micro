@@ -9,8 +9,8 @@
                     <table ng-table="tableParams" class="table table-bordered" cellpadding="0" cellspacing="0" border="0">
                         <tr ng-repeat="user in $data">
                             <td data-title="email">{{user.email}}</td>
-                            <td data-title="'Name'">{{user.firstName}} {{user.lastName}}</td>
-                            <td data-title="'Type'">{{user.account.type}}</td>
+                            <td data-title="name">{{user.firstName}} {{user.lastName}}</td>
+                            <td data-title="type">{{user.account.type}}</td>
                         </tr>
                     </table>
                 </div>
