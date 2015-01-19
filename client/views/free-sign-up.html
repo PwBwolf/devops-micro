@@ -11,15 +11,17 @@
                     <div class="frm">
                         <div class="frm-left1">
                             <span class="label-text" translate="FREE_SIGN_UP_FIRST_NAME">First Name</span>
-                            <br><input autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="txtbox2" required ng-class="{'txtbox-error': form.firstName.$dirty && form.firstName.$invalid}">
+                            <br><input valid-name autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="txtbox2" required ng-class="{'txtbox-error': form.firstName.$dirty && form.firstName.$invalid}">
 
                             <div class="error-msg" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="FREE_SIGN_UP_FIRST_NAME_REQUIRED">Enter your first name</div>
+                            <div class="error-msg" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="FREE_SIGN_UP_FIRST_NAME_INVALID">Enter a valid first name</div>
                         </div>
                         <div class="frm-right1">
                             <span class="label-text" translate="FREE_SIGN_UP_LAST_NAME">Last Name</span>
-                            <br><input autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="txtbox1" required ng-class="{'txtbox-error': form.lastName.$dirty && form.lastName.$invalid}">
+                            <br><input valid-name autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="txtbox1" required ng-class="{'txtbox-error': form.lastName.$dirty && form.lastName.$invalid}">
 
                             <div class="error-msg" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="FREE_SIGN_UP_LAST_NAME_REQUIRED">Enter your last name</div>
+                            <div class="error-msg" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="FREE_SIGN_UP_LAST_NAME_INVALID">Enter a valid last name</div>
                         </div>
                     </div>
                     <div class="frm-btn">
