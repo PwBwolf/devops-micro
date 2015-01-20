@@ -52,28 +52,34 @@
         };
 
         $scope.openAio = function () {
-            aio = $window.open('', '_blank');
-            userSvc.getAioToken(function (response) {
-                aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
-                if (response.username.toLowerCase() === 'guest') {
-                    $window.setTimeout(function () {
-                        if(aio && !aio.closed) {
-                            aio.close();
-                            $rootScope.modal = {};
-                            $rootScope.modal.title = $scope.appConfig.appName;
-                            $rootScope.modal.body = $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
-                            $modal.open({
-                                templateUrl: 'modalWindow',
-                                controller: 'modalCtrl',
-                                size: 'sm'
-                            });
-                        }
-                    }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
-                }
-            }, function () {
-                loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
-                aio.location.href = $scope.appConfig.url + 'error';
-            });
+            console.dir(aio);
+            if(aio && !aio.closed) {
+                aio.focus();
+            } else {
+                aio = $window.open('', '_blank');
+                userSvc.getAioToken(function (response) {
+                    aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                    if (response.username.toLowerCase() === 'guest') {
+                        $window.setTimeout(function () {
+                            if (aio && !aio.closed) {
+                                aio.close();
+                                aio = undefined;
+                                $rootScope.modal = {};
+                                $rootScope.modal.title = $scope.appConfig.appName;
+                                $rootScope.modal.body = $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
+                                $modal.open({
+                                    templateUrl: 'modalWindow',
+                                    controller: 'modalCtrl',
+                                    size: 'sm'
+                                });
+                            }
+                        }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
+                    }
+                }, function () {
+                    loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
+                    aio.location.href = $scope.appConfig.url + 'error';
+                });
+            }
         };
 
         $window.onunload = function() {
