@@ -579,9 +579,13 @@ angular.module('angularPayments', []);angular.module('angularPayments')
                 var typeModel = $parse(attr.paymentsTypeModel);
                 type = typeModel(scope);
             }
-
+            console.log(type);
             if (type) {
-                return ref = cvc.length, __indexOf.call((ref1 = Cards.fromType(type)) != null ? ref1.cvcLength : void 0, ref) >= 0;
+                if(type === 'amex') {
+                    return cvc.length === 4;
+                } else {
+                    return cvc.length === 3;
+                }
             } else {
                 return cvc.length >= 3 && cvc.length <= 4;
             }
@@ -627,7 +631,17 @@ angular.module('angularPayments', []);angular.module('angularPayments')
                 typeModel.assign(scope, card.type);
             }
 
-            ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && (card.luhn === false || _luhnCheck(num));
+            switch (card.type) {
+                case 'amex':
+                    ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 15 && (card.luhn === false || _luhnCheck(num));
+                    break;
+                case 'visa':
+                    ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 16 && (card.luhn === false || _luhnCheck(num));
+                    break;
+                default:
+                    ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 16 && (card.luhn === false || _luhnCheck(num));
+                    break;
+            }
 
             return ret;
         }
