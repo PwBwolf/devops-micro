@@ -52,7 +52,6 @@
         };
 
         $scope.openAio = function () {
-            console.dir(aio);
             if(aio && !aio.closed) {
                 aio.focus();
             } else {

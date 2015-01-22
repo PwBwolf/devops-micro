@@ -13,6 +13,7 @@
             $scope.email = $filter('translate')('ALL_USERS_EMAIL');
             $scope.name = $filter('translate')('ALL_USERS_NAME');
             $scope.type = $filter('translate')('ALL_USERS_TYPE');
+            $scope.status = $filter('translate')('ALL_USERS_STATUS');
         }
 
         $scope.tableParams = new ngTableParams({

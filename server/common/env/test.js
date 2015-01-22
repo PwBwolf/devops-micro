@@ -15,7 +15,7 @@ module.exports = {
     secretToken: 'yip#tv@test#275',
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
     cloudSpongeDomainKey: 'KT5XZEDX6A32PFZCKZ3Y',
-    aioUrl: 'http://172.16.10.100',
+    aioUrl: 'http://209.18.77.106',
     freeSideApiKey: 'yip-freeside-dev',
     freeSideUrl: 'http://172.16.10.5:8008/',
     aioUserPin: '1234',
