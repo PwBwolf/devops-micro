@@ -167,7 +167,8 @@ gulp.task('tools', function () {
  */
 gulp.task('server', function(cb) {
     gulp.src('../server/package.json', {dot: true}).pipe(gulp.dest('dist/server'));
-    gulp.src('../server/common/**/*', {dot: true}).pipe(gulp.dest('dist/server/common'));
+    gulp.src(['../server/common/**/*', '!../server/common/env/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
+    gulp.src(['../server/common/env/all.js', '../server/common/env/'+argv.env+'.js'], {dot: true}).pipe(gulp.dest('dist/server/common/env'));
     gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
     cb();
 });
