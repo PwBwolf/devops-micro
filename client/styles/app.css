@@ -880,6 +880,10 @@ a.btn-import:hover {
     font-size: 16px;
 }
 
+.about-us-header {
+    color: #A03269;
+}
+
 .about-box {
     float: left;
     width: 100%;
@@ -913,6 +917,11 @@ a.btn-import:hover {
 }
 
 .tous-bold-text {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.faq-bold-text {
     font-weight: bold;
     font-family: 'gotham-bookgotham-book';
 }

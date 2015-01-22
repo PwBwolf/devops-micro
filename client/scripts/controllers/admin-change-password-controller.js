@@ -5,10 +5,15 @@
 
         $scope.changePassword = function () {
             if ($scope.form.$valid) {
-                adminSvc.changePassword($scope.mv).then(function () {
+                adminSvc.changePassword($scope.mv).success(function () {
                     loggerSvc.logSuccess($filter('translate')('ADMIN_CHANGE_PASSWORD_SUCCESS'));
-                }).error(function () {
-                    loggerSvc.logError($filter('translate')('ADMIN_CHANGE_PASSWORD_ERROR'));
+                }).error(function (error) {
+                    if(error === 'UserNotFound') {
+                        loggerSvc.logError($filter('translate')('ADMIN_CHANGE_PASSWORD_USER_NOT_FOUND'));
+                    } else {
+                        loggerSvc.logError($filter('translate')('ADMIN_CHANGE_PASSWORD_ERROR'));
+                    }
+
                 });
             } else {
                 setFormDirty();

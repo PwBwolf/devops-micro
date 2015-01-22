@@ -154,6 +154,12 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/faq',
+            {
+                templateUrl: 'views/faq.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/contact-us',
             {
                 templateUrl: 'views/contact-us.html',
