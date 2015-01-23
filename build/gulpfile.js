@@ -191,6 +191,7 @@ function postDeploy(cb) {
     replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
     replaceAndCopy(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'], 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/notify-build.js', 'dist/tools', 'development', argv.env);
+    replaceAndCopy('../tools/update-database.js', 'dist/tools', 'development', argv.env);
 
     var version = fs.readJSONSync('./version.json').version;
     if(argv.tag && argv.tag === 'true') {
