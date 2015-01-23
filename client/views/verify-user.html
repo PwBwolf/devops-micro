@@ -5,7 +5,8 @@
         <div class="container marketing">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <p class="text-center">{{message | translate}} {{appConfig.customerCareNumber}}</p>
+                    <p ng-hide="error" class="text-center">{{message | translate}}</p>
+                    <p ng-show="error" class="text-center">{{message | translate}} {{appConfig.customerCareNumber}}</p>
                 </div>
             </div>
         </div>

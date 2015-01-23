@@ -579,7 +579,6 @@ angular.module('angularPayments', []);angular.module('angularPayments')
                 var typeModel = $parse(attr.paymentsTypeModel);
                 type = typeModel(scope);
             }
-            console.log(type);
             if (type) {
                 if(type === 'amex') {
                     return cvc.length === 4;
@@ -635,8 +634,8 @@ angular.module('angularPayments', []);angular.module('angularPayments')
                 case 'amex':
                     ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 15 && (card.luhn === false || _luhnCheck(num));
                     break;
-                case 'visa':
-                    ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 16 && (card.luhn === false || _luhnCheck(num));
+                case 'dinersclub':
+                    ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 14 && (card.luhn === false || _luhnCheck(num));
                     break;
                 default:
                     ret = (ref = num.length, __indexOf.call(card.length, ref) >= 0) && num.length == 16 && (card.luhn === false || _luhnCheck(num));
