@@ -1,7 +1,7 @@
 'use strict';
 
 if(!process.env.MONGO_PWD) {
-    console.log('MongoDB password not set! Exiting...');
+    console.log('MongoDB password not set! Please set the MONGO_PWD environment variable. Exiting...');
     process.exit(1);
 }
 
