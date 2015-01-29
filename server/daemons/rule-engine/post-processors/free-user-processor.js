@@ -71,39 +71,39 @@ function sendReacquireEmail(user) {
     });
 }
 
-module.exports.send14DayReminderEmail = function(user) {
+module.exports.send14DayReminderEmail = function (user) {
     delete user.postProcessorKey;
     sendReminderEmail(user, '16', '14');
 };
 
-module.exports.send21DayReminderEmail = function(user) {
+module.exports.send21DayReminderEmail = function (user) {
     delete user.postProcessorKey;
     sendReminderEmail(user, '9', '21');
 };
 
-module.exports.send28DayReminderEmail = function(user) {
+module.exports.send28DayReminderEmail = function (user) {
     delete user.postProcessorKey;
     sendReminderEmail(user, '2', '28');
 };
 
-module.exports.send30DayReminderEmail = function(user) {
+module.exports.send30DayReminderEmail = function (user) {
     delete user.postProcessorKey;
     sendLastReminderEmail(user);
 };
 
-module.exports.send31DaySuspensionEmail = function(user) {
+module.exports.send31DaySuspensionEmail = function (user) {
     delete user.postProcessorKey;
     sendSuspensionEmail(user);
 };
 
-module.exports.send32DayReacquireEmail = function(user) {
+module.exports.send32DayReacquireEmail = function (user) {
     delete user.postProcessorKey;
     sendReacquireEmail(user);
 };
 
-config.postProcessors['freeUser14'] = module.exports.send14DayReminderEmail;
-config.postProcessors['freeUser21'] = module.exports.send21DayReminderEmail;
-config.postProcessors['freeUser28'] = module.exports.send28DayReminderEmail;
-config.postProcessors['freeUser30'] = module.exports.send30DayReminderEmail;
-config.postProcessors['freeUser31'] = module.exports.send31DaySuspensionEmail;
-config.postProcessors['freeUser32'] = module.exports.send32DayReacquireEmail;
+config.postProcessors.freeUser14 = module.exports.send14DayReminderEmail;
+config.postProcessors.freeUser21 = module.exports.send21DayReminderEmail;
+config.postProcessors.freeUser28 = module.exports.send28DayReminderEmail;
+config.postProcessors.freeUser30 = module.exports.send30DayReminderEmail;
+config.postProcessors.freeUser31 = module.exports.send31DaySuspensionEmail;
+config.postProcessors.freeUser32 = module.exports.send32DayReacquireEmail;
