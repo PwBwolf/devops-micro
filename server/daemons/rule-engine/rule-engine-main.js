@@ -9,22 +9,22 @@ var CronJob = require('cron').CronJob,
     modelsPath = config.root + '/server/common/models';
 
 require('../../common/config/models')(modelsPath);
-var RuleEngine = require('./rule-engine');
+var ruleEngine = require('./rule-engine');
 require('./fact-providers/user-provider');
 require('./post-processors/free-user-processor');
 var factProviders = config.factProviders;
 
 console.log('Starting e-mailer daemon...');
-new CronJob('0 0 0 * * *', function(){
-        for(var docType in factProviders) {
-            factProviders[docType]().then(function(docs) {
-                if(docs && docs.length > 0) {
-                    RuleEngine.applyRules(docs);
+new CronJob('0 0 0 * * *', function () {
+        for (var docType in factProviders) {
+            factProviders[docType]().then(function (docs) {
+                if (docs && docs.length > 0) {
+                    ruleEngine.applyRules(docs);
                 }
             });
         }
     }, function () {
-        // This function is executed when the job stops
+        console.log('E-mailer daemon has stopped');
     },
     true
 );
