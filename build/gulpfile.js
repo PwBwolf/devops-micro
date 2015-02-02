@@ -1,3 +1,5 @@
+'use strict';
+
 /***********************************************************************/
 /*                          DEPLOYMENT TASKS                           */
 /***********************************************************************/
@@ -10,7 +12,7 @@ var fs = require('fs-extended');
 var argv = require('yargs').argv;
 var Q = require('q');
 var replace = require('gulp-replace-task');
-var tag_version = require('gulp-tag-version');
+var tagVersion = require('gulp-tag-version');
 var git = require('gulp-git');
 var connect = require('gulp-connect');
 
@@ -39,7 +41,7 @@ gulp.task('partials', function () {
 gulp.task('roles', function() {
     return gulp.src('../client/scripts/config/routing.js')
         .pipe($.uglify())
-        .pipe(gulp.dest('dist/client/scripts/config'))
+        .pipe(gulp.dest('dist/client/scripts/config'));
 });
 
 /**
@@ -228,10 +230,10 @@ function commitAndTag(version) {
     gulp.src('./version.json')
         .pipe(git.add())
         .pipe(git.commit('committing version ' + version))
-        .pipe(tag_version());
+        .pipe(tagVersion());
     setTimeout(function(){
         def.resolve();
-    }, 2000)
+    }, 2000);
     return def.promise;
 }
 

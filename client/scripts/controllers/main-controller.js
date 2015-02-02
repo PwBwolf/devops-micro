@@ -57,7 +57,7 @@
             } else {
                 aio = $window.open('', '_blank');
                 userSvc.getAioToken(function (response) {
-                    aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                    aio.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
                     if (response.username.toLowerCase() === 'guest') {
                         $window.setTimeout(function () {
                             if (aio && !aio.closed) {
