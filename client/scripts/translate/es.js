@@ -121,7 +121,7 @@
             FAQ_QUESTION8: '¿En qué consiste la función Adelanto gratis?',
             FAQ_ANSWER8: 'Usted podrá probar de qué se trata YipTV antes de registrarse.',
             FAQ_QUESTION9: '¿Cómo cambio la información de mi tarjeta de crédito?',
-            FAQ_ANSWER9: 'Comuníquese con atención al cliente a través de la línea gratuita 855-919-4788',
+            FAQ_ANSWER9: 'Comuníquese con atención al cliente a través de la línea gratuita',
             FAQ_QUESTION10: '¿En qué lugares está disponible YipTV?',
             FAQ_ANSWER10: 'Estamos en los Estados Unidos (en los 50 estados y en Puerto Rico) pero tenemos contenido y canales de todo el mundo.',
             FAQ_HEADER2: 'Prueba gratuita y facturación de YipTV',

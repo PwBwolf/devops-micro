@@ -868,6 +868,7 @@ a.btn-import:hover {
 .about-name {
     color: #A03269;
     font-size: 19px;
+    font-weight: bold;
 }
 
 .about-us {

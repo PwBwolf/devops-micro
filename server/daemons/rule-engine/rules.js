@@ -1,7 +1,6 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    moment = require('moment'),
     Rule = mongoose.model('Rule'),
     Q = require('q');
 
