@@ -26,7 +26,7 @@
             ADMIN_ALL_USERS: 'All Users',
             ADMIN_CHANGE_PASSWORD_HEADING: 'Change Password',
             ADMIN_CHANGE_PASSWORD_EMAIL: 'Email',
-            ADMIN_CHANGE_PASSWORD_EMAIL_REQUIRED: 'Enter your email address',
+            ADMIN_CHANGE_PASSWORD_EMAIL_REQUIRED: 'Enter the email address',
             ADMIN_CHANGE_PASSWORD_EMAIL_INVALID: 'Enter a valid email address',
             ADMIN_CHANGE_PASSWORD_NEW_PASSWORD: 'New Password',
             ADMIN_CHANGE_PASSWORD_NEW_PASSWORD_REQUIRED: 'Enter your password',

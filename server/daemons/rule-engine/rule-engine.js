@@ -5,7 +5,7 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     Rule = mongoose.model('Rule'),
     RuleEngine = require('node-rules'),
-    rules = null;
+    appRules = null;
 
 require('./rules')().then(function () {
     Rule.find({enabled: true}, function (err, rules) {
@@ -16,14 +16,14 @@ require('./rules')().then(function () {
             for (var i = 0; i < rules.length; i++) {
                 rules[i] = _.assign(rules[i], {'on': 1});
             }
-            rules = new RuleEngine(rules);
+            appRules = new RuleEngine(rules);
         }
     });
 });
 
 module.exports.applyRules = function (docs) {
     docs.forEach(function (doc) {
-        rules.execute(doc, function (result) {
+        appRules.execute(doc, function (result) {
             if (result && result.process) {
                 delete result.result;
                 delete result.process;
