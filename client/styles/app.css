@@ -576,8 +576,8 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption4 h1 {
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 46px;
+    line-height: 46px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
@@ -1374,6 +1374,10 @@ a.btn-import:hover {
 
 @media screen and (max-width: 767px) {
 
+    .welcome-user {
+        text-align: center;
+    }
+
     .user-home-box .caption {
         left: 10%;
     }
@@ -1503,8 +1507,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 32px;
-        line-height: 32px;
+        font-size: 28px;
+        line-height: 28px;
     }
 
     #carousel-banner .carousel-caption4 h2 {
@@ -1708,8 +1712,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 24px;
-        line-height: 24px;
+        font-size: 20px;
+        line-height: 20px;
         padding: 2px;
     }
 
@@ -1853,8 +1857,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 18px;
-        line-height: 18px;
+        font-size: 16px;
+        line-height: 16px;
         padding: 2px;
     }
 
