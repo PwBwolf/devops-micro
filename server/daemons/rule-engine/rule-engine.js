@@ -12,7 +12,7 @@ require('./rules')().then(function () {
         if (err) {
             console.log('Something went wrong while getting the rules: ' + err);
         } else {
-            console.log('Setting up the rule engine');
+            console.log('Setting up the rule engine...');
             for (var i = 0; i < rules.length; i++) {
                 rules[i] = _.assign(rules[i], {'on': 1});
             }
