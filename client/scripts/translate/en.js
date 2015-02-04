@@ -174,7 +174,7 @@
             FREE_SIGN_UP_TELEPHONE_REQUIRED: 'Enter your telephone number',
             FREE_SIGN_UP_LAST_NAME: 'Last Name',
             FREE_SIGN_UP_EMAIL_INVALID: 'Enter a valid email address',
-            FREE_SIGN_UP_EMAIL_EXISTS: 'Email already registered',
+            FREE_SIGN_UP_EMAIL_EXISTS: 'Email address already registered',
             FREE_SIGN_UP_EMAIL_REQUIRED: 'Enter your email address',
             FREE_SIGN_UP_PASSWORD: 'Password',
             FREE_SIGN_UP_PASSWORD_REQUIRED: 'Enter your password',
