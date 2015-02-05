@@ -13,6 +13,7 @@ module.exports = {
     url: 'https://staging.yiptv.net/',
     imageUrl: 'https://staging.yiptv.net/img/',
     secretToken: 'yip#tv@staging#346',
+    ruleEngineRecurrence: '0 0 0 * * *',
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
     cloudSpongeDomainKey: '5FLQG2YJF2SGQ2JY4GCH',
     freeSideApiKey: '',
