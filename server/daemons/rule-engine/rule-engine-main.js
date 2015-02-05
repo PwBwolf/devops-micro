@@ -15,7 +15,7 @@ require('./post-processors/free-user-processor');
 var factProviders = config.factProviders;
 
 console.log('Starting rule engine daemon...');
-new CronJob('* * * * * *', function () {
+new CronJob(config.ruleEngineRecurrence, function () {
         console.log('Running rules...');
         for (var docType in factProviders) {
             factProviders[docType]().then(function (docs) {
