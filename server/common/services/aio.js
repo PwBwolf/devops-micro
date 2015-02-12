@@ -68,5 +68,27 @@ module.exports = {
             logger.logError(JSON.stringify(err));
             callback(err);
         });
+    },
+
+    updateUserPackages: function(username, packages, callback) {
+        var client = new Client();
+        var args = {
+            data: {username: username, packages: packages},
+            headers: {'Content-Type': 'application/json', 'Authorization': 'apikey ' + config.aioApiKey},
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.post(config.aioApiUrl + '/ws/UpdateCustomerPackages.php', args, function (data) {
+            logger.logInfo(data);
+            var jsonData = JSON.parse(data);
+            if (jsonData.responseCode !== 0) {
+                callback(jsonData.message);
+            } else {
+                callback(null, jsonData);
+            }
+        }).on('error', function (err) {
+            logger.logError(JSON.stringify(err));
+            callback(err);
+        });
     }
 };

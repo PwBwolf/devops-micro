@@ -9,8 +9,8 @@
                     <br>
                     <button goto="/change-credit-card" type="button" translate="ACCOUNT_CHANGE_CREDIT_CARD">Change Credit Card</button>
                     <br>
-                    <button goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION">Upgrade Subscription</button>
-                    <br>
+                    <button ng-show="user.type === 'free'" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION">Upgrade Subscription</button>
+                    <br ng-show="user.type === 'free'">
                     <button goto="/cancel-subscription" type="button" translate="ACCOUNT_CANCEL_SUBSCRIPTION">Cancel Subscription</button>
                     <br>
                     <button goto="/contact-us" type="button" translate="ACCOUNT_CONTACT_US">Contact Us</button>

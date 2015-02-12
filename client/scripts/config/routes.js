@@ -104,13 +104,19 @@
             {
                 templateUrl: 'views/cancel-subscription.html',
                 controller: 'commonCtrl',
-                access: access.public
+                access: access.user
             })
             .when('/upgrade-subscription',
             {
                 templateUrl: 'views/upgrade-subscription.html',
+                controller: 'upgradeSubscriptionCtrl',
+                access: access.user
+            })
+            .when('/upgrade-subscription-success',
+            {
+                templateUrl: 'views/upgrade-subscription-success.html',
                 controller: 'commonCtrl',
-                access: access.public
+                access: access.user
             })
             .when('/change-credit-card',
             {

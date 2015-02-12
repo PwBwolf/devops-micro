@@ -127,6 +127,10 @@
                     url: '/api/get-aio-token',
                     method: 'GET'
                 }).success(success).error(error);
+            },
+
+            upgradeSubscription: function(data, success, error) {
+                $http.post('/api/upgrade-subscription', data).success(success).error(error);
             }
         };
     }]);

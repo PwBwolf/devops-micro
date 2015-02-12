@@ -1194,10 +1194,22 @@ a.btn-import:hover {
     background-position: 98% 50%;
 }
 
+.justify-text {
+    text-align: justify;
+}
+
 .sign-in {
     float: right;
     width: 120px;
     margin: 15px 0 0px 25px;
+}
+
+.sign-in-redirect-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: uppercase;
+    color: #A03269;
 }
 
 .sign-in a {

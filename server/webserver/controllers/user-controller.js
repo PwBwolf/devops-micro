@@ -234,7 +234,13 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: user.type});
+            Account.findOne({_id: user.account}, function(err1, account) {
+                if(err1) {
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: account.type});
+            });
         });
     },
 
@@ -370,7 +376,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if(user.status === 'active') {
+            if (user.status === 'active') {
                 return res.status(409).send('UserActivated');
             }
             if (user.status !== 'registered') {
@@ -446,5 +452,130 @@ module.exports = {
             }
             return res.send(data);
         });
+    },
+
+    upgradeSubscription: function (req, res) {
+        async.waterfall([
+            // set account type to paid
+            function (callback) {
+                User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        Account.findOne({_id: user.account}, function (err1, accountObj) {
+                            if (err1) {
+                                callback(err1);
+                            } else {
+                                accountObj.type = 'paid';
+                                accountObj.save(function (err2) {
+                                    if (err2) {
+                                        callback(err2);
+                                    } else {
+                                        callback(null, accountObj);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            // set user upgrade date
+            function (accountObj, callback) {
+                User.findOne({email: req.email.toLowerCase()}, function (err, userObj) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        userObj.upgradeDate = (new Date()).toUTCString();
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                setAccountTypeToFree(accountObj, function () {
+                                    callback(err);
+                                });
+                            } else {
+                                callback(null, accountObj, userObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // change packages in AIO to paid ones
+            function (accountObj, userObj, callback) {
+                var packages = config.aioPaidPackages;
+                aio.updateUserPackages(userObj.email, packages, function (err) {
+                    if (err) {
+                        deleteUpgradeDate(userObj);
+                        setAccountTypeToFree(accountObj);
+                        callback(err);
+                    } else {
+                        callback(null, accountObj, userObj);
+                    }
+                });
+            },
+            // set credit card information in FreeSide
+            function (accountObj, userObj, callback) {
+                var address = req.body.address;
+                var city = req.body.city;
+                var state = req.body.state;
+                var zip = req.body.zipCode;
+                var country = 'US';
+                var payBy = 'CARD';
+                var payInfo = req.body.cardNumber;
+                var payDate = req.body.expiryDate;
+                var payCvv = req.body.cvv;
+                var payName = req.body.cardName;
+                billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                    if(err) {
+                        setFreePackagesInAio(userObj.email);
+                        deleteUpgradeDate(userObj);
+                        setAccountTypeToFree(accountObj);
+                        callback(err);
+                    } else {
+                        callback(null, accountObj, userObj);
+                    }
+                });
+            },
+        ], function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).send(JSON.stringify(err));
+            }
+            return res.status(200).end();
+        });
     }
 };
+
+function setAccountTypeToFree(account, cb) {
+    account.type = 'free';
+    account.save(function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function deleteUpgradeDate(user, cb) {
+    user.upgradeDate = undefined;
+    user.save(function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function setFreePackagesInAio(email, cb) {
+    var packages = config.aioFreePackages;
+    aio.updateUserPackages(email, packages, function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if(cb) {
+            cb();
+        }
+    });
+}
