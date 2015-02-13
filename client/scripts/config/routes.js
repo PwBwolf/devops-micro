@@ -121,6 +121,12 @@
             .when('/change-credit-card',
             {
                 templateUrl: 'views/change-credit-card.html',
+                controller: 'changeCreditCardCtrl',
+                access: access.user
+            })
+            .when('/change-credit-card-success',
+            {
+                templateUrl: 'views/change-credit-card-success.html',
                 controller: 'commonCtrl',
                 access: access.user
             })

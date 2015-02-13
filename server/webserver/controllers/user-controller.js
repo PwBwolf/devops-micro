@@ -440,7 +440,35 @@ module.exports = {
     },
 
     changeCreditCard: function (req, res) {
-        return res.status(200).end();
+        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function(err, user) {
+            if(err) {
+                logger.logError(JSON.stringify(err));
+                return res.status(500).end();
+            }
+            if(!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            if (user.account.type === 'free') {
+                return res.status(409).send('FreeUser');
+            }
+            var address = req.body.address;
+            var city = req.body.city;
+            var state = req.body.state;
+            var zip = req.body.zipCode;
+            var country = 'US';
+            var payBy = 'CARD';
+            var payInfo = req.body.cardNumber;
+            var payDate = req.body.expiryDate;
+            var payCvv = req.body.cvv;
+            var payName = req.body.cardName;
+            billing.updateCreditCard(user.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                if (err) {
+                    logger.logError(JSON.stringify(err));
+                    return res.status(500).end();
+                }
+                return res.status(200).end();
+            });
+        });
     },
 
     getAioToken: function (req, res) {
