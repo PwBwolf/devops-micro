@@ -35,7 +35,8 @@
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
                         $scope.saving = false;
-                    });
+                    }
+                );
             } else {
                 setFormDirty();
             }
