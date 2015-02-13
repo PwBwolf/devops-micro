@@ -26,8 +26,12 @@
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
                         });
                     },
-                    function () {
-                        loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                    function (error) {
+                        if(error === 'NonFreeUser') {
+                            loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED'));
+                        } else {
+                            loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                        }
                         $scope.saving = false;
                     });
             } else {
