@@ -234,8 +234,8 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            Account.findOne({_id: user.account}, function(err1, account) {
-                if(err1) {
+            Account.findOne({_id: user.account}, function (err1, account) {
+                if (err1) {
                     logger.logError(err);
                     return res.status(500).end();
                 }
@@ -465,6 +465,8 @@ module.exports = {
                         Account.findOne({_id: user.account}, function (err1, accountObj) {
                             if (err1) {
                                 callback(err1);
+                            } else if (accountObj.type !== 'free') {
+                                callback('NonFreeUser');
                             } else {
                                 accountObj.type = 'paid';
                                 accountObj.save(function (err2) {
@@ -524,7 +526,7 @@ module.exports = {
                 var payCvv = req.body.cvv;
                 var payName = req.body.cardName;
                 billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                    if(err) {
+                    if (err) {
                         setFreePackagesInAio(userObj.email);
                         deleteUpgradeDate(userObj);
                         setAccountTypeToFree(accountObj);
@@ -537,7 +539,7 @@ module.exports = {
         ], function (err) {
             if (err) {
                 logger.logError(err);
-                return res.status(500).send(JSON.stringify(err));
+                return res.status(500).send(err);
             }
             return res.status(200).end();
         });
@@ -574,7 +576,7 @@ function setFreePackagesInAio(email, cb) {
         if (err) {
             logger.logError(JSON.stringify(err));
         }
-        if(cb) {
+        if (cb) {
             cb();
         }
     });
