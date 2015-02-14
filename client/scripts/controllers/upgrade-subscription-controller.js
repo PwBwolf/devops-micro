@@ -20,7 +20,6 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            $scope.app.reload = true;
                             $location.path('/upgrade-subscription-success');
                             $scope.saving = false;
                         }, function () {
