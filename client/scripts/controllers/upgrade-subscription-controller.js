@@ -20,10 +20,12 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
+                            $scope.app.reload = true;
                             $location.path('/upgrade-subscription-success');
                             $scope.saving = false;
                         }, function () {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
+                            $scope.saving = false;
                         });
                     },
                     function (error) {
