@@ -9,9 +9,6 @@
                     <p class="text-center" translate="UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED">Cannot upgrade subscriptions as you are already a paid user.</p>
                 </div>
             </div>
-            <div class="sign-up-box">
-                <span class="label-text" translate=""></span>
-            </div>
         </div>
 
         <div class="container" ng-show="user.type === 'free'">
@@ -21,12 +18,12 @@
 
                 <form name="form" id="form" ng-submit="upgradeSubscription()" novalidate>
                     <div class="frm-btn">
-                        <span class="label-text" translate="UPGRADE_SUBSCRIPTION_BILLING_INFO">Enter your credit card details. If you need help call</span> <span ng-bind="appConfig.customerCareNumber"></span><br>
+                        <span class="label-text" translate="UPGRADE_SUBSCRIPTION_BILLING_INFO">Enter your credit card details. If you need help call</span> <span class="label-text" ng-bind="appConfig.customerCareNumber"></span><br>
                     </div>
 
                     <div class="frm-btn">
                         <span class="label-text" translate="UPGRADE_SUBSCRIPTION_CARD_NAME">Name as on Credit Card</span>
-                        <br><input valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="txtbox2" ng-class="{'txtbox-error': form.cardName.$dirty && form.cardName.$invalid}">
+                        <br><input autofocus valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="txtbox2" ng-class="{'txtbox-error': form.cardName.$dirty && form.cardName.$invalid}">
 
                         <div class="error-msg" ng-show="form.cardName.$dirty && form.cardName.$error.required" translate="UPGRADE_SUBSCRIPTION_CARD_NAME_REQUIRED">Enter your name as on your credit card</div>
                         <div class="error-msg" ng-show="form.cardName.$dirty && !form.cardName.$error.required && form.cardName.$error.validName" translate="UPGRADE_SUBSCRIPTION_CARD_NAME_INVALID">Enter a valid name</div>

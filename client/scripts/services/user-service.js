@@ -131,6 +131,10 @@
 
             upgradeSubscription: function(data, success, error) {
                 $http.post('/api/upgrade-subscription', data).success(success).error(error);
+            },
+
+            changeCreditCard: function(data, success, error) {
+                $http.post('/api/change-credit-card', data).success(success).error(error);
             }
         };
     }]);
