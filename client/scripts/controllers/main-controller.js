@@ -12,7 +12,6 @@
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
-        $scope.app = {};
 
         var aio;
 
