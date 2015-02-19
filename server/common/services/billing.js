@@ -47,7 +47,6 @@ module.exports = {
     },
 
     updateCreditCard: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
-        console.log(config.freeSideApiKey);
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.update_customer',
             [
