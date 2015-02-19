@@ -20,7 +20,6 @@
                     <input name="password" id="password" maxlength="20" autocomplete="off" type="password" class="txtbox2" ng-model="mv.password" required ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}"/>
                     <span ng-show="form.password.$dirty && form.password.$error.required" class="error-msg" translate="SIGN_IN_PASSWORD_REQUIRED">Enter your email</span>
                     <br>
-                    <!--<div class="chkbox"><input type="checkbox" name="1" class="styled"/> REMEMBER ME</div>-->
                     <br><br>
                     <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
                         Sign In

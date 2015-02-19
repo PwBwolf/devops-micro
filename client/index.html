@@ -63,7 +63,7 @@
                     <a href="/account" access-level="accessLevels.user" class="btn-sign" translate="INDEX_ACCOUNT">Account</a>
                     <a href="/faq" access-level="accessLevels.user" class="btn-sign" translate="INDEX_FAQ_ACRONYM">FAQ</a>
                     <a href="/admin" access-level="accessLevels.admin" class="btn-sign" translate="INDEX_ADMIN">Admin</a>
-                    <!--<a href="/sign-out" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>-->
+                    <a href="#" ng-click="signOut()" access-level="accessLevels.user" class="btn-sign" translate="INDEX_SIGN_OUT">Sign Out</a>
                     <div class="welcome-user" access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </div>
             </div>
@@ -161,6 +161,7 @@
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/admin-service.js"></script>
+<script src="scripts/services/browser-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
@@ -200,13 +201,15 @@
 </script>
 <script type="text/ng-template" id="modalWindow">
     <div class="modal-header">
-        <h3 class="modal-title" ng-bind="modal.title"></h3>
+        <h3 class="modal-title" ng-bind="modalTitle"></h3>
     </div>
-    <div class="modal-body" ng-bind="modal.body">
+    <div class="modal-body" ng-bind="modalBody">
 
     </div>
     <div class="modal-footer">
-        <button class="btn-submit" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
+        <button ng-show="showOkButton" class="btn-submit btn-modal" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
+        <button ng-show="showYesButton" class="btn-submit btn-modal" ng-click="yes()" translate="INDEX_YES_BUTTON">Yes</button>
+        <button ng-show="showNoButton" class="btn-submit btn-modal" ng-click="no()" translate="INDEX_NO_BUTTON">No</button>
     </div>
 </script>
 </body>
