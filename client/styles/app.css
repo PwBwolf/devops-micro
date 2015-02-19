@@ -836,6 +836,7 @@ footer .f-btm a:hover {
 
 .btn-modal {
     margin-bottom: 10px;
+    width: 100%;
 }
 
 a.btn-import {

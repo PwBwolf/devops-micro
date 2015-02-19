@@ -76,6 +76,7 @@
                         templateUrl: 'modalWindow',
                         controller: 'modalCtrl',
                         size: 'sm',
+                        backdrop: 'static',
                         resolve: {
                             title: function () {
                                 return $scope.appConfig.appName;
@@ -108,6 +109,7 @@
                                     templateUrl: 'modalWindow',
                                     controller: 'modalCtrl',
                                     size: 'sm',
+                                    backdrop: 'static',
                                     resolve: {
                                         title: function () {
                                             return $scope.appConfig.appName;
@@ -141,6 +143,7 @@
                 templateUrl: 'modalWindow',
                 controller: 'modalCtrl',
                 size: 'sm',
+                backdrop: 'static',
                 resolve: {
                     title: function () {
                         return $scope.appConfig.appName;
