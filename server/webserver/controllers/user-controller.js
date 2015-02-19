@@ -221,7 +221,6 @@ module.exports = {
     },
 
     signOut: function (req, res) {
-        req.logout();
         return res.status(200).end();
     },
 
