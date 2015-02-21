@@ -13,7 +13,7 @@ module.exports = {
             requestConfig: {timeout: 3000},
             responseConfig: {timeout: 3000}
         };
-        client.post(config.aioUrl + '/ws/AddCustomer.php', args, function (data) {
+        client.post(config.aioApiUrl + '/ws/AddCustomer.php', args, function (data) {
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
             if (jsonData.responseCode !== 0) {
@@ -35,7 +35,7 @@ module.exports = {
             requestConfig: {timeout: 3000},
             responseConfig: {timeout: 3000}
         };
-        client.get(config.aioUrl + '/api/auth/token/sso/', args, function (data) {
+        client.get(config.aioApiUrl + '/api/auth/token/sso/', args, function (data) {
             logger.logInfo(data);
             if (data.success !== 'true') {
                 callback(data.detail);
@@ -56,7 +56,29 @@ module.exports = {
             requestConfig: {timeout: 3000},
             responseConfig: {timeout: 3000}
         };
-        client.post(config.aioUrl + '/ws/UpdateCustomerStatus.php', args, function (data) {
+        client.post(config.aioApiUrl + '/ws/UpdateCustomerStatus.php', args, function (data) {
+            logger.logInfo(data);
+            var jsonData = JSON.parse(data);
+            if (jsonData.responseCode !== 0) {
+                callback(jsonData.message);
+            } else {
+                callback(null, jsonData);
+            }
+        }).on('error', function (err) {
+            logger.logError(JSON.stringify(err));
+            callback(err);
+        });
+    },
+
+    updateUserPackages: function(username, packages, callback) {
+        var client = new Client();
+        var args = {
+            data: {username: username, packages: packages},
+            headers: {'Content-Type': 'application/json', 'Authorization': 'apikey ' + config.aioApiKey},
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.post(config.aioApiUrl + '/ws/UpdateCustomerPackages.php', args, function (data) {
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
             if (jsonData.responseCode !== 0) {

@@ -2,14 +2,91 @@
     <div class="top-bg">&nbsp;</div>
     <div class="setting-box">
         <h1><span translate="CHANGE_CREDIT_CARD_HEADING">Change Credit Card</span></h1>
-        <div class="container marketing">
+
+        <div class="container marketing" ng-show="user.type === 'free'">
             <div class="row">
                 <div class="col-lg-12 col-md-12  col-sm-12">
-                    <p class="text-center" translate="CHANGE_CREDIT_CARD_MESSAGE">To change your credit card please contact customer support at</p>
-                    <h2 class="txt-center" ng-bind="appConfig.customerCareNumber"></h2>
+                    <p class="text-center" translate="CHANGE_CREDIT_CARD_FREE_USER_ERROR">Free trial users cannot change their credit card.</p>
                 </div>
             </div>
         </div>
+
+        <div class="container" ng-show="user.type === 'paid'">
+            <div class="sign-up-box">
+                <form name="form" id="form" ng-submit="changeCreditCard()" novalidate>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_BILLING_INFO">Enter your new credit card details. If you need help call</span> <span class="label-text" ng-bind="appConfig.customerCareNumber"></span><br>
+                    </div>
+
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_CARD_NAME">Name as on Credit Card</span>
+                        <br><input autofocus valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="txtbox2" ng-class="{'txtbox-error': form.cardName.$dirty && form.cardName.$invalid}">
+
+                        <div class="error-msg" ng-show="form.cardName.$dirty && form.cardName.$error.required" translate="CHANGE_CREDIT_CARD_CARD_NAME_REQUIRED">Enter your name as on your credit card</div>
+                        <div class="error-msg" ng-show="form.cardName.$dirty && !form.cardName.$error.required && form.cardName.$error.validName" translate="CHANGE_CREDIT_CARD_CARD_NAME_INVALID">Enter a valid name</div>
+                    </div>
+
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_CARD_NUMBER">Credit Card Number</span>
+                        <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="txtbox2 {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'txtbox-error': form.cardNumber.$dirty && form.cardNumber.$invalid}">
+
+                        <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.required" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_REQUIRED">Enter your credit card number</div>
+                        <div class="error-msg" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_ERROR">Enter a valid credit card number</div>
+                    </div>
+                    <div class="frm">
+                        <div class="frm-left">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE">Expiration Date (MM/YYYY)</span>
+                            <br>
+                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="txtbox2" ng-class="{'txtbox-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
+
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE_REQUIRED">Enter your card expiry date</div>
+                            <div class="error-msg" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="CHANGE_CREDIT_CARD_EXPIRY_DATE_INVALID">Enter a valid card expiry date</div>
+                        </div>
+                        <div class="frm-right">
+                            <span class="label-text" translate="CHANGE_CREDIT_CARD_CVV">CVV</span>
+                            <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="txtbox1" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'txtbox-error': form.cvv.$dirty && form.cvv.$invalid}">
+
+                            <div class="error-msg" ng-show="form.cvv.$dirty && form.cvv.$error.required" translate="CHANGE_CREDIT_CARD_CVV_REQUIRED">Enter your CVV</div>
+                            <div class="error-msg" ng-show="form.cvv.$dirty && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR">Enter a valid CVV</div>
+                        </div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_ADDRESS">Billing Address</span>
+                        <br><input valid-address autocomplete="off" type="text" id="address" name="address" ng-model="mv.address" maxlength="80" required class="txtbox2" ng-class="{'txtbox-error': form.address.$dirty && form.address.$invalid}">
+
+                        <div class="error-msg" ng-show="form.address.$dirty && form.address.$error.required" translate="CHANGE_CREDIT_CARD_ADDRESS_REQUIRED">Enter address as on your credit card</div>
+                        <div class="error-msg" ng-show="form.address.$dirty && !form.address.$error.required && form.address.$error.validAddress" translate="CHANGE_CREDIT_CARD_ADDRESS_INVALID">Enter a valid address</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_CITY">City</span>
+                        <br><input valid-address autocomplete="off" type="text" id="city" name="city" maxlength="80" required ng-model="mv.city" class="txtbox1" ng-class="{'txtbox-error': form.city.$dirty && form.city.$invalid}">
+
+                        <div class="error-msg" ng-show="form.city.$dirty && form.city.$error.required" translate="CHANGE_CREDIT_CARD_CITY_REQUIRED">Enter city as on your credit card</div>
+                        <div class="error-msg" ng-show="form.city.$dirty && !form.city.$error.required && form.city.$error.validAddress" translate="CHANGE_CREDIT_CARD_CITY_INVALID">Enter a valid city</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_STATE">State</span>
+                        <br>
+                        <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="txtbox2 txtboxdd" ng-class="{'txtbox-error': form.state.$dirty && form.state.$invalid}">
+                            <option value="" translate="CHANGE_CREDIT_CARD_STATE_SELECT">Select One</option>
+                        </select>
+
+                        <div class="error-msg" ng-show="form.state.$dirty && form.state.$error.required" translate="CHANGE_CREDIT_CARD_STATE_REQUIRED">Enter state as on your credit card</div>
+                    </div>
+                    <div class="frm-btn">
+                        <span class="label-text" translate="CHANGE_CREDIT_CARD_ZIP_CODE">Zip Code</span>
+                        <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="txtbox1" ng-class="{'txtbox-error': form.zipCode.$dirty && form.zipCode.$invalid}">
+
+                        <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.required" translate="CHANGE_CREDIT_CARD_ZIP_CODE_REQUIRED">Enter your zip code</div>
+                        <div class="error-msg" ng-show="form.zipCode.$dirty && form.zipCode.$error.pattern" translate="CHANGE_CREDIT_CARD_ZIP_CODE_INVALID">Enter a valid zip code</div>
+                    </div>
+                    <div class="frm-btn">
+                        <button ng-disabled="saving" type="submit" class="btn-submit" translate="CHANGE_CREDIT_CARD_SUBMIT_BUTTON">Submit</button>
+                    </div>
+                    <div class="frm-btn btm-link"><span translate="CHANGE_CREDIT_CARD_PROBLEM">Having trouble changing your credit card? Please contact customer support at </span><span ng-bind="appConfig.customerCareNumber"></span></div>
+                </form>
+            </div>
+        </div>
+        <div class="btm-bg">&nbsp;</div>
     </div>
-    <div class="btm-bg">&nbsp;</div>
 </div>

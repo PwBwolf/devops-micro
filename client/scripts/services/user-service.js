@@ -39,11 +39,17 @@
             }).error(error);
         }
 
+        function clearUser () {
+            changeUser(noUser());
+            tokenSvc.clearToken();
+        }
+
         return {
             accessLevels: accessLevels,
             userRoles: userRoles,
             user: currentUser,
             getUserProfile: getUserProfile,
+            clearUser: clearUser,
 
             authorize: function (accessLevel, role) {
                 if (role === undefined) {
@@ -84,14 +90,12 @@
 
             signOut: function (success, error) {
                 $http.post('/api/sign-out', null).success(function () {
-                    changeUser({email: '', role: userRoles.public});
+                    clearUser();
                     success();
-                }).error(error);
-            },
-
-            clearUser: function () {
-                changeUser(noUser());
-                tokenSvc.clearToken();
+                }).error(function () {
+                    clearUser();
+                    error();
+                });
             },
 
             verifyUser: function (code, success, error) {
@@ -122,11 +126,19 @@
                 }).success(success).error(error);
             },
 
-            getAioToken: function(success, error) {
+            getAioToken: function (success, error) {
                 $http({
                     url: '/api/get-aio-token',
                     method: 'GET'
                 }).success(success).error(error);
+            },
+
+            upgradeSubscription: function (data, success, error) {
+                $http.post('/api/upgrade-subscription', data).success(success).error(error);
+            },
+
+            changeCreditCard: function (data, success, error) {
+                $http.post('/api/change-credit-card', data).success(success).error(error);
             }
         };
     }]);

@@ -5,6 +5,10 @@
 
         <div class="container">
             <div class="sign-in-box">
+                <div class="sign-in-redirect-message" ng-show="redirectTo === '/upgrade-subscription'" translate="SIGN_IN_UPGRADE_SUBSCRIPTION">
+                    You need to sign in before you can upgrade your subscription.
+                </div>
+                <br><br>
                 <form name="form" id="form" ng-submit="signIn()" novalidate>
                     <span class="label-text" translate="SIGN_IN_EMAIL">Email</span><br>
                     <input autofocus name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
@@ -16,7 +20,6 @@
                     <input name="password" id="password" maxlength="20" autocomplete="off" type="password" class="txtbox2" ng-model="mv.password" required ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}"/>
                     <span ng-show="form.password.$dirty && form.password.$error.required" class="error-msg" translate="SIGN_IN_PASSWORD_REQUIRED">Enter your email</span>
                     <br>
-                    <!--<div class="chkbox"><input type="checkbox" name="1" class="styled"/> REMEMBER ME</div>-->
                     <br><br>
                     <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
                         Sign In

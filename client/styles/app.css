@@ -101,7 +101,7 @@ input[type="checkbox"]:checked + label:before {
 .right-box {
     padding: 13px 0px 0px;
     margin: 0px;
-    text-align: right;
+    text-align: center;
 }
 
 .right-box a {
@@ -155,7 +155,7 @@ input[type="checkbox"]:checked + label:before {
 a.btn-sign {
     background: #f4f1ec;
     text-align: center;
-    width: 150px;
+    width: 185px;
     line-height: 39px;
     cursor: pointer;
     color: #8a8b8a;
@@ -211,6 +211,7 @@ a.btn-sign:hover {
 .welcome-user {
     font-weight: bold;
     margin-top: 15px;
+    text-align: right;
 }
 
 .banner {
@@ -338,6 +339,11 @@ a.btn-sign:hover {
     margin: 20px;
     font-family: 'radikalregular';
     width: 340px;
+}
+
+.raf-fine-print {
+    text-align: justify;
+    font-size: 12px;
 }
 
 #carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
@@ -570,8 +576,8 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption4 h1 {
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 46px;
+    line-height: 46px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
@@ -828,6 +834,11 @@ footer .f-btm a:hover {
     margin: 0px;
 }
 
+.btn-modal {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
 a.btn-import {
     background: #A03269;
     width: 98%;
@@ -862,6 +873,7 @@ a.btn-import:hover {
 .about-name {
     color: #A03269;
     font-size: 19px;
+    font-weight: bold;
 }
 
 .about-us {
@@ -882,6 +894,7 @@ a.btn-import:hover {
 
 .about-us-header {
     color: #A03269;
+    font-weight: bold;
 }
 
 .about-box {
@@ -1186,10 +1199,22 @@ a.btn-import:hover {
     background-position: 98% 50%;
 }
 
+.justify-text {
+    text-align: justify;
+}
+
 .sign-in {
     float: right;
     width: 120px;
     margin: 15px 0 0px 25px;
+}
+
+.sign-in-redirect-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: uppercase;
+    color: #A03269;
 }
 
 .sign-in a {
@@ -1367,6 +1392,10 @@ a.btn-import:hover {
 
 @media screen and (max-width: 767px) {
 
+    .welcome-user {
+        text-align: center;
+    }
+
     .user-home-box .caption {
         left: 10%;
     }
@@ -1496,8 +1525,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 32px;
-        line-height: 32px;
+        font-size: 28px;
+        line-height: 28px;
     }
 
     #carousel-banner .carousel-caption4 h2 {
@@ -1513,7 +1542,7 @@ a.btn-import:hover {
 @media screen and (max-width: 707px) {
 
     a.btn-sign {
-        width: 130px;
+        width: 160px;
     }
 
     .right-box {
@@ -1566,7 +1595,7 @@ a.btn-import:hover {
     }
 
     a.btn-sign {
-        width: 130px;
+        width: 160px;
     }
 
     .right-box {
@@ -1701,8 +1730,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 24px;
-        line-height: 24px;
+        font-size: 20px;
+        line-height: 20px;
         padding: 2px;
     }
 
@@ -1846,8 +1875,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 h1 {
-        font-size: 18px;
-        line-height: 18px;
+        font-size: 16px;
+        line-height: 16px;
         padding: 2px;
     }
 

@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$window', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter, $window) {
+    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.signIn = function () {
             if ($scope.form.$valid) {

@@ -1,17 +1,33 @@
 (function (app) {
     'use strict';
 
-    app.controller('modalCtrl', function ($scope, $modalInstance) {
-        $scope.ok = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
+    app.controller('modalCtrl', ['$scope', '$modalInstance', 'title', 'body', 'showOkButton', 'showYesButton', 'showNoButton', function ($scope, $modalInstance, title, body, showOkButton, showYesButton, showNoButton) {
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'tokenSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', function (_, appSvc, userSvc, tokenSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal) {
+        $scope.modalTitle = title;
+        $scope.modalBody = body;
+        $scope.showOkButton = showOkButton;
+        $scope.showYesButton = showYesButton;
+        $scope.showNoButton = showNoButton;
+
+        $scope.yes = function () {
+            $modalInstance.close('yes');
+        };
+
+        $scope.ok = function () {
+            $modalInstance.dismiss('ok');
+        };
+
+        $scope.no = function () {
+            $modalInstance.dismiss('no');
+        };
+    }]);
+
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$window', '$filter', '$modal', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $window, $filter, $modal) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
+
         var aio;
 
         activate();
@@ -35,7 +51,7 @@
         }
 
         function loadLanguage() {
-            var userLang = $window.navigator.language || $window.navigator.userLanguage;
+            var userLang = browserSvc.getUserLanguage();
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
             $translate.use(language);
             webStorage.local.add('language', language);
@@ -52,24 +68,65 @@
         };
 
         $scope.openAio = function () {
-            if(aio && !aio.closed) {
+            var browser = browserSvc.getBrowserName();
+            if (aio && !aio.closed) {
                 aio.focus();
+                if(browser === 'firefox' || browser === 'ie' || browser === 'unknown') {
+                    $modal.open({
+                        templateUrl: 'modalWindow',
+                        controller: 'modalCtrl',
+                        size: 'sm',
+                        backdrop: 'static',
+                        resolve: {
+                            title: function () {
+                                return $scope.appConfig.appName;
+                            },
+                            body: function () {
+                                return $filter('translate')('MAIN_VIDEO_PORTAL_ALREADY_OPEN');
+                            },
+                            showOkButton: function () {
+                                return true;
+                            },
+                            showYesButton: function () {
+                                return false;
+                            },
+                            showNoButton: function () {
+                                return false;
+                            }
+                        }
+                    });
+                }
             } else {
                 aio = $window.open('', '_blank');
                 userSvc.getAioToken(function (response) {
-                    aio.location.href = $scope.appConfig.aioUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                    aio.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
                     if (response.username.toLowerCase() === 'guest') {
                         $window.setTimeout(function () {
                             if (aio && !aio.closed) {
                                 aio.close();
                                 aio = undefined;
-                                $rootScope.modal = {};
-                                $rootScope.modal.title = $scope.appConfig.appName;
-                                $rootScope.modal.body = $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
                                 $modal.open({
                                     templateUrl: 'modalWindow',
                                     controller: 'modalCtrl',
-                                    size: 'sm'
+                                    size: 'sm',
+                                    backdrop: 'static',
+                                    resolve: {
+                                        title: function () {
+                                            return $scope.appConfig.appName;
+                                        },
+                                        body: function () {
+                                            return $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
+                                        },
+                                        showOkButton: function () {
+                                            return true;
+                                        },
+                                        showYesButton: function () {
+                                            return false;
+                                        },
+                                        showNoButton: function () {
+                                            return false;
+                                        }
+                                    }
                                 });
                             }
                         }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
@@ -81,7 +138,47 @@
             }
         };
 
-        $window.onunload = function() {
+        $scope.signOut = function () {
+            $modal.open({
+                templateUrl: 'modalWindow',
+                controller: 'modalCtrl',
+                size: 'sm',
+                backdrop: 'static',
+                resolve: {
+                    title: function () {
+                        return $scope.appConfig.appName;
+                    },
+                    body: function () {
+                        return $filter('translate')('MAIN_SIGN_OUT_CONFIRMATION');
+                    },
+                    showOkButton: function () {
+                        return false;
+                    },
+                    showYesButton: function () {
+                        return true;
+                    },
+                    showNoButton: function () {
+                        return true;
+                    }
+                }
+            }).result.then(function () {
+                    userSvc.signOut(function() {
+                        afterSignOut();
+                    }, function() {
+                        afterSignOut();
+                    });
+                });
+        };
+
+        function afterSignOut() {
+            if (aio && !aio.closed) {
+                aio.close();
+            }
+            $location.path('/');
+
+        }
+
+        $window.onunload = function () {
             if (aio && !aio.closed) {
                 aio.close();
             }
