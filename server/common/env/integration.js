@@ -18,6 +18,7 @@ module.exports = {
     cloudSpongeDomainKey: 'BNDQ7QY3HH38QG45E3P8',
     freeSideApiKey: 'yip-freeside-dev',
     freeSideUrl: 'http://172.16.10.5:8008/',
+    aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://172.16.10.100',
     aioPortalUrl: 'http://209.18.77.106',
     aioUserPin: '1234',

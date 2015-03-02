@@ -471,7 +471,8 @@ module.exports = {
     },
 
     getAioToken: function (req, res) {
-        var user = req.email ? req.email : 'guest';
+        var aioGuestList = config.aioGuestAccountList;
+        var user = req.email ? req.email : aioGuestList[getGuestCounter()];
         aio.getToken(user, function (err, data) {
             if (err) {
                 logger.logError(JSON.stringify(err));
@@ -607,4 +608,13 @@ function setFreePackagesInAio(email, cb) {
             cb();
         }
     });
+}
+
+function getGuestCounter () {
+    getGuestCounter.count = ++getGuestCounter.count || 0;
+    if(getGuestCounter.count >= config.aioGuestAccountList.length) {
+        getGuestCounter.count = 0;
+    }
+    console.log(getGuestCounter.count);
+    return getGuestCounter.count;
 }
