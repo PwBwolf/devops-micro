@@ -26,6 +26,7 @@ module.exports = function(config) {
         '../client/bower_components/ng-table/dist/ng-table.js',
         '../client/bower_components/toastr/toastr.js',
         '../client/bower_components/fastclick/lib/fastclick.js',
+        '../client/bower_components/bootstrap/dist/js/bootstrap.min.js',
         '../client/bower_components/angular-bootstrap/ui-bootstrap.js',
         '../client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         './node_modules/angular-mocks/angular-mocks.js',
