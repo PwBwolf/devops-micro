@@ -100,9 +100,22 @@
                 controller: 'accountCtrl',
                 access: access.user
             })
-            .when('/cancel-subscription',
+            .when('/reactivate-subscription',
             {
-                templateUrl: 'views/cancel-subscription.html',
+                templateUrl: 'views/reactivate-subscription.html',
+                controller: 'reactivateSubscriptionCtrl',
+                access: access.user
+            })
+            .when('/reactivate-subscription-success',
+            {
+                templateUrl: 'views/reactivate-subscription-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
+
+            .when('/cancel-subscription-success',
+            {
+                templateUrl: 'views/cancel-subscription-success.html',
                 controller: 'commonCtrl',
                 access: access.user
             })

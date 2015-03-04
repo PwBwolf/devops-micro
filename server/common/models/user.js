@@ -21,6 +21,7 @@ var User = new Schema({
     status: {type: String, required: true},
     createdAt: {type: Date, required: true},
     upgradeDate: {type: Date, required: false},
+    cancelDate: {type: Date, required: false},
     lastLoginTime: Date,
     verificationCode: {type: String, sparse: true},
     resetPasswordCode: {type: String, sparse: true},
