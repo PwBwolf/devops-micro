@@ -7,7 +7,8 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
 
-        var aio;
+        var aioWindow,
+            aioWindowTimeout;
 
         activate();
 
@@ -52,9 +53,13 @@
             } else if ($scope.user.status === 'trial-ended') {
                 $location.path('upgrade-subscription');
             } else {
+                if(aioWindowTimeout) {
+                    clearTimeout(aioWindowTimeout);
+                    aioWindowTimeout = undefined;
+                }
                 var browser = browserSvc.getBrowserName();
-                if (aio && !aio.closed) {
-                    aio.focus();
+                if (aioWindow && !aioWindow.closed) {
+                    aioWindow.focus();
                     if (browser === 'firefox' || browser === 'ie' || browser === 'unknown') {
                         $modal.open({
                             templateUrl: 'modalWindow',
@@ -81,14 +86,14 @@
                         });
                     }
                 } else {
-                    aio = $window.open('', '_blank');
+                    aioWindow = $window.open('', '_blank');
                     userSvc.getAioToken(function (response) {
-                        aio.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
-                        if (response.username.toLowerCase() === 'guest') {
-                            $window.setTimeout(function () {
-                                if (aio && !aio.closed) {
-                                    aio.close();
-                                    aio = undefined;
+                        aioWindow.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                        if (response.isGuest) {
+                            aioWindowTimeout = $window.setTimeout(function () {
+                                if (aioWindow && !aioWindow.closed) {
+                                    aioWindow.close();
+                                    aioWindow = undefined;
                                     $modal.open({
                                         templateUrl: 'modalWindow',
                                         controller: 'modalCtrl',
@@ -117,7 +122,7 @@
                         }
                     }, function () {
                         loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
-                        aio.location.href = $scope.appConfig.url + 'error';
+                        aioWindow.location.href = $scope.appConfig.url + 'error';
                     });
                 }
             }
@@ -156,16 +161,16 @@
         };
 
         function afterSignOut() {
-            if (aio && !aio.closed) {
-                aio.close();
+            if (aioWindow && !aioWindow.closed) {
+                aioWindow.close();
             }
             $location.path('/');
 
         }
 
         $window.onunload = function () {
-            if (aio && !aio.closed) {
-                aio.close();
+            if (aioWindow && !aioWindow.closed) {
+                aioWindow.close();
             }
         };
     }]);
