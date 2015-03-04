@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+    _ = require('lodash'),
     sf = require('sf'),
     async = require('async'),
     jwt = require('jwt-simple'),
@@ -202,9 +203,6 @@ module.exports = {
             if (user.status === 'registered') {
                 return res.status(409).send('UnverifiedAccount');
             }
-            if (user.status !== 'active') {
-                return res.status(409).send('UserError');
-            }
             user.lastSignedInDate = (new Date()).toUTCString();
             user.save(function (err) {
                 if (err) {
@@ -238,7 +236,7 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: account.type});
+                return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: account.type, status: user.status});
             });
         });
     },
@@ -279,7 +277,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (user.status !== 'active') {
+            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = uuid.v4();
@@ -314,7 +312,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (user.status !== 'active') {
+            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
                 return res.status(409).send('UserError');
             }
             return res.status(200).end();
@@ -330,7 +328,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (user.status !== 'active') {
+            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = undefined;
@@ -375,7 +373,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (user.status === 'active') {
+            if (_.contains(['active', 'canceled', 'trial-ended'])) {
                 return res.status(409).send('UserActivated');
             }
             if (user.status !== 'registered') {
@@ -439,12 +437,12 @@ module.exports = {
     },
 
     changeCreditCard: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function(err, user) {
-            if(err) {
+        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
+            if (err) {
                 logger.logError(JSON.stringify(err));
                 return res.status(500).end();
             }
-            if(!user) {
+            if (!user) {
                 return res.status(404).send('UserNotFound');
             }
             if (user.account.type === 'free') {
@@ -571,6 +569,135 @@ module.exports = {
             }
             return res.status(200).end();
         });
+    },
+
+    reactivateSubscription: function (req, res) {
+        var cancelDate;
+        async.waterfall([
+            // set user status to 'active' and remove canceledDate
+            function (callback) {
+                User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        callback(err);
+                    } else if (userObj.status === 'active' && userObj.account.type === 'paid') {
+                        callback('PaidActiveUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        cancelDate = userObj.cancelDate;
+                        userObj.status = 'active';
+                        userObj.cancelDate = undefined;
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                callback(err);
+                            } else {
+                                callback(null, userObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // change status to active in AIO
+            function (userObj, callback) {
+                aio.updateUserStatus(userObj.email, true, function (err) {
+                    if (err) {
+                        setUserCanceledResetCanceledDate(cancelDate, userObj);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // set credit card and billing address
+            function (userObj, callback) {
+                var address = req.body.address;
+                var city = req.body.city;
+                var state = req.body.state;
+                var zip = req.body.zipCode;
+                var country = 'US';
+                var payBy = 'CARD';
+                var payInfo = req.body.cardNumber;
+                var payDate = req.body.expiryDate;
+                var payCvv = req.body.cvv;
+                var payName = req.body.cardName;
+                billing.updateCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                    if (err) {
+                        setUserInactiveInAio(userObj.email);
+                        setUserCanceledResetCanceledDate(cancelDate, userObj);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).send(err);
+            }
+            return res.status(200).end();
+        });
+    },
+
+    cancelSubscription: function (req, res) {
+        async.waterfall([
+            // set user status to 'canceled' and set canceledDate to current date
+            function (callback) {
+                User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        callback(err);
+                    } else if (userObj.status !== 'active') {
+                        callback('NonActiveUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        userObj.status = 'canceled';
+                        userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                callback(err);
+                            } else {
+                                callback(null, userObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // change status to inactive in AIO
+            function (userObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        setUserActiveRemoveCanceledDate(userObj);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // change credit card to dummy and modify billing address
+            function (userObj, callback) {
+                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
+                var city = 'West Palm Peach';
+                var state = 'FL';
+                var country = 'US';
+                var zip = '00000';
+                billing.setDummyCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                    if (err) {
+                        setUserActiveRemoveCanceledDate(userObj);
+                        setUserActiveInAio(userObj.email);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).send(err);
+            }
+            return res.status(200).end();
+        });
     }
 };
 
@@ -610,11 +737,59 @@ function setFreePackagesInAio(email, cb) {
     });
 }
 
-function getGuestCounter () {
+function getGuestCounter() {
     getGuestCounter.count = ++getGuestCounter.count || 0;
-    if(getGuestCounter.count >= config.aioGuestAccountList.length) {
+    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
         getGuestCounter.count = 0;
     }
     console.log(getGuestCounter.count);
     return getGuestCounter.count;
+}
+
+function setUserActiveRemoveCanceledDate(user, cb) {
+    user.cancelDate = undefined;
+    user.status = 'active';
+    user.save(function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function setUserActiveInAio(email, cb) {
+    aio.updateUserStatus(email, true, function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function setUserCanceledResetCanceledDate(cancelDate, user, cb) {
+    user.cancelDate = cancelDate;
+    user.status = 'canceled';
+    user.save(function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function setUserInactiveInAio(email, cb) {
+    aio.updateUserStatus(email, false, function (err) {
+        if (err) {
+            logger.logError(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
 }
