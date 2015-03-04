@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    freePreviewTime: 30000,
     environment: 'development',
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
