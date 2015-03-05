@@ -53,10 +53,6 @@
             } else if ($scope.user.status === 'trial-ended') {
                 $location.path('upgrade-subscription');
             } else {
-                if(aioWindowTimeout) {
-                    clearTimeout(aioWindowTimeout);
-                    aioWindowTimeout = undefined;
-                }
                 var browser = browserSvc.getBrowserName();
                 if (aioWindow && !aioWindow.closed) {
                     aioWindow.focus();
@@ -86,6 +82,10 @@
                         });
                     }
                 } else {
+                    if(aioWindowTimeout) {
+                        clearTimeout(aioWindowTimeout);
+                        aioWindowTimeout = undefined;
+                    }
                     aioWindow = $window.open('', '_blank');
                     userSvc.getAioToken(function (response) {
                         aioWindow.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;

@@ -476,7 +476,7 @@ module.exports = {
                 logger.logError(JSON.stringify(err));
                 return res.status(500).end();
             }
-            if(!req.email) {
+            if (!req.email) {
                 data.isGuest = true;
             }
             return res.send(data);
@@ -484,6 +484,7 @@ module.exports = {
     },
 
     upgradeSubscription: function (req, res) {
+        var status;
         async.waterfall([
             // set account type to paid
             function (callback) {
@@ -510,12 +511,14 @@ module.exports = {
                     }
                 });
             },
-            // set user upgrade date
+            // set user upgrade date and make status active
             function (accountObj, callback) {
                 User.findOne({email: req.email.toLowerCase()}, function (err, userObj) {
                     if (err) {
                         callback(err);
                     } else {
+                        status = userObj.status;
+                        userObj.status = 'active';
                         userObj.upgradeDate = (new Date()).toUTCString();
                         userObj.save(function (err1) {
                             if (err1) {
@@ -529,12 +532,29 @@ module.exports = {
                     }
                 });
             },
+            // change status to active in AIO if user status is trial-ended
+            function (accountObj, userObj, callback) {
+                if (status === 'trial-ended') {
+                    aio.updateUserStatus(userObj.email, true, function (err) {
+                        if (err) {
+                            deleteUpgradeDateSetStatus(userObj, status);
+                            setAccountTypeToFree(accountObj);
+                            callback(err);
+                        } else {
+                            callback(null, accountObj, userObj);
+                        }
+                    });
+                } else {
+                    callback(null, accountObj, userObj);
+                }
+            },
             // change packages in AIO to paid ones
             function (accountObj, userObj, callback) {
                 var packages = config.aioPaidPackages;
                 aio.updateUserPackages(userObj.email, packages, function (err) {
                     if (err) {
-                        deleteUpgradeDate(userObj);
+                        optionallySetUserInactiveInAio(userObj, status);
+                        deleteUpgradeDateSetStatus(userObj, status);
                         setAccountTypeToFree(accountObj);
                         callback(err);
                     } else {
@@ -557,7 +577,8 @@ module.exports = {
                 billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
                         setFreePackagesInAio(userObj.email);
-                        deleteUpgradeDate(userObj);
+                        optionallySetUserInactiveInAio(userObj, status);
+                        deleteUpgradeDateSetStatus(userObj, status);
                         setAccountTypeToFree(accountObj);
                         callback(err);
                     } else {
@@ -592,7 +613,7 @@ module.exports = {
                         userObj.cancelDate = undefined;
                         userObj.save(function (err1) {
                             if (err1) {
-                                callback(err);
+                                callback(err1);
                             } else {
                                 callback(null, userObj);
                             }
@@ -658,7 +679,7 @@ module.exports = {
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.save(function (err1) {
                             if (err1) {
-                                callback(err);
+                                callback(err1);
                             } else {
                                 callback(null, userObj);
                             }
@@ -716,7 +737,8 @@ function setAccountTypeToFree(account, cb) {
     });
 }
 
-function deleteUpgradeDate(user, cb) {
+function deleteUpgradeDateSetStatus(user, status, cb) {
+    user.status = status;
     user.upgradeDate = undefined;
     user.save(function (err) {
         if (err) {
@@ -795,4 +817,21 @@ function setUserInactiveInAio(email, cb) {
             cb();
         }
     });
+}
+
+function optionallySetUserInactiveInAio(userObj, status, cb) {
+    if (status === 'trial-ended') {
+        aio.updateUserStatus(userObj.email, false, function (err) {
+            if (err) {
+                logger.logError(JSON.stringify(err));
+            }
+            if (cb) {
+                cb();
+            }
+        });
+    } else {
+        if (cb) {
+            cb();
+        }
+    }
 }

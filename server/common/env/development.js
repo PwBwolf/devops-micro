@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = {
-    freePreviewTime: 30000,
     environment: 'development',
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
@@ -12,6 +11,7 @@ module.exports = {
     ruleEngineRecurrence: '* * * * * *',
     contactUsEmailList: 'achinth@yiptv.com, vivek@yiptv.com, varunv@yiptv.com',
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
+    cancelSubscriptionForTrialUsers: false,
     freeSideApiKey: 'yip-freeside-dev',
     freeSideUrl: 'http://172.16.10.5:8008/',
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],

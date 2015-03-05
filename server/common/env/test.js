@@ -16,6 +16,7 @@ module.exports = {
     ruleEngineRecurrence: '0 * * * * *',
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
     cloudSpongeDomainKey: 'KT5XZEDX6A32PFZCKZ3Y',
+    cancelSubscriptionForTrialUsers: true,
     freeSideApiKey: 'yip-freeside-dev',
     freeSideUrl: 'http://172.16.10.5:8008/',
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
