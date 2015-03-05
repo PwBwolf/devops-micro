@@ -11,7 +11,9 @@ var CronJob = require('cron').CronJob,
 require('../../common/config/models')(modelsPath);
 var ruleEngine = require('./rule-engine');
 require('./fact-providers/free-user-provider');
+require('./fact-providers/canceled-user-provider');
 require('./post-processors/free-user-processor');
+require('./post-processors/canceled-user-processor');
 var factProviders = config.factProviders;
 
 console.log('Starting rule engine daemon...');

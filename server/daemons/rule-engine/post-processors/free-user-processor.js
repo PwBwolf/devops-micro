@@ -1,7 +1,13 @@
 'use strict';
 
-var config = require('../../../common/config/config'),
+var async = require('async'),
+    mongoose = require('mongoose'),
+    moment = require('moment'),
+    aio = require('../../../common/services/aio'),
+    billing = require('../../../common/services/billing'),
+    config = require('../../../common/config/config'),
     email = require('../../../common/services/email'),
+    User = mongoose.model('User'),
     sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
@@ -13,9 +19,10 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
     };
 
     email.sendEmail(mailOptions, function (err) {
-        console.log('email sent...');
         if (err) {
             console.log(err);
+        } else {
+            console.log(bodyDays + ' day email sent to ' + user.email);
         }
     });
 }
@@ -29,30 +36,100 @@ function sendLastReminderEmail(user) {
     };
 
     email.sendEmail(mailOptions, function (err) {
-        console.log('email sent...');
         if (err) {
             console.log(err);
+        } else {
+            console.log('last reminder email sent to ' + user.email);
         }
     });
 }
 
-function sendSuspensionEmail(user) {
-
-    // TODO: suspend this users account
-
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.trialPeriodCompleteEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
-    };
-
-    email.sendEmail(mailOptions, function (err) {
-        console.log('email sent...');
-        if (err) {
-            console.log(err);
-        }
-    });
+function suspendAndSendEmail(user) {
+    if(config.cancelSubscriptionForTrialUsers) {
+        async.waterfall([
+            // set user status to 'trial-ended'
+            function (callback) {
+                User.findOne({email: user.email}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        userObj.status = 'trial-ended';
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                callback(err1);
+                            } else {
+                                callback(null, userObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // change status to inactive in AIO
+            function (userObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        setUserActive(userObj);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // change credit card to dummy and modify billing address
+            function (userObj, callback) {
+                var address = 'Trial ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
+                var city = 'West Palm Peach';
+                var state = 'FL';
+                var country = 'US';
+                var zip = '00000';
+                billing.setDummyCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                    if (err) {
+                        setUserActive(userObj);
+                        setUserActiveInAio(userObj.email);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // send email
+            function (userObj, callback) {
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: userObj.email,
+                    subject: config.trialPeriodCompleteEmailSubject[userObj.preferences.defaultLanguage],
+                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+                };
+                email.sendEmail(mailOptions, function (err) {
+                    if (err) {
+                        console.log(err);
+                        callback(err);
+                    } else {
+                        console.log('suspension email sent to ' + userObj.email);
+                        callback(null, userObj);
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    } else {
+        var mailOptions = {
+            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+            to: user.email,
+            subject: config.trialPeriodCompleteEmailSubject[user.preferences.defaultLanguage],
+            html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+        };
+        email.sendEmail(mailOptions, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('suspension email sent to ' + user.email);
+            }
+        });
+    }
 }
 
 function sendReacquireEmail(user) {
@@ -64,9 +141,33 @@ function sendReacquireEmail(user) {
     };
 
     email.sendEmail(mailOptions, function (err) {
-        console.log('email sent...');
         if (err) {
             console.log(err);
+        } else {
+            console.log('re-acquire email sent to ' + user.email);
+        }
+    });
+}
+
+function setUserActive(user, cb) {
+    user.status = 'active';
+    user.save(function (err) {
+        if (err) {
+            console.log(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
+        }
+    });
+}
+
+function setUserActiveInAio(email, cb) {
+    aio.updateUserStatus(email, true, function (err) {
+        if (err) {
+            console.log(JSON.stringify(err));
+        }
+        if (cb) {
+            cb();
         }
     });
 }
@@ -93,7 +194,7 @@ module.exports.send30DayReminderEmail = function (user) {
 
 module.exports.send31DaySuspensionEmail = function (user) {
     delete user.postProcessorKey;
-    sendSuspensionEmail(user);
+    suspendAndSendEmail(user);
 };
 
 module.exports.send32DayReacquireEmail = function (user) {

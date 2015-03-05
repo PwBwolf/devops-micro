@@ -139,6 +139,28 @@ function buildRules() {
                 this.postProcessorKey = 'freeUser32';
                 cb();
             }
+        },
+        {
+            'name': 'canceled-user-next-day',
+            'description': 'Send reacquire email next day of cancellation',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.status === 'canceled') {
+                    var canceled = fact.cancelDate;
+                    if (moment().startOf('day').diff(moment(canceled).startOf('day'), 'days') === 1) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'canceledNextDay';
+                cb();
+            }
         }
     ];
 
