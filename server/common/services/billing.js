@@ -80,7 +80,7 @@ module.exports = {
         );
     },
 
-    setDummyCreditCard: function(customerNumber, address, city, state, country, zip, callback) {
+    setAccountCanceled: function(customerNumber, address, city, state, country, zip, callback) {
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.update_customer',
             [
@@ -108,7 +108,38 @@ module.exports = {
                 }
             }
         );
+    },
+
+    setTrialEnded: function(customerNumber, address, city, state, country, zip, callback) {
+        var client = xmlrpc.createClient(config.freeSideUrl);
+        client.methodCall('FS.API.update_customer',
+            [
+                'secret', config.freeSideApiKey,
+                'custnum', customerNumber,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country
+            ], function (err, response) {
+                if (err) {
+                    logger.logError(JSON.stringify(err));
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
     }
+
+
 };
 
 

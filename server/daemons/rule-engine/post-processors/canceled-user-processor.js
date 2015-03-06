@@ -16,7 +16,7 @@ function sendReminderEmail(user) {
         if (err) {
             console.log(err);
         } else {
-            console.log('Next day of cancellation email sent to ' + user.email);
+            console.log('next day cancellation email sent to ' + user.email);
         }
     });
 }

@@ -82,7 +82,7 @@ function suspendAndSendEmail(user) {
                 var state = 'FL';
                 var country = 'US';
                 var zip = '00000';
-                billing.setDummyCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                billing.setTrialEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
                         setUserActive(userObj);
                         setUserActiveInAio(userObj.email);
