@@ -9,7 +9,7 @@ module.exports = {
     imageUrl: 'http://localhost:3000/img/',
     secretToken: 'yip#tv@dev#712',
     ruleEngineRecurrence: '* * * * * *',
-    contactUsEmailList: 'achinth@yiptv.com, vivek@yiptv.com, varunv@yiptv.com',
+    contactUsEmailList: 'achinth@yiptv.com',
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
     cancelSubscriptionForTrialUsers: false,
     freeSideApiKey: 'yip-freeside-dev',

@@ -373,7 +373,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (_.contains(['active', 'canceled', 'trial-ended'])) {
+            if (_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
                 return res.status(409).send('UserActivated');
             }
             if (user.status !== 'registered') {
