@@ -705,7 +705,7 @@ module.exports = {
                 var state = 'FL';
                 var country = 'US';
                 var zip = '00000';
-                billing.setDummyCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                billing.setAccountCanceled(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
                         setUserActiveRemoveCanceledDate(userObj);
                         setUserActiveInAio(userObj.email);

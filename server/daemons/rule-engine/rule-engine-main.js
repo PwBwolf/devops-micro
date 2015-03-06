@@ -30,5 +30,6 @@ new CronJob(config.ruleEngineRecurrence, function () {
     }, function () {
         console.log('Rule engine daemon has stopped');
     },
-    true
+    true,
+    'America/Anchorage'
 );
