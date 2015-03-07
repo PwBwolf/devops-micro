@@ -15,6 +15,8 @@
                     <br ng-show="user.type === 'paid' && user.status === 'canceled'">
                     <button ng-show="user.type === 'paid' && user.status === 'active'" ng-disabled="saving" ng-click="cancelSubscription()" type="button" translate="ACCOUNT_CANCEL_SUBSCRIPTION">Cancel Subscription</button>
                     <br ng-show="user.type === 'paid' && user.status === 'active'">
+                    <button goto="/preferences" type="button" translate="ACCOUNT_PREFERENCES">Preferences</button>
+                    <br>
                     <button goto="/contact-us" type="button" translate="ACCOUNT_CONTACT_US">Contact Us</button>
 
                 </div>

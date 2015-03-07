@@ -483,6 +483,39 @@ module.exports = {
         });
     },
 
+    getPreferences: function (req, res) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError(JSON.stringify(err));
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            return res.send(user.preferences);
+        });
+    },
+
+    updatePreferences: function (req, res) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError(JSON.stringify(err));
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            user.preferences.defaultLanguage = req.body.language;
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError(JSON.stringify(err1));
+                    return res.status(500).end();
+                }
+                return res.status(200).end();
+            });
+        });
+    },
+
     upgradeSubscription: function (req, res) {
         var status;
         async.waterfall([

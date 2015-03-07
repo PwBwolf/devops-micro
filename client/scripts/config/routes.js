@@ -100,6 +100,18 @@
                 controller: 'accountCtrl',
                 access: access.user
             })
+            .when('/preferences',
+            {
+                templateUrl: 'views/preferences.html',
+                controller: 'preferencesCtrl',
+                access: access.user
+            })
+            .when('/preferences-success',
+            {
+                templateUrl: 'views/preferences-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/reactivate-subscription',
             {
                 templateUrl: 'views/reactivate-subscription.html',

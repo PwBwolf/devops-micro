@@ -147,6 +147,14 @@
 
             cancelSubscription: function(success, error) {
                 $http.post('/api/cancel-subscription').success(success).error(error);
+            },
+
+            getPreferences: function(success, error) {
+                $http.get('/api/get-preferences').success(success).error(error);
+            },
+
+            updatePreferences: function(data, success, error) {
+                $http.post('/api/update-preferences', data).success(success).error(error);
             }
          };
     }]);
