@@ -6,6 +6,7 @@
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
+        $scope.session = {};
 
         var aioWindow,
             aioWindowTimeout;
@@ -161,17 +162,20 @@
         };
 
         function afterSignOut() {
-            if (aioWindow && !aioWindow.closed) {
-                aioWindow.close();
-            }
+            $rootScope.$broadcast('CloseAioWindow');
+            $scope.session.signOut = true;
             $location.path('/');
 
         }
 
         $window.onunload = function () {
+            $rootScope.$broadcast('CloseAioWindow');
+        };
+
+        $rootScope.$on('CloseAioWindow', function() {
             if (aioWindow && !aioWindow.closed) {
                 aioWindow.close();
             }
-        };
+        });
     }]);
 }(angular.module('app')));

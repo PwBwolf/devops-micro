@@ -1247,7 +1247,7 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 1199px) {
-    #carousel-banner .carousel-indicators {
+    #carousel-indicators {
         width: 65%;
         bottom: 10px;
     }
@@ -1471,11 +1471,6 @@ a.btn-import:hover {
         margin: 10px 0px 10% 0px;
     }
 
-    #carousel-banner .carousel-caption1 button {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
-
     .right-box a {
         margin: 0 5px 10px
     }
@@ -1484,6 +1479,11 @@ a.btn-import:hover {
         position: absolute;
         top: 0px;
         right: 0px;
+    }
+
+    #carousel-banner .carousel-caption1 button {
+        font-size: 16px;
+        padding: 10px 20px;
     }
 
     #carousel-banner .carousel-caption1 h1 {

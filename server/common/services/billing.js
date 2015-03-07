@@ -92,7 +92,9 @@ module.exports = {
                 'state', state,
                 'zip', zip,
                 'country', country,
-                'payinfo', config.dummyCreditCard,
+                'payinfo', '4242424242424242',
+                'paydate', '12/2035',
+                'paycvv', '123',
             ], function (err, response) {
                 if (err) {
                     logger.logError(JSON.stringify(err));
