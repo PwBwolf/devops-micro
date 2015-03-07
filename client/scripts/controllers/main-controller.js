@@ -19,6 +19,17 @@
             configSeo();
         }
 
+        $rootScope.$on('ChangeLanguage', function (event, language) {
+            changeLanguage(language);
+        });
+
+        function changeLanguage(language) {
+            $translate.use(language);
+            webStorage.local.add('language', language);
+            $scope.language = language;
+            $rootScope.$broadcast('LanguageChanged', language);
+        }
+
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
@@ -34,19 +45,54 @@
         function loadLanguage() {
             var userLang = browserSvc.getUserLanguage();
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
-            $translate.use(language);
-            webStorage.local.add('language', language);
-            $scope.language = language;
+            changeLanguage(language);
         }
 
         $scope.changeLanguage = function () {
             var currentLanguage = $translate.use();
             var newLanguage = currentLanguage === 'en' ? 'es' : 'en';
-            $translate.use(newLanguage);
-            webStorage.local.add('language', newLanguage);
-            $scope.language = newLanguage;
-            $rootScope.$broadcast('LanguageChanged');
+            changeLanguage(newLanguage);
+            if (userSvc.isSignedIn($scope.user)) {
+                $modal.open({
+                    templateUrl: 'modalWindow',
+                    controller: 'modalCtrl',
+                    size: 'sm',
+                    backdrop: 'static',
+                    resolve: {
+                        title: function () {
+                            return $scope.appConfig.appName;
+                        },
+                        body: function () {
+                            return $filter('translate')('MAIN_LANGUAGE_CHANGE_SAVE_CHECK') + ' ' + getLanguageName(newLanguage) + '?';
+                        },
+                        showOkButton: function () {
+                            return false;
+                        },
+                        showYesButton: function () {
+                            return true;
+                        },
+                        showNoButton: function () {
+                            return true;
+                        }
+                    }
+                }).result.then(function () {
+                        var mv = {language: newLanguage};
+                        userSvc.updatePreferences(mv, function () {
+                            loggerSvc.logSuccess($filter('translate')('MAIN_LANGUAGE_CHANGE_SAVE_SUCCESS'));
+                        }, function () {
+                            loggerSvc.logError($filter('translate')('MAIN_LANGUAGE_CHANGE_SAVE_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
+                        });
+                    });
+            }
         };
+
+        function getLanguageName(language) {
+            if (language === 'en') {
+                return 'English';
+            } else {
+                return 'Español';
+            }
+        }
 
         $scope.openAio = function () {
             if ($scope.user.status === 'canceled') {
@@ -83,7 +129,7 @@
                         });
                     }
                 } else {
-                    if(aioWindowTimeout) {
+                    if (aioWindowTimeout) {
                         clearTimeout(aioWindowTimeout);
                         aioWindowTimeout = undefined;
                     }
@@ -172,7 +218,7 @@
             $rootScope.$broadcast('CloseAioWindow');
         };
 
-        $rootScope.$on('CloseAioWindow', function() {
+        $rootScope.$on('CloseAioWindow', function () {
             if (aioWindow && !aioWindow.closed) {
                 aioWindow.close();
             }
