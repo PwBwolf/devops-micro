@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('accountCtrl', ['userSvc', 'loggerSvc', '$scope', '$modal', '$filter', '$location', function (userSvc, loggerSvc, $scope, $modal, $filter, $location) {
+    app.controller('accountCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$modal', '$filter', '$location', function (userSvc, loggerSvc, $rootScope, $scope, $modal, $filter, $location) {
 
         $scope.cancelSubscription = function () {
             $modal.open({
@@ -30,6 +30,7 @@
                     $scope.saving = true;
                     userSvc.cancelSubscription(function () {
                         userSvc.getUserProfile(function () {
+                            $rootScope.$broadcast('CloseAioWindow');
                             $location.path('/cancel-subscription-success');
                             $scope.saving = false;
                         }, function () {
