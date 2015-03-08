@@ -318,7 +318,7 @@
             NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
             PREFERENCES_HEADING: 'Preferences',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',
-            PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your language of preference',
+            PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your preferred language',
             PREFERENCES_SUBMIT_BUTTON: 'Submit',
             PREFERENCES_FETCH_ERROR: 'Unable to fetch your preferences. Please contact customer support at',
             PREFERENCES_SAVE_ERROR: 'Unable to save your preferences. Please contact customer support at',
