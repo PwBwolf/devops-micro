@@ -2,41 +2,24 @@
 
 var _ = require('lodash'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     Q = require('q'),
     config = require('../../../common/config/config'),
     Account = mongoose.model('Account');
 
-function populateAccount(account) {
-    var def = Q.defer();
-    account.populate('primaryUser', function (err, populatedAccount) {
-        if (!err) {
-            populatedAccount.primaryUser._doc = _.assign(populatedAccount.primaryUser._doc, {doctype: 'user'});
-            def.resolve(populatedAccount);
-        } else {
-            def.reject(err);
-        }
-    });
-    return def.promise;
-}
-
 module.exports.getFreeUsers = function () {
     var def = Q.defer();
-    Account.find({type: 'free'}).exec().then(function (accounts) {
+    Account.find({type: 'free'}).populate('primaryUser').exec().then(function (accounts) {
         if (accounts) {
-            var accountPromises = [];
             var userList = [];
             for (var i = 0; i < accounts.length; i++) {
-                var accountPromise = populateAccount(accounts[i]);
-                accountPromises.push(accountPromise);
-                accountPromise.then(function (account) {
-                    userList.push(account.primaryUser._doc);
-                }, function (err) {
-                    console.log('Something went wrong when retrieving user info for account: ', err);
-                });
+                if ((accounts[i].primaryUser.status === 'active' || accounts[i].primaryUser.status === 'trial-ended') &&
+                    moment.utc().startOf('day').diff(moment(accounts[i].primaryUser.createdAt).utc().startOf('day'), 'days') <= 32) {
+                    accounts[i].primaryUser._doc = _.assign(accounts[i].primaryUser._doc, {doctype: 'user'});
+                    userList.push(accounts[i].primaryUser._doc);
+                }
             }
-            Q.all(accountPromises).then(function () {
-                def.resolve(userList);
-            });
+            def.resolve(userList);
         } else {
             def.resolve([]);
         }
