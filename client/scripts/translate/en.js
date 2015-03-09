@@ -312,7 +312,7 @@
             MAIN_SIGN_OUT_CONFIRMATION: 'Are you sure you want to sign out of YipTV?',
             MAIN_VIDEO_PORTAL_ALREADY_OPEN: 'Video Portal is already open in another tab',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Do you want to change your preferred language to ',
-            MAIN_LANGUAGE_CHANGE_SAVE_SUCCESS: 'Language preference save successfully',
+            MAIN_LANGUAGE_CHANGE_SAVE_SUCCESS: 'Language preference saved successfully',
             MAIN_LANGUAGE_CHANGE_SAVE_ERROR: 'Unable to change your language preference. Please contact customer support at',
             NOT_FOUND_HEADING: 'Page Not Found',
             NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
