@@ -596,22 +596,21 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption5a {
     position: absolute;
-    height: 100px;
+    height: 1000px;
     background-color: rgba(255, 255, 255, 0.5);
-    font-family: 'radikalthin';
+    font-family: 'radikalregular';
     text-align: left;
     z-index: 99;
-    left: 50px;
-    top: 360px;
+    left: 0;
 }
 
 #carousel-banner .caption-txt5a {
-    padding: 10px;
+    padding: 300px 10px 0 10px;
 }
 
 #carousel-banner .carousel-caption5a h2 {
-    font-size: 30px;
-    line-height: 35px;
+    font-size: 25px;
+    line-height: 25px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
@@ -1337,10 +1336,6 @@ a.btn-import:hover {
         font-size: 16px;
         line-height: 19px;
     }
-
-    #carousel-banner .carousel-caption5a {
-        top: 300px;
-    }
 }
 
 @media screen and (max-width: 999px) {
@@ -1482,13 +1477,13 @@ a.btn-import:hover {
         font-size: 15px;
     }
 
-    #carousel-banner .carousel-caption5a {
-        top: 225px;
+    #carousel-banner .caption-txt5a {
+        padding: 200px 10px 0 10px;
     }
 
     #carousel-banner .carousel-caption5a h2 {
-        font-size: 25px;
-        line-height: 25px;
+        font-size: 20px;
+        line-height: 20px;
     }
 }
 
@@ -1661,9 +1656,8 @@ a.btn-import:hover {
         margin: 0;
     }
 
-    #carousel-banner .carousel-caption5a {
-        top: 175px;
-        height: 70px;
+    #carousel-banner .caption-txt5a {
+        padding: 150px 10px 0 10px;
     }
 
     #carousel-banner .carousel-caption5a h2 {
@@ -1926,9 +1920,8 @@ a.btn-import:hover {
         font-size: 10px;
     }
 
-    #carousel-banner .carousel-caption5a {
-        top: 120px;
-        height: 60px;
+    #carousel-banner .caption-txt5a {
+        padding: 130px 10px 0 10px;
     }
 
     #carousel-banner .carousel-caption5a h2 {
@@ -2101,9 +2094,8 @@ a.btn-import:hover {
         line-height: 8px;
     }
 
-    #carousel-banner .carousel-caption5a {
-        top: 100px;
-        height: 50px;
+    #carousel-banner .caption-txt5a {
+        padding: 100px 10px 0 10px;
     }
 
     #carousel-banner .carousel-caption5a h2 {
@@ -2242,9 +2234,8 @@ a.btn-import:hover {
         line-height: 8px;
     }
 
-    #carousel-banner .carousel-caption5a {
-        top: 70px;
-        height: 50px;
+    #carousel-banner .caption-txt5a {
+        padding: 70px 10px 0 10px;
     }
 
     #carousel-banner .carousel-caption5a h2 {
