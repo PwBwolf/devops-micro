@@ -350,22 +350,6 @@ a.btn-sign:hover {
     background-image: none;
 }
 
-#carousel-banner .carousel-indicators li {
-    width: 12px;
-    height: 12px;
-    margin: 0px 1px;
-    background-color: #ffffff;
-    border: 1px solid #3c4250;
-    border-radius: 12px;
-}
-
-#carousel-banner .carousel-indicators .active {
-    width: 12px;
-    height: 12px;
-    margin: 0px 3px;
-    background-color: #3c4250;
-}
-
 #carousel-banner .carousel-indicators {
     bottom: 30px;
     left: 0;
@@ -388,7 +372,7 @@ a.btn-sign:hover {
     width: 12px;
     height: 12px;
     margin: 0px 3px;
-    background-color: #ffffff;
+    background-color: #aaa;
 }
 
 #carousel-banner .carousel-control {
@@ -463,6 +447,7 @@ a.btn-sign:hover {
     font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
+    left: 72%;
 }
 
 #carousel-banner .caption-txt2 {
@@ -470,17 +455,17 @@ a.btn-sign:hover {
 }
 
 #carousel-banner .carousel-caption2 h1 {
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 55px;
+    line-height: 55px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
 }
 
 #carousel-banner .carousel-caption2 h2 {
-    font-size: 25px;
-    line-height: 25px;
-    color: #000;
+    font-size: 35px;
+    line-height: 45px;
+    color: #613e73;
     padding: 5px 0;
     margin: 0px;
 }
@@ -1279,13 +1264,13 @@ a.btn-import:hover {
 @media screen and (max-width: 1199px) {
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 40px;
-        line-height: 40px;
+        font-size: 50px;
+        line-height: 50px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 20px;
-        line-height: 20px;
+        font-size: 30px;
+        line-height: 30px;
     }
 }
 
@@ -1378,8 +1363,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 16px;
-        line-height: 16px;
+        font-size: 20px;
+        line-height: 20px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -1596,8 +1581,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 32px;
-        line-height: 32px;
+        font-size: 30px;
+        line-height: 30px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
@@ -1701,8 +1686,8 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 24px;
-        line-height: 24px;
+        font-size: 22px;
+        line-height: 22px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
@@ -1968,7 +1953,7 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 button {
-        font-size: 8px;
+        font-size: 6px;
         padding: 5px 20px;
         margin: 0;
     }
