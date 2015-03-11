@@ -446,16 +446,17 @@ a.btn-sign:hover {
     font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
-    left: 72%;
+    left: 0px;
+    width: 28%;
 }
 
 #carousel-banner .caption-txt2 {
-    padding: 2px;
+    padding: 10px;
 }
 
 #carousel-banner .carousel-caption2 h1 {
-    font-size: 55px;
-    line-height: 55px;
+    font-size: 25px;
+    line-height: 25px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
@@ -463,7 +464,7 @@ a.btn-sign:hover {
 
 #carousel-banner .carousel-caption2 h2 {
     font-size: 20px;
-    line-height: 23px;
+    line-height: 20px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
@@ -594,52 +595,37 @@ a.btn-sign:hover {
     margin: 0px;
 }
 
-#carousel-banner .carousel-caption5a {
+#carousel-banner .carousel-caption5 {
     position: absolute;
-    height: 1000px;
     background-color: rgba(255, 255, 255, 0.5);
-    font-family: 'radikalregular';
-    text-align: left;
-    z-index: 99;
-    left: 0;
-}
-
-#carousel-banner .caption-txt5a {
-    padding: 300px 10px 0 10px;
-}
-
-#carousel-banner .carousel-caption5a h2 {
-    font-size: 25px;
-    line-height: 25px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-
-#carousel-banner .carousel-caption5b {
-    position: absolute;
     height: 1000px;
     font-family: 'radikalthin';
     text-align: left;
     z-index: 99;
-    left: 72%;
-    top: 220px;
+    left: 0px;
 }
 
-#carousel-banner .caption-txt5b {
+#carousel-banner .caption-txt5 {
     padding: 10px;
 }
 
-#carousel-banner .carousel-caption5b h2 {
-    font-size: 20px;
-    line-height: 23px;
+#carousel-banner .carousel-caption5 h1 {
+    font-size: 40px;
+    line-height: 40px;
     color: #613e73;
     padding: 5px 0;
     margin: 0px;
 }
 
-#carousel-banner .carousel-caption5b button {
+#carousel-banner .carousel-caption5 h2 {
+    font-size: 60px;
+    line-height: 60px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption5 button {
     font-size: 22px;
     background-color: #A03269;
     color: #fff;
@@ -650,14 +636,13 @@ a.btn-sign:hover {
     font-family: 'radikalregular';
 }
 
-#carousel-banner .carousel-caption5b p {
+#carousel-banner .carousel-caption5 p {
     font-size: 14px;
     line-height: 14px;
     color: #000;
     padding: 5px 0;
     margin: 0px;
 }
-
 
 .about-text {
     font-weight: bolder;
@@ -1325,16 +1310,38 @@ a.btn-import:hover {
     }
 }
 
-@media screen and (max-width: 1199px) {
-
+@media screen and (max-width: 1250px) {
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 50px;
-        line-height: 50px;
+        font-size: 22px;
+        line-height: 22px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 16px;
-        line-height: 19px;
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    #carousel-banner .carousel-caption2 p {
+        font-size: 12px;
+        line-height: 12px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+
+    #carousel-banner .carousel-caption2 h1 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    #carousel-banner .carousel-caption2 h2 {
+        font-size: 15px;
+        line-height: 15px;
+    }
+
+    #carousel-banner .carousel-caption2 p {
+        font-size: 11px;
+        line-height: 11px;
     }
 }
 
@@ -1422,18 +1429,22 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 36px;
-        line-height: 36px;
+        font-size: 18px;
+        line-height: 18px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 13px;
-        line-height: 16px;
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    #carousel-banner .carousel-caption2 button {
+        font-size: 12px;
     }
 
     #carousel-banner .carousel-caption2 p {
-        font-size: 13px;
-        line-height: 16px;
+        font-size: 9px;
+        line-height: 9px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -1469,37 +1480,32 @@ a.btn-import:hover {
         line-height: 20px;
     }
 
-    #carousel-banner .carousel-caption5b {
-        top: 140px;
+    #carousel-banner .carousel-caption5 h1 {
+        font-size: 36px;
+        line-height: 36px;
     }
 
-    #carousel-banner .carousel-caption5b h2 {
-        font-size: 15px;
-    }
-
-    #carousel-banner .caption-txt5a {
-        padding: 200px 10px 0 10px;
-    }
-
-    #carousel-banner .carousel-caption5a h2 {
-        font-size: 20px;
-        line-height: 20px;
+    #carousel-banner .carousel-caption5 h2 {
+        font-size: 54px;
+        line-height: 54px;
     }
 }
 
 @media screen and (max-width: 799px) {
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 12px;
+
+    #carousel-banner .carousel-caption2 h1 {
+        font-size: 15px;
         line-height: 15px;
+    }
+
+    #carousel-banner .carousel-caption2 h2 {
+        font-size: 10px;
+        line-height: 10px;
     }
 
     #carousel-banner .carousel-caption2 p {
-        font-size: 12px;
-        line-height: 15px;
-    }
-
-    #carousel-banner .carousel-caption5b button {
-        font-size: 15px;
+        font-size: 9px;
+        line-height: 9px;
     }
 }
 
@@ -1604,21 +1610,6 @@ a.btn-import:hover {
         line-height: 30px;
     }
 
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 34px;
-        line-height: 34px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 11px;
-        line-height: 14px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 11px;
-        line-height: 14px;
-    }
-
     #carousel-banner .carousel-caption3 {
         left: 110px;
     }
@@ -1656,13 +1647,14 @@ a.btn-import:hover {
         margin: 0;
     }
 
-    #carousel-banner .caption-txt5a {
-        padding: 150px 10px 0 10px;
+    #carousel-banner .carousel-caption5 h1 {
+        font-size: 32px;
+        line-height: 32px;
     }
 
-    #carousel-banner .carousel-caption5a h2 {
-        font-size: 20px;
-        line-height: 20px;
+    #carousel-banner .carousel-caption5 h2 {
+        font-size: 48px;
+        line-height: 48px;
     }
 }
 
@@ -1697,36 +1689,18 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 30px;
-        line-height: 30px;
+        font-size: 15px;
+        line-height: 15px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 10px;
-        line-height: 13px;
+        font-size: 8px;
+        line-height: 8px;
     }
 
     #carousel-banner .carousel-caption2 p {
-        font-size: 10px;
-        line-height: 13px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 14px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption5b {
-        top: 90px;
-    }
-
-    #carousel-banner .carousel-caption5b h2 {
-        font-size: 12px;
-    }
-
-    #carousel-banner .carousel-caption5b p {
-        font-size: 12px;
+        font-size: 8px;
+        line-height: 8px;
     }
 }
 
@@ -1825,24 +1799,24 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 22px;
-        line-height: 22px;
+        font-size: 12px;
+        line-height: 12px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
         font-size: 8px;
-        line-height: 11px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption2 button {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin: 0;
     }
 
     #carousel-banner .carousel-caption2 p {
         font-size: 8px;
-        line-height: 11px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 14px;
-        padding: 10px 20px;
-        margin: 0;
+        line-height: 8px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -1902,31 +1876,25 @@ a.btn-import:hover {
         line-height: 12px;
     }
 
-    #carousel-banner .carousel-caption5b {
-        top: 70px;
+    #carousel-banner .carousel-caption5 h1 {
+        font-size: 24px;
+        line-height: 24px;
     }
 
-    #carousel-banner .carousel-caption5b h2 {
-        font-size: 10px;
+    #carousel-banner .carousel-caption5 h2 {
+        font-size: 36px;
+        line-height: 36px;
     }
 
-    #carousel-banner .carousel-caption5b button {
-        font-size: 12px;
-        padding: 10px;
+    #carousel-banner .carousel-caption5 button {
+        font-size: 14px;
+        padding: 10px 20px;
         margin: 0;
     }
 
-    #carousel-banner .carousel-caption5b p {
-        font-size: 10px;
-    }
-
-    #carousel-banner .caption-txt5a {
-        padding: 130px 10px 0 10px;
-    }
-
-    #carousel-banner .carousel-caption5a h2 {
-        font-size: 15px;
-        line-height: 15px;
+    #carousel-banner .carousel-caption5 p {
+        font-size: 12px;
+        line-height: 12px;
     }
 }
 
@@ -1995,26 +1963,23 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 18px;
-        line-height: 18px;
-        padding: 2px 0;
+        font-size: 10px;
+        line-height: 10px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
         font-size: 8px;
         line-height: 8px;
-        padding: 2px 0;
     }
 
     #carousel-banner .carousel-caption2 button {
-        font-size: 10px;
-        padding: 5px 20px;
-        margin: 0;
+        font-size: 8px;
+        padding: 5px 10px;
     }
 
     #carousel-banner .carousel-caption2 p {
-        font-size: 10px;
-        line-height: 10px;
+        font-size: 8px;
+        line-height: 8px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -2074,31 +2039,23 @@ a.btn-import:hover {
         line-height: 10px;
     }
 
-    #carousel-banner .carousel-caption5b {
-        top: 60px;
+    #carousel-banner .carousel-caption5 h1 {
+        font-size: 18px;
+        line-height: 18px;
     }
 
-    #carousel-banner .carousel-caption5b h2 {
-        font-size: 8px;
-        line-height: 8px;
+    #carousel-banner .carousel-caption5 h2 {
+        font-size: 30px;
+        line-height: 30px;
     }
 
-    #carousel-banner .carousel-caption5b button {
-        font-size: 8px;
-        padding: 10px;
+    #carousel-banner .carousel-caption5 button {
+        font-size: 10px;
+        padding: 10px 20px;
         margin: 0;
     }
 
-    #carousel-banner .carousel-caption5b p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .caption-txt5a {
-        padding: 100px 10px 0 10px;
-    }
-
-    #carousel-banner .carousel-caption5a h2 {
+    #carousel-banner .carousel-caption5 p {
         font-size: 10px;
         line-height: 10px;
     }
@@ -2136,26 +2093,24 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption2 h1 {
-        font-size: 12px;
-        line-height: 12px;
-        padding: 2px 0;
+        font-size: 7px;
+        line-height: 7px;
+        padding: 1px;
     }
 
     #carousel-banner .carousel-caption2 h2 {
-        font-size: 8px;
-        line-height: 8px;
-        padding: 2px 0;
+        font-size: 7px;
+        line-height: 7px;
+        padding: 1px;
     }
 
     #carousel-banner .carousel-caption2 button {
         font-size: 8px;
-        padding: 5px 7px;
-        margin: 0;
     }
 
     #carousel-banner .carousel-caption2 p {
-        font-size: 8px;
-        line-height: 8px;
+        font-size: 7px;
+        line-height: 7px;
     }
 
     #carousel-banner .carousel-caption3 {
@@ -2214,31 +2169,23 @@ a.btn-import:hover {
         line-height: 8px;
     }
 
-    #carousel-banner .carousel-caption5b {
-        top: 50px;
+    #carousel-banner .carousel-caption5 h1 {
+        font-size: 12px;
+        line-height: 12px;
     }
 
-    #carousel-banner .carousel-caption5b h2 {
-        font-size: 8px;
-        line-height: 8px;
+    #carousel-banner .carousel-caption5 h2 {
+        font-size: 24px;
+        line-height: 24px;
     }
 
-    #carousel-banner .carousel-caption5b button {
+    #carousel-banner .carousel-caption5 button {
         font-size: 8px;
-        padding: 8px;
+        padding: 5px 20px;
         margin: 0;
     }
 
-    #carousel-banner .carousel-caption5b p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .caption-txt5a {
-        padding: 70px 10px 0 10px;
-    }
-
-    #carousel-banner .carousel-caption5a h2 {
+    #carousel-banner .carousel-caption5 p {
         font-size: 8px;
         line-height: 8px;
     }

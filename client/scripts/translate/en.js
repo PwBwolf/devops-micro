@@ -226,6 +226,7 @@
             HOME_JOIN_NOW: 'Join Now',
             HOME_NO_CONTRACTS_CANCEL_ANYTIME: 'No contracts - cancel anytime!',
             HOME_YIPTV_HAS_BEIN: 'YipTV has beIN Sports',
+            HOME_YIPTV_HAS_LA_LIGA: 'YipTV has La Liga',
             HOME_GET_EXCLUSIVE: 'Get exclusive soccer matches',
             HOME_FROM_THE_TOP: 'From the top clubs.',
             HOME_START: 'Start',
