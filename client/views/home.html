@@ -85,16 +85,22 @@
         <div id="webslider-banner" class="carousel slide" bootstrap-carousel interval="5000">
             <ul class="carousel-inner">
                 <li class="item active">
-                    <img src="img/banner3.jpg" alt="...">
+                    <img rwdimgmap width="1351" height="640" ng-src="img/banner1-{{language}}.jpg" alt="..." usemap="img1{{language}}">
+                    <map name="img1en">
+                        <area shape="rect" coords="210,174,354,226" href="javascript:return false;" ng-click="imageMapClick('/sign-up/paid')">
+                    </map>
+                    <map name="img1es">
+
+                    </map>
                 </li>
                 <li class="item">
-                    <img src="img/banner1.jpg" alt="...">
+                    <img ng-src="img/banner2-{{language}}.jpg" alt="...">
                 </li>
                 <li class="item">
-                    <img src="img/banner2.jpg" alt="...">
+                    <img ng-src="img/banner3-{{language}}.jpg" alt="...">
                 </li>
                 <li class="item">
-                    <img src="img/banner4.jpg" alt="...">
+                    <img ng-src="img/banner4-{{language}}.jpg" alt="...">
                 </li>
             </ul>
             <ol class="carousel-indicators">

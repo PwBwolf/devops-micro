@@ -4,7 +4,7 @@
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate',
         'pascalprecht.translate', 'webStorageModule', 'angularPayments',
-        'ui.bootstrap', 'ngTable'
+        'ui.bootstrap', 'ngTable', 'rwdImageMaps'
     ]);
     angular.module('app').value('_', window._);
     angular.module('app').value('toastr', window.toastr);
