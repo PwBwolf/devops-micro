@@ -890,6 +890,11 @@ a.btn-import:hover {
 .about-desc {
     color: #000;
     font-size: 16px;
+}
+
+.leadership-desc {
+    color: #000;
+    font-size: 16px;
     min-height: 160px;
 }
 
@@ -920,6 +925,10 @@ a.btn-import:hover {
     text-align: center;
     font-style: italic;
     text-align: center;
+}
+
+.pr-para {
+    font-size: 16px;
 }
 
 .pr-bold {
