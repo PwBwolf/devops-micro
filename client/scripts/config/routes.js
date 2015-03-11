@@ -191,6 +191,18 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/press-release',
+            {
+                templateUrl: 'views/press-release.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .when('/press-release-1',
+            {
+                templateUrl: 'views/press-release-1.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/faq',
             {
                 templateUrl: 'views/faq.html',
