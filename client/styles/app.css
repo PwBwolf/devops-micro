@@ -594,6 +594,72 @@ a.btn-sign:hover {
     margin: 0px;
 }
 
+#carousel-banner .carousel-caption5a {
+    position: absolute;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-family: 'radikalthin';
+    text-align: left;
+    z-index: 99;
+    left: 50px;
+    top: 360px;
+}
+
+#carousel-banner .caption-txt5a {
+    padding: 10px;
+}
+
+#carousel-banner .carousel-caption5a h2 {
+    font-size: 30px;
+    line-height: 35px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+
+#carousel-banner .carousel-caption5b {
+    position: absolute;
+    height: 1000px;
+    font-family: 'radikalthin';
+    text-align: left;
+    z-index: 99;
+    left: 72%;
+    top: 220px;
+}
+
+#carousel-banner .caption-txt5b {
+    padding: 10px;
+}
+
+#carousel-banner .carousel-caption5b h2 {
+    font-size: 20px;
+    line-height: 23px;
+    color: #613e73;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+#carousel-banner .carousel-caption5b button {
+    font-size: 22px;
+    background-color: #A03269;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    margin: 10px 0;
+    font-family: 'radikalregular';
+}
+
+#carousel-banner .carousel-caption5b p {
+    font-size: 14px;
+    line-height: 14px;
+    color: #000;
+    padding: 5px 0;
+    margin: 0px;
+}
+
+
 .about-text {
     font-weight: bolder;
     font-family: 'gotham-bookgotham-book';
@@ -1271,6 +1337,10 @@ a.btn-import:hover {
         font-size: 16px;
         line-height: 19px;
     }
+
+    #carousel-banner .carousel-caption5a {
+        top: 300px;
+    }
 }
 
 @media screen and (max-width: 999px) {
@@ -1403,6 +1473,23 @@ a.btn-import:hover {
         font-size: 20px;
         line-height: 20px;
     }
+
+    #carousel-banner .carousel-caption5b {
+        top: 140px;
+    }
+
+    #carousel-banner .carousel-caption5b h2 {
+        font-size: 15px;
+    }
+
+    #carousel-banner .carousel-caption5a {
+        top: 225px;
+    }
+
+    #carousel-banner .carousel-caption5a h2 {
+        font-size: 25px;
+        line-height: 25px;
+    }
 }
 
 @media screen and (max-width: 799px) {
@@ -1414,6 +1501,10 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption2 p {
         font-size: 12px;
         line-height: 15px;
+    }
+
+    #carousel-banner .carousel-caption5b button {
+        font-size: 15px;
     }
 }
 
@@ -1569,6 +1660,16 @@ a.btn-import:hover {
     #carousel-banner .carousel-caption4 button {
         margin: 0;
     }
+
+    #carousel-banner .carousel-caption5a {
+        top: 175px;
+        height: 70px;
+    }
+
+    #carousel-banner .carousel-caption5a h2 {
+        font-size: 20px;
+        line-height: 20px;
+    }
 }
 
 @media screen and (max-width: 707px) {
@@ -1620,6 +1721,18 @@ a.btn-import:hover {
         font-size: 14px;
         padding: 10px 20px;
         margin: 0;
+    }
+
+    #carousel-banner .carousel-caption5b {
+        top: 90px;
+    }
+
+    #carousel-banner .carousel-caption5b h2 {
+        font-size: 12px;
+    }
+
+    #carousel-banner .carousel-caption5b p {
+        font-size: 12px;
     }
 }
 
@@ -1794,6 +1907,34 @@ a.btn-import:hover {
         font-size: 12px;
         line-height: 12px;
     }
+
+    #carousel-banner .carousel-caption5b {
+        top: 70px;
+    }
+
+    #carousel-banner .carousel-caption5b h2 {
+        font-size: 10px;
+    }
+
+    #carousel-banner .carousel-caption5b button {
+        font-size: 12px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption5b p {
+        font-size: 10px;
+    }
+
+    #carousel-banner .carousel-caption5a {
+        top: 120px;
+        height: 60px;
+    }
+
+    #carousel-banner .carousel-caption5a h2 {
+        font-size: 15px;
+        line-height: 15px;
+    }
 }
 
 @media screen and (max-width: 479px) {
@@ -1939,6 +2080,36 @@ a.btn-import:hover {
         font-size: 10px;
         line-height: 10px;
     }
+
+    #carousel-banner .carousel-caption5b {
+        top: 60px;
+    }
+
+    #carousel-banner .carousel-caption5b h2 {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption5b button {
+        font-size: 8px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption5b p {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption5a {
+        top: 100px;
+        height: 50px;
+    }
+
+    #carousel-banner .carousel-caption5a h2 {
+        font-size: 10px;
+        line-height: 10px;
+    }
 }
 
 @media screen and (max-width: 399px) {
@@ -2047,6 +2218,36 @@ a.btn-import:hover {
     }
 
     #carousel-banner .carousel-caption4 p {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption5b {
+        top: 50px;
+    }
+
+    #carousel-banner .carousel-caption5b h2 {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption5b button {
+        font-size: 8px;
+        padding: 8px;
+        margin: 0;
+    }
+
+    #carousel-banner .carousel-caption5b p {
+        font-size: 8px;
+        line-height: 8px;
+    }
+
+    #carousel-banner .carousel-caption5a {
+        top: 70px;
+        height: 50px;
+    }
+
+    #carousel-banner .carousel-caption5a h2 {
         font-size: 8px;
         line-height: 8px;
     }
