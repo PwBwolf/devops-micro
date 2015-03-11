@@ -225,6 +225,8 @@
             HOME_GET_MONTH_FREE: 'Get a Month FREE!',
             HOME_JOIN_NOW: 'Join Now',
             HOME_NO_CONTRACTS_CANCEL_ANYTIME: 'No contracts - cancel anytime!',
+            HOME_WATCH_TOP: 'Watch top soccer matches on',
+            HOME_BEIN_SPORTS: 'beIN Sports',
             HOME_START: 'Start',
             HOME_DAYSTREAMING: 'Daystreaming.',
             HOME_LIVE_LOCAL_TV: 'Live, local television from over 20',
