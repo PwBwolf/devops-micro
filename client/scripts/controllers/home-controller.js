@@ -12,7 +12,6 @@
         }
 
         $scope.imageMapClick = function (url) {
-            console.log(url);
             $location.path(url);
         };
 
