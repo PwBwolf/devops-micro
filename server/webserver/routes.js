@@ -10,6 +10,7 @@ var _ = require('lodash'),
     accessLevels = require('../../client/scripts/config/routing').accessLevels,
     routes = [
         {path: '/api/get-app-config', httpMethod: 'GET', middleware: [AppCtrl.getAppConfig]},
+        {path: '/api/get-web-sliders', httpMethod: 'GET', middleware: [AppCtrl.getWebSliders]},
         {path: '/api/get-countries', httpMethod: 'GET', middleware: [AppCtrl.getCountries]},
         {path: '/api/get-states', httpMethod: 'GET', middleware: [AppCtrl.getStates]},
         {path: '/api/save-visitor', httpMethod: 'POST', middleware: [AppCtrl.saveVisitor]},

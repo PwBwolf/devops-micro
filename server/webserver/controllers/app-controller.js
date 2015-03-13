@@ -10,6 +10,7 @@ var _ = require('lodash'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     AppConfig = mongoose.model('AppConfig'),
+    WebSlider = mongoose.model('WebSlider'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
@@ -30,6 +31,16 @@ module.exports = {
             };
             appConfig = _.assign(appConfig._doc, props);
             return res.json(appConfig);
+        });
+    },
+
+    getWebSliders: function (req, res) {
+        WebSlider.find({}, {_id: false}, {sort: {order: 1}}, function (err, sliders) {
+            if (err) {
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            return res.json(sliders);
         });
     },
 

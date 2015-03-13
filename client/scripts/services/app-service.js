@@ -26,6 +26,10 @@
 
             sendRafEmails: function (data, success, error) {
                 $http.post('/api/send-raf-emails', data).success(success).error(error);
+            },
+
+            getWebSliders: function() {
+                return $http.get('/api/get-web-sliders');
             }
         };
     }]);
