@@ -1,0 +1,8 @@
+{
+    "name": "Web-Slider",
+    "version": "0.0.1",
+    "description": "Tool to upload web sliders to DB",
+    "main": "main.js",
+    "dependencies": {
+    }
+}

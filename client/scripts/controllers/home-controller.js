@@ -1,18 +1,23 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeCtrl', ['$scope', '$window', '$location', function ($scope, $window, $location) {
+    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', function (appSvc, $scope, $window, $location) {
         activate();
 
         function activate() {
-            if($scope.session.signOut) {
+            if ($scope.session.signOut) {
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
         }
 
-        $scope.imageMapClick = function(url) {
+        $scope.imageMapClick = function (url) {
+            console.log(url);
             $location.path(url);
+        };
+
+        $scope.onWebSliderChange = function () {
+            angular.element($window).triggerHandler('resize');
         };
     }]);
 }(angular.module('app')));

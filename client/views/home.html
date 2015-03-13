@@ -1,4 +1,5 @@
-<div class="banner" ng-hide="false">
+<!--
+<div class="banner" ng-hide="true">
     <div class="banner-wrap">
         <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="5000">
             <ul class="carousel-inner">
@@ -73,27 +74,19 @@
         </div>
     </div>
 </div>
-<div class="webslider" ng-hide="true">
+-->
+<div class="webslider" ng-hide="false">
     <div class="webslider-wrap">
-        <div id="webslider-banner" class="carousel slide" bootstrap-carousel interval="5000">
+        <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="5000">
             <ul class="carousel-inner">
-                <li class="item active">
-                    <img rwdimgmap width="1351" height="640" ng-src="img/banner1-{{language}}.jpg" alt="..." usemap="img1{{language}}">
-                    <map name="img1en">
-                        <area shape="rect" coords="210,174,354,226" href="javascript:return false;" ng-click="imageMapClick('/sign-up/paid')">
+                <li class="item" ng-repeat="slide in webSliders" ng-class="{active: $index === 0}">
+                    <img alt="..." usemap="img{{$index+1}}-{{language}}" rwdimgmap width="1351" height="640" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
+                    <map name="img{{$index+1}}-en">
+                        <area shape="rect" coords="{{slide.coords.en}}" href="javascript:void(0);" ng-click="imageMapClick(slide.url)">
                     </map>
-                    <map name="img1es">
-
+                    <map name="img{{$index+1}}-es">
+                        <area shape="rect" coords="{{slide.coords.es}}" href="javascript:voide(0);" ng-click="imageMapClick(slide.url)">
                     </map>
-                </li>
-                <li class="item">
-                    <img ng-src="img/banner2-{{language}}.jpg" alt="...">
-                </li>
-                <li class="item">
-                    <img ng-src="img/banner3-{{language}}.jpg" alt="...">
-                </li>
-                <li class="item">
-                    <img ng-src="img/banner4-{{language}}.jpg" alt="...">
                 </li>
             </ul>
             <ol class="carousel-indicators">
@@ -105,6 +98,7 @@
         </div>
     </div>
 </div>
+
 <div class="service">
     <div class="container">
         <div class="row">

@@ -313,6 +313,7 @@
             LEADERSHIP_BA7_NAME: 'Bryan Buckley, Asesor de Junta Directiva',
             LEADERSHIP_BA7_DESCRIPTION: 'Director Comercial Bryan Buckley es un ejecutivo de produccion que ha dirigido mas de 40 comerciales del Super Bowl y apodado como "El rey del Superbowl" por el New York Times. La carrera de Bryan comenzo en 1994 con el inicio del punto de referencia ahora de ESPN "This is Sports Center". Desde esa campana, Bryan ha recibido virtualmente todos los honores, premios y galardon en la industria de asegurar su lugar en la cima "lo mejor de" listas en los EE.UU. Buckley es Co-Fundador de HungryMan Productions, una de las agencias de produccion creativa mas grandes y mas importantes del mundo y ha sido nombrado Director Comercial del ano por el Directors Guild of America.',
             MAIN_ERROR_APP_CONFIG: 'Error frente configuracion de la aplicacion',
+            MAIN_ERROR_WEB_SLIDERS: 'Error loading web sliders',
             MAIN_ERROR_AIO_SSO: 'Error con el portal de video',
             MAIN_FREE_PREVIEW_ENDED: 'Su preestreno gratis ha concluido',
             MAIN_SIGN_OUT_CONFIRMATION: 'Seguro que deseas salir de YipTV?',

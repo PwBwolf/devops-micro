@@ -15,6 +15,7 @@
 
         function activate() {
             getAppConfig();
+            getWebSliders();
             loadLanguage();
             configSeo();
         }
@@ -36,6 +37,16 @@
             }).error(function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
             });
+        }
+
+        function getWebSliders() {
+            if(!$scope.webSliders) {
+                appSvc.getWebSliders().success(function (data) {
+                    $scope.webSliders = data;
+                }).error(function () {
+                    loggerSvc.logError($filter('translate')('MAIN_ERROR_WEB_SLIDERS'));
+                });
+            }
         }
 
         function configSeo() {
