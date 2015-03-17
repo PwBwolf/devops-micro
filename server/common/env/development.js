@@ -4,7 +4,7 @@ module.exports = {
     environment: 'development',
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
-    db: 'mongodb://localhost/yiptv',
+    db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
     url: 'http://localhost:3000/',
     imageUrl: 'http://localhost:3000/img/',
     secretToken: 'yip#tv@dev#712',

@@ -1,21 +1,21 @@
 [
     {
         "order": 1,
-        "image": {
+        "imageFile": {
             "en": "banner1-en.jpg",
             "es": "banner1-es.jpg"
         },
         "maps": {
             "en": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "11,179,152,230",
                     "url": "/sign-up/paid"
                 }
             ],
             "es": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "10,179,186,230",
                     "url": "/sign-up/paid"
                 }
@@ -24,44 +24,44 @@
     },
     {
         "order": 2,
-        "image": {
+        "imageFile": {
             "en": "banner.jpg",
             "es": "banner.jpg"
         },
         "maps": {
             "en": [
                 {
-                    "shape": "rectangle",
-                    "coords": "12,442,155,493",
-                    "url": "/sign-up/paid"
+                    "shape": "rect",
+                    "coords": "17,521,159,573",
+                    "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
-                    "shape": "rectangle",
-                    "coords": "12,442,155,493",
-                    "url": "/sign-up/paid"
+                    "shape": "rect",
+                    "coords": "17,521,159,573",
+                    "url": "/sign-up/free"
                 }
             ]
         }
     },
     {
         "order": 3,
-        "image": {
+        "imageFile": {
             "en": "banner2-en.jpg",
             "es": "banner2-es.jpg"
         },
         "maps": {
             "en": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "210,174,354,226",
                     "url": "/sign-up/paid"
                 }
             ],
             "es": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "208,175,386,227",
                     "url": "/sign-up/paid"
                 }
@@ -70,21 +70,21 @@
     },
     {
         "order": 4,
-        "image": {
+        "imageFile": {
             "en": "banner3-en.jpg",
             "es": "banner3-es.jpg"
         },
         "maps": {
             "en": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "8,200,247,252",
                     "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "8,200,322,252",
                     "url": "/sign-up/free"
                 }
@@ -93,21 +93,21 @@
     },
     {
         "order": 5,
-        "image": {
+        "imageFile": {
             "en": "banner4-en.jpg",
             "es": "banner4-es.jpg"
         },
         "maps": {
             "en": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "208,258,447,310",
                     "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
-                    "shape": "rectangle",
+                    "shape": "rect",
                     "coords": "210,258,523,310",
                     "url": "/sign-up/free"
                 }
@@ -115,3 +115,4 @@
         }
     }
 ]
+
