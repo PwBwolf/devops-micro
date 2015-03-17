@@ -7,6 +7,7 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
         $scope.session = {};
+        $scope.webSliders = webStorage.local.get('webSliders');
 
         var aioWindow,
             aioWindowTimeout;
@@ -15,7 +16,6 @@
 
         function activate() {
             getAppConfig();
-            getWebSliders();
             loadLanguage();
             configSeo();
         }
@@ -34,17 +34,20 @@
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
+                getWebSliders();
             }).error(function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
             });
         }
 
         function getWebSliders() {
-            if(!$scope.webSliders) {
+            if($scope.appConfig.webSliderVersion !== webStorage.get('webSliderVersion')) {
                 appSvc.getWebSliders().success(function (data) {
+                    webStorage.local.add('webSliderVersion', $scope.appConfig.webSliderVersion);
+                    webStorage.local.add('webSliders', data);
                     $scope.webSliders = data;
                 }).error(function () {
-                    loggerSvc.logError($filter('translate')('MAIN_ERROR_WEB_SLIDERS'));
+                    $scope.webSliderError = true;
                 });
             }
         }
