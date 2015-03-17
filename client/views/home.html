@@ -1,5 +1,4 @@
-<!--
-<div class="banner" ng-hide="true">
+<div class="banner" ng-show="webSliderError">
     <div class="banner-wrap">
         <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="5000">
             <ul class="carousel-inner">
@@ -74,29 +73,22 @@
         </div>
     </div>
 </div>
--->
-<div class="webslider">
+<div class="webslider" ng-hide="webSliderError">
     <div class="webslider-wrap">
         <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="5000">
             <ul class="carousel-inner">
                 <li class="item" ng-repeat="slide in webSliders" ng-class="{active: $index === 0}">
-                    <img alt="..." usemap="#img{{$index+1}}-{{language}}" rwdimgmap width="1351" height="640" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
+                    <img alt="..." usemap="#img{{$index+1}}-{{language}}" rwdimgmap width="1350" height="640" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
                 </li>
             </ul>
             <ol class="carousel-indicators">
-                <li data-target="#webslider-banner" data-slide-to="0" class="active"></li>
-                <li data-target="#webslider-banner" data-slide-to="1"></li>
-                <li data-target="#webslider-banner" data-slide-to="2"></li>
-                <li data-target="#webslider-banner" data-slide-to="3"></li>
+                <li data-target="#webslider-banner" ng-repeat="slide in webSliders" data-slide-to="{{$index}}" ng-class="{active: $index === 0}"></li>
             </ol>
         </div>
     </div>
     <div ng-repeat="slide in webSliders">
-        <map name="img{{$index+1}}-en">
-            <area shape="rect" coords="{{slide.coords.en}}" href="javascript:void(0);" ng-click="imageMapClick(slide.url)">
-        </map>
-        <map name="img{{$index+1}}-es">
-            <area shape="rect" coords="{{slide.coords.es}}" href="javascript:void(0);" ng-click="imageMapClick(slide.url)">
+        <map ng-repeat="(key, value) in slide.maps" name="img{{$parent.$index+1}}-{{key}}">
+            <area ng-repeat="map in slide.maps[key]" shape="{{map.shape}}" coords="{{map.coords}}" href="javascript:void(0);" ng-click="imageMapClick(map.url)">
         </map>
     </div>
 </div>

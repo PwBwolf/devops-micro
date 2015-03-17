@@ -313,7 +313,6 @@
             LEADERSHIP_BA7_NAME: 'Bryan Buckley, Board Advisor',
             LEADERSHIP_BA7_DESCRIPTION: 'Commercial Director Bryan Buckley is an acclaimed award winning advertising and production executive directing over 40 Super Bowl commercials and dubbed as "The King of Superbowl" by the New York Times. Bryan&#39;s career began in 1994 with his inception of ESPNs now benchmark "This is Sportscenter" campaign. Since then, Bryan has received virtually every honor, award, and accolade in the industry securing his spot atop "best of" lists in the US and internationally. Mr. Buckley is Co-Founder of Hungryman  Productions, one of the world&#39;s largest and leading creative production agencies and has been named Commercial Director of the Year by the Directors Guild of America.',
             MAIN_ERROR_APP_CONFIG: 'Error fetching application configuration',
-            MAIN_ERROR_WEB_SLIDERS: 'Error loading web sliders',
             MAIN_ERROR_AIO_SSO: 'Error opening video portal',
             MAIN_FREE_PREVIEW_ENDED: 'Your free preview has ended!',
             MAIN_SIGN_OUT_CONFIRMATION: 'Are you sure you want to sign out of YipTV?',

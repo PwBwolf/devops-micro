@@ -1,0 +1,117 @@
+[
+    {
+        "order": 1,
+        "image": {
+            "en": "banner1-en.jpg",
+            "es": "banner1-es.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rectangle",
+                    "coords": "11,179,152,230",
+                    "url": "/sign-up/paid"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rectangle",
+                    "coords": "10,179,186,230",
+                    "url": "/sign-up/paid"
+                }
+            ]
+        }
+    },
+    {
+        "order": 2,
+        "image": {
+            "en": "banner.jpg",
+            "es": "banner.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rectangle",
+                    "coords": "12,442,155,493",
+                    "url": "/sign-up/paid"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rectangle",
+                    "coords": "12,442,155,493",
+                    "url": "/sign-up/paid"
+                }
+            ]
+        }
+    },
+    {
+        "order": 3,
+        "image": {
+            "en": "banner2-en.jpg",
+            "es": "banner2-es.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rectangle",
+                    "coords": "210,174,354,226",
+                    "url": "/sign-up/paid"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rectangle",
+                    "coords": "208,175,386,227",
+                    "url": "/sign-up/paid"
+                }
+            ]
+        }
+    },
+    {
+        "order": 4,
+        "image": {
+            "en": "banner3-en.jpg",
+            "es": "banner3-es.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rectangle",
+                    "coords": "8,200,247,252",
+                    "url": "/sign-up/free"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rectangle",
+                    "coords": "8,200,322,252",
+                    "url": "/sign-up/free"
+                }
+            ]
+        }
+    },
+    {
+        "order": 5,
+        "image": {
+            "en": "banner4-en.jpg",
+            "es": "banner4-es.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rectangle",
+                    "coords": "208,258,447,310",
+                    "url": "/sign-up/free"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rectangle",
+                    "coords": "210,258,523,310",
+                    "url": "/sign-up/free"
+                }
+            ]
+        }
+    }
+]
