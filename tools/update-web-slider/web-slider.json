@@ -25,8 +25,8 @@
     {
         "order": 2,
         "imageFile": {
-            "en": "banner.jpg",
-            "es": "banner.jpg"
+            "en": "banner2-en.jpg",
+            "es": "banner2-es.jpg"
         },
         "maps": {
             "en": [
@@ -48,8 +48,8 @@
     {
         "order": 3,
         "imageFile": {
-            "en": "banner2-en.jpg",
-            "es": "banner2-es.jpg"
+            "en": "banner3-en.jpg",
+            "es": "banner3-es.jpg"
         },
         "maps": {
             "en": [
@@ -71,8 +71,8 @@
     {
         "order": 4,
         "imageFile": {
-            "en": "banner3-en.jpg",
-            "es": "banner3-es.jpg"
+            "en": "banner4-en.jpg",
+            "es": "banner4-es.jpg"
         },
         "maps": {
             "en": [
@@ -94,8 +94,8 @@
     {
         "order": 5,
         "imageFile": {
-            "en": "banner4-en.jpg",
-            "es": "banner4-es.jpg"
+            "en": "banner5-en.jpg",
+            "es": "banner5-es.jpg"
         },
         "maps": {
             "en": [

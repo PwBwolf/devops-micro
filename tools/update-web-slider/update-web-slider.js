@@ -16,7 +16,7 @@ if (typeof process.argv[2] === 'undefined') {
 } else if (_.contains(['development', 'integration', 'test', 'production', 'staging'], process.argv[2])) {
     env = process.argv[2];
 } else {
-    console.log('Environment parameter is missing!\n\rUsage: node update-web-slider <environment>\r\nWhere environment can be development, integration, test, production or staging');
+    console.log('Environment parameter is missing or incorrect!\n\rUsage: node update-web-slider <environment>\r\nWhere environment can be development, integration, test, production or staging');
     process.exit(1);
 }
 
@@ -70,11 +70,11 @@ async.waterfall([
                 } else if (fs.statSync(slide.imageFile.es).size > config.imageSize) {
                     console.log('Spanish image file exceeds maximum file size for slide ' + (i + 1));
                     callback(new Error('Large image file'));
-                } else if (sizeOf(slide.imageFile.en).width > config.imageWidth || sizeOf(slide.imageFile.en).height > config.imageHeight) {
-                    console.log('English image file exceeds maximum image resolution for slide ' + (i + 1));
+                } else if (sizeOf(slide.imageFile.en).width !== config.imageWidth || sizeOf(slide.imageFile.en).height !== config.imageHeight) {
+                    console.log('English image file does not match required image resolution for slide ' + (i + 1));
                     callback(new Error('Incorrect image resolution'));
-                } else if (sizeOf(slide.imageFile.es).width > config.imageWidth || sizeOf(slide.imageFile.es).height > config.imageHeight) {
-                    console.log('Spanish image file exceeds maximum image resolution for slide ' + (i + 1));
+                } else if (sizeOf(slide.imageFile.es).width !== config.imageWidth || sizeOf(slide.imageFile.es).height !== config.imageHeight) {
+                    console.log('Spanish image file does not match required image resolution for slide ' + (i + 1));
                     callback(new Error('Incorrect image resolution'));
                 } else if (imageType(readChunk.sync(slide.imageFile.en, 0, 12)).mime !== config.imageType) {
                     console.log('Incorrect English image type for slide ' + (i + 1));
