@@ -13,13 +13,6 @@
                     var method = $parse(attrs.onSlide);
                     method(scope);
                 });
-
-                scope.$watch('webSliders', function () {
-                    console.log('webSliders changed');
-                    element.carousel({
-                        interval: attrs.interval
-                    });
-                }, true);
             }
         };
     }]);

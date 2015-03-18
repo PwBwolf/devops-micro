@@ -165,7 +165,7 @@ async.waterfall([
                 callback(err);
             } else {
                 var webSliders = db.collection('WebSliders');
-                webSliders.remove({}, {w: 1}, function (err1, result) {
+                webSliders.remove({}, {w: 1}, function (err1) {
                     if (err1) {
                         console.log('Error deleting existing slides from DB');
                         callback(err1);
@@ -179,7 +179,7 @@ async.waterfall([
     },
     // add new slides
     function (sliderData, db, webSliders, callback) {
-        webSliders.insert(sliderData, {w: 1}, function (err, result) {
+        webSliders.insert(sliderData, {w: 1}, function (err) {
             if (err) {
                 console.log('Error adding new slides to DB');
                 callback(err);
@@ -189,26 +189,36 @@ async.waterfall([
             }
         });
     },
-    // increment webSliderVersion in AppConfig
+    // increment webSliderVersion in Versions collection
     function (db, callback) {
-        var appConfig = db.collection('AppConfig');
-        appConfig.findOne({}, function (err, data) {
+        var versions = db.collection('Versions');
+        versions.findOne({}, function (err, data) {
             if (err) {
-                console.log('Error retrieving AppConfig values from DB');
+                console.log('Error retrieving Versions values from DB');
                 callback(err);
             } else {
-                if (!data.webSliderVersion) {
-                    appConfig.update({}, {$set: {webSliderVersion: 1}}, {w: 1}, function (err1) {
+                if (!data) {
+                    versions.insert({webSliderVersion: 1}, {w: 1}, function (err1) {
                         if (err1) {
-                            console.log('Error updating webSliderVersion to 1');
+                            console.log('Error inserting new document with webSliderVersion set to 1');
                             callback(err1);
                         } else {
-                            console.log('Successfully incremented webSliderVersion to 1');
+                            console.log('Successfully inserted new document with webSliderVersion set to 1');
+                            callback(null);
+                        }
+                    });
+                } else if (!data.webSliderVersion) {
+                    versions.update({}, {$set: {webSliderVersion: 1}}, {w: 1}, function (err1) {
+                        if (err1) {
+                            console.log('Error setting webSliderVersion to 1');
+                            callback(err1);
+                        } else {
+                            console.log('Successfully set webSliderVersion to 1');
                             callback(null);
                         }
                     });
                 } else {
-                    appConfig.update({}, {$inc: {webSliderVersion: 1}}, {w: 1}, function (err2) {
+                    versions.update({}, {$inc: {webSliderVersion: 1}}, {w: 1}, function (err2) {
                         if (err2) {
                             console.log('Error incrementing webSliderVersion');
                             callback(err2);
@@ -227,7 +237,7 @@ async.waterfall([
         console.log(err);
         process.exit(1);
     } else {
-        console.log('Completed');
+        console.log('Successfully updated the web sliders');
         process.exit(0);
     }
 });
