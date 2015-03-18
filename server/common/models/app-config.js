@@ -5,8 +5,7 @@ var Schema = mongoose.Schema;
 
 var AppConfig = new Schema({
     appName: String,
-    customerCareNumber: String,
-    webSliderVersion: String
+    customerCareNumber: String
 }, { collection: 'AppConfig' });
 
 mongoose.model('AppConfig', AppConfig);

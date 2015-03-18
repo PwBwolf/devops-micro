@@ -10,6 +10,7 @@ var _ = require('lodash'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     AppConfig = mongoose.model('AppConfig'),
+    Version = mongoose.model('Version'),
     WebSlider = mongoose.model('WebSlider'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
@@ -23,14 +24,21 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            var props = {
-                environment: process.env.NODE_ENV,
-                url: config.url,
-                aioPortalUrl: config.aioPortalUrl,
-                freePreviewTime: config.freePreviewTime
-            };
-            appConfig = _.assign(appConfig._doc, props);
-            return res.json(appConfig);
+            Version.findOne({}, {_id: false}, function (err1, version) {
+                if (err1) {
+                    logger.logError(err1);
+                    return res.status(500).end();
+                }
+                var props = {
+                    environment: process.env.NODE_ENV,
+                    url: config.url,
+                    aioPortalUrl: config.aioPortalUrl,
+                    freePreviewTime: config.freePreviewTime,
+                    webSliderVersion: version.webSliderVersion
+                };
+                appConfig = _.assign(appConfig._doc, props);
+                return res.json(appConfig);
+            });
         });
     },
 
@@ -45,7 +53,7 @@ module.exports = {
     },
 
     getCountries: function (req, res) {
-        Country.find({}, {_id: false},  {sort: {name: 1}}, function (err, countries) {
+        Country.find({}, {_id: false}, {sort: {name: 1}}, function (err, countries) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -55,7 +63,7 @@ module.exports = {
     },
 
     getStates: function (req, res) {
-        State.find({}, {_id: false},  {sort: {name: 1}}, function (err, states) {
+        State.find({}, {_id: false}, {sort: {name: 1}}, function (err, states) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -144,13 +152,13 @@ module.exports = {
                     email: req.body.email,
                     createdAt: (new Date()).toUTCString()
                 });
-                referrer.save(function(err){
+                referrer.save(function (err) {
                     if (err) {
                         logger.logError(err);
                         return res.status(500).end();
                     }
                     referrer.referralCode = hashids.encode(referrer.key, 5);
-                    referrer.save(function(err){
+                    referrer.save(function (err) {
                         if (err) {
                             logger.logError(err);
                             return res.status(500).end();

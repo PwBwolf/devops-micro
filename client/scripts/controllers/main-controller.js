@@ -48,6 +48,7 @@
                     webStorage.local.add('webSliders', data);
                     $scope.webSliders = data;
                     $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
+                    $location.path('/home');
                 });
             }
         }
