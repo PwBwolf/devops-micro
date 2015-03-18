@@ -14,7 +14,7 @@
         activate();
 
         function activate() {
-            $scope.webSliders = webStorage.local.get('webSliders');
+            $scope.webSliders = webStorage.local.get('webSliders') || [];
             $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
             getAppConfig();
             loadLanguage();
@@ -47,7 +47,7 @@
                     webStorage.local.add('webSliderVersion', $scope.appConfig.webSliderVersion);
                     webStorage.local.add('webSliders', data);
                     $scope.webSliders = data;
-                    $scope.webSliderLoaded = true;
+                    $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
                 });
             }
         }

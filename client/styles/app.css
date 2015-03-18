@@ -21,6 +21,10 @@ header {
     background: #f4f1ec;
 }
 
+img[usemap], map area{
+    outline: none;
+}
+
 .header-label {
     font-size: 24px;
     font-weight: bold;

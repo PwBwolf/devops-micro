@@ -39,6 +39,7 @@ async.waterfall([
                     console.log('web-slider.json file is empty');
                     callback(new Error('File empty'));
                 } else {
+                    console.log('Successfully loaded web-slider.json file');
                     callback(null, sliderData);
                 }
             }
@@ -47,46 +48,58 @@ async.waterfall([
     // validate all inputs
     function (sliderData, callback) {
         try {
+            var error = false;
             for (var i = 0; i < sliderData.length; i++) {
                 var slide = sliderData[i];
                 if (!slide.order || typeof slide.order !== 'number') {
                     console.log('Invalid order for slide ' + (i + 1));
                     callback(new Error('Invalid order'));
+                    error = true;
                 } else if (slide.imageFile.en.length === 0) {
                     console.log('English image file not specified for slide ' + (i + 1));
                     callback(new Error('Empty image file'));
+                    error = true;
                 } else if (slide.imageFile.es.length === 0) {
                     console.log('Spanish image file not specified for slide ' + (i + 1));
                     callback(new Error('Empty image file'));
+                    error = true;
                 } else if (!fs.existsSync(slide.imageFile.en)) {
                     console.log('English image file does not exist for slide ' + (i + 1));
                     callback(new Error('Non-existent image file'));
+                    error = true;
                 } else if (!fs.existsSync(slide.imageFile.es)) {
                     console.log('Spanish image file does not exist for slide ' + (i + 1));
                     callback(new Error('Non-existent image file'));
+                    error = true;
                 } else if (fs.statSync(slide.imageFile.en).size > config.imageSize) {
                     console.log('English image file exceeds maximum file size for slide ' + (i + 1));
                     callback(new Error('Large image file'));
+                    error = true;
                 } else if (fs.statSync(slide.imageFile.es).size > config.imageSize) {
                     console.log('Spanish image file exceeds maximum file size for slide ' + (i + 1));
                     callback(new Error('Large image file'));
+                    error = true;
                 } else if (sizeOf(slide.imageFile.en).width !== config.imageWidth || sizeOf(slide.imageFile.en).height !== config.imageHeight) {
                     console.log('English image file does not match required image resolution for slide ' + (i + 1));
                     callback(new Error('Incorrect image resolution'));
+                    error = true;
                 } else if (sizeOf(slide.imageFile.es).width !== config.imageWidth || sizeOf(slide.imageFile.es).height !== config.imageHeight) {
                     console.log('Spanish image file does not match required image resolution for slide ' + (i + 1));
                     callback(new Error('Incorrect image resolution'));
+                    error = true;
                 } else if (imageType(readChunk.sync(slide.imageFile.en, 0, 12)).mime !== config.imageType) {
                     console.log('Incorrect English image type for slide ' + (i + 1));
                     callback(new Error('Incorrect image type'));
+                    error = true;
                 } else if (imageType(readChunk.sync(slide.imageFile.es, 0, 12)).mime !== config.imageType) {
                     console.log('Incorrect Spanish image type for slide ' + (i + 1));
                     callback(new Error('Incorrect image type'));
+                    error = true;
                 } else if (!slide.maps || !slide.maps.en || !slide.maps.es || slide.maps.en.length === 0 || slide.maps.es.length === 0) {
                     console.log('Map not defined correctly for slide ' + (i + 1));
                     callback(new Error('Map missing'));
+                    error = true;
                 } else {
-                    var error = false;
                     var j, map;
                     for (j = 0; j < slide.maps.en.length; j++) {
                         map = slide.maps.en[j];
@@ -122,10 +135,11 @@ async.waterfall([
                             }
                         }
                     }
-                    if (!error) {
-                        callback(null, sliderData);
-                    }
                 }
+            }
+            if (!error) {
+                console.log('Successfully validated web-slider.json file data');
+                callback(null, sliderData);
             }
         } catch (ex) {
             console.log('Incorrect web-slider.json file');
@@ -140,6 +154,7 @@ async.waterfall([
             var imgEs = fs.readFileSync(slide.imageFile.es);
             slide.image = {en: new Buffer(imgEn).toString('base64'), es: new Buffer(imgEs).toString('base64')};
         }
+        console.log('Successfully converted images to base64 strings');
         callback(null, sliderData);
     },
     // delete existing slides
@@ -150,25 +165,26 @@ async.waterfall([
                 callback(err);
             } else {
                 var webSliders = db.collection('WebSliders');
-                webSliders.remove({}, {w: 1}, function (err1) {
+                webSliders.remove({}, {w: 1}, function (err1, result) {
                     if (err1) {
                         console.log('Error deleting existing slides from DB');
                         callback(err1);
                     } else {
-                        callback(null, sliderData, db);
+                        console.log('Successfully deleted existing slides from DB');
+                        callback(null, sliderData, db, webSliders);
                     }
                 });
             }
         });
     },
     // add new slides
-    function (sliderData, db, callback) {
-        var webSliders = db.collection('WebSliders');
-        webSliders.insert(sliderData, {w: 1}, function (err) {
+    function (sliderData, db, webSliders, callback) {
+        webSliders.insert(sliderData, {w: 1}, function (err, result) {
             if (err) {
                 console.log('Error adding new slides to DB');
                 callback(err);
             } else {
+                console.log('Successfully added new slides to DB');
                 callback(null, db);
             }
         });
@@ -187,15 +203,17 @@ async.waterfall([
                             console.log('Error updating webSliderVersion to 1');
                             callback(err1);
                         } else {
+                            console.log('Successfully incremented webSliderVersion to 1');
                             callback(null);
                         }
                     });
                 } else {
                     appConfig.update({}, {$inc: {webSliderVersion: 1}}, {w: 1}, function (err2) {
                         if (err2) {
-                            console.log('Error updating webSliderVersion to 1');
+                            console.log('Error incrementing webSliderVersion');
                             callback(err2);
                         } else {
+                            console.log('Successfully incremented webSliderVersion');
                             callback(null);
                         }
                     });
@@ -208,8 +226,9 @@ async.waterfall([
     if (err) {
         console.log(err);
         process.exit(1);
+    } else {
+        console.log('Completed');
+        process.exit(0);
     }
-    console.log('Success');
-    process.exit(0);
 });
 
