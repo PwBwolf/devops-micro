@@ -348,6 +348,8 @@
             PRESS_RELEASE_HEADING: 'YipTV en la Prensa',
             PRESS_RELEASE_DATE1: 'Marzo 11, 2015',
             PRESS_RELEASE_TITLE1: 'YipTV Anuncia Su Equipo Ejecutivos',
+            PRESS_RELEASE_DATE2: 'Marzo 11, 2015',
+            PRESS_RELEASE_TITLE2: 'Will YipTV do to TV what Vonage did to Voice Calls?',
             PRIVACY_POLICY_HEADING: 'Política de privacidad',
             PRIVACY_POLICY_DATE: 'Fecha de vigencia: 18 de febrero de 2014',
             PRIVACY_POLICY_PARA1: 'La presente es la Política de privacidad del sitio web de YipTV&trade; ubicado en  <a href="/">http://www.YipTV.com</a> (el "Sitio"), proporcionada por YipTV, Inc. ("YipTV", "nosotros" o "nuestro"). Nos dedicamos a proteger la privacidad de los usuarios de nuestros servicios. Esta Política de privacidad explica nuestras prácticas sobre la recopilación, el almacenamiento, el uso y la divulgación de su información en relación con su uso de los servicios, incluidas todas las funciones, las funcionalidades y las interfaces de usuarios ofrecidas a través del Sitio o por medio de cualquier aplicación móvil o plataforma de sistema de juegos que remita a esta Política de privacidad y le permita acceder a los servicios (en conjunto, los "Servicios"). Al utilizar estos Servicios, usted acepta expresamente la recopilación, el almacenamiento, el uso y la divulgación de su información tal como se describe en esta Política de privacidad.',
