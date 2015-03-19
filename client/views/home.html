@@ -4,10 +4,13 @@
             <ul class="carousel-inner">
                 <li class="item active">
                     <img src="img/banner5.jpg" alt="...">
+
                     <div class="carousel-caption5">
                         <div class="caption-txt5">
                             <h1 translate="HOME_YIPTV_HAS_BEIN">YipTV has beIN Sports</h1>
+
                             <h3 translate="HOME_AND_DOZENS">and dozens of other channels</h3>
+
                             <h2 translate="HOME_PRICE">$14.99/month</h2>
                             <button goto="/sign-up/paid" translate="HOME_JOIN_NOW">Join Now!</button>
                             <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
@@ -79,17 +82,15 @@
             <ul class="carousel-inner">
                 <li class="item" ng-repeat="slide in webSliders" ng-class="{active: $index === 0}">
                     <img hidefocus="true" alt="..." usemap="#img{{$index+1}}-{{language}}" rwdimgmap width="1350" height="640" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
+                    <map ng-repeat="(key, value) in slide.maps" name="img{{$parent.$index+1}}-{{key}}">
+                        <area ng-repeat="map in slide.maps[key]" shape="{{map.shape}}" coords="{{map.coords}}" href="javascript:void(0);" ng-click="imageMapClick(map.url)">
+                    </map>
                 </li>
             </ul>
             <ol class="carousel-indicators">
                 <li data-target="#webslider-banner" ng-repeat="slide in webSliders" data-slide-to="{{$index}}" ng-class="{active: $index === 0}"></li>
             </ol>
         </div>
-    </div>
-    <div ng-repeat="slide in webSliders">
-        <map ng-repeat="(key, value) in slide.maps" name="img{{$parent.$index+1}}-{{key}}">
-            <area ng-repeat="map in slide.maps[key]" shape="{{map.shape}}" coords="{{map.coords}}" href="javascript:void(0);" ng-click="imageMapClick(map.url)">
-        </map>
     </div>
 </div>
 
