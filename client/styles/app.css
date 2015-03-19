@@ -283,6 +283,25 @@ a.btn-sign:hover {
     margin: 0px;
 }
 
+.channels {
+    float: left;
+    width: 100%;
+    position: relative;
+    background: #131825;
+}
+
+.channels .channels-wrap {
+    position: relative;
+    margin: 0 auto;
+    width: 1350px;
+}
+
+.channels img {
+    float: left;
+    width: 100%;
+    z-index: 9;
+}
+
 .toast-error {
     background-color: #D43F3A;
 }
@@ -1318,6 +1337,10 @@ a.btn-import:hover {
     }
 
     .user-home-wrap {
+        width: 100%;
+    }
+
+    .channels .channels-wrap {
         width: 100%;
     }
 }

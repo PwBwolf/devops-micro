@@ -1,6 +1,6 @@
 [
     {
-        "order": 1,
+        "order": 2,
         "imageFile": {
             "en": "banner1-en.jpg",
             "es": "banner1-es.jpg"
@@ -23,7 +23,7 @@
         }
     },
     {
-        "order": 3,
+        "order": 1,
         "imageFile": {
             "en": "banner2-en.jpg",
             "es": "banner2-es.jpg"
@@ -32,21 +32,21 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "17,521,159,573",
+                    "coords": "15,507,158,558",
                     "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "12,521,187,571",
+                    "coords": "14,501,189,551",
                     "url": "/sign-up/free"
                 }
             ]
         }
     },
     {
-        "order": 2,
+        "order": 3,
         "imageFile": {
             "en": "banner3-en.jpg",
             "es": "banner3-es.jpg"

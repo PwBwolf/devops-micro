@@ -46,7 +46,6 @@
                 appSvc.getWebSliders().success(function (data) {
                     webStorage.local.add('webSliderVersion', $scope.appConfig.webSliderVersion);
                     webStorage.local.add('webSliders', data);
-                    $scope.webSliders = data;
                     $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
                     if($location.path() === '/') {
                         $route.reload();
