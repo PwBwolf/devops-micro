@@ -10,12 +10,6 @@
                 controller: 'homeCtrl',
                 access: access.anon
             })
-            .when('/home',
-            {
-                templateUrl: 'views/home.html',
-                controller: 'tempCtrl',
-                access: access.anon
-            })
             .when('/sign-in',
             {
                 templateUrl: 'views/sign-in.html',
