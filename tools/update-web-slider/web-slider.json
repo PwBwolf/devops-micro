@@ -1,6 +1,6 @@
 [
     {
-        "order": 2,
+        "order": 1,
         "imageFile": {
             "en": "banner1-en.jpg",
             "es": "banner1-es.jpg"
@@ -9,21 +9,21 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "11,179,152,230",
-                    "url": "/sign-up/paid"
+                    "coords": "18,477,162,529",
+                    "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "10,179,186,230",
-                    "url": "/sign-up/paid"
+                    "coords": "11,492,188,544",
+                    "url": "/sign-up/free"
                 }
             ]
         }
     },
     {
-        "order": 1,
+        "order": 2,
         "imageFile": {
             "en": "banner2-en.jpg",
             "es": "banner2-es.jpg"
@@ -32,15 +32,15 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "15,507,158,558",
-                    "url": "/sign-up/free"
+                    "coords": "9,181,153,231",
+                    "url": "/sign-up/paid"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "14,501,189,551",
-                    "url": "/sign-up/free"
+                    "coords": "10,178,187,231",
+                    "url": "/sign-up/paid"
                 }
             ]
         }
@@ -55,14 +55,14 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "210,174,354,226",
+                    "coords": "209,176,354,227",
                     "url": "/sign-up/paid"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "208,175,386,227",
+                    "coords": "210,174,387,225",
                     "url": "/sign-up/paid"
                 }
             ]
@@ -71,21 +71,21 @@
     {
         "order": 4,
         "imageFile": {
-            "en": "banner5-en.jpg",
-            "es": "banner5-es.jpg"
+            "en": "banner4-en.jpg",
+            "es": "banner4-es.jpg"
         },
         "maps": {
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "208,258,447,310",
+                    "coords": "211,259,449,310",
                     "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "210,258,523,310",
+                    "coords": "209,257,522,309",
                     "url": "/sign-up/free"
                 }
             ]
