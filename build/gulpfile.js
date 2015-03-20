@@ -158,7 +158,7 @@ gulp.task('extras', function (cb) {
  * Copy all the tools in the project a tools directory
  */
 gulp.task('tools', function () {
-    return gulp.src(['../tools/*.*'], { dot: true })
+    return gulp.src(['../tools/**/*'], { dot: true })
         .pipe(gulp.dest('dist/tools'));
 });
 
