@@ -222,7 +222,7 @@ a.btn-sign:hover {
     float: left;
     width: 100%;
     position: relative;
-    background: #131825;
+    background: #fff;
 }
 
 .banner .banner-wrap {
@@ -287,7 +287,7 @@ a.btn-sign:hover {
     float: left;
     width: 100%;
     position: relative;
-    background: #131825;
+    background: #fff;
 }
 
 .channels .channels-wrap {
@@ -300,6 +300,12 @@ a.btn-sign:hover {
     float: left;
     width: 100%;
     z-index: 9;
+}
+
+.channels-header {
+    padding: 40px 0 0 0;
+    color: #613e73;
+    font-size: 18px;
 }
 
 .toast-error {
@@ -323,7 +329,7 @@ a.btn-sign:hover {
 }
 
 .user-home-box {
-    background-color: #131825;
+    background-color: #fff;
 }
 
 .user-home-wrap {
@@ -421,6 +427,13 @@ a.btn-sign:hover {
     right: 10px;
     text-align: right;
     background: url(../img/slide-arrow.png) no-repeat -30px 0;
+}
+
+#carousel-banner h1 {
+    background: none;
+    text-align: left;
+    text-transform: none;
+    font-family: 'radikalthin';
 }
 
 #carousel-banner .carousel-caption1 {

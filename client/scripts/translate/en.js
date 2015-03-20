@@ -246,6 +246,7 @@
             HOME_WATCH_LIVE: 'Watch live news, sports & events from around the world',
             HOME_WATCH_ANY_DEVICE: 'Watch on your TV, Tablet, Phone PC, Game System and more.',
             HOME_NO_CONTRACTS: 'No Contracts, Cancel Any Time',
+            HOME_ONE_LOW_MONTHLY: 'One low monthly price gets you ALL of these channels and more!',
             INDEX_JOIN_TV_EVOLUTION: 'Join the TV Evolution!',
             INDEX_OTHER_LANGUAGE: 'Español',
             INDEX_SIGN_IN: 'Sign In',
