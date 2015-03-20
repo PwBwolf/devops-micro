@@ -3,7 +3,7 @@
 module.exports = {
     imageWidth: 1350,
     imageHeight: 640,
-    imageSize: 716800, // 700kB,
+    imageSize: 307200, // 300kB,
     imageType: 'image/jpeg',
     db: {
         development: 'mongodb://localhost/yiptv',
