@@ -94,6 +94,12 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
+            .when('/player',
+            {
+                templateUrl: 'views/player.html',
+                controller: 'playerCtrl',
+                access: access.public
+            })
             .when('/account',
             {
                 templateUrl: 'views/account.html',
