@@ -824,6 +824,26 @@ footer .f-btm a:hover {
     margin: 0 0 10%;
 }
 
+.content-area .free-sign-up-box h1 {
+    font-family: 'radikallight';
+    background: url(../img/bdr-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0 0 1%;
+}
+
+.content-area .free-sign-up-box h2 {
+    font-family: 'radikallight';
+    font-size: 20px;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin-bottom: 8%;
+}
+
 .content-area h1 span {
     background: #fff;
     padding: 0px 2% 0px 2%;
@@ -851,6 +871,26 @@ footer .f-btm a:hover {
 
 .setting-box a:hover {
     color: #A03269;
+}
+
+.free-sign-up-box {
+    width: 700px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: auto;
+    margin-top: -55px;
+}
+
+.free-sign-up-box a {
+    color: #A03269;
+    font-weight: bold;
+}
+
+.free-sign-up-box a:hover {
+    color: #A03269;
+    text-decoration: underline;
 }
 
 .forgot-box {
@@ -1443,6 +1483,10 @@ a.btn-import:hover {
         margin-top: 0px;
     }
 
+    .free-sign-up-box {
+        width: 100%;
+    }
+
     .sign-up-box {
         width: 100%;
     }
@@ -1624,6 +1668,12 @@ a.btn-import:hover {
     }
 
     .sign-up-box {
+        width: 100%;
+        font-size: 17px;
+        margin-top: 0px;
+    }
+
+    .free-sign-up-box {
         width: 100%;
         font-size: 17px;
         margin-top: 0px;

@@ -197,9 +197,9 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/press-release',
+            .when('/media',
             {
-                templateUrl: 'views/press-release.html',
+                templateUrl: 'views/media.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
