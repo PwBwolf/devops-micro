@@ -348,7 +348,7 @@
             PREFERENCES_SAVE_ERROR: 'Error al guardar sus preferencias. Por favor pongase en contacto con servicio al cliente',
             PREFERENCES_SUCCESS_HEADING: 'Preferencias guardada',
             PREFERENCES_SUCCESS_MESSAGE: 'Sus preferencias han sido guardada con exito.',
-            MEDIA_HEADING: 'YipTV en la Prensa',
+            MEDIA_HEADING: 'Media',
             MEDIA_DATE1: 'Marzo 11, 2015',
             MEDIA_TITLE1: 'YipTV Anuncia Su Equipo Ejecutivos',
             MEDIA_DATE2: 'Marzo 11, 2015',
