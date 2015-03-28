@@ -1,28 +1,5 @@
 [
     {
-        "order": 1,
-        "imageFile": {
-            "en": "banner1-en.jpg",
-            "es": "banner1-es.jpg"
-        },
-        "maps": {
-            "en": [
-                {
-                    "shape": "rect",
-                    "coords": "18,477,162,529",
-                    "url": "/sign-up/free"
-                }
-            ],
-            "es": [
-                {
-                    "shape": "rect",
-                    "coords": "11,492,188,544",
-                    "url": "/sign-up/free"
-                }
-            ]
-        }
-    },
-    {
         "order": 2,
         "imageFile": {
             "en": "banner2-en.jpg",
