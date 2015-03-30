@@ -1,3 +1,5 @@
+'use strict';
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../server/common/config/config');
@@ -17,8 +19,9 @@ var mailOptions = {
 };
 
 email.sendEmail(mailOptions, function (err) {
-    console.log('New build notification email sent...');
     if (err) {
         console.log(err);
+    } else {
+        console.log('New build notification email sent...');
     }
 });

@@ -792,6 +792,12 @@ footer .f-btm a:hover {
     margin-right: 0;
 }
 
+.channel-img {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}
+
 .content-area {
     float: left;
     width: 100%;
