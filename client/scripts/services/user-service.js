@@ -155,6 +155,10 @@
 
             updatePreferences: function(data, success, error) {
                 $http.post('/api/update-preferences', data).success(success).error(error);
+            },
+
+            getUserChannels: function(success, error) {
+                $http.get('/api/get-user-channels').success(success).error(error);
             }
          };
     }]);

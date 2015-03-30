@@ -13,8 +13,6 @@
     <link rel=”alternate” href=”http://yiptv.com{{currentRoute}}” hreflang=”x-default” />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
     <style>
         .ng-hide {
             display: none !important;
@@ -23,9 +21,12 @@
             display: none !important;
         }
     </style>
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
+    <link rel="stylesheet" href="bower_components/bxslider-4/dist/jquery.bxslider.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
@@ -116,7 +117,7 @@
 <script src="bower_components/es5-shim/es5-shim.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
-<!--<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>-->
+<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
@@ -133,11 +134,10 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/ng-table/dist/ng-table.js"></script>
-
+<script src="bower_components/bxslider-4/dist/jquery.bxslider.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:js scripts/scripts.js -->
-<!-- due to bugs in angular-payments modified version is used -->
 <script src="scripts/lib/angular-payments.js"></script>
 <script src="scripts/lib/angular-rwdImageMaps.js"></script>
 <script src="scripts/config/app.js"></script>
@@ -157,13 +157,15 @@
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
 <script src="scripts/directives/bootstrap-carousel.js"></script>
-<script src="scripts/directives/jwplayer.js"></script>
+<script src="scripts/directives/jw-player.js"></script>
+<script src="scripts/directives/bx-slider.js"></script>
 <script src="scripts/directives/goto.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>
 <script src="scripts/services/app-service.js"></script>
 <script src="scripts/services/user-service.js"></script>
+<script src="scripts/services/media-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/admin-service.js"></script>
