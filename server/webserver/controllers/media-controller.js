@@ -7,7 +7,7 @@ var fs = require('fs'),
 
 module.exports = {
     getChannel: function (req, res) {
-        fs.readFile('channels.json', 'utf8', function (err, data) {
+        fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
             if (err) {
                 console.log('Error reading channels.json' + err);
                 return res.status(500).end();
@@ -50,7 +50,7 @@ module.exports = {
     },
 
     getUserChannels: function(req, res) {
-        fs.readFile('channels.json', 'utf8', function (err, data) {
+        fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
             if (err) {
                 console.log('Error reading channels.json' + err);
                 return res.status(500).end();
