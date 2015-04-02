@@ -5,7 +5,7 @@
 
         <div class="container marketing" ng-hide="user.type === 'free'">
             <div class="row">
-                <div class="col-lg-12 col-md-12  col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <p class="text-center" translate="UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED">Cannot upgrade subscriptions as you are already a paid user.</p>
                 </div>
             </div>
@@ -13,6 +13,8 @@
 
         <div class="container" ng-show="user.type === 'free'">
             <div class="sign-up-box">
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
                 <div class="label-text justify-text"><span translate="UPGRADE_SUBSCRIPTION_MESSAGE">You are upgrading to a paid account. Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription</span></div>
                 <br>
 

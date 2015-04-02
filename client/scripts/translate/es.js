@@ -515,7 +515,7 @@
             SIGN_IN_CANCELED_SUBSCRIPTION_MESSAGE: 'Usted no tiene una suscripcion activa. Desea reactivar su suscripcion?',
             SIGN_IN_TRIAL_ENDED_MESSAGE: 'Su prueba gratuita ha terminado. Desea actualizar su suscripcion?',
             SIGN_UP_HEADING: 'Registrarse',
-            SIGN_UP_MESSAGE: 'Se está registrando como un usuario de pago. se le cobrarán $ 14,99 en su tarjeta de crédito al registrarse.',
+            SIGN_UP_MESSAGE: '<span class="sign-up-bold">!Inscribirse es fácil!</span><span class="sign-up-regular"> No hay contrato y podrá cancelar en cualquier momento. Está a mementos de obtener TV de alta calidad de alrededor del mundo. Prepárate para ver el futuro de la televisión.</span>',
             SIGN_UP_FIRST_NAME: 'Nombre',
             SIGN_UP_FIRST_NAME_REQUIRED: 'Ingrese su nombre',
             SIGN_UP_LAST_NAME_REQUIRED: 'Ingrese su apellido',
