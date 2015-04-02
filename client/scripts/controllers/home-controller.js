@@ -12,7 +12,11 @@
         }
 
         $scope.imageMapClick = function (url) {
-            $location.path(url);
+            if(url.charAt(0) === '/') {
+                $location.path(url);
+            } else {
+                $window.open(url);
+            }
         };
 
         $scope.onWebSliderChange = function () {
