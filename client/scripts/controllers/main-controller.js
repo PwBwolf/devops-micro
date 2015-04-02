@@ -186,7 +186,11 @@
                         }
                     }, function () {
                         loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
-                        aioWindow.location.href = $scope.appConfig.url + 'error';
+                        if (aioWindow && !aioWindow.closed) {
+                            aioWindow.close();
+                            aioWindow = undefined;
+                        }
+                        $location.path('/error');
                     });
                 }
             }

@@ -3,7 +3,7 @@
     <div>&nbsp;</div>
     <div class="banner" ng-hide="webSliderLoaded">
         <div class="banner-wrap">
-            <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="5000">
+            <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="8000">
                 <ul class="carousel-inner">
                     <li class="item active">
                         <img src="img/banner5.jpg" alt="...">
@@ -81,7 +81,7 @@
     </div>
     <div class="webslider" ng-show="webSliderLoaded">
         <div class="webslider-wrap">
-            <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="5000">
+            <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="8000">
                 <ul class="carousel-inner">
                     <li class="item" ng-repeat="slide in webSliders" ng-class="{active: $index === 0}">
                         <img hidefocus="true" alt="..." usemap="#img{{$index+1}}-{{language}}" rwdimgmap width="1350" height="640" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
