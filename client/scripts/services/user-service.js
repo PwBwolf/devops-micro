@@ -129,7 +129,8 @@
             getAioToken: function (success, error) {
                 $http({
                     url: '/api/get-aio-token',
-                    method: 'GET'
+                    method: 'GET',
+                    timeout: 10000
                 }).success(success).error(error);
             },
 

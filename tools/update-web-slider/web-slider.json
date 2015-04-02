@@ -1,5 +1,38 @@
 [
     {
+        "order": 1,
+        "imageFile": {
+            "en": "banner1-en.jpg",
+            "es": "banner1-es.jpg"
+        },
+        "maps": {
+            "en": [
+                {
+                    "shape": "rect",
+                    "coords": "60,511,307,585",
+                    "url": "https://play.google.com/store/apps/details?id=com.yiptv.android.client2"
+                },
+                {
+                    "shape": "rect",
+                    "coords": "343,511,592,585",
+                    "url": "https://itunes.apple.com/us/app/yiptv/id972197370?mt=8&uo=4&at=10lu5f&ct=w"
+                }
+            ],
+            "es": [
+                {
+                    "shape": "rect",
+                    "coords": "59,504,304,589",
+                    "url": "https://play.google.com/store/apps/details?id=com.yiptv.android.client2"
+                },
+                {
+                    "shape": "rect",
+                    "coords": "340,506,585,588",
+                    "url": "https://itunes.apple.com/us/app/yiptv/id972197370?mt=8&uo=4&at=10lu5f&ct=w"
+                }
+            ]
+        }
+    },
+    {
         "order": 2,
         "imageFile": {
             "en": "banner2-en.jpg",
@@ -9,15 +42,15 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "9,181,153,231",
-                    "url": "/sign-up/paid"
+                    "coords": "45,517,406,598",
+                    "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "10,178,187,231",
-                    "url": "/sign-up/paid"
+                    "coords": "45,517,406,598",
+                    "url": "/sign-up/free"
                 }
             ]
         }
@@ -32,37 +65,14 @@
             "en": [
                 {
                     "shape": "rect",
-                    "coords": "209,176,354,227",
-                    "url": "/sign-up/paid"
-                }
-            ],
-            "es": [
-                {
-                    "shape": "rect",
-                    "coords": "210,174,387,225",
-                    "url": "/sign-up/paid"
-                }
-            ]
-        }
-    },
-    {
-        "order": 4,
-        "imageFile": {
-            "en": "banner4-en.jpg",
-            "es": "banner4-es.jpg"
-        },
-        "maps": {
-            "en": [
-                {
-                    "shape": "rect",
-                    "coords": "211,259,449,310",
+                    "coords": "45,517,406,598",
                     "url": "/sign-up/free"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
-                    "coords": "209,257,522,309",
+                    "coords": "45,517,406,598",
                     "url": "/sign-up/free"
                 }
             ]

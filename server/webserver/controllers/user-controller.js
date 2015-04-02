@@ -800,7 +800,6 @@ function getGuestCounter() {
     if (getGuestCounter.count >= config.aioGuestAccountList.length) {
         getGuestCounter.count = 0;
     }
-    console.log(getGuestCounter.count);
     return getGuestCounter.count;
 }
 
