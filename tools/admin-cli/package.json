@@ -1,0 +1,9 @@
+{
+  "name": "Admin-CLI",
+  "version": "0.0.1",
+  "description": "Admin CLI Tool",
+  "main": "main.js",
+  "dependencies": {
+    "sf": "^0.1.7"
+  }
+}
