@@ -31,9 +31,9 @@ if (typeof password === 'undefined') {
     var hasNumbers = /\d/.test(password);
     var hasNonAlphas = /\W|_/.test(password);
     var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
-    var isComplexPassword = (password.length >= 8) && (characterGroupCount > 3);
+    var isComplexPassword = (password.length >= 8) && (password.length <= 20) && (characterGroupCount > 3);
     if (!isComplexPassword) {
-        console.log('Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character');
+        console.log('Password should be between 8 to 20 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character');
         process.exit(1);
     }
 }
@@ -44,7 +44,7 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/config/models')(modelsPath);
 var Users = mongoose.model('User');
 
-Users.findOne({email: email}, function (err, user) {
+Users.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
         console.log(err);
         process.exit(1);

@@ -25,7 +25,7 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/config/models')(modelsPath);
 var Users = mongoose.model('User');
 
-Users.findOne({email: email}, function (err, user) {
+Users.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
         console.log(err);
         process.exit(1);
