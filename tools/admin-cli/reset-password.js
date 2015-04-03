@@ -11,7 +11,7 @@ var email = process.argv[2],
     password = process.argv[3];
 
 if (typeof email === 'undefined') {
-    console.log('Email is missing!\n\rUsage: node change-password <email> <password>');
+    console.log('Email is missing!\n\rUsage: node reset-password <email> <password>');
     process.exit(1);
 } else {
     var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
@@ -23,7 +23,7 @@ if (typeof email === 'undefined') {
 }
 
 if (typeof password === 'undefined') {
-    console.log('Password is missing!\n\rUsage: node change-password <email> <password>');
+    console.log('Password is missing!\n\rUsage: node reset-password <email> <password>');
     process.exit(1);
 } else {
     var hasUpperCase = /[A-Z]/.test(password);
@@ -49,7 +49,13 @@ Users.findOne({email: email}, function (err, user) {
         console.log(err);
         process.exit(1);
     } else if (!user) {
-        console.log('User not found');
+        console.log('Password cannot be changed as the user was not found.');
+        process.exit(1);
+    } else if (user.status === 'registered') {
+        console.log('Password cannot be changed as the account is not verified.');
+        process.exit(1);
+    } else if (user.status === 'failed') {
+        console.log('Password cannot be changed as the account was not created successfully.');
         process.exit(1);
     } else {
         user.password = password;
@@ -68,7 +74,7 @@ Users.findOne({email: email}, function (err, user) {
                 emailService.sendEmail(mailOptions, function (err2) {
                     if (err2) {
                         console.log(err2);
-                        console.log('Unable to sent password changed email notification but password has been changed.');
+                        console.log('Unable to sent password changed email notification but password has been changed successfully.');
                         process.exit(1);
                     } else {
                         console.log('Password changed email notification sent successfully.');
