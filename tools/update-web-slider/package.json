@@ -1,8 +1,8 @@
 {
-  "name": "Web-Slider",
+  "name": "Update-Web-Slider",
   "version": "0.0.1",
   "description": "Tool to upload web sliders to DB",
-  "main": "main.js",
+  "main": "update-web-slider.js",
   "dependencies": {
     "async": "^0.9.0",
     "image-size": "^0.3.5",

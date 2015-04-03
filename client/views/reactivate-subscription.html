@@ -13,8 +13,11 @@
 
         <div class="container" ng-show="user.type === 'paid' && user.status === 'canceled'">
             <div class="sign-up-box">
-                <div class="label-text justify-text"><span translate="REACTIVATE_SUBSCRIPTION_MESSAGE">Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription</span></div>
-                <br>
+                <div class="frm">
+                    <div class="frm-btn">
+                        <div class="label-text justify-text"><span translate="REACTIVATE_SUBSCRIPTION_MESSAGE">Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription</span></div>
+                    </div>
+                </div>
 
                 <form name="form" id="form" ng-submit="reactivateSubscription()" novalidate>
                     <div class="frm-btn">
