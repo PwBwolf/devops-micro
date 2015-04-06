@@ -34,7 +34,8 @@ module.exports = {
                     url: config.url,
                     aioPortalUrl: config.aioPortalUrl,
                     freePreviewTime: config.freePreviewTime,
-                    webSliderVersion: version.webSliderVersion
+                    webSliderVersion: version.webSliderVersion,
+                    graceNoteImageUrl: config.graceNoteImageUrl
                 };
                 appConfig = _.assign(appConfig._doc, props);
                 return res.json(appConfig);

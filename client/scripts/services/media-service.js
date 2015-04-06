@@ -10,6 +10,14 @@
                     url: '/api/get-channel',
                     params: {channelId: channelId}
                 });
+            },
+
+            getChannelGuide: function (stationId, name) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/get-channel-guide',
+                    params: {stationId: stationId, name: name}
+                });
             }
         };
     }]);

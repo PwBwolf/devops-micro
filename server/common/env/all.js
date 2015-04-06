@@ -16,6 +16,10 @@ module.exports = {
     factProviders: {},
     postProcessors: {},
     freePreviewTime: 120000,
+    graceNoteLineupId: 'USA-FL70393-DEFAULT',
+    graceNoteApiUrl: 'http://data.tmsapi.com/v1.1',
+    graceNoteApiKey: 'afcqtd2rkgbrw4u4hyg7uuz3',
+    graceNoteImageUrl: 'http://yipt.tmsimg.com/',
     contactUsEmailSubject: 'New Contact Us Request',
     contactUsEmailBody: '<table cellpadding="0" cellspacing="0" border="0" style="background-color:#fff; width:100%;height:100%"> <tr> <td align="center"> <table cellpadding="0" cellspacing="0" border="0" style="background-color:#fff;color:#000;width:80%;font-size:14px;font-family:Verdana"> <tr style="background-color:#f4f1ec"> <td style="padding:10px"> <table cellpadding="0" cellspacing="0" border="0"> <tr> <td><img width="87" height="80" style="vertical-align:middle" title="YipTV" alt="YipTV" src="{0}logo.png" /></td> </tr> </table> </td> </tr> <tr> <td style="width:90%;padding:20px 50px;color: #000;font-size:14px;font-family:Verdana;text-align:justify"> <p>New Contact Us Request</p> </td> </tr> <tr> <td style="width:90%;padding:20px 50px;color: #000;font-size:14px;font-family:Verdana;text-align:justify"> <table cellpadding="0" cellspacing="0" border="0"> <tr> <td style="font-weight: bold">Name:</td> <td>{1}</td> </tr> <tr> <td style="font-weight: bold">Email:</td> <td>{2}</td> </tr> <tr> <td style="font-weight: bold">Telephone:&nbsp;</td> <td>{3}</td> </tr> <tr> <td style="font-weight: bold">Country:</td> <td>{4}</td> </tr> <tr> <td style="font-weight: bold">Interest:</td> <td>{5}</td> </tr> <tr> <td valign="top" style="font-weight: bold;vertical-align: text-top">Details:</td> <td>{6}</td> </tr> </table> </td> </tr> <tr style="background-color:#f4f1ec"> <td align="center" style="padding:20px;font-family:Verdana;font-size: 12px"> Please do not reply to this message; it was sent from an unmonitored email address. This message is a service email related to your use of YipTV. <br /><br /> <p style="color:#808080">YipTV Inc., West Palm Beach, FL, USA</p> </td> </tr> </table> </td> </tr></table>',
     accountVerificationEmailSubject: {

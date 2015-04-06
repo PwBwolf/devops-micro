@@ -8,7 +8,8 @@
                 var slider = element.bxSlider(scope.$eval(attrs.setup));
 
                 scope.$watch(attrs.data, function () {
-                    slider.reloadSlider();
+                    slider.destroySlider();
+                    slider = element.bxSlider(scope.$eval(attrs.setup));
                 }, true);
             }
         };
