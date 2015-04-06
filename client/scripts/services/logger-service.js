@@ -21,6 +21,10 @@
 
             logWarning: function (message) {
                 logIt(message, 'warning');
+            },
+
+            logClear: function () {
+                toastr.clear();
             }
         };
         return service;

@@ -375,6 +375,70 @@ a.btn-sign:hover {
     font-size: 12px;
 }
 
+.bx-wrapper img {
+    padding: 20px;
+}
+
+.bx-wrapper li {
+    cursor: pointer;
+}
+
+.bx-wrapper li.selectedChannel {
+    background-color: #A03269;
+}
+
+.bx-wrapper li a:hover {
+    color: #000;
+}
+
+span.player-icon:hover {
+    background: url(../img/pgplay.png) center center no-repeat;
+}
+
+span.later-icon:hover {
+    background: url(../img/pglater.png) center center no-repeat;
+}
+
+span.pg-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background-size: auto 25% !important;
+}
+
+.cg-title {
+    text-overflow: ellipsis;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cg-time {
+    text-overflow: ellipsis;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+.cg-date {
+    text-overflow: ellipsis;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.program-details {
+    background-color: #f4f1ec;
+    border: solid 1px #000;
+}
+
+.program-details-header {
+    font-family: 'gotham-bookgotham-book';
+}
+
 #carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
     background-image: none;
 }

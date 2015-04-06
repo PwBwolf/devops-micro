@@ -3,6 +3,8 @@
 var fs = require('fs'),
     crypto = require('crypto'),
     URI = require('URIjs'),
+    logger = require('../../common/config/logger'),
+    graceNote = require('../../common/services/grace-note'),
     _ = require('lodash');
 
 module.exports = {
@@ -23,7 +25,7 @@ module.exports = {
                     console.log('channels.json file is empty');
                     return res.status(500).end();
                 } else {
-                    var channel = _.find(channels, function(channel) {
+                    var channel = _.find(channels, function (channel) {
                         return channel.id === req.query.channelId;
                     });
                     var now = new Date();
@@ -39,7 +41,7 @@ module.exports = {
                     hmac.write(path);
                     hmac.end();
                     var hash = hmac.read();
-                    if(hash.length > 20) {
+                    if (hash.length > 20) {
                         hash = hash.substr(0, 20);
                     }
                     channel.live_pc_url = channel.live_pc_url + '?valid_from=' + validFrom + '&valid_to=' + validTo + '&hash=5' + hash;
@@ -49,7 +51,26 @@ module.exports = {
         });
     },
 
-    getUserChannels: function(req, res) {
+    getChannelGuide: function (req, res) {
+        if (req.query.stationId) {
+            var now = new Date();
+            var startTime = isoDate(now);
+            now.setDate(now.getDate() + 1);
+            var endTime = isoDate(now);
+            graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
+                if (err) {
+                    logger.logError(JSON.stringify(err));
+                    return res.status(500).end();
+                }
+                return res.json(data);
+            });
+        } else {
+            var guide = [{airings: [{startTime: '', endTime: '', program: {title: req.query.name, preferredImage: {uri: '/img/channels/nothumb.png'}}}]}];
+            return res.json(guide);
+        }
+    },
+
+    getUserChannels: function (req, res) {
         fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
             if (err) {
                 console.log('Error reading channels.json' + err);
@@ -72,3 +93,15 @@ module.exports = {
         });
     }
 };
+
+function pad(number) {
+    var r = String(number);
+    if (r.length === 1) {
+        r = '0' + r;
+    }
+    return r;
+}
+
+function isoDate(date) {
+    return date.getUTCFullYear() + '-' + pad(date.getUTCMonth() + 1) + '-' + pad(date.getUTCDate()) + 'T' + pad(date.getUTCHours()) + ':' + pad(date.getUTCMinutes()) + 'Z';
+}

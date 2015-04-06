@@ -476,7 +476,7 @@ module.exports = {
                 logger.logError(JSON.stringify(err));
                 return res.status(500).end();
             }
-            if (!req.email) {
+            if (!req.email && data) {
                 data.isGuest = true;
             }
             return res.send(data);
