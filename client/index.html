@@ -4,15 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="fragment" content="!" />
-    <meta name="description" content="">
+    <meta name="description" content="Watch over 100+ USA & Spanish TV shows and channels in variety of genres such as news, sports, lifestyle, and entertainment. Try it for free.">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <meta name="keywords" content="YipTV,TV,Online TV,IP TV">
-    <meta name="description" content="YipTV">
     <base href="/">
     <link rel=”alternate” href=”http://yiptv.com{{currentRoute}}?lang=es” hreflang=”es” />
     <link rel=”alternate” href=”http://yiptv.com{{currentRoute}}” hreflang=”x-default” />
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" type="image/png"  />
     <style>
         .ng-hide {
             display: none !important;
@@ -26,7 +25,6 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="bower_components/toastr/toastr.css"/>
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
-
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
@@ -35,7 +33,7 @@
     <link rel="stylesheet" href="styles/webslider.css"/>
     <link rel="stylesheet" href="styles/jquery.bxslider.css"/>
     <!-- endbuild -->
-    <title ng-bind="appConfig.appName">YipTV</title>
+    <title ng-bind-template="{{appConfig.appName}} - Watch Live Internet TV & Spanish Channels Online">YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
 <body>
 <!--[if lt IE 9]>
@@ -54,8 +52,9 @@
                 </button>
                 <div class="logo"><a href="/"><img src="img/logo.png" alt="YipTV" title="YipTV"></a><span class="logo-text" translate="INDEX_JOIN_TV_EVOLUTION">Join the TV Evolution!</span></div>
                 <div class="language"><span translate="INDEX_SWITCH_TO">Switch to </span><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE">English</a></div>
+                <div class="call-us"><span translate="INDEX_CALL_US">Call us toll free </span> <span class="message-bold" ng-bind="appConfig.customerCareNumber"></span></div>
             </div>
-            <div class="collapse navbar-collapse pull-right right-box home" id="navbar-collapse-1">
+            <div class="collapse navbar-collapse right-box home" id="navbar-collapse-1">
                 <div ng-cloak access-level="accessLevels.public" class="right-nav">
                     <a href="/refer-a-friend" access-level="accessLevels.public" class="btn-sign" translate="INDEX_REFER_FRIEND">Refer a Friend</a>
                     <a href="/sign-in" access-level="accessLevels.anon" class="btn-sign" translate="INDEX_SIGN_IN">Sign In</a>

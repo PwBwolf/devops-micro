@@ -52,6 +52,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();

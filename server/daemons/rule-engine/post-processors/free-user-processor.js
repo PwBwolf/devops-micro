@@ -27,6 +27,23 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
     });
 }
 
+function sendLastButOneReminderEmail(user) {
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.lastButOneReminderEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+    };
+
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('last reminder email sent to ' + user.email);
+        }
+    });
+}
+
 function sendLastReminderEmail(user) {
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
@@ -172,39 +189,33 @@ function setUserActiveInAio(email, cb) {
     });
 }
 
-module.exports.send14DayReminderEmail = function (user) {
+module.exports.send4DayReminderEmail = function (user) {
     delete user.postProcessorKey;
-    sendReminderEmail(user, '16', '14');
+    sendReminderEmail(user, '3', '4');
 };
 
-module.exports.send21DayReminderEmail = function (user) {
+module.exports.send6DayReminderEmail = function (user) {
     delete user.postProcessorKey;
-    sendReminderEmail(user, '9', '21');
+    sendLastButOneReminderEmail(user, '1', '6');
 };
 
-module.exports.send28DayReminderEmail = function (user) {
-    delete user.postProcessorKey;
-    sendReminderEmail(user, '2', '28');
-};
-
-module.exports.send30DayReminderEmail = function (user) {
+module.exports.send7DayReminderEmail = function (user) {
     delete user.postProcessorKey;
     sendLastReminderEmail(user);
 };
 
-module.exports.send31DaySuspensionEmail = function (user) {
+module.exports.send8DaySuspensionEmail = function (user) {
     delete user.postProcessorKey;
     suspendAndSendEmail(user);
 };
 
-module.exports.send32DayReacquireEmail = function (user) {
+module.exports.send9DayReacquireEmail = function (user) {
     delete user.postProcessorKey;
     sendReacquireEmail(user);
 };
 
-config.postProcessors.freeUser14 = module.exports.send14DayReminderEmail;
-config.postProcessors.freeUser21 = module.exports.send21DayReminderEmail;
-config.postProcessors.freeUser28 = module.exports.send28DayReminderEmail;
-config.postProcessors.freeUser30 = module.exports.send30DayReminderEmail;
-config.postProcessors.freeUser31 = module.exports.send31DaySuspensionEmail;
-config.postProcessors.freeUser32 = module.exports.send32DayReacquireEmail;
+config.postProcessors.freeUser4 = module.exports.send4DayReminderEmail;
+config.postProcessors.freeUser6 = module.exports.send6DayReminderEmail;
+config.postProcessors.freeUser7 = module.exports.send7DayReminderEmail;
+config.postProcessors.freeUser8 = module.exports.send8DaySuspensionEmail;
+config.postProcessors.freeUser9 = module.exports.send9DayReacquireEmail;

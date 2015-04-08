@@ -21,7 +21,7 @@ header {
     background: #f4f1ec;
 }
 
-img[usemap], map area{
+img[usemap], map area {
     outline: none;
 }
 
@@ -35,7 +35,7 @@ img[usemap], map area{
     font-size: 18px;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     margin-left: 10px;
     display: none;
 
@@ -62,6 +62,7 @@ label {
     padding-left: 40px;
     font-size: 15px;
 }
+
 .checkbox label {
     margin-bottom: 10px;
 }
@@ -129,7 +130,7 @@ input[type="checkbox"]:checked + label:before {
 
 .language {
     float: right;
-    padding: 0px 0 16px;
+    padding: 0px 0 16px 30px;
     text-align: right;
 }
 
@@ -141,11 +142,21 @@ input[type="checkbox"]:checked + label:before {
     border-bottom: 1px dashed #8a8b8a;
     color: #8a8b8a;
     line-height: 20px !important;
-    margin: 0px 0 0px 5px !important;
+    margin: 0 0 0 5px !important;
 }
 
 .language a:hover {
-    margin: 0px 0 1px 5px;
+    margin: 0 0 1px 5px;
+}
+
+.call-us {
+    float: right;
+    padding: 0 0 16px;
+    text-align: right;
+}
+
+.call-us span {
+    color: #8a8b8a;
 }
 
 .phone {
@@ -1432,12 +1443,17 @@ a.btn-import:hover {
     margin: 15px 0 0px 25px;
 }
 
-.sign-in-redirect-message {
+.message {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
-    text-transform: uppercase;
-    color: #A03269;
+    text-transform: none;
+    color: #000;
+}
+
+.message-bold {
+    font-family: 'gotham-boldgotham-bold';
+    color: #000 !important;
 }
 
 .sign-in a {
@@ -1683,6 +1699,11 @@ a.btn-import:hover {
         text-align: center;
     }
 
+    .call-us {
+        width: 100%;
+        padding-right: 15px;
+    }
+
     .user-home-box .caption {
         left: 10%;
     }
@@ -1880,6 +1901,10 @@ a.btn-import:hover {
 }
 
 @media screen and (max-width: 639px) {
+
+    .call-us {
+        padding-right: 0;
+    }
 
     .user-home-box .caption {
         left: 1%;
