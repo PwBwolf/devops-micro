@@ -149,7 +149,7 @@
             FAQ_ANSWER10: 'Estamos en los Estados Unidos (en los 50 estados y en Puerto Rico) pero tenemos contenido y canales de todo el mundo.',
             FAQ_HEADER2: 'Prueba gratuita y facturación de YipTV',
             FAQ_QUESTION11: '¿Cuánto dura la prueba gratuita?',
-            FAQ_ANSWER11: 'Puede probar el servicio de forma gratuita por 30 días. Disfrute en el acto del contenido de LiveTV y WebTV en su computadora de escritorio o portátil y dispositivos Android.',
+            FAQ_ANSWER11: 'Puede probar el servicio de forma gratuita por 7 días. Disfrute en el acto del contenido de LiveTV y WebTV en su computadora de escritorio o portátil y dispositivos Android.',
             FAQ_QUESTION12: '¿Cómo funciona la facturación?',
             FAQ_ANSWER12: '<span class="faq-bold-text">Únase ahora</span> por $14,99 y recibirá la factura una vez al mes con la fecha en que se registró originalmente. No hay contratos ni tasas de cancelación.',
             FAQ_QUESTION13: '¿Cómo abono el servicio de YipTV?',

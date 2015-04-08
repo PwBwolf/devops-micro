@@ -149,7 +149,7 @@
             FAQ_ANSWER10: 'We’re in the United States (all 50 states and Puerto Rico), but we have content and channels from around the world.',
             FAQ_HEADER2: 'YipTV Free Trial and Billing',
             FAQ_QUESTION11: 'How long is my Free Trial?',
-            FAQ_ANSWER11: 'Try for free for 30 days. Instantly watch LiveTV and WebTV on your computer, laptop, and Android devices.',
+            FAQ_ANSWER11: 'Try for free for 7 days. Instantly watch LiveTV and WebTV on your computer, laptop, and Android devices.',
             FAQ_QUESTION12: 'How does billing work?',
             FAQ_ANSWER12: '<span class="faq-bold-text">Join Now</span> for $14.99 and you will be billed once a month on the date that you originally signed up. There are no contracts or cancellation fees.',
             FAQ_QUESTION13: 'How do I pay for YipTV?',
