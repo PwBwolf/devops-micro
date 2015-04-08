@@ -155,6 +155,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(JSON.stringify(err));
+                    } else {
+                        logger.logInfo('verification email sent to ' + mailOptions.to);
                     }
                 });
                 callback(null, userObj, accountObj);
@@ -296,6 +298,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('forgot password email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
@@ -347,6 +351,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
@@ -395,6 +401,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('resend verification email sent to ' + mailOptions.to);
                     }
                 });
                 res.status(200).end();
@@ -429,6 +437,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();

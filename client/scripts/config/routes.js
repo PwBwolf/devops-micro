@@ -94,7 +94,7 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
-            .when('/player',
+            .when('/player-4872',
             {
                 templateUrl: 'views/player.html',
                 controller: 'playerCtrl',

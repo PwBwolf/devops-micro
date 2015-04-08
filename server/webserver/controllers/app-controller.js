@@ -136,6 +136,8 @@ module.exports = {
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
                     logger.logError(err);
+                } else {
+                    logger.logInfo('contact us email sent to ' + mailOptions.to);
                 }
             });
             return res.status(200).end();
@@ -182,6 +184,8 @@ module.exports = {
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
                         logger.logError(err);
+                    } else {
+                        logger.logInfo('refer a friend email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
