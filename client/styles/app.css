@@ -159,6 +159,11 @@ input[type="checkbox"]:checked + label:before {
     color: #8a8b8a;
 }
 
+
+.call-us .number {
+    color: #000;
+}
+
 .phone {
     display: inline-block;
     background: url(../img/img-phone.png) no-repeat;

@@ -519,7 +519,7 @@
             SIGN_IN_CANCELED_SUBSCRIPTION_MESSAGE: 'Usted no tiene una suscripcion activa. Desea reactivar su suscripcion?',
             SIGN_IN_TRIAL_ENDED_MESSAGE: 'Su prueba gratuita ha terminado. Desea actualizar su suscripcion?',
             SIGN_UP_HEADING: 'Registrarse',
-            SIGN_UP_MESSAGE: '<span class="message-bold">¡Inscribirse es fácil!</span> No hay contrato y podrá cancelar en cualquier momento. Está a mementos de obtener TV de alta calidad de alrededor del mundo. Prepárate para ver el futuro de la televisión.',
+            SIGN_UP_MESSAGE: '¡Inscribirse es fácil! No hay contrato y podrá cancelar en cualquier momento. Está a mementos de obtener TV de alta calidad de alrededor del mundo. Prepárate para ver el futuro de la televisión.',
             SIGN_UP_FIRST_NAME: 'Nombre',
             SIGN_UP_FIRST_NAME_REQUIRED: 'Ingrese su nombre',
             SIGN_UP_LAST_NAME_REQUIRED: 'Ingrese su apellido',
