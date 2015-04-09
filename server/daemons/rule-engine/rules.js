@@ -8,8 +8,8 @@ function buildRules() {
     var def = Q.defer();
     var ruleData = [
         {
-            'name': 'free-user-14-reminder',
-            'description': 'Send a reminder email to a free user after 14 days',
+            'name': 'free-user-4-reminder',
+            'description': 'Send a reminder email to a free user after 4 days',
             'priority': 1,
             'enabled': true,
             'on': 1,
@@ -17,7 +17,7 @@ function buildRules() {
                 var moment = require('moment');
                 if (fact.doctype === 'user') {
                     var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 14) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 4) {
                         cb(true);
                         return;
                     }
@@ -26,20 +26,20 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser14';
+                this.postProcessorKey = 'freeUser4';
                 cb();
             }
         },
         {
-            'name': 'free-user-21-reminder',
-            'description': 'Send a reminder email to a free user after 21 days',
+            'name': 'free-user-6-reminder',
+            'description': 'Send a reminder email to a free user after 6 days',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user') {
                     var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 21) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 6) {
                         cb(true);
                         return;
                     }
@@ -48,20 +48,20 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser21';
+                this.postProcessorKey = 'freeUser6';
                 cb();
             }
         },
         {
-            'name': 'free-user-28-reminder',
-            'description': 'Send a reminder email to a free user after 28 days',
+            'name': 'free-user-7-reminder',
+            'description': 'Send a reminder email to a free user after 7 days',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user') {
                     var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 28) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 7) {
                         cb(true);
                         return;
                     }
@@ -70,20 +70,20 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser28';
+                this.postProcessorKey = 'freeUser7';
                 cb();
             }
         },
         {
-            'name': 'free-user-30-reminder',
-            'description': 'Send a reminder email to a free user after 30 days',
+            'name': 'free-user-8-deactivation',
+            'description': 'Process user de-activation on the 8th day and send notification email',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user') {
                     var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 30) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 8) {
                         cb(true);
                         return;
                     }
@@ -92,20 +92,20 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser30';
+                this.postProcessorKey = 'freeUser8';
                 cb();
             }
         },
         {
-            'name': 'free-user-31-deactivation',
-            'description': 'Process user de-activation on the 31st day and send notification email',
+            'name': 'free-user-9-reacquire',
+            'description': 'Try and reacquire the user on the 9th day',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user') {
                     var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 31) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 9) {
                         cb(true);
                         return;
                     }
@@ -114,29 +114,7 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser31';
-                cb();
-            }
-        },
-        {
-            'name': 'free-user-32-reacquire',
-            'description': 'Try and reacquire the user on the 32nd day',
-            'priority': 1,
-            'enabled': true,
-            'condition': function (fact, cb) {
-                var moment = require('moment');
-                if (fact.doctype === 'user') {
-                    var created = fact.createdAt;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 32) {
-                        cb(true);
-                        return;
-                    }
-                }
-                cb(false);
-            },
-            'consequence': function (cb) {
-                this.process = true;
-                this.postProcessorKey = 'freeUser32';
+                this.postProcessorKey = 'freeUser9';
                 cb();
             }
         },

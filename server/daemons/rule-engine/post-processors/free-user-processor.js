@@ -39,7 +39,7 @@ function sendLastButOneReminderEmail(user) {
         if (err) {
             console.log(err);
         } else {
-            console.log('last reminder email sent to ' + user.email);
+            console.log('last but one reminder email sent to ' + user.email);
         }
     });
 }

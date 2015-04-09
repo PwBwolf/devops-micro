@@ -659,7 +659,7 @@
             UNDER_CONSTRUCTION_HEADING: 'Under Construction',
             UNDER_CONSTRUCTION_MESSAGE: 'The page you are looking is under construction and will be available shortly',
             UPGRADE_SUBSCRIPTION_HEADING: 'Upgrade Subscription',
-            UPGRADE_SUBSCRIPTION_MESSAGE: 'You are upgrading to a paid account. Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription',
+            UPGRADE_SUBSCRIPTION_MESSAGE: 'You are upgrading to a paid account. Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription.',
             UPGRADE_SUBSCRIPTION_BILLING_INFO: 'Enter your credit card details. If you need help call',
             UPGRADE_SUBSCRIPTION_CARD_NAME: 'Name on Credit Card',
             UPGRADE_SUBSCRIPTION_CARD_NAME_REQUIRED: 'Enter name as on your credit card',

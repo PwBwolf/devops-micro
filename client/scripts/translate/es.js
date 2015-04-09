@@ -659,7 +659,7 @@
             UNDER_CONSTRUCTION_HEADING: 'Bajo construccion',
             UNDER_CONSTRUCTION_MESSAGE: 'La pagina que usted busca esta bajo construccion y estara disponible en breve',
             UPGRADE_SUBSCRIPTION_HEADING: 'Actualizar Suscripcion',
-            UPGRADE_SUBSCRIPTION_MESSAGE: 'Usted esta actualizando su cuenta a una cuenta de pago. Su tarjeta de credito sera cargada $14.99 cada mes. Usted puede cancelar su suscripcion en cualquier momento yendo a Cuenta > Cancelar Suscripcion',
+            UPGRADE_SUBSCRIPTION_MESSAGE: 'Usted esta actualizando su cuenta a una cuenta de pago. Su tarjeta de credito sera cargada $14.99 cada mes. Usted puede cancelar su suscripcion en cualquier momento yendo a Cuenta > Cancelar Suscripcion.',
             UPGRADE_SUBSCRIPTION_BILLING_INFO: 'Introduzca sus datos de su tarjeta de credito. Si necesita ayuda, llame',
             UPGRADE_SUBSCRIPTION_CARD_NAME: 'Nombre en tarjeta de crédito',
             UPGRADE_SUBSCRIPTION_CARD_NAME_REQUIRED: 'Ingrese nombre como aparece en su tarjeta de credito',
