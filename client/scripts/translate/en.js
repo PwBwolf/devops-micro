@@ -98,6 +98,8 @@
             CHANGE_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully',
             COMP_SIGN_UP_HEADING: 'Sign Up',
             COMP_SIGN_UP_MESSAGE: 'Sign up for your complimentary YipTV account.',
+            COMP_SIGN_UP_VERIFYING: 'Verifying...',
+            COMP_SIGN_UP_CODE_EXPIRED: 'Your invitation code has expired!',
             COMP_SIGN_UP_FIRST_NAME: 'First Name',
             COMP_SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
             COMP_SIGN_UP_LAST_NAME_REQUIRED: 'Enter your last name',

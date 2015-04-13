@@ -28,8 +28,16 @@
                 $http.post('/api/send-raf-emails', data).success(success).error(error);
             },
 
-            getWebSliders: function() {
+            getWebSliders: function () {
                 return $http.get('/api/get-web-sliders');
+            },
+
+            checkComplimentaryCode: function (code) {
+                return $http({
+                    url: '/api/check-complimentary-code',
+                    method: 'GET',
+                    params: {code: code}
+                });
             }
         };
     }]);

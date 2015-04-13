@@ -1,7 +1,19 @@
 (function (app) {
     'use strict';
 
-    app.controller('complimentarySignUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
+    app.controller('complimentarySignUpCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter) {
+
+        $scope.status = 0; // 0 - checking, 1 - success, 2 - error
+        activate();
+
+        function activate() {
+            var code = $routeParams.compCode;
+            appSvc.checkComplimentaryCode(code).success(function(){
+                $scope.status = 1;
+            }).error(function(){
+                $scope.status = 2;
+            });
+        }
 
         $scope.mv = {disclaimer: true};
 

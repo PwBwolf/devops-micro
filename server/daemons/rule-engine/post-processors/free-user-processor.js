@@ -18,7 +18,7 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
             logger.logError('freeUserProcessor - sendReminderEmail - error sending ' + bodyDays + ' day email to ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo(bodyDays + ' day email sent to ' + user.email);
+            logger.logInfo('freeUserProcessor - sendReminderEmail - ' + bodyDays + ' day email sent to ' + user.email);
         }
     });
 }
@@ -35,7 +35,7 @@ function sendLastButOneReminderEmail(user) {
             logger.logError('freeUserProcessor - sendLastButOneReminderEmail - error sending last but one reminder email to ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo('last but one reminder email sent to ' + user.email);
+            logger.logInfo('freeUserProcessor - sendLastButOneReminderEmail - last but one reminder email sent to ' + user.email);
         }
     });
 }
@@ -52,7 +52,7 @@ function sendLastReminderEmail(user) {
             logger.logError('freeUserProcessor - sendLastReminderEmail - error sending last reminder email to ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo('last reminder email sent to ' + user.email);
+            logger.logInfo('freeUserProcessor - sendLastReminderEmail - last reminder email sent to ' + user.email);
         }
     });
 }
@@ -72,7 +72,7 @@ function suspendAndSendEmail(user) {
                 logger.logError('freeUserProcessor - suspendAndSendEmail - error sending suspension email to ' + user.email);
                 logger.logError(err);
             } else {
-                logger.logInfo('suspension email sent to ' + user.email);
+                logger.logInfo('freeUserProcessor - suspendAndSendEmail - suspension email sent to ' + user.email);
             }
         });
     }
@@ -90,7 +90,7 @@ function sendReacquireEmail(user) {
             logger.logError('freeUserProcessor - sendReacquireEmail - error sending re-acquire email to ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo('re-acquire email sent to ' + user.email);
+            logger.logInfo('freeUserProcessor - sendReacquireEmail - re-acquire email sent to ' + user.email);
         }
     });
 }

@@ -3,7 +3,16 @@
     <div class="setting-box">
         <h1><span translate="COMP_SIGN_UP_HEADING">Sign Up</span></h1>
 
-        <div class="container">
+        <div class="container marketing" ng-hide="status === 1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p ng-show="status === 0" class="text-center" translate="COMP_SIGN_UP_VERIFYING">Verifying...</p>
+                    <p ng-show="status === 2" class="text-center" translate="COMP_SIGN_UP_CODE_EXPIRED">Your invitation code has expired!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" ng-show="status === 1">
             <div class="sign-up-box">
                 <div class="frm">
                     <div class="frm-btn">
