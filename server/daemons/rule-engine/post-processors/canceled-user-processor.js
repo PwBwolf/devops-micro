@@ -18,7 +18,7 @@ function sendReminderEmail(user) {
             logger.logError('canceledUserProcessor - sendReminderEmail - error sending next day cancellation email to ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo('next day cancellation email sent to ' + user.email);
+            logger.logInfo('canceledUserProcessor - sendReminderEmail - next day cancellation email sent to ' + user.email);
         }
     });
 }

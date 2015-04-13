@@ -17,7 +17,7 @@ module.exports = {
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
     cloudSpongeDomainKey: '5FLQG2YJF2SGQ2JY4GCH',
     cancelSubscriptionForTrialUsers: true,
-    complimentarySignUpUrl: 'https://staging.yiptv.net/sign-up/comp/',
+    complimentarySignUpUrl: 'https://staging.yiptv.net/sign-up/complimentary/',
     freeSideApiKey: '',
     freeSideUrl: '',
     aioApiUrl: '',

@@ -12,9 +12,11 @@ var _ = require('lodash'),
     AppConfig = mongoose.model('AppConfig'),
     Version = mongoose.model('Version'),
     WebSlider = mongoose.model('WebSlider'),
+    ComplimentaryCode = mongoose.model('ComplimentaryCode'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
+    date = require('../../common/services/date'),
     sf = require('sf');
 
 module.exports = {
@@ -204,6 +206,30 @@ module.exports = {
                 });
                 return res.status(200).end();
             }
+        });
+    },
+
+    checkComplimentaryCode: function (req, res) {
+        ComplimentaryCode.findOne({code: req.query.code}, function (err, cc) {
+            if (err) {
+                logger.logError('appController - checkComplimentaryCode - error fetching complimentary code: ' + req.query.code);
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!cc) {
+                return res.status(404).send('CodeNotFound');
+            }
+            if (cc.disabled) {
+                return res.status(409).send('CodeDisabled');
+            }
+            if (cc.maximumAccounts <= cc.accountCount) {
+                return res.status(409).send('CodeMaxedOut');
+            }
+            var now = date.utcDateTime(new Date());
+            if (cc.startDate > now || cc.endDate < now) {
+                return res.status(409).send('CodeTimedOut');
+            }
+            return res.status(200).end();
         });
     }
 };

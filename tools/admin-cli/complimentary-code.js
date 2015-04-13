@@ -6,6 +6,7 @@ var config = require('../../server/common/config/config'),
     logger = require('../../server/common/config/logger'),
     date = require('../../server/common/services/date'),
     mongoose = require('../../server/node_modules/mongoose'),
+    moment = require('moment'),
     prompt = require('prompt'),
     uuid = require('node-uuid');
 
@@ -58,25 +59,27 @@ if (command === 'new') {
             startDate: {
                 description: 'Start Date [yyyy-mm-dd]',
                 message: 'Enter a valid date (past dates not allowed)',
-                default: date.utcDate(new Date()),
+                default: date.utcDateString(new Date()),
                 required: true,
                 format: 'date',
                 conform: function (value) {
                     var d1 = new Date(Date.parse(value));
-                    var d2 = new Date(Date.parse(date.utcDate(new Date())));
-                    return (d1 >= d2);
+                    var d2 = new Date(Date.parse(date.utcDateString(new Date())));
+                    var d3 = new Date(Date.parse('2099-12-31'));
+                    return moment(value, 'YYYY-MM-DD').isValid() && (d1 >= d2 && d1 <= d3);
                 }
             },
             endDate: {
                 description: 'End Date [yyyy-mm-dd]',
                 message: 'Enter a valid date (not lesser than start date)',
-                default: date.utcDate(new Date(Date.parse('2099-12-31'))),
+                default: date.utcDateString(new Date(Date.parse('2099-12-31'))),
                 required: true,
                 format: 'date',
                 conform: function (value) {
                     var d1 = new Date(Date.parse(value));
                     var d2 = new Date(Date.parse(prompt.history('startDate').value));
-                    return (d1 >= d2);
+                    var d3 = new Date(Date.parse('2099-12-31'));
+                    return moment(value, 'YYYY-MM-DD').isValid() && (d1 >= d2 && d1 <= d3);
                 }
             },
             duration: {
@@ -84,10 +87,10 @@ if (command === 'new') {
                 message: 'Enter a valid number greater than zero',
                 default: 36500,
                 required: true,
-                type: 'number',
+                pattern: /^\d+$/,
                 divisibleBy: 1,
                 conform: function (value) {
-                    return (value > 0);
+                    return (value > 0 && value <= 36500);
                 }
             },
             maximumAccounts: {
@@ -95,10 +98,10 @@ if (command === 'new') {
                 message: 'Enter a valid number greater than zero',
                 default: 1000000,
                 required: true,
-                type: 'number',
+                pattern: /^\d+$/,
                 divisibleBy: 1,
                 conform: function (value) {
-                    return (value > 0);
+                    return (value > 0 && value <= 1000000);
                 }
             }
         }
