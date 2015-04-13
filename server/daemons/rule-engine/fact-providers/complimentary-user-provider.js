@@ -2,7 +2,6 @@
 
 var _ = require('lodash'),
     mongoose = require('mongoose'),
-    moment = require('moment'),
     Q = require('q'),
     config = require('../../../common/config/config'),
     logger = require('../../../common/config/logger'),
@@ -16,6 +15,7 @@ module.exports.getComplimentaryUsers = function () {
             for (var i = 0; i < accounts.length; i++) {
                 if (accounts[i].primaryUser.status === 'active') {
                     accounts[i].primaryUser._doc = _.assign(accounts[i].primaryUser._doc, {doctype: 'user'});
+                    accounts[i].primaryUser._doc.type = 'comp';
                     userList.push(accounts[i].primaryUser._doc);
                 }
             }

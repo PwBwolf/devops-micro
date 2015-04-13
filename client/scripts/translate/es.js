@@ -99,7 +99,7 @@
             COMP_SIGN_UP_HEADING: 'Registrarse',
             COMP_SIGN_UP_MESSAGE: 'Comience su prueba gratuita de 7 días ahora! No es necesaria una tarjeta de crédito.',
             COMP_SIGN_UP_VERIFYING: 'Verifying...',
-            COMP_SIGN_UP_CODE_EXPIRED: 'Your invitation code has expired!',
+            COMP_SIGN_UP_CODE_EXPIRED: 'Your invitation code is either invalid or has expired!',
             COMP_SIGN_UP_FIRST_NAME: 'Nombre',
             COMP_SIGN_UP_FIRST_NAME_REQUIRED: 'Ingrese su nombre',
             COMP_SIGN_UP_LAST_NAME_REQUIRED: 'Ingrese su apellido',
