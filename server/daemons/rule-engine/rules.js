@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     Rule = mongoose.model('Rule'),
+    logger = require('../../common/config/logger'),
     Q = require('q');
 
 function buildRules() {
@@ -76,7 +77,7 @@ function buildRules() {
         },
         {
             'name': 'free-user-8-deactivation',
-            'description': 'Process user de-activation on the 8th day and send notification email',
+            'description': 'Deactivate user on the 8th day and send notification email',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
@@ -139,6 +140,28 @@ function buildRules() {
                 this.postProcessorKey = 'canceledNextDay';
                 cb();
             }
+        },
+        {
+            'name': 'complimentary-user-deactivation',
+            'description': 'Deactivate user and send notification email',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.status === 'comp-ended') {
+                    var validTill = fact.validTill;
+                    if (moment.utc().startOf('day').diff(moment(validTill).utc().startOf('day'), 'days') === 1) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'complimentaryEnded';
+                cb();
+            }
         }
     ];
 
@@ -160,7 +183,7 @@ function saveRule(ruleData) {
     var rule = new Rule(ruleData);
     rule.save(function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
             def.reject(err);
         } else {
             def.resolve();

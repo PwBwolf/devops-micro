@@ -1,13 +1,9 @@
 'use strict';
 
-var async = require('async'),
-    mongoose = require('mongoose'),
-    moment = require('moment'),
-    aio = require('../../../common/services/aio'),
-    billing = require('../../../common/services/billing'),
-    config = require('../../../common/config/config'),
+var config = require('../../../common/config/config'),
     email = require('../../../common/services/email'),
-    User = mongoose.model('User'),
+    logger = require('../../../common/config/logger'),
+    subscription = require('../../../common/services/subscription'),
     sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
@@ -17,12 +13,11 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
         subject: sf(config.reminderEmailSubject[user.preferences.defaultLanguage], subjectDays),
         html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'upgrade-subscription')
     };
-
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
         } else {
-            console.log(bodyDays + ' day email sent to ' + user.email);
+            logger.logInfo(bodyDays + ' day email sent to ' + user.email);
         }
     });
 }
@@ -34,12 +29,11 @@ function sendLastButOneReminderEmail(user) {
         subject: config.lastButOneReminderEmailSubject[user.preferences.defaultLanguage],
         html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
-
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
         } else {
-            console.log('last but one reminder email sent to ' + user.email);
+            logger.logInfo('last but one reminder email sent to ' + user.email);
         }
     });
 }
@@ -51,87 +45,18 @@ function sendLastReminderEmail(user) {
         subject: config.lastReminderEmailSubject[user.preferences.defaultLanguage],
         html: sf(config.lastReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
-
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
         } else {
-            console.log('last reminder email sent to ' + user.email);
+            logger.logInfo('last reminder email sent to ' + user.email);
         }
     });
 }
 
 function suspendAndSendEmail(user) {
-    if(config.cancelSubscriptionForTrialUsers) {
-        async.waterfall([
-            // set user status to 'trial-ended'
-            function (callback) {
-                User.findOne({email: user.email}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        userObj.status = 'trial-ended';
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                callback(err1);
-                            } else {
-                                callback(null, userObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // change status to inactive in AIO
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, false, function (err) {
-                    if (err) {
-                        setUserActive(userObj);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            },
-            // change credit card to dummy and modify billing address
-            function (userObj, callback) {
-                var address = 'Trial ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                var city = 'West Palm Peach';
-                var state = 'FL';
-                var country = 'US';
-                var zip = '00000';
-                billing.setTrialEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
-                    if (err) {
-                        setUserActive(userObj);
-                        setUserActiveInAio(userObj.email);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            },
-            // send email
-            function (userObj, callback) {
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.trialPeriodCompleteEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        console.log(err);
-                        callback(err);
-                    } else {
-                        console.log('suspension email sent to ' + userObj.email);
-                        callback(null, userObj);
-                    }
-                });
-            }
-        ], function (err) {
-            if (err) {
-                console.log(err);
-            }
-        });
+    if (config.cancelSubscriptionForTrialUsers) {
+        subscription.endFreeTrial(user);
     } else {
         var mailOptions = {
             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
@@ -141,9 +66,9 @@ function suspendAndSendEmail(user) {
         };
         email.sendEmail(mailOptions, function (err) {
             if (err) {
-                console.log(err);
+                logger.logError(err);
             } else {
-                console.log('suspension email sent to ' + user.email);
+                logger.logInfo('suspension email sent to ' + user.email);
             }
         });
     }
@@ -156,35 +81,11 @@ function sendReacquireEmail(user) {
         subject: config.reacquireUserEmailSubject[user.preferences.defaultLanguage],
         html: sf(config.reacquireUserEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
-
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
         } else {
-            console.log('re-acquire email sent to ' + user.email);
-        }
-    });
-}
-
-function setUserActive(user, cb) {
-    user.status = 'active';
-    user.save(function (err) {
-        if (err) {
-            console.log(JSON.stringify(err));
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setUserActiveInAio(email, cb) {
-    aio.updateUserStatus(email, true, function (err) {
-        if (err) {
-            console.log(JSON.stringify(err));
-        }
-        if (cb) {
-            cb();
+            logger.logInfo('re-acquire email sent to ' + user.email);
         }
     });
 }

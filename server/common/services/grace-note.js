@@ -7,7 +7,6 @@ var config = require('../config/config'),
 module.exports = {
 
     getChannelGuide: function (stationId, startTime, endTime, callback) {
-        console.log(stationId + " " + startTime + " " + endTime + " " + config.graceNoteApiKey + " " + config.graceNoteLineupId);
         var client = new Client();
         var args = {
             parameters: {stationId: stationId, startDateTime: startTime, endDateTime: endTime, api_key: config.graceNoteApiKey},

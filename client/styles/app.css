@@ -172,6 +172,14 @@ input[type="checkbox"]:checked + label:before {
     vertical-align: middle;
 }
 
+.error-msg .validation-link {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #f92b26;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
 a.btn-sign {
     background: #f4f1ec;
     text-align: center;

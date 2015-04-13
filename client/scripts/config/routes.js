@@ -28,6 +28,12 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up/complimentary/:compCode',
+            {
+                templateUrl: 'views/complimentary-sign-up.html',
+                controller: 'complimentarySignUpCtrl',
+                access: access.anon
+            })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
@@ -37,6 +43,12 @@
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/complimentary-sign-up-success',
+            {
+                templateUrl: 'views/complimentary-sign-up-success.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })

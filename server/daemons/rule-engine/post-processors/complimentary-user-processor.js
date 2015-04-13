@@ -1,0 +1,15 @@
+'use strict';
+
+var config = require('../../../common/config/config'),
+    subscription = require('../../../common/services/subscription');
+
+function suspendAccount(user) {
+    subscription.endComplimentarySubscription(user);
+}
+
+module.exports.complimentaryAccountEnd = function (user) {
+    delete user.postProcessorKey;
+    suspendAccount(user);
+};
+
+config.postProcessors.complimentaryEnded = module.exports.complimentaryAccountEnd;

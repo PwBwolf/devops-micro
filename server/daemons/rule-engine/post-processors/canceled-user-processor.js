@@ -2,6 +2,7 @@
 
 var config = require('../../../common/config/config'),
     email = require('../../../common/services/email'),
+    logger = require('../../../common/config/logger'),
     sf = require('sf');
 
 function sendReminderEmail(user) {
@@ -14,9 +15,9 @@ function sendReminderEmail(user) {
 
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            console.log(err);
+            logger.logError(err);
         } else {
-            console.log('next day cancellation email sent to ' + user.email);
+            logger.logInfo('next day cancellation email sent to ' + user.email);
         }
     });
 }
@@ -27,4 +28,3 @@ module.exports.sendNextDayReminderEmail = function (user) {
 };
 
 config.postProcessors.canceledNextDay = module.exports.sendNextDayReminderEmail;
-

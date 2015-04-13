@@ -8,16 +8,27 @@ winston.emitErrs = true;
 var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
+            name: 'file.info',
             level: 'info',
-            filename: config.root + '/logs/all-logs.log',
-            handleExceptions: true,
+            filename: config.root + '/logs/all.log',
             json: true,
             maxsize: 5242880,
             maxFiles: 50,
-            colorize: false
+            colorize: false,
+            handleExceptions: true
+        }),
+        new winston.transports.File({
+            name: 'file.error',
+            level: 'error',
+            filename: config.root + '/logs/error.log',
+            json: true,
+            maxsize: 5242880,
+            maxFiles: 50,
+            colorize: false,
+            handleExceptions: true
         }),
         new winston.transports.Console({
-            level: 'debug',
+            name: 'console.all',
             handleExceptions: true,
             json: false,
             colorize: true
@@ -25,30 +36,36 @@ var logger = new winston.Logger({
     ],
     exceptionHandlers: [
         new winston.transports.File({
-            filename: config.root + '/logs/exceptions.log',
+            filename: config.root + '/logs/exception.log',
+            json: true,
             maxsize: 5242880,
-            maxFiles: 50
+            maxFiles: 50,
+            colorize: false
+        }),
+        new winston.transports.Console({
+            json: false,
+            colorize: true
         })
     ],
     exitOnError: false
 });
 
-logger.logError = function(err) {
+logger.logError = function (err) {
     logger.error(JSON.stringify(err));
-}
+};
 
-logger.logDebug = function(msg) {
+logger.logDebug = function (msg) {
     logger.debug(msg);
-}
+};
 
-logger.logInfo = function(msg) {
+logger.logInfo = function (msg) {
     logger.info(msg);
-}
+};
 
 module.exports = logger;
 
 module.exports.stream = {
-    write: function(message){
+    write: function (message) {
         logger.info(message);
     }
 };

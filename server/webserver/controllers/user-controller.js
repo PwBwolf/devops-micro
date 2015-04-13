@@ -279,7 +279,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
+            if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = uuid.v4();
@@ -316,7 +316,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
+            if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
             return res.status(200).end();
@@ -332,7 +332,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (!_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
+            if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = undefined;
@@ -379,7 +379,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (_.contains(['active', 'canceled', 'trial-ended'], user.status)) {
+            if (_.contains(['active', 'canceled', 'trial-ended', 'comp-ended'], user.status)) {
                 return res.status(409).send('UserActivated');
             }
             if (user.status !== 'registered') {

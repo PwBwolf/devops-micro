@@ -48,7 +48,7 @@
                     webStorage.local.add('webSliders', data);
                     $scope.webSliders = data;
                     $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
-                    if($location.path() === '/') {
+                    if ($location.path() === '/') {
                         $route.reload();
                     }
                 });
@@ -114,8 +114,8 @@
         $scope.openAio = function () {
             if ($scope.user.status === 'canceled') {
                 $location.path('/reactivate-subscription');
-            } else if ($scope.user.status === 'trial-ended') {
-                $location.path('upgrade-subscription');
+            } else if ($scope.user.status === 'trial-ended' || $scope.user.status === 'comp-ended') {
+                $location.path('/upgrade-subscription');
             } else {
                 var browser = browserSvc.getBrowserName();
                 if (aioWindow && !aioWindow.closed) {
@@ -152,7 +152,7 @@
                     }
                     aioWindow = $window.open('', '_blank');
                     userSvc.getAioToken(function (response) {
-                        if(!response.username || !response.sso_token) {
+                        if (!response.username || !response.sso_token) {
                             if (aioWindow && !aioWindow.closed) {
                                 aioWindow.close();
                                 aioWindow = undefined;
