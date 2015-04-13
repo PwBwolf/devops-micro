@@ -70,7 +70,7 @@ if (command === 'new') {
             },
             duration: {
                 description: 'Duration in days',
-                message: 'Enter a valid number',
+                message: 'Enter a valid number greater than zero',
                 default: 36500,
                 required: true,
                 type: 'number',
@@ -81,7 +81,7 @@ if (command === 'new') {
             },
             maximumAccounts: {
                 description: 'Maximum accounts allowed',
-                message: 'Enter a valid number',
+                message: 'Enter a valid number greater than zero',
                 default: 1000000,
                 required: true,
                 type: 'number',
@@ -133,7 +133,7 @@ if (command === 'disable') {
             console.log('Complimentary code not found!');
             process.exit(1);
         }
-        cc.active = false;
+        cc.disabled = true;
         cc.updatedAt = (new Date()).toUTCString();
         cc.save(function (err1) {
             if (err1) {
