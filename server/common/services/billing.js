@@ -31,13 +31,16 @@ module.exports = {
                 'payname', payName
             ], function (err, response) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError('billing - createUser - error in creating customer 1');
+                    logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
+                        logger.logError('billing - createUser - error in creating customer 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
+                        logger.logInfo('billing - createUser - response');
                         logger.logInfo(response);
                         callback(null, response.custnum);
                     }
@@ -65,13 +68,16 @@ module.exports = {
                 'payname', payName
             ], function (err, response) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError('billing - updateCreditCard - error in updating customer 1');
+                    logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
+                        logger.logError('billing - updateCreditCard - error in updating customer 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
+                        logger.logInfo('billing - updateCreditCard - response');
                         logger.logInfo(response);
                         callback(null);
                     }
@@ -97,13 +103,16 @@ module.exports = {
                 'paycvv', '123',
             ], function (err, response) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError('billing - setAccountCanceled - error in updating customer 1');
+                    logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
+                        logger.logError('billing - setAccountCanceled - error in updating customer 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
+                        logger.logInfo('billing - setAccountCanceled - response');
                         logger.logInfo(response);
                         callback(null);
                     }
@@ -126,13 +135,16 @@ module.exports = {
                 'country', country
             ], function (err, response) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError('billing - setTrialOrComplimentaryEnded - error in updating customer 1');
+                    logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
+                        logger.logError('billing - setTrialOrComplimentaryEnded - error in updating customer 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
+                        logger.logInfo('billing - setTrialOrComplimentaryEnded - response');
                         logger.logInfo(response);
                         callback(null);
                     }

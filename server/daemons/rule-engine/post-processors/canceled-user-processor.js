@@ -15,6 +15,7 @@ function sendReminderEmail(user) {
 
     email.sendEmail(mailOptions, function (err) {
         if (err) {
+            logger.logError('canceledUserProcessor - sendReminderEmail - error sending next day cancellation email to ' + user.email);
             logger.logError(err);
         } else {
             logger.logInfo('next day cancellation email sent to ' + user.email);

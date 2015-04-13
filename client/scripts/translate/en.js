@@ -552,6 +552,7 @@
             SIGN_IN_REACTIVATE_SUBSCRIPTION: 'You need to sign in before you can re-activate your subscription.',
             SIGN_IN_CANCELED_SUBSCRIPTION_MESSAGE: 'You do not have an active subscription. Do you want to re-activate your subscription?',
             SIGN_IN_TRIAL_ENDED_MESSAGE: 'Your free trial has ended. Do you want to upgrade your subscription?',
+            SIGN_IN_COMP_ENDED_MESSAGE: 'Your complimentary subscription has ended. Do you want to upgrade your subscription?',
             SIGN_UP_HEADING: 'Sign Up',
             SIGN_UP_MESSAGE: 'Signing up is easy! There is no contract and you can cancel any time. You’re moments away from getting high quality TV from around the globe. Get ready to see the future of television.',
             SIGN_UP_FIRST_NAME: 'First Name',

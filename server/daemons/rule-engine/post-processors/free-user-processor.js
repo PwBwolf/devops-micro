@@ -15,6 +15,7 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
+            logger.logError('freeUserProcessor - sendReminderEmail - error sending ' + bodyDays + ' day email to ' + user.email);
             logger.logError(err);
         } else {
             logger.logInfo(bodyDays + ' day email sent to ' + user.email);
@@ -31,6 +32,7 @@ function sendLastButOneReminderEmail(user) {
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
+            logger.logError('freeUserProcessor - sendLastButOneReminderEmail - error sending last but one reminder email to ' + user.email);
             logger.logError(err);
         } else {
             logger.logInfo('last but one reminder email sent to ' + user.email);
@@ -47,6 +49,7 @@ function sendLastReminderEmail(user) {
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
+            logger.logError('freeUserProcessor - sendLastReminderEmail - error sending last reminder email to ' + user.email);
             logger.logError(err);
         } else {
             logger.logInfo('last reminder email sent to ' + user.email);
@@ -66,6 +69,7 @@ function suspendAndSendEmail(user) {
         };
         email.sendEmail(mailOptions, function (err) {
             if (err) {
+                logger.logError('freeUserProcessor - suspendAndSendEmail - error sending suspension email to ' + user.email);
                 logger.logError(err);
             } else {
                 logger.logInfo('suspension email sent to ' + user.email);
@@ -83,6 +87,7 @@ function sendReacquireEmail(user) {
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
+            logger.logError('freeUserProcessor - sendReacquireEmail - error sending re-acquire email to ' + user.email);
             logger.logError(err);
         } else {
             logger.logInfo('re-acquire email sent to ' + user.email);

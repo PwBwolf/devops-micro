@@ -21,11 +21,13 @@ module.exports = {
     getAppConfig: function (req, res) {
         AppConfig.findOne({}, {_id: false}, function (err, appConfig) {
             if (err) {
+                logger.logError('appController - getAppConfig - error fetching app config');
                 logger.logError(err);
                 return res.status(500).end();
             }
             Version.findOne({}, {_id: false}, function (err1, version) {
                 if (err1) {
+                    logger.logError('appController - getAppConfig - error fetching versions');
                     logger.logError(err1);
                     return res.status(500).end();
                 }
@@ -46,6 +48,7 @@ module.exports = {
     getWebSliders: function (req, res) {
         WebSlider.find({}, {_id: false}, {sort: {order: 1}}, function (err, sliders) {
             if (err) {
+                logger.logError('appController - getWebSlider - error fetching web sliders');
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -56,6 +59,7 @@ module.exports = {
     getCountries: function (req, res) {
         Country.find({}, {_id: false}, {sort: {name: 1}}, function (err, countries) {
             if (err) {
+                logger.logError('appController - getCountries - error fetching country list');
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -66,6 +70,7 @@ module.exports = {
     getStates: function (req, res) {
         State.find({}, {_id: false}, {sort: {name: 1}}, function (err, states) {
             if (err) {
+                logger.logError('appController - getStates - error fetching state list');
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -76,7 +81,8 @@ module.exports = {
     saveVisitor: function (req, res) {
         Visitor.findOne({email: req.body.email.toLowerCase()}, function (err, visitor) {
             if (err) {
-                logger.error(JSON.stringify(err));
+                logger.logError('appController - saveVisitor - error fetching visitor: ' + req.body.email.toLowerCase());
+                logger.logError(err);
             }
             if (!visitor) {
                 var visitorObj = new Visitor({
@@ -85,9 +91,10 @@ module.exports = {
                     lastName: req.body.lastName,
                     createdAt: (new Date()).toUTCString()
                 });
-                visitorObj.save(function (err) {
-                    if (err) {
-                        logger.error(JSON.stringify(err));
+                visitorObj.save(function (err1) {
+                    if (err1) {
+                        logger.logError('appController - saveVisitor - error saving visitor - 1: ' + req.body.email.toLowerCase());
+                        logger.logError(err1);
                     }
                 });
             } else {
@@ -99,9 +106,10 @@ module.exports = {
                 }
                 if (req.body.firstName || req.body.lastName) {
                     visitor.updatedAt = (new Date()).toUTCString();
-                    visitor.save(function (err) {
-                        if (err) {
-                            logger.logError(err);
+                    visitor.save(function (err2) {
+                        if (err2) {
+                            logger.logError('appController - saveVisitor - error saving visitor - 2: ' + req.body.email.toLowerCase());
+                            logger.logError(err2);
                         }
                     });
                 }
@@ -124,6 +132,7 @@ module.exports = {
         });
         contactUs.save(function (err) {
             if (err) {
+                logger.logError('appController - saveContactUs - error saving contact us: ' + req.body.email);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -135,9 +144,10 @@ module.exports = {
             };
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
+                    logger.logError('appController - saveContactUs - error sending contact us email: ' + req.body.email);
                     logger.logError(err);
                 } else {
-                    logger.logInfo('contact us email sent to ' + mailOptions.to);
+                    logger.logInfo('appController - saveContactUs - contact us email sent to ' + mailOptions.to);
                 }
             });
             return res.status(200).end();
@@ -147,6 +157,7 @@ module.exports = {
     sendRafEmails: function (req, res) {
         Referrer.findOne({email: req.body.email.toLowerCase()}, function (err, referrer) {
             if (err) {
+                logger.logError('appController - sendRafEmails - error fetching referrer: ' + req.body.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -155,15 +166,17 @@ module.exports = {
                     email: req.body.email,
                     createdAt: (new Date()).toUTCString()
                 });
-                referrer.save(function (err) {
-                    if (err) {
-                        logger.logError(err);
+                referrer.save(function (err1) {
+                    if (err1) {
+                        logger.logError('appController - sendRafEmails - error saving referrer: ' + req.body.email.toLowerCase());
+                        logger.logError(err1);
                         return res.status(500).end();
                     }
                     referrer.referralCode = hashids.encode(referrer.key, 5);
-                    referrer.save(function (err) {
-                        if (err) {
-                            logger.logError(err);
+                    referrer.save(function (err2) {
+                        if (err2) {
+                            logger.logError('appController - sendRafEmails - error saving referrer after referralCode: ' + req.body.email.toLowerCase());
+                            logger.logError(err2);
                             return res.status(500).end();
                         }
                         sendEmail();
@@ -183,9 +196,10 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
+                        logger.logError('appController - sendRafEmails.sendEmail - error sending RAF email to ' + mailOptions.to);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('refer a friend email sent to ' + mailOptions.to);
+                        logger.logInfo('appController - sendRafEmails.sendEmail - refer a friend email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
