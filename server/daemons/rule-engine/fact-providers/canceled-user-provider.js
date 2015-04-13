@@ -5,6 +5,7 @@ var _ = require('lodash'),
     moment = require('moment'),
     Q = require('q'),
     config = require('../../../common/config/config'),
+    logger = require('../../../common/config/logger'),
     User = mongoose.model('User');
 
 module.exports.getCanceledUsers = function () {
@@ -23,7 +24,7 @@ module.exports.getCanceledUsers = function () {
                 def.resolve([]);
             }
         }, function (err) {
-            console.log('Something went wrong when retrieving canceled accounts: ', err);
+            logger.logError('Something went wrong when retrieving canceled accounts: ', err);
             def.reject(err);
         }
     );

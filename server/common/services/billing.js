@@ -112,7 +112,7 @@ module.exports = {
         );
     },
 
-    setTrialEnded: function(customerNumber, address, city, state, country, zip, callback) {
+    setTrialOrComplimentaryEnded: function(customerNumber, address, city, state, country, zip, callback) {
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.update_customer',
             [

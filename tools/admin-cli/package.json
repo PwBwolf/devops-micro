@@ -4,6 +4,8 @@
   "description": "Admin CLI Tool",
   "main": "main.js",
   "dependencies": {
+    "node-uuid": "^1.4.3",
+    "prompt": "^0.2.14",
     "sf": "^0.1.7"
   }
 }
