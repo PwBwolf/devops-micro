@@ -24,7 +24,8 @@ module.exports.getCanceledUsers = function () {
                 def.resolve([]);
             }
         }, function (err) {
-            logger.logError('Something went wrong when retrieving canceled accounts: ', err);
+            logger.logError('canceledUserProvider - getCanceledUsers - error fetching canceled accounts');
+            logger.logError(err);
             def.reject(err);
         }
     );

@@ -18,5 +18,5 @@ require('./express')(app, logger);
 require('./routes')(app);
 
 http.createServer(app).listen(port, function () {
-    logger.logInfo('YipTV server listening on port ' + port);
+    logger.logInfo('app - yiptv server listening on port ' + port);
 });

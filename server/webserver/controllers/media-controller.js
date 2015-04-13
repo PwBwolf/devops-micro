@@ -60,7 +60,7 @@ module.exports = {
             var endTime = date.isoDate(now);
             graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 return res.json(data);

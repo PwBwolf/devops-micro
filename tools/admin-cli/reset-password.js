@@ -4,6 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var sf = require('sf'),
     config = require('../../server/common/config/config'),
+    logger = require('../../server/common/config/logger'),
     emailService = require('../../server/common/services/email'),
     mongoose = require('../../server/node_modules/mongoose');
 
@@ -11,19 +12,19 @@ var email = process.argv[2],
     password = process.argv[3];
 
 if (typeof email === 'undefined') {
-    console.log('Email is missing!\n\rUsage: node reset-password <email> <password>');
+    logger.logError('resetPassword - email is missing!\n\r\tusage: node reset-password <email> <password>');
     process.exit(1);
 } else {
     var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
     var isEmail = regex.test(email);
     if (!isEmail) {
-        console.log('Enter a valid email address.');
+        logger.logError('adminCLI - resetPassword - enter a valid email address.');
         process.exit(1);
     }
 }
 
 if (typeof password === 'undefined') {
-    console.log('Password is missing!\n\rUsage: node reset-password <email> <password>');
+    logger.logError('adminCLI - resetPassword - password is missing!\n\r\tusage: node reset-password <email> <password>');
     process.exit(1);
 } else {
     var hasUpperCase = /[A-Z]/.test(password);
@@ -33,7 +34,7 @@ if (typeof password === 'undefined') {
     var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
     var isComplexPassword = (password.length >= 8) && (password.length <= 20) && (characterGroupCount > 3);
     if (!isComplexPassword) {
-        console.log('Password should be between 8 to 20 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character');
+        logger.logError('adminCLI - resetPassword - password should be between 8 to 20 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character');
         process.exit(1);
     }
 }
@@ -46,25 +47,27 @@ var Users = mongoose.model('User');
 
 Users.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
-        console.log(err);
+        logger.logError('adminCLI - resetPassword - error fetching user: ' + email.toLowerCase());
+        logger.logError(err);
         process.exit(1);
     } else if (!user) {
-        console.log('Password cannot be changed as the user was not found.');
+        logger.logError('adminCLI - resetPassword - password cannot be changed as the user was not found: ' + email.toLowerCase());
         process.exit(1);
     } else if (user.status === 'registered') {
-        console.log('Password cannot be changed as the account is not verified.');
+        logger.logError('adminCLI - resetPassword - password cannot be changed as the account is not verified: ' + email.toLowerCase());
         process.exit(1);
     } else if (user.status === 'failed') {
-        console.log('Password cannot be changed as the account was not created successfully.');
+        logger.logError('adminCLI - resetPassword - password cannot be changed as the account was not created successfully: ' + email.toLowerCase());
         process.exit(1);
     } else {
         user.password = password;
         user.save(function (err1) {
             if (err1) {
-                console.log(err1);
+                logger.logError('adminCLI - resetPassword - error saving new password to user: ' + email.toLowerCase());
+                logger.logError(err1);
                 process.exit(1);
             } else {
-                console.log('Password changed successfully.');
+                logger.logInfo('adminCLI - resetPassword - password changed successfully: ' + email.toLowerCase());
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: user.email,
@@ -73,11 +76,11 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                 };
                 emailService.sendEmail(mailOptions, function (err2) {
                     if (err2) {
-                        console.log(err2);
-                        console.log('Unable to sent password changed email notification but password has been changed successfully.');
+                        logger.logError(err2);
+                        logger.logError('adminCLI - resetPassword - unable to sent password changed email notification but password has been changed successfully: ' + mailOptions.to);
                         process.exit(1);
                     } else {
-                        console.log('Password changed email notification sent successfully.');
+                        logger.logInfo('adminCLI - resetPassword - password changed email notification sent successfully: ' + mailOptions.to);
                         process.exit(0);
                     }
                 });

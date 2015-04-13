@@ -83,12 +83,12 @@ module.exports = {
                         // if AIO user creation fails delete user and account from our DB
                         accountObj.remove(function (err1) {
                             if (err1) {
-                                logger.logError(JSON.stringify(err1));
+                                logger.logError(err1);
                             }
                         });
                         userObj.remove(function (err2) {
                             if (err2) {
-                                logger.logError(JSON.stringify(err2));
+                                logger.logError(err2);
                             }
                         });
                         callback(err);
@@ -122,12 +122,12 @@ module.exports = {
                         userObj.status = 'failed';
                         userObj.save(function (err2) {
                             if (err2) {
-                                logger.logError(JSON.stringify(err2));
+                                logger.logError(err2);
                             }
                         });
                         aio.updateUserStatus(userObj.email, false, function (err3) {
                             if (err3) {
-                                logger.logError(JSON.stringify(err3));
+                                logger.logError(err3);
                             }
                         });
                         callback(err);
@@ -154,7 +154,7 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError(JSON.stringify(err));
+                        logger.logError(err);
                     } else {
                         logger.logInfo('verification email sent to ' + mailOptions.to);
                     }
@@ -181,7 +181,7 @@ module.exports = {
         ], function (err) {
             if (err) {
                 logger.logError(err);
-                return res.status(500).send(JSON.stringify(err));
+                return res.status(500).send(err);
             }
             return res.status(200).end();
         });
@@ -190,6 +190,7 @@ module.exports = {
     signIn: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - signIn - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -206,9 +207,10 @@ module.exports = {
                 return res.status(409).send('UnverifiedAccount');
             }
             user.lastSignedInDate = (new Date()).toUTCString();
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - signIn - error saving user lastSignedInDate: ' + req.body.email.toLowerCase());
+                    logger.logError(err1);
                 }
             });
             var token = jwt.encode({
@@ -225,8 +227,9 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        User.findOne({email: req.email}, function (err, user) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - getUserProfile - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -235,7 +238,8 @@ module.exports = {
             }
             Account.findOne({_id: user.account}, function (err1, account) {
                 if (err1) {
-                    logger.logError(err);
+                    logger.logError('userController - getUserProfile - error fetching account: ' + req.email.toLowerCase());
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: account.type, status: user.status});
@@ -246,6 +250,7 @@ module.exports = {
     verifyUser: function (req, res) {
         User.findOne({verificationCode: req.body.code}, function (err, user) {
             if (err) {
+                logger.logError('userController - verifyUser - error fetching user: ' + req.body.code);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -260,9 +265,10 @@ module.exports = {
             }
             user.status = 'active';
             user.verificationCode = undefined;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 return res.status(200).end();
@@ -273,6 +279,7 @@ module.exports = {
     forgotPassword: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - forgotPassword - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -283,8 +290,9 @@ module.exports = {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = uuid.v4();
-            user.save(function (err) {
-                if (err) {
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - forgotPassword - error saving user: ' + req.body.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
@@ -295,11 +303,12 @@ module.exports = {
                     subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
                 };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError(err);
+                email.sendEmail(mailOptions, function (err2) {
+                    if (err2) {
+                        logger.logError('userController - forgotPassword - error sending forgot password email to : ' + mailOptions.to);
+                        logger.logError(err2);
                     } else {
-                        logger.logInfo('forgot password email sent to ' + mailOptions.to);
+                        logger.logInfo('userController - forgotPassword - forgot password email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
@@ -310,6 +319,7 @@ module.exports = {
     checkResetCode: function (req, res) {
         User.findOne({resetPasswordCode: req.query.code}, function (err, user) {
             if (err) {
+                logger.logError('userController - checkResetCode - error fetching user : ' + req.query.code);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -326,6 +336,7 @@ module.exports = {
     resetPassword: function (req, res) {
         User.findOne({resetPasswordCode: req.body.code}, function (err, user) {
             if (err) {
+                logger.logError('userController - resetPassword - error fetching user : ' + req.body.code);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -337,9 +348,10 @@ module.exports = {
             }
             user.resetPasswordCode = undefined;
             user.password = req.body.newPassword;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - resetPassword - error saving user : ' + req.body.code);
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 var mailOptions = {
@@ -348,11 +360,12 @@ module.exports = {
                     subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                 };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError(err);
+                email.sendEmail(mailOptions, function (err2) {
+                    if (err2) {
+                        logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
+                        logger.logError(err2);
                     } else {
-                        logger.logInfo('password changed email sent to ' + mailOptions.to);
+                        logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
@@ -363,6 +376,7 @@ module.exports = {
     isEmailUnique: function (req, res) {
         User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - isEmailUnique - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
                 return res.send(false);
             }
@@ -373,6 +387,7 @@ module.exports = {
     resendVerification: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - resendVerification - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -386,9 +401,10 @@ module.exports = {
                 return res.status(409).send('UserError');
             }
             user.verificationCode = uuid.v4();
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
@@ -398,11 +414,12 @@ module.exports = {
                     subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
                 };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError(err);
+                email.sendEmail(mailOptions, function (err2) {
+                    if (err2) {
+                        logger.logError('userController - resendVerification - error sending resend verification email to: ' + mailOptions.to);
+                        logger.logError(err2);
                     } else {
-                        logger.logInfo('resend verification email sent to ' + mailOptions.to);
+                        logger.logInfo('userController - resendVerification - resend verification email sent to ' + mailOptions.to);
                     }
                 });
                 res.status(200).end();
@@ -411,8 +428,9 @@ module.exports = {
     },
 
     changePassword: function (req, res) {
-        User.findOne({email: req.email}, function (err, user) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
+                logger.logError('userController - changePassword - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -423,9 +441,10 @@ module.exports = {
                 return res.status(401).send('Unauthorized');
             }
             user.password = req.body.newPassword;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('userController - changePassword - error saving user: ' + req.email.toLowerCase());
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 var mailOptions = {
@@ -434,11 +453,12 @@ module.exports = {
                     subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                 };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError(err);
+                email.sendEmail(mailOptions, function (err2) {
+                    if (err2) {
+                        logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
+                        logger.logError(err2);
                     } else {
-                        logger.logInfo('password changed email sent to ' + mailOptions.to);
+                        logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();
@@ -449,7 +469,8 @@ module.exports = {
     changeCreditCard: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError(JSON.stringify(err));
+                logger.logError('userController - changeCreditCard - error fetching user: ' + req.email.toLowerCase());
+                logger.logError(err);
                 return res.status(500).end();
             }
             if (!user) {
@@ -470,7 +491,8 @@ module.exports = {
             var payName = req.body.cardName;
             billing.updateCreditCard(user.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + req.email.toLowerCase());
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 return res.status(200).end();
@@ -480,10 +502,11 @@ module.exports = {
 
     getAioToken: function (req, res) {
         var aioGuestList = config.aioGuestAccountList;
-        var user = req.email ? req.email : aioGuestList[getGuestCounter()];
+        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
         aio.getToken(user, function (err, data) {
             if (err) {
-                logger.logError(JSON.stringify(err));
+                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
+                logger.logError(err);
                 return res.status(500).end();
             }
             if (!req.email && data) {
@@ -496,7 +519,8 @@ module.exports = {
     getPreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError(JSON.stringify(err));
+                logger.logError('userController - getPreferences - error fetching user: ' + req.email.toLowerCase());
+                logger.logError(err);
                 return res.status(500).end();
             }
             if (!user) {
@@ -509,7 +533,8 @@ module.exports = {
     updatePreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError(JSON.stringify(err));
+                logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
+                logger.logError(err);
                 return res.status(500).end();
             }
             if (!user) {
@@ -518,7 +543,8 @@ module.exports = {
             user.preferences.defaultLanguage = req.body.language;
             user.save(function (err1) {
                 if (err1) {
-                    logger.logError(JSON.stringify(err1));
+                    logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 return res.status(200).end();
@@ -768,11 +794,19 @@ module.exports = {
     }
 };
 
+function getGuestCounter() {
+    getGuestCounter.count = ++getGuestCounter.count || 0;
+    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
+        getGuestCounter.count = 0;
+    }
+    return getGuestCounter.count;
+}
+
 function setAccountTypeToFree(account, cb) {
     account.type = 'free';
     account.save(function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -785,7 +819,7 @@ function deleteUpgradeDateSetStatus(user, status, cb) {
     user.upgradeDate = undefined;
     user.save(function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -797,7 +831,7 @@ function setFreePackagesInAio(email, cb) {
     var packages = config.aioFreePackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -805,20 +839,12 @@ function setFreePackagesInAio(email, cb) {
     });
 }
 
-function getGuestCounter() {
-    getGuestCounter.count = ++getGuestCounter.count || 0;
-    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
-        getGuestCounter.count = 0;
-    }
-    return getGuestCounter.count;
-}
-
 function setUserActiveRemoveCanceledDate(user, cb) {
     user.cancelDate = undefined;
     user.status = 'active';
     user.save(function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -829,7 +855,7 @@ function setUserActiveRemoveCanceledDate(user, cb) {
 function setUserActiveInAio(email, cb) {
     aio.updateUserStatus(email, true, function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -842,7 +868,7 @@ function setUserCanceledResetCanceledDate(cancelDate, user, cb) {
     user.status = 'canceled';
     user.save(function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -853,7 +879,7 @@ function setUserCanceledResetCanceledDate(cancelDate, user, cb) {
 function setUserInactiveInAio(email, cb) {
     aio.updateUserStatus(email, false, function (err) {
         if (err) {
-            logger.logError(JSON.stringify(err));
+            logger.logError(err);
         }
         if (cb) {
             cb();
@@ -865,7 +891,7 @@ function optionallySetUserInactiveInAio(userObj, status, cb) {
     if (status === 'trial-ended') {
         aio.updateUserStatus(userObj.email, false, function (err) {
             if (err) {
-                logger.logError(JSON.stringify(err));
+                logger.logError(err);
             }
             if (cb) {
                 cb();

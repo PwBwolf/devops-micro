@@ -11,6 +11,7 @@ module.exports = {
     getAllUsers: function (req, res) {
         User.find({}, {_id: 0, email:1, firstName:1, lastName:1, account: 1, status: 1}).populate('account', 'type').exec(function (err, data) {
             if (err) {
+                logger.logError('adminController - getAllUsers - error getting all users');
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -21,6 +22,7 @@ module.exports = {
     getUserDetails: function (req, res) {
         User.findOne({email: req.query.email}).populate('account').exec(function (err, data) {
             if (err) {
+                logger.logError('adminController - getUserDetails - error getting user details: ' + req.query.email);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -31,6 +33,7 @@ module.exports = {
     changePassword: function (req, res) {
         User.findOne({email: req.body.email}, function (err, user) {
             if (err) {
+                logger.logError('adminController - changePassword - error fetching user: ' + req.body.email);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -38,9 +41,10 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
             user.password = req.body.newPassword;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError(err);
+            user.save(function (err1) {
+                if (err1) {
+                    logger.logError('adminController - changePassword - error saving changed password: ' + req.body.email);
+                    logger.logError(err1);
                     return res.status(500).end();
                 }
                 var mailOptions = {
@@ -51,9 +55,10 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
+                        logger.logError('adminController - changePassword - error sending password changed email to ' + mailOptions.to);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('password changed email sent to ' + mailOptions.to);
+                        logger.logInfo('adminController - changePassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
                 return res.status(200).end();

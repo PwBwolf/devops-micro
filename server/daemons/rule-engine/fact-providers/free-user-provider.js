@@ -25,7 +25,8 @@ module.exports.getFreeUsers = function () {
             def.resolve([]);
         }
     }, function (err) {
-        logger.logError('Something went wrong when retrieving free accounts: ', err);
+        logger.logError('freeUserProvider - getFreeUsers - error fetching free accounts');
+        logger.logError(err);
         def.reject(err);
     });
     return def.promise;

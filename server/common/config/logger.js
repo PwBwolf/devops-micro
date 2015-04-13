@@ -51,7 +51,7 @@ var logger = new winston.Logger({
 });
 
 logger.logError = function (err) {
-    logger.error(JSON.stringify(err));
+    logger.error(err);
 };
 
 logger.logDebug = function (msg) {

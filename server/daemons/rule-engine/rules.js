@@ -183,7 +183,8 @@ function saveRule(ruleData) {
     var rule = new Rule(ruleData);
     rule.save(function (err) {
         if (err) {
-            logger.logError(err);
+            logger.logError('rules - saveRule - error in saving rule');
+            logger.logError(err)
             def.reject(err);
         } else {
             def.resolve();

@@ -24,7 +24,8 @@ module.exports.getComplimentaryUsers = function () {
             def.resolve([]);
         }
     }, function (err) {
-        logger.logError('Something went wrong when retrieving complimentary accounts: ', err);
+        logger.logError('complimentaryUserProvider - getComplimentaryUsers - error fetching complimentary accounts');
+        logger.logError(err);
         def.reject(err);
     });
     return def.promise;

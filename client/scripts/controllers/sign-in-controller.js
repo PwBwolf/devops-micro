@@ -68,6 +68,33 @@
                                         $location.path('/upgrade-subscription');
                                     });
                             }
+                            if ($scope.user.status === 'comp-ended') {
+                                $modal.open({
+                                    templateUrl: 'modalWindow',
+                                    controller: 'modalCtrl',
+                                    size: 'sm',
+                                    backdrop: 'static',
+                                    resolve: {
+                                        title: function () {
+                                            return $scope.appConfig.appName;
+                                        },
+                                        body: function () {
+                                            return $filter('translate')('SIGN_IN_COMP_ENDED_MESSAGE');
+                                        },
+                                        showOkButton: function () {
+                                            return false;
+                                        },
+                                        showYesButton: function () {
+                                            return true;
+                                        },
+                                        showNoButton: function () {
+                                            return true;
+                                        }
+                                    }
+                                }).result.then(function () {
+                                        $location.path('/upgrade-subscription');
+                                    });
+                            }
                         }
                         $scope.saving = false;
                     },

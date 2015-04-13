@@ -70,6 +70,7 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
+                        logger.logError('error sending suspension email to ' + user.email);
                         logger.logError(err);
                         callback(err);
                     } else {
@@ -88,7 +89,7 @@ module.exports = {
             user.status = 'active';
             user.save(function (err) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError(err);
                 }
                 if (cb) {
                     cb();
@@ -99,7 +100,7 @@ module.exports = {
         function setUserActiveInAio(email, cb) {
             aio.updateUserStatus(email, true, function (err) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError(err);
                 }
                 if (cb) {
                     cb();
@@ -166,10 +167,11 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
+                        logger.logError('error sending complimentary account ended email to ' + userObj.email);
                         logger.logError(err);
                         callback(err);
                     } else {
-                        logger.logInfo('complimentary account ended email sent to ' + user.email);
+                        logger.logInfo('complimentary account ended email sent to ' + userObj.email);
                         callback(null, userObj);
                     }
                 });
@@ -184,7 +186,7 @@ module.exports = {
             user.status = 'active';
             user.save(function (err) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError(err);
                 }
                 if (cb) {
                     cb();
@@ -195,7 +197,7 @@ module.exports = {
         function setUserActiveInAio(email, cb) {
             aio.updateUserStatus(email, true, function (err) {
                 if (err) {
-                    logger.logError(JSON.stringify(err));
+                    logger.logError(err);
                 }
                 if (cb) {
                     cb();

@@ -11,9 +11,10 @@ var _ = require('lodash'),
 require('./rules')().then(function () {
     Rule.find({enabled: true}, function (err, rules) {
         if (err) {
-            logger.logError('Something went wrong while getting the rules: ' + err);
+            logger.logError('ruleEngine - error fetching the rules');
+            logger.logError(err);
         } else {
-            logger.logInfo('Setting up the rule engine...');
+            logger.logInfo('ruleEngine - setting up the rule engine');
             for (var i = 0; i < rules.length; i++) {
                 rules[i] = _.assign(rules[i], {'on': 1});
             }
