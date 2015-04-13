@@ -75,6 +75,9 @@ if (command === 'new') {
                 default: date.utcDateString(new Date(Date.parse('2099-12-31'))),
                 required: true,
                 format: 'date',
+                before: function (value) {
+                    return value + ' 23:59:59Z';
+                },
                 conform: function (value) {
                     var d1 = new Date(Date.parse(value));
                     var d2 = new Date(Date.parse(prompt.history('startDate').value));

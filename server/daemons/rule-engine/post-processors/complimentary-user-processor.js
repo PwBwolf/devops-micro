@@ -4,7 +4,7 @@ var config = require('../../../common/config/config'),
     subscription = require('../../../common/services/subscription');
 
 function suspendAccount(user) {
-    subscription.endComplimentarySubscription(user);
+    subscription.endComplimentarySubscription(user.email);
 }
 
 module.exports.complimentaryAccountEnd = function (user) {

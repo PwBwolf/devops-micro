@@ -10,12 +10,13 @@ var _ = require('lodash'),
 
 module.exports.getCanceledUsers = function () {
     var def = Q.defer();
-    User.find({status: 'canceled'}).exec().then(function (users) {
+    User.find({status: 'canceled'}).populate('account').exec().then(function (users) {
             if (users) {
                 var userList = [];
                 for (var i = 0; i < users.length; i++) {
                     if (moment.utc().startOf('day').diff(moment(users[i].cancelDate).utc().startOf('day'), 'days') <= 1) {
                         users[i]._doc = _.assign(users[i]._doc, {doctype: 'user'});
+                        users[i]._doc.type = 'paid';
                         userList.push(users[i]._doc);
                     }
                 }

@@ -59,7 +59,7 @@ function sendLastReminderEmail(user) {
 
 function suspendAndSendEmail(user) {
     if (config.cancelSubscriptionForTrialUsers) {
-        subscription.endFreeTrial(user);
+        subscription.endFreeTrial(user.email);
     } else {
         var mailOptions = {
             from: config.email.fromName + ' <' + config.email.fromEmail + '>',

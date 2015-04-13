@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     moment = require('moment'),
     config = require('../../common/config/config'),
     email = require('../../common/services/email'),
+    subscription = require('../../common/services/subscription'),
     aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
@@ -553,110 +554,9 @@ module.exports = {
     },
 
     upgradeSubscription: function (req, res) {
-        var status;
-        async.waterfall([
-            // set account type to paid
-            function (callback) {
-                User.findOne({email: req.email.toLowerCase()}, function (err, user) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        Account.findOne({_id: user.account}, function (err1, accountObj) {
-                            if (err1) {
-                                callback(err1);
-                            } else if (accountObj.type !== 'free') {
-                                callback('NonFreeUser');
-                            } else {
-                                accountObj.type = 'paid';
-                                accountObj.save(function (err2) {
-                                    if (err2) {
-                                        callback(err2);
-                                    } else {
-                                        callback(null, accountObj);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            },
-            // set user upgrade date and make status active
-            function (accountObj, callback) {
-                User.findOne({email: req.email.toLowerCase()}, function (err, userObj) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        status = userObj.status;
-                        userObj.status = 'active';
-                        userObj.upgradeDate = (new Date()).toUTCString();
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                setAccountTypeToFree(accountObj, function () {
-                                    callback(err);
-                                });
-                            } else {
-                                callback(null, accountObj, userObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // change status to active in AIO if user status is trial-ended
-            function (accountObj, userObj, callback) {
-                if (status === 'trial-ended') {
-                    aio.updateUserStatus(userObj.email, true, function (err) {
-                        if (err) {
-                            deleteUpgradeDateSetStatus(userObj, status);
-                            setAccountTypeToFree(accountObj);
-                            callback(err);
-                        } else {
-                            callback(null, accountObj, userObj);
-                        }
-                    });
-                } else {
-                    callback(null, accountObj, userObj);
-                }
-            },
-            // change packages in AIO to paid ones
-            function (accountObj, userObj, callback) {
-                var packages = config.aioPaidPackages;
-                aio.updateUserPackages(userObj.email, packages, function (err) {
-                    if (err) {
-                        optionallySetUserInactiveInAio(userObj, status);
-                        deleteUpgradeDateSetStatus(userObj, status);
-                        setAccountTypeToFree(accountObj);
-                        callback(err);
-                    } else {
-                        callback(null, accountObj, userObj);
-                    }
-                });
-            },
-            // set credit card information in FreeSide
-            function (accountObj, userObj, callback) {
-                var address = req.body.address;
-                var city = req.body.city;
-                var state = req.body.state;
-                var zip = req.body.zipCode;
-                var country = 'US';
-                var payBy = 'CARD';
-                var payInfo = req.body.cardNumber;
-                var payDate = req.body.expiryDate;
-                var payCvv = req.body.cvv;
-                var payName = req.body.cardName;
-                billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                    if (err) {
-                        setFreePackagesInAio(userObj.email);
-                        optionallySetUserInactiveInAio(userObj, status);
-                        deleteUpgradeDateSetStatus(userObj, status);
-                        setAccountTypeToFree(accountObj);
-                        callback(err);
-                    } else {
-                        callback(null, accountObj, userObj);
-                    }
-                });
-            },
-        ], function (err) {
+        subscription.upgradeSubscription(req.email, req.body, function(err) {
             if (err) {
+                logger.logError('userController - upgradeSubscription - error during upgrade subscription: ' + req.email);
                 logger.logError(err);
                 return res.status(500).send(err);
             }
@@ -665,66 +565,9 @@ module.exports = {
     },
 
     reactivateSubscription: function (req, res) {
-        var cancelDate;
-        async.waterfall([
-            // set user status to 'active' and remove canceledDate
-            function (callback) {
-                User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        callback(err);
-                    } else if (userObj.status === 'active' && userObj.account.type === 'paid') {
-                        callback('PaidActiveUser');
-                    } else if (userObj.account.type === 'free') {
-                        callback('FreeUser');
-                    } else {
-                        cancelDate = userObj.cancelDate;
-                        userObj.status = 'active';
-                        userObj.cancelDate = undefined;
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                callback(err1);
-                            } else {
-                                callback(null, userObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // change status to active in AIO
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, true, function (err) {
-                    if (err) {
-                        setUserCanceledResetCanceledDate(cancelDate, userObj);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            },
-            // set credit card and billing address
-            function (userObj, callback) {
-                var address = req.body.address;
-                var city = req.body.city;
-                var state = req.body.state;
-                var zip = req.body.zipCode;
-                var country = 'US';
-                var payBy = 'CARD';
-                var payInfo = req.body.cardNumber;
-                var payDate = req.body.expiryDate;
-                var payCvv = req.body.cvv;
-                var payName = req.body.cardName;
-                billing.updateCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                    if (err) {
-                        setUserInactiveInAio(userObj.email);
-                        setUserCanceledResetCanceledDate(cancelDate, userObj);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            }
-        ], function (err) {
+        subscription.reactivateSubscription(req.email, req.body, function(err){
             if (err) {
+                logger.logError('userController - reactivateSubscription - error during reactivate subscription: ' + req.email);
                 logger.logError(err);
                 return res.status(500).send(err);
             }
@@ -733,59 +576,9 @@ module.exports = {
     },
 
     cancelSubscription: function (req, res) {
-        async.waterfall([
-            // set user status to 'canceled' and set canceledDate to current date
-            function (callback) {
-                User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        callback(err);
-                    } else if (userObj.status !== 'active') {
-                        callback('NonActiveUser');
-                    } else if (userObj.account.type === 'free') {
-                        callback('FreeUser');
-                    } else {
-                        userObj.status = 'canceled';
-                        userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                callback(err1);
-                            } else {
-                                callback(null, userObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // change status to inactive in AIO
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, false, function (err) {
-                    if (err) {
-                        setUserActiveRemoveCanceledDate(userObj);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            },
-            // change credit card to dummy and modify billing address
-            function (userObj, callback) {
-                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                var city = 'West Palm Peach';
-                var state = 'FL';
-                var country = 'US';
-                var zip = '00000';
-                billing.setAccountCanceled(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
-                    if (err) {
-                        setUserActiveRemoveCanceledDate(userObj);
-                        setUserActiveInAio(userObj.email);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            }
-        ], function (err) {
+        subscription.cancelSubscription(req.email, function(err){
             if (err) {
+                logger.logError('userController - cancelSubscription - error during cancel subscription: ' + req.email);
                 logger.logError(err);
                 return res.status(500).send(err);
             }
@@ -800,106 +593,4 @@ function getGuestCounter() {
         getGuestCounter.count = 0;
     }
     return getGuestCounter.count;
-}
-
-function setAccountTypeToFree(account, cb) {
-    account.type = 'free';
-    account.save(function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function deleteUpgradeDateSetStatus(user, status, cb) {
-    user.status = status;
-    user.upgradeDate = undefined;
-    user.save(function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setFreePackagesInAio(email, cb) {
-    var packages = config.aioFreePackages;
-    aio.updateUserPackages(email, packages, function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setUserActiveRemoveCanceledDate(user, cb) {
-    user.cancelDate = undefined;
-    user.status = 'active';
-    user.save(function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setUserActiveInAio(email, cb) {
-    aio.updateUserStatus(email, true, function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setUserCanceledResetCanceledDate(cancelDate, user, cb) {
-    user.cancelDate = cancelDate;
-    user.status = 'canceled';
-    user.save(function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function setUserInactiveInAio(email, cb) {
-    aio.updateUserStatus(email, false, function (err) {
-        if (err) {
-            logger.logError(err);
-        }
-        if (cb) {
-            cb();
-        }
-    });
-}
-
-function optionallySetUserInactiveInAio(userObj, status, cb) {
-    if (status === 'trial-ended') {
-        aio.updateUserStatus(userObj.email, false, function (err) {
-            if (err) {
-                logger.logError(err);
-            }
-            if (cb) {
-                cb();
-            }
-        });
-    } else {
-        if (cb) {
-            cb();
-        }
-    }
 }
