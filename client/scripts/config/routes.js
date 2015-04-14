@@ -40,15 +40,9 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/free-sign-up-success',
+            .when('/sign-up-success-login',
             {
-                templateUrl: 'views/free-sign-up-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/complimentary-sign-up-success',
-            {
-                templateUrl: 'views/complimentary-sign-up-success.html',
+                templateUrl: 'views/sign-up-success-login.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })

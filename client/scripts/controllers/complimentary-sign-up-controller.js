@@ -7,8 +7,7 @@
         activate();
 
         function activate() {
-            var code = $routeParams.compCode;
-            appSvc.checkComplimentaryCode(code).success(function(){
+            appSvc.checkComplimentaryCode($routeParams.compCode).success(function(){
                 $scope.status = 1;
             }).error(function(){
                 $scope.status = 2;
@@ -20,15 +19,20 @@
         $scope.signUp = function () {
             if ($scope.form.$valid) {
                 $scope.mv.type = 'comp';
+                $scope.mv.code = $routeParams.compCode;
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
-                    function () {
+                    function (data) {
                         $rootScope.referredBy = undefined;
-                        $location.path('/comp-sign-up-success');
                         $scope.saving = false;
+                        if(data === 'registered') {
+                            $location.path('/sign-up-success');
+                        } else {
+                            $location.path('/sign-up-success-login');
+                        }
                     },
                     function (error) {
                         if (error === 'UserExists') {

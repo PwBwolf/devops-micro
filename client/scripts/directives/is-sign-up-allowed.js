@@ -1,21 +1,21 @@
 ﻿(function (app) {
     'use strict';
 
-    app.directive('isEmailUnique', ['userSvc', function (userSvc) {
+    app.directive('isSignUpAllowed', ['userSvc', function (userSvc) {
         return {
             require: 'ngModel',
             restrict: 'A',
             link: function (scope, element, attrs, ctrl) {
 
                 function validate(viewValue) {
-                    ctrl.$setValidity('isEmailUnique', true);
-                    userSvc.isEmailUnique(
-                        element.val(),
+                    ctrl.$setValidity('isSignUpAllowed', true);
+                    userSvc.isSignUpAllowed(
+                        element.val(), attrs.isSignUpAllowed,
                         function (data) {
-                            ctrl.$setValidity('isEmailUnique', data);
+                            ctrl.$setValidity('isSignUpAllowed', data);
                         },
                         function () {
-                            ctrl.$setValidity('isEmailUnique', false);
+                            ctrl.$setValidity('isSignUpAllowed', false);
                         }
                     );
                     return viewValue;
@@ -25,7 +25,5 @@
                 element.bind('blur', validate);
             }
         };
-
-
     }]);
 }(angular.module('app')));
