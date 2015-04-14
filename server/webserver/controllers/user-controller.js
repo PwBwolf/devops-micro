@@ -3,7 +3,6 @@
 var mongoose = require('mongoose'),
     _ = require('lodash'),
     sf = require('sf'),
-    async = require('async'),
     jwt = require('jwt-simple'),
     uuid = require('node-uuid'),
     logger = require('../../common/config/logger'),
@@ -13,178 +12,124 @@ var mongoose = require('mongoose'),
     subscription = require('../../common/services/subscription'),
     aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
-    userRoles = require('../../../client/scripts/config/routing').userRoles,
     User = mongoose.model('User'),
-    Account = mongoose.model('Account'),
-    Visitor = mongoose.model('Visitor');
+    Account = mongoose.model('Account');
 
 module.exports = {
     signUp: function (req, res) {
-        var type,
-            referredBy;
-        async.waterfall([
-            // create user in db
-            function (callback) {
-                User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
-                    if (err) {
-                        callback(err);
-                    } else if (!user) {
-                        type = req.body.type;
-                        referredBy = req.body.referredBy;
-                        var userObj = new User(req.body);
-                        userObj.role = userRoles.user;
-                        userObj.createdAt = (new Date()).toUTCString();
-                        userObj.verificationCode = uuid.v4();
-                        userObj.status = 'registered';
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                callback(err1);
-                            } else {
-                                callback(null, userObj);
-                            }
-                        });
-                    } else {
-                        callback('UserExists');
-                    }
-                });
-            },
-            // create account in db
-            function (userObj, callback) {
-                var accountObj = new Account({
-                    type: type,
-                    referredBy: referredBy,
-                    primaryUser: userObj,
-                    users: [userObj],
-                    createdAt: (new Date()).toUTCString()
-                });
-                accountObj.save(function (err) {
-                    if (err) {
-                        // if account creation fails delete user as well
-                        userObj.remove(function (err1) {
-                            logger.logError(err1);
-                        });
-                        callback(err);
-                    } else {
-                        userObj.account = accountObj;
-                        userObj.save(function (err2) {
-                            if (err2) {
-                                callback(err2);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // create user in AIO
-            function (userObj, accountObj, callback) {
-                var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
-                    if (err) {
-                        // if AIO user creation fails delete user and account from our DB
-                        accountObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError(err1);
-                            }
-                        });
-                        userObj.remove(function (err2) {
-                            if (err2) {
-                                logger.logError(err2);
-                            }
-                        });
-                        callback(err);
-                    } else {
-                        accountObj.aioAccountId = data.account;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // create user in FreeSide
-            function (userObj, accountObj, callback) {
-                var address = type === 'free' ? 'Trial' : req.body.address;
-                var city = type === 'free' ? 'West Palm Beach' : req.body.city;
-                var state = type === 'free' ? 'FL' : req.body.state;
-                var zip = type === 'free' ? '00000' : req.body.zipCode;
-                var country = 'US';
-                var payBy = type === 'free' ? 'BILL' : 'CARD';
-                var payInfo = type === 'free' ? '' : req.body.cardNumber;
-                var payDate = type === 'free' ? '' : req.body.expiryDate;
-                var payCvv = type === 'free' ? '' : req.body.cvv;
-                var payName = type === 'free' ? '' : req.body.cardName;
-                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
-                    if (err) {
-                        // if freeside user creation fails mark status as failed in our DB and set status as inactive in AIO
-                        userObj.status = 'failed';
-                        userObj.save(function (err2) {
-                            if (err2) {
-                                logger.logError(err2);
-                            }
-                        });
-                        aio.updateUserStatus(userObj.email, false, function (err3) {
-                            if (err3) {
-                                logger.logError(err3);
-                            }
-                        });
-                        callback(err);
-                    } else {
-                        accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err4) {
-                            if (err4) {
-                                callback(err4);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // send verification email
-            function (userObj, accountObj, callback) {
-                var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('verification email sent to ' + mailOptions.to);
-                    }
-                });
-                callback(null, userObj, accountObj);
-            },
-            // delete user from visitor
-            function (userObj, accountObj, callback) {
-                Visitor.findOne({email: userObj.email.toLowerCase()}, function (err, visitor) {
-                    if (err) {
-                        callback(err);
-                    } else if (visitor) {
-                        visitor.remove(function (err1) {
-                            if (err1) {
-                                logger.logError(err);
-                            }
-                            callback(null, userObj, accountObj);
-                        });
-                    } else {
-                        callback(null, userObj, accountObj);
-                    }
-                });
-            }
-        ], function (err) {
+        User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
+                logger.logError('userController - signUp - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
-                return res.status(500).send(err);
+                return res.status(500).end();
             }
-            return res.status(200).end();
+            var type = req.body.type;
+            if (!user) {
+                if (type === 'free') {
+                    subscription.newFreeUser(req.body, function (err) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).end();
+                        } else {
+                            return res.status(200).send('registered');
+                        }
+                    });
+                } else if (type === 'paid') {
+                    subscription.newPaidUser(req.body, function (err) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).end();
+                        } else {
+                            return res.status(200).send('registered');
+                        }
+                    });
+                } else if (type === 'comp') {
+                    subscription.newComplimentaryUser(req.body, function (err) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).end();
+                        } else {
+                            return res.status(200).end('registered');
+                        }
+                    });
+                } else {
+                    logger.logError('userController - signUp - invalid type + ' + type + ': ' + req.body.email.toLowerCase());
+                    return res.status(500).end();
+                }
+            } else {
+                if (user.status === 'failed') {
+                    logger.logError('userController - signUp - user with failed status: ' + req.body.email.toLowerCase());
+                    return res.status(500).end();
+                } else {
+                    if (type === 'free') {
+                        logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
+                        return res.status(500).end();
+                    } else if (type === 'paid' && user.account.type === 'free') {
+                        subscription.upgradeSubscription(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    } else if (type === 'paid' && user.account.type === 'paid' && user.status === 'canceled') {
+                        subscription.reactivateSubscription(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    } else if (type === 'paid' && user.account.type === 'comp' && user.status === 'comp-ended') {
+                        subscription.upgradeSubscription(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    } else if (type === 'comp' && user.account.type === 'free') {
+                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    } else if (type === 'comp' && user.account.type === 'paid' && user.status === 'canceled') {
+                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    } else if (type === 'comp' && user.account.type === 'comp' && user.status === 'comp-ended') {
+                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).end(err);
+                            } else {
+                                return res.status(200).end();
+                            }
+                        });
+                    }
+                }
+            }
         });
     },
 
@@ -243,7 +188,15 @@ module.exports = {
                     logger.logError(err1);
                     return res.status(500).end();
                 }
-                return res.send({email: req.email, role: req.role.title, firstName: user.firstName, lastName: user.lastName, telephone: user.telephone, type: account.type, status: user.status});
+                return res.send({
+                    email: req.email,
+                    role: req.role.title,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    telephone: user.telephone,
+                    type: account.type,
+                    status: user.status
+                });
             });
         });
     },
@@ -374,14 +327,29 @@ module.exports = {
         });
     },
 
-    isEmailUnique: function (req, res) {
-        User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
+    isSignUpAllowed: function (req, res) {
+        User.findOne({email: req.query.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError('userController - isEmailUnique - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
                 return res.send(false);
             }
-            return res.send(!user);
+            if (user) {
+                var type = req.query.type;
+                if (type === 'free') {
+                    if (user.status !== 'failed') {
+                        return res.send(false);
+                    } else {
+                        return true;
+                    }
+                } else if (_.contains(['paid', 'comp'], user.account.type) && _.contains(['active', 'registered'], user.status)) {
+                    return res.send(false);
+                } else {
+                    return res.send(true);
+                }
+            } else {
+                return res.send(true);
+            }
         });
     },
 
@@ -554,7 +522,7 @@ module.exports = {
     },
 
     upgradeSubscription: function (req, res) {
-        subscription.upgradeSubscription(req.email, req.body, function(err) {
+        subscription.upgradeSubscription(req.email, req.body, function (err) {
             if (err) {
                 logger.logError('userController - upgradeSubscription - error during upgrade subscription: ' + req.email);
                 logger.logError(err);
@@ -565,7 +533,7 @@ module.exports = {
     },
 
     reactivateSubscription: function (req, res) {
-        subscription.reactivateSubscription(req.email, req.body, function(err){
+        subscription.reactivateSubscription(req.email, req.body, function (err) {
             if (err) {
                 logger.logError('userController - reactivateSubscription - error during reactivate subscription: ' + req.email);
                 logger.logError(err);
@@ -576,7 +544,7 @@ module.exports = {
     },
 
     cancelSubscription: function (req, res) {
-        subscription.cancelSubscription(req.email, function(err){
+        subscription.cancelSubscription(req.email, function (err) {
             if (err) {
                 logger.logError('userController - cancelSubscription - error during cancel subscription: ' + req.email);
                 logger.logError(err);

@@ -10,7 +10,8 @@ var Account = new Schema({
     type: {type: String, required: true},
     referredBy: String,
     aioAccountId: Number,
-    freeSideCustomerNumber: Number
+    freeSideCustomerNumber: Number,
+    complimentaryCode: String
 }, {collection: 'Accounts'});
 
 mongoose.model('Account', Account);
