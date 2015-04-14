@@ -726,6 +726,7 @@
             UPGRADE_SUBSCRIPTION_PROBLEM: 'Problemas actualizando? Pongase en contacto con atencion al cliente',
             UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Por favor cierre y vuelva a abrir la ventana del navegador de la aplicacion YipTV.',
             UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED: 'No se puede actualizar la suscripcion porque uste lla es un usuario pagado.',
+            UPGRADE_SUBSCRIPTION_COMP_ACTIVE_USER: 'Cannot upgrade subscription as you have a complimentary subscription.',
             UPGRADE_SUBSCRIPTION_SUCCESS_HEADING: 'Cuenta actualizada',
             UPGRADE_SUBSCRIPTION_SUCCESS_MESSAGE: 'Felicidades! Usted ha sido actualizado a un usuario pagado.',
             USER_HOME_WATCH_NOW: 'Mirar ahora',
