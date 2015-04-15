@@ -28,7 +28,7 @@
                         });
                     },
                     function (error) {
-                        if(error === 'NonFreeUser') {
+                        if(error === 'PaidUser') {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED'));
                         } else {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_FAILED') + ' ' + $scope.appConfig.customerCareNumber);

@@ -128,6 +128,10 @@ input[type="checkbox"]:checked + label:before {
     padding: 5px 0px 0px;
 }
 
+.underline {
+    text-decoration: underline !important;
+}
+
 .language {
     float: right;
     padding: 0px 0 16px 30px;

@@ -68,63 +68,63 @@ module.exports = {
                         logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
                         return res.status(500).end();
                     } else if (type === 'paid' && user.account.type === 'free') {
-                        subscription.upgradeSubscription(user.email, req.body, function (err) {
+                        subscription.upgradeSubscription(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     } else if (type === 'paid' && user.account.type === 'paid' && user.status === 'canceled') {
-                        subscription.reactivateSubscription(user.email, req.body, function (err) {
+                        subscription.reactivateSubscription(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     } else if (type === 'paid' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                        subscription.upgradeSubscription(user.email, req.body, function (err) {
+                        subscription.upgradeSubscription(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     } else if (type === 'comp' && user.account.type === 'free') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     } else if (type === 'comp' && user.account.type === 'paid' && user.status === 'canceled') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     } else if (type === 'comp' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err) {
+                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
                                 return res.status(500).end(err);
                             } else {
-                                return res.status(200).end();
+                                return res.status(200).send(status);
                             }
                         });
                     }
