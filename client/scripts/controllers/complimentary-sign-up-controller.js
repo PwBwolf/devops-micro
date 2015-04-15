@@ -37,6 +37,8 @@
                     function (error) {
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('COMP_SIGN_UP_USER_EXISTS'));
+                        } else if(error === 'ReuseCompCode') {
+                            loggerSvc.logError($filter('translate')('COMP_SIGN_UP_REUSE_CODE'));
                         } else {
                             loggerSvc.logError($filter('translate')('COMP_SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
