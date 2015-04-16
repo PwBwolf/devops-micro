@@ -680,7 +680,7 @@ module.exports = {
                     }
                 });
             },
-            // set credit card information in FreeSide
+            // update user information in FreeSide
             function (accountObj, userObj, callback) {
                 var address = newUser.address;
                 var city = newUser.city;
@@ -692,13 +692,13 @@ module.exports = {
                 var payDate = newUser.expiryDate;
                 var payCvv = newUser.cvv;
                 var payName = newUser.cardName;
-                billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateUser(accountObj.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
                         revertPackagesInAio(userObj.email);
                         revertUserStatusInAio(userObj, status);
                         revertUserChanges(userObj, status);
                         revertAccountType(accountObj);
-                        logger.logError('subscription - upgradeSubscription - error setting credit card in billing system: ' + userObj.email);
+                        logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                         callback(err);
                     } else {
                         callback(null, accountObj, userObj);
@@ -734,7 +734,7 @@ module.exports = {
             }
             if (cb) {
                 if (userObj) {
-                    cb(err, userObj);
+                    cb(err, userObj.status);
                 } else {
                     cb(err);
                 }
@@ -864,7 +864,7 @@ module.exports = {
                     }
                 });
             },
-            // set credit card and billing address
+            // update user in FreeSide
             function (userObj, callback) {
                 var address = newUser.address;
                 var city = newUser.city;
@@ -876,11 +876,11 @@ module.exports = {
                 var payDate = newUser.expiryDate;
                 var payCvv = newUser.cvv;
                 var payName = newUser.cardName;
-                billing.updateCreditCard(userObj.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateUser(userObj.account.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
                         setUserInactiveInAio(userObj.email);
                         revertUserChanges(cancelDate, userObj);
-                        logger.logError('subscription - reactivateSubscription - error saving credit card to billing system: ' + userObj.email);
+                        logger.logError('subscription - reactivateSubscription - error updating user in billing system: ' + userObj.email);
                         callback(err);
                     } else {
                         callback(null, userObj);
@@ -1070,7 +1070,7 @@ module.exports = {
                         }
                     });
                 },
-                // set credit card information in FreeSide
+                // update user in FreeSide
                 function (accountObj, userObj, callback) {
                     var address = 'Complimentary';
                     var city = 'West Palm Beach';
@@ -1082,13 +1082,13 @@ module.exports = {
                     var payDate = '';
                     var payCvv = '';
                     var payName = '';
-                    billing.updateCreditCard(accountObj.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                    billing.updateUser(accountObj.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                         if (err) {
                             revertPackagesInAio(userObj.email);
                             revertUserStatusInAio(userObj, status);
                             revertUserChanges(userObj, status);
                             revertAccountChanges(accountObj);
-                            logger.logError('subscription - convertToComplimentary - error setting credit card in billing system: ' + userObj.email);
+                            logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                             callback(err);
                         } else {
                             callback(null, accountObj, userObj);

@@ -49,6 +49,47 @@ module.exports = {
         );
     },
 
+    updateUser: function (customerNumber, firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
+        var client = xmlrpc.createClient(config.freeSideUrl);
+        client.methodCall('FS.API.update_customer',
+            [
+                'secret', config.freeSideApiKey,
+                'custnum', customerNumber,
+                'first', firstName,
+                'last', lastName,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country,
+                'daytime', telephone,
+                'invoicing_list', email,
+                'payby', payBy,
+                'payinfo', payInfo,
+                'paydate', payDate,
+                'paycvv', payCvv,
+                'payname', payName
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateUser - error in updating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateUser - error in updating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateUser - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
     updateCreditCard: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.update_customer',

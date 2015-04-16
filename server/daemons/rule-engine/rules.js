@@ -16,7 +16,7 @@ function buildRules() {
             'on': 1,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'active') {
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
                     var created = fact.createdAt;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 4) {
                         cb(true);
@@ -38,7 +38,7 @@ function buildRules() {
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'active') {
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
                     var created = fact.createdAt;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 6) {
                         cb(true);
@@ -60,7 +60,7 @@ function buildRules() {
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'active') {
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
                     var created = fact.createdAt;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 7) {
                         cb(true);
@@ -82,7 +82,7 @@ function buildRules() {
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'active') {
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
                     var created = fact.createdAt;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 8) {
                         cb(true);
@@ -148,7 +148,7 @@ function buildRules() {
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.status === 'active' && fact.type === 'comp') {
+                if (fact.doctype === 'user' && (fact.status === 'active' || fact.status === 'registered') && fact.type === 'comp') {
                     var validTill = fact.validTill;
                     if (moment.utc().startOf('day').diff(moment(validTill).utc().startOf('day'), 'days') === 1) {
                         cb(true);
