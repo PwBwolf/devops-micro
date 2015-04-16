@@ -340,7 +340,7 @@ module.exports = {
                     if (user.status !== 'failed') {
                         return res.send(false);
                     } else {
-                        return true;
+                        return res.send(true);
                     }
                 } else if (_.contains(['paid', 'comp'], user.account.type) && _.contains(['active', 'registered'], user.status)) {
                     return res.send(false);
