@@ -1,6 +1,7 @@
 'use strict';
 
-var async = require('async'),
+var _ = require('lodash'),
+    async = require('async'),
     mongoose = require('mongoose'),
     moment = require('moment'),
     uuid = require('node-uuid'),
@@ -1000,7 +1001,7 @@ module.exports = {
                         }
                     });
                 },
-                // set user upgrade date and make status active, optionally set user details
+                // update user in DB
                 function (accountObj, callback) {
                     User.findOne({email: userEmail}, function (err, userObj) {
                         if (err) {
@@ -1040,7 +1041,7 @@ module.exports = {
                 },
                 // change status to active in AIO if user status is trial-ended or comp-ended
                 function (accountObj, userObj, callback) {
-                    if (status === 'trial-ended' || status === 'comp-ended') {
+                    if (_.contains(['trial-ended', 'comp-ended', 'canceled'], status)) {
                         aio.updateUserStatus(userObj.email, true, function (err) {
                             if (err) {
                                 revertUserChanges(userObj, status, cancelDate);
@@ -1193,7 +1194,7 @@ module.exports = {
         }
 
         function revertUserStatusInAio(userObj, status, cb) {
-            if (status === 'trial-ended' || status === 'comp-ended') {
+            if (_.contains(['trial-ended', 'comp-ended', 'canceled'], status)) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
                         logger.logError('subscription - convertToComplimentary.revertUserStatusInAio - error setting user to inactive in aio: ' + userObj.email);
