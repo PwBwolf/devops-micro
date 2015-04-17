@@ -614,7 +614,7 @@
             SIGN_UP_SUCCESS_HEADING: '¡Felicitaciones!',
             SIGN_UP_SUCCESS_MESSAGE: 'Se registró satisfactoriamente en YipTV. Haga clic en el botón o el enlace en el mensaje de correo electrónico que le enviamos para verificar su cuenta.',
             SIGN_UP_SUCCESS_LOGIN_HEADING: '¡Felicitaciones!',
-            SIGN_UP_SUCCESS_LOGIN_MESSAGE: 'Ha registrado a YipTV con éxito. <a href="/sign-in">Ingresar</a> a YipTV ahora.',
+            SIGN_UP_SUCCESS_LOGIN_MESSAGE: 'Ha registrado a YipTV con éxito. <a class="underline" href="/sign-in">Ingresar</a> a YipTV ahora.',
             TOUS_HEADING: 'TÉRMINOS DE USO Y SERVICIO ("TUS")',
             TOUS_DATE: 'Fecha de vigencia: 18 de febrero de 2014',
             TOUS_HEADER1: '1. INTRODUCCIÓN AL SERVICIO Y ACEPTACIÓN DE LOS TUS',
