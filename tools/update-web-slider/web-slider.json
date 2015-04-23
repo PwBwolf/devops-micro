@@ -66,14 +66,14 @@
                 {
                     "shape": "rect",
                     "coords": "45,517,406,598",
-                    "url": "/sign-up/free"
+                    "url": "/sign-up/paid"
                 }
             ],
             "es": [
                 {
                     "shape": "rect",
                     "coords": "45,517,406,598",
-                    "url": "/sign-up/free"
+                    "url": "/sign-up/paid"
                 }
             ]
         }
