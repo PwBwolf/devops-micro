@@ -1468,7 +1468,7 @@ module.exports = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: userObj.email,
                     subject: config.complimentaryAccountEndedEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.complimentayAccountEndedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+                    html: sf(config.complimentaryAccountEndedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
