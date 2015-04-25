@@ -1,4 +1,0 @@
-{
-    "integration": "ssh://devops@int.yiptv.net/optdev/devops/daemons",
-    "test": "ssh://devops@test.yiptv.net/devops/daemons"
-}

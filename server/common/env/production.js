@@ -9,6 +9,7 @@ module.exports = {
     environment: 'production',
     cleanup: [],
     port: 3000,
+    merchantPort: 4000,
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@10.100.10.4/yiptv',
     merchantDb: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@10.100.10.4/merchant',
     url: 'https://yiptv.com/',
