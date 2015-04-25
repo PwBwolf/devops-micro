@@ -478,9 +478,9 @@ module.exports = {
                     var state = 'FL';
                     var zip = '00000';
                     var country = 'US';
-                    var payBy = 'BILL';
+                    var payBy = 'COMP';
                     var payInfo = '';
-                    var payDate = '';
+                    var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
                     var payCvv = '';
                     var payName = '';
                     billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
@@ -1078,9 +1078,9 @@ module.exports = {
                     var state = 'FL';
                     var zip = '00000';
                     var country = 'US';
-                    var payBy = 'BILL';
+                    var payBy = 'COMP';
                     var payInfo = '';
-                    var payDate = '';
+                    var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
                     var payCvv = '';
                     var payName = '';
                     billing.updateUser(accountObj.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
