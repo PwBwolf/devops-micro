@@ -30,8 +30,8 @@ if (command === 'new') {
         properties: {
             requestedBy: {
                 description: 'Requested By',
-                pattern: /^[a-zA-Z\s\.]+$/,
-                message: 'Requested by name must contain only letters, spaces or dots',
+                pattern: /^[a-zA-Z0-9\s\-,.']+$/,
+                message: 'Enter a valid name',
                 required: true,
                 conform: function (value) {
                     return value && value.trim();
@@ -39,8 +39,8 @@ if (command === 'new') {
             },
             department: {
                 description: 'Department',
-                pattern: /^[a-zA-Z\s\-\.]+$/,
-                message: 'Department name must contain only letters, spaces, dashes or dots',
+                pattern: /^[a-zA-Z0-9\s\-,.']+$/,
+                message: 'Enter a valid department name',
                 required: true,
                 conform: function (value) {
                     return value && value.trim();
@@ -48,8 +48,8 @@ if (command === 'new') {
             },
             reason: {
                 description: 'Reason',
-                pattern: /^[a-zA-Z\s\-\.]+$/,
-                message: 'Reason must contain only letters, spaces, dashes or dots',
+                pattern: /^[a-zA-Z0-9\s\-,.']+$/,
+                message: 'Enter a valid reason',
                 required: true,
                 conform: function (value) {
                     return value && value.trim();

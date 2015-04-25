@@ -77,7 +77,7 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                 emailService.sendEmail(mailOptions, function (err2) {
                     if (err2) {
                         logger.logError(err2);
-                        logger.logError('adminCLI - resetPassword - unable to sent password changed email notification but password has been changed successfully: ' + mailOptions.to);
+                        logger.logError('adminCLI - resetPassword - unable to send password changed email notification but password has been changed successfully: ' + mailOptions.to);
                         process.exit(1);
                     } else {
                         logger.logInfo('adminCLI - resetPassword - password changed email notification sent successfully: ' + mailOptions.to);
