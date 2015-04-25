@@ -9,6 +9,7 @@ module.exports = {
     environment: 'staging',
     cleanup: [],
     port: 3000,
+    merchantPort: 4000,
     db: 'mongodb://localhost/yiptv',
     merchantDb: 'mongodb://localhost/merchant',
     url: 'https://staging.yiptv.net/',

@@ -8,7 +8,7 @@
 # run npm update to install any new node modules
 #--rule-engine#npm update
 
-# now start the node server and redirect logs to server.log
+# now start the node server and redirect logs to yip-rule-engine.log
 #--rule-engine#/etc/init.d/yip-rule-engine start
 #--rule-engine#cd ..
 ##################### Rule Engine end #######################

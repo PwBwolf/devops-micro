@@ -4,6 +4,7 @@ module.exports = {
     environment: 'development',
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
+    merchantPort: 4000,
     db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
     merchantDb: 'mongodb://yipUser:y1ptd3v@localhost/merchant',
     url: 'http://localhost:3000/',

@@ -4,9 +4,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ComplimentaryCode = new Schema({
-    requestedBy: {type: String, required: true},
-    department: {type: String, required: true},
-    reason: {type: String, required: true},
+    requestedBy: {type: String, required: true, trim: true},
+    department: {type: String, required: true, trim: true},
+    reason: {type: String, required: true, trim: true},
     startDate: {type: Date, required: true},
     endDate: {type: Date, required: true},
     createdAt: {type: Date, required: true},
