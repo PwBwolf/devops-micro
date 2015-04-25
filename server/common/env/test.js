@@ -10,7 +10,7 @@ module.exports = {
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
-    merchantDb: 'mongodb://yipUser:' + process.env.MONGO_PWD + 'localhost/merchant',
+    merchantDb: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/merchant',
     url: 'https://test.yiptv.net/',
     imageUrl: 'https://test.yiptv.net/img/',
     secretToken: 'yip#tv@test#275',
