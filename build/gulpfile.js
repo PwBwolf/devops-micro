@@ -171,6 +171,7 @@ gulp.task('server', function (cb) {
     gulp.src(['../server/common/**/*', '!../server/common/env/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
     gulp.src(['../server/common/env/all.js', '../server/common/env/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/env'));
     gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
+    gulp.src('../server/merchant/**/*', {dot: true}).pipe(gulp.dest('dist/server/merchant'));
     cb();
 });
 
