@@ -1,0 +1,17 @@
+<div class="container">
+	<h3>View 2</h3>
+	<br />
+	<input type="text" data-ng-model="date" />
+	<br />
+	<ul>
+		<li data-ng-repeat="email in emails | filter:date">{{ email.from }} - {{ email.date }}</li>
+	</ul>
+	<br />
+	
+	Customer Name: <input type="text" data-ng-model="newCustomer.from"> <br />
+	Customer Subject: <input type="text" data-ng-model="newCustomer.subject"> <br />
+	Customer Date: <input type="text" data-ng-model="newCustomer.date"> <br />	
+	<button class="" data-ng-click="addCustomer()">Add Customer</button><br />
+	<a href="#/view-1">view 1</a>
+	
+</div>

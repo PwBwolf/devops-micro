@@ -1,0 +1,154 @@
+<div id="Bnr_Bx" class="usr_Scrns_pnl cntntBxBck">
+	<div class='jumbotron'>
+		
+	    <div class="banner" ng-hide="webSliderLoaded">
+	        <div class="banner-wrap">
+	            <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="8000">
+	                <ul class="carousel-inner">
+	                    <li class="item active">
+	                        <img src="../imgs/pc/banner-new1-1600x812.jpg" width="1600" height="812" alt="Banner New1 1600x812">
+
+	                        <div class="carousel-caption5">
+	                            <div class="caption-txt5">
+	                                <h1 translate="HOME_YIPTV_HAS_BEIN">YipTV has beIN Sports</h1>
+
+	                                <h3 translate="HOME_AND_DOZENS">and dozens of other channels</h3>
+
+	                                <h2 translate="HOME_PRICE">$14.99/month</h2>
+	                                <button goto="/sign-up/paid" translate="HOME_JOIN_NOW">Join Now!</button>
+	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li class="item">
+	                       <img src="../imgs/pc/banner02-1600x812.jpg" width="1600" height="812" alt="Banner02 1600x812">
+
+	                        <div class="carousel-caption3">
+	                            <div class="caption-txt3">
+	                                <h1 translate="HOME_UNBEATABLE_PRICE">Unbeatable price.</h1>
+
+	                                <h2 translate="HOME_PRICE">$14.99/mo</h2>
+
+	                                <h3 translate="HOME_NO_CONTRACTS_EVER">No contracts. Ever.</h3>
+	                                <button goto="/sign-up/paid" translate="HOME_JOIN_NOW">Join Now!</button>
+	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li class="item">
+	                        <img src="../imgs/pc/banner03-1600x812.jpg" width="1600" height="812" alt="Banner03 1600x812">
+
+	                        <div class="carousel-caption1">
+	                            <div class="caption-txt1">
+	                                <h1 translate="HOME_LOTS_OF_CHANNELS">Lot of Channels,</h1>
+
+	                                <h1 translate="HOME_ZERO_CONTRACTS">Zero Contracts,</h1>
+
+	                                <h1 translate="HOME_NO_HASSLES">No Hassles.</h1>
+	                                <button goto="/sign-up/free" translate="HOME_GET_MONTH_FREE">Get a Month FREE!</button>
+	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li class="item">
+	                        <img src="../imgs/pc/banner04-1600x812.jpg" width="1600" height="812" alt="Banner04 1600x812">
+
+	                        <div class="carousel-caption4">
+	                            <div class="caption-txt4">
+	                                <h1 translate="HOME_LOVE_EDM">Love EDM? Get VIP</h1>
+
+	                                <h1 translate="HOME_ACCESS_TO_CONTENT">access to content</h1>
+
+	                                <h1 translate="HOME_LIKE_LIVE_ELECTRONICA">like live Electronica.</h1>
+
+	                                <h2 translate="HOME_YIPTV_HAS_CHANNELS">YipTV has channels that your cable</h2>
+
+	                                <h2 translate="HOME_PROVIDER_DOESNT">provider doesn't, like Clubbing TV.</h2>
+	                                <button goto="/sign-up/free" translate="HOME_GET_MONTH_FREE">Get a Month FREE!</button>
+	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
+	                            </div>
+	                        </div>
+	                    </li>
+	                </ul>
+	                <!-- ol class="carousel-indicators">
+	                    <li data-target="#carousel-banner" data-slide-to="0" class="active"></li>
+	                    <li data-target="#carousel-banner" data-slide-to="1"></li>
+	                    <li data-target="#carousel-banner" data-slide-to="2"></li>
+	                    <li data-target="#carousel-banner" data-slide-to="3"></li>
+	                </ol -->
+					
+					<ol class="carousel-indicators">
+					    <li data-target="#webslider-banner" data-slide-to="0" ng-class="0">
+						<img src="../imgs/pgcrsl_bein.png" alt="Crsl Bein" />
+						<span>Bein Sports 	 <small>Watch live news, sports </small></span>
+						</li>
+  	  	  
+					    <li data-target="#webslider-banner" data-slide-to="0" ng-class="0">
+						<img src="../imgs/crsl_app.png" alt="Crsl App">
+						<span>Download The APP	 <small>Watch live news, sports</small></span>
+						</li>
+  	  	  
+					    <li data-target="#webslider-banner" data-slide-to="0" ng-class="0">
+						<img src="../imgs/crsl_app.png" alt="Crsl App">
+						<span>Free for 7 day	 <small>Watch live news, sports</small></span>
+						</li>
+  	  	  
+					    <li data-target="#webslider-banner" data-slide-to="0" ng-class="0">
+						<img src="../imgs/crsl_app.png" alt="Crsl App">
+						<span>money back gurantee	 <small>Watch live news, sports</small></span>
+						</li>
+				  </ol>
+						
+	            </div>
+	        </div>
+	    </div>
+	    <div class="webslider" ng-show="webSliderLoaded">
+	        <div class="webslider-wrap">
+	            <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="8000">
+	                <ul class="carousel-inner">
+	                    <li class="item" ng-repeat="slide in webSliders" ng-class="{active: $index === 0}">
+	                        <img hidefocus="true" alt="..." usemap="#img{{$index+1}}-{{language}}" rwdimgmap width="1350" height="433" ng-src="data:image/jpg;base64,{{slide.image[language]}}">
+	                        <map ng-repeat="(key, value) in slide.maps" name="img{{$parent.$index+1}}-{{key}}">
+	                            <area ng-repeat="map in slide.maps[key]" shape="{{map.shape}}" coords="{{map.coords}}" href="javascript:void(0);" ng-click="imageMapClick(map.url)">
+	                        </map>
+	                    </li>
+	                </ul>
+	                <!-- ol class="carousel-indicators">
+	                    <li data-target="#webslider-banner" ng-repeat="slide in webSliders" data-slide-to="{{$index}}" ng-class="{active: $index === 0}"></li>
+	                </ol -->
+					
+					
+					<ol class="carousel-indicators">
+	  	  	  
+						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
+							<img src="../imgs/crsl_bein.png" alt="Crsl Bein" />
+							<span>Bein Sports 	 <small>Watch live news, sports </small></span>
+							</li>
+	  	  	  
+						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
+							<img src="../imgs/crsl_app.png" alt="Crsl App">
+							<span>Download The APP	 <small>Watch live news, sports</small></span>
+							</li>
+	  	  	  
+						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
+							<img src="../imgs/crsl_app.png" alt="Crsl App">
+							<span>Free for 7 day	 <small>Watch live news, sports</small></span>
+							</li>
+	  	  	  
+						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
+							<img src="../imgs/crsl_app.png" alt="Crsl App">
+							<span>money back gurantee	 <small>Watch live news, sports</small></span>
+							</li>
+	
+					  </ol>
+					
+					
+	            </div>
+	        </div>
+	    </div>
+			
+		
+	</div>	
+	
+</div>
+

@@ -1,0 +1,58 @@
+<div class="content-area">
+    <div class="top-bg">&nbsp;</div>
+    <div class="setting-box">
+        <h1><span translate="USER_DETAILS_HEADING">User Details</span></h1>
+
+        <div class="container">
+            <div class="sign-in-box">
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <form name="form" id="form" ng-submit="getUserDetails()" novalidate>
+                    <span class="label-text" translate="USER_DETAILS_EMAIL">Email</span><br>
+                    <input autofocus name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
+
+                    <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="USER_DETAILS_EMAIL_REQUIRED">Enter your email</div>
+                    <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="USER_DETAILS_EMAIL_INVALID">Enter a valid email</div>
+                    <br><br>
+                    <button ng-disabled="saving" type="submit" translate="USER_DETAILS_SUBMIT_BUTTON" class="btn-submit">
+                        Submit
+                    </button>
+                    <br><br>
+                </form>
+                <div class="frm-btn txt-center" ng-show="showDetails">
+                    <div class="header-label" translate="USER_DETAILS_FIRST_NAME">First Name</div>
+                    <div class="value-label" ng-bind="user.firstName"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_LAST_NAME">Last Name</div>
+                    <div class="value-label" ng-bind="user.lastName"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_EMAIL">Email</div>
+                    <div class="value-label" ng-bind="user.email"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_TELEPHONE">Telephone</div>
+                    <div class="value-label" ng-bind="user.telephone"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_CREATED_AT">Created At</div>
+                    <div class="value-label" ng-bind="user.createdAt | date:'medium'"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_STATUS">Status</div>
+                    <div class="value-label" ng-bind="user.status"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_TYPE">Type</div>
+                    <div class="value-label" ng-bind="user.account.type"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_AIO_ACCOUNT_ID">AIO Account ID</div>
+                    <div class="value-label" ng-bind="user.account.aioAccountId"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_FREESIDE_CUSTOMER_NUMBER">FreeSide Customer Number</div>
+                    <div class="value-label" ng-bind="user.account.freeSideCustomerNumber"></div>
+                    <br>
+                    <div class="header-label" translate="USER_DETAILS_REFERRAL_CODE">Referral Code</div>
+                    <div class="value-label" ng-bind="user.account.referredBy"></div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>

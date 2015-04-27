@@ -1,0 +1,103 @@
+<div id="Shws_Bx" class="usr_Guide_pnl cntntBxBck"  data-ng-controller='usrShwsCntrlr'>
+	<div class='pg2_popchnls mnuShdw jumbotron'>
+		<div class='pg2_title'>most popular shows</div>
+		<div class='pg2_shws container'>
+			<!-- show panels begin -->
+			<div id="shwsCtgry">
+				<div class="{{usrShwClasses[2].className}} {{usrShwClasses[3].className}} {{usrShwClasses[4].className}} {{usrShwClasses[0].className}}" data-ng-class="{'{{usrShwClasses[1].className}}':$index == selectedIndex}" data-ng-click="itemClicked($index)" data-ng-repeat="usrShw in usrShws">
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex) ? '{{usrShwClasses[6].className}}' : '{{usrShwClasses[5].className}}'" >
+						<div class='panel-body'><img data-ng-src='{{usrShw.shwBnr}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw.shwDescCntnt}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex) ? '{{usrShwClasses[5].className}}' : '{{usrShwClasses[6].className}}'">
+						<div class='panel-body'><img data-ng-src='{{usrShw.chnlID}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw.shwDesc}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			<!-- show panels end -->
+			
+			<!-- show panels begin -->
+			<div id="shwsCtgry">
+				<div class="{{usrShwClasses[2].className}} {{usrShwClasses[3].className}} {{usrShwClasses[4].className}} {{usrShwClasses[0].className}}" data-ng-class="{'{{usrShwClasses[1].className}}':$index == selectedIndex2}" data-ng-click="itemClicked2($index)" data-ng-repeat="usrShw1 in usrShws1">
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex2) ? '{{usrShwClasses[6].className}}' : '{{usrShwClasses[5].className}}'" >
+						<div class='panel-body'><img data-ng-src='{{usrShw1.shwBnr}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw1.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw1.shwDescCntnt}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex2) ? '{{usrShwClasses[5].className}}' : '{{usrShwClasses[6].className}}'">
+						<div class='panel-body'><img data-ng-src='{{usrShw1.chnlID}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw1.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw1.shwDesc}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			<!-- show panels end -->
+			
+			<!-- show2 panels begin -->
+			<div id="shwsCtgry">
+				<div class="{{usrShwClasses[2].className}} {{usrShwClasses[3].className}} {{usrShwClasses[4].className}} {{usrShwClasses[0].className}}" data-ng-class="{'{{usrShwClasses[1].className}}':$index == selectedIndex3}" data-ng-click="itemClicked3($index)" data-ng-repeat="usrShw2 in usrShws2">
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex3) ? '{{usrShwClasses[6].className}}' : '{{usrShwClasses[5].className}}'" >
+						<div class='panel-body'><img data-ng-src='{{usrShw2.shwBnr}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw2.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw2.shwDescCntnt}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+					<div id="shwPanel" data-ng-class="($index==selectedIndex3) ? '{{usrShwClasses[5].className}}' : '{{usrShwClasses[6].className}}'">
+						<div class='panel-body'><img data-ng-src='{{usrShw2.chnlID}}' /></div>
+						<div class='panel-footer'>
+							<dl>
+								<dt>{{usrShw2.shwTitle}}</dt>
+								<!-- dd>{{usrShw.shwDesc}}</dd -->
+								<dd>{{usrShw2.shwDesc}}</dd>
+							</dl>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			<!-- show2 panels end -->
+		</div>
+		
+	</div>
+	
+
+</div>
+
+
+
+

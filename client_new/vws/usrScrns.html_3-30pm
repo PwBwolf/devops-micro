@@ -1,0 +1,32 @@
+<div class="usr_Scrns_pnl" data-ng-controller='usrScrnsCntrlr'>
+	<div id="teir_1" class="mainVwrs">
+		
+		<div id="myPlayer" class="mnScrn posNlne"><img src="{{usrMnScrn.mnView}}" /></div>
+		<!-- script type="text/javascript">
+			jwplayer("myPlayer").setup({
+							file: "vods/soccerVid.mp4",
+							image: "{{usrMnScrn.mnView}}",
+							autostart: true,
+							width: 904,
+							height: 370
+							
+							// good for fullScrn //
+							// width: "100%",    //
+							//aspectratio: "16:9"//
+						
+						});
+			
+		</script -->
+			
+		<div class="mnFavs posNlne">
+			<div class="favScrn posNlne" data-ng-repeat="usrF in usrFavs">
+				<img src="{{usrF.chnlID}}" />
+				<div class="chnLbl">{{usrF.favShwTme}}</div><img src="{{usrF.favScrn}}" /></div>
+		</div>
+	</div>
+	
+	<div id="teir_2" class="sgstdChnls posNlne">
+		<div class="sgstdChnl posNlne" data-ng-repeat="usrS in usrSgstns"><img src="{{usrS.chnlID}}" /><div class="chnLbl"><span>{{usrS.sgstdTme}}<br />{{usrS.sgstdDsc}}</span></div><img src="{{usrS.sgstdScrn}}" /></div>
+	</div>
+	
+</div>

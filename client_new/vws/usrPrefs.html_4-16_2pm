@@ -1,0 +1,61 @@
+<div class="usr_Prefs_pnl" data-ng-controller='usrPrefsCntrlr'>
+	
+	<!-- br />
+	<input type="text" data-ng-model="from" />
+	<br />
+	<ul>
+		<li data-ng-repeat="email in emails | filter:from">{{ email.from }} - {{ email.date }}</li>
+	</ul>
+	<a href="#/view-2">view 2</a -->	
+	<div class="logoBox posNlne"><img src="img/nlogo.png" /></div>
+	<div class="usr_Prefs posNlne">
+		
+		<!-- /// === user data - top half of the nav banner === /// -->
+		<div class="usr_Prfl_n_Data">
+			<div class="usr_Prfl posNlne">
+				<div class="usr_Prfl_nfo">
+					<div class="usr_time posNlne">10:30</div><div class="usr_prfl_btn posNlne"><img src="img/img-user-password-hovr.png"/ ><img src="img/img-creditcard-hovr.png"/ ></div>
+				</div>
+				<div class="usr_PrflName"><span class="">{{usrData[0].usremail}}</span></div>
+			</div>
+			<div class="usr_alrtData posNlne"><span>event/alert</span><span><p style="font-size:100%">{{usrData[0].usrmessage}}</p></span></div>
+		
+		</div>
+		
+	
+		<!-- /// === user channels - btm half of the nav banner === /// -->
+		<div class="usr_Prfl_n_Chnls">
+			<ul>
+				<li data-ng-repeat="chnls in usrPrfrdChnls"><img ng-src="{{chnls.chnl}}" /></li>
+			</ul>
+		</div>
+	
+	
+	</div>
+	
+	<!--
+	<div class="modal-btm-space modal-content" data-ng-show="isPopupVisible">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-ng-click="closePopup()">×</button>
+		        <h3>{{selectedEmail.subject}}</h3>
+		    </div>
+		    <div class="modal-body">
+		        <strong>From:</strong> {{selectedEmail.from}} <br />
+		        <strong>Date:</strong> {{selectedEmail.date}} <br />
+		        <br />
+		        <p>
+		            Hey You, <br />
+		            <br />
+		            How you doing?<br />
+		            <br />
+		            Sincerely<br />
+		            Your Bro
+		        </p>
+		    </div>
+		    <div class="modal-footer">
+		        <a href="#" class="btn btn-primary" data-ng-click="closePopup()">Close</a>
+		    </div>
+		</div>-->
+	
+	
+</div>

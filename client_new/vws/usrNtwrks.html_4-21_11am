@@ -1,0 +1,19 @@
+<div id="Menu_Bx" class="usr_Menu_pnl cntntBxBck" data-ng-controller="usrNtwrksCntrlr">
+	<div class='pg2_chnls col-lg-12'>
+		<div class='pg3_title'>Amazing Networks</div>
+		<ul>
+			<li data-ng-repeat="ntwrk in usrNtwrks"><img data-ng-src="{{ntwrk.ntwrkID}}" alt="{{ntwrk.ntwrkAlt}}" data-ng-click="itemClicked($index)" /></li>
+
+		</ul>
+		<!-- img src='imgs/pc/pg_2_a.png' -->
+	</div>
+	<div id='droidlogo' class='teasing'></div>
+	<div id='tempCntnt'>
+		<div id="splash" data-ng-class="($index==selectedIndex) ? '{{usrNtwrkClasses[1].className}}' : '{{usrNtwrkClasses[0].className}}'" data-ng-repeat="ntCntnt in usrNtwrks">
+			<span><img data-ng-src="{{ntCntnt.ntwrkID}}"></span>
+			<p>{{ntCntnt.ntwrkNm}}</p>
+			<p>{{ntCntnt.ntwrkDesc}}</p>
+		</div>
+	</div>
+	
+</div>

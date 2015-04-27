@@ -1,0 +1,26 @@
+<div id="About_Bx" class="usr_Guide_pnl cntntBxBck"  data-ng-controller='usrShwsCntrlr'>
+	<div class='pg2_popchnls mnuShdw jumbotron'>
+		<div class='pg2_title'>most popular shows</div>
+		<div class='pg2_shws container'>
+			<!-- show panels begin -->
+			<div class="{{usrShwClasses[2].className}} {{usrShwClasses[3].className}} {{usrShwClasses[4].className}} {{usrShwClasses[0].className}}" data-ng-repeat="usrShw in usrShws">
+				<div class='panel-body'><img data-ng-src='{{usrShw.shwBnr}}' /></div>
+				<div class='panel-footer'>
+					<dl>
+						<dt>{{usrShw.shwTitle}}</dt>
+						<!-- dd>{{usrShw.shwDesc}}</dd -->
+						<dd>{{usrShw.shwDescCntnt}}</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- show panels end -->
+		</div>
+		
+	</div>
+	
+
+</div>
+
+
+
+
