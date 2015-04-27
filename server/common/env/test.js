@@ -10,6 +10,12 @@ module.exports = {
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     merchantPort: 4000,
+    email: {
+        host: 'dev.yiptv.com',
+        port: 25,
+        fromEmail: 'noreply@yiptv.com',
+        fromName: 'YipTV'
+    },
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
     merchantDb: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/merchant',
     url: 'https://test.yiptv.net/',

@@ -5,6 +5,12 @@ module.exports = {
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     merchantPort: 4000,
+    email: {
+        host: 'dev.yiptv.com',
+        port: 25,
+        fromEmail: 'noreply@yiptv.com',
+        fromName: 'YipTV'
+    },
     db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
     merchantDb: 'mongodb://yipUser:y1ptd3v@localhost/merchant',
     url: 'http://localhost:3000/',
