@@ -8,7 +8,6 @@ var config = require('../../server/common/config/config'),
     prompt = require('prompt'),
     uuid = require('node-uuid');
 
-
 var modelsPath = config.root + '/server/common/models',
     dbYip = mongoose.createConnection(config.db),
     dbMerchant = mongoose.createConnection(config.merchantDb);

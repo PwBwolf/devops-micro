@@ -6,7 +6,7 @@ module.exports = {
     port: 3000,
     merchantPort: 4000,
     email: {
-        host: 'dev.yiptv.com',
+        host: '172.16.10.6',
         port: 25,
         fromEmail: 'noreply@yiptv.com',
         fromName: 'YipTV'

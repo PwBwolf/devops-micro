@@ -256,7 +256,8 @@ function bumpVersion(versionFile, destination) {
 }
 
 gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function (cb) {
-    buildDaemon('dist/server/daemons');
+    buildDaemon('dist/server/daemons', 'rule-engine');
+    buildDaemon('dist/server/daemons', 'merchant-processor');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -362,8 +363,7 @@ function cleanDaemon(destDir, name) {
     fs.emptyDirSync(destDir + '/' + name);
 }
 
-function buildDaemon(destDir, cb) {
-    var daemon = argv.name || 'rule-engine';
+function buildDaemon(destDir, daemon, cb) {
     cleanDaemon(destDir, daemon);
     copyDaemon(['../server/daemons/' + daemon + '/**/*', '!../server/daemons/' + daemon + '/' + daemon + '-main.js', '!../server/daemons/start.sh'], destDir + '/' + daemon).then(function () {
         gulp.src('../server/daemons/' + daemon + '/' + daemon + '-main.js')

@@ -11,7 +11,9 @@ var Account = new Schema({
     referredBy: String,
     aioAccountId: Number,
     freeSideCustomerNumber: Number,
-    complimentaryCode: String
+    complimentaryCode: String,
+    merchant: {type: Schema.Types.ObjectId, ref: 'Merchant'},
+    merchantPopId: String
 }, {collection: 'Accounts'});
 
 mongoose.model('Account', Account);

@@ -11,10 +11,11 @@ var _ = require('lodash'),
     email = require('./email'),
     logger = require('../config/logger'),
     date = require('./date'),
-    User = mongoose.model('User'),
-    Account = mongoose.model('Account'),
-    Visitor = mongoose.model('Visitor'),
-    ComplimentaryCode = mongoose.model('ComplimentaryCode'),
+    dbYip = mongoose.createConnection(config.db),
+    User = dbYip.model('User'),
+    Account = dbYip.model('Account'),
+    Visitor = dbYip.model('Visitor'),
+    ComplimentaryCode = dbYip.model('ComplimentaryCode'),
     userRoles = require('../../../client/scripts/config/routing').userRoles,
     sf = require('sf');
 
@@ -571,6 +572,162 @@ module.exports = {
                 }
             });
         }
+    },
+
+    newMerchantUser: function (user, cb) {
+        async.waterfall([
+            // create user in db
+            function (callback) {
+                var userObj = new User(user);
+                userObj.email = user.username;
+                userObj.preferences = {defaultLanguage: 'en'};
+                userObj.role = userRoles.user;
+                userObj.createdAt = (new Date()).toUTCString();
+                userObj.verificationCode = uuid.v4();
+                userObj.status = 'registered';
+                userObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newMerchantUser - error creating user: ' + userObj.email);
+                        callback(err);
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // create account in db
+            function (userObj, callback) {
+                var accountObj = new Account({
+                    type: 'paid',
+                    merchant: user.merchantId,
+                    merchantPopId: user.merchantPopId,
+                    primaryUser: userObj,
+                    users: [userObj],
+                    createdAt: (new Date()).toUTCString()
+                });
+                accountObj.save(function (err) {
+                    if (err) {
+                        userObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError('subscription - newMerchantUser - error removing user as account creation failed: ' + user.email);
+                                logger.logError(err1);
+                            }
+                        });
+                        logger.logError('subscription - newMerchantUser - error creating account: ' + user.email);
+                        callback(err);
+                    } else {
+                        userObj.account = accountObj;
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                logger.logError('subscription - newMerchantUser - error updating user with account details: ' + user.email);
+                                callback(err1);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // create user in AIO
+            function (userObj, accountObj, callback) {
+                var packages = config.aioPaidPackages;
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
+                    if (err) {
+                        accountObj.remove(function (err1) {
+                            if (err1) {
+                                logger.logError('subscription - newMerchantUser - error removing account as aio create user failed: ' + userObj.email);
+                                logger.logError(err1);
+                            }
+                        });
+                        userObj.remove(function (err2) {
+                            if (err2) {
+                                logger.logError('subscription - newMerchantUser - error removing user as aio create user failed: ' + userObj.email);
+                                logger.logError(err2);
+                            }
+                        });
+                        logger.logError('subscription - newMerchantUser - error creating user in aio: ' + userObj.email);
+                        callback(err);
+                    } else {
+                        accountObj.aioAccountId = data.account;
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                logger.logError('subscription - newMerchantUser - error updating aioAccountId in account: ' + userObj.email);
+                                callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // create user in FreeSide
+            function (userObj, accountObj, callback) {
+                var address = 'Merchant - ' + user.merchantId;
+                var city = 'West Palm Beach';
+                var state = 'FL';
+                var zip = '00000';
+                var country = 'US';
+                var payBy = 'BILL';
+                var payInfo = '';
+                var payDate = '';
+                var payCvv = '';
+                var payName = '';
+                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
+                    if (err) {
+                        userObj.status = 'failed';
+                        userObj.save(function (err1) {
+                            if (err1) {
+                                logger.logError('subscription - newMerchantUser - error updating status to failed as user creation in billing system failed: ' + userObj.email);
+                                logger.logError(err1);
+                            }
+                        });
+                        aio.updateUserStatus(userObj.email, false, function (err2) {
+                            if (err2) {
+                                logger.logError('subscription - newMerchantUser - error setting user inactive in aio as user creation failed in billing system: ' + userObj.email);
+                                logger.logError(err2);
+                            }
+                        });
+                        logger.logError('subscription - newMerchantUser - error creating user in billing system: ' + userObj.email);
+                        callback(err);
+                    } else {
+                        accountObj.freeSideCustomerNumber = customerNumber;
+                        accountObj.save(function (err3) {
+                            if (err3) {
+                                logger.logError('subscription - newMerchantUser - error updating billing system customer number in account: ' + userObj.email);
+                                callback(err3);
+                            } else {
+                                callback(null, userObj, accountObj);
+                            }
+                        });
+                    }
+                });
+            },
+            // send verification email
+            function (userObj, accountObj, callback) {
+                var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: userObj.email,
+                    subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
+                    html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
+                };
+                email.sendEmail(mailOptions, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newMerchantUser - error send verification email to ' + mailOptions.to);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - newMerchantUser - verification email sent to ' + mailOptions.to);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            }
+        ], function (err) {
+            if (err) {
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
     },
 
     upgradeSubscription: function (userEmail, newUser, cb) {

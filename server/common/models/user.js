@@ -9,8 +9,8 @@ var User = new Schema({
     lastName: {type: String, required: true, trim: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
     telephone: {type: String, required: true, trim: true},
-    hashedPassword: {type: String, required: true},
-    salt: {type: String, required: true},
+    hashedPassword: {type: String, required: false},
+    salt: {type: String, required: false},
     role: {
         type: {
             bitMask: {type: Number, required: true},
@@ -56,21 +56,6 @@ User.virtual('password')
     .get(function () {
         return this._password;
     });
-
-var validatePresenceOf = function (value) {
-    return value && value.length;
-};
-
-User.pre('save', function (next) {
-    if (!this.isNew) {
-        return next();
-    }
-    if (!validatePresenceOf(this.password)) {
-        return next(new Error('Invalid password'));
-    } else {
-        return next();
-    }
-});
 
 User.methods = {
     authenticate: function (plainText) {
