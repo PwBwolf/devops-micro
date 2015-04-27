@@ -6,37 +6,78 @@ var mongoose = require('mongoose'),
     dbYip = mongoose.createConnection(config.db),
     dbMerchant = mongoose.createConnection(config.merchantDb),
     User = dbYip.model('User'),
-    Merchant = dbMerchant.model('Merchant');
+    Merchant = dbMerchant.model('Merchant'),
+    monq = require('monq'),
+    queueDb = monq(config.merchantDb),
+    queue = queueDb.queue('api-requests');
 
 module.exports = {
     doesUsernameExist: function (req, res) {
         validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
             if (err) {
-                return res.status(500).end('server-error');
+                logger.logError('merchantController - doesUsernameExist - error validating credentials');
+                logger.logError(err);
+                return res.status(200).send({error: 'server-error'});
             }
             if (!result) {
-                return res.status(401).end('unauthorized');
+                return res.status(200).send({error: 'unauthorized'});
             }
             if (!req.query.username) {
-                return res.status(400).end('invalid-username');
+                return res.status(200).send({error: 'invalid-username'});
             }
             User.findOne({email: req.query.username.toLowerCase()}, function (err1, user) {
                 if (err1) {
                     logger.logError('merchantController - doesUsernameExist - error fetching user: ' + req.query.email);
                     logger.logError(err);
-                    return res.status(500).end('server-error');
+                    return res.status(200).send({error: 'server-error'});
                 }
-                return res.status(200).send(user !== null);
+                return res.status(200).send({result: user !== null});
             });
         });
     },
 
     addUser: function (req, res) {
-        return res.status(200).end();
+        validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+            if (err) {
+                logger.logError('merchantController - addUser - error validating credentials');
+                logger.logError(err);
+                return res.status(200).send({error: 'server-error'});
+            }
+            if (!result) {
+                return res.status(200).send({error: 'unauthorized'});
+            }
+            queue.enqueue('addUser', req.body, function (err) {
+                if (err) {
+                    logger.logError('merchantController - addUser - error adding job to queue: ' + data);
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                } else {
+                    return res.status(200).send({result: 'success'});
+                }
+            });
+        });
     },
 
     makePayment: function (req, res) {
-        return res.status(200).end();
+        validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+            if (err) {
+                logger.logError('merchantController - makePayment - error validating credentials');
+                logger.logError(err);
+                return res.status(200).send({error: 'server-error'});
+            }
+            if (!result) {
+                return res.status(200).send({error: 'unauthorized'});
+            }
+            queue.enqueue('makePayment', req.body, function (err) {
+                if (err) {
+                    logger.logError('merchantController - makePayment - error adding job to queue: ' + data);
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                } else {
+                    return res.status(200).send({result: 'success'});
+                }
+            });
+        });
     }
 };
 
