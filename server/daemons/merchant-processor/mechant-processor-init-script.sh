@@ -12,7 +12,7 @@
 
 NAME=yip-merchant-processor
 SOURCE_DIR=/devops/yiptv/server/daemons/merchant-processor
-SOURCE_FILE=merchant-processor.js
+SOURCE_FILE=merchant-processor-main.js
 
 user=devops
 logfile=/var/log/$NAME.log
