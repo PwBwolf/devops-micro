@@ -6,18 +6,10 @@ var mailer = require('nodemailer'),
 
 var transporter = mailer.createTransport(smtpTransport({
         host: config.email.host,
-        port: config.email.port,
-        auth: {
-            user: config.email.user,
-            pass: config.email.password
-        },
-        secure:false,
-        tls: {
-            ciphers:'SSLv3'
-        }
+        port: config.email.port
     })
 );
 
-exports.sendEmail = function(mailOptions, callback) {
+exports.sendEmail = function (mailOptions, callback) {
     transporter.sendMail(mailOptions, callback);
 };

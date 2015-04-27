@@ -5,14 +5,6 @@ var path = require('path'),
 
 module.exports = {
     root: rootPath,
-    email: {
-        host: 'smtp.office365.com',
-        port: 587,
-        user: 'noreply@yiptv.com',
-        password: 'Sept_25*',
-        fromEmail: 'noreply@yiptv.com',
-        fromName: 'YipTV'
-    },
     factProviders: {},
     postProcessors: {},
     freePreviewTime: 120000,
