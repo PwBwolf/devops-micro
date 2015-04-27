@@ -25,7 +25,7 @@ worker.register({
         try {
             addUserInputValidation(params, function (err) {
                 if (err) {
-                    logger.logError('merchantProcessor - addUser - validation error');
+                    logger.logError('merchantProcessorMain - addUser - validation error');
                     logger.logError(err);
                     saveToDatabase(params, 'failure', err, function () {
                         callback(new Error(err));
@@ -54,7 +54,7 @@ worker.register({
                 }
             });
         } catch (err) {
-            logger.logError('merchantProcessor - addUser - error adding user');
+            logger.logError('merchantProcessorMain - addUser - error adding user');
             logger.logError(err);
             callback(err);
         }
@@ -70,7 +70,7 @@ worker.register({
                 }
             });
         } catch (err) {
-            logger.logError('merchantProcessor - addUser - error adding user');
+            logger.logError('merchantProcessorMain - addUser - error adding user');
             logger.logError(err);
             callback(err);
         }
@@ -134,7 +134,7 @@ function saveToDatabase(params, isSuccess, reason, cb) {
     var ownedBy;
     NewUser.find({username: params.username}, function (err, dbUser) {
         if (err) {
-            logger.logError('merchantProcessor - saveToDatabase - error saving MakePayment');
+            logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
             logger.logError(err);
             ownedBy = null;
         } else if (dbUser) {
@@ -150,7 +150,7 @@ function saveToDatabase(params, isSuccess, reason, cb) {
         payment.isUserOwned = payment.merchant === ownedBy;
         payment.save(function (err) {
             if (err) {
-                logger.logError('merchantProcessor - saveToDatabase - error saving MakePayment');
+                logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
                 logger.logError(err);
                 cb(err);
             } else {
@@ -161,7 +161,7 @@ function saveToDatabase(params, isSuccess, reason, cb) {
                     user.processTime = processTime;
                     user.save(function (err1) {
                         if (err1) {
-                            logger.logError('merchantProcessor - saveToDatabase - error saving NewUser');
+                            logger.logError('merchantProcessorMain - saveToDatabase - error saving NewUser');
                             logger.logError(err);
                             cb(err);
                         } else {
@@ -173,7 +173,5 @@ function saveToDatabase(params, isSuccess, reason, cb) {
                 }
             }
         });
-    })
-
-    cb(null);
+    });
 }
