@@ -23,7 +23,8 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                if (!req.query.username) {
+                var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+                if (!req.query.username || !emailRegex.test(req.query.username)) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
                 User.findOne({email: req.query.username.toLowerCase()}, function (err1, user) {
@@ -53,6 +54,7 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
+                req.body.merchantId = req.query.merchantId;
                 queue.enqueue('addUser', req.body, function (err) {
                     if (err) {
                         logger.logError('merchantController - addUser - error adding job to queue');
@@ -81,6 +83,7 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
+                req.body.merchantId = req.query.merchantId;
                 queue.enqueue('makePayment', req.body, function (err) {
                     if (err) {
                         logger.logError('merchantController - makePayment - error adding job to queue');
