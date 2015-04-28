@@ -1,0 +1,91 @@
+<div class="content-area">
+    <div class="top-bg">&nbsp;</div>
+    <div class="setting-box">
+        <h1><span translate="RAF_HEADING">Refer A Friend</span></h1>
+
+        <div class="container">
+            <div class="sign-in-box">
+                <br>
+                <span class="message" translate="RAF_MESSAGE">Refer your friends and get one month free subscription to YipTV for each friend you refer!</span>
+                <br><br><br>
+
+                <form name="form" id="form" novalidate ng-submit="sendRafEmails()">
+                    <a href="#" id="importLink" class="btn-import cs_import" translate="RAF_IMPORT_CONTACT_LIST">Import From My Contact List</a>
+                    <a href="#" id="loadingIndicator" style="display: none" class="btn-import" translate="RAF_LOADING">Loading...</a>
+                    <br><br>
+                    <span class="label-text" translate="RAF_OR">or</span>
+                    <br><br>
+                    <span class="label-text" translate="RAF_ENTER_FRIENDS_EMAIL">Enter friends' email addresses separated by commas </span>
+                    <br>
+                    <textarea autofocus valid-email-list id="emailList" name="emailList" class="txtbox2 textarea2" ng-model="mv.emailList" value="" required ng-class="{'txtbox-error': form.emailList.$dirty && form.emailList.$invalid}"></textarea>
+                    <br>
+
+                    <div ng-show="form.emailList.$dirty && form.emailList.$error.required" class="error-msg" translate=" RAF_EMAIL_LIST_REQUIRED">Enter at least a single email address</div>
+                    <div ng-show="form.emailList.$dirty && !form.emailList.$error.required && form.emailList.$error.validEmailList" class="error-msg" translate="RAF_EMAIL_LIST_INVALID">One or more email addresses are invalid</div>
+                    <br>
+                    <div ng-show="user.email === ''">
+                        <span class="label-text" translate="RAF_MY_EMAIL">My Email</span><br>
+                        <input name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
+
+                        <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="RAF_EMAIL_REQUIRED">Enter your email</div>
+                        <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="RAF_EMAIL_INVALID">Enter a valid email</div>
+                        <br>
+                    </div>
+                    <br>
+                    <button class="btn-submit" type="submit" translate="RAF_SEND_INVITE">Send Invite</button>
+                </form>
+                <br><br>
+                <div class="raf-fine-print" translate="RAF_FINE_PRINT"><sup>*</sup>The Referrer will receive a 1-month credit of their monthly service fee and the Referree will receive a one-month credit of their monthly service fee (up to $14.99 of credit per Referral) after the Referree has stayed with YipTV for 60 consecutive days. Credit excludes additional charges, including, but not limited, to charges for additional or premium services or features. Cancellation by either Referrer or Referree before 60 days from the date Referree subscribes to YipTV will result in the loss of and/or chargeback of associated credits. Credit has no cash value, is nonrefundable and nontransferable. Certain types of referrals, including, but not limited to, referring yourself or someone living in the same residence as you, are prohibited. Offer, prices and charges are subject to change without notice. Other terms and conditions may apply. Void where prohibited. Offer cannot be combined and is subject to restrictions and limitations.</div>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>
+<script>
+    window.cloudsponge = undefined;
+    var key = {'localhost': 'LJZY53MYH2K7YQKX3TZD', 'int.yiptv.net': 'BNDQ7QY3HH38QG45E3P8', 'test.yiptv.net': 'KT5XZEDX6A32PFZCKZ3Y', 'staging.yiptv.net': '5FLQG2YJF2SGQ2JY4GCH', 'yiptv.com': 'GMQU3G2VW72CLFRVWS2N' };
+    var domain = location.hostname;
+    var appendInTextarea = true;
+    var emailSep = ', ';
+
+    function populateTextArea(contacts) {
+        var email;
+        var emails = [];
+        var textarea = document.getElementById('emailList');
+        if (appendInTextarea && textarea.value.strip().length > 0) {
+            emails = textarea.value.split(emailSep);
+        }
+        for (var i = 0; i < contacts.length; i++) {
+            email = contacts[i].selectedEmail();
+            if (emails.indexOf(email) < 0) {
+                emails.push(email);
+            }
+        }
+        textarea.value = emails.join(emailSep);
+        var input = $('#emailList');
+        input.trigger('input');
+        input.trigger('change');
+    }
+
+    window.csPageOptions = {
+        domain_key: key[domain],
+        mobile_render: true,
+        sources: ['gmail', 'linkedin', 'yahoo', 'facebook', 'windowslive', 'aol', 'plaxo', 'outlook', 'addressbook'],
+        afterSubmitContacts: populateTextArea,
+        afterInit: function() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('importLink').style.display = 'inline';
+            cloudsponge.launch();
+        }
+    };
+
+    document.getElementById('importLink').onclick = function() {
+        var scriptTag = document.createElement('script');
+        scriptTag.setAttribute('type', 'text/javascript');
+        scriptTag.setAttribute('src', '//api.cloudsponge.com/address_books.js');
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(scriptTag, firstScript);
+        document.getElementById('importLink').style.display = 'none';
+        document.getElementById('loadingIndicator').style.display = 'inline';
+    };
+</script>

@@ -30,6 +30,7 @@
                         if (!userSvc.authorize(accessLevel, userRole)) {
                             element.css('display', 'none');
                         } else {
+							
                             element.css('display', prevDisplay);
                         }
                     }

@@ -427,7 +427,7 @@
 
 	/// ====   PAGE AND BUTTON FUNCTIONS   ==== ///
 	
-		var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Device', 'Abt', 'Orders'];
+		var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Device', 'Orders'];
 		//var cntntBxs = ['Home_Bx', 'About_Bx', 'Menu_Bx', 'Event_Bx', 'Order_Bx'];
 		
 		$('#docklogo').on('click', function(){

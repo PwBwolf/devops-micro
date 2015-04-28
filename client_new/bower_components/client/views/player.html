@@ -1,0 +1,64 @@
+<div class="content-area">
+    <div class="top-bg">&nbsp;</div>
+    <div class="setting-box">
+        <h1><span>LIVE TV</span></h1>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1" ng-show="airing">
+                    <span class="program-details-header">Channel:</span>
+                    <span ng-bind="channelName"></span>
+                    <span ng-bind-template="({{channelNumber}})"></span><br>
+                    <span class="program-details-header">Program:</span>
+                    <span ng-bind="airing.program.title"></span><br>
+                    <span class="program-details-header" ng-show="airing.duration">Duration:</span>
+                    <span ng-show="airing.duration" ng-bind-template="{{airing.duration}} minutes"></span><br>
+                    <span class="program-details-header" ng-show="airing.program.shortDescription">Description:</span>
+                    <span ng-bind="airing.program.shortDescription"></span>
+                </div>
+                <div ng-hide="airing" class="col-md-6 col-md-offset-1">&nbsp;</div>
+                <div class="col-md-4">
+                    <jw-player setup="playerOptions" id="tv"></jw-player>
+                </div>
+            </div>
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row" ng-show="loadingChannels">
+                <div class="col-md-12 text-center">Loading channels...</div>
+            </div>
+            <div class="row">
+                <ul bx-slider data="channels" setup="channelSliderOptions">
+                    <li ng-class="{selectedChannel: $index === selectedChannelIndex}" ng-repeat="channel in channels">
+                        <a ng-click="selectChannel($index)">
+                            <img ng-src="{{channel.image_url}}" class="channel-img"/>
+                            <div class="text-center" ng-bind="channel.name"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row" ng-show="loadingChannelGuide">
+                <div class="col-md-12 text-center">Loading schedule...</div>
+            </div>
+            <div class="row">
+                <ul bx-slider data="airings" setup="channelGuideSliderOptions">
+                    <li ng-repeat="airing in airings">
+                        <a ng-click="playChannel($index, airing)">
+                            <span class="pg-icon" tooltip-append-to-body="true" tooltip-placement="top" tooltip-html-unsafe="{{getProgramDetails(airing)}}" ng-class="{'player-icon':$index === 0,'later-icon':$index !== 0}"></span>
+                            <img ng-src="{{getImage(airing.program.preferredImage.uri)}}"/>
+
+                            <div class="text-center cg-title" ng-bind="airing.program.title"></div>
+                            <div class="text-center cg-time" ng-bind-template="{{getTime($index, airing)}}"></div>
+                            <div class="text-center cg-date" ng-bind-template="{{getDate($index, airing)}}"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row program-details" ng-show="programDetails">
+                <div class="col-md-6 col-md-offset-3" ng-bind-html="programDetails">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>

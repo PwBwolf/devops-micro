@@ -86,6 +86,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 	z-index:9999; 
 }
 #brand a, #brand a:select { color:black !important; }
+#brand #refer, #brand #trial { width:auto; padding-left:2%; padding-right:2%; }
 .imgdocked { 
 	height: 65px !important; 
 	
@@ -179,6 +180,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 			#Bnr_Bx article strong { text-transform:uppercase; }
 			#Bnr_Bx article p { margin:0 0 !important; text-transform: lowercase; font-size:x-small; }
 		
+			#welcome { float:right; right:5%; white-space:nowrap;}
 			.heroBtn {  background:rgba(112,106,118, 0.9); } .heroBtnSlctd {  background:rgba(222,60,64, 0.9); }
 		
 		/* /////// ====== ============ ===== ////// */
@@ -266,7 +268,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 
 		/* /////// ====== MENU PAGE ===== ////// */
 		#Ntwrks_Bx {
-			display:;  width: 100%; height: 550px; 
+			display:;  width: 100%; height: 600px; 
 			background:#eee url(../imgs/ntwrks/section-img1.jpg) 50% 9% no-repeat fixed; 
 			background-size:cover; position:relative; /*top:35px;*/
 			margin-bottom:0px; padding:0px; 
@@ -281,10 +283,10 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 	
 		}
 			#droidlogo { display:none; width:15%; height:600px; position:absolute; top:160px; right:335px; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain;  }
-			#tempCntnt { display:; width:80%; height:auto; background:; padding:1%; margin-left:6%; position:relative; top:15%; color:darkgrey; font-size:1.280em; z-index:5; }
-			#tempCntnt p:nth-child(even) { width:120%; font-size:2.7em; top:40px; position:relative; left:20px; color:darkmagenta; }
-			#tempCntnt p:nth-child(odd) { width:100%; font-size:1.20em; color:dimgrey; margin-top:8%;}
-			#tempCntnt img { margin-top: 5%; float: left; }
+			#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:6%;*/ position:relative; top:15%; color:darkgrey; font-size:1.280em; z-index:5; }
+			#tempCntnt p:nth-child(even) { /*width:120%;*/ font-size:2.7em; top:40px; position:relative; text-indent:20px; color:darkmagenta; }
+			#tempCntnt p:nth-child(odd) { /*width:100%;*/ font-size:1.20em; color:dimgrey; margin-top:4%;}
+			#tempCntnt img { margin-top: 4%; float: left; }
 			
 			
 			.pg2_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
@@ -423,7 +425,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 			.ftr_right { color:grey; width:25% !important; }
 			.ftr_right div { margin-top: 20px; }
 			
-			#ftrLinks { padding:2% 20%; text-align: center; margin-top:2%; text-transform: capitalize;   }
+			#ftrLinks { padding:2% 5%; text-align: center; margin-top:2%; text-transform: capitalize;   }
 			#ftrLinks ul { padding-top:30px; border-top: thin solid rgb(160,160,160); }
 			#ftrLinks li { display: inline; margin: 0 2%; }
 			
@@ -586,6 +588,11 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 				-moz-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 				-ms-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 				-o-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
+				
+				-webkit-transform-style: preserve-3d; 
+				-moz-transform-style: preserve-3d; 
+			    -o-transform-style: preserve-3d; 
+			    transform-style: preserve-3d;
 			}
 			.front {
 				/*background:rgb(233,24,53);
@@ -596,6 +603,11 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 				-moz-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
 				-ms-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
 				-o-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
+				
+				-webkit-transform-style: preserve-3d; 
+				-moz-transform-style: preserve-3d; 
+			    -o-transform-style: preserve-3d; 
+			    transform-style: preserve-3d;
 			}
 			/*.faceBack { transform: perspective(1000px) rotateY(-180deg); }
 			.faceFront { transform: perspective(1000px) rotateY(0deg); }*/

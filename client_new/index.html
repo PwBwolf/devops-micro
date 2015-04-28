@@ -57,18 +57,26 @@
 	<div id="brand">
 		<span><a href="/"><img src="imgs/logo.png" alt="" /></a></span>
 		<!-- div class="dropdown dropdown-default" id="refer" class="usr_Input_clsd">refer</div -->
-		<div id="join" class="usr_Input_clsd"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
-		<div id="login" class="usr_Input_clsd"><a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Sign In</a></div>
+		<div id="language" class="usr_Input_clsd"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
+		<div id="signin" class="usr_Input_clsd"><a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Sign In</a><a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a></div>
+		<div id="trial" class="usr_Input_clsd"><a href="/sign-up/free" access-level="accessLevels.anon" translate="INDEX_TRY_FREE">Try Free for 7Days</a><a href="/faq" access-level="accessLevels.user" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
+		<div id="refer" class="usr_Input_clsd"><a href="/refer-a-friend" access-level="accessLevels.public" translate="INDEX_REFER_FRIEND">Refer a Friend</a></div>
 
 	</div>
 	<nav id="navBar">
 		<div id="menu">
 			<div id="menuItems" class="">
 				<!-- mnuItm id="Home">Home</mnuItm -->
-				<mnuItm id="Shws">Shows by Category</mnuItm>
-				<mnuItm id="Ntwrks">Networks</mnuItm>
-				<mnuItm id="Device">How to watch</mnuItm>
-				<mnuItm id="Abt"><a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a></mnuItm>
+				<mnuItm id="Shws" translate="INDEX_SHOWS_BY_CATEGORY">Shows by Category</mnuItm>
+				<mnuItm id="Ntwrks" translate="INDEX_NETWORKS">Networks</mnuItm>
+				<mnuItm id="Device" access-level="accessLevels.anon" translate="INDEX_HOW_TO_WATCH">How to watch</mnuItm>
+				<mnuItm id="watch"><a href="#" ng-click="openAio()" access-level="accessLevels.user" translate="INDEX_WATCH_NOW">Watch Now</a></mnuItm>
+				<mnuItm id="Join"><a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a><a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT">Account</a></mnuItm>
+				<mnuItm id="welcome">
+					<div access-level="accessLevels.user">
+						<span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span>
+					</div>
+				</mnuItm>
 			</div>
 		</div>
 	</nav>

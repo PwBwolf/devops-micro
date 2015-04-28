@@ -259,10 +259,10 @@
 		border-radius:0px !important;
 	}
 		#droidlogo { display:none; width:120px; height:50%; position:relative; top:20%; left:-25%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
-		#tempCntnt { display:; width:85%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:15%; color:darkgrey; font-size:95%;  }
-		#tempCntnt p:nth-child(even) { width:120%; font-size:2.7em; top:29px; position:relative; left:20px; color:darkmagenta; }
-		#tempCntnt p:nth-child(odd) { width:100%; font-size:1.20em; color:dimgrey; margin-top:12%;}
-		#tempCntnt img { margin-top: 5%; float: left; }
+		#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:5%;*/ position:relative; top:15%; color:darkgrey; font-size:95%;  }
+		#tempCntnt p:nth-child(even) { /*width:120%;*/ font-size:2.7em; top:10px; position:relative; text-indent:20px; color:darkmagenta; }
+		#tempCntnt p:nth-child(odd) { /*width:100%;*/ font-size:1.20em; color:dimgrey; margin-top:2%;}
+		#tempCntnt img { /*margin-top: 2%;*/ float: left; }
 
 		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:15%; padding:0 0 !important;  }
 		.pg2_chnls ul { width:100%; height:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding:4px; margin-top:2%; }
@@ -291,7 +291,7 @@
 	}
 
 		#dvcCntnt { display:; width:75%; height:auto; background:; padding:1%; margin:0 auto; position:relative; top:25%; color:darkgrey; font-size:0.78em; z-index:5; }
-		#dvcCntnt p:nth-child(odd) { text-transform: capitalize; width:120%; font-size:2.7em; top:40px; position:relative; left:20px; color:darkmagenta; }
+		#dvcCntnt p:nth-child(odd) { text-transform: capitalize; /*width:120%;*/ font-size:2.7em; top:40px; position:relative; text-indent:20px; color:darkmagenta; }
 		#dvcCntnt p:nth-child(even) { width:100%; font-size:1.7em; color:dimgrey; margin-top:7%;}
 		#dvcCntnt img { margin-top: 5%; float: left; }
 	
@@ -575,10 +575,10 @@
 		}
 	
 		#droidlogo { display: none; width:150px; height:50%; position:relative; top:20%; left:-25%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
-		#tempCntnt { display:; width:85%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:15%; color:darkgrey; font-size:95%;  }
-		#tempCntnt p:nth-child(even) { width:120%; font-size:2.7em; top:29px; position:relative; left:20px; color:darkmagenta; }
-		#tempCntnt p:nth-child(odd) { width:100%; font-size:1.20em; color:dimgrey; margin-top:12%;}
-		#tempCntnt img { margin-top: 5%; float: left; }
+		#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:5%;*/ position:relative; top:15%; color:darkgrey; font-size:95%;  }
+		#tempCntnt p:nth-child(even) { /*width:120%;*/ font-size:2.7em; top:10px; position:relative; text-indent:20px; color:darkmagenta; }
+		#tempCntnt p:nth-child(odd) { /*width:100%;*/ font-size:1.20em; color:dimgrey; margin-top:2%;}
+		#tempCntnt img { /*margin-top: 5%;*/ float: left; }
 	
 		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:15%;  }
 		.pg2_chnls ul { width:100%; height:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding:4px; margin-top:2%; }
