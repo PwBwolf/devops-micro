@@ -150,6 +150,8 @@ gulp.task('extras', function (cb) {
         .pipe(gulp.dest('dist/client'));
     gulp.src('../client/dependencies/*.*', {dot: true})
         .pipe(gulp.dest('dist/client/dependencies'));
+    gulp.src('../client_new/**/*', {dot: true})
+        .pipe(gulp.dest('dist/client_new'));
     cb();
 });
 
