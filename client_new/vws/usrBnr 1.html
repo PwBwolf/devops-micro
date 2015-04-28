@@ -1,14 +1,14 @@
 <div id="Bnr_Bx" class="usr_Scrns_pnl cntntBxBck">
 	<div class='jumbotron'>
 		
-	    <div class="banner" ng-hide="webSliderLoaded">
+	    <div class="banner" ng-show="webSliderLoaded">
 	        <div class="banner-wrap">
-	            <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="8000">
+	            <div id="carousel-banner" class="carousel slide" bootstrap-carousel interval="4000">
 	                <ul class="carousel-inner">
 	                    <li class="item active">
-	                        <img src="../imgs/pc/banner-new1-1600x812.jpg" width="1600" height="812" alt="Banner New1 1600x812">
+	                        <img src="../imgs/mbl/en/beIN_MobilePort.jpg" width="400" height="330" alt="beIN_MobilePort">
 
-	                        <div class="carousel-caption5">
+	                        <!-- div class="carousel-caption5">
 	                            <div class="caption-txt5">
 	                                <h1 translate="HOME_YIPTV_HAS_BEIN">YipTV has beIN Sports</h1>
 
@@ -18,12 +18,12 @@
 	                                <button goto="/sign-up/paid" translate="HOME_JOIN_NOW">Join Now!</button>
 	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
 	                            </div>
-	                        </div>
+	                        </div -->
 	                    </li>
 	                    <li class="item">
-	                       <img src="../imgs/pc/banner02-1600x812.jpg" width="1600" height="812" alt="Banner02 1600x812">
+	                       <img src="../imgs/mbl/en/Download_MobilePort.jpg" width="400" height="330" alt="Banner02 1600x812">
 
-	                        <div class="carousel-caption3">
+	                        <!-- div class="carousel-caption3">
 	                            <div class="caption-txt3">
 	                                <h1 translate="HOME_UNBEATABLE_PRICE">Unbeatable price.</h1>
 
@@ -33,12 +33,12 @@
 	                                <button goto="/sign-up/paid" translate="HOME_JOIN_NOW">Join Now!</button>
 	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
 	                            </div>
-	                        </div>
+	                        </div -->
 	                    </li>
 	                    <li class="item">
-	                        <img src="../imgs/pc/banner03-1600x812.jpg" width="1600" height="812" alt="Banner03 1600x812">
+	                        <img src="../imgs/mbl/en/Unbeat_MobilePort.jpg" width="400" height="330" alt="Banner03 1600x812">
 
-	                        <div class="carousel-caption1">
+	                        <!-- div class="carousel-caption1">
 	                            <div class="caption-txt1">
 	                                <h1 translate="HOME_LOTS_OF_CHANNELS">Lot of Channels,</h1>
 
@@ -48,12 +48,12 @@
 	                                <button goto="/sign-up/free" translate="HOME_GET_MONTH_FREE">Get a Month FREE!</button>
 	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
 	                            </div>
-	                        </div>
+	                        </div -->
 	                    </li>
 	                    <li class="item">
 	                        <img src="../imgs/pc/banner04-1600x812.jpg" width="1600" height="812" alt="Banner04 1600x812">
 
-	                        <div class="carousel-caption4">
+	                        <!-- div class="carousel-caption4">
 	                            <div class="caption-txt4">
 	                                <h1 translate="HOME_LOVE_EDM">Love EDM? Get VIP</h1>
 
@@ -67,17 +67,17 @@
 	                                <button goto="/sign-up/free" translate="HOME_GET_MONTH_FREE">Get a Month FREE!</button>
 	                                <p translate="HOME_NO_CONTRACTS_CANCEL_ANYTIME">No contracts - cancel anytime!</p>
 	                            </div>
-	                        </div>
+	                        </div -->
 	                    </li>
 	                </ul>
-	                <!-- ol class="carousel-indicators">
+	                <ol class="carousel-indicators">
 	                    <li data-target="#carousel-banner" data-slide-to="0" class="active"></li>
 	                    <li data-target="#carousel-banner" data-slide-to="1"></li>
 	                    <li data-target="#carousel-banner" data-slide-to="2"></li>
 	                    <li data-target="#carousel-banner" data-slide-to="3"></li>
-	                </ol -->
+	                </ol>
 					
-					<ol class="carousel-indicators">
+					<!-- ol class="carousel-indicators">
 					    <li data-target="#webslider-banner" data-slide-to="0" ng-class="0">
 						<img src="../imgs/pgcrsl_bein.png" alt="Crsl Bein" />
 						<span>Bein Sports 	 <small>Watch live news, sports </small></span>
@@ -97,12 +97,12 @@
 						<img src="../imgs/crsl_app.png" alt="Crsl App">
 						<span>money back gurantee	 <small>Watch live news, sports</small></span>
 						</li>
-				  </ol>
+				  </ol -->
 						
 	            </div>
 	        </div>
 	    </div>
-	    <div class="webslider" ng-show="webSliderLoaded">
+	    <div class="webslider" ng-hide="webSliderLoaded">
 	        <div class="webslider-wrap">
 	            <div id="webslider-banner" class="carousel slide" bootstrap-carousel on-slide="onWebSliderChange()" interval="8000">
 	                <ul class="carousel-inner">
@@ -119,8 +119,8 @@
 					
 					
 					<ol class="carousel-indicators">
-	  	  	  
-						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
+                    	<li data-target="#webslider-banner" ng-repeat="slide in webSliders" data-slide-to="{{$index}}" ng-class="{active: $index === 0}"></li>
+						    <!-- li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
 							<img src="../imgs/crsl_bein.png" alt="Crsl Bein" />
 							<span>Bein Sports 	 <small>Watch live news, sports </small></span>
 							</li>
@@ -138,7 +138,7 @@
 						    <li data-target="#webslider-banner" data-slide-to="{{$index}}" ng-class="{active: $index === 0}">
 							<img src="../imgs/crsl_app.png" alt="Crsl App">
 							<span>money back gurantee	 <small>Watch live news, sports</small></span>
-							</li>
+							</li -->
 	
 					  </ol>
 					
