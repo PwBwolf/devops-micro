@@ -470,6 +470,9 @@
 		$scope.en_Bnrs = [];
 		$scope.sp_Bnrs = [];
 		
+		var hroBnrs = $("ul [id*='_bnr_']");
+		
+		
 		init();
 		function init(){
 			$scope.en_Bnrs = usrBnrsFctry.getEnBnrs();
@@ -482,7 +485,7 @@
 		       console.log(value);
 			   if(value < 769){
 				   //$scope.en_Bnr = usrBnrsFctry.getEnTbltBnrs();
-				    console.log('this is '+value+'px landscape mobile or portrait tablet.');
+				    console.log('this window is '+value+'px wide. Its either landscape mobile or portrait tablet. So I\'ll use '+hroBnrs.length);
 					
 				   } else if(value > 768 && value < 1025){
 					   console.log('this is '+value+'px landscape tablet or small screen.');
