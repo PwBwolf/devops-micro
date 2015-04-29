@@ -356,6 +356,8 @@
 	
 		.pg4_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
 		.pg4_chnls ul { width:100%; height:140%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; margin:3% 0 1% !important; padding-bottom: 5%; text-align:center; }
+		.pg4_chnls ol { width:100%; height:auto; margin:1% 0; text-align: center; }
+		.pg4_chnls figure { width:70%; height:auto; display:block; margin:10% 0;} .pg4_chnls figcaption { width:auto; height:auto; } 
 		.pg4_chnls li { display:inline; vertical-align: middle; height:100%; padding: 0 2%; }
 		.pg4_chnls li img { height:125%; width:auto; margin-top:6px; padding:4px; cursor:pointer; }
 
@@ -738,7 +740,7 @@
 		.pg4_chnls { background:rgb(90,45,118); height:16%; z-index:6; }
 		.pg4_chnls ul { width:100%; height:140%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; margin:1% 0 !important; padding-bottom: 3%; text-align:center; }
 		.pg4_chnls ol { width:100%; height:auto; margin:1% 0; text-align: center; }
-		.pg4_chnls figure { width:32%; height:auto; } .pg4_chnls figcaption { width:auto; height:auto; } 
+		.pg4_chnls figure { width:32%; height:auto; display:inline-block; vertical-align: top; margin:10% 0;} .pg4_chnls figcaption { width:auto; height:auto; } 
 		.pg4_chnls li { display:inline; vertical-align: middle; height:100%; padding: 0 2%; }
 		.pg4_chnls li img { height:125%; width:auto; margin:10% 0; padding:4px; display:inline-block; vertical-align: top; cursor:pointer; }
 
