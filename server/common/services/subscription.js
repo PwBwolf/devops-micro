@@ -756,6 +756,7 @@ module.exports = {
                             } else {
                                 type = accountObj.type;
                                 accountObj.type = 'paid';
+                                accountObj.complimentaryCode = undefined;
                                 accountObj.save(function (err2) {
                                     if (err2) {
                                         logger.logError('subscription - upgradeSubscription - error saving account to paid: ' + userEmail);
@@ -781,6 +782,7 @@ module.exports = {
                         userObj.status = status === 'registered' ? 'registered' : 'active';
                         userObj.upgradeDate = (new Date()).toUTCString();
                         userObj.cancelDate = undefined;
+                        userObj.validTill = undefined;
                         if (newUser.firstName) {
                             currentUser = {
                                 firstName: userObj.firstName,
@@ -840,16 +842,17 @@ module.exports = {
             },
             // update user information in FreeSide
             function (accountObj, userObj, callback) {
-                var address = newUser.address;
-                var city = newUser.city;
-                var state = newUser.state;
-                var zip = newUser.zipCode;
+                var merchantId = accountObj.merchant ? ' - ' + accountObj.merchant : '';
+                var address = newUser.address ? newUser.address : 'Merchant' + merchantId;
+                var city = newUser.city ? newUser.city : 'West Palm Beach';
+                var state = newUser.state ? newUser.state : 'FL';
+                var zip = newUser.zipCode ? newUser.zipCode : '00000';
                 var country = 'US';
-                var payBy = 'CARD';
-                var payInfo = newUser.cardNumber;
-                var payDate = newUser.expiryDate;
-                var payCvv = newUser.cvv;
-                var payName = newUser.cardName;
+                var payBy = newUser.cardNumber ? 'CARD' : 'BILL';
+                var payInfo = newUser.cardNumber ? newUser.cardNumber : '';
+                var payDate = newUser.expiryDate ? newUser.expiryDate : '';
+                var payCvv = newUser.cvv ? newUser.cvv : '';
+                var payName = newUser.cardName ? newUser.cardName : '';
                 billing.updateUser(accountObj.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
                         revertPackagesInAio(userObj.email);
@@ -1024,16 +1027,17 @@ module.exports = {
             },
             // update user in FreeSide
             function (userObj, callback) {
-                var address = newUser.address;
-                var city = newUser.city;
-                var state = newUser.state;
-                var zip = newUser.zipCode;
+                var merchantId = userObj.account.merchant ? ' - ' + userObj.account.merchant : '';
+                var address = newUser.address ? newUser.address : 'Merchant' + merchantId;
+                var city = newUser.city ? newUser.city : 'West Palm Beach';
+                var state = newUser.state ? newUser.state : 'FL';
+                var zip = newUser.zipCode ? newUser.zipCode : '00000';
                 var country = 'US';
-                var payBy = 'CARD';
-                var payInfo = newUser.cardNumber;
-                var payDate = newUser.expiryDate;
-                var payCvv = newUser.cvv;
-                var payName = newUser.cardName;
+                var payBy = newUser.cardNumber ? 'CARD' : 'BILL';
+                var payInfo = newUser.cardNumber ? newUser.cardNumber : '';
+                var payDate = newUser.expiryDate ? newUser.expiryDate : '';
+                var payCvv = newUser.cvv ? newUser.cvv : '';
+                var payName = newUser.cardName ? newUser.cardName : '';
                 billing.updateUser(userObj.account.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
                         setUserInactiveInAio(userObj.email);
@@ -1671,5 +1675,34 @@ module.exports = {
                 }
             });
         }
+    },
+
+    updateToMerchantBilling: function (email, cb) {
+        User.findOne({email: email}).populate('account').exec(function (err, userObj) {
+            if (err) {
+                logger.logError('subscription - updateToMerchantBilling - error fetching user: ' + email);
+                cb(err);
+            } else {
+                var merchantId = userObj.account.merchant ? ' - ' + userObj.account.merchant : '';
+                var address = 'Merchant' + merchantId;
+                var city = 'West Palm Beach';
+                var state = 'FL';
+                var zip = '00000';
+                var country = 'US';
+                var payBy = 'BILL';
+                var payInfo = '';
+                var payDate = '';
+                var payCvv = '';
+                var payName = '';
+                billing.updateUser(userObj.account.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                    if (err) {
+                        logger.logError('subscription - updateToMerchantBilling - error updating user in billing system: ' + userObj.email);
+                        cb(err);
+                    } else {
+                        cb(null);
+                    }
+                });
+            }
+        });
     }
 };
