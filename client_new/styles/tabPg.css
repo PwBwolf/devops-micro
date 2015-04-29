@@ -8,8 +8,8 @@
 .jumbotron { margin-bottom: 0px !important; }
 .jumbotron, #pnlCntnr { padding: 0px 0px !important; }
 .jumbotron, .container, .jumbotron .container { width:100% !important; }
-#pcHdr { display: !important; }
-/*#resHdr, .cellCntntPnl { position:relative; z-index:101; }*/
+#resHdr { display: none !important; }
+
 .off {display: none !important;} .on {display: all !important; }
 #still { display:none; }
 
@@ -142,7 +142,7 @@
 		#navBar { width:100%; height:34px; clear:both; display:block; position:absolute; background:rgba(254, 254, 254, .95); color:rgba(62, 25, 77, .94); border-bottom: solid 1px lightgrey; /*z-index:9990;*/ }
 			#menu {  width:100%; font-weight:bold; }
 
-				#menuItems { margin:6px auto; text-align:center; padding-left:100px; }
+				#menuItems { margin:8px auto; text-align:center; padding-left:100px; }
 				#menuItems mnuItm { padding: 0 10px; text-transform: uppercase; margin:9px auto; }
 				#menuItems mnuItm:hover { cursor:pointer; color:rgba(254, 254, 254, .89); background:rgba(5, 5, 5, .5); border-top:solid 1px red; }
 				#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
@@ -620,7 +620,7 @@
 	#navBar { width:100%; height:34px; clear:both; display:block; position:absolute; background:rgba(254, 254, 254, .95); color:rgba(62, 25, 77, .94); border-bottom: solid 1px lightgrey; /*z-index:9990;*/ }
 		#menu {  width:100%; font-weight:bold; }
 
-			#menuItems { margin:6px auto; text-align:center; padding-left:100px; }
+			#menuItems { margin:8px auto; text-align:center; padding-left:100px; }
 			#menuItems mnuItm { padding: 0 20px; text-transform: uppercase; margin:9px auto; }
 			#menuItems mnuItm:hover { cursor:pointer; color:rgba(254, 254, 254, .89); background:rgba(5, 5, 5, .5); border-top:solid 1px red; }
 			#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
