@@ -69,13 +69,82 @@ worker.register({
         try {
             makePaymentInputValidation(params, function (err) {
                 if (err) {
-                    callback(err);
+                    logger.logError('merchantProcessorMain - makePayment - validation error');
+                    logger.logError(err);
+                    saveToDatabase(params, 'failure', err, false, function () {
+                        callback(new Error(err));
+                    });
                 } else {
-                    callback(null, 'success');
+                    params.currency = 'USD';
+                    User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
+                        if (err) {
+                            logger.logError('merchantProcessorMain - makePayment - error fetching user: ' + params.username);
+                            logger.logError(err);
+                            saveToDatabase(params, 'failure', 'server-error', false, function () {
+                                callback(err);
+                            });
+                        } else if (!dbUser) {
+                            saveToDatabase(params, 'failure', 'username-not-found', false, function () {
+                                callback(new Error('username-not-found'));
+                            });
+                        } else {
+                            if (dbUser.status === 'failed') {
+                                saveToDatabase(params, 'failure', 'account-error', false, function () {
+                                    callback(new Error('account-error'));
+                                });
+                            } else if (dbUser.account.type === 'comp' && (dbUser.status === 'registered' || dbUser.status === 'active')) {
+                                saveToDatabase(params, 'failure', 'account-error', false, function () {
+                                    callback(new Error('account-error'));
+                                });
+                            } else if (dbUser.account.type === 'free' || (dbUser.account.type === 'comp' && dbUser.status === 'comp-ended')) {
+                                subscription.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
+                                    if (err) {
+                                        logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
+                                        logger.logError(err);
+                                        saveToDatabase(params, 'failure', 'server-error', false, function () {
+                                            callback(err);
+                                        });
+                                    } else {
+                                        saveToDatabase(params, 'success', '', false, function () {
+                                            callback(null, 'success');
+                                        });
+                                    }
+                                });
+                            } else if (dbUser.account.type === 'paid' && dbUser.status === 'canceled') {
+                                subscription.reactivateSubscription(params.username.toLowerCase(), {}, function (err) {
+                                    if (err) {
+                                        logger.logError('merchantProcessorMain - makePayment - error reactivating user: ' + params.username);
+                                        logger.logError(err);
+                                        saveToDatabase(params, 'failure', 'server-error', false, function () {
+                                            callback(err);
+                                        });
+                                    } else {
+                                        saveToDatabase(params, 'success', '', false, function () {
+                                            callback(null, 'success');
+                                        });
+                                    }
+                                });
+                            } else {
+                                subscription.updateToMerchantBilling(params.username.toLowerCase(), function (err) {
+                                    if (err) {
+                                        logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
+                                        logger.logError(err);
+                                        saveToDatabase(params, 'failure', 'server-error', false, function () {
+                                            callback(err);
+                                        });
+                                    } else {
+                                        saveToDatabase(params, 'success', '', false, function () {
+                                            callback(null, 'success');
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
             });
         } catch (err) {
-            logger.logError('merchantProcessorMain - addUser - error adding user');
+            logger.logError('merchantProcessorMain - makePayment - error adding user');
             logger.logError(err);
             callback(err);
         }
@@ -120,6 +189,10 @@ function makePaymentInputValidation(params, cb) {
         cb('invalid-amount');
     } else if (!params.submitTime || !moment(params.submitTime).isValid()) {
         cb('invalid-submit-time');
+    } else if (params.currency && params.currency !== 'USD') {
+        cb('invalid-currency');
+    } else {
+        cb(null);
     }
 }
 
@@ -180,14 +253,16 @@ function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
         });
     } else {
         var ownedBy;
-        NewUser.find({username: params.username}, function (err, dbUser) {
+        NewUser.findOne({username: params.username.toLowerCase()}, function (err, dbUser) {
             if (err) {
                 logger.logError('merchantProcessorMain - saveToDatabase - error fetching new-user');
                 logger.logError(err);
                 ownedBy = null;
             } else {
-                ownedBy = dbUser ? dbUser.merchant : null;
+                ownedBy = dbUser ? dbUser.merchant.toString() : null;
             }
+            console.log(typeof ownedBy);
+            console.log(typeof params.merchantId);
             payment.isUserOwned = params.merchantId === ownedBy;
             payment.save(function (err1) {
                 if (err1) {
