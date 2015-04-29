@@ -13,7 +13,8 @@
 	<div id='tempCntnt'>
 		<div id="splash" data-ng-class="($index==selectedIndex) ? '{{usrNtwrkClasses[1].className}}' : '{{usrNtwrkClasses[0].className}}'" data-ng-repeat="ntCntnt in usrNtwrks">
 			<span><img data-ng-src="{{ntCntnt.ntwrkID}}"></span>
-			<p><h4>{{ntCntnt.ntwrkNm}}</h4>{{ntCntnt.ntwrkDesc}}</p>
+			<h4>{{ntCntnt.ntwrkNm}}</h4>
+			<p>{{ntCntnt.ntwrkDesc}}</p>
 			<p>{{ntCntnt.ntwrkDesc_1}}</p>
 			<p>{{ntCntnt.ntwrkDesc_2}}</p>
 		</div>
