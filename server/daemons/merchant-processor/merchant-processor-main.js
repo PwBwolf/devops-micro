@@ -35,7 +35,9 @@ worker.register({
                     params.currency = 'USD';
                     doesUserExist(params.username, function (err, result) {
                         if (err) {
-                            callback(err);
+                            saveToDatabase(params, 'failure', 'server-error', true, function () {
+                                callback(err);
+                            });
                         } else if (result) {
                             saveToDatabase(params, 'failure', 'username-exists', true, function () {
                                 callback(new Error('username-exists'));
@@ -43,7 +45,9 @@ worker.register({
                         } else {
                             subscription.newMerchantUser(params, function (err) {
                                 if (err) {
-                                    callback(err);
+                                    saveToDatabase(params, 'failure', 'server-error', true, function () {
+                                        callback(err);
+                                    });
                                 } else {
                                     saveToDatabase(params, 'success', '', true, function () {
                                         callback(null, 'success');
@@ -132,61 +136,68 @@ function doesUserExist(email, cb) {
 }
 
 function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
-    var ownedBy;
-    NewUser.find({username: params.username}, function (err, dbUser) {
-        if (err) {
-            logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
-            logger.logError(err);
-            ownedBy = null;
-        } else if (dbUser) {
-            ownedBy = dbUser.merchant;
-        } else {
-            ownedBy = null;
-        }
-        var processTime = (new Date()).toUTCString();
-        var payment = new MakePayment();
-        payment.merchant = params.merchantId;
-        payment.merchantPopId = params.merchantPopId;
-        payment.merchantReferenceId = params.merchantReferenceId;
-        payment.username = params.username;
-        payment.status = isSuccess;
-        payment.reason = reason;
-        payment.processTime = processTime;
-        payment.isUserOwned = payment.merchant === ownedBy;
-        payment.amount = (!params.amount || typeof params.amount !== 'number') ? 0 : params.amount;
-        payment.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
-        payment.currency = params.currency;
-        payment.payload = JSON.stringify(params);
-        payment.save(function (err) {
+    var processTime = (new Date()).toUTCString();
+    var payment = new MakePayment();
+    payment.merchant = params.merchantId;
+    payment.merchantPopId = params.merchantPopId;
+    payment.merchantReferenceId = params.merchantReferenceId;
+    payment.username = params.username;
+    payment.status = isSuccess;
+    payment.reason = reason;
+    payment.processTime = processTime;
+    payment.amount = (!params.amount || typeof params.amount !== 'number') ? 0 : params.amount;
+    payment.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
+    payment.currency = params.currency;
+    payment.payload = JSON.stringify(params);
+    if (isAddUser) {
+        var user = new NewUser();
+        user.merchant = params.merchantId;
+        user.merchantPopId = params.merchantPopId;
+        user.merchantReferenceId = params.merchantReferenceId;
+        user.username = params.username;
+        user.status = isSuccess;
+        user.reason = reason;
+        user.processTime = processTime;
+        user.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
+        user.payload = JSON.stringify(params);
+        user.save(function (err) {
             if (err) {
-                logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
+                logger.logError('merchantProcessorMain - saveToDatabase - error saving NewUser');
                 logger.logError(err);
                 cb(err);
             } else {
-                if (isAddUser) {
-                    var user = new NewUser();
-                    user.merchant = params.merchantId;
-                    user.merchantPopId = params.merchantPopId;
-                    user.merchantReferenceId = params.merchantReferenceId;
-                    user.username = params.username;
-                    user.status = isSuccess;
-                    user.reason = reason;
-                    user.processTime = processTime;
-                    user.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
-                    user.payload = JSON.stringify(params);
-                    user.save(function (err1) {
-                        if (err1) {
-                            logger.logError('merchantProcessorMain - saveToDatabase - error saving NewUser');
-                            logger.logError(err);
-                            cb(err);
-                        } else {
-                            cb(null);
-                        }
-                    });
+                payment.isUserOwned = true;
+                payment.save(function (err1) {
+                    if (err1) {
+                        logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
+                        logger.logError(err1);
+                        cb(err1);
+                    } else {
+                        cb(null);
+                    }
+                });
+            }
+        });
+    } else {
+        var ownedBy;
+        NewUser.find({username: params.username}, function (err, dbUser) {
+            if (err) {
+                logger.logError('merchantProcessorMain - saveToDatabase - error fetching new-user');
+                logger.logError(err);
+                ownedBy = null;
+            } else {
+                ownedBy = dbUser ? dbUser.merchant : null;
+            }
+            payment.isUserOwned = params.merchantId === ownedBy;
+            payment.save(function (err1) {
+                if (err1) {
+                    logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
+                    logger.logError(err1);
+                    cb(err1);
                 } else {
                     cb(null);
                 }
-            }
+            });
         });
-    });
+    }
 }
