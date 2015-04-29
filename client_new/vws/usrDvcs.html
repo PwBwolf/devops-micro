@@ -1,18 +1,38 @@
 <div id="Device_Bx" class="usr_Menu_pnl cntntBxBck" data-ng-controller="usrDevicesCntrlr">
-	<div class='pg4_chnls col-lg-12'>
+	<!-- div class='pg4_chnls col-lg-12'>
 		<h3 class='pg4_title' translate='INDEX_HOW_TO_WATCH'>How to Watch</h3>
 		<ul>
 			<li data-ng-repeat="dvc1 in usrDvcs"><img data-ng-src="{{dvc1.dvcImg}}" alt="{{dvc1.dvcImg}}" data-ng-mouseenter="itemHovered($index)" /></li>
 
 		</ul>
-		<!-- img src='imgs/pc/pg_2_a.png' -->
 	</div>
-	<!-- div id='droidlogo' class='teasing'></div -->
 	<div id='dvcCntnt'>
 		<div id="splash" data-ng-class="($index==selectedIndex) ? '{{usrDvcClasses[1].className}}' : '{{usrDvcClasses[0].className}}'" data-ng-repeat="dvc2 in usrDvcs">
 			<p>{{dvc2.dvcDesc1}}</p>
 			<p>{{dvc2.dvcDesc2}}</p>
 		</div>
-	</div>
-	
+	</div -->
+		
+	<div class='pg4_chnls col-lg-12'>
+		<h3 class='pg4_title' translate='INDEX_HOW_TO_WATCH'>How to Watch</h3>
+		<ul>
+			<figure>
+				<img src="../imgs/dvcs/htw_1.jpg" width="145" height="121" alt="Htw 1">
+				<figcaption>
+					abcd
+				</figcaption>
+			</figure>
+			<figure>
+				<img src="../imgs/dvcs/htw_2.jpg" width="174" height="121" alt="Htw 2">
+				<figcaption>
+					abcd
+				</figcaption>
+			</figure>
+			<figure>
+				<img src="../imgs/dvcs/htw_3.jpg" width="135" height="121" alt="Htw 3">
+				<figcaption>
+					abcd
+				</figcaption>
+			</figure>
+		</ul>
 </div>
