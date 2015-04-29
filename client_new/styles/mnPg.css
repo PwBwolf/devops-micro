@@ -88,6 +88,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 #brand #refer, #brand #trial { width:auto; padding-left:2%; padding-right:2%; }
 .imgdocked { 
 	height: 65px !important; 
+	left: 120px !important;
 	
 	transition: all 1s ease-in-out; 
 	-webkit-transition: all 1s ease-in-out; 
