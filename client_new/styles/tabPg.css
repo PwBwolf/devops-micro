@@ -745,9 +745,9 @@
 		}
 	
 		#droidlogo { display: none; width:150px; height:50%; position:relative; top:20%; left:-25%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
-		#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:5%;*/ position:relative; top:15%; color:darkgrey; font-size:95%;  }
-		#tempCntnt p:nth-child(even) { /*width:120%;*/ font-size:2.7em; top:10px; position:relative; text-indent:20px; color:darkmagenta; }
-		#tempCntnt p:nth-child(odd) { /*width:100%;*/ font-size:1.20em; color:dimgrey; margin-top:2%;}
+		#tempCntnt { display:; width:75%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:20%; color:darkgrey; font-size:100%; white-space: nowrap; overflow-y:hidden; overflow-x:scroll;  }
+		#tempCntnt p:nth-child(2) { width:100%; font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
+		#tempCntnt p { width:100%; font-size:1.0em; color:dimgrey; margin-top:0%; padding:5px; margin-right:10px; display:inline-block; vertical-align: top; white-space: normal; }
 		#tempCntnt img { /*margin-top: 5%;*/ float: left; }
 	
 		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:15%;  }
