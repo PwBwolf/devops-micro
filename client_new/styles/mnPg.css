@@ -181,7 +181,8 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 		
 			#welcome { float:right; right:5%; white-space:nowrap;}
 			.heroBtn {  background:rgba(112,106,118, 0.9); } .heroBtnSlctd {  background:rgba(222,60,64, 0.9); }
-		
+			
+			.banner .banner-wrap { width: auto !important; }
 		/* /////// ====== ============ ===== ////// */
 
 

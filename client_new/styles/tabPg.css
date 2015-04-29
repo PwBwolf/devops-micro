@@ -182,6 +182,7 @@
 
 	/* /////// ====== HOME PAGE ===== ////// */
 	#Bnr_Bx { width: 100%; height: 462px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
+	.banner .banner-wrap { width: auto !important; }
 	
 
 	/* /////// ====== ABOUT PAGE ===== ////// */
@@ -640,6 +641,7 @@
 
 	/* /////// ====== HOME PAGE ===== ////// */
 	#Bnr_Bx { width: 100%; height: 400px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
+	.banner .banner-wrap { width: auto !important; }
 	
 
 	/* /////// ====== ABOUT PAGE ===== ////// */
