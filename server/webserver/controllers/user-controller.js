@@ -217,14 +217,62 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
+            if (user.hashedPassword) {
+                user.status = 'active';
+                user.verificationCode = undefined;
+                user.save(function (err1) {
+                    if (err1) {
+                        logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
+                        logger.logError(err1);
+                        return res.status(500).end();
+                    }
+                    return res.status(200).send('web-user');
+                });
+            } else {
+                return res.status(200).send('merchant-user');
+            }
+        });
+    },
+
+    setPasswordAndVerifyUser: function (req, res) {
+        User.findOne({verificationCode: req.body.code}, function (err, user) {
+            if (err) {
+                logger.logError('userController - setPasswordAndVerifyUser - error fetching user: ' + req.body.code);
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            if (user.status === 'active') {
+                return res.status(409).send('UserVerified');
+            }
+            if (user.status !== 'registered') {
+                return res.status(409).send('UserError');
+            }
+            user.password = req.body.newPassword;
             user.status = 'active';
             user.verificationCode = undefined;
             user.save(function (err1) {
                 if (err1) {
-                    logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
+                    logger.logError('userController - setPasswordAndVerifyUser - error saving user: ' + req.body.code);
                     logger.logError(err1);
                     return res.status(500).end();
                 }
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+                };
+                email.sendEmail(mailOptions, function (err2) {
+                    if (err2) {
+                        logger.logError('userController - setPasswordAndVerifyUser - error sending password changed email to: ' + mailOptions.to);
+                        logger.logError(err2);
+                    } else {
+                        logger.logInfo('userController - setPasswordAndVerifyUser - password changed email sent to ' + mailOptions.to);
+                    }
+                });
                 return res.status(200).end();
             });
         });

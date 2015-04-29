@@ -755,7 +755,15 @@
             VERIFY_USER_HEADING_SUCCESS: 'Cuenta verificada',
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Su cuenta se ha verificado satisfactoriamente. Haga clic en el botón Ingresar arriba para ingresar a YipTV.',
-            VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar su cuenta o su cuenta ya ha sido verificada. Comuníquese con el servicio al cliente al'
+            VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar su cuenta o su cuenta ya ha sido verificada. Comuníquese con el servicio al cliente al',
+            VERIFY_USER_SET_PASSWORD_HEADING: 'Establecer contraseña',
+            VERIFY_USER_NEW_PASSWORD: 'Nueva Contrasena',
+            VERIFY_USER_CONFIRM_PASSWORD_REQUIRED: 'Confirme su Contrasena',
+            VERIFY_USER_CONFIRM_PASSWORD: 'Confirmar Contrasena',
+            VERIFY_USER_NEW_PASSWORD_NOT_COMPLEX: 'Contrasena debe tener al menos 8 caracteres, 1 letra mayuscula, 1 letra minuscula, 1 numero, y 1 caractere especial',
+            VERIFY_USER_NEW_PASSWORD_REQUIRED: 'Introduzca su contrasena',
+            VERIFY_USER_CONFIRM_PASSWORD_NO_MATCH: 'Contrasenas no coinciden',
+            VERIFY_USER_BUTTON: 'Presentar'
         });
     }]);
 }(angular.module('app')));

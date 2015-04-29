@@ -89,13 +89,13 @@ function addUserInputValidation(params, cb) {
     var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
     var nameRegex = /^[a-zA-Z0-9\s\-,.']+$/;
     var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50) {
+    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
-    } else if (!params.firstName || !nameRegex.test(params.firstName) || params.firstName.trim().length > 20) {
+    } else if (!params.firstName || !nameRegex.test(params.firstName) || params.firstName.trim().length > 20 || params.firstName.trim().length <= 0) {
         cb('invalid-first-name');
-    } else if (!params.lastName || !nameRegex.test(params.lastName) || params.lastName.trim().length > 20) {
+    } else if (!params.lastName || !nameRegex.test(params.lastName) || params.lastName.trim().length > 20 || params.lastName.trim().length <= 0) {
         cb('invalid-last-name');
-    } else if (!params.telephone || !phoneRegex.test(params.telephone) || params.telephone.trim().length > 12) {
+    } else if (!params.telephone || !phoneRegex.test(params.telephone) || params.telephone.trim().length > 12 || params.telephone.trim().length <= 0) {
         cb('invalid-telephone');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
@@ -112,7 +112,7 @@ function addUserInputValidation(params, cb) {
 
 function makePaymentInputValidation(params, cb) {
     var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50) {
+    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
