@@ -11,7 +11,8 @@ var NewUser = new Schema({
     processTime: Date,
     username: String,
     status: String,
-    reason: String
+    reason: String,
+    payload: String
 }, { collection: 'Users' });
 
 mongoose.model('NewUser', NewUser);

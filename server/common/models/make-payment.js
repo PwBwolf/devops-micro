@@ -14,7 +14,8 @@ var MakePayment = new Schema({
     reason: String,
     amount: Number,
     currency: String,
-    isUserOwned: Boolean
+    isUserOwned: Boolean,
+    payload: String
 }, { collection: 'Payments' });
 
 mongoose.model('MakePayment', MakePayment);
