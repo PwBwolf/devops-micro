@@ -162,6 +162,7 @@ if (command === 'disable') {
                 process.exit(1);
             }
             logger.logInfo('adminCLI - complimentaryCode - complimentary code disabled: ' + code);
+            process.exit(0);
         });
     });
 }
