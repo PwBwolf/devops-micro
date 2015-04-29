@@ -694,7 +694,7 @@
 	}
 
 		#droidlogo { display:none; width:60px; height:50%; position:relative; top:15%; left:-26%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
-		#tempCntnt { display:; width:75%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:20%; color:darkgrey; font-size:85%; overflow-y:hidden; overflow-x:scroll;  }
+		#tempCntnt { display:; width:75%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:20%; color:darkgrey; font-size:85%; white-space: nowrap; overflow-y:hidden; overflow-x:scroll;  }
 		#tempCntnt p:nth-child(2) { width:100%; font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
 		#tempCntnt p { width:100%; font-size:1.0em; color:dimgrey; margin-top:0%; display:inline-block; vertical-align: top; white-space: normal; }
 		#tempCntnt img { margin-top: 5%; float: left; display:none; }
