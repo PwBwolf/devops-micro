@@ -334,7 +334,7 @@
 
 	/* /////// ====== DEVICE PAGE ===== ////// */
 	#Device_Bx {
-		display:;  width: 100%; height: 700px; 
+		display:;  width: 100%; height: 750px; 
 		position:relative; background-color:white;
 		margin-bottom:0px; padding:0px; color:darkslategrey;
 	
@@ -353,14 +353,14 @@
 		#dvcCntnt p:nth-child(even) { width:100%; font-size:1.7em; color:dimgrey; margin-top:7%;}
 		#dvcCntnt img { margin-top: 5%; float: left; }
 	
-		.pg4_chnls { background:rgb(90,45,118); height:13%; z-index:6; }
+		.pg4_chnls { background:rgb(90,45,118); height:10%; z-index:6; }
 		.pg4_chnls ul { width:100%; height:140%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; margin:5% 0 1% !important; padding-bottom: 2%; text-align:center; }
 		.pg4_chnls ol { width:100%; height:auto; padding-top:4%; text-align: center; }
 		.pg4_chnls figure { width:70%; height:auto; display:block; margin:10% auto;} .pg4_chnls figcaption { width:auto; height:auto; } 
 		.pg4_chnls li { display:inline; vertical-align: middle; height:100%; padding: 0 2%; }
 		.pg4_chnls li img { height:125%; width:auto; margin-top:6px; padding:4px; cursor:pointer; }
 
-		.pg4_title { text-transform: uppercase; text-align:center; color:white; padding-top:2%; position:relative; }
+		.pg4_title { text-transform: uppercase; text-align:center; color:white; padding-top:3%; position:relative; }
 					
 
 	/* /////// ====== ============ ===== ////// */
