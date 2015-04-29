@@ -60,7 +60,6 @@ dd+dd { color: rgba(135, 117, 104, .9); margin-bottom:12px; }
 body {height:auto; font-family: default, Verdana, Arial, Tahoma; font-size:12px; }
 
 
-
 /* //// ============================================== //// */
 /* //// ============== migration prefs =============== //// */
 
@@ -141,7 +140,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 
 		/* /////// ====== HOME PAGE ===== ////// */
 		#Bnr_Bx { 
-			width: 100%; height: 425px; /*margin-top:40px;*/ padding:0px; top:0px;
+			width: 100%; height: 500px; /*margin-top:40px;*/ padding:0px; top:0px;
 			/* background:#eee url(../imgs/tab/HerobeIN_041315.jpg) 50% 90% no-repeat; fixed*/
 			position:relative; background-size:contain;
 		

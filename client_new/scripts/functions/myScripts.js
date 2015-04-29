@@ -470,7 +470,14 @@
 		$scope.en_Bnrs = [];
 		$scope.sp_Bnrs = [];
 		
-		var hroBnrs = $("ul [id*='_bnr_']");
+		//var hroBnrs = $("ul [id*='_bnr_']");
+		var hroBnrsCntnr = document.getElementById('carousel-banner');
+		var hroBnrs = hroBnrsCntnr.querySelectorAll("li img");
+	    var mP = 'mbl_bnr_P', mL = 'mbl_bnr_L', tP = 'tblt_bnr_P', tL = 'tblt_bnr_L', dT = 'dsktp_bnr_L', othrBnrs, crntBnr;
+		var enMblPImg = '../imgs/mbl/en/mbl_P_';
+		var enMblLImg = '../imgs/mbl/en/mbl_L_';
+		var enTbltImg = '../imgs/tblt/en/tblt_';
+		var enDskTpImg = '../imgs/pc/en/dsktp_';
 		
 		
 		init();
@@ -483,16 +490,44 @@
 		       return window.innerWidth;
 		    }, function(value) {
 		       console.log(value);
-			   if(value < 769){
-				   //$scope.en_Bnr = usrBnrsFctry.getEnTbltBnrs();
-				    console.log('this window is '+value+'px wide. Its either landscape mobile or portrait tablet. So I\'ll use '+hroBnrs.length);
-					
-				   } else if(value > 768 && value < 1025){
-					   console.log('this is '+value+'px landscape tablet or small screen.');
-				   		} else {
-				   			console.log('this is '+value+'px desktop.');
-				   			}
-		   });
+			   
+			  
+		  if(value < 400){
+			   //$scope.en_Bnr = usrBnrsFctry.getEnTbltBnrs();
+			   for(var h = 0; h < hroBnrs.length; h++){
+				   hroBnrs[h].setAttribute('src', enMblPImg+[h+1]+'.jpg');
+				   hroBnrs[h].setAttribute('width', '400px');
+				   hroBnrs[h].setAttribute('height', '330px');
+			   }	
+			   console.log('this window is '+value+'px wide. Its portrait mobile. So I\'ll use '+hroBnrs.length);
+				   } else if(value > 400 && value <= 768){
+				   
+					   for(var h = 0; h < hroBnrs.length; h++){
+						   hroBnrs[h].setAttribute('src', enMblLImg+[h+1]+'.jpg');
+						   hroBnrs[h].setAttribute('width', '667px');
+						   hroBnrs[h].setAttribute('height', '350px');
+					   }
+					   
+			       console.log('this window is '+value+'px Its landscape mobile.'+hroBnrs.length);
+				   		} else if(value >= 769 && value <= 1024){
+				   
+						   for(var h = 0; h < hroBnrs.length; h++){
+							   hroBnrs[h].setAttribute('src', enTbltImg+[h+1]+'.jpg');
+							   hroBnrs[h].setAttribute('width', '1300px');
+							   hroBnrs[h].setAttribute('height', '433px');
+						   }
+					    console.log('this window is '+value+'px Its tablet view.'+hroBnrs.length);
+					   		} else if( value > 1024 ){
+			   
+							   for(var h = 0; h < hroBnrs.length; h++){
+								   hroBnrs[h].setAttribute('src', enDskTpImg+[h+1]+'.jpg');
+								   hroBnrs[h].setAttribute('width', '2600px');
+								   hroBnrs[h].setAttribute('height', '866');
+							   }
+							console.log('this window is '+value+'px Its Desktop view.'+hroBnrs.length);
+		  }
+			  
+		});
 		
 		//$(document).load(function(){
 			$('#slider').nivoSlider({
