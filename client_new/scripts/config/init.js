@@ -123,6 +123,7 @@
 					navbar.style.color = '#3e194d';
 					navbar.className = navbar.className.replace('docked', '');
 					navLogo.className = navLogo.className.replace('imgdocked', '');
+					navLogo.style.position = 'absolute';
 					//$(dl).hide('slow');
 					$(hmBtn).hide('slow');
 				navdocked = false;
