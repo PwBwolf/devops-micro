@@ -214,7 +214,7 @@
 	
 	/* /////// ====== ABOUT PAGE ===== ////// */
 	#Shws_Bx { 
-		display:;  width: 100%; height: 500px; /*top:15px;*/
+		display:;  width: 100%; height: 100%; /*top:15px;*/
 		background:rgba(238,238,238, 0.9); 
 		position:relative; color:black;
 		margin-bottom:0px; padding:0px; text-align:center;
@@ -293,7 +293,7 @@
 
 	/* /////// ====== MENU PAGE ===== ////// */
 	#Ntwrks_Bx {
-		display:;  width: 100%; height: 500px; 
+		display:;  width: 100%; height: 100%; 
 		background:#eee url(../imgs/ntwrks/section-img_tblt.jpg) 50% 9% no-repeat fixed; 
 		background-size:cover; position:relative; /*top:35px;*/
 		margin-bottom:0px; padding:0px; 
