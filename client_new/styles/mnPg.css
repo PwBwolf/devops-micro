@@ -209,6 +209,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 		#Shws_Bx .panel, #Shws_Bx .panel-footer {
 			  border: 0px !important; box-shadow: none !important;
 		}
+		#Shws_Bx .bckImg { width:75%; }
 		#Shws_Bx .panel-footer { background-color: transparent; padding:6px 0px !important; } 
 		#shwsCtgry { position: relative; margin: 20px 0px; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
 			.pg2_popchnls {  background:white; height:100%; }
