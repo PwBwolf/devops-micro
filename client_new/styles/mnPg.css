@@ -213,7 +213,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 		#shwsCtgry { position: relative; margin: 20px 0px; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
 			.pg2_popchnls {  background:white; height:100%; }
 			.pg2_title { text-transform: uppercase; color:rgb(90,45,118); padding:20px 0px 40px; position:relative; top:20px; }
-			.pg2_shws { text-align:center !important; width:100%; height:85%; margin-bottom:0px !important; font-size:85%; position:relative; top[:10px;}
+			.pg2_shws { text-align:center !important; width:100%; height:85%; margin-bottom:0px !important; font-size:85%; position:relative; top:10px;}
 			.pg2_shws .col-md-2 { display:inline-block; vertical-align:top; margin:17px !important; float:none !important; }
 			.pg2_shws dl { margin-bottom: 0px !important; }
 			
