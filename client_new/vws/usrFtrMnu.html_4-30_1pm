@@ -11,13 +11,13 @@
 				<article>
 					<h5>show by category</h5>
 					<ul>
-						<li><a href='/' >AZ Clic</a></li>
-						<li><a href='/' >AZ CORAZON</a></li>
-						<li><a href='/' >BeIn Sports</a></li>
-						<li><a href='/' >BeIn Sports ñ</a></li>
-						<li><a href='/' >CANAL AMERICA</a></li>
-						<li><a href='/' >CANAL ANTIESTRES</a></li>
-						<li><a href='/' >Canal Sur</a></li>
+						<li><a href='/' >Entertainment</a></li>
+						<li><a href='/' >News</a></li>
+						<li><a href='/' >General</a></li>
+						<li><a href='/' >Faith</a></li>
+						<li><a href='/' >Kids</a></li>
+						<li><a href='/' >Sports</a></li>
+						<li><a href='/' >Music</a></li>
 					</ul>
 				</article>
 			</aside>
@@ -39,16 +39,16 @@
 			
 			<aside class='ftr_right'>
 				<article>
-					<h5>network</h5>
-					<ul>
-						<li><a href='/' >Bob's Burgers</a></li>
-						<li><a href='/' >Canal America</a></li>
-						<li><a href='/' >JBN</a></li>
-						<li><a href='/' >Mi Gente TV</a></li>
-						<li><a href='/' >TVC LATINO</a></li>
-						<li><a href='/' >YES</a></li>
-						<li><a href='/' >Youtube</a></li>
-					</ul>
+					<h5>yiptv news and updates</h5>
+					<span>
+						Subscribe and be the first to know when YIPTV launches new channels and shows!
+					</span>
+					<div class="input-group">
+				        <input type="text" class="form-control" placeholder="Enter Your Email.">
+				        <span class="input-group-btn">
+				            <button class="btn btn-default" type="button">Go!</button>
+				        </span>
+					</div>
 				</article>
 			</aside>
 			

@@ -203,9 +203,9 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 		
 			z-index: 100; 
 		}
-		#Shws_Bx .catTitle { margin-top:50px; }
+		#Shws_Bx .catTitle { margin:50px 0px; }
 		#Shws_Bx .catName { font-size:2.0em; color:darkmagenta; text-transform:uppercase; }
-		#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 15%; margin: 0% 2%; top:-3px; }
+		#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 12%; margin: 0% 2%; top:-3px; }
 		#Shws_Bx .panel, #Shws_Bx .panel-footer {
 			  border: 0px !important; box-shadow: none !important;
 		}
