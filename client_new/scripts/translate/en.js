@@ -376,7 +376,7 @@
             MEDIA_TITLE4: 'The Seismic Shifts in Content Consumption',
             MEDIA_DATE5: 'June 26, 2014',
             MEDIA_TITLE5: 'YipTV predicts continued TV innovation despite Aereo Ruling',
-			NETWORKS_AMAZING_NETWORKS: '{{usrNtwrks[1].ntwrkNm}}',
+			NETWORKS_AMAZING_NETWORKS: 'Amazing Networks',
             NOT_FOUND_HEADING: 'Page Not Found',
             NOT_FOUND_MESSAGE: 'The page you are looking for does not exist.',
             PR1_HEADING: 'Press Release',
