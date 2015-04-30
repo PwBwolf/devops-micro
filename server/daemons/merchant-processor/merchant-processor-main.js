@@ -252,17 +252,14 @@ function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
             }
         });
     } else {
-        var ownedBy;
-        NewUser.findOne({username: params.username.toLowerCase()}, function (err, dbUser) {
+        var ownedBy = null;
+        User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
             if (err) {
                 logger.logError('merchantProcessorMain - saveToDatabase - error fetching new-user');
                 logger.logError(err);
-                ownedBy = null;
             } else {
-                ownedBy = dbUser ? dbUser.merchant.toString() : null;
+                ownedBy = dbUser && dbUser.account.merchant ? dbUser.account.merchant.toString() : null;
             }
-            console.log(typeof ownedBy);
-            console.log(typeof params.merchantId);
             payment.isUserOwned = params.merchantId === ownedBy;
             payment.save(function (err1) {
                 if (err1) {
