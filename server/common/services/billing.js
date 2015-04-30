@@ -139,6 +139,7 @@ module.exports = {
                 'state', state,
                 'zip', zip,
                 'country', country,
+                'payby', 'CARD',
                 'payinfo', '4242424242424242',
                 'paydate', '12/2035',
                 'paycvv', '123',
