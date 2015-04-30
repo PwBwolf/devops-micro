@@ -253,7 +253,7 @@ function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
         });
     } else {
         var ownedBy = null;
-        var email = params.email ? params.email.toLowerCase() : undefined;
+        var email = params.username ? params.username.toLowerCase() : undefined;
         User.findOne({email: email}).populate('account').exec(function (err, dbUser) {
             if (err) {
                 logger.logError('merchantProcessorMain - saveToDatabase - error fetching new-user');
