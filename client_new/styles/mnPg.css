@@ -140,7 +140,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 	#menu {  width:100%; font-weight:bold; }
 
 		#menuItems { margin:6px auto; text-align:center; }
-		#menuItems mnuItm { padding: 9px 20px; text-transform: uppercase; margin:0 auto; }
+		#menuItems mnuItm { padding: 0px 20px; text-transform: uppercase; margin:0 auto; }
 		#menuItems mnuItm:hover { cursor:pointer; color:rgba(254, 254, 254, .89); background:rgba(5, 5, 5, .5); /*border-top:solid 1px red;*/ }
 		#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
 		#menuItems div > img { height:20px; width:auto; }
