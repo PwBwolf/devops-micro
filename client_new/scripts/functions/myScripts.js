@@ -412,7 +412,7 @@
 				   hroBnrs[h].setAttribute('src', enMblPImg+[h+1]+'.jpg');
 				   hroBnrs[h].setAttribute('width', '400px');
 				   hroBnrs[h].setAttribute('height', '330px');
-				   hroBnrsMap[h].setAttribute('coords', enMblPImg_map_+[h+1] );
+				   //hroBnrsMap[h].setAttribute('coords', enMblPImg_map_+[h+1] );
 			   }	
 			   console.log('this window is '+value+'px wide. Its portrait mobile. So I\'ll use '+hroBnrs.length);
 				   } else if(value > 400 && value <= 768){
@@ -421,7 +421,7 @@
 						   hroBnrs[h].setAttribute('src', enMblLImg+[h+1]+'.jpg');
 						   hroBnrs[h].setAttribute('width', '667px');
 						   hroBnrs[h].setAttribute('height', '350px');
-						   hroBnrsMap[h].setAttribute('coords', enMblLImg_map_+[h+1] );
+						   //hroBnrsMap[h].setAttribute('coords', enMblLImg_map_+[h+1] );
 						   
 					   }
 					   
@@ -432,7 +432,7 @@
 							   hroBnrs[h].setAttribute('src', enTbltImg+[h+1]+'.jpg');
 							   hroBnrs[h].setAttribute('width', '1300px');
 							   hroBnrs[h].setAttribute('height', '433px');
-							   hroBnrsMap[h].setAttribute('coords', enTbltImg_map_+[h+1] );
+							   //hroBnrsMap[h].setAttribute('coords', enTbltImg_map_+[h+1] );
 							   
 						   }
 					    console.log('this window is '+value+'px Its tablet view.'+hroBnrs.length);
@@ -442,7 +442,7 @@
 								   hroBnrs[h].setAttribute('src', enDskTpImg+[h+1]+'.jpg');
 								   hroBnrs[h].setAttribute('width', '2600px');
 								   hroBnrs[h].setAttribute('height', '866');
-								   hroBnrsMap[h].setAttribute('coords', enDskTpImg_map_+[h+1] );
+								   //hroBnrsMap[h].setAttribute('coords', enDskTpImg_map_+[h+1] );
 								   
 							   }
 							console.log('this window is '+value+'px Its Desktop view.'+hroBnrs.length);
