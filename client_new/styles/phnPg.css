@@ -20,7 +20,7 @@
 	/*background:rgb(204,51,102);
 	pointer-events:none;*/
 	
-	transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:;
+	transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 	-webkit-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 	-moz-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 	-ms-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
@@ -31,10 +31,10 @@
 	pointer-events:none;*/
 	
  	transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
-	-webkit-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-	-moz-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-	-ms-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-	-o-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
+	-webkit-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+	-moz-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+	-ms-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+	-o-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
 }
 
 /* ================================= */
@@ -200,7 +200,7 @@
 
 
 	/* /////// ====== HOME PAGE ===== ////// */
-	#Bnr_Bx { width: 100%; height: 330px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
+	#Bnr_Bx { width: 100%; height: 346px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
 	#Bnr_Bx .carousel-indicators { display:none; }
 	.banner .banner-wrap { width: auto !important; }
 
@@ -219,9 +219,9 @@
 	
 		z-index: 100; 
 	}
-	#Shws_Bx .catTitle { margin:50px 0px; }
-	#Shws_Bx .catName { font-size:2.0em; color:darkmagenta; text-transform:uppercase; }
-	#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 12%; margin: 0% 2%; top:-3px; }
+	#Shws_Bx .catTitle { margin:20px 0px; }
+	#Shws_Bx .catName { font-size:1.0em; color:darkmagenta; text-transform:uppercase; }
+	#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { display:none; border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 12%; margin: 0% 2%; top:-3px; }
 	#Shws_Bx .panel, #Shws_Bx .panel-footer {
 		  border: 0px !important; box-shadow: none !important;
 	}
@@ -232,7 +232,7 @@
 		
 		.pg2_popchnls { background:white; padding:3% 1% 7% !important; }
 		.pg2_title { text-transform: uppercase; color:rgb(90,45,118); padding:5px 0 10px; position:relative; }
-		.pg2_shws { text-align:left !important; width:100%; padding:2% 0 !important; }
+		.pg2_shws { text-align:center !important; width:100%; padding:2% 0 !important; }
 		.pg2_shws .col-md-2 { display:inline-block; padding: 0px !important; vertical-align:top; width:90% !important; /*height:inherit !important;*/ margin:7px !important; margin-bottom:125px !important; float:none !important; }
 		.pg2_shws img { width: 95%; } .pg2_shws .panel-body { padding: 4px !important; }
 		.pg2_shws dl { margin-bottom: 0px !important; }
@@ -291,7 +291,7 @@
 	
 	#Ntwrks_Bx {
 		display:;  width: 100%; height: 400px; 
-		background:#eee url(../imgs/ntwrks/section-img_tblt.jpg) 50% 9% no-repeat fixed; 
+		background:#eee url(../imgs/ntwrks/logo-background-mbl.jpg) top center no-repeat fixed; 
 		background-size:cover; position:relative; /*top:35px;*/
 		margin-bottom:0px; padding:0px; 
 	
@@ -318,17 +318,18 @@
 
 		#droidlogo { display:none; width:60px; height:50%; position:relative; top:15%; left:-26%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
 		#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:0%;*/ position:relative; top:15%; color:darkgrey; font-size:90%; white-space: nowrap; overflow-y:scroll; overflow-x:hidden;  }
-		#tempCntnt p:nth-child(2) { /*width:120%;*/ font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
+		#tempCntnt p:nth-child(1) { /*width:120%;*/ font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
 		#tempCntnt p{ /*width:100%;*/ font-size:1.0em; color:dimgrey; margin-top:0%; padding:5px; margin-right:10px; display:inline-block; vertical-align: top; white-space: normal; }
 		#tempCntnt img { margin-top: 5%; float: left; display:none; }
+		#tempCntnt h4 { color: darkmagenta;}
 
 
 		#tempCntnt { display:; width:90%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:20%; color:darkgrey; font-size:90%; white-space: nowrap; overflow-y:hidden; overflow-x:scroll;  }
 
 
 
-		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:15%; padding:0 !important;  }
-		.pg2_chnls ul { width:100%; height:110%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding:3px; margin-top:4%; }
+		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:12%; padding:0 !important;  }
+		.pg2_chnls ul { width:100%; height:120%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding:3px; margin-top:2%; }
 		.pg2_chnls li { display:inline; vertical-align: middle; height:100%;  }
 		.pg2_chnls li img { height:100%; width:auto; margin-top:6px; }
 
@@ -375,7 +376,7 @@
 	
 	/* /////// ====== ABOUT PAGE ===== ////// */
 	#Abt_Bx {
-		display:;  width: 100%; height: auto; 
+		display:;  width: 100%; height: auto; top: -7px;
 		position:relative; background-color:rgba(238,238,238,1);
 		margin-bottom:30px; padding:0px; color: black;
 
@@ -391,7 +392,7 @@
 	
 	#Abt_Bx .jumbotron p { font-size: 85% !important; }
 		.pg5_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
-		.pg5_title { text-transform: uppercase; text-align:center; color:white; padding:4% 0 1%; position:relative; }
+		.pg5_title { text-transform: uppercase; text-align:center; color:white; padding:4% 0 3%; position:relative; }
 		
 		.abt_left, .abt_right { height:inherit; padding: 2%; width:100%; }
 		.abt_right article { width:48%; display:inline-block; padding:0 1%; vertical-align: top; }
@@ -447,7 +448,7 @@
 	#Ftr_Bx .jumbotron {  background:rgb(61, 51, 75) !important; height:inherit; }
 	#ftrCopy {text-align: center;} 
 	#ftrCopy li, #ftrLinks li { list-style: none; list-style-type: none; color:white; }
-		.pg7_chnls { background:rgb(227, 63, 67);/* height:15%;*/ padding:15px 0; z-index:6; text-align:center; }
+		.pg7_chnls { background:rgb(227, 63, 67);/* height:15%;*/ padding:1px 0 22px; z-index:6; text-align:center; }
 		.pg7_title { color:white; position:relative; /*display:inline-block; margin-left:3%;*/ }
 		.pg7_title h4 { margin-top: 0px !important; }
 		.pg7_chnls button { text-transform: uppercase; /*display:inline-block; left:15%;*/ position:relative; }
@@ -616,16 +617,16 @@
 		  border: 0px !important; box-shadow: none !important;
 	}
 	#Shws_Bx .bckImg { width:75%; }	
-	#Shws_Bx .catTitle { margin:50px 0px; }
-	#Shws_Bx .catName { font-size:2.0em; color:darkmagenta; text-transform:uppercase; }
-	#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 12%; margin: 0% 2%; top:-3px; }
+	#Shws_Bx .catTitle { margin:20px 0px; }
+	#Shws_Bx .catName { font-size:1.20em; color:darkmagenta; text-transform:uppercase; }
+	#Shws_Bx .catLine_l, #Shws_Bx .catLine_r { display:none; border-bottom: thin dotted grey; border-top: thin dotted grey; padding:0% 12%; margin: 0% 2%; top:-3px; }
 	#Shws_Bx .panel-footer { background-color: transparent; padding:8px 4px !important; border:none !important; } 
 	#Shws_Bx .jumbotron { background-color: white;}
 	#shwsCtgry { position: relative; margin-bottom: 15px ; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
 		
 		.pg2_popchnls { background:white; padding:3% 1% 7% !important; }
 		.pg2_title { text-transform: uppercase; color:rgb(90,45,118); padding:5px 0 10px; position:relative; }
-		.pg2_shws { text-align:left !important; width:100%; padding:2% 0 !important; }
+		.pg2_shws { text-align:center !important; width:100%; padding:2% 0 !important; }
 		.pg2_shws .col-md-2 { display:inline-block; padding: 0px !important; vertical-align:top; width:34% !important; /*height:inherit !important;*/ margin:7px !important; float:none !important; }
 		.pg2_shws img { width: 95%; } .pg2_shws .panel-body { padding: 0px !important; }
 		.pg2_shws dl { margin-bottom: 0px !important; }
@@ -685,7 +686,7 @@
 	
 	#Ntwrks_Bx {
 		display:;  width: 100%; height: 400px; 
-		background:#eee url(../imgs/ntwrks/section-img_tblt.jpg) 50% 9% no-repeat fixed; 
+		background:#eee url(../imgs/ntwrks/logo-background-mbl_l.jpg) 50% 9% no-repeat fixed; 
 		background-size:cover; position:relative; /*top:35px;*/
 		margin-bottom:0px; padding:0px; 
 	
@@ -712,9 +713,10 @@
 
 		#droidlogo { display:none; width:60px; height:50%; position:relative; top:15%; left:-26%; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain; float:right;  }
 		#tempCntnt { display:; width:75%; height:auto; background:; padding:1%; margin-left:5%; position:relative; top:20%; color:darkgrey; font-size:100%; white-space: nowrap; overflow-y:hidden; overflow-x:scroll;  }
-		#tempCntnt p:nth-child(2) { width:100%; font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
+		#tempCntnt p:nth-child(1) { width:100%; font-size:2.7em; /*top:29px;*/ position:relative; text-indent:20px; color:darkmagenta; margin-bottom: 2px !important; }
 		#tempCntnt p { width:100%; font-size:1.0em; color:dimgrey; margin-top:0%; padding:5px; margin-right:10px; display:inline-block; vertical-align: top; white-space: normal; }
 		#tempCntnt img { margin-top: 5%; float: left; display:none; }
+		#tempCntnt h4 { color: darkmagenta;}
 
 		.pg2_chnls { border-bottom: 1px groove aliceblue; /*border-top: 1px groove aliceblue;*/ background:rgb(90,45,118); height:16%; padding:1px 0 !important;  }
 		.pg2_chnls ul { width:100%; height:110%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding:3px; margin-top:4%; }
@@ -762,7 +764,7 @@
 	
 	/* /////// ====== ABOUT PAGE ===== ////// */
 	#Abt_Bx {
-		display:;  width: 100%; height: auto; 
+		display:;  width: 100%; height: auto; top: -7px;
 		position:relative; background-color:rgba(238,238,238,1);
 		margin-bottom:30px; padding:0px; color: black;
 
@@ -778,7 +780,7 @@
 	
 	#Abt_Bx .jumbotron p { font-size: 85% !important; }
 		.pg5_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
-		.pg5_title { text-transform: uppercase; text-align:center; color:white; padding:4% 0 1%; position:relative; }
+		.pg5_title { text-transform: uppercase; text-align:center; color:white; padding:4% 0 3%; position:relative; }
 		
 		.abt_left, .abt_right { height:inherit; padding: 2%; width:100%; }
 		.abt_right article { width:48%; display:inline-block; padding:0 1%; vertical-align: top; }
@@ -790,7 +792,7 @@
 	
 	/* /////// ====== ABOUT PAGE ===== ////// */
 	#App_Bx {
-		display:;  width: 100%; height: 400px; 
+		display:;  width: 100%; height: 400px; top:-25px;
 		background:#eee url(../imgs/appBckgrnd1.jpg) 50% 9% no-repeat fixed; 
 		background-size:cover; position:relative; /*top:35px;*/
 		margin-bottom:0px; padding:0px; 
@@ -816,7 +818,7 @@
 
 	/* /////// ====== FOOTER MENU PAGE ===== ////// */
 	#Ftr_Bx {
-		display:;  width: 100%; height: 380px; 
+		display:;  width: 100%; height: 380px; top:-25px;
 		position:relative; font-size:11px;
 		margin-bottom:0px; padding:0px; color: black;
 
@@ -835,7 +837,7 @@
 	#Ftr_Bx .jumbotron {  background:rgb(61, 51, 75) !important; }
 	#ftrCopy {text-align: center;} 
 	#ftrCopy li, #ftrLinks li { list-style: none; list-style-type: none; color:white; }
-		.pg7_chnls { background:rgb(227, 63, 67);/* height:15%;*/ padding:15px 0; z-index:6; text-align:center; }
+		.pg7_chnls { background:rgb(227, 63, 67);/* height:15%;*/ padding:1px 0 22px; z-index:6; text-align:center; }
 		.pg7_title { color:white; position:relative; /*display:inline-block; margin-left:3%;*/ }
 		.pg7_title h4 { margin-top: 0px !important; }
 		.pg7_chnls button { text-transform: uppercase; /*display:inline-block; left:15%;*/ position:relative; }

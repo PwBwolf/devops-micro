@@ -608,7 +608,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 				/*background:rgb(204,51,102);
 				pointer-events:none;*/
 				
-				transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:;
+				transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 				-webkit-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 				-moz-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
 				-ms-transform: perspective(1000px) rotateY(180deg); backface-visibility:hidden; width:100%;
@@ -624,10 +624,10 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 				pointer-events:none;*/
 				
 			 	transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
-				-webkit-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-				-moz-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-				-ms-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
-				-o-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:;
+				-webkit-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+				-moz-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+				-ms-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
+				-o-transform: perspective(1000px) rotateY(0deg); backface-visibility:hidden; width:100%;
 				
 				-webkit-transform-style: preserve-3d; 
 				-moz-transform-style: preserve-3d; 

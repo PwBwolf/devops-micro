@@ -376,6 +376,8 @@
             MEDIA_TITLE4: 'Los cambios Sísmicos en el Consumo de Contenidos.',
             MEDIA_DATE5: 'Junio 26, 2014',
             MEDIA_TITLE5: 'YipTV predice innovación de TV a pesar de la sentencia de Aereo.',
+			NAVBAR_LANGUAGE: 'Lenguaje',
+			NAVBAR_JOIN: 'Ensamble',
 			NETWORKS_AMAZING_NETWORKS: 'Redes asombrosas',
             NOT_FOUND_HEADING: 'Pagina no disponible',
             NOT_FOUND_MESSAGE: 'La pagina que usted busca no existe',

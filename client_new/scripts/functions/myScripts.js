@@ -718,9 +718,12 @@
 		
 		
 	    $scope.itemClicked = function ($index) {
+			//console.log($(item).attr('class'));
 			//console.log($index);
+			//console.log( $(this).attr('class') );
 			//$index.preventDefault();
 	    	$scope.selectedIndex = $index;
+			
 			
 		}
 	    $scope.itemClicked2 = function ($index) {
