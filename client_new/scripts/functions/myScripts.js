@@ -386,14 +386,13 @@
 		//var hroBnrs = $("ul [id*='_bnr_']");
 		var hroBnrsCntnr = document.getElementById('carousel-banner');
 		var hroBnrs = hroBnrsCntnr.querySelectorAll("li img");
-		var hroBnrsMap = hroBnrsCntnr.querySelectorAll("li area");
 	    var mP = 'mbl_bnr_P', mL = 'mbl_bnr_L', tP = 'tblt_bnr_P', tL = 'tblt_bnr_L', dT = 'dsktp_bnr_L', othrBnrs, crntBnr;
-		var enMblPImg = '../imgs/mbl/en/mbl_P_', enMblPImg_map = '',
-			enMblLImg = '../imgs/mbl/en/mbl_L_', enMblLImg_map_1 = '../imgs/mbl/en/mbl_L_', enMblLImg_map_2 = '../imgs/mbl/en/mbl_L_', enMblLImg_map_3 = '../imgs/mbl/en/mbl_L_', enMblLImg_map_4 = '../imgs/mbl/en/mbl_L_', enMblLImg_map_5 = '../imgs/mbl/en/mbl_L_',
-			enTbltImg = '../imgs/tblt/en/tblt_', enTbltImg_map_1 = '../imgs/tblt/en/tblt_', enTbltImg_map_2 = '../imgs/tblt/en/tblt_', enTbltImg_map_3 = '../imgs/tblt/en/tblt_', enTbltImg_map_4 = '../imgs/tblt/en/tblt_', enTbltImg_map_5 = '51,226,302,223,303,281,52,284',
-			enDskTpImg = '../imgs/pc/en/dsktp_', enDskTpImg_map_1 = '47,573,611,572,609,702,45,702', enDskTpImg_map_2 = '105,504,605,505,610,621,102,619', enDskTpImg_map_3 = '153,566,464,565,464,656,153,658', enDskTpImg_map_4 = '505,564,825,564,823,659,506,659', enDskTpImg_map_5 = '607,566,104,564,105,450,605,449';
+		var enMblPImg = '../imgs/mbl/en/mbl_P_';
+		var enMblLImg = '../imgs/mbl/en/mbl_L_';
+		var enTbltImg = '../imgs/tblt/en/tblt_';
+		var enDskTpImg = '../imgs/pc/en/dsktp_';
 		
-		console.log(hroBnrsMap.length);
+		
 		init();
 		function init(){
 			$scope.en_Bnrs = usrBnrsFctry.getEnBnrs();
@@ -412,7 +411,6 @@
 				   hroBnrs[h].setAttribute('src', enMblPImg+[h+1]+'.jpg');
 				   hroBnrs[h].setAttribute('width', '400px');
 				   hroBnrs[h].setAttribute('height', '330px');
-				   //hroBnrsMap[h].setAttribute('coords', enMblPImg_map_+[h+1] );
 			   }	
 			   console.log('this window is '+value+'px wide. Its portrait mobile. So I\'ll use '+hroBnrs.length);
 				   } else if(value > 400 && value <= 768){
@@ -421,8 +419,6 @@
 						   hroBnrs[h].setAttribute('src', enMblLImg+[h+1]+'.jpg');
 						   hroBnrs[h].setAttribute('width', '667px');
 						   hroBnrs[h].setAttribute('height', '350px');
-						   //hroBnrsMap[h].setAttribute('coords', enMblLImg_map_+[h+1] );
-						   
 					   }
 					   
 			       console.log('this window is '+value+'px Its landscape mobile.'+hroBnrs.length);
@@ -432,8 +428,6 @@
 							   hroBnrs[h].setAttribute('src', enTbltImg+[h+1]+'.jpg');
 							   hroBnrs[h].setAttribute('width', '1300px');
 							   hroBnrs[h].setAttribute('height', '433px');
-							   //hroBnrsMap[h].setAttribute('coords', enTbltImg_map_+[h+1] );
-							   
 						   }
 					    console.log('this window is '+value+'px Its tablet view.'+hroBnrs.length);
 					   		} else if( value > 1024 ){
@@ -442,8 +436,6 @@
 								   hroBnrs[h].setAttribute('src', enDskTpImg+[h+1]+'.jpg');
 								   hroBnrs[h].setAttribute('width', '2600px');
 								   hroBnrs[h].setAttribute('height', '866');
-								   //hroBnrsMap[h].setAttribute('coords', enDskTpImg_map_+[h+1] );
-								   
 							   }
 							console.log('this window is '+value+'px Its Desktop view.'+hroBnrs.length);
 		  }
