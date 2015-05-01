@@ -192,7 +192,7 @@ module.exports = {
                 var rafUrl = config.url + 'invite/' + referrer.referralCode;
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: req.body.emailList,
+                    bcc: req.body.emailList,
                     subject: config.referAFriendEmailSubject,
                     html: sf(config.referAFriendEmailBody, config.imageUrl, rafUrl)
                 };
