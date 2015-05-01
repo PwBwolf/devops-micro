@@ -361,17 +361,19 @@ a.btn-sign:hover {
 }
 
 .user-home-wrap {
-    width: 1350px;
+    width: inherit;
     margin: 0 auto;
     position: relative;
     overflow: hidden;
+	text-align: center;
 }
 
 .user-home-box .caption {
-    top: 0px;
-    left: 25%;
+    top: 15%;
+    margin: auto;
     position: absolute;
     height: 100%;
+	width:100%;
     font-family: 'radikalthin';
     z-index: 99;
 }
@@ -1228,6 +1230,7 @@ a.btn-import:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
+	border: 1px dashed dimgrey;
 }
 
 .txtboxdd {
