@@ -1218,6 +1218,7 @@ a.btn-import:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
+	border: 1px dashed dimgrey;
 }
 
 .txtbox2 {

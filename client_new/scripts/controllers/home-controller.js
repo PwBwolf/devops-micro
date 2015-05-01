@@ -40,7 +40,7 @@
 			};
 		
 			/// ====   PAGE AND BUTTON FUNCTIONS   ==== ///
-			var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Device', 'Orders'];
+			var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Abt', 'Orders'];
 		
 			/*
 			$('#docklogo').on('click', function(){

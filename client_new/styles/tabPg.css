@@ -155,7 +155,7 @@
 
 				#menuItems { margin:8px auto; text-align:center; padding-left:100px; }
 				#menuItems mnuItm { padding: 0px 10px; text-transform: uppercase; margin:0px auto; }
-				#menuItems mnuItm:hover { cursor:pointer; color:rgba(254, 254, 254, .89); /*background:rgba(5, 5, 5, .5);*/ border-bottom:solid 1px red; }
+				#menuItems mnuItm:hover { cursor:pointer; color:rgba(154, 154, 154, .89); /*background:rgba(5, 5, 5, .5);*/ border-bottom:solid 1px red; }
 				#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
 				#menuItems div > img { height:20px; width:auto; }
 	
@@ -641,7 +641,7 @@
 
 			#menuItems { margin:8px auto; text-align:center; padding-left:100px; }
 			#menuItems mnuItm { padding: 0px 20px; text-transform: uppercase; margin:0px auto; }
-			#menuItems mnuItm:hover { cursor:pointer; color:rgba(254, 254, 254, .89); /*background:rgba(5, 5, 5, .5);*/ border-bottom:solid 1px red; }
+			#menuItems mnuItm:hover { cursor:pointer; color:rgba(154, 154, 154, .89); /*background:rgba(5, 5, 5, .5);*/ border-bottom:solid 1px red; }
 			#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
 			#menuItems div > img { height:20px; width:auto; }
 	
