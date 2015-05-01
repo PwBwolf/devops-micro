@@ -102,6 +102,10 @@
                 $http.post('/api/verify-user', {code: code}).success(success).error(error);
             },
 
+            setPasswordAndVerifyUser: function (data, success, error) {
+                $http.post('/api/set-password-verify-user', data).success(success).error(error);
+            },
+
             forgotPassword: function (email, success, error) {
                 $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
             },
