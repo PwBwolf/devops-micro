@@ -49,6 +49,15 @@ body, html { font-size:14px; max-width:1280px; margin: 0 auto; }
 .off {display: none !important;} .on {display: all !important;}
 #still { display: none; }
 
+/*.mnuShdw {
+	box-shadow: 0px 1px 5px #666;
+	-webkit-box-shadow: 0px 1px 5px #666;
+	-moz-box-shadow: 0px 1px 5px #666;
+	-ms-box-shadow: 0px 1px 5px #666;
+	-o-box-shadow: 0px 1px 5px #666;
+
+	border-radius:0px !important;
+}*/
 
 * { margin:0px; padding:0px; border:0px; text-decoration:none; }
 a { text-decoration:none; color:rgba(155, 155, 155, .94); font-weight:bold; }
@@ -271,10 +280,16 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 
 		/* /////// ====== MENU PAGE ===== ////// */
 		#Ntwrks_Bx {
-			display:;  width: 100%; height: 100%; 
-			background:#eee url(../imgs/ntwrks/section-img1.jpg) 50% 9% no-repeat fixed; 
-			background-size:cover; position:relative; /*top:35px;*/
-			margin-bottom:0px; padding:0px; 
+			display:;  width: 100%; height: 600px; clear:both;
+			/*background:#eee url(../imgs/ntwrks/section-img1.jpg) 50% 9% no-repeat fixed;
+			background-size:cover; position:relative;
+			margin-bottom:0px; padding:0px;*/
+			
+			background-image: url(../imgs/ntwrks/logo-container.png), url(../imgs/ntwrks/logo-background.jpg);
+			background-repeat: no-repeat;
+			background-position: -5% 5%, 50% 50%;
+			background-attachment: scroll, fixed;
+			background-size: 46%, cover;
 		
 			transition: all 1s ease-in-out; 
 			-webkit-transition: all 1s ease-in-out; 
@@ -285,19 +300,24 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 			z-index: 95; 
 	
 		}
+		#Ntwrks_Bx .ntwrkLogoBig { display:inline-block; vertical-align: top; }
+		#Ntwrks_Bx .ntwrkCntnt { margin-left:17%; display:inline-block; vertical-align: top; width:50%; }
+		
+		
 			#droidlogo { display:none; width:15%; height:600px; position:absolute; top:160px; right:335px; background:transparent url(../imgs/pc/droidlogo1.png) no-repeat; background-size:contain;  }
-			#tempCntnt { display:; width:auto; height:auto; background:; padding:6%; /*margin-left:6%;*/ position:relative; top:15%; color:darkgrey; font-size:1.280em;  white-space: nowrap; overflow-y:hidden; overflow-x:scroll; z-index:5; }
-			#tempCntnt p:nth-child(2) { /*width:120%;*/ font-size:2.7em; top:40px; position:relative; text-indent:20px; color:darkmagenta; }
-			#tempCntnt p { /*width:100%;*/ font-size:1.20em; color:dimgrey; margin-top:4%;  margin-right:10px; display:inline-block; vertical-align: top; white-space: normal;}
+			#tempCntnt { display:; width:auto; height:auto; background:; padding:5%; /*margin-left:6%;*/ position:relative; top:7%; color:darkgrey; font-size:1.280em;  white-space: nowrap; overflow-y:hidden; overflow-x:scroll; z-index:5; }
+			#tempCntnt p:nth-child(1) { /*width:120%;*/ font-size:2.7em; top:40px; position:relative; text-indent:20px; color:darkmagenta; }
+			#tempCntnt p { /*width:100%;*/ font-size:1.0em; color:dimgrey; margin-top:4%;  margin-right:10px; display:inline-block; vertical-align: top; white-space: normal;}
 			#tempCntnt img { margin-top: 4%; float: left; }
+			#tempCntnt h4 { color:rgb(90,45,118); }
+		
 			
-			
-			.pg2_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
+			.pg2_chnls { background:rgb(90,45,118); height:12%; z-index:6; }
 			.pg2_chnls ul { width:100%; height:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; margin-bottom:2% !important; }
 			.pg2_chnls li { display:inline; vertical-align: middle; height:100%; }
 			.pg2_chnls li img { height:90%; width:auto; margin-top:6px; padding:4px; }
 		
-			.pg3_title { text-transform: uppercase; text-align:center; color:white; padding-top:1%; margin-bottom:3%; position:relative; }
+			.pg3_title { text-transform: uppercase; text-align:center; color:white; padding-top:0%; margin-bottom:3%; position:relative; }
 			
 		
 		/* /////// ====== ============ ===== ////// */
@@ -360,7 +380,7 @@ header { width:auto; height: 50px; background:rgba(229,229,231, .91) !important;
 		
 		
 			.pg5_chnls { background:rgb(90,45,118); height:15%; z-index:6; }
-			.pg5_title { text-transform: uppercase; text-align:center; color:white; padding-top:2px; position:relative; }
+			.pg5_title { text-transform: uppercase; text-align:center; color:white; padding-top:2px; padding-bottom:1%; position:relative; }
 			
 			.abt_left, .abt_right { display:inline-block; vertical-align: top; height:inherit; padding: 3%; }
 			.abt_left { float:left; width: 45%;  }

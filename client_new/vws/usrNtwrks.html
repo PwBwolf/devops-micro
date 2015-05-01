@@ -1,6 +1,4 @@
-<div id="still" style="background-image:url(../imgs/ntwrks/section-img_tblt.jpg)"></div>
-
-<div id="Ntwrks_Bx" class="usr_Menu_pnl cntntBxBck" data-ng-controller="usrNtwrksCntrlr">
+<div id="Ntwrks_Bx" class="usr_Menu_pnl mnuShdw cntntBxBck" data-ng-controller="usrNtwrksCntrlr">
 	<div class='pg2_chnls col-lg-12'>
 		<h3 class='pg3_title' translate="NETWORKS_AMAZING_NETWORKS">Amazing Network</h3>
 		<ul>
@@ -12,12 +10,14 @@
 	<div id='droidlogo' class='teasing'></div>
 	<div id='tempCntnt'>
 		<div id="splash" data-ng-class="($index==selectedIndex) ? '{{usrNtwrkClasses[1].className}}' : '{{usrNtwrkClasses[0].className}}'" data-ng-repeat="ntCntnt in usrNtwrks">
-			<span><img data-ng-src="{{ntCntnt.ntwrkID}}"></span>
-			<h4>{{ntCntnt.ntwrkNm}}</h4>
-			<p>{{ntCntnt.ntwrkDesc}}</p>
-			<p>{{ntCntnt.ntwrkDesc_1}}</p>
-			<p>{{ntCntnt.ntwrkDesc_2}}</p>
-			<p>{{ntCntnt.ntwrkDesc_3}}</p>
+			<span class="ntwrkLogoBig"><img data-ng-src="{{ntCntnt.ntwrkImg}}"></span>
+			<div class="ntwrkCntnt">
+				<h4>{{ntCntnt.ntwrkNm}}</h4>
+				<p>{{ntCntnt.ntwrkDesc}}</p>
+				<p>{{ntCntnt.ntwrkDesc_1}}</p>
+				<p>{{ntCntnt.ntwrkDesc_2}}</p>
+				<p>{{ntCntnt.ntwrkDesc_3}}</p>
+			</div>
 		</div>
 	</div>
 	

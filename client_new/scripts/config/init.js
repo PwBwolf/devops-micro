@@ -50,7 +50,7 @@
 			//alert($('#droidlogo').attr('class'));
 			//$('#tempCntnt').parallax("50%", 0.2);
 			//$('#Home_Bx').parallax("50%", 1.55);
-
+			$('.ntwrkLogoBig').parallax("50%", 1.12);
 
 		/// ====  MENU & SHOPPING CART FREEZE  ==== ///
 
