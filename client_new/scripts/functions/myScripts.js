@@ -335,45 +335,49 @@
 	.controller('myController', function($scope){
 		
 		/// === orig === ////
+		/*
 		$scope.usrDataFile = {
-			"bnr": "vws/usrBnr.html",
-			"shws": "vws/usrShws.html",
-			"ntwrks": "vws/usrNtwrks.html",
-			"dvcs": "vws/usrDvcs.html",
-			"abt": "vws/usrAbt.html",
-			"app": "vws/usrApp.html",
-			"ftr": "vws/usrFtrMnu.html"
-		};
+					"bnr": "vws/usrBnr.html",
+					"shws": "vws/usrShws.html",
+					"ntwrks": "vws/usrNtwrks.html",
+					"dvcs": "vws/usrDvcs.html",
+					"abt": "vws/usrAbt.html",
+					"app": "vws/usrApp.html",
+					"ftr": "vws/usrFtrMnu.html"
+				};*/
+		
 		
 
 	/// ====   PAGE AND BUTTON FUNCTIONS   ==== ///
 	
+		/*
 		var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Abt', 'Orders'];
-		
-		$('#docklogo').on('click', function(){
-			$('html, body').animate({
-				scrollTop: 0,
 				
-			}, 1500);
-		});
+				$('#docklogo').on('click', function(){
+					$('html, body').animate({
+						scrollTop: 0,
+						
+					}, 1500);
+				});
+				
+				for(var j = 0; j < 5; j++){
+					$('#'+mnuBtns[j]).on('click', function(){
+			
+						var dPg = $(this).attr('id');
+						var dSite = $('html, body');
+						    dSite.animate({
+								scrollTop: $('#'+dPg+'_Bx').offset().top - 30
+							}, 1500 );
+						   console.log(dPg);
+							//});
+							
+							//alert(dBtn);
+							return false;
 		
-		for(var j = 0; j < 5; j++){
-			$('#'+mnuBtns[j]).on('click', function(){
-	
-				var dPg = $(this).attr('id');
-				var dSite = $('html, body');
-				    dSite.animate({
-						scrollTop: $('#'+dPg+'_Bx').offset().top - 30
-					}, 1500 );
-				   console.log(dPg);
-					//});
-					
-					//alert(dBtn);
-					return false;
-
-			});
-		};
-	
+					});
+				};
+			*/
+		
 		
 
 	})
@@ -384,63 +388,65 @@
 		$scope.sp_Bnrs = [];
 		
 		//var hroBnrs = $("ul [id*='_bnr_']");
+		/*
 		var hroBnrsCntnr = document.getElementById('carousel-banner');
-		var hroBnrs = hroBnrsCntnr.querySelectorAll("li img");
-	    var mP = 'mbl_bnr_P', mL = 'mbl_bnr_L', tP = 'tblt_bnr_P', tL = 'tblt_bnr_L', dT = 'dsktp_bnr_L', othrBnrs, crntBnr;
-		var enMblPImg = '../imgs/mbl/en/mbl_P_';
-		var enMblLImg = '../imgs/mbl/en/mbl_L_';
-		var enTbltImg = '../imgs/tblt/en/tblt_';
-		var enDskTpImg = '../imgs/pc/en/dsktp_';
-		
-		
-		init();
-		function init(){
-			$scope.en_Bnrs = usrBnrsFctry.getEnBnrs();
-			$scope.sp_Bnrs = usrBnrsFctry.getSpBnrs();
-		}
-		
-		$scope.$watch(function(){
-		       return window.innerWidth;
-		    }, function(value) {
-		       console.log(value);
-			   
-			  
-		  if(value < 400){
-			   //$scope.en_Bnr = usrBnrsFctry.getEnTbltBnrs();
-			   for(var h = 0; h < hroBnrs.length; h++){
-				   hroBnrs[h].setAttribute('src', enMblPImg+[h+1]+'.jpg');
-				   hroBnrs[h].setAttribute('width', '400px');
-				   hroBnrs[h].setAttribute('height', '330px');
-			   }	
-			   console.log('this window is '+value+'px wide. Its portrait mobile. So I\'ll use '+hroBnrs.length);
-				   } else if(value > 400 && value <= 768){
-				   
-					   for(var h = 0; h < hroBnrs.length; h++){
-						   hroBnrs[h].setAttribute('src', enMblLImg+[h+1]+'.jpg');
-						   hroBnrs[h].setAttribute('width', '667px');
-						   hroBnrs[h].setAttribute('height', '350px');
-					   }
+				var hroBnrs = hroBnrsCntnr.querySelectorAll("li img");
+			    var mP = 'mbl_bnr_P', mL = 'mbl_bnr_L', tP = 'tblt_bnr_P', tL = 'tblt_bnr_L', dT = 'dsktp_bnr_L', othrBnrs, crntBnr;
+				var enMblPImg = '../imgs/mbl/en/mbl_P_';
+				var enMblLImg = '../imgs/mbl/en/mbl_L_';
+				var enTbltImg = '../imgs/tblt/en/tblt_';
+				var enDskTpImg = '../imgs/pc/en/dsktp_';
+				
+				
+				init();
+				function init(){
+					$scope.en_Bnrs = usrBnrsFctry.getEnBnrs();
+					$scope.sp_Bnrs = usrBnrsFctry.getSpBnrs();
+				}
+				
+				$scope.$watch(function(){
+				       return window.innerWidth;
+				    }, function(value) {
+				       console.log(value);
 					   
-			       console.log('this window is '+value+'px Its landscape mobile.'+hroBnrs.length);
-				   		} else if(value >= 769 && value <= 1024){
-				   
-						   for(var h = 0; h < hroBnrs.length; h++){
-							   hroBnrs[h].setAttribute('src', enTbltImg+[h+1]+'.jpg');
-							   hroBnrs[h].setAttribute('width', '1300px');
-							   hroBnrs[h].setAttribute('height', '433px');
-						   }
-					    console.log('this window is '+value+'px Its tablet view.'+hroBnrs.length);
-					   		} else if( value > 1024 ){
-			   
+					  
+				  if(value < 400){
+					   //$scope.en_Bnr = usrBnrsFctry.getEnTbltBnrs();
+					   for(var h = 0; h < hroBnrs.length; h++){
+						   hroBnrs[h].setAttribute('src', enMblPImg+[h+1]+'.jpg');
+						   hroBnrs[h].setAttribute('width', '400px');
+						   hroBnrs[h].setAttribute('height', '330px');
+					   }	
+					   console.log('this window is '+value+'px wide. Its portrait mobile. So I\'ll use '+hroBnrs.length);
+						   } else if(value > 400 && value <= 768){
+						   
 							   for(var h = 0; h < hroBnrs.length; h++){
-								   hroBnrs[h].setAttribute('src', enDskTpImg+[h+1]+'.jpg');
-								   hroBnrs[h].setAttribute('width', '2600px');
-								   hroBnrs[h].setAttribute('height', '866');
+								   hroBnrs[h].setAttribute('src', enMblLImg+[h+1]+'.jpg');
+								   hroBnrs[h].setAttribute('width', '667px');
+								   hroBnrs[h].setAttribute('height', '350px');
 							   }
-							console.log('this window is '+value+'px Its Desktop view.'+hroBnrs.length);
-		  }
-			  
-		});
+							   
+					       console.log('this window is '+value+'px Its landscape mobile.'+hroBnrs.length);
+						   		} else if(value >= 769 && value <= 1024){
+						   
+								   for(var h = 0; h < hroBnrs.length; h++){
+									   hroBnrs[h].setAttribute('src', enTbltImg+[h+1]+'.jpg');
+									   hroBnrs[h].setAttribute('width', '1300px');
+									   hroBnrs[h].setAttribute('height', '433px');
+								   }
+							    console.log('this window is '+value+'px Its tablet view.'+hroBnrs.length);
+							   		} else if( value > 1024 ){
+					   
+									   for(var h = 0; h < hroBnrs.length; h++){
+										   hroBnrs[h].setAttribute('src', enDskTpImg+[h+1]+'.jpg');
+										   hroBnrs[h].setAttribute('width', '2600px');
+										   hroBnrs[h].setAttribute('height', '866');
+									   }
+									console.log('this window is '+value+'px Its Desktop view.'+hroBnrs.length);
+				  }
+					  
+				});*/
+		
 		
 			$('#slider').nivoSlider({
 				pauseTime: 6000,

@@ -27,17 +27,50 @@
 		
 		/// ===================================== ///
 		/// ====== ALDEN'S FUNCTIONS BELOW ====== ///
+		$scope.$watch(function(){
+		       return window.innerWidth;
+		    }, function(value) {
+		       console.log(value);
+			   var x = value;
+			   
+			   switch(true){
+				   case (x < 768):
+					   $scope.usrDataFile = { "bnr": "vws/usrBnr_mbl.html", 
+					   						  "shws": "vws/usrShws.html",
+				   							  "ntwrks": "vws/usrNtwrks.html",
+											  "abt": "vws/usrAbt.html",
+											  "app": "vws/usrApp.html",
+											  "ftr": "vws/usrFtrMnu.html"
+				   						};
+					   console.log('its phn');
+					   break;
+				   case (x > 767 && x < 1025):
+					  $scope.usrDataFile = { "bnr": "vws/usrBnr_tblt.html", 
+					  						 "shws": "vws/usrShws.html",
+											 "ntwrks": "vws/usrNtwrks.html",
+											 "abt": "vws/usrAbt.html",
+											 "app": "vws/usrApp.html",
+											 "ftr": "vws/usrFtrMnu.html"
+										};					   
+					   console.log('its  tablet');
+					   break;
+				   case (x > 1025):
+					  $scope.usrDataFile = { "bnr": "vws/usrBnr.html", 
+					 						 "shws": "vws/usrShws.html",
+											 "ntwrks": "vws/usrNtwrks.html",
+											 "abt": "vws/usrAbt.html",
+											 "app": "vws/usrApp.html",
+											 "ftr": "vws/usrFtrMnu.html"
+										};			
+					   console.log('its tblt Landscape or pc');
+					   break;
+				   default:
+					   ('I dont know what it is');
+			   }
+			   
+			   
+		   });
 		
-		
-			$scope.usrDataFile = {
-				"bnr": "vws/usrBnr.html",
-				"shws": "vws/usrShws.html",
-				"ntwrks": "vws/usrNtwrks.html",
-				"dvcs": "vws/usrDvcs.html",
-				"abt": "vws/usrAbt.html",
-				"app": "vws/usrApp.html",
-				"ftr": "vws/usrFtrMnu.html"
-			};
 		
 			/// ====   PAGE AND BUTTON FUNCTIONS   ==== ///
 			var mnuBtns = ['pgCntnt', 'Shws', 'Ntwrks', 'Abt', 'Orders'];

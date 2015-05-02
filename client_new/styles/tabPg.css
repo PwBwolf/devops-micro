@@ -126,7 +126,7 @@
 		}
 
 			.usr_Input_clsd {
-				width:10%; height:100%; background:rgba(210,210,210,0.9); margin-left:1px;
+				width:15%; height:100%; background:rgba(210,210,210,0.9); margin-left:1px;
 				padding:2px; display:inline-block; float:right; padding-top:17px;
 				color: black; text-align:center; vertical-align:middle;
 	
@@ -154,7 +154,7 @@
 			#menu {  width:100%; font-weight:bold; }
 
 				#menuItems { margin:8px auto; text-align:center; padding-left:100px; }
-				#menuItems mnuItm { padding: 0px 10px; text-transform: uppercase; margin:0px auto; }
+				#menuItems mnuItm { padding: 0px 6px; text-transform: uppercase; margin:0px auto; }
 				#menuItems mnuItm:hover { cursor:pointer; color:rgba(154, 154, 154, .89); /*background:rgba(5, 5, 5, .5);*/ border-bottom:solid 1px red; }
 				#menuItems div { display:inline-block ; vertical-align: middle; margin-right:3%; cursor:pointer; }
 				#menuItems div > img { height:20px; width:auto; }
@@ -192,7 +192,7 @@
 
 
 	/* /////// ====== HOME PAGE ===== ////// */
-	#Bnr_Bx { width: 100%; height: 462px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
+	#Bnr_Bx { width: 100%; height: 315px; top:0px; margin-bottom:0px; padding:0px; transition: all 1s ease-in-out; -webkit-transition: all 1s ease-in-out; z-index: 100; }
 	.banner .banner-wrap { width: auto !important; }
 	
 
@@ -612,7 +612,7 @@
 	}
 
 		.usr_Input_clsd {
-			width:10%; height:100%; background:rgba(210,210,210,0.9); margin-left:1px;
+			width:13%; height:100%; background:rgba(210,210,210,0.9); margin-left:1px;
 			padding:2px; display:inline-block; float:right; padding-top:17px;
 			color: black; text-align:center; vertical-align:middle;
 	
