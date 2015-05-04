@@ -414,7 +414,7 @@ gulp.task('connect', function () {
     nodemon({cwd: '../server/webserver', script: 'app.js', ext: 'js'});
 
     connect.server({
-        root: '../../client',
+        root: '../../client_new',
         livereload: true,
         port: 9000,
         middleware: function (connect, opt) {
