@@ -422,7 +422,7 @@
             PRIVACY_POLICY_PARA13: 'We may collect and receive information about you from third parties, such as programmers, servicers, commerce and business partners, consumer reporting agencies, and consumer data companies, and combine it with information we collect from you. If you connect to a third party social media service through an icon or link on the Services, we will collect the fact that you clicked on the icon or link, the area within the Services you clicked on, and the content or other information you posted through that connection. We may also obtain your user ID and/or user name associated with that third party service, any information/content you have permitted the third party to share with us, and any information you have made public in connection with that third party service.',
             PRIVACY_POLICY_NUMBERED_HEADER2: '2. Our Use of Your Information',
             PRIVACY_POLICY_PARA14: 'We use the information that we collect to:',
-            PRIVACY_POLICY_PARA14_BULLET1: 'Create and maintain your registration or membership;',
+            PRIVACY_POLICY_PARA14_BULLET1: 'Create and maintain your registration or subscription;',
             PRIVACY_POLICY_PARA14_BULLET2: 'Understand user preferences to enhance the user experience with the Services;',
             PRIVACY_POLICY_PARA14_BULLET3: 'Perform statistical research and analytics;',
             PRIVACY_POLICY_PARA14_BULLET4: 'Customize and personalize the content and advertising that you see on the Services, including by providing recommendations regarding content or programming that we think will be enjoyable for you;',
