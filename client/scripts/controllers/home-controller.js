@@ -3,13 +3,17 @@
 
     app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', function (appSvc, $scope, $window, $location) {
         activate();
+		
+		$scope.notifyServiceOnChage = function(){
+		    console.log($scope.windowHeight);
+		};
 
         function activate() {
             if ($scope.session.signOut) {
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
-        }
+        };
 
         $scope.imageMapClick = function (url) {
             if (url.charAt(0) === '/') {

@@ -1,7 +1,39 @@
 (function (app) {
     'use strict';
 
-    app.factory('usrBnrsFctry', function () {
+    
+    app.directive('resize', function ($window) {
+	    return function ($scope, element, attr) {
+
+	        var w = angular.element($window);
+	        $scope.$watch(function () {
+	            return {
+	                'h': w.height(), 
+	                'w': w.width()
+	            };
+	        }, function (newValue, oldValue) {
+	            $scope.windowHeight = newValue.h;
+	            $scope.windowWidth = newValue.w;
+
+	            /*
+	            scope.resizeWithOffset = function (offsetH) {
+	            	                scope.$eval(attr.notifier);
+	            	                return { 
+	            	                    'height': (newValue.h - offsetH) + 'px'                    
+	            	                };
+	            	            };*/
+	            
+
+	        }, true);
+
+	        w.bind('resize', function () {
+	            $scope.$apply();
+	        });
+    	};
+	})
+	
+	
+	.factory('usrBnrsFctry', function () {
         var en_Bnrs = [
             {bnrID: '0001', bnrPath: 'img/pc/en/Hero_eng_beINSports.jpg', bnrPath_tblt: 'img/tblt/en/Hero_eng_beINSports.jpg', bnrPath_mbl: 'img/mbl/en/Hero_eng_beINSports.jpg'},
             {bnrID: '0002', bnrPath: 'img/pc/en/Hero_eng_download.jpg', bnrPath_tblt: 'img/tblt/en/Hero_eng_download.jpg', bnrPath_mbl: 'img/mbl/en/Hero_eng_download.jpg'},
