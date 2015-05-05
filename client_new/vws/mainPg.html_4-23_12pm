@@ -1,6 +1,0 @@
-<div id="bnr" data-ng-include="usrDataFile.bnr"></div>
-<div id="shws" data-ng-include="usrDataFile.shws"></div>
-<div id="ntwrks" data-ng-include="usrDataFile.ntwrks"></div>
-<div id="dvcs" data-ng-include="usrDataFile.dvcs"></div>
-<div id="abt" data-ng-include="usrDataFile.abt"></div>
-
