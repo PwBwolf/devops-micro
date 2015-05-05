@@ -22,6 +22,14 @@
         $scope.onWebSliderChange = function () {
             angular.element($window).triggerHandler('resize');
         };
+		
+		$scope.$on('$locationChangeStart', function (event, newLoc, oldLoc){
+		   console.log('changing to: ' + newLoc);
+		});
+
+		$scope.$on('$locationChangeSuccess', function (event, newLoc, oldLoc){
+		   console.log('changed from '+oldLoc+' to: ' + newLoc);
+		});
 
         $scope.$watch(function () {
             return window.innerWidth;
