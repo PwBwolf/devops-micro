@@ -257,23 +257,23 @@
 		$rootScope.$on("$locationChangeSuccess", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
 			var baseLoc = $location.host();
-			var fullLoc = 'https://'+baseLoc+'/'+$location.url();
+			var fullLoc = 'https://'+baseLoc+$location.url();
 			
 			if( newLoc != fullLoc){
-				/*
+				
 				for(var b = 0; b < dBtns.length; b++){
-									dBtns[b].css('display', 'none');
-								}*/
+					dBtns[b].css('display', 'none');
+				}
 				
 				console.log('we\'re not home. this is location: '+fullLoc);
 			} else {
-				/*
+				
 				for(var c = 0; c < dBtns.length; c++){
-									dBtns[c].css('display', 'inline-block');
-								}*/
+					dBtns[c].css('display', 'inline-block');
+				}
 				console.log('this is home '+fullLoc);
 				
-			}
+			} 
 			console.log('moving from: '+oldLoc+' -  to '+newLoc);
 		});
 		/*
