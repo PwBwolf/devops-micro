@@ -256,18 +256,23 @@
 
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
-			
-			console.log($location.host());
-			// for(var b = 0; b < dBtns.length; b++){
-// 				dBtns[b].css('display', 'none');
-// 			}
-			
-				
+			var home = $location.host();
+			if( newLoc != home){
+				for(var b = 0; b < dBtns.length; b++){
+					dBtns[b].css('display', 'none');
+				}
+			} else {
+				for(var b = 0; b < dBtns.length; b++){
+					dBtns[b].css('display', 'inline-block');
+				}
+			}
 			console.log('moving from: '+oldLoc+' '+dBtns.length);
 		});
+		/*
 		$rootScope.$on("$locationChangeSuccess", function(event, newLoc, oldLoc) {
-			console.log('moving to: '+newLoc);
-		});
+					console.log('moving to: '+newLoc);
+				});*/
+		
 		
 		
     }]);

@@ -299,16 +299,6 @@ header {
     -ms-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
 }
-/* delete after testing */
-#Bnr_Bx span { 
-	color:black; 
-	position:absolute;
-	top:10px;
-	left:0px;
-	z-index:13;
-}
-
-/* -------------------- */
 
 .theme-default .nivoSlider {
     height: 100%;
