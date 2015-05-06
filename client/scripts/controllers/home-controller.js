@@ -1,31 +1,15 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', function (appSvc, $scope, $window, $location) {
+    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', '$', function (appSvc, $scope, $window, $location, $) {
         activate();
-		
-		$scope.notifyServiceOnChage = function(){
-		    console.log($scope.windowHeight);
-		};
 
         function activate() {
             if ($scope.session.signOut) {
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
-        };
-
-        $scope.imageMapClick = function (url) {
-            if (url.charAt(0) === '/') {
-                $location.path(url);
-            } else {
-                $window.open(url);
-            }
-        };
-
-        $scope.onWebSliderChange = function () {
-            angular.element($window).triggerHandler('resize');
-        };
+        }
 
         $scope.$watch(function () {
             return window.innerWidth;
@@ -34,32 +18,32 @@
             switch (true) {
                 case (x < 768):
                     $scope.usrDataFile = {
-                        'bnr': 'views/user-banner-mobile.html',
-                        'shws': 'views/user-shows.html',
-                        'ntwrks': 'views/user-networks.html',
-                        'abt': 'views/user-about.html',
-                        'app': 'views/user-app.html',
-                        'ftr': 'views/user-footer-menu.html'
+                        'bnr': 'views/home-banner-mobile.html',
+                        'shws': 'views/home-shows.html',
+                        'ntwrks': 'views/home-networks.html',
+                        'abt': 'views/home-about.html',
+                        'app': 'views/home-app.html',
+                        'ftr': 'views/home-footer-menu.html'
                     };
                     break;
                 case (x > 767 && x < 1025):
                     $scope.usrDataFile = {
-                        'bnr': 'views/user-banner-tablet.html',
-                        'shws': 'views/user-shows.html',
-                        'ntwrks': 'views/user-networks.html',
-                        'abt': 'views/user-about.html',
-                        'app': 'views/user-app.html',
-                        'ftr': 'views/user-footer-menu.html'
+                        'bnr': 'views/home-banner-tablet.html',
+                        'shws': 'views/home-shows.html',
+                        'ntwrks': 'views/home-networks.html',
+                        'abt': 'views/home-about.html',
+                        'app': 'views/home-app.html',
+                        'ftr': 'views/home-footer-menu.html'
                     };
                     break;
                 case (x > 1025):
                     $scope.usrDataFile = {
-                        'bnr': 'views/user-banner.html',
-                        'shws': 'views/user-shows.html',
-                        'ntwrks': 'views/user-networks.html',
-                        'abt': 'views/user-about.html',
-                        'app': 'views/user-app.html',
-                        'ftr': 'views/user-footer-menu.html'
+                        'bnr': 'views/home-banner.html',
+                        'shws': 'views/home-shows.html',
+                        'ntwrks': 'views/home-networks.html',
+                        'abt': 'views/home-about.html',
+                        'app': 'views/home-app.html',
+                        'ftr': 'views/home-footer-menu.html'
                     };
                     break;
             }
@@ -77,15 +61,5 @@
                 return false;
             });
         }
-		
-		
-		$scope.$on('$locationChangeStart', function (event, newLoc, oldLoc){
-		   console.log('changing to: ' + newLoc);
-		});
-
-		$scope.$on('$locationChangeSuccess', function (event, newLoc, oldLoc){
-		   console.log('changed from '+oldLoc+' to: ' + newLoc);
-		});
-		
     }]);
 }(angular.module('app')));
