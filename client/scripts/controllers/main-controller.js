@@ -257,7 +257,7 @@
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
 			//var baseLoc = 'http://'+$location.host()+':3000/';
-			var baseLoc = $location.host();
+			var baseLoc = 'https://'+$location.host();
 			//var fullLoc = 'https://'+baseLoc;
 			
 			if(newLoc != baseLoc){
