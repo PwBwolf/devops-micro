@@ -257,7 +257,7 @@
 		$rootScope.$on("$locationChangeSuccess", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
 			var baseLoc = $location.host();
-			var fullLoc = 'https://'+baseLoc+'/';
+			var fullLoc = 'https://'+baseLoc+'/'+$location.url();
 			
 			if( newLoc != fullLoc){
 				/*
@@ -265,7 +265,7 @@
 									dBtns[b].css('display', 'none');
 								}*/
 				
-				console.log('we\'re not home. this is location: '+home);
+				console.log('we\'re not home. this is location: '+fullLoc);
 			} else {
 				/*
 				for(var c = 0; c < dBtns.length; c++){
