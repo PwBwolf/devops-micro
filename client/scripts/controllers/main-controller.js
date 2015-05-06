@@ -257,10 +257,12 @@
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
 			var home = $location.host();
+			
 			if( newLoc != home || $location.host() != home){
 				for(var b = 0; b < dBtns.length; b++){
 					dBtns[b].css('display', 'none');
 				}
+				console.log('this is location: '+home)
 			} else {
 				for(var c = 0; c < dBtns.length; c++){
 					dBtns[c].css('display', 'inline-block');
