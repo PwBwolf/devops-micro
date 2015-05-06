@@ -43,6 +43,10 @@
     display: all !important;
 }
 
+.open > .dropdown-menu{
+	min-width:100%;
+}
+
 .navbar-default {
     background-color: rgba(238, 238, 238, 0.88) !important;
     width: 100%;
@@ -129,7 +133,13 @@
 
     .navbar-nav {
     }
-
+	
+	.navBtn {
+		float:right;
+		padding: 2% 1%;
+		/*right:12%;*/
+	}
+	
     .theme-default .nivo-controlNav {
         display: none;
         top: -55px;
@@ -1011,6 +1021,7 @@
 
     #ftrCopy {
         text-align: center;
+		display:none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -1029,6 +1040,8 @@
     .pg7_title {
         color: white;
         position: relative;
+		font-size:1.0em;
+		padding-bottom:2%;
     }
 
     .pg7_title h4 {
@@ -1125,7 +1138,7 @@
 
     footer {
         width: 100%;
-        height: 30px;
+        height: 48px;
         position: fixed;
         bottom: 0px;
         background: rgba(253, 253, 253, .91);
@@ -1189,7 +1202,13 @@
 
     .navbar-nav {
     }
-
+	
+	.navBtn {
+		float:right;
+		padding: 2% 1% 0;
+		right:12%;
+	}
+	
     .theme-default .nivo-controlNav {
         display: none;
         top: -55px;
@@ -1919,7 +1938,7 @@
 
     #App_Bx {
         width: 100%;
-        height: 400px;
+        height: 420px;
         top: -25px;
         background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
@@ -1976,7 +1995,7 @@
 
     #Ftr_Bx {
         width: 100%;
-        height: 380px;
+        height: 180px;
         top: -25px;
         position: relative;
         font-size: 11px;
@@ -2015,6 +2034,7 @@
 
     #ftrCopy {
         text-align: center;
+		display:none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -2033,6 +2053,8 @@
     .pg7_title {
         color: white;
         position: relative;
+		font-size:1.3em;
+		padding-bottom:2%;
     }
 
     .pg7_title h4 {
@@ -2065,16 +2087,17 @@
     }
 
     #ftrLinks {
-        padding: 2% 5% 4%;
+        padding: 2% 7% 5%;
         text-align: center;
-        margin-top: 2%;
+        /*margin-top: 2%;*/
         text-transform: capitalize;
         font-size: 80%;
+		line-height:2em;
     }
 
     #ftrLinks ul {
         padding-top: 15px;
-        border-top: thin solid rgb(160, 160, 160);
+        /*border-top: thin solid rgb(160, 160, 160);*/
     }
 
     #ftrLinks li {
@@ -2129,7 +2152,7 @@
 
     footer {
         width: 100%;
-        height: 30px;
+        height: 37px;
         position: fixed;
         bottom: 0px;
         background: rgba(253, 253, 253, .91);

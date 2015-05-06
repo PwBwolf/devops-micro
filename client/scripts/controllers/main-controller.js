@@ -252,5 +252,23 @@
                 aioWindow.close();
             }
         });
+		
+
+		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
+			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
+			
+			console.log($location.host());
+			// for(var b = 0; b < dBtns.length; b++){
+// 				dBtns[b].css('display', 'none');
+// 			}
+			
+				
+			console.log('moving from: '+oldLoc+' '+dBtns.length);
+		});
+		$rootScope.$on("$locationChangeSuccess", function(event, newLoc, oldLoc) {
+			console.log('moving to: '+newLoc);
+		});
+		
+		
     }]);
 }(angular.module('app')));

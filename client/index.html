@@ -80,28 +80,31 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/"><img src="img/logo1.png"/></a>
 
-                <div class="btn-group">
+                <div class="navBtn btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" translate="NAVBAR_LANGUAGE"
                             data-toggle="dropdown" aria-expanded="false">
                         Language <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a>
+                        <li>
+							<a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a>
                         </li>
                     </ul>
                 </div>
-                <div class="btn-group">
+                <div class="navBtn btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" translate="NAVBAR_JOIN"
                             data-toggle="dropdown" aria-expanded="false">
                         Login/Join <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Login</a><a
-                            href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign
-                            Out</a></li>
-                        <li><a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join
-                            Now</a><a href="/account" access-level="accessLevels.user"
-                                      translate="INDEX_ACCOUNT">Account</a></li>
+                        <li>
+						   	<a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Login</a>
+							<a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a>
+						</li>
+                        <li>
+							<a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a>
+							<a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT">Account</a>
+						</li>
                     </ul>
                 </div>
             </div>
@@ -112,9 +115,7 @@
 <div id="pgCntnt_Bx" ng-view autoscroll="true" class="view-animate_"></div>
 
 <footer class="topShdw">
-    <div>Copyright ® 2015 YipTV. Use of the YipTV service and this Web site constitutes acceptance of our Terms of Use
-        and Privacy Policy.
-    </div>
+    <div translate="FOOTER_COPYRIGHT">COPYRIGHT ® 2012-2015 YIPTV. USE OF THE YIPTV SERVICE AND THIS WEB SITE CONSTITUTES ACCEPTANCE OF OUR TERMS OF USE AND PRIVACY POLICY. </div>
     <div id="sclMda" class="likOns">
         <a target="_blank" href="https://www.facebook.com/yiptvlatino"><img src="img/facebook.png" alt=""/></a>
         <a target="_blank" href="https://twitter.com/YipTV"><img src="img/twitter.png" alt=""/></a>
