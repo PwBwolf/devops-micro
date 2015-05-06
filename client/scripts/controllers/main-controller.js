@@ -257,13 +257,13 @@
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
 			var home = $location.host();
-			if( newLoc != home){
+			if( newLoc != home || $location.host() != home){
 				for(var b = 0; b < dBtns.length; b++){
 					dBtns[b].css('display', 'none');
 				}
 			} else {
-				for(var b = 0; b < dBtns.length; b++){
-					dBtns[b].css('display', 'inline-block');
+				for(var c = 0; c < dBtns.length; c++){
+					dBtns[c].css('display', 'inline-block');
 				}
 			}
 			console.log('moving from: '+oldLoc+' '+dBtns.length);
