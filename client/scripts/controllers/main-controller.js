@@ -256,33 +256,22 @@
 
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
 			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
-			//var baseLoc = 'http://'+$location.host()+':3000/';
 			var baseLoc = 'https://'+$location.host()+'/';
-			//var fullLoc = 'https://'+baseLoc;
 			
 			if(newLoc != baseLoc){
-				
 				for(var b = 0; b < dBtns.length; b++){
 					dBtns[b].css('display', 'none');
 				}
-				
 				console.log('not home. from: '+baseLoc+' to '+newLoc);
 			} else {
-				
 				for(var c = 0; c < dBtns.length; c++){
 					dBtns[c].css('display', 'inline-block');
 				}
 				console.log('this is home '+newLoc);
-				
 			} 
 			console.log('moving from: '+oldLoc+' -  to '+newLoc);
 		});
-		/*
-		$rootScope.$on("$locationChangeSuccess", function(event, newLoc, oldLoc) {
-					console.log('moving to: '+newLoc);
-				});*/
-		
-		
+
 		
     }]);
 }(angular.module('app')));
