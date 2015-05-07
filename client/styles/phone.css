@@ -435,7 +435,7 @@
     #sclMda {
         display: none;
         width: 20%;
-        display: inline-block;
+        /*display: inline-block;*/
         vertical-align: middle;
         text-align: center;
         padding: 0px;
@@ -2193,5 +2193,8 @@
         filter: none;
         -webkit-filter: grayscale(0);
         -moz-filter: grayscale(0);
+        -ms-filter: grayscale(0);
+        -o-filter: grayscale(0);
+        
     }
 }

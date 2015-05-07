@@ -339,7 +339,7 @@
     #sclMda {
         display: none !important;
         width: 20%;
-        display: inline-block;
+        /*display: inline-block;*/
         vertical-align: middle;
         text-align: center;
         padding: 0px;
@@ -975,7 +975,7 @@
     }
 
     #ftrLinks {
-        padding: 1% 15% 5%;
+        padding: 1% 1% 5%;
         text-align: center;
        /* margin-top: 2%;*/
         text-transform: capitalize;
@@ -2006,7 +2006,7 @@
     }
 
     #ftrLinks {
-        padding: 2% 20% 3%;
+        padding: 2% 5% 3%;
         text-align: center;
         /*margin-top: 2%;*/
         text-transform: capitalize;
