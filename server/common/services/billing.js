@@ -163,7 +163,7 @@ module.exports = {
         );
     },
 
-    setTrialOrComplimentaryEnded: function(customerNumber, address, city, state, country, zip, callback) {
+    setTrialEnded: function(customerNumber, address, city, state, country, zip, callback) {
         var client = xmlrpc.createClient(config.freeSideUrl);
         client.methodCall('FS.API.update_customer',
             [
@@ -177,16 +177,49 @@ module.exports = {
                 'country', country
             ], function (err, response) {
                 if (err) {
-                    logger.logError('billing - setTrialOrComplimentaryEnded - error in updating customer 1');
+                    logger.logError('billing - setTrialEnded - error in updating customer 1');
                     logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
-                        logger.logError('billing - setTrialOrComplimentaryEnded - error in updating customer 2');
+                        logger.logError('billing - setTrialEnded - error in updating customer 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
-                        logger.logInfo('billing - setTrialOrComplimentaryEnded - response');
+                        logger.logInfo('billing - setTrialEnded - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
+    setComplimentaryEnded: function(customerNumber, address, city, state, country, zip, expiryDate, callback) {
+        var client = xmlrpc.createClient(config.freeSideUrl);
+        client.methodCall('FS.API.update_customer',
+            [
+                'secret', config.freeSideApiKey,
+                'custnum', customerNumber,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country,
+                'paydate', expiryDate
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - setComplimentaryEnded - error in updating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - setComplimentaryEnded - error in updating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - setComplimentaryEnded - response');
                         logger.logInfo(response);
                         callback(null);
                     }
