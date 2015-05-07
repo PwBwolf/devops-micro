@@ -1403,7 +1403,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
-                        setUserActiveRemoveCanceledDate(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
                         callback(err);
                     } else {
@@ -1420,7 +1420,7 @@ module.exports = {
                 var zip = '00000';
                 billing.setAccountCanceled(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
-                        setUserActiveRemoveCanceledDate(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         setUserActiveInAio(userObj.email);
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         callback(err);
@@ -1438,12 +1438,12 @@ module.exports = {
             }
         });
 
-        function setUserActiveRemoveCanceledDate(user, cb) {
+        function setUserActiveRemoveCancelDate(user, cb) {
             user.cancelDate = undefined;
             user.status = 'active';
             user.save(function (err) {
                 if (err) {
-                    logger.logError('subscription - cancelSubscription.setUserActiveRemoveCanceledDate - error saving user back to active: ' + user.email);
+                    logger.logError('subscription - cancelSubscription.setUserActiveRemoveCancelDate - error saving user back to active: ' + user.email);
                     logger.logError(err);
                 }
                 if (cb) {
@@ -1491,7 +1491,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
-                        setUserActive(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         logger.logError('subscription - endFreeTrial - error updating aio customer status to inactive: ' + userObj.email);
                         callback(err);
                     } else {
@@ -1508,7 +1508,7 @@ module.exports = {
                 var zip = '00000';
                 billing.setTrialOrComplimentaryEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
-                        setUserActive(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         setUserActiveInAio(userObj.email);
                         logger.logError('subscription - endFreeTrial - error updating billing system with trial address: ' + userObj.email);
                         callback(err);
@@ -1545,11 +1545,12 @@ module.exports = {
             }
         });
 
-        function setUserActive(user, cb) {
+        function setUserActiveRemoveCancelDate(user, cb) {
             user.status = 'active';
+            user.cancelDate = undefined;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('subscription - endFreeTrial.setUserActive - error saving user back to active: ' + user.email);
+                    logger.logError('subscription - endFreeTrial.setUserActiveRemoveCancelDate - error saving user back to active: ' + user.email);
                     logger.logError(err);
                 }
                 if (cb) {
@@ -1597,7 +1598,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
-                        setUserActive(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         logger.logError('subscription - endComplimentarySubscription - error setting aio customer to inactive: ' + userObj.email);
                         callback(err);
                     } else {
@@ -1614,7 +1615,7 @@ module.exports = {
                 var zip = '00000';
                 billing.setTrialOrComplimentaryEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
-                        setUserActive(userObj);
+                        setUserActiveRemoveCancelDate(userObj);
                         setUserActiveInAio(userObj.email);
                         logger.logError('subscription - endComplimentarySubscription - error setting complimentary address in billing system: ' + userObj.email);
                         callback(err);
@@ -1651,11 +1652,12 @@ module.exports = {
             }
         });
 
-        function setUserActive(user, cb) {
+        function setUserActiveRemoveCancelDate(user, cb) {
             user.status = 'active';
+            user.cancelDate = undefined;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('subscription - endComplimentarySubscription.setUserActive - error saving user back to active: ' + user.email);
+                    logger.logError('subscription - endComplimentarySubscription.setUserActiveRemoveCancelDate - error saving user back to active: ' + user.email);
                     logger.logError(err);
                 }
                 if (cb) {
