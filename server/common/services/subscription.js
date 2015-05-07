@@ -1506,7 +1506,7 @@ module.exports = {
                 var state = 'FL';
                 var country = 'US';
                 var zip = '00000';
-                billing.setTrialOrComplimentaryEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                billing.setTrialEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
                     if (err) {
                         setUserActiveRemoveCancelDate(userObj);
                         setUserActiveInAio(userObj.email);
@@ -1613,7 +1613,8 @@ module.exports = {
                 var state = 'FL';
                 var country = 'US';
                 var zip = '00000';
-                billing.setTrialOrComplimentaryEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, function (err) {
+                var expiryDate = ((new Date()).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
+                billing.setComplimentaryEnded(userObj.account.freeSideCustomerNumber, address, city, state, country, zip, expiryDate, function (err) {
                     if (err) {
                         setUserActiveRemoveCancelDate(userObj);
                         setUserActiveInAio(userObj.email);
