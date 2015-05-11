@@ -1,8 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    logger = require('../../common/config/logger'),
-    config = require('../../common/config/config'),
+    logger = require('../../common/setup/logger'),
+    config = require('../../common/setup/config'),
     sf = require('sf'),
     email = require('../../common/services/email'),
     User = mongoose.model('User');

@@ -1,8 +1,8 @@
 'use strict';
 
-var config = require('../../../common/config/config'),
+var config = require('../../../common/setup/config'),
     email = require('../../../common/services/email'),
-    logger = require('../../../common/config/logger'),
+    logger = require('../../../common/setup/logger'),
     sf = require('sf');
 
 function sendReminderEmail(user) {

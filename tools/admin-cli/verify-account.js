@@ -2,8 +2,8 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var config = require('../../server/common/config/config'),
-    logger = require('../../server/common/config/logger'),
+var config = require('../../server/common/setup/config'),
+    logger = require('../../server/common/setup/logger'),
     mongoose = require('../../server/node_modules/mongoose');
 
 logger.cli();
@@ -25,7 +25,7 @@ if (typeof email === 'undefined') {
 var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../../server/common/config/models')(modelsPath);
+require('../../server/common/setup/models')(modelsPath);
 var Users = mongoose.model('User');
 
 Users.findOne({email: email.toLowerCase()}, function (err, user) {

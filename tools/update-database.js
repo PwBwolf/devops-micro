@@ -11,12 +11,12 @@ console.log = function (d) {
     logStdOut.write(d + '\n');
 };
 
-var config = require('../server/common/config/config'),
+var config = require('../server/common/setup/config'),
     mongoose = require('../server/node_modules/mongoose'),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../server/common/config/models')(modelsPath);
+require('../server/common/setup/models')(modelsPath);
 
 var Users = mongoose.model('User');
 

@@ -4,8 +4,8 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     moment = require('moment'),
     Q = require('q'),
-    config = require('../../../common/config/config'),
-    logger = require('../../../common/config/logger'),
+    config = require('../../../common/setup/config'),
+    logger = require('../../../common/setup/logger'),
     Account = mongoose.model('Account');
 
 module.exports.getFreeUsers = function () {

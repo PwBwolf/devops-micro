@@ -1,7 +1,7 @@
 'use strict';
 
-var config = require('../config/config'),
-    logger = require('../../common/config/logger'),
+var config = require('../setup/config'),
+    logger = require('../../common/setup/logger'),
     Client = require('node-rest-client').Client;
 
 module.exports = {

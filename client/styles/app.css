@@ -170,7 +170,7 @@ input[type="checkbox"]:checked + label:before {
 
 .phone {
     display: inline-block;
-    background: url(../img/img-phone.png) no-repeat;
+    background: url(../images/img-phone.png) no-repeat;
     padding: 0px 0px 5px 35px;
     margin: 0px;
     vertical-align: middle;
@@ -208,7 +208,7 @@ a.btn-sign:hover {
     float: right;
     padding: 10px 10px;
     margin: 25px 15px 8px;
-    background: url(../img/btn-bg.jpg) repeat-y center right;
+    background: url(../images/btn-bg.jpg) repeat-y center right;
     border: 2px solid #6f2079;
     border-radius: 0px;
 }
@@ -218,7 +218,7 @@ a.btn-sign:hover {
 }
 
 .navbar-toggle.collapsed, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background: url(../img/btn-bg.jpg) repeat-y center right;
+    background: url(../images/btn-bg.jpg) repeat-y center right;
 }
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
@@ -422,11 +422,11 @@ a.btn-sign:hover {
 }
 
 span.player-icon:hover {
-    background: url(../img/pgplay.png) center center no-repeat;
+    background: url(../images/play.png) center center no-repeat;
 }
 
 span.later-icon:hover {
-    background: url(../img/pglater.png) center center no-repeat;
+    background: url(../images/later.png) center center no-repeat;
 }
 
 span.pg-icon {
@@ -505,7 +505,7 @@ span.pg-icon {
     margin: -40px 0 0;
     opacity: 1;
     color: rgba(0, 0, 0, 0);
-    background: url(../img/slide-arrow.png) no-repeat 0px 0px;
+    background: url(../images/slide-arrow.png) no-repeat 0px 0px;
     text-shadow: 0 0 0 rgba(255, 255, 255, 0);
     -webkit-transition: all 0s ease;
     -moz-transition: all 0s ease;
@@ -514,13 +514,13 @@ span.pg-icon {
 
 #carousel-banner .carousel-control.left {
     left: 10px;
-    background: url(../img/slide-arrow.png) no-repeat 0px 0px;
+    background: url(../images/slide-arrow.png) no-repeat 0px 0px;
 }
 
 #carousel-banner .carousel-control.right {
     right: 10px;
     text-align: right;
-    background: url(../img/slide-arrow.png) no-repeat -30px 0;
+    background: url(../images/slide-arrow.png) no-repeat -30px 0;
 }
 
 #carousel-banner h1 {
@@ -857,27 +857,6 @@ footer .f-nav.social a {
     padding-bottom: 10px;
 }
 
-footer .f-btm {
-    float: left;
-    width: 100%;
-    background: url(../img/f-bg-btm.jpg) repeat-x top left #151723;
-    padding: 25px 2% 20px;
-    text-align: center;
-    font-family: 'gotham-lightgotham-light';
-    font-size: 12px;
-    color: #ffffff;
-    line-height: 20px;
-}
-
-footer .f-btm a {
-    color: #ffffff;
-}
-
-footer .f-btm a:hover {
-    color: #A03269;
-    text-decoration: none;
-}
-
 .copyright {
     display: block;
 }
@@ -902,7 +881,7 @@ footer .f-btm a:hover {
 
 .content-area h1 {
     font-family: 'radikallight';
-    background: url(../img/bdr-line.png) center 18px no-repeat;
+    background: url(../images/bdr-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
     font-weight: normal;
@@ -914,7 +893,7 @@ footer .f-btm a:hover {
 
 .content-area .setting-box h1 {
     font-family: 'radikallight';
-    background: url(../img/bdr-line.png) center 18px no-repeat;
+    background: url(../images/bdr-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
     font-weight: normal;
@@ -1184,7 +1163,6 @@ a.btn-import:hover {
     left: 0px;
     float: left;
     width: 100%;
-    background: url(../img/cont-btm-bg.png) repeat-x bottom center;
     height: 13px;
     z-index: 99;
 }
@@ -1193,7 +1171,6 @@ a.btn-import:hover {
     position: absolute;
     float: left;
     width: 100%;
-    background: url(../img/cont-top-bg.png) repeat-x bottom center;
     height: 13px;
     z-index: 99;
 }
@@ -1314,7 +1291,7 @@ a.btn-import:hover {
     line-height: 32px;
     padding: 0px 0px 0px 0px;
     margin: 0px 15px 5px 0px;
-    background: url(../img/checkbox.png) no-repeat;
+    background: url(../images/checkbox.png) no-repeat;
     border: 0px solid #FFFFFF;
     display: block;
     clear: left;
@@ -1481,7 +1458,7 @@ a.btn-import:hover {
 
 .sign-in a {
     display: block;
-    background: url(../img/btn-bg.jpg) repeat-y #6f2079;
+    background: url(../images/btn-bg.jpg) repeat-y #6f2079;
     font-family: 'gotham-bookgotham-book';
     font-size: 15px;
     color: #ffffff;

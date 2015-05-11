@@ -2,8 +2,8 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var config = require('../../server/common/config/config'),
-    logger = require('../../server/common/config/logger'),
+var config = require('../../server/common/setup/config'),
+    logger = require('../../server/common/setup/logger'),
     date = require('../../server/common/services/date'),
     mongoose = require('../../server/node_modules/mongoose'),
     moment = require('moment'),
@@ -22,7 +22,7 @@ if (!command || (command !== 'new' && command !== 'disable')) {
 var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../../server/common/config/models')(modelsPath);
+require('../../server/common/setup/models')(modelsPath);
 var ComplimentaryCode = mongoose.model('ComplimentaryCode');
 
 if (command === 'new') {

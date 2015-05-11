@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../../../common/config/config'),
+var config = require('../../../common/setup/config'),
     subscription = require('../../../common/services/subscription');
 
 function suspendAccount(user) {
