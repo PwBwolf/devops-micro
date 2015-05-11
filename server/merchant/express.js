@@ -3,7 +3,7 @@
 var morgan = require('morgan'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    logger = require('../common/config/logger');
+    logger = require('../common/setup/logger');
 
 module.exports = function (app, logger) {
     app.set('showStackError', true);

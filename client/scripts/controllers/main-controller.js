@@ -240,7 +240,6 @@
             $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
             $location.path('/');
-
         }
 
         $window.onunload = function () {
@@ -252,26 +251,5 @@
                 aioWindow.close();
             }
         });
-		
-
-		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
-			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
-			var baseLoc = 'https://'+$location.host()+'/';
-			
-			if(newLoc != baseLoc){
-				for(var b = 0; b < dBtns.length; b++){
-					dBtns[b].css('display', 'none');
-				}
-				console.log('not home. from: '+baseLoc+' to '+newLoc);
-			} else {
-				for(var c = 0; c < dBtns.length; c++){
-					dBtns[c].css('display', 'inline-block');
-				}
-				console.log('this is home '+newLoc);
-			} 
-			console.log('moving from: '+oldLoc+' -  to '+newLoc);
-		});
-
-		
     }]);
 }(angular.module('app')));

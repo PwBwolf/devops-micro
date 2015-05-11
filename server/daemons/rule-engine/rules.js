@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
     Rule = mongoose.model('Rule'),
-    logger = require('../../common/config/logger'),
+    logger = require('../../common/setup/logger'),
     Q = require('q');
 
 function buildRules() {

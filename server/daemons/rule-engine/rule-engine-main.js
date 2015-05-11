@@ -3,13 +3,13 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var CronJob = require('cron').CronJob,
-    config = require('../../common/config/config'),
-    logger = require('../../common/config/logger'),
+    config = require('../../common/setup/config'),
+    logger = require('../../common/setup/logger'),
     mongoose = require('mongoose'),
     db = mongoose.connect(config.db),
     modelsPath = config.root + '/server/common/models';
 
-require('../../common/config/models')(modelsPath);
+require('../../common/setup/models')(modelsPath);
 var ruleEngine = require('./rule-engine');
 require('./fact-providers/free-user-provider');
 require('./fact-providers/canceled-user-provider');

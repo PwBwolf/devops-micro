@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    config = require('../../common/config/config'),
+    config = require('../../common/setup/config'),
     autoIncrement = require('mongoose-auto-increment'),
     connection = mongoose.createConnection(config.db);
 

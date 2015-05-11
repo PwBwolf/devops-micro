@@ -3,8 +3,8 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var sf = require('sf'),
-    config = require('../../server/common/config/config'),
-    logger = require('../../server/common/config/logger'),
+    config = require('../../server/common/setup/config'),
+    logger = require('../../server/common/setup/logger'),
     emailService = require('../../server/common/services/email'),
     mongoose = require('../../server/node_modules/mongoose');
 
@@ -42,7 +42,7 @@ if (typeof password === 'undefined') {
 var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../../server/common/config/models')(modelsPath);
+require('../../server/common/setup/models')(modelsPath);
 var Users = mongoose.model('User');
 
 Users.findOne({email: email.toLowerCase()}, function (err, user) {

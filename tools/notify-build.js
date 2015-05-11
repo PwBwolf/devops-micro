@@ -2,7 +2,7 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var config = require('../server/common/config/config');
+var config = require('../server/common/setup/config');
 var email = require('../server/common/services/email');
 
 var moment = require('../server/node_modules/moment');
