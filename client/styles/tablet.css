@@ -237,6 +237,19 @@
         padding-right: 1%;
     }
 
+	.contactNumber {
+	    width: 35%;
+	    height: 100%;
+	    margin-left: 1px;
+	    padding: 2px;
+	    display: inline-block;
+	    float: right;
+	    padding-top: 15px;
+	    color: black;
+	    text-align: center;
+	    vertical-align: middle;
+	}
+
     .imgdocked {
         height: 65px !important;
         transition: all 1s ease-in-out;
@@ -1248,6 +1261,19 @@
         padding-left: 2%;
         padding-right: 2%;
     }
+
+	.contactNumber {
+	    width: 25%;
+	    height: 100%;
+	    margin-left: 1px;
+	    padding: 2px;
+	    display: inline-block;
+	    float: right;
+	    padding-top: 15px;
+	    color: black;
+	    text-align: center;
+	    vertical-align: middle;
+	}
 
     .imgdocked {
         height: 65px !important;

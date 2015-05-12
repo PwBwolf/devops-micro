@@ -307,6 +307,7 @@
             INDEX_YES_BUTTON: 'Sí',
             INDEX_NO_BUTTON: 'No',
             INDEX_LANGUAGE_DROPDOWN: 'Idioma',
+			INDEX_CONTACT_NUMBER: 'Call us toll free: <a href=\'tel:+18559194788\'>855-919-4788</a>',
             INDEX_USER_DROPDOWN: 'Ingresar',
             INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2015 YIPTV. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
             LEADERSHIP_HEADING: 'Liderazgo',
