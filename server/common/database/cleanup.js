@@ -4,11 +4,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var mongoose = require('mongoose'),
     Q = require('q'),
-    config = require('../config/config'),
+    config = require('../setup/config'),
     modelsPath = '../models',
     db = mongoose.connect(config.db);
 
-require('../config/models')(modelsPath);
+require('../setup/models')(modelsPath);
 
 function cleanupCollection(name) {
     var def = Q.defer();

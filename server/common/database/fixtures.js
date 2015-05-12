@@ -6,11 +6,11 @@ var mongoose = require('mongoose'),
     crawler = require('walk'),
     fs = require('fs-extended'),
     Q = require('q'),
-    config = require('../config/config'),
+    config = require('../setup/config'),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../config/models')(modelsPath);
+require('../setup/models')(modelsPath);
 
 var models = {
     'Countries': mongoose.model('Country'),

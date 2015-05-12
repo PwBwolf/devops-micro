@@ -240,7 +240,6 @@
             $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
             $location.path('/');
-
         }
 
         $window.onunload = function () {
@@ -252,6 +251,7 @@
                 aioWindow.close();
             }
         });
+<<<<<<< HEAD
 		
 
 		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
@@ -274,5 +274,7 @@
 		});
 
 		
+=======
+>>>>>>> origin/master
     }]);
 }(angular.module('app')));

@@ -2,7 +2,7 @@
 
 var express = require('express'),
     morgan = require('morgan'),
-    config = require('../common/config/config'),
+    config = require('../common/setup/config'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     cookieParser = require('cookie-parser'),
@@ -16,7 +16,7 @@ module.exports = function (app, logger) {
     app.use(bodyParser.json({ type: 'application/*+json' }));
     app.use(methodOverride());
     app.use(cookieParser());
-    app.use(favicon(config.root + '/client/img/favicon.ico'));
+    app.use(favicon(config.root + '/client/images/favicon.ico'));
     app.use(express.static(config.root + '/client'));
     app.use(morgan('combined', { 'stream': logger.stream }));
 };

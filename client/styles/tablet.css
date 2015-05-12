@@ -104,12 +104,6 @@
     .navbar-nav {
     }
 
-    .theme-default .nivo-controlNav {
-        display: none;
-        top: -55px;
-        z-index: 5;
-    }
-
     [contentEditable=true]:focus {
         background: rgba(90, 90, 90, 0.7);
         border: #999 2px solid;
@@ -303,7 +297,7 @@
     #menu {
         width: 100%;
         font-weight: bold;
-		font-size:85%;
+        font-size: 85%;
     }
 
     #menuItems {
@@ -312,13 +306,13 @@
         padding-left: 100px;
     }
 
-    #menuItems mnuItm {
+    #menuItems menuItem {
         padding: 0px 6px;
         text-transform: uppercase;
         margin: 0px auto;
     }
 
-    #menuItems mnuItm:hover {
+    #menuItems menuItem:hover {
         cursor: pointer;
         color: rgba(154, 154, 154, .89);
         border-bottom: solid 1px red;
@@ -442,7 +436,7 @@
         background-color: white;
     }
 
-    #shwsCtgry {
+    .shwsCtgry {
         position: relative;
         margin-bottom: 40px;
         overflow-x: scroll;
@@ -509,7 +503,7 @@
 
     }
 
-    #shwPanel {
+    .shwPanel {
         overflow: hidden;
         position: absolute;
         backface-visibility: hidden;
@@ -525,7 +519,7 @@
         height: 800px;
         position: relative;
         top: 25px;
-        background-image: url(../img/ntwrks/logo-container.png), url(../img/ntwrks/logo-background.jpg);
+        background-image: url(../images/networks/logo-container.png), url(../images/networks/logo-background.jpg);
         background-repeat: no-repeat;
         background-position: -5% 25%, 50% 50%;
         background-attachment: scroll, fixed;
@@ -569,7 +563,7 @@
         position: relative;
         top: 20%;
         left: -25%;
-        background: transparent url(../img/pc/droidLogo1.png) no-repeat;
+        background: transparent url(../images/droid-logo.png) no-repeat;
         background-size: contain;
         float: right;
     }
@@ -612,7 +606,7 @@
 
     .pg2_chnls {
         border-bottom: 1px groove aliceblue;
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 7%;
         padding: 0 0 !important;
     }
@@ -778,7 +772,7 @@
     }
 
     .pg5_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 15%;
         z-index: 6;
     }
@@ -835,7 +829,7 @@
     #App_Bx {
         width: 100%;
         height: 400px;
-        background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
+        background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -923,7 +917,7 @@
 
     #ftrCopy {
         text-align: center;
-		display:none;
+        display: none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -942,7 +936,7 @@
     .pg7_title {
         color: white;
         position: relative;
-		padding-bottom:1%;
+        padding-bottom: 1%;
     }
 
     .pg7_title h4 {
@@ -977,7 +971,7 @@
     #ftrLinks {
         padding: 1% 1% 5%;
         text-align: center;
-       /* margin-top: 2%;*/
+        /* margin-top: 2%;*/
         text-transform: capitalize;
         font-size: 80%;
     }
@@ -990,51 +984,6 @@
     #ftrLinks li {
         display: inline;
         margin: 0 2%;
-    }
-
-    #Events_Bx {
-        width: 100%;
-        height: 580px;
-        background: #eee url(../img/pg4.jpg) 50% 0% no-repeat;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
-    }
-
-    #Orders_Bx {
-        width: 100%;
-        height: 700px;
-        background: #eee url(../img/pg5.jpg) 50% 0% no-repeat fixed;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
-    }
-
-    #Final_Bx {
-        width: 100%;
-        height: 860px;
-        background: #eee url(../img/pg7.jpg) 50% 4% no-repeat;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
     }
 
     footer {
@@ -1051,7 +1000,6 @@
         padding: 10px;
         z-index: 9990;
     }
-
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
@@ -1093,15 +1041,6 @@
 
     .navbar-brand img {
         height: inherit;
-    }
-
-    .navbar-nav {
-    }
-
-    .theme-default .nivo-controlNav {
-        display: none;
-        top: -55px;
-        z-index: 5;
     }
 
     [contentEditable=true]:focus {
@@ -1368,13 +1307,13 @@
         padding-left: 100px;
     }
 
-    #menuItems mnuItm {
+    #menuItems menuItem {
         padding: 0px 20px;
         text-transform: uppercase;
         margin: 0px auto;
     }
 
-    #menuItems mnuItm:hover {
+    #menuItems menuItem:hover {
         cursor: pointer;
         color: rgba(154, 154, 154, .89);
         border-bottom: solid 1px red;
@@ -1468,7 +1407,7 @@
         background-color: white;
     }
 
-    #shwsCtgry {
+    .shwsCtgry {
         position: relative;
         margin-bottom: 40px;
         overflow-x: scroll;
@@ -1534,7 +1473,7 @@
         transition: width 1s ease-in-out;
     }
 
-    #shwPanel {
+    .shwPanel {
         overflow: hidden;
         position: absolute;
         backface-visibility: hidden;
@@ -1548,7 +1487,7 @@
     #Ntwrks_Bx {
         width: 100%;
         height: 500px;
-        background-image: url(../img/ntwrks/logo-container.png), url(../img/ntwrks/logo-background.jpg);
+        background-image: url(../images/networks/logo-container.png), url(../images/networks/logo-background.jpg);
         background-repeat: no-repeat;
         background-position: -5% 5%, 50% 50%;
         background-attachment: scroll, fixed;
@@ -1592,7 +1531,7 @@
         position: relative;
         top: 20%;
         left: -25%;
-        background: transparent url(../img/pc/droidLogo1.png) no-repeat;
+        background: transparent url(../images/droid-logo.png) no-repeat;
         background-size: contain;
         float: right;
     }
@@ -1641,7 +1580,7 @@
 
     .pg2_chnls {
         border-bottom: 1px groove aliceblue;
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 10%;
     }
 
@@ -1806,7 +1745,7 @@
     }
 
     .pg5_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 15%;
         z-index: 6;
     }
@@ -1863,7 +1802,7 @@
     #App_Bx {
         width: 100%;
         height: 400px;
-        background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
+        background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -1955,7 +1894,7 @@
 
     #ftrCopy {
         text-align: center;
-		display:none;
+        display: none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -1975,7 +1914,7 @@
         position: relative;
         display: inline-block;
         margin-left: 3%;
-		margin-right: 5%;
+        margin-right: 5%;
     }
 
     .pg7_chnls button {
@@ -2008,13 +1947,11 @@
     #ftrLinks {
         padding: 2% 5% 3%;
         text-align: center;
-        /*margin-top: 2%;*/
         text-transform: capitalize;
     }
 
     #ftrLinks ul {
         padding-top: 1%;
-        /*border-top: thin solid rgb(160, 160, 160);*/
     }
 
     #ftrLinks li {
@@ -2025,7 +1962,7 @@
     #Events_Bx {
         width: 100%;
         height: auto;
-        background: #eee url(../img/pg4.jpg) 50% 0% no-repeat;
+        background: #eee url(../images/pg4.jpg) 50% 0% no-repeat;
         background-size: 100%;
         position: relative;
         right: 0px;
@@ -2040,7 +1977,7 @@
     #Orders_Bx {
         width: 100%;
         height: 700px;
-        background: #eee url(../img/pg5.jpg) 50% 0% no-repeat fixed;
+        background: #eee url(../images/pg5.jpg) 50% 0% no-repeat fixed;
         background-size: 100%;
         position: relative;
         right: 0px;
@@ -2055,7 +1992,7 @@
     #Final_Bx {
         width: 100%;
         height: 860px;
-        background: #eee url(../img/pg7.jpg) 50% 4% no-repeat;
+        background: #eee url(../images/pg7.jpg) 50% 4% no-repeat;
         background-size: 100%;
         position: relative;
         right: 0px;

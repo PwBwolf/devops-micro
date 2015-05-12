@@ -1,8 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    logger = require('../../common/config/logger'),
-    config = require('../../common/config/config'),
+    logger = require('../../common/setup/logger'),
+    config = require('../../common/setup/config'),
     dbYip = mongoose.createConnection(config.db),
     dbMerchant = mongoose.createConnection(config.merchantDb),
     User = dbYip.model('User'),

@@ -1,8 +1,8 @@
 'use strict';
 
 var _ = require('lodash'),
-    config = require('../../common/config/config'),
-    logger = require('../../common/config/logger'),
+    config = require('../../common/setup/config'),
+    logger = require('../../common/setup/logger'),
     mongoose = require('mongoose'),
     Rule = mongoose.model('Rule'),
     RuleEngine = require('node-rules'),

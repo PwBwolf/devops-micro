@@ -43,8 +43,8 @@
     display: all !important;
 }
 
-.open > .dropdown-menu{
-	min-width:100%;
+.open > .dropdown-menu {
+    min-width: 100%;
 }
 
 .navbar-default {
@@ -133,17 +133,10 @@
 
     .navbar-nav {
     }
-	
-	.navBtn {
-		float:right;
-		padding: 2% 1%;
-		/*right:12%;*/
-	}
-	
-    .theme-default .nivo-controlNav {
-        display: none;
-        top: -55px;
-        z-index: 5;
+
+    .navBtn {
+        float: right;
+        padding: 2% 1%;
     }
 
     [contentEditable=true]:focus {
@@ -408,13 +401,13 @@
         padding-left: 100px;
     }
 
-    #menuItems mnuItm {
+    #menuItems menuItem {
         padding: 4px 10px;
         text-transform: uppercase;
         margin: 9px auto;
     }
 
-    #menuItems mnuItm:hover {
+    #menuItems menuItem:hover {
         cursor: pointer;
         color: rgba(254, 254, 254, .89);
         background: rgba(5, 5, 5, .5);
@@ -544,7 +537,7 @@
         background-color: white;
     }
 
-    #shwsCtgry {
+    .shwsCtgry {
         position: relative;
         margin-bottom: 25px;
         overflow-x: scroll;
@@ -610,7 +603,7 @@
         transition: width 1s ease-in-out;
     }
 
-    #shwPanel {
+    .shwPanel {
         overflow: hidden;
         position: absolute;
         backface-visibility: hidden;
@@ -633,7 +626,7 @@
     #Ntwrks_Bx {
         width: 100%;
         height: 400px;
-        background: #eee url(../img/ntwrks/logo-background-mbl.jpg) top center no-repeat fixed;
+        background: #eee url(../images/networks/logo-background-mobile-portrait.jpg) top center no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -662,7 +655,7 @@
         position: relative;
         top: 15%;
         left: -26%;
-        background: transparent url(../img/pc/droidLogo1.png) no-repeat;
+        background: transparent url(../images/droid-logo.png) no-repeat;
         background-size: contain;
         float: right;
     }
@@ -725,7 +718,7 @@
 
     .pg2_chnls {
         border-bottom: 1px groove aliceblue;
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 12%;
         padding: 0 !important;
     }
@@ -811,7 +804,7 @@
     }
 
     .pg4_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 8%;
         z-index: 6;
     }
@@ -891,7 +884,7 @@
     }
 
     .pg5_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 15%;
         z-index: 6;
     }
@@ -938,7 +931,7 @@
         width: 100%;
         height: 400px;
         top: -25px;
-        background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
+        background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -1021,7 +1014,7 @@
 
     #ftrCopy {
         text-align: center;
-		display:none;
+        display: none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -1040,8 +1033,8 @@
     .pg7_title {
         color: white;
         position: relative;
-		font-size:1.0em;
-		padding-bottom:2%;
+        font-size: 1.0em;
+        padding-bottom: 2%;
     }
 
     .pg7_title h4 {
@@ -1094,7 +1087,7 @@
     #Events_Bx {
         width: 100%;
         height: 580px;
-        background: #eee url(../img/pg4.jpg) 50% 0% no-repeat;
+        background: #eee url(../images/pg4.jpg) 50% 0% no-repeat;
         background-size: 100%;
         position: relative;
         right: 0px;
@@ -1109,7 +1102,7 @@
     #Orders_Bx {
         width: 100%;
         height: 700px;
-        background: #eee url(../img/pg5.jpg) 50% 0% no-repeat fixed;
+        background: #eee url(../images/pg5.jpg) 50% 0% no-repeat fixed;
         background-size: 100%;
         position: relative;
         right: 0px;
@@ -1124,7 +1117,7 @@
     #Final_Bx {
         width: 100%;
         height: 860px;
-        background: #eee url(../img/pg7.jpg) 50% 4% no-repeat;
+        background: #eee url(../images/pg7.jpg) 50% 4% no-repeat;
         background-size: 100%;
         position: relative;
         right: 0px;
@@ -1202,17 +1195,11 @@
 
     .navbar-nav {
     }
-	
-	.navBtn {
-		float:right;
-		padding: 2% 1% 0;
-		right:12%;
-	}
-	
-    .theme-default .nivo-controlNav {
-        display: none;
-        top: -55px;
-        z-index: 5;
+
+    .navBtn {
+        float: right;
+        padding: 2% 1% 0;
+        right: 12%;
     }
 
     [contentEditable=true]:focus {
@@ -1555,7 +1542,7 @@
         background-color: white;
     }
 
-    #shwsCtgry {
+    .shwsCtgry {
         position: relative;
         margin-bottom: 15px;
         overflow-x: scroll;
@@ -1620,7 +1607,7 @@
         transition: width 1s ease-in-out;
     }
 
-    #shwPanel {
+    .shwPanel {
         overflow: hidden;
         position: absolute;
         backface-visibility: hidden;
@@ -1643,7 +1630,7 @@
     #Ntwrks_Bx {
         width: 100%;
         height: 400px;
-        background: #eee url(../img/ntwrks/logo-background-mbl_l.jpg) 50% 9% no-repeat fixed;
+        background: #eee url(../images/networks/logo-background-mobile-landscape.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -1672,7 +1659,7 @@
         position: relative;
         top: 15%;
         left: -26%;
-        background: transparent url(../img/pc/droidLogo1.png) no-repeat;
+        background: transparent url(../images/droid-logo.png) no-repeat;
         background-size: contain;
         float: right;
     }
@@ -1724,7 +1711,7 @@
 
     .pg2_chnls {
         border-bottom: 1px groove aliceblue;
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 16%;
         padding: 1px 0 !important;
     }
@@ -1810,7 +1797,7 @@
     }
 
     .pg4_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 16%;
         z-index: 6;
     }
@@ -1893,7 +1880,7 @@
     }
 
     .pg5_chnls {
-        background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+        background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
         height: 15%;
         z-index: 6;
     }
@@ -1940,7 +1927,7 @@
         width: 100%;
         height: 420px;
         top: -25px;
-        background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
+        background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
         background-size: cover;
         position: relative;
         margin-bottom: 0px;
@@ -2034,7 +2021,7 @@
 
     #ftrCopy {
         text-align: center;
-		display:none;
+        display: none;
     }
 
     #ftrCopy li, #ftrLinks li {
@@ -2053,8 +2040,8 @@
     .pg7_title {
         color: white;
         position: relative;
-		font-size:1.3em;
-		padding-bottom:2%;
+        font-size: 1.3em;
+        padding-bottom: 2%;
     }
 
     .pg7_title h4 {
@@ -2089,65 +2076,18 @@
     #ftrLinks {
         padding: 2% 7% 5%;
         text-align: center;
-        /*margin-top: 2%;*/
         text-transform: capitalize;
         font-size: 80%;
-		line-height:2em;
+        line-height: 2em;
     }
 
     #ftrLinks ul {
         padding-top: 15px;
-        /*border-top: thin solid rgb(160, 160, 160);*/
     }
 
     #ftrLinks li {
         display: inline;
         margin: 0 1%;
-    }
-
-    #Events_Bx {
-        width: 100%;
-        height: auto;
-        background: #eee url(../img/pg4.jpg) 50% 0% no-repeat;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
-    }
-
-    #Orders_Bx {
-        width: 100%;
-        height: 700px;
-        background: #eee url(../img/pg5.jpg) 50% 0% no-repeat fixed;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
-    }
-
-    #Final_Bx {
-        width: 100%;
-        height: 860px;
-        background: #eee url(../img/pg7.jpg) 50% 4% no-repeat;
-        background-size: 100%;
-        position: relative;
-        right: 0px;
-        top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
-        transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        z-index: 100;
     }
 
     footer {
@@ -2195,6 +2135,6 @@
         -moz-filter: grayscale(0);
         -ms-filter: grayscale(0);
         -o-filter: grayscale(0);
-        
+
     }
 }

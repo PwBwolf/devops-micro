@@ -2,8 +2,8 @@
 
 var _ = require('lodash'),
     mongoose = require('mongoose'),
-    logger = require('../../common/config/logger'),
-    config = require('../../common/config/config'),
+    logger = require('../../common/setup/logger'),
+    config = require('../../common/setup/config'),
     ContactUs = mongoose.model('ContactUs'),
     Referrer = mongoose.model('Referrer'),
     Visitor = mongoose.model('Visitor'),

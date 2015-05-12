@@ -8,7 +8,7 @@
             aspectratio: '16:9',
             primary: 'html5',
             logo: {
-                file: '/img/tv_logo.png'
+                file: '/images/tv-logo.png'
             }
         };
 
@@ -106,7 +106,7 @@
         };
 
         $scope.getImage = function(uri) {
-            if(uri.indexOf('/img/channels/') === 0) {
+            if(uri.indexOf('/images/channels/') === 0) {
                 return uri;
             } else {
                 return $scope.appConfig.graceNoteImageUrl + uri;

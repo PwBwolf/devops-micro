@@ -6,14 +6,14 @@ var monq = require('monq'),
     moment = require('moment'),
     math = require('mathjs'),
     mongoose = require('mongoose'),
-    logger = require('../../common/config/logger'),
-    config = require('../../common/config/config'),
+    logger = require('../../common/setup/logger'),
+    config = require('../../common/setup/config'),
     queueDb = monq(config.merchantDb),
     modelsPath = config.root + '/server/common/models',
     dbYip = mongoose.createConnection(config.db),
     dbMerchant = mongoose.createConnection(config.merchantDb);
 
-require('../../common/config/models')(modelsPath);
+require('../../common/setup/models')(modelsPath);
 
 var User = dbYip.model('User'),
     NewUser = dbMerchant.model('NewUser'),

@@ -261,13 +261,13 @@ header {
     text-align: center;
 }
 
-#menuItems mnuItm {
+#menuItems menuItem {
     padding: 0px 20px;
     text-transform: uppercase;
     margin: 0 auto;
 }
 
-#menuItems mnuItm:hover {
+#menuItems menuItem:hover {
     cursor: pointer;
     color: rgba(154, 154, 154, .89);
     border-bottom: solid 1px red;
@@ -298,15 +298,6 @@ header {
     -moz-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
-}
-
-.theme-default .nivoSlider {
-    height: 100%;
-}
-
-.theme-default .nivo-controlNav {
-    top: -30px !important;
-    display: none;
 }
 
 .jumbotron {
@@ -455,7 +446,7 @@ header {
     padding: 6px 0px !important;
 }
 
-#shwsCtgry {
+.shwsCtgry {
     position: relative;
     margin: 20px 0px;
     overflow-x: scroll;
@@ -515,7 +506,7 @@ header {
     transition: width 1s ease-in-out;
 }
 
-#shwPanel {
+.shwPanel {
     overflow: hidden;
     position: absolute;
     backface-visibility: hidden;
@@ -530,7 +521,7 @@ header {
     width: 100%;
     height: 600px;
     clear: both;
-    background-image: url(../img/ntwrks/logo-container.png), url(../img/ntwrks/logo-background.jpg);
+    background-image: url(../images/networks/logo-container.png), url(../images/networks/logo-background.jpg);
     background-repeat: no-repeat;
     background-position: -5% 5%, 50% 50%;
     background-attachment: scroll, fixed;
@@ -562,7 +553,7 @@ header {
     position: absolute;
     top: 160px;
     right: 335px;
-    background: transparent url(../img/pc/droidLogo1.png) no-repeat;
+    background: transparent url(../images/droid-logo.png) no-repeat;
     background-size: contain;
 }
 
@@ -608,7 +599,7 @@ header {
 }
 
 .pg2_chnls {
-    background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+    background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
     height: 12%;
     z-index: 6;
 }
@@ -771,7 +762,7 @@ header {
 }
 
 .pg5_chnls {
-    background: #9578A6 url(../img/bannerSwatch.png) left top repeat-x;
+    background: #9578A6 url(../images/banner-swatch.png) left top repeat-x;
     height: 15%;
     z-index: 6;
 }
@@ -829,7 +820,7 @@ header {
 #App_Bx {
     width: 100%;
     height: 400px;
-    background: #eee url(../img/appBckgrnd1.jpg) 50% 9% no-repeat fixed;
+    background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
     background-size: cover;
     position: relative;
     margin-bottom: 0px;
@@ -908,7 +899,7 @@ header {
 
 #ftrCopy {
     text-align: center;
-	display:none;
+    display:none;
 }
 
 #ftrCopy li, #ftrLinks li {
@@ -928,7 +919,7 @@ header {
     position: relative;
     display: inline-block;
     margin-left: 3%;
-	margin-right: 5%;
+    margin-right: 5%;
 }
 
 .pg7_chnls button {
@@ -957,14 +948,12 @@ header {
 #ftrLinks {
     padding: 1% 5%;
     text-align: center;
-    /*margin-top: 2%;*/
     text-transform: capitalize;
 }
 
 #ftrLinks ul {
     padding-top: 30px;
-	margin-top:10px;
-    /*border-top: thin solid rgb(160, 160, 160);*/
+    margin-top:10px;
 }
 
 #ftrLinks li {

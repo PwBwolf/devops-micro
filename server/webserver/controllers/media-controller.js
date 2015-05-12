@@ -3,7 +3,7 @@
 var fs = require('fs'),
     crypto = require('crypto'),
     URI = require('URIjs'),
-    logger = require('../../common/config/logger'),
+    logger = require('../../common/setup/logger'),
     date = require('../../common/services/date'),
     graceNote = require('../../common/services/grace-note'),
     _ = require('lodash');
@@ -66,7 +66,7 @@ module.exports = {
                 return res.json(data);
             });
         } else {
-            var guide = [{airings: [{startTime: '', endTime: '', program: {title: req.query.name, preferredImage: {uri: '/img/channels/nothumb.png'}}}]}];
+            var guide = [{airings: [{startTime: '', endTime: '', program: {title: req.query.name, preferredImage: {uri: '/images/channels/nothumb.png'}}}]}];
             return res.json(guide);
         }
     },

@@ -117,13 +117,13 @@ gulp.task('webapp-nominify', ['partials', 'roles'], function () {
  * Read each image, optimize it and save it in the destination folder.
  */
 gulp.task('images', function () {
-    return gulp.src('../client/img/**/*') // Get images from specified dir and all subdirs.
+    return gulp.src('../client/images/**/*') // Get images from specified dir and all subdirs.
         .pipe($.imagemin({
             optimizationLevel: 3,
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest('dist/client/img/'))
+        .pipe(gulp.dest('dist/client/images/'))
         .pipe($.size());
 });
 
@@ -168,8 +168,8 @@ gulp.task('tools', function () {
  */
 gulp.task('server', function (cb) {
     gulp.src('../server/package.json', {dot: true}).pipe(gulp.dest('dist/server'));
-    gulp.src(['../server/common/**/*', '!../server/common/env/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
-    gulp.src(['../server/common/env/all.js', '../server/common/env/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/env'));
+    gulp.src(['../server/common/**/*', '!../server/common/config/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
+    gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
     gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
     gulp.src('../server/merchant/**/*', {dot: true}).pipe(gulp.dest('dist/server/merchant'));
     cb();
@@ -458,7 +458,7 @@ gulp.task('watch', function () {
     gulp.watch(['../../client/**/*.html'], ['reload-html']);
     gulp.watch(['../../client/scripts/**/*.js'], ['reload-js']);
     gulp.watch(['../../client/styles/**/*.css'], ['reload-css']);
-    gulp.watch(['../../client/img/**/*'], ['reload-images']);
+    gulp.watch(['../../client/images/**/*'], ['reload-images']);
 });
 
 
