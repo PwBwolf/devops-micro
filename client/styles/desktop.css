@@ -863,7 +863,7 @@ header {
 
 #Ftr_Bx {
     width: 100%;
-    height: 220px;
+    height: 200px;
     position: relative;
     margin-bottom: 30px;
     padding: 0px;
@@ -902,10 +902,20 @@ header {
     display:none;
 }
 
-#ftrCopy li, #ftrLinks li {
+#ftrCopy li, #ftrLinks li, #lglLinks li {
     list-style: none;
     list-style-type: none;
     color: white;
+}
+#lglLinks {
+	background:white;
+    padding: 1% 5%;
+    text-align: center;
+    text-transform: capitalize;
+}
+#lglLinks li  {
+    display: inline;
+    margin: 0 2%;
 }
 
 .pg7_chnls {
@@ -946,13 +956,13 @@ header {
 }
 
 #ftrLinks {
-    padding: 1% 5%;
+    padding: 2% 5%;
     text-align: center;
     text-transform: capitalize;
 }
 
 #ftrLinks ul {
-    padding-top: 30px;
+    padding-top: 18px;
     margin-top:10px;
 }
 
