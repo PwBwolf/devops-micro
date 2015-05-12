@@ -328,17 +328,14 @@
         padding-right: 1%;
     }
 
-	.contactNumber {
-	    width: 35%;
+	.mblContactNumber {
+	    width: 100%;
 	    height: 100%;
-	    margin-left: 1px;
-	    padding: 2px;
-	    display: inline-block;
-	    float: right;
-	    padding-top: 15px;
+	    padding: 10px 0;
 	    color: black;
 	    text-align: center;
 	    vertical-align: middle;
+		border-top: thin solid whitesmoke;
 	}
 
     .imgdocked {
@@ -461,7 +458,9 @@
         -moz-filter: grayscale(0);
     }
 
-    #pgCntnt_bx {
+    #pgCntnt_Bx {
+		top:40px;
+		position:relative;
         width: auto;
         height: auto;
         margin-bottom: 100px;
@@ -1174,17 +1173,14 @@
         display: block !important;
     }
 	
-	.contactNumber {
-	    width: 35%;
+	.mblContactNumber {
+	    width: 100%;
 	    height: 100%;
-	    margin-left: 1px;
-	    padding: 2px;
-	    display: inline-block;
-	    float: right;
-	    padding-top: 15px;
+	    padding: 10px 0;
 	    color: black;
 	    text-align: center;
 	    vertical-align: middle;
+		border-top: thin solid whitesmoke;
 	}
 
     header {
@@ -1463,7 +1459,9 @@
         margin: 3px 0 !important;
     }
 
-    #pgCntnt_bx {
+    #pgCntnt_Bx {
+		top:40px;
+		position:relative;
         width: auto;
         height: auto;
         margin-bottom: 100px;
