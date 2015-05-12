@@ -256,6 +256,7 @@
             FOOTER_PRIVACY_POLICY: 'Política de privacidad',
             FOOTER_TERMS_OF_USE: 'Términos de uso',
             FOOTER_FAQ: 'Preguntas frecuentes',
+			FOOTER_END_USER_LICENSE_AGREEMENT: 'End User License Agreement',
             FREE_SIGN_UP_HEADING: 'Registrarse',
             FREE_SIGN_UP_MESSAGE: 'Comience su prueba gratuita de 7 días ahora! No es necesaria una tarjeta de crédito.',
             FREE_SIGN_UP_FIRST_NAME: 'Nombre',

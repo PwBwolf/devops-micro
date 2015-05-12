@@ -327,6 +327,14 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/license-agreement',
+            {
+                title: 'Terms of Use & Services - YipTV',
+                description: 'Explore terms of use and services of YipTV, an online internet TV streaming service.',
+                templateUrl: 'views/terms-of-use.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
             .when('/customer-support',
             {
                 title: title,
