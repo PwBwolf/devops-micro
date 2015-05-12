@@ -2,7 +2,7 @@
     'use strict';
 
     app.directive('bookmark', ['$', function ($) {
-        return function (scope, element, attrs) {
+        return function (scope, element) {
 
             element.bind('click', function () {
                 var id = element.attr('id');

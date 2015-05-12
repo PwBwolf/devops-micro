@@ -148,8 +148,6 @@ gulp.task('fonts', function () {
 gulp.task('extras', function (cb) {
     gulp.src(['../client/*.*', '!../client/*.html'], {dot: true})
         .pipe(gulp.dest('dist/client'));
-    gulp.src(['../client/styles/*.css', '!../client/*.html'], {dot: true})
-        .pipe(gulp.dest('dist/client/styles'));
     cb();
 });
 
