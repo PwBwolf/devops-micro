@@ -1,0 +1,50 @@
+<div class="content-area">
+    <div class="top-bg">&nbsp;</div>
+    <div class="setting-box">
+        <h1><span translate="SIGN_IN_HEADING">Sign In</span></h1>
+
+        <div class="container">
+            <div class="sign-in-box">
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div class="message" ng-show="redirectTo === '/upgrade-subscription'" translate="SIGN_IN_UPGRADE_SUBSCRIPTION">
+                    You need to sign in before you can upgrade your subscription.
+                </div>
+                <div class="message" ng-show="redirectTo === '/reactivate-subscription'" translate="SIGN_IN_REACTIVATE_SUBSCRIPTION">
+                    You need to sign in before you can re-activate your subscription.
+                </div>
+                <div class="message" ng-hide="redirectTo" translate="SIGN_IN_MESSAGE">
+                    Welcome back to YipTV. Login below to watch your favorite shows.
+                </div>
+                <br><br>
+                <form name="form" id="form" ng-submit="signIn()" novalidate>
+                    <span class="label-text" translate="SIGN_IN_EMAIL">Email</span><br>
+                    <input autofocus name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="txtbox2" ng-model="mv.email" required ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}"/>
+
+                    <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="SIGN_IN_EMAIL_REQUIRED">Enter your email</div>
+                    <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="SIGN_IN_EMAIL_INVALID">Enter a valid email</div>
+                    <br><br>
+                    <span class="label-text" translate="SIGN_IN_PASSWORD">Password</span><br>
+                    <input name="password" id="password" maxlength="20" autocomplete="off" type="password" class="txtbox2" ng-model="mv.password" required ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}"/>
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="error-msg" translate="SIGN_IN_PASSWORD_REQUIRED">Enter your email</span>
+                    <br>
+                    <br><br>
+                    <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="btn-submit">
+                        Sign In
+                    </button>
+                    <br><br>
+
+                    <div class="btm-link">
+                        <span class="not-registered" translate="SIGN_IN_FORGOT_PASSWORD">Forgot Password?</span>
+                        <a href="/forgot-password" translate="SIGN_IN_RESET_PASSWORD">Reset Password</a>
+                        <span class="separator">|</span><span class="not-registered" translate="SIGN_IN_NOT_REGISTERED">Not Registered Yet?</span>
+                        <a href="/sign-up/paid" translate="SIGN_IN_SIGN_UP">Sign Up</a><br><br>
+                        <span class="not-registered" translate="SIGN_IN_NO_VERIFICATION_EMAIL">Did not receive verification email?</span>
+                        <a href="/resend-verification" translate="SIGN_IN_RESEND_VERIFICATION">Request again</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="btm-bg">&nbsp;</div>
+</div>

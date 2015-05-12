@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://www.yiptv.com/</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://www.yiptv.com/?lang=es"/>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.yiptv.com/about-us</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://www.yiptv.com/about-us?lang=es"/>
+    </url>
+    <url>
+        <loc>https://www.yiptv.com/sign-up</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://www.yiptv.com/sign-up?lang=es"/>
+    </url>
+    <url>
+        <loc>https://www.yiptv.com/sign-in</loc>
+        <xhtml:link rel="alternate" hreflang="es" href="https://www.yiptv.com/sign-in?lang=es"/>
+    </url>
+</urlset>
