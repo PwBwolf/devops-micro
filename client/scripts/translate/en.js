@@ -287,7 +287,6 @@
             FOOTER_ABOUT_US: 'About Us',
             FOOTER_LEADERSHIP: 'Leadership',
             FOOTER_BLOG: 'Blog',
-			FOOTER_PRESS: 'Press',
             FOOTER_PRIVACY_POLICY: 'Privacy Policy',
             FOOTER_TERMS_OF_USE: 'Terms of Use',
             FOOTER_FAQ: 'FAQs',

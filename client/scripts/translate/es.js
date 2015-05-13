@@ -253,7 +253,6 @@
             FOOTER_ABOUT_US: 'Sobre nosotros',
             FOOTER_LEADERSHIP: 'Liderazgo',
             FOOTER_BLOG: 'Blog',
-			FOOTER_PRESS: 'Press',
             FOOTER_PRIVACY_POLICY: 'Política de privacidad',
             FOOTER_TERMS_OF_USE: 'Términos de uso',
             FOOTER_FAQ: 'Preguntas frecuentes',
