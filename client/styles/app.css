@@ -163,7 +163,6 @@ input[type="checkbox"]:checked + label:before {
     color: #8a8b8a;
 }
 
-
 .call-us .number {
     color: #000;
 }
@@ -365,7 +364,7 @@ a.btn-sign:hover {
     margin: 0 auto;
     position: relative;
     overflow: hidden;
-	text-align: center;
+    text-align: center;
 }
 
 .user-home-box .caption {
@@ -373,7 +372,7 @@ a.btn-sign:hover {
     margin: auto;
     position: absolute;
     height: 100%;
-	width:100%;
+    width: 100%;
     font-family: 'radikalthin';
     z-index: 99;
 }
@@ -795,6 +794,21 @@ span.pg-icon {
     text-decoration: underline;
 }
 
+.underline-bold-text {
+    text-decoration: underline;
+    font-weight: bolder;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.bold-text {
+    font-weight: bold;
+    font-family: 'gotham-bookgotham-book';
+}
+
+.no-bullets {
+    list-style-type: none !important;
+}
+
 .uppercase-text {
     text-transform: uppercase;
 }
@@ -1049,6 +1063,10 @@ a.btn-import:hover {
     padding-left: 20px;
 }
 
+.content-list li {
+    margin-bottom: 5px;
+}
+
 .content-sub-list {
     list-style-type: circle;
     padding-left: 20px;
@@ -1147,11 +1165,6 @@ a.btn-import:hover {
     font-family: 'gotham-bookgotham-book';
 }
 
-.tous-bold-text {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
 .faq-bold-text {
     font-weight: bold;
     font-family: 'gotham-bookgotham-book';
@@ -1195,7 +1208,7 @@ a.btn-import:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
-	border: 1px dashed dimgrey;
+    border: 1px dashed dimgrey;
 }
 
 .txtbox2 {
@@ -1208,7 +1221,7 @@ a.btn-import:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
-	border: 1px dashed dimgrey;
+    border: 1px dashed dimgrey;
 }
 
 .txtboxdd {

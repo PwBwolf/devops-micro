@@ -327,11 +327,11 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/license-agreement',
+            .when('/eula',
             {
-                title: 'Terms of Use & Services - YipTV',
-                description: 'Explore terms of use and services of YipTV, an online internet TV streaming service.',
-                templateUrl: 'views/terms-of-use.html',
+                title: 'Software End-User License Agreement - YipTV',
+                description: 'Explore software end-user license agreement of YipTV, an online internet TV streaming service.',
+                templateUrl: 'views/eula.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
