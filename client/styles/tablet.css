@@ -346,7 +346,6 @@
     #sclMda {
         display: none !important;
         width: 20%;
-        /*display: inline-block;*/
         vertical-align: middle;
         text-align: center;
         padding: 0px;
@@ -946,7 +945,12 @@
 	}
 	#lglLinks li  {
 	    display: inline;
-	    margin: 0 2%;
+	}
+	
+	#lglLinks li:nth-child(n+2)::before{
+		content: '|';
+		margin: 0 2%;
+		color:grey;
 	}
 	
     .pg7_chnls {
@@ -994,20 +998,23 @@
     #ftrLinks {
         padding: 1% 1% 5%;
         text-align: center;
-        /* margin-top: 2%;*/
         text-transform: capitalize;
         font-size: 80%;
     }
 
     #ftrLinks ul {
         padding-top: 15px;
-        /*border-top: thin solid rgb(160, 160, 160);*/
     }
 
     #ftrLinks li {
         display: inline;
-        margin: 0 2%;
     }
+	
+	#ftrLinks li:nth-child(n+2)::before{
+		content: '|';
+		margin: 0 2%;
+		color:grey;
+	}
 
     footer {
         width: 100%;
@@ -1263,7 +1270,7 @@
     }
 
 	.contactNumber {
-	    width: 25%;
+	    width: 30%;
 	    height: 100%;
 	    margin-left: 1px;
 	    padding: 2px;
@@ -1946,7 +1953,12 @@
 	}
 	#lglLinks li  {
 	    display: inline;
-	    margin: 0 2%;
+	}
+	
+	#lglLinks li:nth-child(n+2)::before{
+		content: '|';
+		margin: 0 2%;
+		color:grey;
 	}
 
     .pg7_chnls {
@@ -2002,8 +2014,13 @@
 
     #ftrLinks li {
         display: inline;
-        margin: 0 2%;
     }
+	
+	#ftrLinks li:nth-child(n+2)::before{
+		content: '|';
+		margin: 0 2%;
+		color:grey;
+	}
 
     #Events_Bx {
         width: 100%;

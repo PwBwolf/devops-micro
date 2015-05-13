@@ -920,6 +920,25 @@ header {
     list-style-type: none;
     color: white;
 }
+#ftrLinks {
+    padding: 2% 5%;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+#ftrLinks ul {
+    padding-top: 18px;
+    margin-top:10px;
+}
+
+#ftrLinks li {
+    display: inline;
+}
+#ftrLinks li:nth-child(n+2)::before{
+	content: '|';
+	margin: 0 2%;
+	color:grey;
+}
 #lglLinks {
 	background:white;
     padding: 1% 5%;
@@ -928,7 +947,11 @@ header {
 }
 #lglLinks li  {
     display: inline;
-    margin: 0 2%;
+}
+#lglLinks li:nth-child(n+2)::before{
+	content: '|';
+	color: dimgrey;
+	margin: 0 2%;
 }
 
 .pg7_chnls {
@@ -966,22 +989,6 @@ header {
 
 .ftr_right div {
     margin-top: 20px;
-}
-
-#ftrLinks {
-    padding: 2% 5%;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-#ftrLinks ul {
-    padding-top: 18px;
-    margin-top:10px;
-}
-
-#ftrLinks li {
-    display: inline;
-    margin: 0 2%;
 }
 
 #testP {
