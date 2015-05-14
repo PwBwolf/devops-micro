@@ -876,7 +876,7 @@ header {
 
 #Ftr_Bx {
     width: 100%;
-    height: 200px;
+    height: auto;
     position: relative;
     margin-bottom: 30px;
     padding: 0px;

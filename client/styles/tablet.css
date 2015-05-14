@@ -1965,6 +1965,7 @@
         background: rgb(227, 63, 67);
         padding: 10px 0;
         z-index: 6;
+		white-space:nowrap;
     }
 
     .pg7_title {

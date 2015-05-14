@@ -68,7 +68,7 @@
                 <menuItem id="Shws" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY">Shows by Category</menuItem>
                 <menuItem id="Ntwrks" bookmark home-only access-level="accessLevels.anon" translate="INDEX_NETWORKS">Networks</menuItem>
                 <menuItem id="Abt" bookmark home-only access-level="accessLevels.anon" translate="INDEX_ABOUT_US">About YipTV</menuItem>
-                <menuItem id="watch"><a href="#" ng-click="openAio()" access-level="accessLevels.user" translate="INDEX_WATCH_NOW">Watch Now</a></menuItem>
+                <menuItem id="watch"  access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW">Watch Now</a></menuItem>
                 <menuItem id="Join"><a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a><a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT">Account</a></menuItem>
                 <menuItem id="welcome">
                     <div access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
