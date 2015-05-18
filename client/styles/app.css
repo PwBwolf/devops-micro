@@ -349,10 +349,6 @@ input[type="checkbox"]:checked + label:before {
     margin: 0px;
 }
 
-.content-box a {
-    color: #000;
-}
-
 .content-box a:hover {
     color: #A03269;
 }
