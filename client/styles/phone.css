@@ -29,6 +29,10 @@
     width: 100%;
 }
 
+.open > .dropdown-menu {
+    min-width: 100%;
+}
+
 .back {
     transform: perspective(1000px) rotateY(180deg);
     backface-visibility: hidden;
