@@ -38,7 +38,6 @@ img[usemap], map area {
 input[type="checkbox"] {
     margin-left: 10px;
     display: none;
-
 }
 
 label:before {
@@ -63,11 +62,11 @@ label {
     font-size: 15px;
 }
 
-.checkbox label {
+.check-box label {
     margin-bottom: 10px;
 }
 
-.checkbox label:before {
+.check-box label:before {
     border-radius: 3px;
 }
 
@@ -93,45 +92,6 @@ input[type="checkbox"]:checked + label:before {
     height: 78px;
 }
 
-.logo-text {
-    padding-left: 10px;
-    color: #8a8b8a;
-    font-weight: bold;
-}
-
-.f-logo img {
-    width: 90px;
-}
-
-.right-box {
-    padding: 13px 0px 0px;
-    margin: 0px;
-    text-align: center;
-}
-
-.right-box a {
-    display: inline-block;
-    font-family: 'gotham-bookgotham-book';
-    font-size: 15px;
-    color: #000000;
-    line-height: 20px;
-    padding: 0px;
-    margin: 0px 0 0px 10px;
-}
-
-.right-box a:hover, .right-box a.active {
-    border-bottom-color: transparent;
-    color: #8e3055;
-}
-
-.right-box.home {
-    padding: 5px 0px 0px;
-}
-
-.underline {
-    text-decoration: underline !important;
-}
-
 .language {
     float: right;
     padding: 0px 0 16px 30px;
@@ -153,96 +113,18 @@ input[type="checkbox"]:checked + label:before {
     margin: 0 0 1px 5px;
 }
 
-.call-us {
-    float: right;
-    padding: 0 0 16px;
-    text-align: right;
-}
-
-.call-us span {
-    color: #8a8b8a;
-}
-
-.call-us .number {
-    color: #000;
-}
-
-.phone {
-    display: inline-block;
-    background: url(../images/img-phone.png) no-repeat;
-    padding: 0px 0px 5px 35px;
-    margin: 0px;
-    vertical-align: middle;
-}
-
-.error-msg .validation-link {
-    font-family: 'gotham-bookgotham-book';
-    font-size: 16px;
-    color: #f92b26;
-    text-transform: uppercase;
-    text-decoration: underline;
-}
-
-a.btn-sign {
-    background: #f4f1ec;
-    text-align: center;
-    width: 185px;
-    line-height: 39px;
-    cursor: pointer;
-    color: #8a8b8a;
-}
-
-a.btn-sign:hover {
-    cursor: pointer;
-}
-
 .navbar-default {
     background: none;
     border: none;
     margin: 0px;
 }
 
-.navbar-toggle {
-    position: relative;
-    float: right;
-    padding: 10px 10px;
-    margin: 25px 15px 8px;
-    background: url(../images/btn-bg.jpg) repeat-y center right;
-    border: 2px solid #6f2079;
-    border-radius: 0px;
-}
-
-.navbar-default .navbar-toggle {
-    border: 2px solid #6f2079;
-}
-
-.navbar-toggle.collapsed, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background: url(../images/btn-bg.jpg) repeat-y center right;
-}
-
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     border: none;
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
-}
-
-.textarea2 {
+.text-area {
     height: 241px;
-}
-
-.btn-small {
-    font-size: 17px !important;
-    border-radius: 5px !important;
-    padding: 8px !important;
-    padding-bottom: 11px !important;
-}
-
-.welcome-user {
-    font-weight: bold;
-    margin-top: 15px;
-    text-align: right;
 }
 
 .banner {
@@ -264,75 +146,24 @@ a.btn-sign:hover {
     z-index: 9;
 }
 
-.service {
-    float: left;
-    width: 100%;
-    background-color: #fff;
-    padding: 40px 0px 20px 0px;
-    margin: 0px;
-    font-family: 'radikallight';
-    font-size: 17px;
-    line-height: 26px;
-}
-
-.service-box {
-    float: left;
-    width: 100%;
-    min-height: 260px;
-    border-right: 1px solid #000;
-    padding: 20px 10% 20px 10%;
-    margin: 0px;
-}
-
-.service-box-last {
-    float: left;
-    width: 100%;
-    min-height: 226px;
-    background: none;
-    padding: 20px 10% 20px 10%;
-    margin: 0px;
-}
-
-.service-box p {
-    width: 195px;
-    margin: 0px auto;
-    color: #613e73;
-}
-
-.service-box-last p {
-    width: 140px;
-    margin: 0px auto;
-    color: #613e73;
-}
-
-.service-box img, .service-box-last img {
-    padding: 0px 0px 12% 0px;
-    margin: 0px;
-}
-
-.channels {
-    float: left;
-    width: 100%;
-    position: relative;
-    background: #fff;
-}
-
-.channels .channels-wrap {
-    position: relative;
+#accountBox {
+    position:relative;
     margin: 0 auto;
-    width: 1350px;
 }
 
-.channels img {
-    float: left;
-    width: 100%;
-    z-index: 9;
+#userHomeBox {
+    position:relative;
+    margin: 0 auto;
 }
 
-.channels-header {
-    padding: 40px 0 0 0;
-    color: #613e73;
-    font-size: 22px;
+#footerJoinButton {
+    color: black !important;
+    font-weight: normal !important;
+}
+
+#footerTrialButton {
+    color: white !important;
+    font-weight: normal !important;
 }
 
 .toast-error {
@@ -404,75 +235,7 @@ a.btn-sign:hover {
     font-size: 12px;
 }
 
-.bx-wrapper img {
-    padding: 20px;
-}
-
-.bx-wrapper li {
-    cursor: pointer;
-}
-
-.bx-wrapper li.selectedChannel {
-    background-color: #A03269;
-}
-
-.bx-wrapper li a:hover {
-    color: #000;
-}
-
-span.player-icon:hover {
-    background: url(../images/play.png) center center no-repeat;
-}
-
-span.later-icon:hover {
-    background: url(../images/later.png) center center no-repeat;
-}
-
-span.pg-icon {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    background-size: auto 25% !important;
-}
-
-.cg-title {
-    text-overflow: ellipsis;
-    width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.cg-time {
-    text-overflow: ellipsis;
-    width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 16px;
-}
-
-.cg-date {
-    text-overflow: ellipsis;
-    width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 13px;
-}
-
-.program-details {
-    background-color: #f4f1ec;
-    border: solid 1px #000;
-}
-
-.program-details-header {
-    font-family: 'gotham-bookgotham-book';
-}
-
-#carousel-banner .carousel-control.left, #carousel-banner .carousel-control.right {
-    background-image: none;
-}
-
-#carousel-banner .carousel-indicators {
+#carouselBanner .carousel-indicators {
     bottom: 30px;
     left: 0;
     width: 80%;
@@ -481,7 +244,7 @@ span.pg-icon {
     z-index: 9999;
 }
 
-#carousel-banner .carousel-indicators li {
+#carouselBanner .carousel-indicators li {
     width: 12px;
     height: 12px;
     margin: 0px 3px;
@@ -490,308 +253,28 @@ span.pg-icon {
     border-radius: 12px;
 }
 
-#carousel-banner .carousel-indicators .active {
+#carouselBanner .carousel-indicators .active {
     width: 12px;
     height: 12px;
     margin: 0px 3px;
     background-color: #aaa;
 }
 
-#carousel-banner .carousel-control {
-    top: 50%;
-    width: 30px;
-    height: 40px;
-    margin: -40px 0 0;
-    opacity: 1;
-    color: rgba(0, 0, 0, 0);
-    background: url(../images/slide-arrow.png) no-repeat 0px 0px;
-    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
-    -webkit-transition: all 0s ease;
-    -moz-transition: all 0s ease;
-    transition: all 0s ease;
+.carousel li {
+    margin-right: 0;
 }
 
-#carousel-banner .carousel-control.left {
-    left: 10px;
-    background: url(../images/slide-arrow.png) no-repeat 0px 0px;
-}
-
-#carousel-banner .carousel-control.right {
-    right: 10px;
-    text-align: right;
-    background: url(../images/slide-arrow.png) no-repeat -30px 0;
-}
-
-#carousel-banner h1 {
-    background: none;
-    text-align: left;
-    text-transform: none;
-    font-family: 'radikalthin';
-}
-
-#carousel-banner .carousel-caption1 {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 1000px;
-    font-family: 'radikalthin';
-    text-align: left;
-    z-index: 99;
-}
-
-#carousel-banner .caption-txt1 {
-    padding: 10px;
-}
-
-#carousel-banner .carousel-caption1 h1 {
-    font-size: 50px;
-    line-height: 50px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption1 button {
-    font-size: 22px;
-    background-color: #A03269;
-    color: #fff;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px 25px;
-    margin: 10px 0;
-    font-family: 'radikalregular';
-}
-
-#carousel-banner .carousel-caption1 p {
-    font-size: 14px;
-    line-height: 14px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption2 {
-    position: absolute;
-    height: 1000px;
-    font-family: 'radikalthin';
-    text-align: left;
-    z-index: 99;
-    left: 0px;
-    width: 28%;
-}
-
-#carousel-banner .caption-txt2 {
-    padding: 10px;
-}
-
-#carousel-banner .carousel-caption2 h1 {
-    font-size: 25px;
-    line-height: 25px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption2 h2 {
-    font-size: 20px;
-    line-height: 20px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption2 button {
-    font-size: 22px;
-    background-color: #A03269;
-    color: #fff;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px 25px;
-    margin: 10px 0;
-    font-family: 'radikalregular';
-}
-
-#carousel-banner .carousel-caption2 p {
-    font-size: 14px;
-    line-height: 14px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption3 {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 1000px;
-    font-family: 'radikalthin';
-    text-align: left;
-    z-index: 99;
-    left: 200px;
-}
-
-#carousel-banner .caption-txt3 {
-    padding: 10px;
-}
-
-#carousel-banner .carousel-caption3 h1 {
-    font-size: 40px;
-    line-height: 40px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption3 h2 {
-    font-size: 60px;
-    line-height: 60px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption3 h3 {
-    font-size: 25px;
-    line-height: 25px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption3 button {
-    font-size: 22px;
-    background-color: #A03269;
-    color: #fff;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px 25px;
-    margin: 10px 0;
-    font-family: 'radikalregular';
-}
-
-#carousel-banner .carousel-caption3 p {
-    font-size: 14px;
-    line-height: 14px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption4 {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 1000px;
-    font-family: 'radikalthin';
-    text-align: left;
-    z-index: 99;
-    left: 200px;
-}
-
-#carousel-banner .caption-txt4 {
-    padding: 10px;
-}
-
-#carousel-banner .carousel-caption4 h1 {
-    font-size: 46px;
-    line-height: 46px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption4 h2 {
-    font-size: 25px;
-    line-height: 25px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption4 button {
-    font-size: 22px;
-    background-color: #A03269;
-    color: #fff;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px 25px;
-    margin: 10px 0;
-    font-family: 'radikalregular';
-}
-
-#carousel-banner .carousel-caption4 p {
-    font-size: 14px;
-    line-height: 14px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption5 {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 1000px;
-    font-family: 'radikalthin';
-    text-align: left;
-    z-index: 99;
-    left: 0px;
-}
-
-#carousel-banner .caption-txt5 {
-    padding: 10px;
-}
-
-#carousel-banner .carousel-caption5 h1 {
-    font-size: 40px;
-    line-height: 40px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption5 h2 {
-    font-size: 60px;
-    line-height: 60px;
-    color: #613e73;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption5 h3 {
-    font-size: 30px;
-    line-height: 30px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-#carousel-banner .carousel-caption5 button {
-    font-size: 22px;
-    background-color: #A03269;
-    color: #fff;
-    border: 0px;
-    border-radius: 5px;
-    padding: 10px 25px;
-    margin: 10px 0;
-    font-family: 'radikalregular';
-}
-
-#carousel-banner .carousel-caption5 p {
-    font-size: 14px;
-    line-height: 14px;
-    color: #000;
-    padding: 5px 0;
-    margin: 0px;
-}
-
-.about-text {
+.bolder-text {
     font-weight: bolder;
     font-family: 'gotham-bookgotham-book';
 }
 
-.align-text {
+.justify-text {
     text-align: justify;
 }
 
 .underline-text {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 
 .underline-bold-text {
@@ -813,78 +296,6 @@ span.pg-icon {
     text-transform: uppercase;
 }
 
-footer {
-    float: left;
-    width: 100%;
-}
-
-footer .f-top {
-    float: left;
-    width: 100%;
-    background: #f4f1ec;
-    padding: 45px 0;
-}
-
-footer .f-logo {
-    text-align: center;
-}
-
-footer .f-nav {
-    float: left;
-    padding: 0 30px 0 35px;
-    border-left: 1px solid #bfbdbe;
-    min-height: 130px;
-}
-
-footer .f-nav br {
-    line-height: 45px;
-}
-
-footer .f-nav h2 {
-    font-family: 'gotham-bookgotham-book';
-    color: #262c3a;
-    margin: 0px 0px 8px;
-    width: 100%;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-footer .f-nav li {
-    background: none;
-    margin: 3px 0;
-    font-family: 'gotham-lightgotham-light';
-    font-size: 14px;
-    line-height: 22px
-}
-
-footer .f-nav li a {
-    color: #808285;
-}
-
-footer .f-nav li a:hover {
-    color: #A03269;
-}
-
-footer .f-nav.social a {
-    float: left;
-    margin-right: 5px;
-    padding-bottom: 10px;
-}
-
-.copyright {
-    display: block;
-}
-
-.carousel li {
-    margin-right: 0;
-}
-
-.channel-img {
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
-}
-
 .content-area {
     float: left;
     width: 100%;
@@ -895,7 +306,7 @@ footer .f-nav.social a {
 
 .content-area h1 {
     font-family: 'radikallight';
-    background: url(../images/bdr-line.png) center 18px no-repeat;
+    background: url(../images/title-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
     font-weight: normal;
@@ -905,9 +316,9 @@ footer .f-nav.social a {
     margin: 0px 0px 1%;
 }
 
-.content-area .setting-box h1 {
+.content-area .content-box h1 {
     font-family: 'radikallight';
-    background: url(../images/bdr-line.png) center 18px no-repeat;
+    background: url(../images/title-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
     font-weight: normal;
@@ -923,12 +334,12 @@ footer .f-nav.social a {
     margin: 0px;
 }
 
-.content-area .marketing p {
+.content-area .message-box p {
     padding: 25px 0px 0px 0px;
     margin-top: 60px;
 }
 
-.setting-box {
+.content-box {
     float: left;
     width: 100%;
     font-family: 'gotham-lightgotham-light';
@@ -938,45 +349,15 @@ footer .f-nav.social a {
     margin: 0px;
 }
 
-.setting-box a {
+.content-box a {
     color: #000;
 }
 
-.setting-box a:hover {
+.content-box a:hover {
     color: #A03269;
 }
 
-.free-sign-up-box {
-    width: 700px;
-    font-family: 'radikallight';
-    font-size: 16px;
-    color: #000;
-    padding: 0px;
-    margin: auto;
-    margin-top: -55px;
-}
-
-.free-sign-up-box a {
-    color: #A03269;
-    font-weight: bold;
-}
-
-.free-sign-up-box a:hover {
-    color: #A03269;
-    text-decoration: underline;
-}
-
-.forgot-box {
-    width: 900px;
-    font-family: 'radikallight';
-    font-size: 16px;
-    color: #000;
-    padding: 0px;
-    margin: auto;
-    margin-top: -48px;
-}
-
-.sign-in-box {
+.form-box {
     width: 700px;
     font-family: 'radikallight';
     font-size: 16px;
@@ -985,38 +366,7 @@ footer .f-nav.social a {
     margin: 0 auto;
 }
 
-.sign-up-box {
-    width: 700px;
-    font-family: 'radikallight';
-    font-size: 16px;
-    color: #000;
-    padding: 0px;
-    margin: 0 auto;
-}
-
-.sign-up-regular {
-    font-family: 'gotham-lightgotham-light';
-}
-
-.sign-up-bold {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.txtbox {
-    background: #FFFFFF;
-    width: 98%;
-    height: 44px;
-    font-family: 'radikallight';
-    font-size: 20px;
-    color: #000;
-    border: 0px;
-    padding: 0px 1%;
-    margin: 10px 0px 80px 0px;
-    border-radius: 5px;
-}
-
-.btn-submit {
+.submit-button {
     background: #A03269;
     width: 98%;
     height: 54px;
@@ -1032,12 +382,12 @@ footer .f-nav.social a {
     margin: 0px;
 }
 
-.btn-modal {
+.modal-button {
     margin-bottom: 10px;
     width: 100%;
 }
 
-a.btn-import {
+a.import-button {
     background: #A03269;
     width: 98%;
     height: 40px;
@@ -1053,7 +403,7 @@ a.btn-import {
     margin: 0;
 }
 
-a.btn-import:hover {
+a.import-button:hover {
     color: #fff;
     text-decoration: none;
 }
@@ -1072,32 +422,32 @@ a.btn-import:hover {
     padding-left: 20px;
 }
 
-.about-name {
+.leadership-name {
     color: #A03269;
     font-size: 19px;
     font-weight: bold;
 }
 
-.about-us {
-    margin-top: 60px;
+.leadership-description {
+    color: #000;
+    font-size: 16px;
+    min-height: 160px;
 }
 
-.about-us-img {
+.leadership-image {
     float: left;
     padding: 0 10px 5px 0;
     width: 160px;
     height: 160px;
 }
 
-.about-desc {
-    color: #000;
-    font-size: 16px;
+.paragraph-area {
+    margin-top: 60px;
 }
 
-.leadership-desc {
+.content-text {
     color: #000;
     font-size: 16px;
-    min-height: 160px;
 }
 
 .about-us-header {
@@ -1105,42 +455,21 @@ a.btn-import:hover {
     font-weight: bold;
 }
 
-.about-box {
-    float: left;
-    width: 100%;
-    font-family: 'gotham-lightgotham-light';
-    font-size: 19px;
-    color: #000;
-    padding: 80px 0px 60px 0px;
-    margin: 0px;
-}
-
 .press-release {
     margin-top: 60px;
 }
 
-.pr-title {
+.press-release-title {
     color: #000;
     font-weight: bold;
     text-align: center;
     font-family: 'gotham-bookgotham-book';
 }
 
-.pr-sub-title {
+.press-release-sub-title {
     color: #000;
     text-align: center;
     font-style: italic;
-    text-align: center;
-}
-
-.pr-para {
-    font-size: 16px;
-}
-
-.pr-bold {
-    color: #000;
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
 }
 
 .numbered-header {
@@ -1149,7 +478,7 @@ a.btn-import:hover {
     font-family: 'gotham-bookgotham-book';
 }
 
-.para-header {
+.paragraph-header {
     font-weight: bold;
     font-family: 'gotham-bookgotham-book';
 }
@@ -1165,29 +494,6 @@ a.btn-import:hover {
     font-family: 'gotham-bookgotham-book';
 }
 
-.faq-bold-text {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.btm-bg {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    float: left;
-    width: 100%;
-    height: 13px;
-    z-index: 99;
-}
-
-.top-bg {
-    position: absolute;
-    float: left;
-    width: 100%;
-    height: 13px;
-    z-index: 99;
-}
-
 #details {
     height: 250px;
     resize: none;
@@ -1198,7 +504,7 @@ a.btn-import:hover {
     resize: none;
 }
 
-.txtbox1 {
+.text-box {
     background: #FFFFFF;
     color: #000000;
     font-family: "radikallight";
@@ -1211,25 +517,12 @@ a.btn-import:hover {
     border: 1px dashed dimgrey;
 }
 
-.txtbox2 {
-    background: #FFFFFF;
-    color: #000000;
-    font-family: "radikallight";
-    font-size: 20px;
-    height: 44px;
-    margin: 10px 0 1%;
-    padding: 0 1%;
-    width: 98%;
-    border-radius: 5px;
-    border: 1px dashed dimgrey;
-}
-
-.txtboxdd {
+.drop-down-list {
     -webkit-appearance: menulist-button;
     padding: 0 0 0 1% !important;
 }
 
-.txtbox-error {
+.text-box-error {
     background: #FFFFFF;
     border: 2px solid;
     border-color: rgb(228, 29, 29);
@@ -1243,17 +536,27 @@ a.btn-import:hover {
     border-radius: 5px;
 }
 
-.btm-link {
+.center-form {
     float: left;
     width: 100%;
     text-align: center;
 }
 
-.btm-link span {
+.center-form span {
     font-family: "radikalthin";
     font-weight: normal;
     padding: 0px 5px;
     margin: 0px 0px 0px 0px;
+}
+
+.center-form a {
+    color: #A03269;
+    text-decoration: none;
+}
+
+.center-form a:hover {
+    color: #A03269;
+    text-decoration: underline;
 }
 
 .heading {
@@ -1265,37 +568,6 @@ a.btn-import:hover {
     font-size: 16px;
     padding-left: 0;
     text-transform: uppercase;
-}
-
-.upper {
-    text-transform: uppercase;
-}
-
-.btm-link a {
-    color: #A03269;
-    text-decoration: none;
-}
-
-.btm-link a:hover {
-    color: #A03269;
-    text-decoration: underline;
-}
-
-.btm-link a.forgot {
-    color: #FFFFFF;
-    text-decoration: none;
-}
-
-.btm-link a.forgot:hover {
-    color: #A03269;
-    text-decoration: underline;
-}
-
-.chkbox {
-    display: block;
-    color: #7d818a;
-    padding: 4% 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
 }
 
 .checkbox {
@@ -1311,79 +583,46 @@ a.btn-import:hover {
     float: left;
 }
 
-.error-msg {
+.error-message {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     color: #f92b26;
     text-transform: uppercase;
 }
 
-.not-registered {
-    font-family: 'radikallight';
-    font-size: 16px;
-}
-
-.txt-center {
+.center-text {
     text-align: center;
 }
 
-.frm {
+.form-container {
     float: left;
     width: 100%;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
-.frm1 {
-    float: left;
-    width: 100%;
-    padding: 5% 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.frm-left {
+.two-third-form {
     float: left;
     width: 65%;
     padding: 5% 0% 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
-.frm-right {
+.one-third-form {
     float: left;
     width: 33%;
     padding: 5% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
-.frm-left1 {
+.half-form {
     float: left;
     width: 49.5%;
     padding: 5% 0% 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
-.frm-right1 {
-    float: left;
-    width: 49.5%;
-    padding: 5% 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.frm-left2 {
-    float: left;
-    width: 75%;
-    padding: 5% 0% 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.frm-right2 {
-    float: right;
-    width: 25%;
-    padding: 5% 10px 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.frm-btn {
+.full-form {
     float: left;
     width: 100%;
     padding: 5% 0px 0px 0px;
@@ -1444,16 +683,6 @@ a.btn-import:hover {
     background-position: 98% 50%;
 }
 
-.justify-text {
-    text-align: justify;
-}
-
-.sign-in {
-    float: right;
-    width: 120px;
-    margin: 15px 0 0px 25px;
-}
-
 .message {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
@@ -1461,31 +690,6 @@ a.btn-import:hover {
     text-transform: none;
     color: #000;
     text-align: justify;
-}
-
-.message-bold {
-    font-family: 'gotham-boldgotham-bold';
-    font-weight: bold;
-    color: #000 !important;
-}
-
-.sign-in a {
-    display: block;
-    background: url(../images/btn-bg.jpg) repeat-y #6f2079;
-    font-family: 'gotham-bookgotham-book';
-    font-size: 15px;
-    color: #ffffff;
-    line-height: 39px;
-    text-align: center;
-    border: 1px solid #6f2079;
-    padding: 0px;
-    margin: 0px;
-}
-
-.sign-in a:hover {
-    background: #FFFFFF;
-    text-align: center;
-    color: #000000;
 }
 
 @media screen and (max-width: 1350px) {
@@ -1496,226 +700,24 @@ a.btn-import:hover {
     .user-home-wrap {
         width: 100%;
     }
-
-    .channels .channels-wrap {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 1250px) {
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 22px;
-        line-height: 22px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 12px;
-        line-height: 12px;
-    }
-}
-
-@media screen and (max-width: 1199px) {
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 20px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 15px;
-        line-height: 15px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 11px;
-        line-height: 11px;
-    }
 }
 
 @media screen and (max-width: 999px) {
-
-    .right-box {
-        text-align: center;
-    }
 
     a.language {
         margin-left: 17px;
     }
 
-    .service {
-        font-size: 16px;
-        line-height: 22px;
-    }
-
-    .service-box {
-        padding: 20px 12% 20px 0%;
-    }
-
-    .service-box p {
+    .form-box {
         width: 100%;
     }
 
-    footer .f-top {
-        padding: 30px 0;
-    }
-
-    footer .f-logo {
-        margin-bottom: 25px;
-    }
-
-    footer .f-nav {
-        border: none;
-        border-right: 1px solid #bfbdbe;
-        padding: 0 20px 0 30px;
-    }
-
-    footer .f-nav.social {
-        border: none;
-    }
-
-    .forgot-box {
+    .form-box {
         width: 100%;
-        margin-top: 0px;
-    }
-
-    .free-sign-up-box {
-        width: 100%;
-    }
-
-    .sign-up-box {
-        width: 100%;
-    }
-
-    .sign-in-box {
-        width: 100%;
-    }
-
-    #carousel-banner .carousel-indicators {
-        width: 100%;
-        text-align: center;
-        left: 0px;
-        bottom: 0px;
-    }
-
-    #carousel-banner .carousel-control {
-        width: 20px;
-    }
-
-    #carousel-banner .carousel-control.left {
-        left: 5px;
-    }
-
-    #carousel-banner .carousel-control.right {
-        right: 5px;
-        background-position: -40px 0;
-    }
-
-    #carousel-banner .carousel-caption1 h1 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 12px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 9px;
-        line-height: 9px;
-    }
-
-    #carousel-banner .carousel-caption3 {
-        left: 150px;
-    }
-
-    #carousel-banner .carousel-caption3 h1 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption3 h2 {
-        font-size: 54px;
-        line-height: 54px;
-    }
-
-    #carousel-banner .carousel-caption3 h3 {
-        font-size: 20px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption4 {
-        left: 130px;
-    }
-
-    #carousel-banner .carousel-caption4 h1 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption4 h2 {
-        font-size: 20px;
-        line-height: 20px;
-    }
-
-    #carousel-banner .carousel-caption5 h1 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption5 h2 {
-        font-size: 54px;
-        line-height: 54px;
-    }
-
-    #carousel-banner .carousel-caption5 h3 {
-        font-size: 25px;
-        line-height: 25px;
-    }
-}
-
-@media screen and (max-width: 799px) {
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 15px;
-        line-height: 15px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 9px;
-        line-height: 9px;
     }
 }
 
 @media screen and (max-width: 767px) {
-
-    .welcome-user {
-        text-align: center;
-    }
-
-    .call-us {
-        width: 100%;
-        padding-right: 15px;
-    }
 
     .user-home-box .caption {
         left: 10%;
@@ -1725,228 +727,30 @@ a.btn-import:hover {
         margin-right: -60px;
     }
 
-    .right-box a {
-        margin-left: 12px;
-    }
-
-    .service {
-        padding-bottom: 0px;
-    }
-
-    .service-box {
-        background: none;
-        width: 90%;
-        padding: 20px 0;
-        margin: 0 5% 10px;
-        border-right: none;
-        border-bottom: 1px solid #2f3442;
-    }
-
-    .service-box img, .service-box-last img {
-        padding-bottom: 25px;
-    }
-
-    .service-box p {
-        width: 195px;
-    }
-
-    footer .f-nav {
-        padding: 0 10px 0 15px;
-    }
-
-    footer .f-nav h2 {
-        font-size: 20px;
-    }
-
-    footer .f-btm {
-        padding: 17px 2% 15px;
-    }
-
-    footer .f-btm span {
-        display: block;
-    }
-
-    .forgot-box {
+    .form-box {
         width: 100%;
         font-size: 17px;
         margin-top: 0px;
     }
 
-    .sign-up-box {
+    .form-box {
         width: 100%;
         font-size: 17px;
         margin-top: 0px;
-    }
-
-    .free-sign-up-box {
-        width: 100%;
-        font-size: 17px;
-        margin-top: 0px;
-    }
-
-    .sign-in-box {
-        width: 100%;
-        font-size: 17px;
-        margin-top: 0px;
-    }
-
-    .txtbox {
-        margin: 10px 0px 10% 0px;
-    }
-
-    .right-box a {
-        margin: 0 5px 10px
-    }
-
-    .sign-in {
-        position: absolute;
-        top: 0px;
-        right: 0px;
-    }
-
-    #carousel-banner .carousel-caption1 button {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
-
-    #carousel-banner .carousel-caption1 h1 {
-        font-size: 30px;
-        line-height: 30px;
-    }
-
-    #carousel-banner .carousel-caption3 {
-        left: 110px;
-    }
-
-    #carousel-banner .carousel-caption3 h1 {
-        font-size: 32px;
-        line-height: 32px;
-    }
-
-    #carousel-banner .carousel-caption3 h2 {
-        font-size: 48px;
-        line-height: 48px;
-    }
-
-    #carousel-banner .carousel-caption3 h3 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption4 {
-        left: 110px;
-    }
-
-    #carousel-banner .carousel-caption4 h1 {
-        font-size: 28px;
-        line-height: 28px;
-    }
-
-    #carousel-banner .carousel-caption4 h2 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption4 button {
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption5 h1 {
-        font-size: 32px;
-        line-height: 32px;
-    }
-
-    #carousel-banner .carousel-caption5 h2 {
-        font-size: 48px;
-        line-height: 48px;
-    }
-
-    #carousel-banner .carousel-caption5 h3 {
-        font-size: 20px;
-        line-height: 20px;
     }
 }
 
 @media screen and (max-width: 707px) {
 
-    a.btn-sign {
-        width: 160px;
-    }
-
-    .right-box {
-        padding: 15px 0 0px;
-        text-align: center;
-        width: 100%;
-        position: relative;
-    }
-
     .language {
         font-size: 13px;
-    }
-
-    .logo-text {
-        font-size: 13px;
-    }
-
-    .right-box a {
-        margin: 0 5px 5px;
-        font-size: 13px;
-    }
-
-    footer .f-nav {
-        padding: 0 5px 0 5px;
-    }
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 15px;
-        line-height: 15px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 8px;
-        line-height: 8px;
     }
 }
 
 @media screen and (max-width: 639px) {
 
-    .call-us {
-        padding-right: 0;
-    }
-
     .user-home-box .caption {
         left: 1%;
-    }
-
-    .navbar-toggle {
-        margin-right: 0px;
-    }
-
-    .f-logo img {
-        width: 80px;
-    }
-
-    a.btn-sign {
-        width: 160px;
-    }
-
-    .right-box {
-        padding: 15px 0 0px;
-        text-align: center;
-        width: 100%;
-        position: relative;
-    }
-
-    .right-box a {
-        margin-left: 17px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        font-size: 13px;
     }
 
     .language a {
@@ -1957,330 +761,47 @@ a.btn-import:hover {
         margin: 0 0 1px 5px !important
     }
 
-    footer .f-top {
-        text-align: center;
-        padding-bottom: 15px;
-    }
-
-    footer .f-nav {
-        width: 100%;
-        padding: 0 0 20px 0;
-        min-height: 75px;
-        border: none;
-    }
-
-    .txtbox {
-        height: 50px;
-        line-height: 50px;
-    }
-
-    .btn-submit {
+    .submit-button {
         height: 60px;
         line-height: 60px;
         font-size: 20px;
     }
 
-    .btm-link {
+    .center-form {
         font-size: 16px;
     }
 
     .content-area h1 {
         font-size: 24px;
     }
-
-    .right-box a {
-        margin: 0 5px 10px
-    }
-
-    footer .f-nav.social a:nth-of-type(1) {
-        padding-left: 40%;
-    }
-
-    #carousel-banner .carousel-caption1 h1 {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .carousel-caption1 button {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-
-    #carousel-banner .carousel-caption1 p {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 12px;
-        padding: 5px 10px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption3 {
-        left: 90px;
-    }
-
-    #carousel-banner .carousel-caption3 h1 {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .carousel-caption3 h2 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption3 h3 {
-        font-size: 14px;
-        line-height: 14px;
-    }
-
-    #carousel-banner .carousel-caption3 button {
-        font-size: 14px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption3 p {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption4 {
-        left: 90px;
-    }
-
-    #carousel-banner .carousel-caption4 h1 {
-        font-size: 20px;
-        line-height: 20px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 h2 {
-        font-size: 14px;
-        line-height: 14px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 button {
-        font-size: 14px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption4 p {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption5 h1 {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .carousel-caption5 h2 {
-        font-size: 36px;
-        line-height: 36px;
-    }
-
-    #carousel-banner .carousel-caption5 h3 {
-        font-size: 15px;
-        line-height: 15px;
-    }
-
-    #carousel-banner .carousel-caption5 button {
-        font-size: 14px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption5 p {
-        font-size: 12px;
-        line-height: 12px;
-    }
 }
 
 @media screen and (max-width: 479px) {
-
-    .logo-text {
-        display: none;
-    }
-
-    .phone {
-        float: left;
-        text-align: center;
-        background-position: 30% 0;
-        padding: 0 0 10px 0;
-        width: 100%;
-    }
-
-    .right-box a {
-        margin: 5px 10px;
-    }
 
     .banner {
         overflow: hidden;
     }
 
-    .frm-left, .frm-right, .frm-left1, .frm-right1 {
+    .two-third-form, .one-third-form, .half-form {
         width: 100%;
     }
 
-    a.btn-import {
+    a.import-button {
         font-size: 12px;
         padding: 5px 5px;
         margin: 0;
     }
 
-    .btm-link {
+    .center-form {
         font-size: 14px;
     }
 
-    .btm-link a {
+    .center-form a {
         padding: 0 0 0 0;
     }
 
-    .btm-link .separator {
+    .center-form .separator {
         display: none;
-    }
-
-    .right-box a {
-        margin: 0 5px 10px;
-    }
-
-    #carousel-banner .carousel-caption1 h1 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption1 button {
-        font-size: 10px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption1 p {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 8px;
-        padding: 5px 10px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption3 {
-        left: 70px;
-    }
-
-    #carousel-banner .carousel-caption3 h1 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption3 h2 {
-        font-size: 30px;
-        line-height: 30px;
-    }
-
-    #carousel-banner .carousel-caption3 h3 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption3 button {
-        font-size: 10px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption3 p {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption4 {
-        left: 70px;
-    }
-
-    #carousel-banner .carousel-caption4 h1 {
-        font-size: 16px;
-        line-height: 16px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 h2 {
-        font-size: 12px;
-        line-height: 12px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 button {
-        font-size: 10px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption4 p {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption5 h1 {
-        font-size: 18px;
-        line-height: 18px;
-    }
-
-    #carousel-banner .carousel-caption5 h2 {
-        font-size: 30px;
-        line-height: 30px;
-    }
-
-    #carousel-banner .carousel-caption5 h3 {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption5 button {
-        font-size: 10px;
-        padding: 10px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption5 p {
-        font-size: 10px;
-        line-height: 10px;
     }
 }
 
@@ -2293,128 +814,5 @@ a.btn-import:hover {
         font-size: 14px;
         padding: 10px;
         width: 250px;
-    }
-
-    .phone {
-        background-position: 26% 0;
-    }
-
-    #carousel-banner .carousel-caption1 h1 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption1 button {
-        font-size: 8px;
-        padding: 5px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption1 p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption2 h1 {
-        font-size: 7px;
-        line-height: 7px;
-        padding: 1px;
-    }
-
-    #carousel-banner .carousel-caption2 h2 {
-        font-size: 7px;
-        line-height: 7px;
-        padding: 1px;
-    }
-
-    #carousel-banner .carousel-caption2 button {
-        font-size: 8px;
-    }
-
-    #carousel-banner .carousel-caption2 p {
-        font-size: 7px;
-        line-height: 7px;
-    }
-
-    #carousel-banner .carousel-caption3 {
-        left: 60px;
-    }
-
-    #carousel-banner .carousel-caption3 h1 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption3 h2 {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .carousel-caption3 h3 {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption3 button {
-        font-size: 8px;
-        padding: 5px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption3 p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption4 {
-        left: 50px;
-    }
-
-    #carousel-banner .carousel-caption4 h1 {
-        font-size: 12px;
-        line-height: 12px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 h2 {
-        font-size: 10px;
-        line-height: 10px;
-        padding: 2px;
-    }
-
-    #carousel-banner .carousel-caption4 button {
-        font-size: 8px;
-        padding: 5px 20px;
-    }
-
-    #carousel-banner .carousel-caption4 p {
-        font-size: 8px;
-        line-height: 8px;
-    }
-
-    #carousel-banner .carousel-caption5 h1 {
-        font-size: 12px;
-        line-height: 12px;
-    }
-
-    #carousel-banner .carousel-caption5 h2 {
-        font-size: 24px;
-        line-height: 24px;
-    }
-
-    #carousel-banner .carousel-caption5 h3 {
-        font-size: 10px;
-        line-height: 10px;
-    }
-
-    #carousel-banner .carousel-caption5 button {
-        font-size: 8px;
-        padding: 5px 20px;
-        margin: 0;
-    }
-
-    #carousel-banner .carousel-caption5 p {
-        font-size: 8px;
-        line-height: 8px;
     }
 }

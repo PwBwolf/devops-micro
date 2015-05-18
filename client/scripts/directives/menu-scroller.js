@@ -5,7 +5,7 @@
         return {
             restrict: 'A',
             link: function () {
-                var topBtn = angular.element('#pgCntnt');
+                var topBtn = angular.element('#top');
                 var navBar = $window.document.getElementById('navBar');
                 var brand = $window.document.getElementById('brand');
                 var navTop = navBar.offsetTop;
@@ -23,7 +23,7 @@
                         navBar.style.color = 'black';
                         navBar.className = 'docked';
                         navLogo.style.position = 'fixed';
-                        navLogo.className = 'imgdocked';
+                        navLogo.className = 'image-docked';
                         topBtn.show('slow');
                         navDocked = true;
                     } else if (navDocked && scrollTop() <= navTop) {
@@ -32,7 +32,7 @@
                         navBar.style.top = navTop + 'px';
                         navBar.style.color = '#3e194d';
                         navBar.className = navBar.className.replace('docked', '');
-                        navLogo.className = navLogo.className.replace('imgdocked', '');
+                        navLogo.className = navLogo.className.replace('image-docked', '');
                         navLogo.style.position = 'absolute';
                         topBtn.hide('slow');
                         navDocked = false;

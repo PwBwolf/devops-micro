@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css styles/main.css -->
+    <!-- build:css styles/app.css -->
     <link rel="stylesheet" href="styles/fonts.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
     <!-- endbuild -->
@@ -45,81 +45,78 @@
 </head>
 <body>
 <!--[if lt IE 9]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
-<header id='pcHdr' class="">
+<header id="desktopHeader">
     <div id="brand">
         <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
 
-        <div id="language" class="usr_Input_clsd"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
-        <div id="signin" class="usr_Input_clsd">
+        <div id="language" class="menu-button"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
+        <div class="menu-button">
             <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Sign In</a>
             <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a>
         </div>
-        <div id="trial" class="usr_Input_clsd" access-level="accessLevels.user"><a href="/faq" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
-		<div id="contact" class="contactNumber" translate="INDEX_CONTACT_NUMBER">Call us toll free: <a href='tel:+18559194788'>855-919-4788</a></div>
+        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href="/faq" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
+        <div class="contact-number" translate="INDEX_CONTACT_NUMBER">Call us toll free: <a href="tel:+18559194788">855-919-4788</a></div>
     </div>
     <nav id="navBar">
         <div id="menu">
-            <div id="menuItems" class="">
-                <div id="docklogo" style="display:none"><img id="dl_img" src="images/mini-logo.png"></div>
-                <menuItem id="pgCntnt" bookmark style="display:none">Top ^</menuItem>
-                <menuItem id="Shws" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY">Shows by Category</menuItem>
-                <menuItem id="Ntwrks" bookmark home-only access-level="accessLevels.anon" translate="INDEX_NETWORKS">Networks</menuItem>
-                <menuItem id="Abt" bookmark home-only access-level="accessLevels.anon" translate="INDEX_ABOUT_US">About YipTV</menuItem>
-                <menuItem id="watch"  access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW">Watch Now</a></menuItem>
-                <menuItem id="Join"><a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a><a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT">Account</a></menuItem>
+            <div id="menuItems">
+                <div style="display:none"><img src="images/mini-logo.png"></div>
+                <menuItem id="top" bookmark style="display:none">Top ^</menuItem>
+                <menuItem id="shows" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY"></menuItem>
+                <menuItem id="networks" bookmark home-only access-level="accessLevels.anon" translate="INDEX_NETWORKS"></menuItem>
+                <menuItem id="about" bookmark home-only access-level="accessLevels.anon" translate="INDEX_ABOUT_US"></menuItem>
+                <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
+                <menuItem access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
+                <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
                 <menuItem id="welcome">
-                    <div access-level="accessLevels.user"><span translate="INDEX_WELCOME">Welcome</span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
+                    <div access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
                 </menuItem>
             </div>
         </div>
     </nav>
 </header>
-<header id='resHdr'>
+<header id="phoneHeader">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
 
-                <div class="navBtn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_LANGUAGE_DROPDOWN"
-                            data-toggle="dropdown" aria-expanded="false">
-                        Language <span class="caret"></span>
-                    </button>
+                <div class="nav-btn btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_LANGUAGE_DROPDOWN" data-toggle="dropdown" aria-expanded="false"></button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a>
+                            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
                         </li>
                     </ul>
                 </div>
-                <div class="navBtn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false">
-                        Login/Join <span class="caret"></span>
+                <div class="nav-btn btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Login</a>
-                            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a>
+                            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
+                            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
                         </li>
                         <li>
-                            <a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW">Join Now</a>
-                            <a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT">Account</a>
+                            <a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW"></a>
+                            <a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT"></a>
                         </li>
                     </ul>
                 </div>
             </div>
-			<div id="contact" class="mblContactNumber" translate="INDEX_CONTACT_NUMBER">Call us toll free: <a href='tel:+18559194788'>855-919-4788</a></div>
+            <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
         </div>
     </nav>
 </header>
 
-<div id="pgCntnt_Bx" ng-view autoscroll="true" class="view-animate_"></div>
+<div id="topBox" ng-view autoscroll="true"></div>
 
-<footer class="topShdw">
+<footer class="top-shadow">
     <div translate="INDEX_COPYRIGHT"></div>
-    <div id="sclMda" class="likOns">
+    <div id="socialMedia" class="likOns">
         <a target="_blank" href="https://www.facebook.com/yiptvlatino"><img src="images/facebook.png" alt=""/></a>
         <a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>
     </div>
@@ -129,7 +126,6 @@
 <script src="bower_components/es5-shim/es5-shim.min.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
-<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
@@ -180,7 +176,6 @@
 <script src="scripts/config/translate.js"></script>
 <script src="scripts/services/app-service.js"></script>
 <script src="scripts/services/user-service.js"></script>
-<script src="scripts/services/media-service.js"></script>
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/admin-service.js"></script>
@@ -201,7 +196,6 @@
 <script src="scripts/controllers/forgot-password-controller.js"></script>
 <script src="scripts/controllers/reset-password-controller.js"></script>
 <script src="scripts/controllers/user-home-controller.js"></script>
-<script src="scripts/controllers/player-controller.js"></script>
 <script src="scripts/controllers/account-controller.js"></script>
 <script src="scripts/controllers/preferences-controller.js"></script>
 <script src="scripts/controllers/change-credit-card-controller.js"></script>
@@ -241,9 +235,9 @@
     <div class="modal-body" ng-bind="modalBody">
     </div>
     <div class="modal-footer">
-        <button ng-show="showOkButton" class="btn-submit btn-modal" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
-        <button ng-show="showYesButton" class="btn-submit btn-modal" ng-click="yes()" translate="INDEX_YES_BUTTON">Yes</button>
-        <button ng-show="showNoButton" class="btn-submit btn-modal" ng-click="no()" translate="INDEX_NO_BUTTON">No</button>
+        <button ng-show="showOkButton" class="submit-button modal-button" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
+        <button ng-show="showYesButton" class="submit-button modal-button" ng-click="yes()" translate="INDEX_YES_BUTTON">Yes</button>
+        <button ng-show="showNoButton" class="submit-button modal-button" ng-click="no()" translate="INDEX_NO_BUTTON">No</button>
     </div>
 </script>
 </body>

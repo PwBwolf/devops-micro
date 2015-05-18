@@ -134,14 +134,6 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
-            .when('/player-4872',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/player.html',
-                controller: 'playerCtrl',
-                access: access.public
-            })
             .when('/account',
             {
                 title: title,

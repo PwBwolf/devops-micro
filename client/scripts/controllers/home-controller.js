@@ -38,7 +38,7 @@
                     break;
                 case (x > 1025):
                     $scope.content = {
-                        'banners': 'views/banner.html',
+                        'banners': 'views/banner-desktop.html',
                         'shows': 'views/shows.html',
                         'networks': 'views/networks.html',
                         'about': 'views/about-yiptv.html',

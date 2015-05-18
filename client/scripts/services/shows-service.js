@@ -30,8 +30,8 @@
         ];
 
         var showClasses = [
-            {className: 'panel_clsd'},
-            {className: 'panel_open'},
+            {className: 'panel-closed'},
+            {className: 'panel-open'},
             {className: 'panel'},
             {className: 'panel-default'},
             {className: 'col-md-2'},

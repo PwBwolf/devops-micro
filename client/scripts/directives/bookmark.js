@@ -8,7 +8,7 @@
                 var id = element.attr('id');
                 var site = $('html, body');
                 site.animate({
-                    scrollTop: $('#' + id + '_Bx').offset().top - 30
+                    scrollTop: $('#' + id + 'Box').offset().top - 30
                 }, 1500);
                 return false;
             });

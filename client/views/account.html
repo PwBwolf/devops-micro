@@ -1,28 +1,25 @@
 <div class="content-area">
-    <div class="top-bg">&nbsp;</div>
     <div class="user-home-box">
         <div class="user-home-wrap">
             <img src="images/background.jpg" alt="...">
 
             <div class="caption">
-                <div style="position:relative;margin: 0 auto">
-                    <button goto="/change-password" type="button" translate="ACCOUNT_CHANGE_PASSWORD">Change Password</button>
+                <div id="accountBox">
+                    <button goto="/change-password" type="button" translate="ACCOUNT_CHANGE_PASSWORD"></button>
                     <br>
-                    <button ng-show="user.type === 'paid' && user.status === 'active'" goto="/change-credit-card" type="button" translate="ACCOUNT_CHANGE_CREDIT_CARD">Change Credit Card</button>
+                    <button ng-show="user.type === 'paid' && user.status === 'active'" goto="/change-credit-card" type="button" translate="ACCOUNT_CHANGE_CREDIT_CARD"></button>
                     <br ng-show="user.type === 'paid' && user.status === 'active'">
-                    <button ng-show="(user.type === 'free' && (user.status === 'active' || user.status === 'trial-ended')) || (user.type === 'comp' && user.status === 'comp-ended')" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION">Upgrade Subscription</button>
+                    <button ng-show="(user.type === 'free' && (user.status === 'active' || user.status === 'trial-ended')) || (user.type === 'comp' && user.status === 'comp-ended')" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION"></button>
                     <br ng-show="(user.type === 'free' && (user.status === 'active' || user.status === 'trial-ended')) || (user.type === 'comp' && user.status === 'comp-ended')">
-                    <button ng-show="user.type === 'paid' && user.status === 'canceled'" goto="/reactivate-subscription" type="button" translate="ACCOUNT_REACTIVATE_SUBSCRIPTION">Re-activate Subscription</button>
+                    <button ng-show="user.type === 'paid' && user.status === 'canceled'" goto="/reactivate-subscription" type="button" translate="ACCOUNT_REACTIVATE_SUBSCRIPTION"></button>
                     <br ng-show="user.type === 'paid' && user.status === 'canceled'">
-                    <button ng-show="user.type === 'paid' && user.status === 'active'" ng-disabled="saving" ng-click="cancelSubscription()" type="button" translate="ACCOUNT_CANCEL_SUBSCRIPTION">Cancel Subscription</button>
+                    <button ng-show="user.type === 'paid' && user.status === 'active'" ng-disabled="saving" ng-click="cancelSubscription()" type="button" translate="ACCOUNT_CANCEL_SUBSCRIPTION"></button>
                     <br ng-show="user.type === 'paid' && user.status === 'active'">
-                    <button goto="/preferences" type="button" translate="ACCOUNT_PREFERENCES">Preferences</button>
+                    <button goto="/preferences" type="button" translate="ACCOUNT_PREFERENCES"></button>
                     <br>
-                    <button goto="/contact-us" type="button" translate="ACCOUNT_CONTACT_US">Contact Us</button>
-
+                    <button goto="/contact-us" type="button" translate="ACCOUNT_CONTACT_US"></button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="btm-bg">&nbsp;</div>
 </div>

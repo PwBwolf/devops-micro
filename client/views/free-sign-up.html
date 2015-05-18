@@ -1,72 +1,70 @@
 <div class="content-area">
-    <div class="top-bg">&nbsp;</div>
-    <div class="setting-box">
-        <h1><span translate="FREE_SIGN_UP_HEADING">Sign Up</span></h1>
+    <div class="content-box">
+        <h1><span translate="FREE_SIGN_UP_HEADING"></span></h1>
 
         <div class="container">
-            <div class="sign-up-box">
-                <div class="frm">
-                    <div class="frm-btn">
-                        <div class="message" translate="FREE_SIGN_UP_MESSAGE">You are signing up as a 7-day free trial user.</div>
+            <div class="form-box">
+                <div class="form-container">
+                    <div class="full-form">
+                        <div class="message" translate="FREE_SIGN_UP_MESSAGE"></div>
                     </div>
                 </div>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
-                    <div class="frm">
-                        <div class="frm-left1">
-                            <span class="label-text" translate="FREE_SIGN_UP_FIRST_NAME">First Name</span>
-                            <br><input valid-name autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="txtbox2" required ng-class="{'txtbox-error': form.firstName.$dirty && form.firstName.$invalid}">
+                    <div class="form-container">
+                        <div class="half-form">
+                            <span class="label-text" translate="FREE_SIGN_UP_FIRST_NAME"></span>
+                            <br><input valid-name autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
 
-                            <div class="error-msg" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="FREE_SIGN_UP_FIRST_NAME_REQUIRED">Enter your first name</div>
-                            <div class="error-msg" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="FREE_SIGN_UP_FIRST_NAME_INVALID">Enter a valid first name</div>
+                            <div class="error-message" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="FREE_SIGN_UP_FIRST_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="FREE_SIGN_UP_FIRST_NAME_INVALID"></div>
                         </div>
-                        <div class="frm-right1">
-                            <span class="label-text" translate="FREE_SIGN_UP_LAST_NAME">Last Name</span>
-                            <br><input valid-name autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="txtbox1" required ng-class="{'txtbox-error': form.lastName.$dirty && form.lastName.$invalid}">
+                        <div class="half-form">
+                            <span class="label-text" translate="FREE_SIGN_UP_LAST_NAME"></span>
+                            <br><input valid-name autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="text-box" required ng-class="{'text-box-error': form.lastName.$dirty && form.lastName.$invalid}">
 
-                            <div class="error-msg" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="FREE_SIGN_UP_LAST_NAME_REQUIRED">Enter your last name</div>
-                            <div class="error-msg" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="FREE_SIGN_UP_LAST_NAME_INVALID">Enter a valid last name</div>
+                            <div class="error-message" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="FREE_SIGN_UP_LAST_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="FREE_SIGN_UP_LAST_NAME_INVALID"></div>
                         </div>
                     </div>
-                    <div class="frm-btn">
-                        <span class="label-text" translate="FREE_SIGN_UP_EMAIL">Email</span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="free" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="txtbox2" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                    <div class="full-form">
+                        <span class="label-text" translate="FREE_SIGN_UP_EMAIL"></span><br>
+                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="free" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}">
 
-                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.required" translate="FREE_SIGN_UP_EMAIL_REQUIRED">Enter your email address</div>
-                        <div class="error-msg" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="FREE_SIGN_UP_EMAIL_INVALID">Enter a valid email address</div>
-                        <div class="error-msg" ng-show="form.email.$dirty && form.email.$error.isSignUpAllowed" translate="FREE_SIGN_UP_EMAIL_EXISTS">Email already registered</div>
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.required" translate="FREE_SIGN_UP_EMAIL_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="FREE_SIGN_UP_EMAIL_INVALID"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.isSignUpAllowed" translate="FREE_SIGN_UP_EMAIL_EXISTS"></div>
                     </div>
-                    <div class="frm-btn">
-                        <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE">Telephone</span><br>
-                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="txtbox2" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+                    <div class="full-form">
+                        <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE"></span><br>
+                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
 
-                        <div class="error-msg" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED">Enter your telephone number</div>
-                        <div class="error-msg" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID">Enter a valid US telephone number</div>
+                        <div class="error-message" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>
                     </div>
-                    <div class="frm-btn"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD">Password</span><br>
-                        <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="txtbox2" ng-class="{'txtbox-error': form.password.$dirty && form.password.$invalid}">
+                    <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD"></span><br>
+                        <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$dirty && form.password.$invalid}">
 
-                        <div class="error-msg" ng-show="form.password.$dirty && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED">Enter your password</div>
-                        <div class="error-msg" ng-show="form.password.$dirty && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX">Password needs to be at least 8 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character</div>
+                        <div class="error-message" ng-show="form.password.$dirty && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.password.$dirty && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                     </div>
-                    <div class="frm-btn"><span class="label-text" translate="FREE_SIGN_UP_CONFIRM_PASSWORD">Confirm Password</span><br>
-                        <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="txtbox2" ng-class="{'txtbox-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
+                    <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_CONFIRM_PASSWORD"></span><br>
+                        <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
 
-                        <div class="error-msg" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_REQUIRED">Confirm your password</div>
-                        <div class="error-msg" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH">Passwords do not match</div>
+                        <div class="error-message" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH"></div>
                     </div>
-                    <div class="frm-btn btm-link">
-                        <input type="checkbox" class="checkbox" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="FREE_SIGN_UP_DISCLAIMER">I agree to the YipTV</span><a href="/terms-of-use" target="_blank" translate="FREE_SIGN_UP_TERMS_OF_USE">Terms of Use</a> <span translate="FREE_SIGN_UP_AND">and</span> <a href="/privacy-policy" translate="FREE_SIGN_UP_PRIVACY_POLICY" target="_blank">Privacy Policy</a><span translate="FREE_SIGN_UP_DISCLAIMER_END"></span></label>
+                    <div class="full-form center-form">
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="FREE_SIGN_UP_DISCLAIMER"></span><a href="/terms-of-use" target="_blank" translate="FREE_SIGN_UP_TERMS_OF_USE"></a> <span translate="FREE_SIGN_UP_AND"></span> <a href="/privacy-policy" translate="FREE_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="FREE_SIGN_UP_DISCLAIMER_END"></span></label>
 
-                        <div class="error-msg" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="FREE_SIGN_UP_DISCLAIMER_REQUIRED">In order to use YipTV services you need to accept our Terms of Use and Privacy Policy</div>
+                        <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="FREE_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
-                    <div class="frm-btn">
-                        <button ng-disabled="saving" type="submit" class="btn-submit" translate="FREE_SIGN_UP_SUBMIT_BUTTON">Sign Up</button>
+                    <div class="full-form">
+                        <button ng-disabled="saving" type="submit" class="submit-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
                     </div>
-                    <div class="frm-btn btm-link"><span translate="FREE_SIGN_UP_PROBLEM">Having trouble signing up? Please contact customer support at </span><span ng-bind="appConfig.customerCareNumber"></span></div>
-                    <div class="frm-btn btm-link"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT">Already have an account? </span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN">Sign In</a></div>
+                    <div class="full-form center-form"><span translate="FREE_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
+                    <div class="full-form center-form"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN"></a></div>
                 </form>
             </div>
         </div>
-        <div class="btm-bg">&nbsp;</div>
     </div>
 </div>
