@@ -1,59 +1,56 @@
 <div class="content-area">
-    <div class="top-bg">&nbsp;</div>
-    <div class="setting-box">
-        <h1><span translate="CONTACT_US_HEADING">Contact Us</span></h1>
+    <div class="content-box">
+        <h1><span translate="CONTACT_US_HEADING"></span></h1>
 
         <div class="container">
-            <div class="sign-in-box">
+            <div class="form-box">
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
-                    <div class="frm">
-                        <span class="label-text" translate="CONTACT_US_NAME">Name</span>
-                        <input autocomplete="off" maxlength="41" type="text" autofocus class="txtbox2" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'txtbox-error': form.name.$dirty && form.name.$invalid}">
+                    <div class="form-container">
+                        <span class="label-text" translate="CONTACT_US_NAME"></span>
+                        <input autocomplete="off" maxlength="41" type="text" autofocus class="text-box" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'text-box-error': form.name.$dirty && form.name.$invalid}">
 
-                        <div ng-show="form.name.$dirty && form.name.$error.required" class="error-msg" translate="CONTACT_US_NAME_REQUIRED">Enter your name</div>
-                        <br><br><span class="label-text" translate="CONTACT_US_EMAIL">Email</span>
-                        <input autocomplete="off" type="text" is-email required maxlength="50" class="txtbox2" name="email" id="email" ng-model="mv.email" ng-class="{'txtbox-error': form.email.$dirty && form.email.$invalid}">
+                        <div ng-show="form.name.$dirty && form.name.$error.required" class="error-message" translate="CONTACT_US_NAME_REQUIRED"></div>
+                        <br><br><span class="label-text" translate="CONTACT_US_EMAIL"></span>
+                        <input autocomplete="off" type="text" is-email required maxlength="50" class="text-box" name="email" id="email" ng-model="mv.email" ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}">
 
-                        <div ng-show="form.email.$dirty && form.email.$error.required" class="error-msg" translate="CONTACT_US_EMAIL_REQUIRED">Enter your email</div>
-                        <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-msg" translate="CONTACT_US_EMAIL_INVALID">Email is invalid</div>
-                        <br><br><span class="label-text" translate="CONTACT_US_TELEPHONE">Telephone</span>
-                        <br><input autocomplete="off" type="text" is-us-phone-number maxlength="12" required class="txtbox2" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'txtbox-error': form.telephone.$dirty && form.telephone.$invalid}">
+                        <div ng-show="form.email.$dirty && form.email.$error.required" class="error-message" translate="CONTACT_US_EMAIL_REQUIRED"></div>
+                        <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="CONTACT_US_EMAIL_INVALID"></div>
+                        <br><br><span class="label-text" translate="CONTACT_US_TELEPHONE"></span>
+                        <br><input autocomplete="off" type="text" is-us-phone-number maxlength="12" required class="text-box" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
 
-                        <div ng-show="form.telephone.$dirty && form.telephone.$error.required" class="error-msg" translate="CONTACT_US_TELEPHONE_REQUIRED">Enter your telephone number</div>
-                        <div ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-msg" translate="CONTACT_US_TELEPHONE_INVALID">Enter a valid US telephone number</div>
-                        <br><br><span class="label-text" translate="CONTACT_US_COUNTRY">Country</span>
+                        <div ng-show="form.telephone.$dirty && form.telephone.$error.required" class="error-message" translate="CONTACT_US_TELEPHONE_REQUIRED"></div>
+                        <div ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-message" translate="CONTACT_US_TELEPHONE_INVALID"></div>
+                        <br><br><span class="label-text" translate="CONTACT_US_COUNTRY"></span>
                         <br>
-                        <select required class="txtbox2 txtboxdd" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'txtbox-error': form.country.$dirty && form.country.$invalid}">
-                            <option value="" translate="CONTACT_US_COUNTRY_SELECT">Select One</option>
+                        <select required class="text-box drop-down-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$dirty && form.country.$invalid}">
+                            <option value="" translate="CONTACT_US_COUNTRY_SELECT"></option>
                         </select>
-                        <div ng-show="form.country.$dirty && form.country.$error.required" class="error-msg" translate="CONTACT_US_COUNTRY_REQUIRED">Select your country</div>
-                        <br><br><span class="label-text" translate="CONTACT_US_INTEREST">Interest</span>
+                        <div ng-show="form.country.$dirty && form.country.$error.required" class="error-message" translate="CONTACT_US_COUNTRY_REQUIRED"></div>
+                        <br><br><span class="label-text" translate="CONTACT_US_INTEREST"></span>
                         <br>
-                        <select class="txtbox2 txtboxdd" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'txtbox-error': form.interest.$dirty && form.interest.$invalid}">
-                            <option value="" translate="CONTACT_US_INTEREST_SELECT">Select One</option>
-                            <option value="Technical Support" translate="CONTACT_US_INTEREST_TECHNICAL">Technical Support</option>
-                            <option value="Billing Support" translate="CONTACT_US_INTEREST_BILLING">Billing Support</option>
-                            <option value="Become a YipTV investor" translate="CONTACT_US_INTEREST_INVESTOR">Become a YipTV investor</option>
+                        <select class="text-box drop-down-list" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'text-box-error': form.interest.$dirty && form.interest.$invalid}">
+                            <option value="" translate="CONTACT_US_INTEREST_SELECT"></option>
+                            <option value="Technical Support" translate="CONTACT_US_INTEREST_TECHNICAL"></option>
+                            <option value="Billing Support" translate="CONTACT_US_INTEREST_BILLING"></option>
+                            <option value="Become a YipTV investor" translate="CONTACT_US_INTEREST_INVESTOR"></option>
                         </select>
 
-                        <div ng-show="form.interest.$dirty && form.interest.$error.required" class="error-msg" translate="CONTACT_US_INTEREST_REQUIRED">Select your reason for contacting us</div>
+                        <div ng-show="form.interest.$dirty && form.interest.$error.required" class="error-message" translate="CONTACT_US_INTEREST_REQUIRED"></div>
 
-                        <br><br><span class="label-text" translate="CONTACT_US_DETAILS">How can we assist you?</span>
-                        <br><textarea maxlength="1000" class="txtbox2 textarea2" name="details" id="details" ng-model="mv.details" value="" required ng-class="{'txtbox-error': form.details.$dirty && form.details.$invalid}"></textarea>
+                        <br><br><span class="label-text" translate="CONTACT_US_DETAILS"></span>
+                        <br><textarea maxlength="1000" class="text-box text-area" name="details" id="details" ng-model="mv.details" value="" required ng-class="{'text-box-error': form.details.$dirty && form.details.$invalid}"></textarea>
 
-                        <div ng-show="form.details.$dirty && form.details.$error.required" class="error-msg" translate="CONTACT_US_DETAILS_REQUIRED">Tell us how we can help you</div>
+                        <div ng-show="form.details.$dirty && form.details.$error.required" class="error-message" translate="CONTACT_US_DETAILS_REQUIRED"></div>
                     </div>
-                    <div class="frm">&nbsp;</div>
-                    <div class="frm-btn">
-                        <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="btn-submit">
-                            Submit
+                    <div class="form-container">&nbsp;</div>
+                    <div class="full-form">
+                        <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="submit-button">
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="btm-bg">&nbsp;</div>
 </div>
