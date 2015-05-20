@@ -265,6 +265,7 @@
     #menu {
         width: 100%;
         font-weight: bold;
+		font-size:80%;
     }
 
     #menuItems {
@@ -351,7 +352,7 @@
     #showsBox .category-line-left, #showsBox .category-line-right {
         border-bottom: thin dotted grey;
         border-top: thin dotted grey;
-        padding: 0% 12%;
+        padding: 0% 5%;
         margin: 0% 2%;
         top: -3px;
     }
