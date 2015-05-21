@@ -1,7 +1,7 @@
 {
-    "integration": "ssh://devops@int.yiptv.net/optdev/devops/distributions",
+    "integration": "ssh://devops@172.16.10.8/optdev/devops/distributions",
     "ci": "/optdev/devops/distributions",
-    "test": "ssh://devops@test.yiptv.net/devops/distributions",
+    "test": "ssh://devops@172.16.10.11/devops/distributions",
     "prod1": "ssh://prodops@10.100.10.9/home/prodops/distributions",
     "prod2": "ssh://prodops@10.100.10.10/home/prodops/distributions"
 }

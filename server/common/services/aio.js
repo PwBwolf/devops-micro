@@ -98,5 +98,29 @@ module.exports = {
             logger.logError(err);
             callback(err);
         });
+    },
+
+    updatePassword: function(username, password, callback) {
+        var client = new Client();
+        var args = {
+            data: {username: username, password: password},
+            headers: {'Content-Type': 'application/json', 'Authorization': 'apikey ' + config.aioApiKey},
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.post(config.aioApiUrl + '/ws/UpdateCustomer.php', args, function (data) {
+            logger.logInfo('aio - updatePassword - response');
+            logger.logInfo(data);
+            var jsonData = JSON.parse(data);
+            if (jsonData.responseCode !== 0) {
+                callback(jsonData.message);
+            } else {
+                callback(null, jsonData);
+            }
+        }).on('error', function (err) {
+            logger.logError('aio - updatePassword - error in updating password');
+            logger.logError(err);
+            callback(err);
+        });
     }
 };
