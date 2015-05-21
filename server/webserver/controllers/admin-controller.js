@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     config = require('../../common/setup/config'),
     sf = require('sf'),
     email = require('../../common/services/email'),
+    aio = require('../../common/services/aio'),
     User = mongoose.model('User');
 
 module.exports = {
@@ -40,6 +41,8 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
+            var hashedPassword = user.hashedPassword;
+            var salt = user.salt;
             user.password = req.body.newPassword;
             user.save(function (err1) {
                 if (err1) {
@@ -47,21 +50,37 @@ module.exports = {
                     logger.logError(err1);
                     return res.status(500).end();
                 }
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: user.email,
-                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('adminController - changePassword - error sending password changed email to ' + mailOptions.to);
-                        logger.logError(err);
+                aio.updatePassword(user.email, req.body.newPassword, function (err2) {
+                    if (err2) {
+                        logger.logError('adminController - changePassword - error updating password in aio: ' + req.body.code);
+                        logger.logError(err2);
+                        user.hashedPassword = hashedPassword;
+                        user.salt = salt;
+                        user.save(function (err3) {
+                            if (err3) {
+                                logger.logError('adminController - changePassword - error reverting password in db: ' + req.body.code);
+                                logger.logError(err1);
+                            }
+                            return res.status(500).end();
+                        });
                     } else {
-                        logger.logInfo('adminController - changePassword - password changed email sent to ' + mailOptions.to);
+                        var mailOptions = {
+                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                            to: user.email,
+                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+                        };
+                        email.sendEmail(mailOptions, function (err4) {
+                            if (err4) {
+                                logger.logError('adminController - changePassword - error sending password changed email to: ' + mailOptions.to);
+                                logger.logError(err4);
+                            } else {
+                                logger.logInfo('adminController - changePassword - password changed email sent to ' + mailOptions.to);
+                            }
+                        });
+                        return res.status(200).end();
                     }
                 });
-                return res.status(200).end();
             });
         });
     }
