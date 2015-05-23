@@ -840,6 +840,24 @@ module.exports = {
                     }
                 });
             },
+            // if password has changed set new password in aio
+            function (accountObj, userObj, callback) {
+                if (newUser.password) {
+                    aio.updatePassword(userObj.email, newUser.password, function (err) {
+                        if(err) {
+                            revertPackagesInAio(userObj.email);
+                            revertUserStatusInAio(userObj, status);
+                            revertUserChanges(userObj, status);
+                            revertAccountType(accountObj);
+                            logger.logError('subscription - upgradeSubscription - error updating password in aio: ' + userObj.email);
+                        } else {
+                            callback(null, accountObj, userObj);
+                        }
+                    });
+                } else {
+                    callback(null, accountObj, userObj);
+                }
+            },
             // update user information in FreeSide
             function (accountObj, userObj, callback) {
                 var merchantId = accountObj.merchant ? ' - ' + accountObj.merchant : '';
@@ -1024,6 +1042,22 @@ module.exports = {
                         callback(null, userObj);
                     }
                 });
+            },
+            // if password has changed set new password in aio
+            function (userObj, callback) {
+                if (newUser.password) {
+                    aio.updatePassword(userObj.email, newUser.password, function (err) {
+                        if(err) {
+                            setUserInactiveInAio(userObj.email);
+                            revertUserChanges(cancelDate, userObj);
+                            logger.logError('subscription - reactivateSubscription - error updating password in aio: ' + userObj.email);
+                        } else {
+                            callback(null, userObj);
+                        }
+                    });
+                } else {
+                    callback(null, userObj);
+                }
             },
             // update user in FreeSide
             function (userObj, callback) {
@@ -1231,6 +1265,24 @@ module.exports = {
                             callback(null, accountObj, userObj);
                         }
                     });
+                },
+                // if password has changed set new password in aio
+                function (accountObj, userObj, callback) {
+                    if (newUser.password) {
+                        aio.updatePassword(userObj.email, newUser.password, function (err) {
+                            if(err) {
+                                revertPackagesInAio(userObj.email);
+                                revertUserStatusInAio(userObj, status);
+                                revertUserChanges(userObj, status);
+                                revertAccountChanges(accountObj);
+                                logger.logError('subscription - convertToComplimentary - error updating password in aio: ' + userObj.email);
+                            } else {
+                                callback(null, accountObj, userObj);
+                            }
+                        });
+                    } else {
+                        callback(null, accountObj, userObj);
+                    }
                 },
                 // update user in FreeSide
                 function (accountObj, userObj, callback) {
