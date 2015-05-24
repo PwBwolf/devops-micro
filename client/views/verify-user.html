@@ -1,5 +1,5 @@
 <div class="content-area">
-    <div class="content-box" ng-hide="showPassword">
+    <div class="content-box">
         <h1><span>{{heading | translate}}</span></h1>
 
         <div class="container message-box">
@@ -8,32 +8,6 @@
                     <p ng-hide="error" class="text-center">{{message | translate}}</p>
 
                     <p ng-show="error" class="text-center">{{message | translate}} {{appConfig.customerCareNumber}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content-box" ng-show="showPassword">
-        <div class="content-box">
-            <h1><span translate="VERIFY_USER_SET_PASSWORD_HEADING"></span></h1>
-
-            <div class="container">
-                <div class="form-box">
-                    <div>&nbsp;</div>
-                    <div>&nbsp;</div>
-                    <form name="form" id="form" ng-submit="setPasswordAndVerifyUser()" novalidate>
-                        <span class="label-text" translate="VERIFY_USER_NEW_PASSWORD"></span><br>
-                        <input autofocus focus-watch="showPassword" focus-value="true" required complex-password ng-model="mv.newPassword" id="newPassword" name="newPassword" maxlength="20" type="password" autocomplete="off" class="text-box" ng-class="{'text-box-error': form.newPassword.$dirty && form.newPassword.$invalid}">
-
-                        <div class="error-message" ng-show="form.newPassword.$dirty && form.newPassword.$error.required" translate="VERIFY_USER_NEW_PASSWORD_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.newPassword.$dirty && !form.newPassword.$error.required && form.newPassword.$error.complexity" translate="VERIFY_USER_NEW_PASSWORD_NOT_COMPLEX"></div>
-                        <br><br><span class="label-text" translate="VERIFY_USER_CONFIRM_PASSWORD"></span><br>
-                        <input required autocomplete="off" same-as="mv.newPassword" id="confirmPassword" name="confirmPassword" ng-model="mv.confirmPassword" maxlength="20" type="password" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
-
-                        <div class="error-message" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="VERIFY_USER_CONFIRM_PASSWORD_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="VERIFY_USER_CONFIRM_PASSWORD_NO_MATCH"></div>
-                        <br><br><br>
-                        <button type="submit" ng-disabled="saving" class="submit-button" translate="VERIFY_USER_BUTTON"></button>
-                    </form>
                 </div>
             </div>
         </div>

@@ -44,22 +44,22 @@ module.exports = {
             var hashedPassword = user.hashedPassword;
             var salt = user.salt;
             user.password = req.body.newPassword;
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('adminController - changePassword - error saving changed password: ' + req.body.email);
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err2) {
-                    if (err2) {
+                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                    if (err) {
                         logger.logError('adminController - changePassword - error updating password in aio: ' + req.body.code);
-                        logger.logError(err2);
+                        logger.logError(err);
                         user.hashedPassword = hashedPassword;
                         user.salt = salt;
-                        user.save(function (err3) {
-                            if (err3) {
+                        user.save(function (err) {
+                            if (err) {
                                 logger.logError('adminController - changePassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                             return res.status(500).end();
                         });
@@ -70,10 +70,10 @@ module.exports = {
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                             html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                         };
-                        email.sendEmail(mailOptions, function (err4) {
-                            if (err4) {
+                        email.sendEmail(mailOptions, function (err) {
+                            if (err) {
                                 logger.logError('adminController - changePassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err4);
+                                logger.logError(err);
                             } else {
                                 logger.logInfo('adminController - changePassword - password changed email sent to ' + mailOptions.to);
                             }

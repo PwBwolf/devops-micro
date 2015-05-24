@@ -27,8 +27,8 @@ module.exports = {
                 if (!req.query.username || !emailRegex.test(req.query.username)) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
-                User.findOne({email: req.query.username.toLowerCase()}, function (err1, user) {
-                    if (err1) {
+                User.findOne({email: req.query.username.toLowerCase()}, function (err, user) {
+                    if (err) {
                         logger.logError('merchantController - doesUsernameExist - error fetching user: ' + req.query.email);
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});

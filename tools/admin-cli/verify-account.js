@@ -45,9 +45,9 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
     } else {
         user.status = 'active';
         user.verificationCode = undefined;
-        user.save(function (err1) {
-            if (err1) {
-                console.log(err1);
+        user.save(function (err) {
+            if (err) {
+                console.log(err);
                 process.exit(1);
             } else {
                 logger.logInfo('adminCLI - verifyAccount - account verified successfully: ' + email.toLowerCase());

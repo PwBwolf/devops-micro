@@ -165,10 +165,10 @@ async.waterfall([
                 callback(err);
             } else {
                 var webSliders = db.collection('WebSliders');
-                webSliders.remove({}, {w: 1}, function (err1) {
-                    if (err1) {
+                webSliders.remove({}, {w: 1}, function (err) {
+                    if (err) {
                         console.log('Error deleting existing slides from DB');
-                        callback(err1);
+                        callback(err);
                     } else {
                         console.log('Successfully deleted existing slides from DB');
                         callback(null, sliderData, db, webSliders);
@@ -198,30 +198,30 @@ async.waterfall([
                 callback(err);
             } else {
                 if (!data) {
-                    versions.insert({webSliderVersion: 1}, {w: 1}, function (err1) {
-                        if (err1) {
+                    versions.insert({webSliderVersion: 1}, {w: 1}, function (err) {
+                        if (err) {
                             console.log('Error inserting new document with webSliderVersion set to 1');
-                            callback(err1);
+                            callback(err);
                         } else {
                             console.log('Successfully inserted new document with webSliderVersion set to 1');
                             callback(null);
                         }
                     });
                 } else if (!data.webSliderVersion) {
-                    versions.update({}, {$set: {webSliderVersion: 1}}, {w: 1}, function (err1) {
-                        if (err1) {
+                    versions.update({}, {$set: {webSliderVersion: 1}}, {w: 1}, function (err) {
+                        if (err) {
                             console.log('Error setting webSliderVersion to 1');
-                            callback(err1);
+                            callback(err);
                         } else {
                             console.log('Successfully set webSliderVersion to 1');
                             callback(null);
                         }
                     });
                 } else {
-                    versions.update({}, {$inc: {webSliderVersion: 1}}, {w: 1}, function (err2) {
-                        if (err2) {
+                    versions.update({}, {$inc: {webSliderVersion: 1}}, {w: 1}, function (err) {
+                        if (err) {
                             console.log('Error incrementing webSliderVersion');
-                            callback(err2);
+                            callback(err);
                         } else {
                             console.log('Successfully incremented webSliderVersion');
                             callback(null);

@@ -124,10 +124,10 @@ if (command === 'new') {
             cc.createdAt = (new Date()).toUTCString();
             cc.code = uuid.v4();
             cc.accountCount = 0;
-            cc.save(function (err1) {
-                if (err1) {
+            cc.save(function (err) {
+                if (err) {
                     logger.logError('adminCLI - complimentaryCode - error in creating complimentary code');
-                    logger.logError(err1);
+                    logger.logError(err);
                     process.exit(1);
                 }
                 logger.logInfo('adminCLI - complimentaryCode - complimentary code created successfully!');
@@ -155,10 +155,10 @@ if (command === 'disable') {
         }
         cc.disabled = true;
         cc.updatedAt = (new Date()).toUTCString();
-        cc.save(function (err1) {
-            if (err1) {
+        cc.save(function (err) {
+            if (err) {
                 logger.logError('adminCLI - complimentaryCode - error disabling complimentary code: ' + code);
-                logger.logError(err1);
+                logger.logError(err);
                 process.exit(1);
             }
             logger.logInfo('adminCLI - complimentaryCode - complimentary code disabled: ' + code);

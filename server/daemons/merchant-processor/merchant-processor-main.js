@@ -240,11 +240,11 @@ function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
                 cb(err);
             } else {
                 payment.isUserOwned = true;
-                payment.save(function (err1) {
-                    if (err1) {
+                payment.save(function (err) {
+                    if (err) {
                         logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
-                        logger.logError(err1);
-                        cb(err1);
+                        logger.logError(err);
+                        cb(err);
                     } else {
                         cb(null);
                     }
@@ -262,11 +262,11 @@ function saveToDatabase(params, isSuccess, reason, isAddUser, cb) {
                 ownedBy = dbUser && dbUser.account.merchant ? dbUser.account.merchant.toString() : null;
             }
             payment.isUserOwned = params.merchantId === ownedBy;
-            payment.save(function (err1) {
-                if (err1) {
+            payment.save(function (err) {
+                if (err) {
                     logger.logError('merchantProcessorMain - saveToDatabase - error saving MakePayment');
-                    logger.logError(err1);
-                    cb(err1);
+                    logger.logError(err);
+                    cb(err);
                 } else {
                     cb(null);
                 }

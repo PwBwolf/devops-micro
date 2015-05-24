@@ -22,170 +22,144 @@ var _ = require('lodash'),
 module.exports = {
 
     newFreeUser: function (user, cb) {
+        var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
         async.waterfall([
             // create user in db
             function (callback) {
-                var userObj = new User(user);
-                userObj.role = userRoles.user;
-                userObj.createdAt = (new Date()).toUTCString();
-                userObj.verificationCode = uuid.v4();
-                userObj.status = 'registered';
-                userObj.save(function (err) {
+                createUser(user, function (err, userObj) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user: ' + user.email);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
                     }
+                    callback(err, userObj);
                 });
             },
             // create account in db
             function (userObj, callback) {
-                var accountObj = new Account({
-                    type: 'free',
-                    referredBy: user.referredBy,
-                    primaryUser: userObj,
-                    users: [userObj],
-                    createdAt: (new Date()).toUTCString()
+                createAccount(user, userObj, 'free', function (err, accountObj) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating account: ' + user.email);
+                        errorType = 'db-account-insert';
+                    }
+                    callback(err, userObj, accountObj);
                 });
+            },
+            // update user with account
+            function (userObj, accountObj, callback) {
+                userObj.account = accountObj;
+                userObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating user with account details: ' + user.email);
+                        errorType = 'db-user-update';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // create user in aio
+            function (userObj, accountObj, callback) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreePackages, function (err, data) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
+                        errorType = 'aio-user-insert';
+                    }
+                    if (data) {
+                        aioAccountId = data.account;
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // set aio account id in account
+            function (userObj, accountObj, callback) {
+                accountObj.aioAccountId = aioAccountId;
                 accountObj.save(function (err) {
                     if (err) {
-                        userObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newFreeUser - error removing user as account creation failed: ' + user.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        logger.logError('subscription - newFreeUser - error creating account: ' + user.email);
-                        callback(err);
-                    } else {
-                        userObj.account = accountObj;
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newFreeUser - error updating user with account details: ' + user.email);
-                                callback(err1);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
+                        logger.logError('subscription - newFreeUser - error updating aio account id in account: ' + userObj.email);
+                        logger.logError(err);
                     }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // set aio user inactive
+            function (userObj, accountObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error setting aio user inactive: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                    callback(null, userObj, accountObj);
                 });
             },
-            // create user in AIO
+            // create user in freeside
             function (userObj, accountObj, callback) {
-                var packages = config.aioFreePackages;
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
+                var password = userObj.createdAt.getTime();
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'Trial', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
                     if (err) {
-                        accountObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newFreeUser - error removing account as aio create user failed: ' + userObj.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        userObj.remove(function (err2) {
-                            if (err2) {
-                                logger.logError('subscription - newFreeUser - error removing user as aio create user failed: ' + userObj.email);
-                                logger.logError(err2);
-                            }
-                        });
-                        logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        accountObj.aioAccountId = data.account;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                logger.logError('subscription - newFreeUser - error updating aioAccountId in account: ' + userObj.email);
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
+                        logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
+                        errorType = 'freeside-user-insert';
                     }
+                    freeSideCustomerNumber = customerNumber;
+                    freeSideSessionId = sessionId;
+                    callback(err, userObj, accountObj);
                 });
             },
-            // create user in FreeSide
-            function (userObj, accountObj, callback) {
-                var address = 'Trial';
-                var city = 'West Palm Beach';
-                var state = 'FL';
-                var zip = '00000';
-                var country = 'US';
-                var payBy = 'BILL';
-                var payInfo = '';
-                var payDate = '';
-                var payCvv = '';
-                var payName = '';
-                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
+            // add free package in freeside
+            function(userObj, accountObj, callback) {
+                billing.orderPackage(freeSideSessionId, config.freeSideFreePackageNumber, function (err) {
                     if (err) {
-                        userObj.status = 'failed';
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newFreeUser - error updating status to failed as user creation in billing system failed: ' + userObj.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        aio.updateUserStatus(userObj.email, false, function (err2) {
-                            if (err2) {
-                                logger.logError('subscription - newFreeUser - error setting user inactive in aio as user creation failed in billing system: ' + userObj.email);
-                                logger.logError(err2);
-                            }
-                        });
-                        logger.logError('subscription - newFreeUser - error creating user in billing system: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                logger.logError('subscription - newFreeUser - error updating billing system customer number in account: ' + userObj.email);
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
+                        logger.logError('subscription - newFreeUser - error ordering package in freeside: ' + userObj.email);
+                        errorType = 'freeside-order-insert';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // update freeside customer number in account
+            function (userObj, accountObj, callback) {
+                accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
+                accountObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating billing system customer number in account: ' + userObj.email);
+                        logger.logError(err);
                     }
                 });
+                callback(null, userObj, accountObj);
             },
             // send verification email
             function (userObj, accountObj, callback) {
-                var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
-                };
-                email.sendEmail(mailOptions, function (err) {
+                sendVerificationEmail(userObj, function (err) {
                     if (err) {
-                        logger.logError('subscription - newFreeUser - error send verification email to ' + mailOptions.to);
+                        logger.logError('subscription - newFreeUser - error sending verification email: ' + userObj.email);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('subscription - newFreeUser - verification email sent to ' + mailOptions.to);
+                        logger.logInfo('subscription - newFreeUser - verification email sent: ' + userObj.email);
                     }
                 });
                 callback(null, userObj, accountObj);
             },
             // delete user from visitor
             function (userObj, accountObj, callback) {
-                Visitor.findOne({email: userObj.email.toLowerCase()}, function (err, visitor) {
+                deleteVisitor(userObj.email, function (err) {
                     if (err) {
-                        logger.logError('subscription - newFreeUser - error fetching visitor: ' + userObj.email);
-                        callback(err);
-                    } else if (visitor) {
-                        visitor.remove(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newFreeUser - error removing visitor: ' + userObj.email);
-                                logger.logError(err);
-                            }
-                            callback(null, userObj, accountObj);
-                        });
-                    } else {
-                        callback(null, userObj, accountObj);
+                        logger.logError('subscription - newFreeUser - error deleting visitor: ' + userObj.email);
+                        logger.logError(err);
                     }
                 });
+                callback(null, userObj, accountObj);
             }
-        ], function (err) {
+        ], function (err, userObj, accountObj) {
             if (err) {
                 logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-order-insert':
+                    case 'freeside-user-insert':
+                        setDbUserFailed(userObj);
+                        break;
+                    case 'aio-user-insert':
+                    case 'db-user-update':
+                        removeDbAccount(userObj.email, accountObj);
+                        removeDbUser(userObj);
+                        break;
+                    case 'db-account-insert':
+                        removeDbUser(userObj);
+                }
             }
             if (cb) {
                 cb(err);
@@ -222,20 +196,20 @@ module.exports = {
                 });
                 accountObj.save(function (err) {
                     if (err) {
-                        userObj.remove(function (err1) {
-                            if (err1) {
+                        userObj.remove(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error removing user as account creation failed: ' + user.email);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                         });
                         logger.logError('subscription - newPaidUser - error creating account: ' + user.email);
                         callback(err);
                     } else {
                         userObj.account = accountObj;
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error updating user with account details: ' + user.email);
-                                callback(err1);
+                                callback(err);
                             } else {
                                 callback(null, userObj, accountObj);
                             }
@@ -248,26 +222,26 @@ module.exports = {
                 var packages = config.aioPaidPackages;
                 aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                     if (err) {
-                        accountObj.remove(function (err1) {
-                            if (err1) {
+                        accountObj.remove(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error removing account as aio create user failed: ' + userObj.email);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                         });
-                        userObj.remove(function (err2) {
-                            if (err2) {
+                        userObj.remove(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error removing user as aio create user failed: ' + userObj.email);
-                                logger.logError(err2);
+                                logger.logError(err);
                             }
                         });
                         logger.logError('subscription - newPaidUser - error creating user in aio: ' + userObj.email);
                         callback(err);
                     } else {
                         accountObj.aioAccountId = data.account;
-                        accountObj.save(function (err3) {
-                            if (err3) {
+                        accountObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error updating aioAccountId in account: ' + userObj.email);
-                                callback(err3);
+                                callback(err);
                             } else {
                                 callback(null, userObj, accountObj);
                             }
@@ -290,26 +264,26 @@ module.exports = {
                 billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
                     if (err) {
                         userObj.status = 'failed';
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error updating status to failed as user creation in billing system failed: ' + userObj.email);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                         });
-                        aio.updateUserStatus(userObj.email, false, function (err2) {
-                            if (err2) {
+                        aio.updateUserStatus(userObj.email, false, function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error setting user inactive in aio as user creation failed in billing system: ' + userObj.email);
-                                logger.logError(err2);
+                                logger.logError(err);
                             }
                         });
                         logger.logError('subscription - newPaidUser - error creating user in billing system: ' + userObj.email);
                         callback(err);
                     } else {
                         accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err3) {
-                            if (err3) {
+                        accountObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error updating billing system customer number in account: ' + userObj.email);
-                                callback(err3);
+                                callback(err);
                             } else {
                                 callback(null, userObj, accountObj);
                             }
@@ -343,8 +317,8 @@ module.exports = {
                         logger.logError('subscription - newPaidUser - error fetching visitor: ' + userObj.email);
                         callback(err);
                     } else if (visitor) {
-                        visitor.remove(function (err1) {
-                            if (err1) {
+                        visitor.remove(function (err) {
+                            if (err) {
                                 logger.logError('subscription - newPaidUser - error removing visitor: ' + userObj.email);
                                 logger.logError(err);
                             }
@@ -419,20 +393,20 @@ module.exports = {
                     });
                     accountObj.save(function (err) {
                         if (err) {
-                            userObj.remove(function (err1) {
-                                if (err1) {
+                            userObj.remove(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error removing user as account creation failed: ' + user.email);
-                                    logger.logError(err1);
+                                    logger.logError(err);
                                 }
                             });
                             logger.logError('subscription - newComplimentaryUser - error creating account: ' + user.email);
                             callback(err);
                         } else {
                             userObj.account = accountObj;
-                            userObj.save(function (err1) {
-                                if (err1) {
+                            userObj.save(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error updating user with account details: ' + user.email);
-                                    callback(err1);
+                                    callback(err);
                                 } else {
                                     callback(null, userObj, accountObj);
                                 }
@@ -445,26 +419,26 @@ module.exports = {
                     var packages = config.aioPaidPackages;
                     aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
                         if (err) {
-                            accountObj.remove(function (err1) {
-                                if (err1) {
+                            accountObj.remove(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error removing account as aio create user failed: ' + userObj.email);
-                                    logger.logError(err1);
+                                    logger.logError(err);
                                 }
                             });
-                            userObj.remove(function (err2) {
-                                if (err2) {
+                            userObj.remove(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error removing user as aio create user failed: ' + userObj.email);
-                                    logger.logError(err2);
+                                    logger.logError(err);
                                 }
                             });
                             logger.logError('subscription - newComplimentaryUser - error creating user in aio: ' + userObj.email);
                             callback(err);
                         } else {
                             accountObj.aioAccountId = data.account;
-                            accountObj.save(function (err3) {
-                                if (err3) {
+                            accountObj.save(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error updating aioAccountId in account: ' + userObj.email);
-                                    callback(err3);
+                                    callback(err);
                                 } else {
                                     callback(null, userObj, accountObj);
                                 }
@@ -487,26 +461,26 @@ module.exports = {
                     billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
                         if (err) {
                             userObj.status = 'failed';
-                            userObj.save(function (err1) {
-                                if (err1) {
+                            userObj.save(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error updating status to failed as user creation in billing system failed: ' + userObj.email);
-                                    logger.logError(err1);
+                                    logger.logError(err);
                                 }
                             });
-                            aio.updateUserStatus(userObj.email, false, function (err2) {
-                                if (err2) {
+                            aio.updateUserStatus(userObj.email, false, function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error setting user inactive in aio as user creation failed in billing system: ' + userObj.email);
-                                    logger.logError(err2);
+                                    logger.logError(err);
                                 }
                             });
                             logger.logError('subscription - newComplimentaryUser - error creating user in billing system: ' + userObj.email);
                             callback(err);
                         } else {
                             accountObj.freeSideCustomerNumber = customerNumber;
-                            accountObj.save(function (err3) {
-                                if (err3) {
+                            accountObj.save(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error updating billing system customer number in account: ' + userObj.email);
-                                    callback(err3);
+                                    callback(err);
                                 } else {
                                     callback(null, userObj, accountObj);
                                 }
@@ -540,8 +514,8 @@ module.exports = {
                             logger.logError('subscription - newComplimentaryUser - error fetching visitor: ' + userObj.email);
                             callback(err);
                         } else if (visitor) {
-                            visitor.remove(function (err1) {
-                                if (err1) {
+                            visitor.remove(function (err) {
+                                if (err) {
                                     logger.logError('subscription - newComplimentaryUser - error removing visitor: ' + userObj.email);
                                     logger.logError(err);
                                 }
@@ -574,162 +548,6 @@ module.exports = {
         }
     },
 
-    newMerchantUser: function (user, cb) {
-        async.waterfall([
-            // create user in db
-            function (callback) {
-                var userObj = new User(user);
-                userObj.email = user.username;
-                userObj.preferences = {defaultLanguage: 'en'};
-                userObj.role = userRoles.user;
-                userObj.createdAt = (new Date()).toUTCString();
-                userObj.verificationCode = uuid.v4();
-                userObj.status = 'registered';
-                userObj.save(function (err) {
-                    if (err) {
-                        logger.logError('subscription - newMerchantUser - error creating user: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        callback(null, userObj);
-                    }
-                });
-            },
-            // create account in db
-            function (userObj, callback) {
-                var accountObj = new Account({
-                    type: 'paid',
-                    merchant: user.merchantId,
-                    merchantPopId: user.merchantPopId,
-                    primaryUser: userObj,
-                    users: [userObj],
-                    createdAt: (new Date()).toUTCString()
-                });
-                accountObj.save(function (err) {
-                    if (err) {
-                        userObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newMerchantUser - error removing user as account creation failed: ' + user.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        logger.logError('subscription - newMerchantUser - error creating account: ' + user.email);
-                        callback(err);
-                    } else {
-                        userObj.account = accountObj;
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newMerchantUser - error updating user with account details: ' + user.email);
-                                callback(err1);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // create user in AIO
-            function (userObj, accountObj, callback) {
-                var packages = config.aioPaidPackages;
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, packages, function (err, data) {
-                    if (err) {
-                        accountObj.remove(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newMerchantUser - error removing account as aio create user failed: ' + userObj.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        userObj.remove(function (err2) {
-                            if (err2) {
-                                logger.logError('subscription - newMerchantUser - error removing user as aio create user failed: ' + userObj.email);
-                                logger.logError(err2);
-                            }
-                        });
-                        logger.logError('subscription - newMerchantUser - error creating user in aio: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        accountObj.aioAccountId = data.account;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                logger.logError('subscription - newMerchantUser - error updating aioAccountId in account: ' + userObj.email);
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // create user in FreeSide
-            function (userObj, accountObj, callback) {
-                var address = 'Merchant - ' + user.merchantId;
-                var city = 'West Palm Beach';
-                var state = 'FL';
-                var zip = '00000';
-                var country = 'US';
-                var payBy = 'BILL';
-                var payInfo = '';
-                var payDate = '';
-                var payCvv = '';
-                var payName = '';
-                billing.createUser(userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err, customerNumber) {
-                    if (err) {
-                        userObj.status = 'failed';
-                        userObj.save(function (err1) {
-                            if (err1) {
-                                logger.logError('subscription - newMerchantUser - error updating status to failed as user creation in billing system failed: ' + userObj.email);
-                                logger.logError(err1);
-                            }
-                        });
-                        aio.updateUserStatus(userObj.email, false, function (err2) {
-                            if (err2) {
-                                logger.logError('subscription - newMerchantUser - error setting user inactive in aio as user creation failed in billing system: ' + userObj.email);
-                                logger.logError(err2);
-                            }
-                        });
-                        logger.logError('subscription - newMerchantUser - error creating user in billing system: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        accountObj.freeSideCustomerNumber = customerNumber;
-                        accountObj.save(function (err3) {
-                            if (err3) {
-                                logger.logError('subscription - newMerchantUser - error updating billing system customer number in account: ' + userObj.email);
-                                callback(err3);
-                            } else {
-                                callback(null, userObj, accountObj);
-                            }
-                        });
-                    }
-                });
-            },
-            // send verification email
-            function (userObj, accountObj, callback) {
-                var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newMerchantUser - error send verification email to ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - newMerchantUser - verification email sent to ' + mailOptions.to);
-                    }
-                });
-                callback(null, userObj, accountObj);
-            }
-        ], function (err) {
-            if (err) {
-                logger.logError(err);
-            }
-            if (cb) {
-                cb(err);
-            }
-        });
-    },
-
     upgradeSubscription: function (userEmail, newUser, cb) {
         var status,
             type,
@@ -743,10 +561,10 @@ module.exports = {
                         logger.logError('subscription - upgradeSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else {
-                        Account.findOne({_id: user.account}, function (err1, accountObj) {
-                            if (err1) {
+                        Account.findOne({_id: user.account}, function (err, accountObj) {
+                            if (err) {
                                 logger.logError('subscription - upgradeSubscription - error fetching account: ' + userEmail);
-                                callback(err1);
+                                callback(err);
                             } else if (user.status === 'failed') {
                                 callback('FailedUser');
                             } else if (accountObj.type === 'paid') {
@@ -757,10 +575,10 @@ module.exports = {
                                 type = accountObj.type;
                                 accountObj.type = 'paid';
                                 accountObj.complimentaryCode = undefined;
-                                accountObj.save(function (err2) {
-                                    if (err2) {
+                                accountObj.save(function (err) {
+                                    if (err) {
                                         logger.logError('subscription - upgradeSubscription - error saving account to paid: ' + userEmail);
-                                        callback(err2);
+                                        callback(err);
                                     } else {
                                         callback(null, accountObj);
                                     }
@@ -796,8 +614,8 @@ module.exports = {
                             userObj.telephone = newUser.telephone;
                             userObj.password = newUser.password;
                         }
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 revertAccountType(accountObj);
                                 logger.logError('subscription - upgradeSubscription - error saving user to active: ' + userEmail);
                                 callback(err);
@@ -844,7 +662,7 @@ module.exports = {
             function (accountObj, userObj, callback) {
                 if (newUser.password) {
                     aio.updatePassword(userObj.email, newUser.password, function (err) {
-                        if(err) {
+                        if (err) {
                             revertPackagesInAio(userObj.email);
                             revertUserStatusInAio(userObj, status);
                             revertUserChanges(userObj, status);
@@ -1020,10 +838,10 @@ module.exports = {
                             userObj.telephone = newUser.telephone;
                             userObj.password = newUser.password;
                         }
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - reactivateSubscription - error saving user to active: ' + userObj.email);
-                                callback(err1);
+                                callback(err);
                             } else {
                                 callback(null, userObj);
                             }
@@ -1047,7 +865,7 @@ module.exports = {
             function (userObj, callback) {
                 if (newUser.password) {
                     aio.updatePassword(userObj.email, newUser.password, function (err) {
-                        if(err) {
+                        if (err) {
                             setUserInactiveInAio(userObj.email);
                             revertUserChanges(cancelDate, userObj);
                             logger.logError('subscription - reactivateSubscription - error updating password in aio: ' + userObj.email);
@@ -1167,10 +985,10 @@ module.exports = {
                             logger.logError('subscription - convertToComplimentary - error fetching user: ' + userEmail);
                             callback(err);
                         } else {
-                            Account.findOne({_id: user.account}, function (err1, accountObj) {
-                                if (err1) {
+                            Account.findOne({_id: user.account}, function (err, accountObj) {
+                                if (err) {
                                     logger.logError('subscription - convertToComplimentary - error fetching account: ' + userEmail);
-                                    callback(err1);
+                                    callback(err);
                                 } else if (user.status === 'failed') {
                                     callback('FailedUser');
                                 } else if (accountObj.type === 'paid' && (user.status === 'active' || user.status === 'registered')) {
@@ -1183,10 +1001,10 @@ module.exports = {
                                     type = accountObj.type;
                                     accountObj.type = 'comp';
                                     accountObj.complimentaryCode = newUser.code;
-                                    accountObj.save(function (err2) {
-                                        if (err2) {
+                                    accountObj.save(function (err) {
+                                        if (err) {
                                             logger.logError('subscription - convertToComplimentary - error saving account to paid: ' + userEmail);
-                                            callback(err2);
+                                            callback(err);
                                         } else {
                                             callback(null, accountObj);
                                         }
@@ -1222,8 +1040,8 @@ module.exports = {
                                 userObj.telephone = newUser.telephone;
                                 userObj.password = newUser.password;
                             }
-                            userObj.save(function (err1) {
-                                if (err1) {
+                            userObj.save(function (err) {
+                                if (err) {
                                     revertAccountChanges(accountObj);
                                     logger.logError('subscription - convertToComplimentary - error saving user to active: ' + userEmail);
                                     callback(err);
@@ -1270,7 +1088,7 @@ module.exports = {
                 function (accountObj, userObj, callback) {
                     if (newUser.password) {
                         aio.updatePassword(userObj.email, newUser.password, function (err) {
-                            if(err) {
+                            if (err) {
                                 revertPackagesInAio(userObj.email);
                                 revertUserStatusInAio(userObj, status);
                                 revertUserChanges(userObj, status);
@@ -1440,10 +1258,10 @@ module.exports = {
                     } else {
                         userObj.status = 'canceled';
                         userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
-                                callback(err1);
+                                callback(err);
                             } else {
                                 callback(null, userObj);
                             }
@@ -1528,10 +1346,10 @@ module.exports = {
                     } else {
                         userObj.status = 'trial-ended';
                         userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - endFreeTrial - error saving user to trial-ended status: ' + userObj.email);
-                                callback(err1);
+                                callback(err);
                             } else {
                                 callback(null, userObj);
                             }
@@ -1635,10 +1453,10 @@ module.exports = {
                     } else {
                         userObj.status = 'comp-ended';
                         userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err1) {
-                            if (err1) {
+                        userObj.save(function (err) {
+                            if (err) {
                                 logger.logError('subscription - endComplimentarySubscription - error saving user to comp-ended status: ' + userObj.email);
-                                callback(err1);
+                                callback(err);
                             } else {
                                 callback(null, userObj);
                             }
@@ -1761,3 +1579,87 @@ module.exports = {
         });
     }
 };
+
+function createUser(user, cb) {
+    var userObj = new User(user);
+    userObj.role = userRoles.user;
+    userObj.createdAt = (new Date()).toUTCString();
+    userObj.verificationCode = uuid.v4();
+    userObj.status = 'registered';
+    userObj.save(function (err) {
+        if (cb) {
+            cb(err, userObj);
+        }
+    });
+}
+
+function createAccount(user, userObj, type, cb) {
+    var accountObj = new Account({
+        type: type,
+        referredBy: user.referredBy,
+        primaryUser: userObj,
+        users: [userObj],
+        createdAt: (new Date()).toUTCString()
+    });
+    accountObj.save(function (err) {
+        if (cb) {
+            cb(err, accountObj);
+        }
+    });
+}
+
+function setDbUserFailed(user, cb) {
+    user.status = 'failed';
+    user.save(function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function removeDbAccount(email, account, cb) {
+    account.remove(function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function removeDbUser(user, cb) {
+    user.remove(function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendVerificationEmail(user, cb) {
+    var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function deleteVisitor(email, cb) {
+    Visitor.findOne({email: email.toLowerCase()}, function (err, visitor) {
+        if (visitor) {
+            visitor.remove(function (err) {
+                if (err) {
+                    logger.logError('subscription - deleteVisitor - error removing visitor: ' + email);
+                    logger.logError(err);
+                }
+            });
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
