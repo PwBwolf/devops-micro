@@ -81,20 +81,20 @@ prompt.get(schema, function (err, result) {
                     var merchant = new MerchantYip(result);
                     merchant.createdAt = (new Date()).toUTCString();
                     merchant.apiKey = uuid.v4();
-                    merchant.save(function (err1) {
-                        if (err1) {
+                    merchant.save(function (err) {
+                        if (err) {
                             logger.logError('adminCLI - createMerchant - error in creating merchant in yiptv db');
-                            logger.logError(err1);
+                            logger.logError(err);
                             process.exit(1);
                         }
                         var mg = new MerchantMG(result);
                         mg._id = merchant._id;
                         mg.createdAt = merchant.createdAt;
                         mg.apiKey = merchant.apiKey;
-                        mg.save(function (err2) {
-                            if (err2) {
+                        mg.save(function (err) {
+                            if (err) {
                                 logger.logError('adminCLI - createMerchant - error in creating merchant in merchant db');
-                                logger.logError(err2);
+                                logger.logError(err);
                                 process.exit(1);
                             } else {
                                 logger.logInfo('adminCLI - createMerchant - merchant created successfully!');

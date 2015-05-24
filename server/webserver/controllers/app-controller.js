@@ -27,10 +27,10 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            Version.findOne({}, {_id: false}, function (err1, version) {
-                if (err1) {
+            Version.findOne({}, {_id: false}, function (err, version) {
+                if (err) {
                     logger.logError('appController - getAppConfig - error fetching versions');
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 var props = {
@@ -93,10 +93,10 @@ module.exports = {
                     lastName: req.body.lastName,
                     createdAt: (new Date()).toUTCString()
                 });
-                visitorObj.save(function (err1) {
-                    if (err1) {
+                visitorObj.save(function (err) {
+                    if (err) {
                         logger.logError('appController - saveVisitor - error saving visitor - 1: ' + req.body.email.toLowerCase());
-                        logger.logError(err1);
+                        logger.logError(err);
                     }
                 });
             } else {
@@ -108,10 +108,10 @@ module.exports = {
                 }
                 if (req.body.firstName || req.body.lastName) {
                     visitor.updatedAt = (new Date()).toUTCString();
-                    visitor.save(function (err2) {
-                        if (err2) {
+                    visitor.save(function (err) {
+                        if (err) {
                             logger.logError('appController - saveVisitor - error saving visitor - 2: ' + req.body.email.toLowerCase());
-                            logger.logError(err2);
+                            logger.logError(err);
                         }
                     });
                 }
@@ -168,17 +168,17 @@ module.exports = {
                     email: req.body.email,
                     createdAt: (new Date()).toUTCString()
                 });
-                referrer.save(function (err1) {
-                    if (err1) {
+                referrer.save(function (err) {
+                    if (err) {
                         logger.logError('appController - sendRafEmails - error saving referrer: ' + req.body.email.toLowerCase());
-                        logger.logError(err1);
+                        logger.logError(err);
                         return res.status(500).end();
                     }
                     referrer.referralCode = hashids.encode(referrer.key, 5);
-                    referrer.save(function (err2) {
-                        if (err2) {
+                    referrer.save(function (err) {
+                        if (err) {
                             logger.logError('appController - sendRafEmails - error saving referrer after referralCode: ' + req.body.email.toLowerCase());
-                            logger.logError(err2);
+                            logger.logError(err);
                             return res.status(500).end();
                         }
                         sendEmail();

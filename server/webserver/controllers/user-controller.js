@@ -153,10 +153,10 @@ module.exports = {
                 return res.status(409).send('UnverifiedAccount');
             }
             user.lastSignedInDate = (new Date()).toUTCString();
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - signIn - error saving user lastSignedInDate: ' + req.body.email.toLowerCase());
-                    logger.logError(err1);
+                    logger.logError(err);
                 }
             });
             var token = jwt.encode({
@@ -182,10 +182,10 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            Account.findOne({_id: user.account}, function (err1, account) {
-                if (err1) {
+            Account.findOne({_id: user.account}, function (err, account) {
+                if (err) {
                     logger.logError('userController - getUserProfile - error fetching account: ' + req.email.toLowerCase());
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 return res.send({
@@ -217,83 +217,31 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            if (user.hashedPassword) {
-                user.status = 'active';
-                user.verificationCode = undefined;
-                user.save(function (err1) {
-                    if (err1) {
-                        logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
-                        logger.logError(err1);
-                        return res.status(500).end();
-                    }
-                    return res.status(200).send('web-user');
-                });
-            } else {
-                return res.status(200).send('merchant-user');
-            }
-        });
-    },
-
-    setPasswordAndVerifyUser: function (req, res) {
-        User.findOne({verificationCode: req.body.code}, function (err, user) {
-            if (err) {
-                logger.logError('userController - setPasswordAndVerifyUser - error fetching user: ' + req.body.code);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.status === 'active') {
-                return res.status(409).send('UserVerified');
-            }
-            if (user.status !== 'registered') {
-                return res.status(409).send('UserError');
-            }
-            var verificationCode = user.verificationCode;
-            var hashedPassword = user.hashedPassword;
-            var salt = user.salt;
             var status = user.status;
-            user.password = req.body.newPassword;
+            var verificationCode = user.verificationCode;
             user.status = 'active';
             user.verificationCode = undefined;
-            user.save(function (err1) {
-                if (err1) {
-                    logger.logError('userController - setPasswordAndVerifyUser - error saving user: ' + req.body.code);
-                    logger.logError(err1);
+            user.save(function (err) {
+                if (err) {
+                    logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err2) {
-                    if (err2) {
-                        logger.logError('userController - setPasswordAndVerifyUser - error updating password in aio: ' + req.body.code);
-                        logger.logError(err2);
-                        user.verificationCode = verificationCode;
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
+                aio.updateUserStatus(user.email, true, function (err) {
+                    if (err) {
+                        logger.logError('userController - verifyUser - error setting user active in aio: ' + user.email);
+                        logger.logError(err);
                         user.status = status;
-                        user.save(function (err3) {
-                            if (err3) {
-                                logger.logError('userController - setPasswordAndVerifyUser - error reverting password in db: ' + req.body.code);
-                                logger.logError(err1);
+                        user.verificationCode = verificationCode;
+                        user.save(function(err){
+                            if(err){
+                                logger.logError('userController - verifyUser - error reverting user back: ' + user.email);
+                                logger.logError(err);
                             }
                             return res.status(500).end();
                         });
                     } else {
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
-                        };
-                        email.sendEmail(mailOptions, function (err4) {
-                            if (err4) {
-                                logger.logError('userController - setPasswordAndVerifyUser - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err4);
-                            } else {
-                                logger.logInfo('userController - setPasswordAndVerifyUser - password changed email sent to ' + mailOptions.to);
-                            }
-                        });
-                        return res.status(200).end();
+                        return res.status(200).send();
                     }
                 });
             });
@@ -314,8 +262,8 @@ module.exports = {
                 return res.status(409).send('UserError');
             }
             user.resetPasswordCode = uuid.v4();
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - forgotPassword - error saving user: ' + req.body.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
@@ -327,10 +275,10 @@ module.exports = {
                     subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
                 };
-                email.sendEmail(mailOptions, function (err2) {
-                    if (err2) {
+                email.sendEmail(mailOptions, function (err) {
+                    if (err) {
                         logger.logError('userController - forgotPassword - error sending forgot password email to : ' + mailOptions.to);
-                        logger.logError(err2);
+                        logger.logError(err);
                     } else {
                         logger.logInfo('userController - forgotPassword - forgot password email sent to ' + mailOptions.to);
                     }
@@ -375,23 +323,23 @@ module.exports = {
             var salt = user.salt;
             user.resetPasswordCode = undefined;
             user.password = req.body.newPassword;
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - resetPassword - error saving user: ' + req.body.code);
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err2) {
-                    if (err2) {
+                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                    if (err) {
                         logger.logError('userController - resetPassword - error updating password in aio: ' + req.body.code);
-                        logger.logError(err2);
+                        logger.logError(err);
                         user.resetPasswordCode = resetPasswordCode;
                         user.hashedPassword = hashedPassword;
                         user.salt = salt;
-                        user.save(function (err3) {
-                            if (err3) {
+                        user.save(function (err) {
+                            if (err) {
                                 logger.logError('userController - resetPassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                             return res.status(500).end();
                         });
@@ -402,10 +350,10 @@ module.exports = {
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                             html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                         };
-                        email.sendEmail(mailOptions, function (err4) {
-                            if (err4) {
+                        email.sendEmail(mailOptions, function (err) {
+                            if (err) {
                                 logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err4);
+                                logger.logError(err);
                             } else {
                                 logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
                             }
@@ -460,10 +408,10 @@ module.exports = {
                 return res.status(409).send('UserError');
             }
             user.verificationCode = uuid.v4();
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
@@ -473,10 +421,10 @@ module.exports = {
                     subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
                     html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
                 };
-                email.sendEmail(mailOptions, function (err2) {
-                    if (err2) {
+                email.sendEmail(mailOptions, function (err) {
+                    if (err) {
                         logger.logError('userController - resendVerification - error sending resend verification email to: ' + mailOptions.to);
-                        logger.logError(err2);
+                        logger.logError(err);
                     } else {
                         logger.logInfo('userController - resendVerification - resend verification email sent to ' + mailOptions.to);
                     }
@@ -502,22 +450,22 @@ module.exports = {
             var hashedPassword = user.hashedPassword;
             var salt = user.salt;
             user.password = req.body.newPassword;
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - changePassword - error saving user: ' + req.email.toLowerCase());
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err2) {
-                    if (err2) {
+                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                    if (err) {
                         logger.logError('userController - changePassword - error updating password in aio: ' + req.body.code);
-                        logger.logError(err2);
+                        logger.logError(err);
                         user.hashedPassword = hashedPassword;
                         user.salt = salt;
-                        user.save(function (err3) {
-                            if (err3) {
+                        user.save(function (err) {
+                            if (err) {
                                 logger.logError('userController - changePassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                             return res.status(500).end();
                         });
@@ -528,10 +476,10 @@ module.exports = {
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                             html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                         };
-                        email.sendEmail(mailOptions, function (err4) {
-                            if (err4) {
+                        email.sendEmail(mailOptions, function (err) {
+                            if (err) {
                                 logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err4);
+                                logger.logError(err);
                             } else {
                                 logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
                             }
@@ -618,10 +566,10 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
             user.preferences.defaultLanguage = req.body.language;
-            user.save(function (err1) {
-                if (err1) {
+            user.save(function (err) {
+                if (err) {
                     logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
-                    logger.logError(err1);
+                    logger.logError(err);
                     return res.status(500).end();
                 }
                 return res.status(200).end();

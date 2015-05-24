@@ -64,22 +64,22 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
         var hashedPassword = user.hashedPassword;
         var salt = user.salt;
         user.password = password;
-        user.save(function (err1) {
-            if (err1) {
+        user.save(function (err) {
+            if (err) {
                 logger.logError('adminCLI - resetPassword - error saving new password to user: ' + email.toLowerCase());
-                logger.logError(err1);
+                logger.logError(err);
                 process.exit(1);
             } else {
-                aio.updatePassword(user.email, password, function (err2) {
-                    if (err2) {
+                aio.updatePassword(user.email, password, function (err) {
+                    if (err) {
                         logger.logError('adminCLI - resetPassword - error updating password in aio: ' + email.toLowerCase());
-                        logger.logError(err2);
+                        logger.logError(err);
                         user.hashedPassword = hashedPassword;
                         user.salt = salt;
-                        user.save(function (err3) {
-                            if (err3) {
+                        user.save(function (err) {
+                            if (err) {
                                 logger.logError('adminCLI - resetPassword - error reverting password in db: ' + email.toLowerCase());
-                                logger.logError(err1);
+                                logger.logError(err);
                             }
                             process.exit(1);
                         });
@@ -92,10 +92,10 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
                             html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
                         };
-                        emailService.sendEmail(mailOptions, function (err4) {
-                            if (err4) {
+                        emailService.sendEmail(mailOptions, function (err) {
+                            if (err) {
                                 logger.logError('adminCLI - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err4);
+                                logger.logError(err);
                                 process.exit(1);
                             } else {
                                 logger.logInfo('adminCLI - resetPassword - password changed email sent to ' + mailOptions.to);
