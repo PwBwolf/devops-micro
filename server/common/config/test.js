@@ -28,7 +28,7 @@ module.exports = {
     complimentarySignUpUrl: 'https://test.yiptv.net/sign-up/complimentary/',
     freeSideApiKey: 'yip-freeside-dev',
     freeSideBackOfficeApiUrl: 'http://172.16.10.5:8008/',
-    freeSideSelfServiceApiUrl: 'https://172.16.10.5:8080/',
+    freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
     freeSideFreePackageNumber: 6,
     freeSidePaidPackageNumber: 4,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
