@@ -4,7 +4,7 @@ var _ = require('lodash'),
     MerchantCtrl = require('./controllers/merchant-controller'),
     routes = [
         {path: '/merchant/api/does-username-exist', httpMethod: 'GET', middleware: [MerchantCtrl.doesUsernameExist]},
-        {path: '/merchant/api/add-user', httpMethod: 'POST', middleware: [MerchantCtrl.addUser]},
+        {path: '/merchant/api/make-refund', httpMethod: 'POST', middleware: [MerchantCtrl.makeRefund]},
         {path: '/merchant/api/make-payment', httpMethod: 'POST', middleware: [MerchantCtrl.makePayment]}
     ];
 

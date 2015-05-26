@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+    moment = require('moment'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
     dbYip = mongoose.createConnection(config.db),
@@ -33,7 +34,11 @@ module.exports = {
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
-                    return res.status(200).send({error: '', result: user !== null});
+                    var refundLastDate;
+                    if(user) {
+                        refundLastDate = moment(user.createdAt).add(config.refundPeriodInDays, 'days').utc().hour(23).minute(59).second(59);
+                    }
+                    return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate});
                 });
             });
         } catch (ex) {
@@ -43,11 +48,11 @@ module.exports = {
         }
     },
 
-    addUser: function (req, res) {
+    makeRefund: function (req, res) {
         try {
             validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
                 if (err) {
-                    logger.logError('merchantController - addUser - error validating credentials');
+                    logger.logError('merchantController - makeRefund - error validating credentials');
                     logger.logError(err);
                     return res.status(200).send({error: 'server-error'});
                 }
@@ -55,9 +60,9 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 req.body.merchantId = req.query.merchantId;
-                queue.enqueue('addUser', req.body, function (err) {
+                queue.enqueue('makeRefund', req.body, function (err) {
                     if (err) {
-                        logger.logError('merchantController - addUser - error adding job to queue');
+                        logger.logError('merchantController - makeRefund - error adding job to queue');
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     } else {
@@ -66,7 +71,7 @@ module.exports = {
                 });
             });
         } catch (ex) {
-            logger.logError('merchantController - addUser - exception');
+            logger.logError('merchantController - makeRefund - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
         }

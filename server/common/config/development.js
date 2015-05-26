@@ -21,6 +21,7 @@ module.exports = {
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
     cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'http://localhost:3000/sign-up/complimentary/',
+    refundPeriodInDays: 3,
     freeSideApiKey: 'yip-freeside-dev',
     freeSideBackOfficeApiUrl: 'http://172.16.10.5:8008/',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
