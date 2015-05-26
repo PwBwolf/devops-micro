@@ -36,7 +36,7 @@ module.exports = {
                     }
                     var refundLastDate;
                     if(user) {
-                        refundLastDate = moment(user.createdAt).add(config.refundPeriodInDays, 'days').utc().hour(23).minute(59).second(59);
+                        refundLastDate = moment(user.createdAt).add(config.refundPeriodInDays, 'days').utc();
                     }
                     return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate});
                 });
