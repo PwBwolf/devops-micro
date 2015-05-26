@@ -26,6 +26,7 @@ module.exports = {
     cloudSpongeDomainKey: 'BNDQ7QY3HH38QG45E3P8',
     cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'https://int.yiptv.net/sign-up/complimentary/',
+    refundPeriodInDays: 3,
     freeSideApiKey: 'yip-freeside-dev',
     freeSideBackOfficeApiUrl: 'http://172.16.10.5:8008/',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
