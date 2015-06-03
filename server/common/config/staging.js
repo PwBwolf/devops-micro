@@ -27,6 +27,7 @@ module.exports = {
     cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'https://staging.yiptv.net/sign-up/complimentary/',
     refundPeriodInDays: 3,
+    blogUrl: '',
     freeSideApiKey: '',
     freeSideBackOfficeApiUrl: '',
     freeSideSelfServiceApiUrl: '',
