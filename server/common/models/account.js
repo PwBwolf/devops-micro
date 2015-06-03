@@ -12,8 +12,8 @@ var Account = new Schema({
     aioAccountId: Number,
     freeSideCustomerNumber: Number,
     complimentaryCode: String,
-    merchant: {type: Schema.Types.ObjectId, ref: 'Merchant'},
-    merchantPopId: String
+    merchant: String,
+    paymentPending: Boolean
 }, {collection: 'Accounts'});
 
 mongoose.model('Account', Account);

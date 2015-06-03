@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var MakePayment = new Schema({
+var Payment = new Schema({
     merchant: {type: Schema.Types.ObjectId, ref: 'Merchant', index: true},
     merchantPopId: String,
     merchantReferenceId: String,
@@ -14,8 +14,7 @@ var MakePayment = new Schema({
     reason: String,
     amount: Number,
     currency: String,
-    isUserOwned: Boolean,
-    payload: String
+    payload: Object
 }, { collection: 'Payments' });
 
-mongoose.model('MakePayment', MakePayment);
+mongoose.model('Payment', Payment);

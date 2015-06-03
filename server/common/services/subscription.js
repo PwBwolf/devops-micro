@@ -189,6 +189,7 @@ module.exports = {
             function (userObj, callback) {
                 var accountObj = new Account({
                     type: 'paid',
+                    merchant: 'YIPTV',
                     referredBy: user.referredBy,
                     primaryUser: userObj,
                     users: [userObj],
@@ -652,8 +653,7 @@ module.exports = {
             },
             // update user information in FreeSide
             function (accountObj, userObj, callback) {
-                var merchantId = accountObj.merchant ? ' - ' + accountObj.merchant : '';
-                var address = newUser.address ? newUser.address : 'Merchant' + merchantId;
+                var address = newUser.address ? newUser.address : accountObj.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
                 var state = newUser.state ? newUser.state : 'FL';
                 var zip = newUser.zipCode ? newUser.zipCode : '00000';
@@ -698,7 +698,7 @@ module.exports = {
                 } else {
                     callback(null, accountObj, userObj);
                 }
-            },
+            }
         ], function (err, accountObj, userObj) {
             if (err) {
                 logger.logError(err);
@@ -853,8 +853,7 @@ module.exports = {
             },
             // update user in FreeSide
             function (userObj, callback) {
-                var merchantId = userObj.account.merchant ? ' - ' + userObj.account.merchant : '';
-                var address = newUser.address ? newUser.address : 'Merchant' + merchantId;
+                var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
                 var state = newUser.state ? newUser.state : 'FL';
                 var zip = newUser.zipCode ? newUser.zipCode : '00000';
@@ -1530,8 +1529,7 @@ module.exports = {
                 logger.logError('subscription - updateToMerchantBilling - error fetching user: ' + email);
                 cb(err);
             } else {
-                var merchantId = userObj.account.merchant ? ' - ' + userObj.account.merchant : '';
-                var address = 'Merchant' + merchantId;
+                var address = userObj.account.merchant;
                 var city = 'West Palm Beach';
                 var state = 'FL';
                 var zip = '00000';
@@ -1573,6 +1571,7 @@ function createUser(user, cc, cb) {
 function createAccount(user, userObj, type, cb) {
     var accountObj = new Account({
         type: type,
+        merchant: 'YIPTV',
         primaryUser: userObj,
         users: [userObj],
         createdAt: (new Date()).toUTCString()
