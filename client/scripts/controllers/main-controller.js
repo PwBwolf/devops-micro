@@ -65,6 +65,10 @@
             changeLanguage(language);
         }
 
+        $scope.goToBlogUrl = function (urlName) {
+            $window.location = $scope.appConfig.blogUrl + $filter('translate')(urlName);
+        };
+
         $scope.changeLanguage = function () {
             var currentLanguage = $translate.use();
             var newLanguage = currentLanguage === 'en' ? 'es' : 'en';
