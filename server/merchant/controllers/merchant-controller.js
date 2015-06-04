@@ -8,12 +8,19 @@ var mongoose = require('mongoose'),
     dbMerchant = mongoose.createConnection(config.merchantDb),
     User = dbYip.model('User'),
     Merchant = dbMerchant.model('Merchant'),
+    ApiLog = dbMerchant.model('ApiLog'),
     monq = require('monq'),
     queueDb = monq(config.merchantDb),
     queue = queueDb.queue('api-requests');
 
 module.exports = {
     doesUsernameExist: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'does-username-exist';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.merchantId = req.query.merchantId;
+        apiLog.apiKey = req.query.apiKey;
+        apiLog.params = {username: req.query.username};
         try {
             validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
                 if (err) {
@@ -35,7 +42,7 @@ module.exports = {
                         return res.status(200).send({error: 'server-error'});
                     }
                     var refundLastDate;
-                    if(user) {
+                    if (user) {
                         refundLastDate = moment(user.createdAt).add(config.refundPeriodInDays, 'days').utc();
                     }
                     return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate});
@@ -45,10 +52,24 @@ module.exports = {
             logger.logError('merchantController - doesUsernameExist - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
+        } finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('merchantController - doesUsernameExist - error saving api log');
+                    logger.logError(err);
+                }
+            });
         }
     },
 
     makeRefund: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'make-refund';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.merchantId = req.query.merchantId;
+        apiLog.apiKey = req.query.apiKey;
+        apiLog.body = req.body;
         try {
             validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
                 if (err) {
@@ -74,10 +95,24 @@ module.exports = {
             logger.logError('merchantController - makeRefund - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
+        } finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('merchantController - makeRefund - error saving api log');
+                    logger.logError(err);
+                }
+            });
         }
     },
 
     makePayment: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'make-payment';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.merchantId = req.query.merchantId;
+        apiLog.apiKey = req.query.apiKey;
+        apiLog.body = req.body;
         try {
             validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
                 if (err) {
@@ -103,6 +138,14 @@ module.exports = {
             logger.logError('merchantController - makePayment - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
+        }  finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('merchantController - makePayment - error saving api log');
+                    logger.logError(err);
+                }
+            });
         }
     }
 };
