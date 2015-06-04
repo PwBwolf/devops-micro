@@ -190,6 +190,7 @@ module.exports = {
                 var accountObj = new Account({
                     type: 'paid',
                     merchant: 'YIPTV',
+                    paymentPending: false,
                     referredBy: user.referredBy,
                     primaryUser: userObj,
                     users: [userObj],
@@ -1572,6 +1573,7 @@ function createAccount(user, userObj, type, cb) {
     var accountObj = new Account({
         type: type,
         merchant: 'YIPTV',
+        paymentPending: false,
         primaryUser: userObj,
         users: [userObj],
         createdAt: (new Date()).toUTCString()
