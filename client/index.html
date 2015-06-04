@@ -66,8 +66,8 @@
                 <div style="display:none"><img src="images/mini-logo.png"></div>
                 <menuItem id="top" bookmark style="display:none">Top ^</menuItem>
                 <menuItem id="shows" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY"></menuItem>
-                <menuItem id="networks" bookmark home-only access-level="accessLevels.anon" translate="INDEX_NETWORKS"></menuItem>
-                <menuItem id="about" bookmark home-only access-level="accessLevels.anon" translate="INDEX_ABOUT_US"></menuItem>
+                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToBlogUrl('BLOG_URL_NETWORKS')" translate="INDEX_NETWORKS"></a></menuItem>
+                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToBlogUrl('BLOG_URL_ABOUT_US')" translate="INDEX_ABOUT_US"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
