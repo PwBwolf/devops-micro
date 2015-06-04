@@ -73,6 +73,7 @@
             BANNER_3_DESKTOP: '<img src="../images/banners/desktop/es/desktop-3.jpg" usemap="#map3" alt="desktop Image"><map name="map3" id="map3"><area shape="rect" href="https://itunes.apple.com/us/app/yiptv/id972197370?mt=8&ign-mpt=uo%3D4" coords="244, 270, 411, 335" /><area shape="rect" href="https://play.google.com/store/apps/details?id=com.yiptv.android.client2" coords="69, 272, 240, 335" /></map>',
             BANNER_4_DESKTOP: '<img src="../images/banners/desktop/es/desktop-4.jpg" usemap="#map4" alt="desktop Image"><map name="map4" id="map4"><area alt="" title="" href="/sign-up/free" shape="rect" coords="46, 215, 309, 297" /></map>',
             BLOG_URL_ABOUT_US: 'index.php/nosotros/',
+			BLOG_URL_FAQS: 'index.php/preguntas-frecuentes/',
             BLOG_URL_MAIN: 'index.php/yip-now/',
             BLOG_URL_PRIVACY_POLICY: 'index.php/privacy-policy/',
             BLOG_URL_TOUS: 'index.php/terms-of-service/',
