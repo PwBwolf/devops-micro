@@ -13,7 +13,9 @@ var Account = new Schema({
     freeSideCustomerNumber: Number,
     complimentaryCode: String,
     merchant: String,
-    paymentPending: Boolean
+    paymentPending: Boolean,
+    firstCardPaymentDate: Date,
+    firstMerchantPaymentDate: Date
 }, {collection: 'Accounts'});
 
 mongoose.model('Account', Account);

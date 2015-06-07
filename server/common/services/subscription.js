@@ -102,7 +102,7 @@ module.exports = {
                 });
             },
             // add free package in freeside
-            function(userObj, accountObj, callback) {
+            function (userObj, accountObj, callback) {
                 billing.orderPackage(freeSideSessionId, config.freeSideFreePackageNumber, function (err) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error ordering package in freeside: ' + userObj.email);
@@ -191,6 +191,7 @@ module.exports = {
                     type: 'paid',
                     merchant: 'YIPTV',
                     paymentPending: false,
+                    firstCardPaymentDate: (new Date()).toUTCString(),
                     referredBy: user.referredBy,
                     primaryUser: userObj,
                     users: [userObj],
@@ -366,6 +367,7 @@ module.exports = {
         });
 
         var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
+
         function createComplimentaryUser(user, cc, cb) {
             async.waterfall([
                 // create user in db
@@ -447,7 +449,7 @@ module.exports = {
                     });
                 },
                 // add paid package in freeside
-                function(userObj, accountObj, callback) {
+                function (userObj, accountObj, callback) {
                     billing.orderPackage(freeSideSessionId, config.freeSidePaidPackageNumber, function (err) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error ordering package in freeside: ' + userObj.email);
@@ -1225,7 +1227,7 @@ module.exports = {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
                         callback(err);
-                    } else if (userObj.status !== 'active') {
+                    } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
                         callback('NonActiveUser');
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
@@ -1559,7 +1561,7 @@ function createUser(user, cc, cb) {
     userObj.createdAt = (new Date()).toUTCString();
     userObj.verificationCode = uuid.v4();
     userObj.status = 'registered';
-    if(cc) {
+    if (cc) {
         userObj.validTill = moment(userObj.createdAt).add(cc.duration, 'days').utc();
     }
     userObj.save(function (err) {
@@ -1578,7 +1580,7 @@ function createAccount(user, userObj, type, cb) {
         users: [userObj],
         createdAt: (new Date()).toUTCString()
     });
-    if(type === 'comp') {
+    if (type === 'comp') {
         accountObj.complimentaryCode = user.code;
     } else {
         accountObj.referredBy = user.referredBy;
