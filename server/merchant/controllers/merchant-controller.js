@@ -35,15 +35,15 @@ module.exports = {
                 if (!req.query.username || !emailRegex.test(req.query.username)) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
-                User.findOne({email: req.query.username.toLowerCase()}, function (err, user) {
+                User.findOne({email: req.query.username.toLowerCase()}).populate('account').exec(function (err, user) {
                     if (err) {
                         logger.logError('merchantController - doesUsernameExist - error fetching user: ' + req.query.email);
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
                     var refundLastDate;
-                    if (user) {
-                        refundLastDate = moment(user.createdAt).add(config.refundPeriodInDays, 'days').utc();
+                    if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate) {
+                        refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
                     return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate});
                 });
