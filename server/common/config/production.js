@@ -33,7 +33,7 @@ module.exports = {
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',
     freeSideFreePackageNumber: 6,
     freeSidePaidPackageNumber: 3,
-    freeSideComplimentaryPackageNumber: 3,
+    freeSideComplimentaryPackageNumber: 6,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://10.100.10.102',
     aioPortalUrl: 'http://content.yiptv.com',

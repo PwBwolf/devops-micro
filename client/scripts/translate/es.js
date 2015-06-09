@@ -233,9 +233,9 @@
             FREE_SIGN_UP_FAILED: 'Error al contratar Usuario. Por favor pongase en contacto con servico al cliente',
             FREE_SIGN_UP_PROBLEM: '¿Tiene problemas para registrarse? Comuníquese con el servicio al cliente al',
             INDEX_OTHER_LANGUAGE: 'English',
-            INDEX_ABOUT_US: 'nosotros',
-            INDEX_SIGN_IN: 'Registrarse',
-            INDEX_JOIN_NOW: 'Crear una cuenta',
+            INDEX_ABOUT_US: 'Nosotros',
+            INDEX_SIGN_IN: 'Ingresar',
+            INDEX_JOIN_NOW: 'Únase Ahora',
             INDEX_TRY_FREE: 'Probar por 7 días',
             INDEX_WATCH_NOW: 'Mirar ahora',
             INDEX_NETWORKS: 'Redes y Canales',
@@ -588,14 +588,6 @@
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Su cuenta se ha verificado satisfactoriamente. Haga clic en el botón Ingresar arriba para ingresar a YipTV.',
             VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar su cuenta o su cuenta ya ha sido verificada. Comuníquese con el servicio al cliente al',
-            VERIFY_USER_SET_PASSWORD_HEADING: ' Fije la palabra de paso ',
-            VERIFY_USER_NEW_PASSWORD: ' Nueva palabra de paso ',
-            VERIFY_USER_CONFIRM_PASSWORD_REQUIRED: ' Confirme la palabra de paso ',
-            VERIFY_USER_CONFIRM_PASSWORD: ' Confirme la palabra de paso ',
-            VERIFY_USER_NEW_PASSWORD_NOT_COMPLEX: ' La palabra de paso debe tener por lo menos 8 caracteres, una carta mayúscula, una carta minúscula, un número y un caractere especial ',
-            VERIFY_USER_NEW_PASSWORD_REQUIRED: ' Incorpore por favor su palabra de paso ',
-            VERIFY_USER_CONFIRM_PASSWORD_NO_MATCH: ' las palabras de paso no corresponden con ',
-            VERIFY_USER_BUTTON: ' Presente '
         });
     }]);
 }(angular.module('app')));

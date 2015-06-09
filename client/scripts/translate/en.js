@@ -588,14 +588,6 @@
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact customer support at',
-            VERIFY_USER_SET_PASSWORD_HEADING: ' Set Password ',
-            VERIFY_USER_NEW_PASSWORD: ' New Password ',
-            VERIFY_USER_CONFIRM_PASSWORD_REQUIRED: ' Confirm your password ',
-            VERIFY_USER_CONFIRM_PASSWORD: ' Confirm Password ',
-            VERIFY_USER_NEW_PASSWORD_NOT_COMPLEX: ' Password needs to be at Least 8 characters, uppercase Contain 1 & 1 lowercase letter, 1 number & 1 special character ',
-            VERIFY_USER_NEW_PASSWORD_REQUIRED: ' Enter your password ',
-            VERIFY_USER_CONFIRM_PASSWORD_NO_MATCH: ' Passwords do not match ',
-            VERIFY_USER_BUTTON: ' Submit '
         });
     }]);
 }(angular.module('app')));
