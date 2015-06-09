@@ -105,7 +105,9 @@
     }
 
     .navbar-brand img {
-        height: inherit;
+        height:75%;
+		width:auto;
+		margin-top:4px;
     }
 
     .nav-btn {
@@ -212,7 +214,7 @@
 
     #brand img {
         width: auto;
-        height: 80px;
+        height: 70px;
         display: block !important;
         margin: 0 auto;
         position: absolute;
@@ -943,7 +945,9 @@
     }
 
     .navbar-brand img {
-        height: inherit;
+        height: 80%;
+		width: auto;
+		margin-top:4px;
     }
 
     .nav-btn {

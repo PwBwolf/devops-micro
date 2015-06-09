@@ -17,6 +17,7 @@
                 }
 
                 $window.onscroll = function () {
+					var c = 0;
                     if (!navDocked && (navBar.offsetTop - scrollTop() < 0)) {
                         navBar.style.top = 0;
                         navBar.style.position = 'fixed';
@@ -26,17 +27,22 @@
                         navLogo.className = 'image-docked';
                         topBtn.show('slow');
                         navDocked = true;
+						
+						
                     } else if (navDocked && scrollTop() <= navTop) {
+						c++;
                         navBar.style.position = 'absolute';
                         navLogo.style.position = 'absolute';
                         navBar.style.top = navTop + 'px';
                         navBar.style.color = '#3e194d';
                         navBar.className = navBar.className.replace('docked', '');
-                        navLogo.className = navLogo.className.replace('image-docked', '');
-                        navLogo.style.position = 'absolute';
-                        topBtn.hide('slow');
+                        navLogo.className = navLogo.className.replace('image-docked', null);
+						topBtn.hide('slow');
                         navDocked = false;
+
+						
                     }
+					
                 };
             }
         };

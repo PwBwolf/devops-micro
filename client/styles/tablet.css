@@ -191,7 +191,7 @@
 
     #brand img {
         width: auto;
-        height: 80px;
+        height: 60px;
         display: block !important;
         margin: 0 auto;
         position: absolute;
@@ -224,7 +224,7 @@
     }
 
     .image-docked {
-        height: 65px !important;
+        height: 50px !important;
         transition: all 1s ease-in-out;
         -webkit-transition: all 1s ease-in-out;
         -moz-transition: all 1s ease-in-out;
