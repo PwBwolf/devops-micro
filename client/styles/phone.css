@@ -939,6 +939,10 @@
     header {
         background: transparent;
     }
+	
+	#wpNtwrk {
+		margin-top:9px;
+	}
 
     .navbar-brand {
         padding: 0 5px !important;
