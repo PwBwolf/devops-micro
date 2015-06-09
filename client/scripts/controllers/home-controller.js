@@ -20,8 +20,6 @@
                     $scope.content = {
                         'banners': 'views/banner-mobile.html',
                         'shows': 'views/shows.html',
-                        'networks': 'views/networks.html',
-                        'about': 'views/about-yiptv.html',
                         'download': 'views/download.html',
                         'footer': 'views/footer.html'
                     };
@@ -30,8 +28,6 @@
                     $scope.content = {
                         'banners': 'views/banner-tablet.html',
                         'shows': 'views/shows.html',
-                        'networks': 'views/networks.html',
-                        'about': 'views/about-yiptv.html',
                         'download': 'views/download.html',
                         'footer': 'views/footer.html'
                     };
@@ -40,8 +36,6 @@
                     $scope.content = {
                         'banners': 'views/banner-desktop.html',
                         'shows': 'views/shows.html',
-                        'networks': 'views/networks.html',
-                        'about': 'views/about-yiptv.html',
                         'download': 'views/download.html',
                         'footer': 'views/footer.html'
                     };

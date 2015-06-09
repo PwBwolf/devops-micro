@@ -33,6 +33,7 @@ module.exports = {
     freeSideSelfServiceApiUrl: '',
     freeSideFreePackageNumber: 6,
     freeSidePaidPackageNumber: 4,
+    freeSideComplimentaryPackageNumber: 4,
     aioApiUrl: '',
     aioPortalUrl: '',
     aioUserPin: '1234',

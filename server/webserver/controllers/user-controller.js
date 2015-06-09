@@ -30,7 +30,7 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end();
+                            return res.status(500).end(err.message);
                         } else {
                             return res.status(200).send('registered');
                         }
@@ -40,7 +40,7 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end();
+                            return res.status(500).end(err.message);
                         } else {
                             return res.status(200).send('registered');
                         }
@@ -50,7 +50,7 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end();
+                            return res.status(500).end(err.message);
                         } else {
                             return res.status(200).end('registered');
                         }
@@ -195,7 +195,8 @@ module.exports = {
                     lastName: user.lastName,
                     telephone: user.telephone,
                     type: account.type,
-                    status: user.status
+                    status: user.status,
+                    paymentPending: account.paymentPending
                 });
             });
         });

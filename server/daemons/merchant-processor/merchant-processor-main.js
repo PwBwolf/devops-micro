@@ -57,7 +57,7 @@ worker.register({
                                     callback(new Error('account-error'));
                                 });
                             } else {
-                                updateAccountForPayment(dbUser.email, dbUser.account._id, params.merchantId, function (err, merchant, paymentPending, firstMerchantPaymentDate) {
+                                updateAccountForPayment(dbUser.email, dbUser.account._id, params.merchantId, function (err, merchant, paymentPending, firstMerchantPaymentDate, billingDate) {
                                     if (err) {
                                         logger.logError('merchantProcessorMain - makePayment - error updating user merchant: ' + params.username);
                                         logger.logError(err);
@@ -70,7 +70,7 @@ worker.register({
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
                                                     logger.logError(err);
-                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate);
+                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
                                                         callback(err);
                                                     });
@@ -85,7 +85,7 @@ worker.register({
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error reactivating user: ' + params.username);
                                                     logger.logError(err);
-                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate);
+                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
                                                         callback(err);
                                                     });
@@ -100,7 +100,7 @@ worker.register({
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                     logger.logError(err);
-                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate);
+                                                    rollbackAccountForPayment(dbUser.account._id, merchant, paymentPending, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
                                                         callback(err);
                                                     });
@@ -317,10 +317,12 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
                             var oldMerchant = account.merchant;
                             var oldPaymentPending = account.paymentPending;
                             var oldFirstMerchantPaymentDate = account.firstMerchantPaymentDate;
+                            var oldBillingDate = account.oldBillingDate;
                             account.merchant = merchant.name;
                             account.paymentPending = false;
                             if (!account.firstMerchantPaymentDate && firstMerchantPaymentDate) {
                                 account.firstMerchantPaymentDate = firstMerchantPaymentDate;
+                                account.billingDate = (new Date()).toUTCString();
                             }
                             account.save(function (err) {
                                 if (err) {
@@ -328,7 +330,7 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
                                     logger.logError(err);
                                     cb(err);
                                 } else {
-                                    cb(null, oldMerchant, oldPaymentPending, oldFirstMerchantPaymentDate);
+                                    cb(null, oldMerchant, oldPaymentPending, oldFirstMerchantPaymentDate, oldBillingDate);
                                 }
                             });
                         }
@@ -339,7 +341,7 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
     });
 }
 
-function rollbackAccountForPayment(accountId, merchant, paymentPending, firstMerchantPaymentDate) {
+function rollbackAccountForPayment(accountId, merchant, paymentPending, firstMerchantPaymentDate, billingDate) {
     Account.findOne({_id: accountId}, function (err, account) {
         if (err) {
             logger.logError('merchantProcessorMain - rollbackAccountForPayment - error fetching account');
@@ -350,6 +352,7 @@ function rollbackAccountForPayment(accountId, merchant, paymentPending, firstMer
             account.merchant = merchant;
             account.paymentPending = paymentPending;
             account.firstMerchantPaymentDate = firstMerchantPaymentDate;
+            account.billingDate = billingDate;
             account.save(function (err) {
                 if (err) {
                     logger.logError('merchantProcessorMain - rollbackAccountForPayment - error saving account');
