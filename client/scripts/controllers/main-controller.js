@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -14,8 +14,6 @@
         activate();
 
         function activate() {
-            $scope.webSliders = webStorage.local.get('webSliders') || [];
-            $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
             getAppConfig();
             loadLanguage();
             configSeo();
@@ -35,24 +33,9 @@
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
-                getWebSliders();
             }).error(function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
             });
-        }
-
-        function getWebSliders() {
-            if ($scope.appConfig.webSliderVersion !== webStorage.get('webSliderVersion') || !$scope.webSliders || $scope.webSliders.length === 0) {
-                appSvc.getWebSliders().success(function (data) {
-                    webStorage.local.add('webSliderVersion', $scope.appConfig.webSliderVersion);
-                    webStorage.local.add('webSliders', data);
-                    $scope.webSliders = data;
-                    $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
-                    if ($location.path() === '/') {
-                        $route.reload();
-                    }
-                });
-            }
         }
 
         function configSeo() {
@@ -64,6 +47,12 @@
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
             changeLanguage(language);
         }
+
+        $scope.$on('$routeChangeSuccess', function() {
+            if($routeParams.lang) {
+                changeLanguage($routeParams.lang);
+            }
+        });
 
         $scope.goToBlogUrl = function (urlName) {
             $window.location = $scope.appConfig.blogUrl + $filter('translate')(urlName);
