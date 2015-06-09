@@ -62,6 +62,14 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
+            .when('/sign-up-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-payment-pending.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/invite/:referralCode',
             {
                 title: title,
@@ -247,43 +255,11 @@
                 controller: 'commonCtrl',
                 access: access.user
             })
-            .when('/about-us',
-            {
-                title: 'YipTV - Online TV Streaming Services',
-                description: 'YipTV, Inc, is a privately held US-based online TV streaming services that provides low cost live internet TV. Enjoy with 100+ channels in multiple languages.',
-                templateUrl: 'views/about-us.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/leadership',
             {
                 title: 'YipTV Management and Board of Directors Team',
                 description: 'YipTV has an experienced and highly qualified management team who are aware about customer needs and demands. Explore detailed information about our leadership.',
                 templateUrl: 'views/leadership.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/media',
-            {
-                title: 'YipTV in Press Release and News',
-                description: 'Explore YipTV news in press release and media. Read all news from a single place.',
-                templateUrl: 'views/media.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/press-release-1',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/press-release-1.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/faq',
-            {
-                title: 'Frequently Asked Questions - YipTV',
-                description: 'Get instant reply of your questions with YipTV FAQ section. Email or call us for further questions.',
-                templateUrl: 'views/faq.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
@@ -303,30 +279,6 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/privacy-policy',
-            {
-                title: 'Privacy Policy - YipTV',
-                description: 'Explore privacy policy of YipTV, USA based internet TV streaming services.',
-                templateUrl: 'views/privacy-policy.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/terms-of-use',
-            {
-                title: 'Terms of Use & Services - YipTV',
-                description: 'Explore terms of use and services of YipTV, an online internet TV streaming service.',
-                templateUrl: 'views/terms-of-use.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/eula',
-            {
-                title: 'Software End-User License Agreement - YipTV',
-                description: 'Explore software end-user license agreement of YipTV, an online internet TV streaming service.',
-                templateUrl: 'views/eula.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/customer-support',
             {
                 title: title,
@@ -334,38 +286,6 @@
                 templateUrl: 'views/customer-support.html',
                 controller: 'commonCtrl',
                 access: access.public
-            })
-            .when('/admin',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/admin.html',
-                controller: 'commonCtrl',
-                access: access.admin
-            })
-            .when('/admin/all-users',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/all-users.html',
-                controller: 'allUsersCtrl',
-                access: access.admin
-            })
-            .when('/admin/user-details',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/user-details.html',
-                controller: 'userDetailsCtrl',
-                access: access.admin
-            })
-            .when('/admin/change-password',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/admin-change-password.html',
-                controller: 'adminChangePasswordCtrl',
-                access: access.admin
             })
             .when('/error',
             {

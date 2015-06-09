@@ -101,16 +101,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // add free package in freeside
-            function (userObj, accountObj, callback) {
-                billing.orderPackage(freeSideSessionId, config.freeSideFreePackageNumber, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error ordering package in freeside: ' + userObj.email);
-                        errorType = 'freeside-order-insert';
-                    }
-                    callback(err, userObj, accountObj);
-                });
-            },
             // update freeside customer number in account
             function (userObj, accountObj, callback) {
                 accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
@@ -121,6 +111,16 @@ module.exports = {
                     }
                 });
                 callback(null, userObj, accountObj);
+            },
+            // add free package in freeside
+            function (userObj, accountObj, callback) {
+                billing.orderPackage(freeSideSessionId, config.freeSideFreePackageNumber, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error ordering package in freeside: ' + userObj.email);
+                        errorType = 'freeside-order-insert';
+                    }
+                    callback(err, userObj, accountObj);
+                });
             },
             // send verification email
             function (userObj, accountObj, callback) {
@@ -168,6 +168,165 @@ module.exports = {
     },
 
     newPaidUser: function (user, cb) {
+        var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
+        async.waterfall([
+            // create user in db
+            function (callback) {
+                createUser(user, null, function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error creating user: ' + user.email);
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // create account in db
+            function (userObj, callback) {
+                createAccount(user, userObj, 'paid', function (err, accountObj) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error creating account: ' + user.email);
+                        errorType = 'db-account-insert';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // update user with account
+            function (userObj, accountObj, callback) {
+                userObj.account = accountObj;
+                userObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error updating user with account details: ' + user.email);
+                        errorType = 'db-user-update';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // create user in aio
+            function (userObj, accountObj, callback) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidPackages, function (err, data) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error creating user in aio: ' + userObj.email);
+                        errorType = 'aio-user-insert';
+                    }
+                    if (data) {
+                        aioAccountId = data.account;
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // set aio account id in account
+            function (userObj, accountObj, callback) {
+                accountObj.aioAccountId = aioAccountId;
+                accountObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error updating aio account id in account: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // set aio user inactive
+            function (userObj, accountObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error setting aio user inactive: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                    callback(null, userObj, accountObj);
+                });
+            },
+            // create user in freeside
+            function (userObj, accountObj, callback) {
+                var password = userObj.createdAt.getTime();
+                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, password, userObj.telephone, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, function (err, customerNumber, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error creating user in freeside: ' + userObj.email);
+                        errorType = 'freeside-user-insert';
+                    }
+                    freeSideCustomerNumber = customerNumber;
+                    freeSideSessionId = sessionId;
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // update freeside customer number in account
+            function (userObj, accountObj, callback) {
+                accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
+                accountObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error updating billing system customer number in account: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // add paid package in freeside
+            function (userObj, accountObj, callback) {
+                billing.orderPackage(freeSideSessionId, config.freeSidePaidPackageNumber, function (err) {
+                    if (err) {
+                        if (err === '_decline') {
+                            logger.logError('subscription - newPaidUser - credit card declined: ' + userObj.email);
+                            errorType = 'payment-declined';
+                        } else {
+                            logger.logError('subscription - newPaidUser - error ordering package in freeside: ' + userObj.email);
+                            errorType = 'freeside-order-insert';
+                        }
+                        logger.logError(err);
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // send verification email
+            function (userObj, accountObj, callback) {
+                sendVerificationEmail(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error sending verification email: ' + userObj.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - newPaidUser - verification email sent: ' + userObj.email);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // delete user from visitor
+            function (userObj, accountObj, callback) {
+                deleteVisitor(userObj.email, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error deleting visitor: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            }
+        ], function (err, userObj, accountObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'payment-declined':
+                        revertAccountPaymentDetails(userObj.email, accountObj);
+                        sendVerificationEmail(userObj);
+                        deleteVisitor(userObj.email);
+                        err = new Error('PaymentPending');
+                        break;
+                    case 'freeside-order-insert':
+                    case 'freeside-user-insert':
+                        setDbUserFailed(userObj);
+                        break;
+                    case 'aio-user-insert':
+                    case 'db-user-update':
+                        removeDbAccount(accountObj);
+                        removeDbUser(userObj);
+                        break;
+                    case 'db-account-insert':
+                        removeDbUser(userObj);
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    // TODO: remove this once testing is completed for the new self service API implementation
+    newPaidUserOld: function (user, cb) {
         async.waterfall([
             // create user in db
             function (callback) {
@@ -448,16 +607,6 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     });
                 },
-                // add paid package in freeside
-                function (userObj, accountObj, callback) {
-                    billing.orderPackage(freeSideSessionId, config.freeSidePaidPackageNumber, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newComplimentaryUser - error ordering package in freeside: ' + userObj.email);
-                            errorType = 'freeside-order-insert';
-                        }
-                        callback(err, userObj, accountObj);
-                    });
-                },
                 // update freeside customer number in account
                 function (userObj, accountObj, callback) {
                     accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
@@ -468,6 +617,16 @@ module.exports = {
                         }
                     });
                     callback(null, userObj, accountObj);
+                },
+                // add complimentary package in freeside
+                function (userObj, accountObj, callback) {
+                    billing.orderPackage(freeSideSessionId, config.freeSideComplimentaryPackageNumber, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newComplimentaryUser - error ordering package in freeside: ' + userObj.email);
+                            errorType = 'freeside-order-insert';
+                        }
+                        callback(err, userObj, accountObj);
+                    });
                 },
                 // send verification email
                 function (userObj, accountObj, callback) {
@@ -1572,14 +1731,19 @@ function createUser(user, cc, cb) {
 }
 
 function createAccount(user, userObj, type, cb) {
+    var now = (new Date()).toUTCString();
     var accountObj = new Account({
         type: type,
         merchant: 'YIPTV',
         paymentPending: false,
         primaryUser: userObj,
         users: [userObj],
-        createdAt: (new Date()).toUTCString()
+        createdAt: now
     });
+    if (type === 'paid') {
+        accountObj.firstCardPaymentDate = now;
+        accountObj.billingDate = now;
+    }
     if (type === 'comp') {
         accountObj.complimentaryCode = user.code;
     } else {
@@ -1641,6 +1805,21 @@ function deleteVisitor(email, cb) {
                     logger.logError(err);
                 }
             });
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountPaymentDetails(email, account, cb) {
+    account.paymentPending = true;
+    account.firstCardPaymentDate = undefined;
+    account.billingDate = undefined;
+    account.save(function(err){
+        if (err) {
+            logger.logError('subscription - revertAccountPaymentDetails - error reverting payment details from account : ' + email);
+            logger.logError(err);
         }
         if (cb) {
             cb(err);

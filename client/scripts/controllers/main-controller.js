@@ -120,6 +120,8 @@
                 $location.path('/reactivate-subscription');
             } else if ($scope.user.status === 'trial-ended' || $scope.user.status === 'comp-ended') {
                 $location.path('/upgrade-subscription');
+            } else if($scope.user.paymentPending) {
+                $location.path('/change-credit-card');
             } else {
                 var browser = browserSvc.getBrowserName();
                 if (aioWindow && !aioWindow.closed) {
