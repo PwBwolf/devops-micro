@@ -323,7 +323,7 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
                             if (!account.firstMerchantPaymentDate && firstMerchantPaymentDate) {
                                 account.firstMerchantPaymentDate = firstMerchantPaymentDate;
                             }
-                            if(!account.billingDate && firstMerchantPaymentDate) {
+                            if(!account.billingDate) {
                                 account.billingDate = (new Date()).toUTCString();
                             }
                             account.save(function (err) {

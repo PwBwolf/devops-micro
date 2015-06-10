@@ -6,6 +6,31 @@ var config = require('../setup/config'),
 
 module.exports = {
 
+    login: function (email, password, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.login', [
+            'email', email,
+            'password', password,
+            'domain', 'yiptv.com'
+        ], function (error, response) {
+            if (error) {
+                logger.logError('billing - login - error in login 1');
+                logger.logError(error);
+                callback(error);
+            } else {
+                if (response.error) {
+                    logger.logError('billing - login - error in login 2');
+                    logger.logError(response.error);
+                    callback(response.error);
+                } else {
+                    logger.logInfo('billing - login - response');
+                    logger.logInfo(response);
+                    callback(null, response.session_id);
+                }
+            }
+        });
+    },
+
     newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.new_customer_minimal',
@@ -45,6 +70,45 @@ module.exports = {
                         logger.logInfo('billing - createCustomer - response');
                         logger.logInfo(response);
                         callback(null, response.custnum, response.session_id);
+                    }
+                }
+            }
+        );
+    },
+
+    updateCreditCard: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        console.log(payDate);
+        client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
+            [
+                'session_id', sessionId,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country,
+                'payby', payBy,
+                'payinfo', payInfo,
+                'paycvv', payCvv,
+                'month', payDate.substring(0, 2),
+                'year', payDate.substring(3),
+                'auto', 'Y',
+                'payname', payName
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateCreditCard - error in creating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateCreditCard - error in creating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateCreditCard - response');
+                        logger.logInfo(response);
+                        callback(null);
                     }
                 }
             }
@@ -162,7 +226,7 @@ module.exports = {
         );
     },
 
-    updateCreditCard: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateCreditCardOld: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.update_customer',
             [

@@ -24,6 +24,8 @@
                     }, function (error) {
                         if(error === 'FreeUser') {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_FREE_USER_ERROR'));
+                        } else if(error === 'PaymentPending') {
+                            loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_PAYMENT_ERROR'));
                         } else {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
