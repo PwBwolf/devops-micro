@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     sf = require('sf'),
     jwt = require('jwt-simple'),
     uuid = require('node-uuid'),
+    async = require('async'),
     logger = require('../../common/setup/logger'),
     moment = require('moment'),
     config = require('../../common/setup/config'),
@@ -66,7 +67,7 @@ module.exports = {
                 } else {
                     if (type === 'free') {
                         logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
-                        return res.status(500).end();
+                        return res.status(500).end('UserExists');
                     } else if (type === 'paid' && user.account.type === 'free') {
                         subscription.upgradeSubscription(user.email, req.body, function (err, status) {
                             if (err) {
@@ -127,6 +128,8 @@ module.exports = {
                                 return res.status(200).send(status);
                             }
                         });
+                    } else {
+                        return res.status(500).end('UserExists');
                     }
                 }
             }
@@ -234,8 +237,8 @@ module.exports = {
                         logger.logError(err);
                         user.status = status;
                         user.verificationCode = verificationCode;
-                        user.save(function(err){
-                            if(err){
+                        user.save(function (err) {
+                            if (err) {
                                 logger.logError('userController - verifyUser - error reverting user back: ' + user.email);
                                 logger.logError(err);
                             }
@@ -505,23 +508,77 @@ module.exports = {
             if (user.account.type === 'free') {
                 return res.status(409).send('FreeUser');
             }
-            var address = req.body.address;
-            var city = req.body.city;
-            var state = req.body.state;
-            var zip = req.body.zipCode;
-            var country = 'US';
-            var payBy = 'CARD';
-            var payInfo = req.body.cardNumber;
-            var payDate = req.body.expiryDate;
-            var payCvv = req.body.cvv;
-            var payName = req.body.cardName;
-            billing.updateCreditCard(user.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                if (err) {
-                    logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + req.email.toLowerCase());
-                    logger.logError(err);
-                    return res.status(500).end();
+            async.waterfall([
+                // login
+                function (callback) {
+                    billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                        if (err) {
+                            logger.logError('userController - changeCreditCard - error logging into billing system: ' + user.email);
+                            logger.logError(err);
+                        }
+                        callback(err, sessionId);
+                    });
+                },
+                // update credit card
+                function (sessionId, callback) {
+                    billing.updateCreditCard(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
+                        if (err) {
+                            logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + user.email);
+                            logger.logError(err);
+                        }
+                        callback(err, sessionId);
+                    });
+                },
+                // if payment pending then order package
+                function (sessionId, callback) {
+                    if (user.account.paymentPending) {
+                        billing.orderPackage(sessionId, config.freeSidePaidPackageNumber, function (err) {
+                            if (err) {
+                                if (err === '_decline') {
+                                    logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
+                                } else {
+                                    logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
+                                }
+                                logger.logError(err);
+                            }
+                            callback(err);
+                        });
+                    } else {
+                        callback(null);
+                    }
+                },
+                // update account
+                function (callback) {
+                    if (user.account.paymentPending) {
+                        user.account.paymentPending = false;
+                        if (!user.account.firstCardPaymentDate) {
+                            user.account.firstCardPaymentDate = (new Date()).toUTCString();
+                        }
+                        if (!user.account.billingDate) {
+                            user.account.billingDate = (new Date()).toUTCString();
+                        }
+                        user.account.save(function (err) {
+                            if (err) {
+                                logger.logError('userController - changeCreditCard - error updating account: ' + user.email);
+                                logger.logError(err);
+                            }
+                            callback(err);
+                        });
+                    } else {
+                        callback(null);
+                    }
                 }
-                return res.status(200).end();
+            ], function (err) {
+                if (err) {
+                    logger.logError(err);
+                    if(err === '_decline') {
+                        return res.status(500).end('PaymentPending');
+                    } else {
+                        return res.status(500).end();
+                    }
+                } else {
+                    return res.status(200).end();
+                }
             });
         });
     },
