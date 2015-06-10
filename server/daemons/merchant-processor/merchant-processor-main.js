@@ -317,11 +317,13 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
                             var oldMerchant = account.merchant;
                             var oldPaymentPending = account.paymentPending;
                             var oldFirstMerchantPaymentDate = account.firstMerchantPaymentDate;
-                            var oldBillingDate = account.oldBillingDate;
+                            var oldBillingDate = account.billingDate;
                             account.merchant = merchant.name;
                             account.paymentPending = false;
                             if (!account.firstMerchantPaymentDate && firstMerchantPaymentDate) {
                                 account.firstMerchantPaymentDate = firstMerchantPaymentDate;
+                            }
+                            if(!account.billingDate && firstMerchantPaymentDate) {
                                 account.billingDate = (new Date()).toUTCString();
                             }
                             account.save(function (err) {
