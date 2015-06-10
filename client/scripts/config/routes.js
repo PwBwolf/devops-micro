@@ -4,7 +4,7 @@
     app.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
         var access = routing.accessLevels,
             title = 'YipTV - Watch Live Internet TV & Spanish Channels Online',
-            description = 'Watch over 100+ USA & Spanish TV shows and channels in variety of genres such as news, sports, lifestyle, and entertainment. Try it free.';
+            description = 'Watch over 50+ USA & Spanish TV shows and channels in a variety of genres such as news, sports, lifestyle, and entertainment. Only 14.99/mo. With no contract.';
 
         $routeProvider.when('/',
             {
