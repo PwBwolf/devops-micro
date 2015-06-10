@@ -76,7 +76,44 @@ module.exports = {
         );
     },
 
-    updateCreditCard: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateCreditCard: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.update_customer',
+            [
+                'secret', config.freeSideApiKey,
+                'custnum', customerNumber,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country,
+                'payby', payBy,
+                'payinfo', payInfo,
+                'paydate', payDate,
+                'paycvv', payCvv,
+                'payname', payName
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateCreditCard - error in updating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateCreditCard - error in updating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateCreditCard - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
+    updateCreditCardNew: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         console.log(payDate);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
@@ -141,48 +178,27 @@ module.exports = {
         });
     },
 
-    createUser: function (firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
-        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
-        client.methodCall('FS.API.new_customer',
-            [
-                'secret', config.freeSideApiKey,
-                'agentnum', 1,
-                'refnum', 1,
-                'first', firstName,
-                'last', lastName,
-                'company', '',
-                'address1', address,
-                'city', city,
-                'county', '',
-                'state', state,
-                'zip', zip,
-                'country', country,
-                'daytime', telephone,
-                'invoicing_list', email,
-                'postal_invoicing', 0,
-                'payby', payBy,
-                'payinfo', payInfo,
-                'paydate', payDate,
-                'paycvv', payCvv,
-                'payname', payName
-            ], function (err, response) {
-                if (err) {
-                    logger.logError('billing - createUser - error in creating customer 1');
-                    logger.logError(err);
-                    callback(err);
+    getPackages: function(sessionId, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.order_pkg', [
+            'session_id', sessionId
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - getPackages - error in getting packages 1');
+                logger.logError(err);
+                callback(err);
+            } else {
+                if (response.error) {
+                    logger.logError('billing - getPackages - error in getting packages 2');
+                    logger.logError(response.error);
+                    callback(response.error);
                 } else {
-                    if (response.error) {
-                        logger.logError('billing - createUser - error in creating customer 2');
-                        logger.logError(response.error);
-                        callback(response.error);
-                    } else {
-                        logger.logInfo('billing - createUser - response');
-                        logger.logInfo(response);
-                        callback(null, response.custnum);
-                    }
+                    logger.logInfo('billing - getPackages - response');
+                    logger.logInfo(response);
+                    callback(null, response.cust_pkg);
                 }
             }
-        );
+        });
     },
 
     updateUser: function (customerNumber, firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
@@ -218,43 +234,6 @@ module.exports = {
                         callback(response.error);
                     } else {
                         logger.logInfo('billing - updateUser - response');
-                        logger.logInfo(response);
-                        callback(null);
-                    }
-                }
-            }
-        );
-    },
-
-    updateCreditCardOld: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
-        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
-        client.methodCall('FS.API.update_customer',
-            [
-                'secret', config.freeSideApiKey,
-                'custnum', customerNumber,
-                'address1', address,
-                'city', city,
-                'county', '',
-                'state', state,
-                'zip', zip,
-                'country', country,
-                'payby', payBy,
-                'payinfo', payInfo,
-                'paydate', payDate,
-                'paycvv', payCvv,
-                'payname', payName
-            ], function (err, response) {
-                if (err) {
-                    logger.logError('billing - updateCreditCard - error in updating customer 1');
-                    logger.logError(err);
-                    callback(err);
-                } else {
-                    if (response.error) {
-                        logger.logError('billing - updateCreditCard - error in updating customer 2');
-                        logger.logError(response.error);
-                        callback(response.error);
-                    } else {
-                        logger.logInfo('billing - updateCreditCard - response');
                         logger.logInfo(response);
                         callback(null);
                     }
