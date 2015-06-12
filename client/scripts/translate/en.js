@@ -466,7 +466,7 @@
             SIGN_UP_HEADING: 'Sign Up',
             SIGN_UP_MESSAGE: 'Signing up is easy! There is no contract and you can cancel any time. You’re moments away from getting high quality TV from around the globe. Get ready to see the future of television.',
             SIGN_UP_PROMO: '<img src="images/pages/en/signup-1499.jpg" />',
-			SIGN_UP_FIRST_NAME: 'First Name',
+            SIGN_UP_FIRST_NAME: 'First Name',
             SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
             SIGN_UP_LAST_NAME_REQUIRED: 'Enter your last name',
             SIGN_UP_FIRST_NAME_INVALID: 'Enter a valid first name',

@@ -3,8 +3,8 @@
 
     app.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
         var access = routing.accessLevels,
-            title = 'YipTV - Watch Live Internet TV & Spanish Channels Online',
-            description = 'Watch over 50+ USA & Spanish TV shows and channels in a variety of genres such as news, sports, lifestyle, and entertainment. Only 14.99/mo. With no contract.';
+            title = {en: 'YipTV - Watch Live Internet TV & Spanish Channels Online', es: 'TV en español por Internet en YipTV'},
+            description = {en: 'Watch over 50+ USA & Spanish TV shows and channels in a variety of genres such as news, sports, lifestyle, and entertainment. Only 14.99/mo. With no contract.', es: 'Ve más de 50 canales en español. Disfruta noticias, deportes, e entretenimiento en tus móviles por tan sólo $14.99 al mes'};
 
         $routeProvider.when('/',
             {
@@ -338,8 +338,8 @@
     app.run(['_', '$rootScope', '$route', '$location', '$http', 'userSvc', 'tokenSvc', function (_, $rootScope, $route, $location, $http, userSvc, tokenSvc) {
         $rootScope.$on('$routeChangeSuccess', function (newVal, oldVal) {
             if (oldVal !== newVal) {
-                document.title = $route.current.title;
-                $rootScope.meta = {description: $route.current.description};
+                $rootScope.title = $route.current.title[$rootScope.language] || $route.current.title;
+                $rootScope.description = $route.current.description[$rootScope.language] || $route.current.description;
             }
         });
 
