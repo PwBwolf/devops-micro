@@ -687,22 +687,22 @@ a.import-button:hover {
     color: #000;
     text-align: justify;
 }
-#topBox .message { 
-	width: 55%; 
-	display:inline-block; 
-	vertical-align:top; 
+#topBox .message {
+    width: 55%;
+    display:inline-block;
+    vertical-align:top;
 }
-#topBox .promo { 
-	height:auto; 
-	width:40%;
-	display:inline-block;
-	vertical-align: top;
-	margin-left: 2%;
-	margin-top: -6px; 
+#topBox .promo {
+    height:auto;
+    width:40%;
+    display:inline-block;
+    vertical-align: top;
+    margin-left: 2%;
+    margin-top: -6px;
 }
-#topBox .promo img { 
-	width: 100%; 
-	height:auto; 
+#topBox .promo img {
+    width: 100%;
+    height:auto;
 }
 
 @media screen and (max-width: 1350px) {

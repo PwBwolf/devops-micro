@@ -199,10 +199,10 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('appController - sendRafEmails.sendEmail - error sending RAF email to ' + mailOptions.to);
+                        logger.logError('appController - sendRafEmails.sendEmail - error sending RAF email to ' + mailOptions.bcc);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('appController - sendRafEmails.sendEmail - refer a friend email sent to ' + mailOptions.to);
+                        logger.logInfo('appController - sendRafEmails.sendEmail - refer a friend email sent to ' + mailOptions.bcc);
                     }
                 });
                 return res.status(200).end();
