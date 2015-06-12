@@ -76,46 +76,8 @@ module.exports = {
         );
     },
 
-    updateCreditCard: function (customerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
-        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
-        client.methodCall('FS.API.update_customer',
-            [
-                'secret', config.freeSideApiKey,
-                'custnum', customerNumber,
-                'address1', address,
-                'city', city,
-                'county', '',
-                'state', state,
-                'zip', zip,
-                'country', country,
-                'payby', payBy,
-                'payinfo', payInfo,
-                'paydate', payDate,
-                'paycvv', payCvv,
-                'payname', payName
-            ], function (err, response) {
-                if (err) {
-                    logger.logError('billing - updateCreditCard - error in updating customer 1');
-                    logger.logError(err);
-                    callback(err);
-                } else {
-                    if (response.error) {
-                        logger.logError('billing - updateCreditCard - error in updating customer 2');
-                        logger.logError(response.error);
-                        callback(response.error);
-                    } else {
-                        logger.logInfo('billing - updateCreditCard - response');
-                        logger.logInfo(response);
-                        callback(null);
-                    }
-                }
-            }
-        );
-    },
-
-    updateCreditCardNew: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateCreditCard: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        console.log(payDate);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
                 'session_id', sessionId,
@@ -178,28 +140,7 @@ module.exports = {
         });
     },
 
-    getPackages: function(sessionId, callback) {
-        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        client.methodCall('FS.ClientAPI_XMLRPC.order_pkg', [
-            'session_id', sessionId
-        ], function (err, response) {
-            if (err) {
-                logger.logError('billing - getPackages - error in getting packages 1');
-                logger.logError(err);
-                callback(err);
-            } else {
-                if (response.error) {
-                    logger.logError('billing - getPackages - error in getting packages 2');
-                    logger.logError(response.error);
-                    callback(response.error);
-                } else {
-                    logger.logInfo('billing - getPackages - response');
-                    logger.logInfo(response);
-                    callback(null, response.cust_pkg);
-                }
-            }
-        });
-    },
+    getPackages: getPackages,
 
     updateUser: function (customerNumber, firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
@@ -341,5 +282,49 @@ module.exports = {
                 }
             }
         );
+    },
+
+    hasPaidActivePackage: function (sessionId, callback) {
+        getPackages(sessionId, function (err, packages) {
+            if (err) {
+                logger.logError('billing - hasPaidPackage - error in getting packages');
+                logger.logError(err);
+                callback(err);
+            } else if (packages && packages.length > 0) {
+                var status = false;
+                for (var i = 0; i < packages.length; i++) {
+                    if (packages[i].pkgpart === String(config.freeSidePaidPackageNumber) && packages[i].status === 'active') {
+                        status = true;
+                        break;
+                    }
+                }
+                callback(null, status);
+            } else {
+                callback(null, false);
+            }
+        });
     }
 };
+
+function getPackages(sessionId, callback) {
+    var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+    client.methodCall('FS.ClientAPI_XMLRPC.list_pkgs', [
+        'session_id', sessionId
+    ], function (err, response) {
+        if (err) {
+            logger.logError('billing - getPackages - error in getting packages 1');
+            logger.logError(err);
+            callback(err);
+        } else {
+            if (response.error) {
+                logger.logError('billing - getPackages - error in getting packages 2');
+                logger.logError(response.error);
+                callback(response.error);
+            } else {
+                logger.logInfo('billing - getPackages - response');
+                logger.logInfo(response);
+                callback(null, response.cust_pkg);
+            }
+        }
+    });
+}

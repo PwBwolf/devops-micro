@@ -20,6 +20,7 @@
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
+                console.log($scope.mv.preferences.defaultLanguage);
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,

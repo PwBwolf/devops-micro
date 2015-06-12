@@ -508,40 +508,6 @@ module.exports = {
             if (user.account.type === 'free') {
                 return res.status(409).send('FreeUser');
             }
-            var address = req.body.address;
-            var city = req.body.city;
-            var state = req.body.state;
-            var zip = req.body.zipCode;
-            var country = 'US';
-            var payBy = 'CARD';
-            var payInfo = req.body.cardNumber;
-            var payDate = req.body.expiryDate;
-            var payCvv = req.body.cvv;
-            var payName = req.body.cardName;
-            billing.updateCreditCard(user.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                if (err) {
-                    logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + req.email.toLowerCase());
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                return res.status(200).end();
-            });
-        });
-    },
-
-    changeCreditCardNew: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError('userController - changeCreditCard - error fetching user: ' + req.email.toLowerCase());
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.account.type === 'free') {
-                return res.status(409).send('FreeUser');
-            }
             async.waterfall([
                 // login
                 function (callback) {
@@ -566,21 +532,25 @@ module.exports = {
                 // if payment pending then order package
                 function (sessionId, callback) {
                     if (user.account.paymentPending) {
-                        doesUserHavePaidPackage(sessionId, function(err, result){
-                           if(err) {
-                               logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
-                           }
-                        });
-                        billing.orderPackage(sessionId, config.freeSidePaidPackageNumber, function (err) {
+                        billing.hasPaidActivePackage(sessionId, function (err, result) {
                             if (err) {
-                                if (err === '_decline') {
-                                    logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
-                                } else {
-                                    logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
-                                }
-                                logger.logError(err);
+                                logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
+                                callback(err);
+                            } else if (!result) {
+                                billing.orderPackage(sessionId, config.freeSidePaidPackageNumber, function (err) {
+                                    if (err) {
+                                        if (err === '_decline') {
+                                            logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
+                                        } else {
+                                            logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
+                                        }
+                                        logger.logError(err);
+                                    }
+                                    callback(err);
+                                });
+                            } else {
+                                callback(err);
                             }
-                            callback(err);
                         });
                     } else {
                         callback(null);
@@ -610,7 +580,7 @@ module.exports = {
             ], function (err) {
                 if (err) {
                     logger.logError(err);
-                    if(err === '_decline') {
+                    if (err === '_decline') {
                         return res.status(500).end('PaymentPending');
                     } else {
                         return res.status(500).end();

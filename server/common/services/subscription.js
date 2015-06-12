@@ -1640,7 +1640,7 @@ function revertAccountPaymentDetails(email, account, cb) {
     account.paymentPending = true;
     account.firstCardPaymentDate = undefined;
     account.billingDate = undefined;
-    account.save(function(err){
+    account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountPaymentDetails - error reverting payment details from account : ' + email);
             logger.logError(err);
