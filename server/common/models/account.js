@@ -11,7 +11,7 @@ var Account = new Schema({
     referredBy: String,
     aioAccountId: Number,
     freeSideCustomerNumber: Number,
-    complimentaryCode: String,
+    complimentaryCode: {type: String, sparse: true },
     merchant: String,
     paymentPending: Boolean,
     firstCardPaymentDate: Date,
