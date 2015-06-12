@@ -236,11 +236,11 @@ input[type="checkbox"]:checked + label:before {
 }
 
 #carouselBanner .carousel-indicators {
-    bottom: 30px;
+    bottom: -30px;
     left: 0;
-    width: 80%;
+    width: 100%;
     margin: 0px;
-    text-align: right;
+    text-align: center;
     z-index: 9999;
 }
 
