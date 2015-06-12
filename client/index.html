@@ -57,7 +57,7 @@
             <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Sign In</a>
             <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a>
         </div>
-        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href ng-click="goToBlogUrl('BLOG_URL_FAQS')" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
+        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
         <div class="contact-number" translate="INDEX_CONTACT_NUMBER">Call us toll free: <a href="tel:+18559194788">855-919-4788</a></div>
     </div>
     <nav id="navBar">
@@ -66,8 +66,8 @@
                 <div style="display:none"><img src="images/mini-logo.png"></div>
                 <menuItem id="top" bookmark style="display:none">Top ^</menuItem>
                 <menuItem id="shows" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY"></menuItem>
-                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToBlogUrl('BLOG_URL_NETWORKS')" translate="INDEX_NETWORKS"></a></menuItem>
-                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToBlogUrl('BLOG_URL_ABOUT_US')" translate="INDEX_ABOUT_US"></a></menuItem>
+                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_NETWORKS')" translate="INDEX_NETWORKS"></a></menuItem>
+                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_ABOUT_US')" translate="INDEX_ABOUT_US"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>

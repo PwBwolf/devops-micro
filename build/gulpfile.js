@@ -197,6 +197,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
 
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {

@@ -58,7 +58,7 @@
             }
         });
 
-        $scope.goToBlogUrl = function (urlName) {
+        $scope.goToCmsUrl = function (urlName) {
             $window.location = $scope.appConfig.blogUrl + $filter('translate')(urlName);
         };
 
