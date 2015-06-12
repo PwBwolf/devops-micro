@@ -53,7 +53,7 @@ module.exports = {
                             logger.logError(err);
                             return res.status(500).end(err.message);
                         } else {
-                            return res.status(200).end('registered');
+                            return res.status(200).send('registered');
                         }
                     });
                 } else {
@@ -67,7 +67,7 @@ module.exports = {
                 } else {
                     if (type === 'free') {
                         logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
-                        return res.status(500).end('UserExists');
+                        return res.status(409).end('UserExists');
                     } else if (type === 'paid' && user.account.type === 'free') {
                         subscription.upgradeSubscription(user.email, req.body, function (err, status) {
                             if (err) {
@@ -129,7 +129,7 @@ module.exports = {
                             }
                         });
                     } else {
-                        return res.status(500).end('UserExists');
+                        return res.status(409).end('UserExists');
                     }
                 }
             }
