@@ -114,7 +114,7 @@ module.exports = {
             },
             // add free package in freeside
             function (userObj, accountObj, callback) {
-                billing.orderPackage(freeSideSessionId, config.freeSideFreePackageNumber, function (err) {
+                billing.orderPackage(freeSideSessionId, config.freeSideFreePackagePart, function (err) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error ordering package in freeside: ' + userObj.email);
                         errorType = 'freeside-order-insert';
@@ -260,7 +260,7 @@ module.exports = {
             },
             // add paid package in freeside
             function (userObj, accountObj, callback) {
-                billing.orderPackage(freeSideSessionId, config.freeSidePaidPackageNumber, function (err) {
+                billing.orderPackage(freeSideSessionId, config.freeSidePaidPackagePart, function (err) {
                     if (err) {
                         if (err === '_decline') {
                             logger.logError('subscription - newPaidUser - credit card declined: ' + userObj.email);
@@ -444,7 +444,7 @@ module.exports = {
                 },
                 // add complimentary package in freeside
                 function (userObj, accountObj, callback) {
-                    billing.orderPackage(freeSideSessionId, config.freeSideComplimentaryPackageNumber, function (err) {
+                    billing.orderPackage(freeSideSessionId, config.freeSideComplimentaryPackagePart, function (err) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error ordering package in freeside: ' + userObj.email);
                             errorType = 'freeside-order-insert';
@@ -510,136 +510,129 @@ module.exports = {
     },
 
     upgradeSubscription: function (userEmail, newUser, cb) {
-        var status,
-            type,
-            cancelDate,
-            currentUser;
+        var currentValues, currentUser, errorType;
         async.waterfall([
-            // set account type to paid
+            // update user
             function (callback) {
-                User.findOne({email: userEmail}, function (err, user) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else {
-                        Account.findOne({_id: user.account}, function (err, accountObj) {
-                            if (err) {
-                                logger.logError('subscription - upgradeSubscription - error fetching account: ' + userEmail);
-                                callback(err);
-                            } else if (user.status === 'failed') {
-                                callback('FailedUser');
-                            } else if (accountObj.type === 'paid') {
-                                callback('PaidUser');
-                            } else if (accountObj.type === 'comp' && (user.status === 'active' || user.status === 'registered')) {
-                                callback('ActiveCompUser');
-                            } else {
-                                type = accountObj.type;
-                                accountObj.type = 'paid';
-                                accountObj.complimentaryCode = undefined;
-                                accountObj.save(function (err) {
-                                    if (err) {
-                                        logger.logError('subscription - upgradeSubscription - error saving account to paid: ' + userEmail);
-                                        callback(err);
-                                    } else {
-                                        callback(null, accountObj);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            },
-            // set user upgrade date and make status active, optionally set user details
-            function (accountObj, callback) {
-                User.findOne({email: userEmail}, function (err, userObj) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription - error fetching user: ' + userEmail);
-                        callback(err);
-                    } else {
-                        status = userObj.status;
-                        cancelDate = userObj.cancelDate;
-                        userObj.status = status === 'registered' ? 'registered' : 'active';
-                        userObj.upgradeDate = (new Date()).toUTCString();
-                        userObj.cancelDate = undefined;
-                        userObj.validTill = undefined;
-                        if (newUser.firstName) {
-                            currentUser = {
-                                firstName: userObj.firstName,
-                                lastName: userObj.lastName,
-                                telephone: userObj.telephone,
-                                hashedPassword: userObj.hashedPassword,
-                                salt: userObj.salt
+                        if (!userObj) {
+                            logger.logError('subscription - upgradeSubscription - user not found: ' + userEmail);
+                            callback('UserNoFound');
+                        } else if (userObj.status === 'failed') {
+                            callback('FailedUser');
+                        } else if (userObj.account.type === 'paid') {
+                            callback('PaidUser');
+                        } else if (userObj.account.type === 'comp' && (userObj.status === 'active' || userObj.status === 'registered')) {
+                            callback('ActiveCompUser');
+                        } else {
+                            currentValues = {
+                                type: userObj.account.type,
+                                complimentaryCode: userObj.account.complimentaryCode,
+                                billingDate: userObj.account.billingDate,
+                                paymentPending: userObj.account.paymentPending,
+                                firstCardPaymentDate: userObj.account.firstCardPaymentDate,
+                                status: userObj.status,
+                                cancelDate: userObj.cancelDate,
+                                upgradeDate: userObj.upgradeDate,
+                                validTill: userObj.validTill,
                             };
-                            userObj.firstName = newUser.firstName;
-                            userObj.lastName = newUser.lastName;
-                            userObj.telephone = newUser.telephone;
-                            userObj.password = newUser.password;
-                        }
-                        userObj.save(function (err) {
-                            if (err) {
-                                revertAccountType(accountObj);
-                                logger.logError('subscription - upgradeSubscription - error saving user to active: ' + userEmail);
-                                callback(err);
-                            } else {
-                                callback(null, accountObj, userObj);
+                            userObj.account.type = 'paid';
+                            userObj.account.complimentaryCode = undefined;
+                            userObj.account.billingDate = (new Date()).toUTCString();
+                            userObj.account.paymentPending = false;
+                            userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
+                            userObj.upgradeDate = (new Date()).toUTCString();
+                            userObj.cancelDate = undefined;
+                            userObj.validTill = undefined;
+                            if (!userObj.account.firstCardPaymentDate) {
+                                userObj.account.firstCardPaymentDate = (new Date()).toUTCString();
                             }
-                        });
+                            if (newUser.firstName) {
+                                currentUser = {
+                                    firstName: userObj.firstName,
+                                    lastName: userObj.lastName,
+                                    telephone: userObj.telephone,
+                                    hashedPassword: userObj.hashedPassword,
+                                    salt: userObj.salt
+                                };
+                                userObj.firstName = newUser.firstName;
+                                userObj.lastName = newUser.lastName;
+                                userObj.telephone = newUser.telephone;
+                                userObj.password = newUser.password;
+                            }
+                            userObj.save(function (err) {
+                                if (err) {
+                                    logger.logError('subscription - upgradeSubscription - error saving user: ' + userEmail);
+                                    callback(err, userObj);
+                                } else {
+                                    userObj.account.save(function (err) {
+                                        if (err) {
+                                            logger.logError('subscription - upgradeSubscription - error saving account: ' + userEmail);
+                                            errorType = 'db-account-update';
+                                        }
+                                        callback(err, userObj);
+                                    });
+                                }
+                            });
+                        }
                     }
                 });
             },
             // change status to active in AIO if user status is trial-ended or comp-ended
-            function (accountObj, userObj, callback) {
-                if (status === 'trial-ended' || status === 'comp-ended') {
+            function (userObj, callback) {
+                if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
                     aio.updateUserStatus(userObj.email, true, function (err) {
                         if (err) {
-                            revertUserChanges(userObj, status, cancelDate);
-                            revertAccountType(accountObj);
                             logger.logError('subscription - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
-                            callback(err);
-                        } else {
-                            callback(null, accountObj, userObj);
+                            errorType = 'aio-status-update';
                         }
+                        callback(err, userObj);
                     });
                 } else {
-                    callback(null, accountObj, userObj);
+                    callback(null, userObj);
                 }
             },
             // change packages in AIO to paid ones
-            function (accountObj, userObj, callback) {
-                var packages = config.aioPaidPackages;
-                aio.updateUserPackages(userObj.email, packages, function (err) {
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
                     if (err) {
-                        revertUserStatusInAio(userObj, status);
-                        revertUserChanges(userObj, status);
-                        revertAccountType(accountObj);
                         logger.logError('subscription - upgradeSubscription - error updating user packages to paid in aio: ' + userObj.email);
-                        callback(err);
-                    } else {
-                        callback(null, accountObj, userObj);
+                        errorType = 'aio-package-update';
                     }
+                    callback(err, userObj);
                 });
             },
             // if password has changed set new password in aio
-            function (accountObj, userObj, callback) {
+            function (userObj, callback) {
                 if (newUser.password) {
                     aio.updatePassword(userObj.email, newUser.password, function (err) {
                         if (err) {
-                            revertPackagesInAio(userObj.email);
-                            revertUserStatusInAio(userObj, status);
-                            revertUserChanges(userObj, status);
-                            revertAccountType(accountObj);
                             logger.logError('subscription - upgradeSubscription - error updating password in aio: ' + userObj.email);
-                        } else {
-                            callback(null, accountObj, userObj);
+                            errorType = 'aio-password-update';
                         }
+                        callback(err, userObj);
                     });
                 } else {
-                    callback(null, accountObj, userObj);
+                    callback(null, userObj);
                 }
             },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('userController - upgradeSubscription - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
             // update user information in FreeSide
-            function (accountObj, userObj, callback) {
-                var address = newUser.address ? newUser.address : accountObj.merchant;
+            function (userObj, sessionId, callback) {
+                var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
                 var state = newUser.state ? newUser.state : 'FL';
                 var zip = newUser.zipCode ? newUser.zipCode : '00000';
@@ -649,45 +642,114 @@ module.exports = {
                 var payDate = newUser.expiryDate ? newUser.expiryDate : '';
                 var payCvv = newUser.cvv ? newUser.cvv : '';
                 var payName = newUser.cardName ? newUser.cardName : '';
-                billing.updateUser(accountObj.freeSideCustomerNumber, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
                     if (err) {
-                        revertPackagesInAio(userObj.email);
-                        revertUserStatusInAio(userObj, status);
-                        revertUserChanges(userObj, status);
-                        revertAccountType(accountObj);
                         logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
-                        callback(err);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel existing package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
+                    if (err) {
+                        logger.logError('userController - upgradeSubscription - error removing active package: ' + userObj.email);
+                        errorType = 'freeside-cancel-package';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // order paid package
+            function (userObj, sessionId, callback) {
+                billing.hasPaidActivePackage(sessionId, function (err, result) {
+                    if (err) {
+                        logger.logError('userController - upgradeSubscription - error getting current packages: ' + userObj.email);
+                        callback(err, userObj);
+                    } else if (!result) {
+                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                            if (err) {
+                                if (err === '_decline') {
+                                    logger.logError('userController - upgradeSubscription - credit card declined: ' + userObj.email);
+                                    errorType = 'payment-declined';
+                                } else {
+                                    logger.logError('userController - upgradeSubscription - error ordering package in freeside: ' + userObj.email);
+                                    errorType = 'freeside-order-package';
+                                }
+                                logger.logError(err);
+                            }
+                            callback(err, userObj);
+                        });
                     } else {
-                        callback(null, accountObj, userObj);
+                        callback(err, userObj);
                     }
                 });
             },
             // send verification email if registered
-            function (accountObj, userObj, callback) {
+            function (userObj, callback) {
                 if (userObj.status === 'registered') {
-                    var verificationUrl = config.url + 'verify-user?code=' + userObj.verificationCode;
-                    var mailOptions = {
-                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                        to: userObj.email,
-                        subject: config.accountVerificationEmailSubject[userObj.preferences.defaultLanguage],
-                        html: sf(config.accountVerificationEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, verificationUrl)
-                    };
-                    email.sendEmail(mailOptions, function (err) {
+                    sendVerificationEmail(userObj, function (err) {
                         if (err) {
-                            logger.logError('subscription - upgradeSubscription - error send verification email to ' + mailOptions.to);
+                            logger.logError('subscription - upgradeSubscription - error sending verification email: ' + userObj.email);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - upgradeSubscription - verification email sent to ' + mailOptions.to);
+                            logger.logInfo('subscription - upgradeSubscription - verification email sent: ' + userObj.email);
                         }
                     });
-                    callback(null, accountObj, userObj);
-                } else {
-                    callback(null, accountObj, userObj);
                 }
+                callback(null, userObj);
+            },
+            // delete user from visitor
+            function (userObj, callback) {
+                deleteVisitor(userObj.email, function (err) {
+                    if (err) {
+                        logger.logError('subscription - upgradeSubscription - error deleting visitor: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj);
             }
-        ], function (err, accountObj, userObj) {
+        ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
+                    case 'aio-status-update':
+                        revertAccountChangesForUpgrade(userObj, currentValues, currentUser);
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
+                    case 'aio-package-update':
+                        revertUserStatusInAio(userObj.email, currentValues.status);
+                        revertAccountChangesForUpgrade(userObj, currentValues, currentUser);
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
+                    case 'aio-password-update':
+                        revertUserPackagesInAio(userObj.email, currentValues.type);
+                        revertUserStatusInAio(userObj.email, currentValues.status);
+                        revertAccountChangesForUpgrade(userObj, currentValues, currentUser);
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-cancel-package':
+                    case 'freeside-order-package':
+                        revertUserPackagesInAio(userObj.email, currentValues.type);
+                        revertUserStatusInAio(userObj.email, currentValues.status);
+                        revertAccountChangesForUpgrade(userObj, currentValues, currentUser);
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
+                    case 'payment-declined':
+                        updateAccountOnPaymentDeclined(userObj, currentValues);
+                        if (userObj.status === 'registered') {
+                            sendVerificationEmail(userObj);
+                        }
+                        deleteVisitor(userObj.email);
+                        var errorCode = userObj.status === 'registered' ? 'PaymentPending' : 'PaymentPendingActive';
+                        err = new Error(errorCode);
+                        break;
+                }
             }
             if (cb) {
                 if (userObj) {
@@ -697,72 +759,6 @@ module.exports = {
                 }
             }
         });
-
-        function revertAccountType(account, cb) {
-            account.type = type;
-            account.save(function (err) {
-                if (err) {
-                    logger.logError('subscription - upgradeSubscription.revertAccountType - error set account status back to old value: ' + userEmail);
-                    logger.logError(err);
-                }
-                if (cb) {
-                    cb();
-                }
-            });
-        }
-
-        function revertUserChanges(user, status, cancelDate, cb) {
-            user.status = status;
-            user.upgradeDate = undefined;
-            user.cancelDate = cancelDate;
-            if (currentUser) {
-                user.firstName = currentUser.firstName;
-                user.lastName = currentUser.lastName;
-                user.telephone = currentUser.telephone;
-                user.hashedPassword = currentUser.hashedPassword;
-                user.salt = currentUser.salt;
-            }
-            user.save(function (err) {
-                if (err) {
-                    logger.logError('subscription - upgradeSubscription.revertUserChanges - error setting user back to old values: ' + user.email);
-                    logger.logError(err);
-                }
-                if (cb) {
-                    cb();
-                }
-            });
-        }
-
-        function revertPackagesInAio(email, cb) {
-            var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
-            aio.updateUserPackages(email, packages, function (err) {
-                if (err) {
-                    logger.logError('subscription - upgradeSubscription.revertPackagesInAio - error setting back package in aio: ' + email);
-                    logger.logError(err);
-                }
-                if (cb) {
-                    cb();
-                }
-            });
-        }
-
-        function revertUserStatusInAio(userObj, status, cb) {
-            if (status === 'trial-ended' || status === 'comp-ended') {
-                aio.updateUserStatus(userObj.email, false, function (err) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription.revertUserStatusInAio - error setting back user status in aio: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                    if (cb) {
-                        cb();
-                    }
-                });
-            } else {
-                if (cb) {
-                    cb();
-                }
-            }
-        }
     },
 
     reactivateSubscription: function (userEmail, newUser, cb) {
@@ -1642,7 +1638,93 @@ function revertAccountPaymentDetails(email, account, cb) {
     account.billingDate = undefined;
     account.save(function (err) {
         if (err) {
-            logger.logError('subscription - revertAccountPaymentDetails - error reverting payment details from account : ' + email);
+            logger.logError('subscription - revertAccountPaymentDetails - error reverting payment details from account: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
+    user.status = currentValues.status;
+    user.cancelDate = currentValues.cancelDate;
+    user.upgradeDate = currentValues.upgradeDate;
+    user.validTill = currentValues.validTill;
+    if (currentUser) {
+        user.firstName = currentUser.firstName;
+        user.lastName = currentUser.lastName;
+        user.telephone = currentUser.telephone;
+        user.hashedPassword = currentUser.hashedPassword;
+        user.salt = currentUser.salt;
+    }
+    user.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertUserChangesForUpgrade - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForUpgrade(user, currentValues, currentUser, cb) {
+    user.account.type = currentValues.type;
+    user.account.complimentaryCode = currentValues.complimentaryCode;
+    user.account.billingDate = currentValues.billingDate;
+    user.account.paymentPending = currentValues.paymentPending;
+    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserPackagesInAio(email, type, cb) {
+    var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
+    aio.updateUserPackages(email, packages, function (err) {
+        if (err) {
+            logger.logError('subscription - revertPackagesInAio - error setting back package in aio: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserStatusInAio(email, status, cb) {
+    if (status === 'trial-ended' || status === 'comp-ended') {
+        aio.updateUserStatus(email, false, function (err) {
+            if (err) {
+                logger.logError('subscription - revertUserStatusInAio - error setting back user status in aio: ' + email);
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    } else {
+        if (cb) {
+            cb();
+        }
+    }
+}
+
+function updateAccountOnPaymentDeclined(user, currentValues, cb) {
+    user.account.paymentPending = true;
+    user.account.billingDate = currentValues.billingDate;
+    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - updateAccountPaymentDeclined - error updating account on payment declined: ' + user.email);
             logger.logError(err);
         }
         if (cb) {
