@@ -70,6 +70,14 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
+            .when('/sign-up-success-payment-pending-active',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-payment-pending-active.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/invite/:referralCode',
             {
                 title: title,
@@ -204,6 +212,14 @@
                 title: title,
                 description: description,
                 templateUrl: 'views/upgrade-subscription-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
+            .when('/upgrade-subscription-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/upgrade-subscription-success-payment-pending.html',
                 controller: 'commonCtrl',
                 access: access.user
             })

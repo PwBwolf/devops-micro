@@ -31,7 +31,7 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end(err.message);
+                            return res.status(500).send(err.message);
                         } else {
                             return res.status(200).send('registered');
                         }
@@ -41,7 +41,7 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end(err.message);
+                            return res.status(500).send(err.message);
                         } else {
                             return res.status(200).send('registered');
                         }
@@ -51,9 +51,9 @@ module.exports = {
                         if (err) {
                             logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
                             logger.logError(err);
-                            return res.status(500).end(err.message);
+                            return res.status(500).send(err.message);
                         } else {
-                            return res.status(200).end('registered');
+                            return res.status(200).send('registered');
                         }
                     });
                 } else {
@@ -67,13 +67,13 @@ module.exports = {
                 } else {
                     if (type === 'free') {
                         logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
-                        return res.status(500).end('UserExists');
+                        return res.status(409).send('UserExists');
                     } else if (type === 'paid' && user.account.type === 'free') {
                         subscription.upgradeSubscription(user.email, req.body, function (err, status) {
                             if (err) {
                                 logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -83,7 +83,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -93,7 +93,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -103,7 +103,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -113,7 +113,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -123,13 +123,13 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).end(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
                         });
                     } else {
-                        return res.status(500).end('UserExists');
+                        return res.status(409).send('UserExists');
                     }
                 }
             }
@@ -508,47 +508,12 @@ module.exports = {
             if (user.account.type === 'free') {
                 return res.status(409).send('FreeUser');
             }
-            var address = req.body.address;
-            var city = req.body.city;
-            var state = req.body.state;
-            var zip = req.body.zipCode;
-            var country = 'US';
-            var payBy = 'CARD';
-            var payInfo = req.body.cardNumber;
-            var payDate = req.body.expiryDate;
-            var payCvv = req.body.cvv;
-            var payName = req.body.cardName;
-            billing.updateCreditCard(user.account.freeSideCustomerNumber, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, function (err) {
-                if (err) {
-                    logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + req.email.toLowerCase());
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                return res.status(200).end();
-            });
-        });
-    },
-
-    changeCreditCardNew: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError('userController - changeCreditCard - error fetching user: ' + req.email.toLowerCase());
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.account.type === 'free') {
-                return res.status(409).send('FreeUser');
-            }
             async.waterfall([
-                // login
+                // login to freeside
                 function (callback) {
                     billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
                         if (err) {
                             logger.logError('userController - changeCreditCard - error logging into billing system: ' + user.email);
-                            logger.logError(err);
                         }
                         callback(err, sessionId);
                     });
@@ -558,7 +523,6 @@ module.exports = {
                     billing.updateCreditCard(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
                         if (err) {
                             logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + user.email);
-                            logger.logError(err);
                         }
                         callback(err, sessionId);
                     });
@@ -566,27 +530,31 @@ module.exports = {
                 // if payment pending then order package
                 function (sessionId, callback) {
                     if (user.account.paymentPending) {
-                        doesUserHavePaidPackage(sessionId, function(err, result){
-                           if(err) {
-                               logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
-                           }
-                        });
-                        billing.orderPackage(sessionId, config.freeSidePaidPackageNumber, function (err) {
+                        billing.hasPaidActivePackage(sessionId, function (err, result) {
                             if (err) {
-                                if (err === '_decline') {
-                                    logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
-                                } else {
-                                    logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
-                                }
-                                logger.logError(err);
+                                logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
+                                callback(err);
+                            } else if (!result) {
+                                billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                                    if (err) {
+                                        if (err === '_decline') {
+                                            logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
+                                        } else {
+                                            logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
+                                        }
+                                        logger.logError(err);
+                                    }
+                                    callback(err);
+                                });
+                            } else {
+                                callback(err);
                             }
-                            callback(err);
                         });
                     } else {
                         callback(null);
                     }
                 },
-                // update account
+                // update account if payment done
                 function (callback) {
                     if (user.account.paymentPending) {
                         user.account.paymentPending = false;
@@ -610,7 +578,7 @@ module.exports = {
             ], function (err) {
                 if (err) {
                     logger.logError(err);
-                    if(err === '_decline') {
+                    if (err === '_decline') {
                         return res.status(500).end('PaymentPending');
                     } else {
                         return res.status(500).end();
@@ -679,7 +647,7 @@ module.exports = {
             if (err) {
                 logger.logError('userController - upgradeSubscription - error during upgrade subscription: ' + req.email);
                 logger.logError(err);
-                return res.status(500).send(err);
+                return res.status(500).send(err.message);
             }
             return res.status(200).end();
         });
@@ -690,7 +658,7 @@ module.exports = {
             if (err) {
                 logger.logError('userController - reactivateSubscription - error during reactivate subscription: ' + req.email);
                 logger.logError(err);
-                return res.status(500).send(err);
+                return res.status(500).send(err.message);
             }
             return res.status(200).end();
         });

@@ -37,6 +37,8 @@
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if(error === 'PaymentPending') {
                             $location.path('/sign-up-success-payment-pending');
+                        } else if(error === 'PaymentPendingActive') {
+                            $location.path('/sign-up-success-payment-pending-active');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
