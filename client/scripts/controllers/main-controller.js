@@ -59,7 +59,7 @@
         });
 
         $scope.goToCmsUrl = function (urlName) {
-            $window.location = $scope.appConfig.blogUrl + $filter('translate')(urlName);
+            $window.location = $scope.appConfig.cmsUrl + $filter('translate')(urlName);
         };
 
         $scope.changeLanguage = function () {

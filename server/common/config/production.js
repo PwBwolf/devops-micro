@@ -27,7 +27,7 @@ module.exports = {
     cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'https://yiptv.com/sign-up/complimentary/',
     refundPeriodInDays: 3,
-    blogUrl: 'http://www.yiptv.com/live-tv/',
+    cmsUrl: 'http://www.yiptv.com/live-tv/',
     freeSideApiKey: 'yip-freeside-prod',
     freeSideBackOfficeApiUrl: 'http://10.100.10.15:8008/',
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',

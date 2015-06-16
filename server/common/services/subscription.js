@@ -911,20 +911,6 @@ module.exports = {
                     }
                 });
             },
-            // send verification email if registered
-            function (userObj, callback) {
-                if (userObj.status === 'registered') {
-                    sendVerificationEmail(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - reactivateSubscription - error sending verification email: ' + userObj.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - reactivateSubscription - verification email sent: ' + userObj.email);
-                        }
-                    });
-                }
-                callback(null, userObj);
-            },
             // delete user from visitor
             function (userObj, callback) {
                 deleteVisitor(userObj.email, function (err) {
@@ -961,9 +947,6 @@ module.exports = {
                         break;
                     case 'payment-declined':
                         updateAccountOnPaymentDeclined(userObj, currentValues);
-                        if (userObj.status === 'registered') {
-                            sendVerificationEmail(userObj);
-                        }
                         deleteVisitor(userObj.email);
                         err = new Error('PaymentPendingActive');
                         break;

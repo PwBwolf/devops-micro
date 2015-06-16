@@ -37,7 +37,7 @@ module.exports = {
                     environment: process.env.NODE_ENV,
                     url: config.url,
                     aioPortalUrl: config.aioPortalUrl,
-                    blogUrl: config.blogUrl,
+                    cmsUrl: config.cmsUrl,
                     freePreviewTime: config.freePreviewTime,
                     webSliderVersion: version.webSliderVersion,
                     graceNoteImageUrl: config.graceNoteImageUrl
