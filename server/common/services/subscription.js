@@ -269,7 +269,6 @@ module.exports = {
                             logger.logError('subscription - newPaidUser - error ordering package in freeside: ' + userObj.email);
                             errorType = 'freeside-order-insert';
                         }
-                        logger.logError(err);
                     }
                     callback(err, userObj, accountObj);
                 });
@@ -1436,7 +1435,7 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 var address = 'Complimentary subscription ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
                 var expiryDate = ((new Date()).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
-                billing.updateAddress(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', function (err) {
+                billing.updateAddressAndPayDate(userObj.account.freeSideCustomerNumber, address, 'West Palm Beach', 'FL', '00000', 'US', expiryDate, function (err) {
                     if (err) {
                         logger.logError('subscription - endComplimentarySubscription - error updating billing system with complimentary address: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1451,7 +1450,7 @@ module.exports = {
                         logger.logError('subscription - endComplimentarySubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-cancel-package';
                     }
-                    callback(err, userObj, sessionId);
+                    callback(err, userObj);
                 });
             },
             // send email
