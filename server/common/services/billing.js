@@ -138,12 +138,12 @@ module.exports = {
                 'payname', payName
             ], function (err, response) {
                 if (err) {
-                    logger.logError('billing - updateCreditCard - error in creating customer 1');
+                    logger.logError('billing - updateCreditCard - error in updating credit card 1');
                     logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
-                        logger.logError('billing - updateCreditCard - error in creating customer 2');
+                        logger.logError('billing - updateCreditCard - error in updating credit card 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
@@ -169,16 +169,16 @@ module.exports = {
                 'country', country
             ], function (err, response) {
                 if (err) {
-                    logger.logError('billing - updateCreditCard - error in creating customer 1');
+                    logger.logError('billing - updateAddress - error in updating address 1');
                     logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
-                        logger.logError('billing - updateCreditCard - error in creating customer 2');
+                        logger.logError('billing - updateAddress - error in creating address 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
-                        logger.logInfo('billing - updateCreditCard - response');
+                        logger.logInfo('billing - updateAddress - response');
                         logger.logInfo(response);
                         callback(null);
                     }
@@ -250,6 +250,39 @@ module.exports = {
                         callback(response.error);
                     } else {
                         logger.logInfo('billing - updateUser - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
+    updateAddressAndPayDate: function (customerNumber, address, city, state, zip, country, payDate, callback) {
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.update_customer',
+            [
+                'secret', config.freeSideApiKey,
+                'custnum', customerNumber,
+                'address1', address,
+                'city', city,
+                'county', '',
+                'state', state,
+                'zip', zip,
+                'country', country,
+                'paydate', payDate
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateAddressAndPayDate - error in updating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateAddressAndPayDate - error in updating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateAddressAndPayDate - response');
                         logger.logInfo(response);
                         callback(null);
                     }
