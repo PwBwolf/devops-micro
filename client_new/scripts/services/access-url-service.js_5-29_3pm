@@ -1,0 +1,55 @@
+(function (app) {
+    'use strict';
+
+    app.factory('accessurlsvc', [function () {
+		var allChannels = [
+			{ prdStatus: '2', chnlID: '90917', baseUrl: 'http://yiptv-a3series.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-a3series/_definst_/live.m3u8' },
+			{ prdStatus: '2', chnlID: '16800', baseUrl: 'http://yiptv-antenna3.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-antenna3/_definst_/live.m3u8' },
+			{ prdStatus: '1', chnlID: '00000', baseUrl: 'http://yiptv2-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-aymsports/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '92197', baseUrl: 'http://yiptv-azclick.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-azclick/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '61404', baseUrl: 'http://yiptv-azcorazon.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-azcorazon/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '76942', baseUrl: 'http://yiptv4-live.hls.adaptive.level3.net', streamLoc: '/yiptv4/beinengov/appleman.m3u8' },
+			{ prdStatus: '3', chnlID: '76943', baseUrl: 'http://yiptv7-live.hls.adaptive.level3.net', streamLoc: '/yiptv7/beinespanov/appleman.m3u8' },
+			{ prdStatus: '0', chnlID: '76943', baseUrl: 'http://yiptv-beinespanol.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-beinespanol/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '00000', baseUrl: 'http://yiptv-boliviatv.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-boliviatv/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '69650', baseUrl: 'http://yiptv-canaltiempo.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canaltiempo/_definst_/live.m3u8' },
+			{ prdStatus: '2', chnlID: '15213', baseUrl: 'http://yiptv-canal52.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canal52/_definst_/live.m3u8' },
+			
+			{ prdStatus: '3', chnlID: '00000', baseUrl: 'http://yiptv-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canal_america/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '60271', baseUrl: 'http://yiptv-canalantiestres.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canalantiestres/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '12750', baseUrl: 'http://yiptv2-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '55912', baseUrl: 'http://yiptv2-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-canal_tro/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '87028', baseUrl: 'http://yiptv-elcantinazo.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-elcantinazo/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '49411', baseUrl: 'http://yiptv8-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-caribvision/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '84443', baseUrl: 'http://yiptv-cb24.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-cb24/_definst_/live.m3u8' },
+			{ prdStatus: '1', chnlID: '00000', baseUrl: 'http://yiptv2-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-cbtvmich/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '75044', baseUrl: 'http://yiptv-live.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8' },
+			{ prdStatus: '3', chnlID: '65269', baseUrl: 'http://yiptv-cosmovision.hls.adaptive.level3.net', streamLoc: '/hls-live/yiptvlive-cosmovision/_definst_/live.m3u8' },
+			
+		];
+		
+		var prodLvls = [
+			{ lvl: '3', lvlStatus: 'In Production' },
+			{ lvl: '2', lvlStatus: 'Pre Production' },
+			{ lvl: '1', lvlStatus: 'Pending Production' },
+			{ lvl: '0', lvlStatus: 'Not in Production' }
+			
+		];
+		
+		var special = [
+			{ dname: '', dtype: 'isType' },
+			{ dname: '', dtype: 'isType1' },
+			
+		]
+		
+		var accessUrlFctry = {};
+			accessUrlFctry.getAllData = function(){ return allChannels; };
+			accessUrlFctry.getProdStatus = function(){ return prodLvls; };
+			accessUrlFctry.getSpecial = function(){ return special; };
+						
+			accessUrlFctry.sendUsrData = function(){
+			
+			};
+		return accessUrlFctry;
+    }]);
+}(angular.module('app')));
