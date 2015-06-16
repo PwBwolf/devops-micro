@@ -101,13 +101,16 @@ module.exports = {
                     }
                 });
             } else {
-                if (req.body.firstName) {
+                var changed = false;
+                if (req.body.firstName && req.body.firstName !== visitor.firstName) {
                     visitor.firstName = req.body.firstName;
+                    changed = true;
                 }
-                if (req.body.lastName) {
+                if (req.body.lastName && req.body.lastName !== visitor.lastName) {
                     visitor.lastName = req.body.lastName;
+                    changed = true;
                 }
-                if (req.body.firstName || req.body.lastName) {
+                if (changed) {
                     visitor.updatedAt = (new Date()).toUTCString();
                     visitor.save(function (err) {
                         if (err) {

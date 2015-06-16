@@ -19,8 +19,13 @@
                 userSvc.changeCreditCard(
                     $scope.mv,
                     function () {
-                        $location.path('/change-credit-card-success');
-                        $scope.saving = false;
+                        userSvc.getUserProfile(function () {
+                            $location.path('/change-credit-card-success');
+                            $scope.saving = false;
+                        }, function () {
+                            loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_ACCOUNT_REFRESH_ERROR'));
+                            $scope.saving = false;
+                        });
                     }, function (error) {
                         if(error === 'FreeUser') {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_FREE_USER_ERROR'));

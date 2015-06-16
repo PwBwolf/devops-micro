@@ -1,0 +1,9 @@
+{
+  "name": "FreeSide-Testing",
+  "version": "0.0.1",
+  "description": "FreeSide testing tools",
+  "main": "main.js",
+  "dependencies": {
+    "xmlrpc": "^1.3.1"
+  }
+}
