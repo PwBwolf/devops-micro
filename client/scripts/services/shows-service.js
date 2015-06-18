@@ -25,7 +25,7 @@
             {channelId: 'images/channels-big/antena-3.png', showBanner: 'images/shows/entertainment/hormiguero.jpg', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'SHOWS_ENT_PNL_2_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
             {channelId: '', showBanner: 'images/shows/entertainment/iconos.jpg', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'SHOWS_ENT_PNL_3_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
             {channelId: 'images/channels-big/video-rola.png', showBanner: 'images/shows/entertainment/musica.jpg', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'SHOWS_ENT_PNL_4_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelId: '', showBanner: 'images/shows/entertainment/simpsons.jpg', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'SHOWS_ENT_PNL_5_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
+            {channelId: ' ', showBanner: 'images/shows/entertainment/simpsons.jpg', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'SHOWS_ENT_PNL_5_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
             {channelId: 'images/channels-big/antena-3.png', showBanner: 'images/shows/entertainment/costuras.jpg', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'SHOWS_ENT_PNL_6_DESC', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'}
         ];
 
