@@ -179,7 +179,7 @@
             DOWNLOAD_BULLET_1: 'Sign up for a YipTV account <a href=\'/sign-up/paid\'>here</a>',
             DOWNLOAD_BULLET_2: 'Go to the App Store or Google Play to download the free app',
             DOWNLOAD_BULLET_3: 'Start enjoying YipTV on your device immediately. No other hardware is required.',
-            DOWNLOAD_FINE_PRINT: '*Data rates from your wireless carrier may apply when not using Wi-Fi.  YipTV has been engineered to work flawlessly over any broadband connection, whether wired, Wi-Fi LTE, 4G or even 3G cellular landlines.',
+            DOWNLOAD_FINE_PRINT: '*Data rates from your wireless carrier may apply when not using Wi-Fi.  YipTV has been engineered to work flawlessly over any broadband connection, whether wired, Wi-Fi LTE, 4G or even 3G.',
             ERROR_HEADING: 'Error',
             ERROR_MESSAGE: 'An unexpected error has occurred. Please try again. If error persists please contact customer support at',
             FORGOT_PASSWORD_HEADING: 'Forgot Password',
