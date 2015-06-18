@@ -290,7 +290,7 @@ input[type="checkbox"]:checked + label:before {
 
 .bolder-text {
     font-weight: bolder;
-    font-family: 'gotham-bookgotham-book';
+    font-family: 'gotham-boldgotham-bold';
 }
 
 .justify-text {
@@ -400,6 +400,10 @@ input[type="checkbox"]:checked + label:before {
     border-radius: 10px;
     padding: 0px;
     margin: 0px;
+}
+
+.sign-up-button {
+    background: #5FC503;
 }
 
 .modal-button {
@@ -711,23 +715,6 @@ a.import-button:hover {
     color: #000;
     text-align: justify;
 }
-.wGrphc {
-    width: 55%;
-    display:inline-block;
-    vertical-align:top;
-}
-.grphc {
-    height:auto;
-    width:40%;
-    display:inline-block;
-    vertical-align: top;
-    margin-left: 2%;
-    margin-top: -6px;
-}
-.grphc img {
-    width: 100%;
-    height:auto;
-}
 
 @media screen and (max-width: 1350px) {
     .banner .banner-wrap {
@@ -751,6 +738,10 @@ a.import-button:hover {
 
     .form-box {
         width: 100%;
+    }
+
+    .order-summary-title {
+        text-align: left;
     }
 }
 
