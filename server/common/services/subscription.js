@@ -1825,7 +1825,7 @@ function revertUserPackagesInAio(email, type, cb) {
 }
 
 function setUserInactiveInAio(email, status, cb) {
-    if (status === 'trial-ended' || status === 'comp-ended' || 'canceled') {
+    if (status === 'trial-ended' || status === 'comp-ended' || status === 'canceled') {
         aio.updateUserStatus(email, false, function (err) {
             if (err) {
                 logger.logError('subscription - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
