@@ -56,7 +56,6 @@
             $scope.form.email.$dirty = true;
             $scope.form.telephone.$dirty = true;
             $scope.form.password.$dirty = true;
-            $scope.form.confirmPassword.$dirty = true;
             $scope.form.cardName.$dirty = true;
             $scope.form.cardNumber.$dirty = true;
             $scope.form.address.$dirty = true;

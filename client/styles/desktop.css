@@ -137,6 +137,10 @@ header {
     padding-right: 2%;
 }
 
+.order-summary-title {
+    text-align: right;
+}
+
 .contact-number {
     width: 25%;
     height: 100%;
