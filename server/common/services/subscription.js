@@ -1258,7 +1258,6 @@ module.exports = {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
                         errorType = 'aio-status-update';
-                        callback(err);
                     }
                     callback(err, userObj);
                 });
