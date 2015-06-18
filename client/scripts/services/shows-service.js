@@ -3,12 +3,12 @@
 
     app.factory('showsSvc', [function () {
         var shows1 = [
-            {channelId: 'images/channels-big/bein-sports-espanol.png', showBanner: 'images/shows/sports/liga.jpg', showTitle: 'SHOWS_SPORTS_PNL_1_TITLE', showDescription: 'SHOWS_SPORTS_PNL_1_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_1_DESC_CNTNT'},
+            {channelId: 'images/channels-big/bein-sports-espanol.png', showBanner: 'images/shows/sports/copa.jpg', showTitle: 'SHOWS_SPORTS_PNL_1_TITLE', showDescription: 'SHOWS_SPORTS_PNL_1_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_1_DESC_CNTNT'},
             {channelId: 'images/channels-big/tvc-latino.png', showBanner: 'images/shows/sports/boxeo.jpg', showTitle: 'SHOWS_SPORTS_PNL_2_TITLE', showDescription: 'SHOWS_SPORTS_PNL_2_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_2_DESC_CNTNT'},
-            {channelId: 'images/channels-big/bein-sports.png', showBanner: 'images/shows/sports/copa.jpg', showTitle: 'SHOWS_SPORTS_PNL_3_TITLE', showDescription: 'SHOWS_SPORTS_PNL_3_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_3_DESC_CNTNT'},
+            {channelId: 'images/channels-big/bein-sports.png', showBanner: 'images/shows/sports/score.jpg', showTitle: 'SHOWS_SPORTS_PNL_3_TITLE', showDescription: 'SHOWS_SPORTS_PNL_3_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_3_DESC_CNTNT'},
             {channelId: 'images/channels-big/bein-sports.png', showBanner: 'images/shows/sports/superbike.jpg', showTitle: 'SHOWS_SPORTS_PNL_4_TITLE', showDescription: 'SHOWS_SPORTS_PNL_4_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_4_DESC_CNTNT'},
             {channelId: 'images/channels-big/tvc-latino.png', showBanner: 'images/shows/sports/auto.jpg', showTitle: 'SHOWS_SPORTS_PNL_5_TITLE', showDescription: 'SHOWS_SPORTS_PNL_5_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_5_DESC_CNTNT'},
-            {channelId: 'images/channels-big/tvc-latino.png', showBanner: 'images/shows/sports/futbol.jpg', showTitle: 'SHOWS_SPORTS_PNL_6_TITLE', showDescription: 'SHOWS_SPORTS_PNL_6_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_6_DESC_CNTNT'}
+            {channelId: 'images/channels-big/tvc-latino.png', showBanner: 'images/shows/sports/locas.jpg', showTitle: 'SHOWS_SPORTS_PNL_6_TITLE', showDescription: 'SHOWS_SPORTS_PNL_6_DESC', showDescriptionContent: 'SHOWS_SPORTS_PNL_6_DESC_CNTNT'}
         ];
 
         var shows2 = [
