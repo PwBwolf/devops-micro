@@ -1,0 +1,22 @@
+<div class="content-area">
+    <div class="user-home-box">
+        <div class="user-home-wrap">
+            <img src="images/background.jpg" alt="...">
+            <div class="caption">
+                <div id="userHomeBox">
+                    <button ng-click="openAio()" ng-show="user.status === 'active'" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
+                    <br ng-show="user.status === 'active'">
+                    <button goto="/upgrade-subscription" ng-show="(user.type === 'free' && user.status === 'trial-ended') || (user.type === 'comp' && user.status === 'comp-ended')" type="button" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
+                    <br ng-show="(user.type === 'free' && user.status === 'trial-ended') || (user.type === 'comp' && user.status === 'comp-ended')">
+                    <button goto="/reactivate-subscription" ng-show="user.type === 'paid' && user.status === 'canceled'" type="button" translate="USER_HOME_REACTIVATE_SUBSCRIPTION"></button>
+                    <br ng-show="user.type === 'paid' && user.status === 'canceled'">
+                    <button goto="/account" type="button" translate="USER_HOME_ACCOUNT"></button>
+                    <br>
+                    <button goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND"></button>
+                    <br>
+                    <button goto="/contact-us" type="button" translate="USER_HOME_CONTACT_US"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

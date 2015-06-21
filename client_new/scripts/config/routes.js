@@ -3,8 +3,8 @@
 
     app.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
         var access = routing.accessLevels,
-            title = 'YipTV - Watch Live Internet TV & Spanish Channels Online',
-            description = 'Watch over 100+ USA & Spanish TV shows and channels in variety of genres such as news, sports, lifestyle, and entertainment. Try it free.';
+            title = {en: 'YipTV - Watch Live Internet TV & Spanish Channels Online', es: 'TV en español por Internet en YipTV'},
+            description = {en: 'Watch over 50+ USA & Spanish TV shows and channels in a variety of genres such as news, sports, lifestyle, and entertainment. Only 14.99/mo. With no contract.', es: 'Ve más de 50 canales en español. Disfruta noticias, deportes, e entretenimiento en tus móviles por tan sólo $14.99 al mes'};
 
         $routeProvider.when('/',
             {
@@ -59,6 +59,22 @@
                 title: title,
                 description: description,
                 templateUrl: 'views/sign-up-success-login.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/sign-up-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-payment-pending.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/sign-up-success-payment-pending-active',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-payment-pending-active.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
@@ -130,17 +146,10 @@
             {
                 title: title,
                 description: description,
-                templateUrl: 'views/user-home.html',
-                controller: 'userHomeCtrl',
+                //templateUrl: 'views/user-home.html',
+				templateUrl: 'views/home.html',
+                controller: 'homeCtrl',
                 access: access.user
-            })
-            .when('/player-4872',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/player.html',
-                controller: 'playerCtrl',
-                access: access.public
             })
             .when('/account',
             {
@@ -182,7 +191,14 @@
                 controller: 'commonCtrl',
                 access: access.user
             })
-
+            .when('/reactivate-subscription-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/reactivate-subscription-success-payment-pending.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/cancel-subscription-success',
             {
                 title: title,
@@ -204,6 +220,14 @@
                 title: title,
                 description: description,
                 templateUrl: 'views/upgrade-subscription-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
+            .when('/upgrade-subscription-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/upgrade-subscription-success-payment-pending.html',
                 controller: 'commonCtrl',
                 access: access.user
             })
@@ -255,43 +279,11 @@
                 controller: 'commonCtrl',
                 access: access.user
             })
-            .when('/about-us',
-            {
-                title: 'YipTV - Online TV Streaming Services',
-                description: 'YipTV, Inc, is a privately held US-based online TV streaming services that provides low cost live internet TV. Enjoy with 100+ channels in multiple languages.',
-                templateUrl: 'views/about-us.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/leadership',
             {
                 title: 'YipTV Management and Board of Directors Team',
                 description: 'YipTV has an experienced and highly qualified management team who are aware about customer needs and demands. Explore detailed information about our leadership.',
                 templateUrl: 'views/leadership.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/media',
-            {
-                title: 'YipTV in Press Release and News',
-                description: 'Explore YipTV news in press release and media. Read all news from a single place.',
-                templateUrl: 'views/media.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/press-release-1',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/press-release-1.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/faq',
-            {
-                title: 'Frequently Asked Questions - YipTV',
-                description: 'Get instant reply of your questions with YipTV FAQ section. Email or call us for further questions.',
-                templateUrl: 'views/faq.html',
                 controller: 'commonCtrl',
                 access: access.public
             })
@@ -311,22 +303,6 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/privacy-policy',
-            {
-                title: 'Privacy Policy - YipTV',
-                description: 'Explore privacy policy of YipTV, USA based internet TV streaming services.',
-                templateUrl: 'views/privacy-policy.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/terms-of-use',
-            {
-                title: 'Terms of Use & Services - YipTV',
-                description: 'Explore terms of use and services of YipTV, an online internet TV streaming service.',
-                templateUrl: 'views/terms-of-use.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/customer-support',
             {
                 title: title,
@@ -334,38 +310,6 @@
                 templateUrl: 'views/customer-support.html',
                 controller: 'commonCtrl',
                 access: access.public
-            })
-            .when('/admin',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/admin.html',
-                controller: 'commonCtrl',
-                access: access.admin
-            })
-            .when('/admin/all-users',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/all-users.html',
-                controller: 'allUsersCtrl',
-                access: access.admin
-            })
-            .when('/admin/user-details',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/user-details.html',
-                controller: 'userDetailsCtrl',
-                access: access.admin
-            })
-            .when('/admin/change-password',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/admin-change-password.html',
-                controller: 'adminChangePasswordCtrl',
-                access: access.admin
             })
             .when('/error',
             {
@@ -418,8 +362,8 @@
     app.run(['_', '$rootScope', '$route', '$location', '$http', 'userSvc', 'tokenSvc', function (_, $rootScope, $route, $location, $http, userSvc, tokenSvc) {
         $rootScope.$on('$routeChangeSuccess', function (newVal, oldVal) {
             if (oldVal !== newVal) {
-                document.title = $route.current.title;
-                $rootScope.meta = {description: $route.current.description};
+                $rootScope.title = $route.current.title[$rootScope.language] || $route.current.title;
+                $rootScope.description = $route.current.description[$rootScope.language] || $route.current.description;
             }
         });
 

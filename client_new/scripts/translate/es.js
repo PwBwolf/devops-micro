@@ -353,6 +353,7 @@
             INDEX_TRY_FREE: 'Probar por 7 días',
             INDEX_WATCH_NOW: 'Mirar ahora',
             INDEX_NETWORKS: 'Redes y Canales',
+            INDEX_SHOWS_BY_CATEGORY: 'Programación por Categoria',
 			INDEX_USER_BILLING: 'Facturacion',
             INDEX_USER_PROFILE: 'Perfil',
             INDEX_USER_ACCOUNT: 'Cuenta',

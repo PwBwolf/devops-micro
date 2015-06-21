@@ -257,7 +257,7 @@
 				width: 902,
 				height: 370,
 				playlist: [{
-					image: "../img/friend-banner.jpg",
+					image: "../images/friend-banner.jpg",
 					sources: [
 						//{ file: "http://yiptv-tele_caribe.hls.adaptive.level3.net" }
 						{ file: bUrl+fUri+"&hash="+key+hmac }
@@ -307,7 +307,7 @@
 									'src': 'scripts/config/jwplayer/jwplayer.flash.swf' 
 								}
 					        ],
-							image: "img/friend-banner.jpg",
+							image: "images/friend-banner.jpg",
 							//androidhls: true,
 							autostart: true,
 							fallback: false

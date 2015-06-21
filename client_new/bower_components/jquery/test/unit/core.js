@@ -29,7 +29,7 @@ test("jQuery()", function() {
 	var elem, i,
 		obj = jQuery("div"),
 		code = jQuery("<code/>"),
-		img = jQuery("<img/>"),
+		img = jQuery("<images/>"),
 		div = jQuery("<div/><hr/><code/><b/>"),
 		exec = false,
 		lng = "",
