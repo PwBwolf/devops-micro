@@ -4,6 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
+    aio = require('../../server/common/services/aio'),
     mongoose = require('../../server/node_modules/mongoose');
 
 logger.cli();
@@ -43,15 +44,34 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
         logger.logError('adminCLI - verifyAccount - account is already verified.');
         process.exit(1);
     } else {
+        var status = user.status;
+        var verificationCode = user.verificationCode;
         user.status = 'active';
         user.verificationCode = undefined;
         user.save(function (err) {
             if (err) {
-                console.log(err);
+                logger.logError('adminCLI - verifyAccount - error saving user.');
+                logger.logError(err);
                 process.exit(1);
             } else {
-                logger.logInfo('adminCLI - verifyAccount - account verified successfully: ' + email.toLowerCase());
-                process.exit(0);
+                aio.updateUserStatus(user.email, true, function (err) {
+                    if (err) {
+                        logger.logError('adminCLI - verifyAccount - error setting user active in aio');
+                        logger.logError(err);
+                        user.status = status;
+                        user.verificationCode = verificationCode;
+                        user.save(function (err) {
+                            if (err) {
+                                logger.logError('adminCLI - verifyAccount - error reverting user');
+                                logger.logError(err);
+                            }
+                            process.exit(1);
+                        });
+                    } else {
+                        logger.logInfo('adminCLI - verifyAccount - account verified successfully');
+                        process.exit(0);
+                    }
+                });
             }
         });
     }

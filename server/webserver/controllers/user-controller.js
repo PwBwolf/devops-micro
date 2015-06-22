@@ -239,7 +239,7 @@ module.exports = {
                         user.verificationCode = verificationCode;
                         user.save(function (err) {
                             if (err) {
-                                logger.logError('userController - verifyUser - error reverting user back: ' + user.email);
+                                logger.logError('userController - verifyUser - error reverting user: ' + user.email);
                                 logger.logError(err);
                             }
                             return res.status(500).end();
