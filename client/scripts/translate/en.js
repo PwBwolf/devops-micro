@@ -483,7 +483,7 @@
             SHOWS_ENT_PNL_2_DESC_CNTNT: 'antonio banderas',
             SHOWS_ENT_PNL_3_TITLE: 'iconos',
             SHOWS_ENT_PNL_3_DESC: 'Hola TV',
-            SHOWS_ENT_PNL_3_DESC_CNTNT: 'COMING SOON',
+            SHOWS_ENT_PNL_3_DESC_CNTNT: 'Intimate biographies of the world’s most iconic public figures.',
             SHOWS_ENT_PNL_4_TITLE: 'The Regional Mexican Music Channel',
             SHOWS_ENT_PNL_4_DESC: 'Video Rola',
             SHOWS_ENT_PNL_4_DESC_CNTNT: 'Conciertos, especiales, videos, exclusivos!',
