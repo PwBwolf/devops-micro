@@ -40,6 +40,11 @@ input[type="checkbox"] {
     display: none;
 }
 
+input[type="radio"] {
+    margin-left: 10px;
+    display: none;
+}
+
 label:before {
     content: "";
     display: inline-block;
@@ -71,6 +76,15 @@ label {
 }
 
 input[type="checkbox"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="radio"]:checked + label:before {
     content: "\2713";
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
     font-size: 15px;

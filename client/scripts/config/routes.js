@@ -46,6 +46,14 @@
                 controller: 'complimentarySignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up/idt',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/idt-sign-up.html',
+                controller: 'idtSignUpCtrl',
+                access: access.anon
+            })
             .when('/sign-up-success',
             {
                 title: title,

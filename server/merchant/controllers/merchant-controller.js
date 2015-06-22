@@ -41,11 +41,14 @@ module.exports = {
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
-                    var refundLastDate;
+                    var refundLastDate, billingDate;
                     if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate) {
                         refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
-                    return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate});
+                    if(user && user.account) {
+                        billingDate = user.account.billingDate;
+                    }
+                    return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
                 });
             });
         } catch (ex) {
@@ -138,7 +141,7 @@ module.exports = {
             logger.logError('merchantController - makePayment - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
-        }  finally {
+        } finally {
             apiLog.responseTime = (new Date()).toUTCString();
             apiLog.save(function (err) {
                 if (err) {
