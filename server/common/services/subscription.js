@@ -302,7 +302,6 @@ module.exports = {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
                         sendVerificationEmail(userObj);
-                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         err = new Error('PaymentPending');
                         break;
@@ -418,8 +417,9 @@ module.exports = {
                 },
                 // create user in freeside
                 function (userObj, accountObj, callback) {
+                    var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'COMP', '', payDate, '', '', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';
@@ -580,7 +580,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in aio if user status is trial-ended or comp-ended
+            // change status to active in AIO if user status is trial-ended or comp-ended
             function (userObj, callback) {
                 if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
                     aio.updateUserStatus(userObj.email, true, function (err) {
@@ -594,7 +594,7 @@ module.exports = {
                     callback(null, userObj);
                 }
             },
-            // change packages in aio to paid ones
+            // change packages in AIO to paid ones
             function (userObj, callback) {
                 aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
                     if (err) {
@@ -628,7 +628,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // update user information in freeside
+            // update user information in FreeSide
             function (userObj, sessionId, callback) {
                 var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
@@ -693,15 +693,6 @@ module.exports = {
                             logger.logInfo('subscription - upgradeSubscription - verification email sent: ' + userObj.email);
                         }
                     });
-                } else {
-                    sendUpgradeEmail(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - upgradeSubscription - error sending upgrade email: ' + userObj.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - upgradeSubscription - upgrade email sent: ' + userObj.email);
-                        }
-                    });
                 }
                 callback(null, userObj);
             },
@@ -750,10 +741,7 @@ module.exports = {
                         updateAccountOnPaymentDeclined(userObj, currentValues);
                         if (userObj.status === 'registered') {
                             sendVerificationEmail(userObj);
-                        } else {
-                            sendUpgradeEmail(userObj);
                         }
-                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         var errorCode = userObj.status === 'registered' ? 'PaymentPending' : 'PaymentPendingActive';
                         err = new Error(errorCode);
@@ -832,7 +820,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in aio
+            // change status to active in AIO
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, true, function (err) {
                     if (err) {
@@ -866,7 +854,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // update user information in freeside
+            // update user information in FreeSide
             function (userObj, sessionId, callback) {
                 var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
@@ -920,18 +908,6 @@ module.exports = {
                     }
                 });
             },
-            // send email
-            function (userObj, callback) {
-                sendReactivateEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - reactivateSubscription - error sending reactivated email: ' + userObj.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - reactivateSubscription - reactivated email sent: ' + userObj.email);
-                    }
-                });
-                callback(null, userObj);
-            },
             // delete user from visitor
             function (userObj, callback) {
                 deleteVisitor(userObj.email, function (err) {
@@ -968,8 +944,6 @@ module.exports = {
                         break;
                     case 'payment-declined':
                         updateAccountOnPaymentDeclined(userObj, currentValues);
-                        sendReactivateEmail(userObj);
-                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         err = new Error('PaymentPendingActive');
                         break;
@@ -1127,7 +1101,8 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
+                        var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
+                        billing.updateUser(userObj.account.freeSideCustomerNumber, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'COMP', '', payDate, '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
@@ -1164,15 +1139,6 @@ module.exports = {
                                     logger.logError(err);
                                 } else {
                                     logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
-                                }
-                            });
-                        } else {
-                            sendConvertToComplimentaryEmail(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending converted to complimentary email: ' + userObj.email);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - converted to complimentary email sent: ' + userObj.email);
                                 }
                             });
                         }
@@ -1286,7 +1252,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in aio
+            // change status to inactive in AIO
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1378,7 +1344,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in aio
+            // change status to inactive in AIO
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1483,7 +1449,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in aio
+            // change status to inactive in AIO
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1506,7 +1472,8 @@ module.exports = {
             // change billing address
             function (userObj, sessionId, callback) {
                 var address = 'Complimentary subscription ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                billing.updateAddress(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', function (err) {
+                var expiryDate = ((new Date()).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
+                billing.updateAddressAndPayDate(userObj.account.freeSideCustomerNumber, address, 'West Palm Beach', 'FL', '00000', 'US', expiryDate, function (err) {
                     if (err) {
                         logger.logError('subscription - endComplimentarySubscription - error updating billing system with complimentary address: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1584,9 +1551,7 @@ module.exports = {
                 });
             }
         });
-    },
-
-    sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail
+    }
 };
 
 function createUser(user, cc, cb) {
@@ -1902,90 +1867,6 @@ function updateAccountOnPaymentDeclined(user, currentValues, cb) {
         if (err) {
             logger.logError('subscription - updateAccountPaymentDeclined - error updating account on payment declined: ' + user.email);
             logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function sendReactivateEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.reactivateSubscriptionEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.reactivateSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendReactivateEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendReactivateEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function sendUpgradeEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.upgradeSubscriptionEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.upgradeSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendUpgradeEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function sendConvertToComplimentaryEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendUpgradeEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function sendCreditCardPaymentFailureEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.creditCardPaymentFailureEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendCreditCardPaymentFailureEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendCreditCardPaymentFailureEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

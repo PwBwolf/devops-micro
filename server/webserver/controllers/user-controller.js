@@ -245,7 +245,6 @@ module.exports = {
                             return res.status(500).end();
                         });
                     } else {
-                        sendAccountVerifiedEmail(user);
                         return res.status(200).send();
                     }
                 });
@@ -528,24 +527,6 @@ module.exports = {
                         callback(err, sessionId);
                     });
                 },
-                // send email
-                function (sessionId, callback) {
-                    var mailOptions = {
-                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                        to: user.email,
-                        subject: config.changeCreditCardEmailSubject[user.preferences.defaultLanguage],
-                        html: sf(config.changeCreditCardEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                    };
-                    email.sendEmail(mailOptions, function (err) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error sending email: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('userController - changeCreditCard - email sent successfully: ' + user.email);
-                        }
-                    });
-                    callback(null, sessionId);
-                },
                 // if payment pending then order package
                 function (sessionId, callback) {
                     if (user.account.paymentPending) {
@@ -598,7 +579,6 @@ module.exports = {
                 if (err) {
                     logger.logError(err);
                     if (err === '_decline') {
-                        subscription.sendCreditCardPaymentFailureEmail(user);
                         return res.status(500).end('PaymentPending');
                     } else {
                         return res.status(500).end();
@@ -702,25 +682,4 @@ function getGuestCounter() {
         getGuestCounter.count = 0;
     }
     return getGuestCounter.count;
-}
-
-function sendAccountVerifiedEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('userController - sendAccountVerifiedEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('userController - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
 }
