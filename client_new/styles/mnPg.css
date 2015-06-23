@@ -14,7 +14,7 @@ body,html { font-size:14px; }
 
 
 /* //// === ammendments to bootstrap css === //// */
-.jumbotron { padding: 0 !important; background:rgb(211,211,211) !important; background-color:rgb(211,211,211) !important; }
+.jumbotron { padding: 0 !important; /*background:rgb(211,211,211) !important; background-color:rgb(211,211,211) !important;*/ }
 .jumbotron .container { width:100%; padding:0 0; }
 .jumbotron p { font-size:;}
 

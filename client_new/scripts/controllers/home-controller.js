@@ -13,8 +13,12 @@
             }
         }
 		
+		//var dUser = $scope.user.firstName;
+		//console.log('dUser: '+dUser);
+		
 		function init(){
 			$scope.prflSlctns = prflButtons.getPfrlSlctns();
+			$scope.dUsr = $scope.user;
 		}
 		
 		
@@ -73,7 +77,7 @@
 			"chnls": "views/home-chnls.html",
 			"guide": "views/home-guide.html",
 			"langPrefs": "views/preferences.html",
-			"usrPrfl": "views/user-info.html",
+			"usrPrfl": "views/user-info.php",
 			"usrPwd": "views/change-password.html"
 		}
 		
