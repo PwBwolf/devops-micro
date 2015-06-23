@@ -302,6 +302,7 @@ module.exports = {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
                         sendVerificationEmail(userObj);
+                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         err = new Error('PaymentPending');
                         break;
@@ -693,6 +694,15 @@ module.exports = {
                             logger.logInfo('subscription - upgradeSubscription - verification email sent: ' + userObj.email);
                         }
                     });
+                } else {
+                    sendUpgradeEmail(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - upgradeSubscription - error sending upgrade email: ' + userObj.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - upgradeSubscription - upgrade email sent: ' + userObj.email);
+                        }
+                    });
                 }
                 callback(null, userObj);
             },
@@ -741,7 +751,10 @@ module.exports = {
                         updateAccountOnPaymentDeclined(userObj, currentValues);
                         if (userObj.status === 'registered') {
                             sendVerificationEmail(userObj);
+                        } else {
+                            sendUpgradeEmail(userObj);
                         }
+                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         var errorCode = userObj.status === 'registered' ? 'PaymentPending' : 'PaymentPendingActive';
                         err = new Error(errorCode);
@@ -908,6 +921,18 @@ module.exports = {
                     }
                 });
             },
+            // send email
+            function (userObj, callback) {
+                sendReactivateEmail(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - reactivateSubscription - error sending reactivated email: ' + userObj.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - reactivateSubscription - reactivated email sent: ' + userObj.email);
+                    }
+                });
+                callback(null, userObj);
+            },
             // delete user from visitor
             function (userObj, callback) {
                 deleteVisitor(userObj.email, function (err) {
@@ -944,6 +969,8 @@ module.exports = {
                         break;
                     case 'payment-declined':
                         updateAccountOnPaymentDeclined(userObj, currentValues);
+                        sendReactivateEmail(userObj);
+                        sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
                         err = new Error('PaymentPendingActive');
                         break;
@@ -1139,6 +1166,15 @@ module.exports = {
                                     logger.logError(err);
                                 } else {
                                     logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
+                                }
+                            });
+                        } else {
+                            sendConvertToComplimentaryEmail(userObj, function (err) {
+                                if (err) {
+                                    logger.logError('subscription - convertToComplimentary - error sending converted to complimentary email: ' + userObj.email);
+                                    logger.logError(err);
+                                } else {
+                                    logger.logInfo('subscription - convertToComplimentary - converted to complimentary email sent: ' + userObj.email);
                                 }
                             });
                         }
@@ -1551,7 +1587,9 @@ module.exports = {
                 });
             }
         });
-    }
+    },
+
+    sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail
 };
 
 function createUser(user, cc, cb) {
@@ -1867,6 +1905,90 @@ function updateAccountOnPaymentDeclined(user, currentValues, cb) {
         if (err) {
             logger.logError('subscription - updateAccountPaymentDeclined - error updating account on payment declined: ' + user.email);
             logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendReactivateEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.reactivateSubscriptionEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.reactivateSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendReactivateEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendReactivateEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendUpgradeEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.upgradeSubscriptionEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.upgradeSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendUpgradeEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendConvertToComplimentaryEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendUpgradeEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendCreditCardPaymentFailureEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.creditCardPaymentFailureEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendCreditCardPaymentFailureEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendCreditCardPaymentFailureEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
