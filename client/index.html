@@ -30,21 +30,22 @@
             display: none !important;
         }
     </style>
-	<script type="text/javascript">
-	    var _gaq = _gaq || [];
-	    _gaq.push(['_setAccount', 'UA-29465199-1']);
-	    _gaq.push(['_setDomainName', 'none']);
-	    _gaq.push(['_setAllowLinker', true]);
-	    _gaq.push(['_trackPageview']);
-	    (function () {
-	        var ga = document.createElement('script');
-	        ga.type = 'text/javascript';
-	        ga.async = true;
-	        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	        var s = document.getElementsByTagName('script')[0];
-	        s.parentNode.insertBefore(ga, s);
-	    })();
-	</script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29465199-1']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
@@ -59,15 +60,24 @@
     <title>YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
 <body>
-	<!-- Google Tag Manager -->
-	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MKGQRV"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-MKGQRV');</script>
-	<!-- End Google Tag Manager -->
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-MKGQRV"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({
+        'gtm.start': new Date().getTime(), event: 'gtm.js'
+    });
+    var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src =
+        '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-MKGQRV');</script>
+<!-- End Google Tag Manager -->
 <!--[if lt IE 9]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -152,7 +162,6 @@
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
-<script src="bower_components/jquery/jquery.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script src="bower_components/toastr/toastr.js"></script>
