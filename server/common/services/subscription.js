@@ -418,9 +418,8 @@ module.exports = {
                 },
                 // create user in freeside
                 function (userObj, accountObj, callback) {
-                    var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'COMP', '', payDate, '', '', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';
@@ -581,7 +580,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in AIO if user status is trial-ended or comp-ended
+            // change status to active in aio if user status is trial-ended or comp-ended
             function (userObj, callback) {
                 if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
                     aio.updateUserStatus(userObj.email, true, function (err) {
@@ -595,7 +594,7 @@ module.exports = {
                     callback(null, userObj);
                 }
             },
-            // change packages in AIO to paid ones
+            // change packages in aio to paid ones
             function (userObj, callback) {
                 aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
                     if (err) {
@@ -629,7 +628,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // update user information in FreeSide
+            // update user information in freeside
             function (userObj, sessionId, callback) {
                 var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
@@ -833,7 +832,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in AIO
+            // change status to active in aio
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, true, function (err) {
                     if (err) {
@@ -867,7 +866,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // update user information in FreeSide
+            // update user information in freeside
             function (userObj, sessionId, callback) {
                 var address = newUser.address ? newUser.address : userObj.account.merchant;
                 var city = newUser.city ? newUser.city : 'West Palm Beach';
@@ -1128,8 +1127,7 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
-                        var payDate = ((new Date(userObj.validTill)).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
-                        billing.updateUser(userObj.account.freeSideCustomerNumber, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'COMP', '', payDate, '', '', function (err) {
+                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
@@ -1288,7 +1286,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in AIO
+            // change status to inactive in aio
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1380,7 +1378,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in AIO
+            // change status to inactive in aio
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1485,7 +1483,7 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in AIO
+            // change status to inactive in aio
             function (userObj, callback) {
                 aio.updateUserStatus(userObj.email, false, function (err) {
                     if (err) {
@@ -1508,8 +1506,7 @@ module.exports = {
             // change billing address
             function (userObj, sessionId, callback) {
                 var address = 'Complimentary subscription ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                var expiryDate = ((new Date()).getMonth() + 1) + '/' + (new Date(userObj.validTill)).getFullYear();
-                billing.updateAddressAndPayDate(userObj.account.freeSideCustomerNumber, address, 'West Palm Beach', 'FL', '00000', 'US', expiryDate, function (err) {
+                billing.updateAddress(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', function (err) {
                     if (err) {
                         logger.logError('subscription - endComplimentarySubscription - error updating billing system with complimentary address: ' + userObj.email);
                         errorType = 'freeside-user-update';
