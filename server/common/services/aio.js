@@ -17,6 +17,7 @@ module.exports = {
             logger.logInfo('aio - createUser - response');
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
+            logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
                 callback(jsonData.message);
             } else {
@@ -64,6 +65,7 @@ module.exports = {
             logger.logInfo('aio - updateUserStatus - response');
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
+            logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
                 callback(jsonData.message);
             } else {
@@ -88,6 +90,7 @@ module.exports = {
             logger.logInfo('aio - updateUserPackages - response');
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
+            logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
                 callback(jsonData.message);
             } else {
@@ -112,6 +115,7 @@ module.exports = {
             logger.logInfo('aio - updatePassword - response');
             logger.logInfo(data);
             var jsonData = JSON.parse(data);
+            logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
                 callback(jsonData.message);
             } else {

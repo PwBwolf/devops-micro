@@ -3,6 +3,15 @@
 
     app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$modal', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter, $modal) {
 
+        activate();
+
+        function activate() {
+            var email = $location.search().email;
+            if (email) {
+                $scope.mv = {email: email};
+            }
+        }
+
         $scope.signIn = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
@@ -92,7 +101,7 @@
                                 }).result.then(function () {
                                         $location.path('/upgrade-subscription');
                                     });
-                            } else if($scope.user.paymentPending) {
+                            } else if ($scope.user.paymentPending) {
                                 $modal.open({
                                     templateUrl: 'modalWindow',
                                     controller: 'modalCtrl',

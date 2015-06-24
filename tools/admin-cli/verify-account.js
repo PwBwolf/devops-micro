@@ -28,6 +28,8 @@ var modelsPath = config.root + '/server/common/models',
 
 require('../../server/common/setup/models')(modelsPath);
 var Users = mongoose.model('User');
+var subscription = require('../../server/common/services/subscription');
+
 
 Users.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
@@ -69,7 +71,14 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                         });
                     } else {
                         logger.logInfo('adminCLI - verifyAccount - account verified successfully');
-                        process.exit(0);
+                        subscription.sendAccountVerifiedEmail(user, function (err) {
+                            if (err) {
+                                logger.logError('adminCLI - verifyAccount - error sending email');
+                            } else {
+                                logger.logInfo('adminCLI - verifyAccount - email sent to user');
+                                process.exit(0);
+                            }
+                        });
                     }
                 });
             }
