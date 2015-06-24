@@ -14,6 +14,7 @@
             ACCOUNT_CANCEL_SUBSCRIPTION_CONFIRMATION: 'Are you sure you want to cancel your subscription?',
             ACCOUNT_CANCEL_SUBSCRIPTION_FAILURE: 'Cancel subscription failed. Please contact customer support at',
             ACCOUNT_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Please close and re-open the YipTV application browser window',
+            ACCOUNT_CANCEL_ON: 'We have received your cancellation request. Your subscription will be canceled at the end of your billing cycle which is',
             BANNER_1_MOBILE_P: '<a href="sign-up/paid"><img src="../images/banners/mobile/en/mobile-portrait-1.jpg" alt="beIN_MobilePort"></a>',
             BANNER_2_MOBILE_P: '<a href="sign-up/paid"><img src="../images/banners/mobile/en/mobile-portrait-2.jpg" alt="beIN_MobilePort"></a>',
             BANNER_3_MOBILE_P: '<a href="http://www.yiptv.com/live-tv/index.php/copa-america/" target="_self"><img src="../images/banners/mobile/en/mobile-portrait-3.jpg" alt="beIN_MobilePort"></a>',

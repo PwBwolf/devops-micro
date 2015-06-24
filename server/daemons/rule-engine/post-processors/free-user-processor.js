@@ -7,11 +7,12 @@ var config = require('../../../common/setup/config'),
     sf = require('sf');
 
 function sendReminderEmail(user, subjectDays, bodyDays) {
+    var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: sf(config.reminderEmailSubject[user.preferences.defaultLanguage], subjectDays),
-        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'upgrade-subscription')
+        html: sf(config.reminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, bodyDays, config.url + 'upgrade-subscription' + params)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -24,11 +25,12 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
 }
 
 function sendLastButOneReminderEmail(user) {
+    var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.lastButOneReminderEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+        html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -41,11 +43,12 @@ function sendLastButOneReminderEmail(user) {
 }
 
 function sendLastReminderEmail(user) {
+    var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.lastReminderEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.lastReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+        html: sf(config.lastReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -61,11 +64,12 @@ function suspendAndSendEmail(user) {
     if (config.cancelSubscriptionForTrialUsers) {
         subscription.endFreeTrial(user.email);
     } else {
+        var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
         var mailOptions = {
             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
             to: user.email,
             subject: config.trialPeriodCompleteEmailSubject[user.preferences.defaultLanguage],
-            html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+            html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
         };
         email.sendEmail(mailOptions, function (err) {
             if (err) {
@@ -79,11 +83,12 @@ function suspendAndSendEmail(user) {
 }
 
 function sendReacquireEmail(user) {
+    var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.reacquireUserEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.reacquireUserEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+        html: sf(config.reacquireUserEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
