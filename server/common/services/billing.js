@@ -274,6 +274,32 @@ module.exports = {
                 callback(null);
             }
         });
+    },
+
+    getBillingDate: function (sessionId, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.renew_info', [
+            'session_id', sessionId
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - getBillingDate - error in getting billing date 1');
+                logger.logError(err);
+                callback(err);
+            } else {
+                if (response.error) {
+                    logger.logError('billing - getBillingDate - error in getting billing date 2');
+                    logger.logError(response.error);
+                    callback(response.error);
+                } else if (response.dates && response.dates.length > 0) {
+                    logger.logInfo('billing - getBillingDate - response');
+                    logger.logInfo(response);
+                    callback(null, new Date(response.dates[0].bill_date * 1000));
+                } else {
+                    logger.logError('billing - getBillingDate - billing date not found');
+                    callback(new Error('NoBillingDate'));
+                }
+            }
+        });
     }
 };
 

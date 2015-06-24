@@ -22,6 +22,7 @@ var User = new Schema({
     createdAt: {type: Date, required: true},
     upgradeDate: {type: Date, required: false},
     cancelDate: {type: Date, required: false},
+    cancelOn: {type: Date, required: false},
     validTill: {type: Date, required: false},
     lastLoginTime: Date,
     verificationCode: {type: String, sparse: true},

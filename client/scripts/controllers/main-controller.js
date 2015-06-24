@@ -112,7 +112,7 @@
             if ($scope.user.status === 'canceled') {
                 $location.path('/reactivate-subscription');
             } else if ($scope.user.status === 'trial-ended' || $scope.user.status === 'comp-ended') {
-                $location.path('/upgrade-subscription');
+                $location.path('/upgrade-subscription').search('utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + $scope.language);
             } else if($scope.user.paymentPending) {
                 $location.path('/change-credit-card');
             } else {

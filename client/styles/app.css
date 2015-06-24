@@ -200,6 +200,13 @@ input[type="radio"]:checked + label:before {
     color: #fff;
 }
 
+.cancel-on {
+    background-color: #FFF;
+    font-weight: bolder;
+    padding: 10px;
+    display: inline-block;
+}
+
 .user-home-box {
     background-color: #fff;
 }
@@ -606,6 +613,14 @@ a.import-button:hover {
     font-size: 16px;
     padding-left: 0;
     text-transform: uppercase;
+}
+
+.sign-up-label {
+    text-transform: none;
+}
+
+.sign-up-text-box {
+    border: 1px solid dimgrey;
 }
 
 .checkbox {

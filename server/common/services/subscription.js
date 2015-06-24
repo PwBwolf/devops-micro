@@ -1246,9 +1246,8 @@ module.exports = {
     },
 
     cancelSubscription: function (userEmail, cb) {
-        var currentValues, errorType;
+        var errorType;
         async.waterfall([
-            // set user status to 'canceled' and set canceledDate to current date
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1259,41 +1258,8 @@ module.exports = {
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
                     } else {
-                        currentValues = {
-                            status: userObj.status,
-                            cancelDate: userObj.cancelDate,
-                            billingDate: userObj.account.billingDate,
-                            paymentPending: userObj.account.paymentPending
-                        };
-                        userObj.account.billingDate = undefined;
-                        userObj.account.paymentPending = false;
-                        userObj.status = 'canceled';
-                        userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err) {
-                            if (err) {
-                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
-                                callback(err);
-                            } else {
-                                userObj.account.save(function (err) {
-                                    if (err) {
-                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
-                                        errorType = 'db-account-update';
-                                    }
-                                    callback(err, userObj);
-                                });
-                            }
-                        });
+                        callback(null, userObj);
                     }
-                });
-            },
-            // change status to inactive in aio
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, false, function (err) {
-                    if (err) {
-                        logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
-                        errorType = 'aio-status-update';
-                    }
-                    callback(err, userObj);
                 });
             },
             // login to freeside
@@ -1301,49 +1267,61 @@ module.exports = {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
-                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // get billing date
+            function (userObj, sessionId, callback) {
+                billing.getBillingDate(sessionId, function (err, billingDate) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                    }
+                    callback(err, userObj, sessionId, billingDate);
+                });
+            },
+            // update user
+            function (userObj, sessionId, billingDate, callback) {
+                userObj.cancelOn = moment(billingDate).subtract(1, 'days').toDate().toUTCString();
+                userObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating user: ' + userObj.email);
                     }
                     callback(err, userObj, sessionId);
                 });
             },
             // change credit card to dummy and modify billing address
             function (userObj, sessionId, callback) {
-                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
+                var address = 'To be canceled on ' + moment(userObj.cancelOn).format('MM/DD/YYYY');
                 billing.updateCreditCard(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'CARD', '4242424242424242', '12/2035', '123', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
                     }
-                    callback(err, userObj, sessionId);
+                    callback(err, userObj);
                 });
             },
-            // cancel existing package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'paid', function (err) {
+            // send email
+            function (userObj, callback) {
+                sendCancellationEmail(userObj, function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        logger.logError('subscription - cancelSubscription - error sending cancellation email: ' + userObj.email);
                     }
-                    callback(err, userObj, sessionId);
                 });
+                callback(null, userObj);
             }
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
                 switch (errorType) {
-                    case 'db-account-update':
-                        revertUserChangesForCancel(userObj, currentValues);
-                        break;
-                    case 'aio-status-update':
-                        revertAccountChangesForCancel(userObj, currentValues);
-                        revertUserChangesForCancel(userObj, currentValues);
-                        break;
                     case 'freeside-user-update':
-                    case 'freeside-login':
-                    case 'freeside-cancel-package':
-                        setUserActiveInAio(userObj.email, currentValues.status);
-                        revertAccountChangesForCancel(userObj, currentValues);
-                        revertUserChangesForCancel(userObj, currentValues);
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - cancelSubscription - error removing cancelOn date: ' + userObj.email);
+                                logger.logError(err);
+                            }
+                        });
                         break;
                 }
             }
@@ -1553,6 +1531,114 @@ module.exports = {
                     case 'freeside-login':
                     case 'freeside-cancel-package':
                         setUserActiveInAio(userObj.email, currentValues.status);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    endPaidSubscription: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            // set user status to 'canceled' and set canceledDate to current date
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
+                        callback('NonActiveUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        currentValues = {
+                            status: userObj.status,
+                            cancelDate: userObj.cancelDate,
+                            billingDate: userObj.account.billingDate,
+                            paymentPending: userObj.account.paymentPending
+                        };
+                        userObj.account.billingDate = undefined;
+                        userObj.account.paymentPending = false;
+                        userObj.status = 'canceled';
+                        userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            // change status to inactive in aio
+            function (userObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
+                        errorType = 'aio-status-update';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // change credit card to dummy and modify billing address
+            function (userObj, sessionId, callback) {
+                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
+                billing.updateCreditCard(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'CARD', '4242424242424242', '12/2035', '123', '', function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel existing package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackageByType(sessionId, 'paid', function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
+                        errorType = 'freeside-cancel-package';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'aio-status-update':
+                        revertAccountChangesForCancel(userObj, currentValues);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-cancel-package':
+                        setUserActiveInAio(userObj.email, currentValues.status);
+                        revertAccountChangesForCancel(userObj, currentValues);
                         revertUserChangesForCancel(userObj, currentValues);
                         break;
                 }
@@ -1959,7 +2045,7 @@ function sendConvertToComplimentaryEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.convertToComplimentaryEmailSubject[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+        html: sf(config.convertToComplimentaryEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -2009,6 +2095,27 @@ function sendAccountVerifiedEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendCancellationEmail(user, cb) {
+    var cancelOn = moment(user.cancelOn).utc().format('M/D/YYYY');
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.cancelSubscriptionEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.cancelSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, cancelOn)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendCancellationEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendCancellationEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

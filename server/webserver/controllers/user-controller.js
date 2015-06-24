@@ -199,7 +199,8 @@ module.exports = {
                     telephone: user.telephone,
                     type: account.type,
                     status: user.status,
-                    paymentPending: account.paymentPending
+                    paymentPending: account.paymentPending,
+                    cancelOn: user.cancelOn
                 });
             });
         });
