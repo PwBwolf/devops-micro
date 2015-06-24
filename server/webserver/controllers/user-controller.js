@@ -245,7 +245,7 @@ module.exports = {
                             return res.status(500).end();
                         });
                     } else {
-                        sendAccountVerifiedEmail(user);
+                        subscription.sendAccountVerifiedEmail(user);
                         return res.status(200).send();
                     }
                 });
@@ -702,25 +702,4 @@ function getGuestCounter() {
         getGuestCounter.count = 0;
     }
     return getGuestCounter.count;
-}
-
-function sendAccountVerifiedEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('userController - sendAccountVerifiedEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('userController - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
 }

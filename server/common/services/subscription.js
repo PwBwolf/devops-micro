@@ -1586,7 +1586,9 @@ module.exports = {
         });
     },
 
-    sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail
+    sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail,
+
+    sendAccountVerifiedEmail: sendAccountVerifiedEmail
 };
 
 function createUser(user, cc, cb) {
@@ -1986,6 +1988,27 @@ function sendCreditCardPaymentFailureEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendCreditCardPaymentFailureEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendAccountVerifiedEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendAccountVerifiedEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

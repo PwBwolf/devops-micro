@@ -2,11 +2,9 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var sf = require('sf'),
-    config = require('../../server/common/setup/config'),
+var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
     aio = require('../../server/common/services/aio'),
-    emailService = require('../../server/common/services/email'),
     mongoose = require('../../server/node_modules/mongoose');
 
 logger.cli();
@@ -30,6 +28,8 @@ var modelsPath = config.root + '/server/common/models',
 
 require('../../server/common/setup/models')(modelsPath);
 var Users = mongoose.model('User');
+var subscription = require('../../server/common/services/subscription');
+
 
 Users.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
@@ -71,7 +71,7 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                         });
                     } else {
                         logger.logInfo('adminCLI - verifyAccount - account verified successfully');
-                        sendAccountVerifiedEmail(user, function (err) {
+                        subscription.sendAccountVerifiedEmail(user, function (err) {
                             if (err) {
                                 logger.logError('adminCLI - verifyAccount - error sending email');
                             } else {
@@ -85,24 +85,3 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
         });
     }
 });
-
-function sendAccountVerifiedEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    emailService.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('userController - sendAccountVerifiedEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('userController - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
