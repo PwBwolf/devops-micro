@@ -30,7 +30,7 @@
 						
 						
                     } else if (navDocked && scrollTop() <= navTop) {
-						c++;
+						//c++;
                         navBar.style.position = 'absolute';
                         navLogo.style.position = 'absolute';
                         navBar.style.top = navTop + 'px';

@@ -8,6 +8,47 @@
     display: none !important;
 }
 
+#chnlLinks {
+	background-color: rgba(48,42,58,0.95);
+	width: inherit;
+	text-align:	center;
+}
+
+#chnlLinks dl {
+    margin-bottom: 30px !important;
+	text-align: left;
+}
+
+#chnlLinks dt {
+    color: white;
+    /*font-size: 1.25em;*/
+	font-size: 95%;
+    font-weight: bolder !important;
+    text-transform: capitalize;
+	margin-bottom: 8px;
+}
+
+#chnlLinks dd {
+    color: rgb(129,198,255);
+    /*margin-top: 2px;*/
+   /* font-size: 1.0em;*/
+   font-size: 85%;
+   white-space: normal;
+}
+
+#chnlLinks dd + dd {
+    /*color: rgba(135, 117, 104, .9);*/
+	margin-bottom:2px;
+}
+
+#chnlLinks .posNlne {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 auto;
+	padding: 2%;
+	width: auto;
+}
+
 body, html {
     font-size: 14px;
     max-width: 1280px;
@@ -661,8 +702,8 @@ header {
 }
 
 #footerLinks ul {
-    padding-top: 18px;
-    margin-top:10px;
+    /*padding-top: 18px;
+    margin-top:10px;*/
 }
 
 #footerLinks li {

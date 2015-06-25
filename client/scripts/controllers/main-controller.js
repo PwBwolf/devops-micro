@@ -1,11 +1,15 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'wpDataSvc', 'footerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, wpDataSvc, footerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
+		
+		/// wp-pull-data-test ///
+		$scope.wpData = wpDataSvc.getWpData;
+		
         $scope.session = {};
 
         var aioWindow,
@@ -17,6 +21,16 @@
             getAppConfig();
             loadLanguage();
             configSeo();
+			
+			$scope.sportsCtgry = footerSvc.getSports();
+			$scope.kidsCtgry = footerSvc.getKids();
+			$scope.generalCtgry = footerSvc.getGeneral();
+			$scope.newsCtgry = footerSvc.getNews();
+			$scope.musicCtgry = footerSvc.getMusic();
+			$scope.eduCtgry = footerSvc.getEdu();
+			$scope.lifestyleCtgry = footerSvc.getLifestyle();
+			$scope.faithCtgry = footerSvc.getFaith();
+			$scope.entCtgry = footerSvc.getEnt();
         }
 
         $rootScope.$on('ChangeLanguage', function (event, language) {
@@ -250,5 +264,7 @@
                 aioWindow.close();
             }
         });
+		
+		//function
     }]);
 }(angular.module('app')));

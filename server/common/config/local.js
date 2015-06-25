@@ -22,7 +22,7 @@ module.exports = {
     cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'http://localhost:3000/sign-up/complimentary/',
     refundPeriodInDays: 3,
-    cmsUrl: 'http://test.yiptv.net/live-tv/',
+    cmsUrl: 'http://int.yiptv.net/live-tv/',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
     freeSideFreePackagePart: 6,
     freeSidePaidPackagePart: 4,
