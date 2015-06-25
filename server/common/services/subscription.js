@@ -1399,11 +1399,12 @@ module.exports = {
             },
             // send email
             function (userObj, callback) {
+                var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + userObj.preferences.defaultLanguage;
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: userObj.email,
                     subject: config.trialPeriodCompleteEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription' + params)
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
