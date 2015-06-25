@@ -6,10 +6,10 @@
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
-		
-		/// wp-pull-data-test ///
-		$scope.wpData = wpDataSvc.getWpData;
-		
+
+        /// wp-pull-data-test ///
+        $scope.wpData = wpDataSvc.getWpData;
+
         $scope.session = {};
 
         var aioWindow,
@@ -21,16 +21,16 @@
             getAppConfig();
             loadLanguage();
             configSeo();
-			
-			$scope.sportsCtgry = footerSvc.getSports();
-			$scope.kidsCtgry = footerSvc.getKids();
-			$scope.generalCtgry = footerSvc.getGeneral();
-			$scope.newsCtgry = footerSvc.getNews();
-			$scope.musicCtgry = footerSvc.getMusic();
-			$scope.eduCtgry = footerSvc.getEdu();
-			$scope.lifestyleCtgry = footerSvc.getLifestyle();
-			$scope.faithCtgry = footerSvc.getFaith();
-			$scope.entCtgry = footerSvc.getEnt();
+
+            $scope.sportsCtgry = footerSvc.getSports();
+            $scope.kidsCtgry = footerSvc.getKids();
+            $scope.generalCtgry = footerSvc.getGeneral();
+            $scope.newsCtgry = footerSvc.getNews();
+            $scope.musicCtgry = footerSvc.getMusic();
+            $scope.eduCtgry = footerSvc.getEdu();
+            $scope.lifestyleCtgry = footerSvc.getLifestyle();
+            $scope.faithCtgry = footerSvc.getFaith();
+            $scope.entCtgry = footerSvc.getEnt();
         }
 
         $rootScope.$on('ChangeLanguage', function (event, language) {
@@ -41,7 +41,7 @@
             $translate.use(language);
             webStorage.local.add('language', language);
             $rootScope.language = language;
-            if($route.current) {
+            if ($route.current) {
                 $rootScope.title = $route.current.title[$rootScope.language] || $route.current.title;
                 $rootScope.description = $route.current.description[$rootScope.language] || $route.current.description;
             }
@@ -66,8 +66,8 @@
             changeLanguage(language);
         }
 
-        $scope.$on('$routeChangeSuccess', function() {
-            if($routeParams.lang) {
+        $scope.$on('$routeChangeSuccess', function () {
+            if ($routeParams.lang) {
                 changeLanguage($routeParams.lang);
             }
         });
@@ -125,9 +125,11 @@
         $scope.openAio = function () {
             if ($scope.user.status === 'canceled') {
                 $location.path('/reactivate-subscription');
-            } else if ($scope.user.status === 'trial-ended' || $scope.user.status === 'comp-ended') {
+            } else if ($scope.user.status === 'trial-ended') {
                 $location.path('/upgrade-subscription').search('utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + $scope.language);
-            } else if($scope.user.paymentPending) {
+            } else if ($scope.user.status === 'comp-ended') {
+                $location.path('/upgrade-subscription');
+            } else if ($scope.user.paymentPending) {
                 $location.path('/change-credit-card');
             } else {
                 var browser = browserSvc.getBrowserName();
@@ -264,7 +266,7 @@
                 aioWindow.close();
             }
         });
-		
-		//function
+
+        //function
     }]);
 }(angular.module('app')));
