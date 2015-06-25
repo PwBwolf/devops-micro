@@ -50,8 +50,9 @@
         ];
 		
         var edu_Ctgry = [
-            {channelName: 'Yes', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Zoom', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'}
+			{channelName: 'HITN', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
+            {channelName: 'Yes', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_2', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
+            {channelName: 'Zoom', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_3', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'}
 
         ];
 		

@@ -667,6 +667,7 @@ header {
 	font-size:75%;
 	line-height:1.4em;
 }
+
 #footerBox {
     width: 100%;
     height: auto;
@@ -683,7 +684,11 @@ header {
 }
 
 #footerBox a {
-    color: grey;
+    color: rgb(129,198,255);
+}
+
+#footerBox a:hover {
+	color: rgb(254,254,254);
 }
 
 #footerBox .jumbotron {
