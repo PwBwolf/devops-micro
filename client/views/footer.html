@@ -7,69 +7,68 @@
 	<div id="chnlLinks" >
 		<div class="chnlLinks-col posNlne">
 			<dl>
-				<dt>Sports</dt>
-				<dd data-ng-repeat="spC in sportsCtgry"><a href="#" data-ng-click="goToCmsUrl('{{spC.showDescription}}')">{{spC.channelName}}</a></dd>
+				<dt translate="FOOTER_CHANNEL_SP">Sports</dt>
+				<dd data-ng-repeat="spC in sportsCtgry"><a href="#" data-ng-click="goToCmsUrl(spC.showDescription)">{{spC.channelName}}</a></dd>
 			</dl>
 			<dl>
-				<dt>Kids</dt>
-				<dd data-ng-repeat="kC in kidsCtgry | limitTo:1" data-ng-click="goToCmsUrl('{{kC.showDescription}}')">{{kC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_KDS">Kids</dt>
+				<dd data-ng-repeat="kC in kidsCtgry | limitTo:1"><a href="#" data-ng-click="goToCmsUrl(kC.showDescription)">{{kC.channelName}}</a></dd>
 			</dl>
 			<dl>
-				<dt>General</dt>
-				<dd data-ng-repeat="gC in generalCtgry" data-ng-click="goToCmsUrl('{{gC.showDescription}}')">{{gC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_GNRL">General</dt>
+				<dd data-ng-repeat="gC in generalCtgry"><a href="#" data-ng-click="goToCmsUrl(gC.showDescription)">{{gC.channelName}}</a></dd>
 			</dl>
 		</div>
 		
 		<div class="chnlLinks-col posNlne">
 			<dl>
-				<dt>News</dt>
-				<dd data-ng-repeat="nC in newsCtgry" data-ng-click="goToCmsUrl('{{nC.showDescription}}')">{{nC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_NEWS">News</dt>
+				<dd data-ng-repeat="nC in newsCtgry"><a href="#" data-ng-click="goToCmsUrl(nC.showDescription)">{{nC.channelName}}</a></dd>
 			</dl>
 		</div>
 		
 		<div class="chnlLinks-col posNlne">
 			<dl>
-				<dt>Music</dt>
-				<dd data-ng-repeat="mC in musicCtgry" data-ng-click="goToCmsUrl('{{mC.showDescription}}')">{{mC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_MSC">Music</dt>
+				<dd data-ng-repeat="mC in musicCtgry"><a href="#" data-ng-click="goToCmsUrl(mC.showDescription)">{{mC.channelName}}</a></dd>
 			</dl>
 			<dl>
-				<dt>Educational</dt>
-				<dd data-ng-repeat="eduC in newsCtgry" data-ng-click="goToCmsUrl('{{eduC.showDescription}}')">{{eduC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_EDU">Educational</dt>
+				<dd data-ng-repeat="eduC in newsCtgry"><a href="#" data-ng-click="goToCmsUrl(eduC.showDescription)">{{eduC.channelName}}</a></dd>
 			</dl>
 		</div>
 		
 		<div class="chnlLinks-col posNlne">
 			<dl>
-				<dt>Lifestyle</dt>
-				<dd data-ng-repeat="lC in lifestyleCtgry" data-ng-click="goToCmsUrl('{{lC.showDescription}}')">{{lC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_LS">Lifestyle</dt>
+				<dd data-ng-repeat="lC in lifestyleCtgry"><a href="#" data-ng-click="goToCmsUrl(lC.showDescription)">{{lC.channelName}}</a></dd>
 			</dl>
 			<dl>
-				<dt>Faith</dt>
-				<dd data-ng-repeat="fC in faithCtgry" data-ng-click="goToCmsUrl('{{fC.showDescription}}')">{{fC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_FTH">Faith</dt>
+				<dd data-ng-repeat="fC in faithCtgry"><a href="#" data-ng-click="goToCmsUrl(fC.showDescription)">{{fC.channelName}}</a></dd>
 			</dl>
 		</div>
 		
 		<div class="chnlLinks-col posNlne">
 			<dl>
-				<dt>Entertainment</dt>
-				<dd data-ng-repeat="entC in entCtgry" data-ng-click="goToCmsUrl('{{entC.showDescription}}')">{{entC.channelName}}</dd>
+				<dt translate="FOOTER_CHANNEL_ENT">Entertainment</dt>
+				<dd data-ng-repeat="entC in entCtgry"><a href="#" data-ng-click="goToCmsUrl(entC.showDescription)">{{entC.channelName}}</a></dd>
 			</dl>
 		</div>
 		
-		<div class="chnlLinks-col posNlne">
+		<div class="chnlLinks-col posNlne" style="width:20%">
 			<div class="posNlne">
-				<img src="images/footer/Facebook.png" alt-"facebook icon">
-				<img src="images/footer/Google.png" alt-"facebook icon">
-				<img src="images/footer/Linkedin.png" alt-"facebook icon">
-				<img src="images/footer/Twitter.png" alt-"facebook icon">
+				<a href="https://www.facebook.com/pages/Yiptv/670093559720356?fref=ts"><img src="images/footer/Facebook.png" alt-"facebook icon"></a>
+				<a href="https://twitter.com/YipTV"><img src="images/footer/Google.png" alt-"facebook icon"></a>
+				<a href="http://linkedin.com/company/yiptv"><img src="images/footer/Linkedin.png" alt-"facebook icon"></a>
+				<a href="https://plus.google.com/110377468150377213884"><img src="images/footer/Twitter.png" alt-"facebook icon"></a>
 			</div>
 			<dl>
 				<dt>YipNow</dt>
-				<dd>Our First Mobile Operator Joins</dd>
+				<dd><a href="#" data-ng-click="goToCmsUrl('FOOTER_MOBILE_OPS')" translate="FOOTER_MOBILE_OPS_TEXT">Our First Mobile Operator Joins</a></dd>
 			</dl>
 			<dl>
-				<dt>Kids</dt>
-				<dd>beIN Sports</dd>
+				<p style="color:white">All of us at YipTV are super excited about TruConnect becoming the first mobile operator to bundle our service with… <a href="#" data-ng-click="goToCmsUrl('FOOTER_MOBILE_OPS')">Read more</a></p>
 			</dl>
 
 		</div>
