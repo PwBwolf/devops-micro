@@ -1558,6 +1558,7 @@ module.exports = {
                         currentValues = {
                             status: userObj.status,
                             cancelDate: userObj.cancelDate,
+                            cancelOn: userObj.cancelOn,
                             billingDate: userObj.account.billingDate,
                             paymentPending: userObj.account.paymentPending
                         };
@@ -1565,6 +1566,7 @@ module.exports = {
                         userObj.account.paymentPending = false;
                         userObj.status = 'canceled';
                         userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.cancelOn = undefined;
                         userObj.save(function (err) {
                             if (err) {
                                 logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
@@ -1620,8 +1622,18 @@ module.exports = {
                         logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-cancel-package';
                     }
-                    callback(err, userObj, sessionId);
+                    callback(err, userObj);
                 });
+            },
+            // send email
+            function (userObj, callback) {
+                sendPaidSubscriptionEndedEmail(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error sending canceled email: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj);
             }
         ], function (err, userObj) {
             if (err) {
@@ -1860,6 +1872,7 @@ function revertUserChangesForComplimentary(user, currentValues, currentUser, cb)
 function revertUserChangesForCancel(user, currentValues, cb) {
     user.status = currentValues.status;
     user.cancelDate = currentValues.cancelDate;
+    user.cancelOn = currentValues.cancelOn;
     user.save(function (err) {
         if (err) {
             logger.logError('subscription - revertUserChangesForCancel - error reverting user changes: ' + email);
@@ -2116,6 +2129,26 @@ function sendCancellationEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendCancellationEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendPaidSubscriptionEndedEmail(user, cb) {
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.subscriptionCanceledEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'reactivate-subscription')
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendPaidSubscriptionEndedEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendPaidSubscriptionEndedEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

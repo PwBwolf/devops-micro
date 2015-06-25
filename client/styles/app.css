@@ -205,6 +205,7 @@ input[type="radio"]:checked + label:before {
     font-weight: bolder;
     padding: 10px;
     display: inline-block;
+    width: 60%;
 }
 
 .user-home-box {

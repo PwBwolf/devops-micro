@@ -142,6 +142,28 @@ function buildRules() {
             }
         },
         {
+            'name': 'cancel-user',
+            'description': 'Cancel users if cancellation requested on last billing day',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.status === 'active' && fact.type === 'paid') {
+                    var cancelOn = fact.cancelOn;
+                    if (moment.utc().startOf('day').diff(moment(cancelOn).utc().startOf('day'), 'days') === 1) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'canceledUser';
+                cb();
+            }
+        },
+        {
             'name': 'complimentary-user-deactivation',
             'description': 'Deactivate user and send notification email',
             'priority': 1,
