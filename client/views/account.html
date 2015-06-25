@@ -5,7 +5,7 @@
 
             <div class="caption">
                 <div id="accountBox">
-                    <div ng-show="user.cancelOn" class="cancel-on"><span translate="ACCOUNT_CANCEL_ON"></span> {{user.cancelOn | date : 'M/d/yyyy'}}</div>
+                    <div ng-show="user.cancelOn" class="cancel-on"><span translate="ACCOUNT_CANCEL_ON"></span> ({{user.cancelOn | date : 'M/d/yyyy'}}).</div>
                     <div></div>
                     <button goto="/change-password" type="button" translate="ACCOUNT_CHANGE_PASSWORD"></button>
                     <br>

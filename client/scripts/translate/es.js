@@ -14,7 +14,7 @@
             ACCOUNT_CANCEL_SUBSCRIPTION_CONFIRMATION: 'Seguro que desea cancelar su suscripcion?',
             ACCOUNT_CANCEL_SUBSCRIPTION_FAILURE: 'Cancelacion de suscripcion fallo. Por favor pongase en contacto con atencion al cliente',
             ACCOUNT_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Por favor cierre y vuelva a abrir la ventana del navegador de la aplicacion YipTV',
-            ACCOUNT_CANCEL_ON: 'We have received your cancellation request. Your subscription will be canceled at the end of your billing cycle which is',
+            ACCOUNT_CANCEL_ON: 'Su suscripción de YipTV ha sido cancelada. Su servicio continuará hasta el final de su ciclo de facturación actua ',
             BANNER_1_MOBILE_P: '<a href="sign-up/paid"><img src="../images/banners/mobile/es/mobile-portrait-1.jpg" alt="beIN_MobilePort"></a>',
             BANNER_2_MOBILE_P: '<a href="sign-up/paid"><img src="../images/banners/mobile/es/mobile-portrait-2.jpg" alt="beIN_MobilePort"></a>',
             BANNER_3_MOBILE_P: '<a href="http://www.yiptv.com/live-tv/index.php/copa-america-2/" target="_self"><img src="../images/banners/mobile/es/mobile-portrait-3.jpg" alt="beIN_MobilePort"></a>',
