@@ -54,6 +54,14 @@
                 controller: 'idtSignUpCtrl',
                 access: access.anon
             })
+            .when('/processing-order',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/processing-order.html',
+                controller: 'processingOrderCtrl',
+                access: access.anon
+            })
             .when('/sign-up-success',
             {
                 title: title,
