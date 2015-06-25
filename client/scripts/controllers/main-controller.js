@@ -238,7 +238,7 @@
         function afterSignOut() {
             $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
-            $location.path('/');
+            $location.path('/').search('');
         }
 
         $window.onunload = function () {

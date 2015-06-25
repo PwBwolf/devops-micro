@@ -79,7 +79,7 @@
 
                     <div class="full-form">
                         <span class="label-text sign-up-label" translate="SIGN_UP_CARD_NUMBER"></span>
-                        <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="text-box {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'text-box-error': form.cardNumber.$touched && form.cardNumber.$invalid}">
+                        <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="text-box sign-up-text-box {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'text-box-error': form.cardNumber.$touched && form.cardNumber.$invalid}">
 
                         <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED"></div>
                         <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR"></div>

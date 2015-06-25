@@ -570,7 +570,7 @@ a.import-button:hover {
 .text-box-error {
     background: #FFFFFF;
     border: 2px solid;
-    border-color: rgb(228, 29, 29);
+    border-color: rgb(228, 29, 29) !important;
     color: #000000;
     font-family: "radikallight";
     font-size: 20px;
@@ -620,7 +620,7 @@ a.import-button:hover {
 }
 
 .sign-up-text-box {
-    border: 1px solid dimgrey;
+    border: 1px solid;
 }
 
 .checkbox {
