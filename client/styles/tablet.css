@@ -793,6 +793,7 @@
 	#footerBox a:hover {
 		color: rgb(254,254,254);
 	}
+	
 
 	#footerBox .jumbotron {
 	    background: rgb(61, 51, 75) !important;
@@ -841,6 +842,10 @@
         color:grey;
     }
 
+	#legalLinks a:hover{
+		color:dimgrey;
+	}
+	
     .footer-subscription {
         background: rgb(227, 63, 67);
         padding: 10px 0;

@@ -738,6 +738,10 @@ header {
     margin: 0 2%;
 }
 
+#legalLinks a:hover{
+	color:dimgrey;
+}
+
 .footer-subscription {
     background: rgb(227, 63, 67);
     padding: 20px 0;

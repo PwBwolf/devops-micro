@@ -883,7 +883,12 @@
         margin: 0 2%;
         color: grey;
     }
+	
+	#legalLinks a:hover{
+		color:dimgrey;
+	}
 
+	/*
 	#footerBox a {
 	    color: rgb(129,198,255);
 	}
@@ -909,7 +914,7 @@
 
 	#footerLinks ul {
 	    /*padding-top: 18px;
-	    margin-top:10px;*/
+	    margin-top:10px;
 	}
 
 	#footerLinks li {
@@ -940,6 +945,7 @@
         color: grey;
     }
 
+	*/
     .footer-subscription {
         background: rgb(227, 63, 67);
         padding: 1px 0 22px;
@@ -1729,6 +1735,10 @@
         margin: 0 2%;
         color: grey;
     }
+	
+	#legalLinks a:hover{
+		color:dimgrey;
+	}
 
     .footer-subscription {
         background: rgb(227, 63, 67);
