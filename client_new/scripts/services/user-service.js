@@ -62,7 +62,7 @@
                 if (user === undefined) {
                     user = currentUser;
                 }
-                return user.role.title !== userRoles.anon.title;
+                return user.title !== userRoles.title;
             },
 
             isSignUpAllowed: function (email, type, success, error) {

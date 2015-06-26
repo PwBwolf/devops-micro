@@ -190,7 +190,8 @@ header {
     border-bottom: solid 1px lightgrey;
 }
 
-#collapseExample { width:42%; left:150px; }
+#collapseExample, #collapseExample1 { width:42%; left:150px; }
+#collapseExample1 > div{ overflow: hidden; overflow-y:scroll; } 
 #acctBtns { left: 150px; text-transform: uppercase; width:42%;}
 .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){ border-radius: 0px; }
 .btn-group > .btn:last-child:not(:first-child):not(.dropdown-toggle){ border-radius: 0px; }
@@ -205,7 +206,7 @@ header {
 	text-align:center;
 	box-shadow:0 1px 1px rgba(20,20,20, 0.5) !important;
 }
-#langPrefs, #usrPrfl { height:220px }
+#langPrefs, #usrPrfl { height:520px }
 #pwdChng, #billing { height: 440px; }
 #langPrefs .content-box, #usrPrfl .content-box, #pwdChng .content-box, #billing .content-box { padding:10px 0; }
 .l_Prefs { width: 400px !important; }

@@ -13,8 +13,12 @@
             }
         }
 		
+		//var dUser = $scope.user.firstName;
+		//console.log('dUser: '+dUser);
+		
 		function init(){
 			$scope.prflSlctns = prflButtons.getPfrlSlctns();
+			$scope.dUsr = $scope.user;
 		}
 		
 		
@@ -78,6 +82,11 @@
 		}
 		
 		
-    }]);
+    }])
+	.filter('setCount', function(){
+		return function(repo, begin, end){
+			return repo.slice(begin, end);
+		}
+	})
 	
 }(angular.module('app')));

@@ -1,0 +1,78 @@
+<div class="content-area">
+    <div class="content-box">
+        <h1><span translate="COMP_SIGN_UP_HEADING"></span></h1>
+
+        <div class="container message-box" ng-hide="status === 1">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p ng-show="status === 0" class="text-center" translate="COMP_SIGN_UP_VERIFYING"></p>
+                    <p ng-show="status === 2" class="text-center" translate="COMP_SIGN_UP_CODE_EXPIRED"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" ng-show="status === 1">
+            <div class="form-box">
+                <div class="form-container">
+                    <div class="full-form">
+                        <div class="message" translate="COMP_SIGN_UP_MESSAGE"></div>
+                    </div>
+                </div>
+                <form name="form" id="form" ng-submit="signUp()" novalidate>
+                    <div class="form-container">
+                        <div class="half-form">
+                            <span class="label-text" translate="COMP_SIGN_UP_FIRST_NAME"></span>
+                            <br><input valid-name autofocus focus-watch="status" focus-value="1" autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
+
+                            <div class="error-message" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="COMP_SIGN_UP_FIRST_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="COMP_SIGN_UP_FIRST_NAME_INVALID"></div>
+                        </div>
+                        <div class="half-form">
+                            <span class="label-text" translate="COMP_SIGN_UP_LAST_NAME"></span>
+                            <br><input valid-name autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="text-box" required ng-class="{'text-box-error': form.lastName.$dirty && form.lastName.$invalid}">
+
+                            <div class="error-message" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="COMP_SIGN_UP_LAST_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="COMP_SIGN_UP_LAST_NAME_INVALID"></div>
+                        </div>
+                    </div>
+                    <div class="full-form">
+                        <span class="label-text" translate="COMP_SIGN_UP_EMAIL"></span><br>
+                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="comp" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}">
+
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.required" translate="COMP_SIGN_UP_EMAIL_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="COMP_SIGN_UP_EMAIL_INVALID"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.isSignUpAllowed" translate="COMP_SIGN_UP_EMAIL_EXISTS"></div>
+                    </div>
+                    <div class="full-form">
+                        <span class="label-text" translate="COMP_SIGN_UP_TELEPHONE"></span><br>
+                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
+
+                        <div class="error-message" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="COMP_SIGN_UP_TELEPHONE_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="COMP_SIGN_UP_TELEPHONE_INVALID"></div>
+                    </div>
+                    <div class="full-form"><span class="label-text" translate="COMP_SIGN_UP_PASSWORD"></span><br>
+                        <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$dirty && form.password.$invalid}">
+
+                        <div class="error-message" ng-show="form.password.$dirty && form.password.$error.required" translate="COMP_SIGN_UP_PASSWORD_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.password.$dirty && !form.password.$error.required && form.password.$error.complexity" translate="COMP_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
+                    </div>
+                    <div class="full-form"><span class="label-text" translate="COMP_SIGN_UP_CONFIRM_PASSWORD"></span><br>
+                        <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
+
+                        <div class="error-message" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="COMP_SIGN_UP_CONFIRM_PASSWORD_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="COMP_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH"></div>
+                    </div>
+                    <div class="full-form center-form">
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="COMP_SIGN_UP_DISCLAIMER"></span><a href ng-click="goToCmsUrl('CMS_URL_TOUS')" target="_blank" translate="COMP_SIGN_UP_TERMS_OF_USE"></a> <span translate="COMP_SIGN_UP_AND"></span> <a href ng-click="goToCmsUrl('CMS_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="COMP_SIGN_UP_DISCLAIMER_END"></span></label>
+                        <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="COMP_SIGN_UP_DISCLAIMER_REQUIRED"></div>
+                    </div>
+                    <div class="full-form">
+                        <button ng-disabled="saving" type="submit" class="submit-button" translate="COMP_SIGN_UP_SUBMIT_BUTTON"></button>
+                    </div>
+                    <div class="full-form center-form"><span translate="COMP_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
+                    <div class="full-form center-form"><span translate="COMP_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="COMP_SIGN_UP_SIGN_IN"></a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
