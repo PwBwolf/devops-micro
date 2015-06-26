@@ -78,11 +78,6 @@
 		}
 		
 		
-    }])
-	.filter('setCount', function(){
-		return function(repo, begin, end){
-			return repo.slice(begin, end);
-		}
-	})
+    }]);
 	
 }(angular.module('app')));
