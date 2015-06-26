@@ -240,7 +240,7 @@
 			FOOTER_CHANNEL_ENT_9: 'index.php/es/redes-y-canales/entretenimiento/a3-series-2/',
 			FOOTER_CHANNEL_ENT_10: 'index.php/es/redes-y-canales/entretenimiento/teleformula-2/',
 			FOOTER_CHANNEL_ENT_11: 'index.php/es/redes-y-canales/entretenimiento/telepacifico-2/',
-			FOOTER_CHANNEL_ENT_12: 'index.php/es/redes-y-canales/entretenimiento/telemedellin/',
+			FOOTER_CHANNEL_ENT_12: 'index.php/es/redes-y-canales/entretenimiento/tele-medellin/',
 			FOOTER_CHANNEL_ENT_13: 'index.php/es/redes-y-canales/entretenimiento/tele-caribe-2/',
 			FOOTER_CHANNEL_ENT_14: 'index.php/es/redes-y-canales/entretenimiento/teleantioquia-2/',
 			FOOTER_CHANNEL_ENT_15: 'index.php/es/redes-y-canales/entretenimiento/jbn-2/',
