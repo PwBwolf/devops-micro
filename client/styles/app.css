@@ -205,7 +205,7 @@ input[type="radio"]:checked + label:before {
     font-weight: bolder;
     padding: 10px;
     display: inline-block;
-    width: 60%;
+    width: 340px;
 }
 
 .user-home-box {
@@ -871,6 +871,11 @@ a.import-button:hover {
     .user-home-box .caption button {
         font-size: 14px;
         padding: 10px;
+        width: 250px;
+    }
+
+    .cancel-on {
+        font-size: 14px;
         width: 250px;
     }
 }
