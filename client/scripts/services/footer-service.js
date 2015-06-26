@@ -73,7 +73,7 @@
             {channelName: 'Hola TV', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_1', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
             {channelName: 'RCN Novelas', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_2', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
             {channelName: 'Caribvision', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_3', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'Latele Novela', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_4', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
+            {channelName: 'La Telenovela', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_4', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
 			{channelName: 'Canal 52 MX', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_5', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
             {channelName: 'TVC Latino', channelCtgry: '6', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_6', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
 			{channelName: 'TV Quisqueya', channelCtgry: '7', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_7', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
