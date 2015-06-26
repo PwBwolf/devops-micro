@@ -1282,7 +1282,11 @@ module.exports = {
             },
             // update user
             function (userObj, sessionId, billingDate, callback) {
-                userObj.cancelOn = moment(billingDate).subtract(1, 'days').toDate().toUTCString();
+                if(billingDate) {
+                    userObj.cancelOn = moment(billingDate).subtract(1, 'days').toDate().toUTCString();
+                } else {
+                    userObj.cancelOn = (new Date()).toUTCString();
+                }
                 userObj.save(function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error updating user: ' + userObj.email);

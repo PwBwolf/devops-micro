@@ -295,8 +295,8 @@ module.exports = {
                     logger.logInfo(response);
                     callback(null, new Date(response.dates[0].bill_date * 1000));
                 } else {
-                    logger.logError('billing - getBillingDate - billing date not found');
-                    callback(new Error('NoBillingDate'));
+                    logger.logInfo('billing - getBillingDate - billing date not found');
+                    callback(null, null);
                 }
             }
         });
