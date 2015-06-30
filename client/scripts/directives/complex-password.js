@@ -12,7 +12,7 @@
                         var hasUpperCase = /[A-Z]/.test(password);
                         var hasNumbers = /\d/.test(password);
                         var characterGroupCount = hasUpperCase + hasNumbers;
-                        ctrl.$setValidity('complexity', (password.length >= 6) && (characterGroupCount >= 1));
+                        ctrl.$setValidity('complexity', (password.length >= 6) && (characterGroupCount >= 2));
                         return password;
                     } else {
                         ctrl.$setValidity('complexity', true);

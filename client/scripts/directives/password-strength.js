@@ -20,7 +20,7 @@
                             passedMatches = $.grep(flags, function (el) {
                                 return el === true;
                             }).length;
-                        if (password.length < 6) {
+                        if (password.length < 6 || passedMatches === 0) {
                             force = 5;
                         } else if (passedMatches === 1) {
                             force = 15;

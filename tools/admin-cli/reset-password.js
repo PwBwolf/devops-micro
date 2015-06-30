@@ -29,13 +29,11 @@ if (typeof password === 'undefined') {
     process.exit(1);
 } else {
     var hasUpperCase = /[A-Z]/.test(password);
-    var hasLowerCase = /[a-z]/.test(password);
     var hasNumbers = /\d/.test(password);
-    var hasNonAlphas = /\W|_/.test(password);
-    var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
-    var isComplexPassword = (password.length >= 8) && (password.length <= 20) && (characterGroupCount > 3);
+    var characterGroupCount = hasUpperCase + hasNumbers;
+    var isComplexPassword = (password.length >= 6) && (password.length <= 20) && (characterGroupCount >= 2);
     if (!isComplexPassword) {
-        logger.logError('adminCLI - resetPassword - password should be between 8 to 20 characters, contain 1 uppercase & 1 lowercase letter, 1 number & 1 special character');
+        logger.logError('adminCLI - resetPassword - password should be between 6 to 20 characters, contain 1 uppercase and 1 number');
         process.exit(1);
     }
 }
