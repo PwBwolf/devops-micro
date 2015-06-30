@@ -6,11 +6,11 @@
 		<!-- show-desc-directive data-ng-show="showTheFile();" test-attr="myAttr" class="mnScrn posNlne"><img ng-src="{{usrMnScrn.mnView}}" /></show-desc-directive -->
 		<div id="my-player" class="mnScrn posNlne"><img data-ng-src="{{usrMnScrn.mnView}}" /></div>
 		<!--span id='errLog'></span-->
-		<div class="mnFavs posNlne">
-			<div class="favScrn posNlne" data-id="{{usrF.favShwTme}}" data-ng-repeat="usrF in usrFavs" data-ng-click="createH(usrF.tmsId);">
+		<div class="mnFavs posNlne" data-ng-controller="playerCtrl">
+			<div class="favScrn posNlne" data-id="{{usrF.favShwTme}}" data-ng-repeat="usrF in usrFavs" data-ng-click="playChannel(2);"> <!-- createH(usrF.tmsId); -->
 				<img ng-src="{{usrF.chnlIdImg}}" />
 				<div class="chnLbl">
-					<span>{{usrF.favShwTme}}</span><br /><span>{{usrF.favDesc}}</span>
+					<span>{{onAir}}</span><br /><span>{{usrF.favDesc}}</span>
 				</div>
 				<img ng-src="{{usrF.favScrn}}" />
 			</div>
