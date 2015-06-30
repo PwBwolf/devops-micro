@@ -11,7 +11,7 @@
                     colors: ['#F00', '#F90', '#E6E600', '#33CC33', '#1CAF9A'],
                     measureStrength: function (password) {
                         var force = 0,
-                            regex = /[$-/:-?{-~!"^_`\[\]]/g,
+                            regex = /[$*()\\=+@%&#-/:-?{-~!"^_`\[\]]/g,
                             lowerLetters = /[a-z]+/.test(password),
                             upperLetters = /[A-Z]+/.test(password),
                             numbers = /[0-9]+/.test(password),
@@ -20,9 +20,6 @@
                             passedMatches = $.grep(flags, function (el) {
                                 return el === true;
                             }).length;
-
-                        force += 2 * password.length + ((password.length >= 10) ? 1 : 0);
-                        force += passedMatches * 10;
                         if (password.length < 6) {
                             force = 5;
                         } else if (passedMatches === 1) {
