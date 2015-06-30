@@ -92,7 +92,7 @@
                 <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_NETWORKS')" translate="INDEX_NETWORKS"></a></menuItem>
                 <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_ABOUT_US')" translate="INDEX_ABOUT_US"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
-                <menuItem access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
+                <menuItem id="join-now" access-level="accessLevels.anon" data-ng-show="(dimButton()) ? true : false"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
                 <menuItem id="welcome">
                     <div access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>

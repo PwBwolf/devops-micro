@@ -497,6 +497,7 @@
             SHOWS_ENT_PNL_6_DESC_CNTNT: '',
             SIGN_IN_HEADING: 'Sign In',
             SIGN_IN_MESSAGE: 'Welcome back to YipTV. Login below to watch your favorite shows.',
+			SIGN_IN_MESSAGE_2: 'Not registered yet? <a href="/sign-up/paid">Click Here to sign up</a> and start watching now!',
             SIGN_IN_EMAIL: 'Email',
             SIGN_IN_EMAIL_REQUIRED: 'Enter your email address',
             SIGN_IN_EMAIL_INVALID: 'Enter a valid email address',

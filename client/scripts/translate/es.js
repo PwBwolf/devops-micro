@@ -497,6 +497,7 @@
             SHOWS_ENT_PNL_6_DESC_CNTNT: '',
             SIGN_IN_HEADING: 'Ingresar',
             SIGN_IN_MESSAGE: 'Bienvenido de nuevo a YipTV. Inicie sesión a bajo para ver sus programas favoritos.',
+			SIGN_IN_MESSAGE_2: '¿Todavía no se ha registrado? <a href="/sign-up/paid">¡Haz clic aquí</a> para registrarte y empieza a ver ahora!',
             SIGN_IN_EMAIL: 'Dirección de correo electrónico',
             SIGN_IN_EMAIL_REQUIRED: 'Introduzca su direccion de correo electronico',
             SIGN_IN_EMAIL_INVALID: 'Introduzca una dirreccion de correo electronico valida',
