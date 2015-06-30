@@ -8,10 +8,10 @@
                     <div class="col-md-12 bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span> </div>
+                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12"><h3 translate="SIGN_UP_ORDER_SUMMARY"></h3> </div>
+                    <div class="col-md-12"><h3 translate="SIGN_UP_ORDER_SUMMARY"></h3></div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 order-summary-title"><span translate="SIGN_UP_ORDER"></span></div>
@@ -65,81 +65,83 @@
 
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
-                    </div>
-                    <div class="full-form">
-                        <h3 translate="SIGN_UP_BILLING_INFO"></h3>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_CARD_NAME"></span>
-                        <br><input valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="text-box sign-up-text-box" ng-class="{'text-box-error': form.cardName.$touched && form.cardName.$invalid}">
+                        <div>
+                            <ul class="passwordStrength" password-strength="password"></ul>
+                        </div>
+                        <div class="full-form">
+                            <h3 translate="SIGN_UP_BILLING_INFO"></h3>
+                        </div>
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_CARD_NAME"></span>
+                            <br><input valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="text-box sign-up-text-box" ng-class="{'text-box-error': form.cardName.$touched && form.cardName.$invalid}">
 
-                        <div class="error-message" ng-show="form.cardName.$touched && form.cardName.$error.required" translate="SIGN_UP_CARD_NAME_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.cardName.$touched && !form.cardName.$error.required && form.cardName.$error.validName" translate="SIGN_UP_CARD_NAME_INVALID"></div>
-                    </div>
+                            <div class="error-message" ng-show="form.cardName.$touched && form.cardName.$error.required" translate="SIGN_UP_CARD_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.cardName.$touched && !form.cardName.$error.required && form.cardName.$error.validName" translate="SIGN_UP_CARD_NAME_INVALID"></div>
+                        </div>
 
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_CARD_NUMBER"></span>
-                        <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="text-box sign-up-text-box {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'text-box-error': form.cardNumber.$touched && form.cardNumber.$invalid}">
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_CARD_NUMBER"></span>
+                            <br><input autocomplete="off" type="text" id="cardNumber" name="cardNumber" ng-model="mv.cardNumber" maxlength="19" required class="text-box sign-up-text-box {{form.cardNumber.$card.type}}" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="{'text-box-error': form.cardNumber.$touched && form.cardNumber.$invalid}">
 
-                        <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR"></div>
-                    </div>
-                    <div class="form-container">
-                        <div class="half-form">
-                            <span class="label-text sign-up-label" translate="SIGN_UP_EXPIRY_DATE"></span>
+                            <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.required" translate="SIGN_UP_CARD_NUMBER_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.cardNumber.$touched && form.cardNumber.$error.card" translate="SIGN_UP_CARD_NUMBER_ERROR"></div>
+                        </div>
+                        <div class="form-container">
+                            <div class="half-form">
+                                <span class="label-text sign-up-label" translate="SIGN_UP_EXPIRY_DATE"></span>
+                                <br>
+                                <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.expiryDate.$touched && form.expiryDate.$invalid}">
+
+                                <div class="error-message" ng-show="form.expiryDate.$touched && form.expiryDate.$error.required" translate="SIGN_UP_EXPIRY_DATE_REQUIRED"></div>
+                                <div class="error-message" ng-show="form.expiryDate.$touched && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="SIGN_UP_EXPIRY_DATE_INVALID"></div>
+                            </div>
+                            <div class="half-form">
+                                <span class="label-text sign-up-label" translate="SIGN_UP_CVV"></span>
+                                <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="text-box sign-up-text-box" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'text-box-error': form.cvv.$touched && form.cvv.$invalid}">
+
+                                <div class="error-message" ng-show="form.cvv.$touched && form.cvv.$error.required" translate="SIGN_UP_CVV_REQUIRED"></div>
+                                <div class="error-message" ng-show="form.cvv.$touched && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR"></div>
+                            </div>
+                        </div>
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_ADDRESS"></span>
+                            <br><input valid-address autocomplete="off" type="text" id="address" name="address" ng-model="mv.address" maxlength="80" required class="text-box sign-up-text-box" ng-class="{'text-box-error': form.address.$touched && form.address.$invalid}">
+
+                            <div class="error-message" ng-show="form.address.$touched && form.address.$error.required" translate="SIGN_UP_ADDRESS_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.address.$touched && !form.address.$error.required && form.address.$error.validAddress" translate="SIGN_UP_ADDRESS_INVALID"></div>
+                        </div>
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_CITY"></span>
+                            <br><input valid-address autocomplete="off" type="text" id="city" name="city" maxlength="80" required ng-model="mv.city" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.city.$touched && form.city.$invalid}">
+
+                            <div class="error-message" ng-show="form.city.$touched && form.city.$error.required" translate="SIGN_UP_CITY_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.city.$touched && !form.city.$error.required && form.city.$error.validAddress" translate="SIGN_UP_CITY_INVALID"></div>
+                        </div>
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_STATE"></span>
                             <br>
-                            <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.expiryDate.$touched && form.expiryDate.$invalid}">
+                            <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="text-box drop-down-list sign-up-text-box" ng-class="{'text-box-error': form.state.$touched && form.state.$invalid}">
+                                <option value="" translate="SIGN_UP_STATE_SELECT"></option>
+                            </select>
 
-                            <div class="error-message" ng-show="form.expiryDate.$touched && form.expiryDate.$error.required" translate="SIGN_UP_EXPIRY_DATE_REQUIRED"></div>
-                            <div class="error-message" ng-show="form.expiryDate.$touched && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="SIGN_UP_EXPIRY_DATE_INVALID"></div>
+                            <div class="error-message" ng-show="form.state.$touched && form.state.$error.required" translate="SIGN_UP_STATE_REQUIRED"></div>
                         </div>
-                        <div class="half-form">
-                            <span class="label-text sign-up-label" translate="SIGN_UP_CVV"></span>
-                            <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="text-box sign-up-text-box" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'text-box-error': form.cvv.$touched && form.cvv.$invalid}">
+                        <div class="full-form">
+                            <span class="label-text sign-up-label" translate="SIGN_UP_ZIP_CODE"></span>
+                            <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.zipCode.$touched && form.zipCode.$invalid}">
 
-                            <div class="error-message" ng-show="form.cvv.$touched && form.cvv.$error.required" translate="SIGN_UP_CVV_REQUIRED"></div>
-                            <div class="error-message" ng-show="form.cvv.$touched && !form.cvv.$error.required && (form.cvv.$error.cvc || form.cvv.$invalid)" translate="SIGN_UP_CARD_NUMBER_CVV_ERROR"></div>
+                            <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID"></div>
                         </div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_ADDRESS"></span>
-                        <br><input valid-address autocomplete="off" type="text" id="address" name="address" ng-model="mv.address" maxlength="80" required class="text-box sign-up-text-box" ng-class="{'text-box-error': form.address.$touched && form.address.$invalid}">
+                        <div class="full-form center-form">
+                            <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span><a href ng-click="goToCmsUrl('CMS_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToCmsUrl('CMS_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="SIGN_UP_DISCLAIMER_END"></span></label>
 
-                        <div class="error-message" ng-show="form.address.$touched && form.address.$error.required" translate="SIGN_UP_ADDRESS_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.address.$touched && !form.address.$error.required && form.address.$error.validAddress" translate="SIGN_UP_ADDRESS_INVALID"></div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_CITY"></span>
-                        <br><input valid-address autocomplete="off" type="text" id="city" name="city" maxlength="80" required ng-model="mv.city" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.city.$touched && form.city.$invalid}">
-
-                        <div class="error-message" ng-show="form.city.$touched && form.city.$error.required" translate="SIGN_UP_CITY_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.city.$touched && !form.city.$error.required && form.city.$error.validAddress" translate="SIGN_UP_CITY_INVALID"></div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_STATE"></span>
-                        <br>
-                        <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="text-box drop-down-list sign-up-text-box" ng-class="{'text-box-error': form.state.$touched && form.state.$invalid}">
-                            <option value="" translate="SIGN_UP_STATE_SELECT"></option>
-                        </select>
-
-                        <div class="error-message" ng-show="form.state.$touched && form.state.$error.required" translate="SIGN_UP_STATE_REQUIRED"></div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text sign-up-label" translate="SIGN_UP_ZIP_CODE"></span>
-                        <br><input autocomplete="off" type="text" id="zipCode" name="zipCode" maxlength="5" required ng-pattern="/^\d{5}$/" ng-model="mv.zipCode" class="text-box sign-up-text-box" ng-class="{'text-box-error': form.zipCode.$touched && form.zipCode.$invalid}">
-
-                        <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID"></div>
-                    </div>
-                    <div class="full-form center-form">
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span><a href ng-click="goToCmsUrl('CMS_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToCmsUrl('CMS_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="SIGN_UP_DISCLAIMER_END"></span></label>
-
-                        <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED"></div>
-                    </div>
-                    <div class="full-form">
-                        <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
-                    </div>
-                    <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
+                            <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED"></div>
+                        </div>
+                        <div class="full-form">
+                            <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
+                        </div>
+                        <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                 </form>
             </div>
         </div>

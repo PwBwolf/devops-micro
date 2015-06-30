@@ -605,6 +605,24 @@ a.import-button:hover {
     text-decoration: underline;
 }
 
+ul.passwordStrength {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: 2px;
+    width: 100%;
+}
+
+.point {
+    background: #DDD;
+    border-radius: 2px;
+    display: inline-block;
+    height: 10px;
+    margin-right: 1px;
+    width: 19.5%;
+}
+
 .heading {
     text-transform: uppercase;
 }
