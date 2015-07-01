@@ -17,7 +17,7 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if(data === 'registered') {
-                            $location.path('/sign-up-success');
+                            $location.path('/sign-up-success-free');
                         } else {
                             $location.path('/sign-up-success-login');
                         }

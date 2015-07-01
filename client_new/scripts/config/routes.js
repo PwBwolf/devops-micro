@@ -54,6 +54,14 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
+            .when('/sign-up-success-free',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-free.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/sign-up-success-login',
             {
                 title: title,

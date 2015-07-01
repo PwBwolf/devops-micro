@@ -50,7 +50,7 @@
 			        };
 					
 					for(var c in $scope.channels){
-						//$scope.selectChannel(c);
+						$scope.selectChannel(c);
 						//console.log($scope.channels[c].name);
 					}
                 }
