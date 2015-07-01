@@ -733,7 +733,8 @@
 	}
 
 	#downloadButtons {
-		margin-bottom: 4%;
+		margin: 4% auto;
+		text-align:center;
 	}
 
 	#finePrint {

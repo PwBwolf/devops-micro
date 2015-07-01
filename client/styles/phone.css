@@ -16,6 +16,10 @@
     z-index: 101;
 }
 
+#signupfreesbmt {
+	width: 90% !important;
+}
+
 .off {
     display: none !important;
 }
