@@ -42,10 +42,8 @@
 			var elm = angular.element('#join-now');
 			if (loc != newLoc){
 				$scope.dimButton = function(){ return false; }
-				console.log('not home: '+newLoc);
 			} else {
 				$scope.dimButton = function(){ return true; }
-				console.log('home: '+newLoc);
 			}
 			//console.log('location: '+loc);
 			//console.log(angular.element('#join-now').html());

@@ -4,12 +4,7 @@
             <img class="img-responsive" ng-src="/images/pages/{{language}}/signup.jpg"/>
 
             <div class="form-box">
-                <div class="row">
-                    <div class="col-md-12 bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span></div>
-                </div>
+                
                 <div class="row">
                     <div class="col-md-12"><h3 translate="SIGN_UP_ORDER_SUMMARY"></h3></div>
                 </div>
@@ -141,7 +136,14 @@
                         <div class="full-form">
                             <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
                         </div>
-                        <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+		                <div class="row">
+		                    <div class="col-md-12 bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
+		                </div>
+		                <div class="row">
+		                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span></div>
+		                </div>
                 </form>
             </div>
         </div>

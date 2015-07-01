@@ -38,6 +38,14 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up-free-success',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-free-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
             .when('/sign-up/complimentary/:compCode',
             {
                 title: title,
