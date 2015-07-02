@@ -560,7 +560,7 @@ a.import-button:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
-    border: 1px dashed dimgrey;
+    border: 1px solid;
 }
 
 .drop-down-list {
@@ -631,15 +631,7 @@ ul.passwordStrength {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
-    text-transform: uppercase;
-}
-
-.sign-up-label {
     text-transform: none;
-}
-
-.sign-up-text-box {
-    border: 1px solid;
 }
 
 .checkbox {
