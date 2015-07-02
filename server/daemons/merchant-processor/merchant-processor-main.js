@@ -20,7 +20,8 @@ var User = dbYip.model('User'),
     Refund = dbMerchant.model('Refund'),
     Account = dbYip.model('Account'),
     Merchant = dbYip.model('Merchant'),
-    subscription = require('../../common/services/subscription');
+    subscription = require('../../common/services/subscription'),
+    merchantService = require('../../common/services/merchant');
 
 var worker = queueDb.worker(['api-requests']);
 worker.register({
@@ -66,7 +67,7 @@ worker.register({
                                         });
                                     } else {
                                         if (dbUser.account.type === 'free' || (dbUser.account.type === 'comp' && dbUser.status === 'comp-ended')) {
-                                            subscription.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
+                                            merchantService.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
                                                     logger.logError(err);
@@ -81,7 +82,7 @@ worker.register({
                                                 }
                                             });
                                         } else if (dbUser.account.type === 'paid' && dbUser.status === 'canceled') {
-                                            subscription.reactivateSubscription(params.username.toLowerCase(), {}, function (err) {
+                                            merchantService.reactivateSubscription(params.username.toLowerCase(), {}, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error reactivating user: ' + params.username);
                                                     logger.logError(err);
@@ -96,7 +97,7 @@ worker.register({
                                                 }
                                             });
                                         } else {
-                                            subscription.updateToMerchantBilling(params.username.toLowerCase(), function (err) {
+                                            merchantService.updateToMerchantBilling(params.username.toLowerCase(), function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                     logger.logError(err);

@@ -77,6 +77,10 @@
                 $http.post('/api/sign-up', user).success(success).error(error);
             },
 
+            merchantSignUp: function (user, success, error) {
+                $http.post('/api/merchant-sign-up', user).success(success).error(error);
+            },
+
             signIn: function (user, success, error) {
                 $http.post('/api/sign-in', user).success(function (response) {
                     if (response.token) {

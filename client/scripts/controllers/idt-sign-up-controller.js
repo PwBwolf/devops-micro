@@ -51,6 +51,34 @@
                 }
             } else {
                 if ($scope.form.firstName.$valid && $scope.form.lastName.$valid && $scope.form.telephone.$valid && $scope.form.password.$valid && $scope.form.disclaimer.$valid) {
+                    $scope.mv.type = 'paid';
+                    $scope.mv.referredBy = $rootScope.referredBy;
+                    $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
+                    $scope.saving = true;
+                    userSvc.merchantSignUp(
+                        $scope.mv,
+                        function (data) {
+                            $rootScope.referredBy = undefined;
+                            $scope.saving = false;
+                            if (data === 'registered') {
+                                $location.path('/sign-up-success');
+                            } else {
+                                $location.path('/sign-up-success-login');
+                            }
+                        },
+                        function (error) {
+                            if (error === 'UserExists') {
+                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                            } else if (error === 'PaymentPending') {
+                                $location.path('/sign-up-success-payment-pending');
+                            } else if (error === 'PaymentPendingActive') {
+                                $location.path('/sign-up-success-payment-pending-active');
+                            } else {
+                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                            }
+                            $scope.saving = false;
+                        }
+                    );
                 } else {
                     setFormTouched();
                 }
