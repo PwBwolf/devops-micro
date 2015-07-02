@@ -36,19 +36,6 @@
         $rootScope.$on('ChangeLanguage', function (event, language) {
             changeLanguage(language);
         });
-		
-		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc){
-			var loc = 'https://'+$location.host()+'/';
-			var elm = angular.element('#join-now');
-			if (loc != newLoc){
-				$scope.dimButton = function(){ return false; }
-			} else {
-				$scope.dimButton = function(){ return true; }
-			}
-			//console.log('location: '+loc);
-			//console.log(angular.element('#join-now').html());
-			
-		});
 
         function changeLanguage(language) {
             $translate.use(language);
@@ -279,12 +266,10 @@
                 aioWindow.close();
             }
         });
-
-        //function
     }])
-	.filter('setCount', function(){
-		return function(repo, begin, end){
-			return repo.slice(begin, end);
-		};
-	});
+        .filter('setCount', function () {
+            return function (repo, begin, end) {
+                return repo.slice(begin, end);
+            };
+        });
 }(angular.module('app')));
