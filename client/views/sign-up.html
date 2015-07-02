@@ -136,13 +136,15 @@
                         <div class="full-form" style="margin-bottom: 30px;">
                             <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
                         </div>
-		                <div class="message">
-		                    <div class="col-md-12 bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
-		                </div>
-		                <div class="message">
-		                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span></div>
-		                </div>
                 </form>
+				
+                <div class="row">
+                    <div class="bolder-text" style="padding-left:14px"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><span translate="SIGN_UP_MESSAGE"></span></div>
+                </div>
+				
             </div>
         </div>
     </div>
