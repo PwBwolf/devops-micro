@@ -401,6 +401,7 @@
             MAIN_ERROR_AIO_SSO: 'Error con el portal de video',
             MAIN_FREE_PREVIEW_ENDED: 'Su preestreno gratis ha concluido',
             MAIN_SIGN_OUT_CONFIRMATION: 'Seguro que deseas salir de YipTV?',
+            MAIN_SERVICES_NOT_AVAILABLE: 'This service is disabled as payment is pending on your account',
             MAIN_VIDEO_PORTAL_ALREADY_OPEN: 'Portal de Video ya esta abierto en otra pestana',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Desea cambiar su idioma preferido a',
             MAIN_LANGUAGE_CHANGE_SAVE_SUCCESS: 'Preferencia de idioma guardado con exito',
