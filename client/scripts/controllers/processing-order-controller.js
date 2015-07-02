@@ -8,7 +8,7 @@
             if ($rootScope.signUpSuccessUrl) {
                 $timeout(function () {
                     $location.path($rootScope.signUpSuccessUrl);
-                }, 1000);
+                }, 5000);
             }
         }
     }]);

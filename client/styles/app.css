@@ -747,15 +747,6 @@ ul.passwordStrength {
     background-position: 98% 50%;
 }
 
-.message {
-    font-family: 'gotham-bookgotham-book';
-    font-size: 16px;
-    padding-left: 0;
-    text-transform: none;
-    color: #000;
-    text-align: justify;
-}
-
 @media screen and (max-width: 1350px) {
     .banner .banner-wrap {
         width: 100%;
