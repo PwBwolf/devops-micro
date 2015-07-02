@@ -190,7 +190,14 @@
                 controller: 'commonCtrl',
                 access: access.user
             })
-
+            .when('/reactivate-subscription-success-payment-pending',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/reactivate-subscription-success-payment-pending.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/cancel-subscription-success',
             {
                 title: title,
