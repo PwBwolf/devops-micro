@@ -47,31 +47,31 @@
                         }
                     );
                 } else {
-                    setFormDirty();
+                    setFormTouched();
                 }
             } else {
                 if ($scope.form.firstName.$valid && $scope.form.lastName.$valid && $scope.form.telephone.$valid && $scope.form.password.$valid && $scope.form.disclaimer.$valid) {
                 } else {
-                    setFormDirty();
+                    setFormTouched();
                 }
             }
         };
 
-        function setFormDirty() {
-            $scope.form.firstName.$dirty = true;
-            $scope.form.lastName.$dirty = true;
-            $scope.form.email.$dirty = true;
-            $scope.form.telephone.$dirty = true;
-            $scope.form.password.$dirty = true;
-            $scope.form.cardName.$dirty = true;
-            $scope.form.cardNumber.$dirty = true;
-            $scope.form.address.$dirty = true;
-            $scope.form.city.$dirty = true;
-            $scope.form.state.$dirty = true;
-            $scope.form.cvv.$dirty = true;
-            $scope.form.expiryDate.$dirty = true;
-            $scope.form.zipCode.$dirty = true;
-            $scope.form.disclaimer.$dirty = true;
+        function setFormTouched() {
+            $scope.form.firstName.$touched = true;
+            $scope.form.lastName.$touched = true;
+            $scope.form.email.$touched = true;
+            $scope.form.telephone.$touched = true;
+            $scope.form.password.$touched = true;
+            $scope.form.cardName.$touched = true;
+            $scope.form.cardNumber.$touched = true;
+            $scope.form.address.$touched = true;
+            $scope.form.city.$touched = true;
+            $scope.form.state.$touched = true;
+            $scope.form.cvv.$touched = true;
+            $scope.form.expiryDate.$touched = true;
+            $scope.form.zipCode.$touched = true;
+            $scope.form.disclaimer.$touched = true;
         }
 
     }]);
