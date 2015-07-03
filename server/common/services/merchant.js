@@ -385,7 +385,6 @@ module.exports = {
                             currentValues = {
                                 billingDate: userObj.account.billingDate,
                                 paymentPending: userObj.account.paymentPending,
-                                firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate
                             };
@@ -560,7 +559,6 @@ module.exports = {
                                 complimentaryCode: userObj.account.complimentaryCode,
                                 billingDate: userObj.account.billingDate,
                                 paymentPending: userObj.account.paymentPending,
-                                firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
@@ -568,24 +566,12 @@ module.exports = {
                             };
                             userObj.account.type = 'paid';
                             userObj.account.complimentaryCode = undefined;
-                            userObj.account.paymentPending = true;
+                            userObj.account.billingDate = (new Date()).toUTCString();
+                            userObj.account.paymentPending = false;
                             userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
                             userObj.validTill = undefined;
-                            if (newUser.firstName) {
-                                currentUser = {
-                                    firstName: userObj.firstName,
-                                    lastName: userObj.lastName,
-                                    telephone: userObj.telephone,
-                                    hashedPassword: userObj.hashedPassword,
-                                    salt: userObj.salt
-                                };
-                                userObj.firstName = newUser.firstName;
-                                userObj.lastName = newUser.lastName;
-                                userObj.telephone = newUser.telephone;
-                                userObj.password = newUser.password;
-                            }
                             userObj.save(function (err) {
                                 if (err) {
                                     logger.logError('merchant - upgradeSubscription - error saving user: ' + userEmail);
@@ -654,17 +640,7 @@ module.exports = {
             },
             // update user information in freeside
             function (userObj, sessionId, callback) {
-                var address = newUser.address ? newUser.address : userObj.account.merchant;
-                var city = newUser.city ? newUser.city : 'West Palm Beach';
-                var state = newUser.state ? newUser.state : 'FL';
-                var zip = newUser.zipCode ? newUser.zipCode : '00000';
-                var country = 'US';
-                var payBy = newUser.cardNumber ? 'CARD' : 'BILL';
-                var payInfo = newUser.cardNumber ? newUser.cardNumber : '';
-                var payDate = newUser.expiryDate ? newUser.expiryDate : '';
-                var payCvv = newUser.cvv ? newUser.cvv : '';
-                var payName = newUser.cardName ? newUser.cardName : '';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -728,16 +704,6 @@ module.exports = {
                     });
                 }
                 callback(null, userObj);
-            },
-            // delete user from visitor
-            function (userObj, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('merchant - upgradeSubscription - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
-                callback(null, userObj);
             }
         ], function (err, userObj) {
             if (err) {
@@ -769,17 +735,6 @@ module.exports = {
                         setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
-                        break;
-                    case 'payment-declined':
-                        updateAccountOnPaymentDeclined(userObj, currentValues);
-                        if (userObj.status === 'registered') {
-                            sendVerificationEmail(userObj);
-                        } else {
-                            sendUpgradeEmail(userObj);
-                        }
-                        deleteVisitor(userObj.email);
-                        var errorCode = userObj.status === 'registered' ? 'PaymentPending' : 'PaymentPendingActive';
-                        err = new Error(errorCode);
                         break;
                 }
             }
@@ -813,30 +768,13 @@ module.exports = {
                             currentValues = {
                                 billingDate: userObj.account.billingDate,
                                 paymentPending: userObj.account.paymentPending,
-                                firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate
                             };
-                            userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.account.paymentPending = false;
                             userObj.status = 'active';
                             userObj.cancelDate = undefined;
-                            if (!userObj.account.firstCardPaymentDate) {
-                                userObj.account.firstCardPaymentDate = (new Date()).toUTCString();
-                            }
-                            if (newUser.firstName) {
-                                currentUser = {
-                                    firstName: userObj.firstName,
-                                    lastName: userObj.lastName,
-                                    telephone: userObj.telephone,
-                                    hashedPassword: userObj.hashedPassword,
-                                    salt: userObj.salt
-                                };
-                                userObj.firstName = newUser.firstName;
-                                userObj.lastName = newUser.lastName;
-                                userObj.telephone = newUser.telephone;
-                                userObj.password = newUser.password;
-                            }
+                            userObj.account.billingDate = (new Date()).toUTCString();
+                            userObj.account.paymentPending = false;
                             userObj.save(function (err) {
                                 if (err) {
                                     logger.logError('merchant - reactivateSubscription - error saving user: ' + userEmail);
@@ -891,17 +829,7 @@ module.exports = {
             },
             // update user information in freeside
             function (userObj, sessionId, callback) {
-                var address = newUser.address ? newUser.address : userObj.account.merchant;
-                var city = newUser.city ? newUser.city : 'West Palm Beach';
-                var state = newUser.state ? newUser.state : 'FL';
-                var zip = newUser.zipCode ? newUser.zipCode : '00000';
-                var country = 'US';
-                var payBy = newUser.cardNumber ? 'CARD' : 'BILL';
-                var payInfo = newUser.cardNumber ? newUser.cardNumber : '';
-                var payDate = newUser.expiryDate ? newUser.expiryDate : '';
-                var payCvv = newUser.cvv ? newUser.cvv : '';
-                var payName = newUser.cardName ? newUser.cardName : '';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - reactivateSubscription - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -954,16 +882,6 @@ module.exports = {
                     }
                 });
                 callback(null, userObj);
-            },
-            // delete user from visitor
-            function (userObj, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
-                callback(null, userObj);
             }
         ], function (err, userObj) {
             if (err) {
@@ -989,12 +907,6 @@ module.exports = {
                         revertAccountChangesForReactivate(userObj, currentValues);
                         revertUserChangesForReactivate(userObj, currentValues, currentUser);
                         break;
-                    case 'payment-declined':
-                        updateAccountOnPaymentDeclined(userObj, currentValues);
-                        sendReactivateEmail(userObj);
-                        deleteVisitor(userObj.email);
-                        err = new Error('PaymentPendingActive');
-                        break;
                 }
             }
             if (cb) {
@@ -1007,7 +919,127 @@ module.exports = {
         });
     },
 
-    updateToMerchantBilling: function (email, cb) {
+    endPaidSubscription: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            // set user status to 'canceled' and set canceledDate to current date
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
+                        callback('NonActiveUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        currentValues = {
+                            status: userObj.status,
+                            cancelDate: userObj.cancelDate,
+                            cancelOn: userObj.cancelOn,
+                            billingDate: userObj.account.billingDate,
+                            paymentPending: userObj.account.paymentPending
+                        };
+                        userObj.account.billingDate = undefined;
+                        userObj.account.paymentPending = false;
+                        userObj.status = 'canceled';
+                        userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            // change status to inactive in aio
+            function (userObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
+                        errorType = 'aio-status-update';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // change credit card to dummy and modify billing address
+            function (userObj, sessionId, callback) {
+                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
+                billing.updateCreditCard(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'CARD', '4242424242424242', '12/2035', '123', '', function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel existing package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackageByType(sessionId, 'paid', function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
+                        errorType = 'freeside-cancel-package';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // send email
+            function (userObj, callback) {
+                sendPaidSubscriptionEndedEmail(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error sending canceled email: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj);
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'aio-status-update':
+                        revertAccountChangesForCancel(userObj, currentValues);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-cancel-package':
+                        setUserActiveInAio(userObj.email, currentValues.status);
+                        revertAccountChangesForCancel(userObj, currentValues);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    makeCashPayment: function (email, cb) {
         User.findOne({email: email}).populate('account').exec(function (err, userObj) {
             if (err) {
                 logger.logError('merchant - updateToMerchantBilling - error fetching user: ' + email);
@@ -1224,21 +1256,6 @@ function setUserInactiveInAio(email, status, cb) {
             cb();
         }
     }
-}
-
-function updateAccountOnPaymentDeclined(user, currentValues, cb) {
-    user.account.paymentPending = true;
-    user.account.billingDate = currentValues.billingDate;
-    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('merchant - updateAccountPaymentDeclined - error updating account on payment declined: ' + user.email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
 }
 
 function sendReactivateEmail(user, cb) {

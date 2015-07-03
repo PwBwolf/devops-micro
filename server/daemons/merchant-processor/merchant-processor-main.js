@@ -20,7 +20,6 @@ var User = dbYip.model('User'),
     Refund = dbMerchant.model('Refund'),
     Account = dbYip.model('Account'),
     Merchant = dbYip.model('Merchant'),
-    subscription = require('../../common/services/subscription'),
     merchantService = require('../../common/services/merchant');
 
 var worker = queueDb.worker(['api-requests']);
@@ -97,7 +96,7 @@ worker.register({
                                                 }
                                             });
                                         } else {
-                                            merchantService.updateToMerchantBilling(params.username.toLowerCase(), function (err) {
+                                            merchantService.makeCashPayment(params.username.toLowerCase(), function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                     logger.logError(err);
@@ -164,7 +163,7 @@ worker.register({
                             } else if (dbUser && dbUser.account && !dbUser.account.firstCardPaymentDate && dbUser.account.firstMerchantPaymentDate) {
                                 var refundLastDate = moment(dbUser.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                                 if (refundLastDate.isAfter(moment.utc())) {
-                                    subscription.cancelSubscription(params.username.toLowerCase(), function (err) {
+                                    merchantService.endPaidSubscription(params.username.toLowerCase(), function (err) {
                                         if (err) {
                                             logger.logError('merchantProcessorMain - makeRefund - error in canceling subscription: ' + params.username);
                                             logger.logError(err);

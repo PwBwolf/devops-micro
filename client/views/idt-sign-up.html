@@ -67,8 +67,8 @@
                         <h3 translate="IDT_SIGN_UP_BILLING_INFO"></h3>
                     </div>
                     <div class="full-form center-form">
-                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="card" value="card"><label for="card">Pay By Credit Card</label>
-                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="cash" value="cash"><label for="cash">Pay By Cash using IDT</label>
+                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="card" value="card"><label for="card" translate="IDT_SIGN_UP_PAY_BY_CC"></label>
+                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="cash" value="cash"><label for="cash" translate="IDT_SIGN_UP_PAY_BY_CASH"></label>
                     </div>
                     <div ng-show="mv.paymentType==='card'">
                         <div class="full-form">
@@ -146,7 +146,7 @@
                         <div class="bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                     </div>
                     <div class="full-form" style="padding-top:0">
-                        <span class="label-text" translate="SIGN_UP_MESSAGE"></span>
+                        <span class="message" translate="SIGN_UP_MESSAGE"></span>
                     </div>
                 </form>
             </div>
