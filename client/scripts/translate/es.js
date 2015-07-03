@@ -51,7 +51,7 @@
             CHANGE_CREDIT_CARD_CVV: 'Código CVV',
             CHANGE_CREDIT_CARD_CVV_REQUIRED: 'Introduzca codigo CVV',
             CHANGE_CREDIT_CARD_CARD_NUMBER_CVV_ERROR: 'Introduzca codigo CVV valido',
-            CHANGE_CREDIT_CARD_EXPIRY_DATE: 'Fecha de expiración (MM/YYYY)',
+            CHANGE_CREDIT_CARD_EXPIRY_DATE: 'Fecha de expiración (MM/AAAA)',
             CHANGE_CREDIT_CARD_EXPIRY_DATE_REQUIRED: 'Introduzca fecha de expiracion de su tarjeta de credito',
             CHANGE_CREDIT_CARD_EXPIRY_DATE_INVALID: 'Introduzca fecha de expiracion valida',
             CHANGE_CREDIT_CARD_ZIP_CODE: 'Código postal',
