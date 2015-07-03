@@ -631,6 +631,13 @@ ul.passwordStrength {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
+    text-transform: capitalize;
+}
+
+.sign-up-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
     text-transform: none;
 }
 
