@@ -8,45 +8,41 @@
     display: none !important;
 }
 
-#chnlLinks {
-	background-color: rgba(48,42,58,0.95);
-	width: inherit;
-	text-align:	center;
+#channelLinks {
+    background-color: rgba(48, 42, 58, 0.95);
+    width: inherit;
+    text-align: center;
 }
 
-#chnlLinks dl {
+#channelLinks dl {
     margin-bottom: 30px !important;
-	text-align: left;
+    text-align: left;
 }
 
-#chnlLinks dt {
+#channelLinks dt {
     color: white;
-    /*font-size: 1.25em;*/
-	font-size: 95%;
+    font-size: 95%;
     font-weight: bolder !important;
     text-transform: capitalize;
-	margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
-#chnlLinks dd {
-    color: rgb(129,198,255);
-    /*margin-top: 2px;*/
-   /* font-size: 1.0em;*/
-   font-size: 85%;
-   white-space: normal;
+#channelLinks dd {
+    color: rgb(129, 198, 255);
+    font-size: 85%;
+    white-space: normal;
 }
 
-#chnlLinks dd + dd {
-    /*color: rgba(135, 117, 104, .9);*/
-	margin-bottom:2px;
+#channelLinks dd + dd {
+    margin-bottom: 2px;
 }
 
-#chnlLinks .posNlne {
-	display: inline-block;
-	vertical-align: top;
-	margin: 0 auto;
-	padding: 2%;
-	width: auto;
+#channelLinks .line {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 auto;
+    padding: 2%;
+    width: auto;
 }
 
 body, html {
@@ -609,7 +605,7 @@ header {
 
 #downloadBox {
     width: 100%;
-    height:500px;
+    height: 500px;
     background: #eee url(../images/app-background.jpg) 50% 9% no-repeat fixed;
     background-size: cover;
     position: relative;
@@ -652,21 +648,21 @@ header {
 }
 
 #leftContent li {
-	font-size: 90%;
-	list-style-type:decimal;
-	list-style-position:inside;
-	line-height:1.5em;
-	text-indent:22px;
+    font-size: 90%;
+    list-style-type: decimal;
+    list-style-position: inside;
+    line-height: 1.5em;
+    text-indent: 22px;
 }
 
 #downloadButtons {
-	margin: 4% auto;
-	text-align:center;
+    margin: 4% auto;
+    text-align: center;
 }
 
 #finePrint {
-	font-size:75%;
-	line-height:1.4em;
+    font-size: 75%;
+    line-height: 1.4em;
 }
 
 #footerBox {
@@ -685,11 +681,11 @@ header {
 }
 
 #footerBox a {
-    color: rgb(129,198,255);
+    color: rgb(129, 198, 255);
 }
 
 #footerBox a:hover {
-	color: rgb(254,254,254);
+    color: rgb(254, 254, 254);
 }
 
 #footerBox .jumbotron {
@@ -701,46 +697,42 @@ header {
     list-style-type: none;
     color: white;
 }
+
 #footerLinks {
     padding: 2% 5%;
     text-align: center;
     text-transform: capitalize;
 }
 
-#footerLinks ul {
-    /*padding-top: 18px;
-    margin-top:10px;*/
-}
-
 #footerLinks li {
     display: inline;
 }
 
-#footerLinks li:nth-child(n+2)::before{
+#footerLinks li:nth-child(n+2)::before {
     content: '|';
     margin: 0 2%;
-    color:grey;
+    color: grey;
 }
 
 #legalLinks {
-    background:white;
+    background: white;
     padding: 1% 5%;
     text-align: center;
     text-transform: capitalize;
 }
 
-#legalLinks li  {
+#legalLinks li {
     display: inline;
 }
 
-#legalLinks li:nth-child(n+2)::before{
+#legalLinks li:nth-child(n+2)::before {
     content: '|';
     color: dimgrey;
     margin: 0 2%;
 }
 
-#legalLinks a:hover{
-	color:dimgrey;
+#legalLinks a:hover {
+    color: dimgrey;
 }
 
 .footer-subscription {

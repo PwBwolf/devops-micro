@@ -2,138 +2,131 @@
     'use strict';
 
     app.factory('footerSvc', [function () {
-        var sports_Ctgry = [
-            {channelName: 'beIN Sports', channelCtgry: '1', showTitle: 'SHOWS_SPORTS_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_SP_1', showDescriptionContent: 'SHOWS_SPORTS_PNL_1_DESC_CNTNT'},
-            {channelName: 'beIN Sports ñ', channelCtgry: '2', showTitle: 'SHOWS_SPORTS_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_SP_2', showDescriptionContent: 'SHOWS_SPORTS_PNL_2_DESC_CNTNT'},
-            {channelName: 'TyC Sports', channelCtgry: '3', showTitle: 'SHOWS_SPORTS_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_SP_3', showDescriptionContent: 'SHOWS_SPORTS_PNL_3_DESC_CNTNT'},
-            {channelName: 'PXTV Action LATAM', channelCtgry: '4', showTitle: 'SHOWS_SPORTS_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_SP_4', showDescriptionContent: 'SHOWS_SPORTS_PNL_4_DESC_CNTNT'},
-            {channelName: 'AYM Sports', channelCtgry: '5', showTitle: 'SHOWS_SPORTS_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_SP_5', showDescriptionContent: 'SHOWS_SPORTS_PNL_5_DESC_CNTNT'}
+        var sportsCategory = [
+            {channelName: 'beIN Sports', showUrl: 'FOOTER_CHANNEL_SPORTS_1'},
+            {channelName: 'beIN Sports ñ', showUrl: 'FOOTER_CHANNEL_SPORTS_2'},
+            {channelName: 'TyC Sports', showUrl: 'FOOTER_CHANNEL_SPORTS_3'},
+            {channelName: 'PXTV Action LATAM', showUrl: 'FOOTER_CHANNEL_SPORTS_4'},
+            {channelName: 'AYM Sports', showUrl: 'FOOTER_CHANNEL_SPORTS_5'}
         ];
 
-        var kids_Ctgry = [
-            {channelName: 'Smile of a Child', channelCtgry: '1', showTitle: 'SHOWS_NEWS_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_KDS_1', showDescriptionContent: 'SHOWS_NEWS_PNL_1_DESC_CNTNT'},
-            {channelName: 'images/channels-big/hola-tv.jpg', channelCtgry: '2', showTitle: 'SHOWS_NEWS_PNL_2_TITLE', showDescription: 'SHOWS_NEWS_PNL_2_DESC', showDescriptionContent: 'SHOWS_NEWS_PNL_2_DESC_CNTNT'},
-            {channelName: 'images/channels-big/ntn-24.png', channelCtgry: '3', showTitle: 'SHOWS_NEWS_PNL_3_TITLE', showDescription: 'SHOWS_NEWS_PNL_3_DESC', showDescriptionContent: 'SHOWS_NEWS_PNL_3_DESC_CNTNT'},
-            {channelName: 'images/channels-big/ntn-24.png', channelCtgry: '4', showTitle: 'SHOWS_NEWS_PNL_4_TITLE', showDescription: 'SHOWS_NEWS_PNL_4_DESC', showDescriptionContent: 'SHOWS_NEWS_PNL_4_DESC_CNTNT'},
-            {channelName: 'images/channels-big/tele-sur.png', channelCtgry: '5', showTitle: 'SHOWS_NEWS_PNL_5_TITLE', showDescription: 'SHOWS_NEWS_PNL_5_DESC', showDescriptionContent: 'SHOWS_NEWS_PNL_5_DESC_CNTNT'},
-            {channelName: 'images/channels-big/antena-3.png', channelCtgry: '6', showTitle: 'SHOWS_NEWS_PNL_6_TITLE', showDescription: 'SHOWS_NEWS_PNL_6_DESC', showDescriptionContent: 'SHOWS_NEWS_PNL_6_DESC_CNTNT'}
+        var kidsCategory = [
+            {channelName: 'Smile of a Child', showUrl: 'FOOTER_CHANNEL_KIDS_1'}
         ];
 
-        var general_Ctgry = [
-            {channelName: 'Bolivia TV', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_GNRL_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Canal América', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_GNRL_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
-            {channelName: 'Promovision', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_GNRL_3', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
-            {channelName: 'TV Chile', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_GNRL_4', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'CBTV', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_GNRL_5', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'}
+        var generalCategory = [
+            {channelName: 'Bolivia TV', showUrl: 'FOOTER_CHANNEL_GENERAL_1'},
+            {channelName: 'Canal América', showUrl: 'FOOTER_CHANNEL_GENERAL_2'},
+            {channelName: 'Promovision', showUrl: 'FOOTER_CHANNEL_GENERAL_3'},
+            {channelName: 'TV Chile', showUrl: 'FOOTER_CHANNEL_GENERAL_4'},
+            {channelName: 'CBTV', showUrl: 'FOOTER_CHANNEL_GENERAL_5'}
         ];
-		
-        var news_Ctgry = [
-            {channelName: 'Canal Tiempo', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'CB24', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
-            {channelName: 'Maya TV', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_3', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
-            {channelName: 'MeioNorte', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_4', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'NTN24', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_5', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
-            {channelName: 'One America News', channelCtgry: '6', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_6', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'RT Español', channelCtgry: '7', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_7', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'RT News', channelCtgry: '8', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_8', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Telesur', channelCtgry: '9', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_NEWS_9', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'}
-	    ];
-		
-        var music_Ctgry = [
-            {channelName: 'AZ Clic', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Clubbing TV', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
-            {channelName: 'El Cantinazo', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_3', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
-			{channelName: 'JCTV', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_4', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Mi Gente TV', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_5', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'Mi Musica', channelCtgry: '6', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_6', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
-            {channelName: 'Video Rola', channelCtgry: '7', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_MSC_7', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'}
+
+        var newsCategory = [
+            {channelName: 'Canal Tiempo', showUrl: 'FOOTER_CHANNEL_NEWS_1'},
+            {channelName: 'CB24', showUrl: 'FOOTER_CHANNEL_NEWS_2'},
+            {channelName: 'Maya TV', showUrl: 'FOOTER_CHANNEL_NEWS_3'},
+            {channelName: 'MeioNorte', showUrl: 'FOOTER_CHANNEL_NEWS_4'},
+            {channelName: 'NTN24', showUrl: 'FOOTER_CHANNEL_NEWS_5'},
+            {channelName: 'One America News', showUrl: 'FOOTER_CHANNEL_NEWS_6'},
+            {channelName: 'RT Español', showUrl: 'FOOTER_CHANNEL_NEWS_7'},
+            {channelName: 'RT News', showUrl: 'FOOTER_CHANNEL_NEWS_8'},
+            {channelName: 'Telesur', showUrl: 'FOOTER_CHANNEL_NEWS_9'}
         ];
-		
-        var edu_Ctgry = [
-			{channelName: 'HITN', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Yes', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_2', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Zoom', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_EDU_3', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'}
+
+        var musicCategory = [
+            {channelName: 'AZ Clic', showUrl: 'FOOTER_CHANNEL_MUSIC_1'},
+            {channelName: 'Clubbing TV', showUrl: 'FOOTER_CHANNEL_MUSIC_2'},
+            {channelName: 'El Cantinazo', showUrl: 'FOOTER_CHANNEL_MUSIC_3'},
+            {channelName: 'JCTV', showUrl: 'FOOTER_CHANNEL_MUSIC_4'},
+            {channelName: 'Mi Gente TV', showUrl: 'FOOTER_CHANNEL_MUSIC_5'},
+            {channelName: 'Mi Musica', showUrl: 'FOOTER_CHANNEL_MUSIC_6'},
+            {channelName: 'Video Rola', showUrl: 'FOOTER_CHANNEL_MUSIC_7'}
+        ];
+
+        var educationCategory = [
+            {channelName: 'HITN', showUrl: 'FOOTER_CHANNEL_EDUCATION_1'},
+            {channelName: 'Yes', showUrl: 'FOOTER_CHANNEL_EDUCATION_2'},
+            {channelName: 'Zoom', showUrl: 'FOOTER_CHANNEL_EDUCATION_3'}
 
         ];
-		
-        var lifestyle_Ctgry = [
-            {channelName: 'Destinos TV', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_LS_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'Trendy', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_LS_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
+
+        var lifestyleCategory = [
+            {channelName: 'Destinos TV', showUrl: 'FOOTER_CHANNEL_LIFESTYLE_1'},
+            {channelName: 'Trendy', showUrl: 'FOOTER_CHANNEL_LIFESTYLE_2'}
         ];
-		
-        var faith_Ctgry = [
-            {channelName: 'Enlace Juvenil', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_1_TITLE', showDescription: 'FOOTER_CHANNEL_FTH_1', showDescriptionContent: 'SHOWS_ENT_PNL_1_DESC_CNTNT'},
-            {channelName: 'TBN', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_FTH_2', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
-            {channelName: 'TBN Enlance', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_FTH_3', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
-            {channelName: 'Tele Vid', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_FTH_4', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'The Church Channel', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_FTH_5', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'}
+
+        var faithCategory = [
+            {channelName: 'Enlace Juvenil', showUrl: 'FOOTER_CHANNEL_FAITH_1'},
+            {channelName: 'TBN', showUrl: 'FOOTER_CHANNEL_FAITH_2'},
+            {channelName: 'TBN Enlance', showUrl: 'FOOTER_CHANNEL_FAITH_3'},
+            {channelName: 'Tele Vid', showUrl: 'FOOTER_CHANNEL_FAITH_4'},
+            {channelName: 'The Church Channel', showUrl: 'FOOTER_CHANNEL_FAITH_5'}
         ];
-		
-        var ent_Ctgry = [
-            {channelName: 'Hola! TV', channelCtgry: '1', showTitle: 'SHOWS_ENT_PNL_2_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_1', showDescriptionContent: 'SHOWS_ENT_PNL_2_DESC_CNTNT'},
-            {channelName: 'RCN Novelas', channelCtgry: '2', showTitle: 'SHOWS_ENT_PNL_3_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_2', showDescriptionContent: 'SHOWS_ENT_PNL_3_DESC_CNTNT'},
-            {channelName: 'Caribvision', channelCtgry: '3', showTitle: 'SHOWS_ENT_PNL_4_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_3', showDescriptionContent: 'SHOWS_ENT_PNL_4_DESC_CNTNT'},
-            {channelName: 'Latele Novela', channelCtgry: '4', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_4', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
-			{channelName: 'Canal 52 MX', channelCtgry: '5', showTitle: 'SHOWS_ENT_PNL_5_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_5', showDescriptionContent: 'SHOWS_ENT_PNL_5_DESC_CNTNT'},
-            {channelName: 'TVC Latino', channelCtgry: '6', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_6', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'TV Quisqueya', channelCtgry: '7', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_7', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Tempo', channelCtgry: '8', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_8', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'A 3 Series', channelCtgry: '9', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_9', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Teleformula', channelCtgry: '10', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_10', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Tele Pacífico', channelCtgry: '11', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_11', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Tele Medellin', channelCtgry: '12', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_12', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Tele Caribe', channelCtgry: '13', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_13', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Tele Antioquia', channelCtgry: '14', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_14', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'JBN', channelCtgry: '15', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_15', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'HITN', channelCtgry: '16', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_16', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Cosmovisión', channelCtgry: '17', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_17', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Canal Tro', channelCtgry: '18', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_18', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Canal Sur', channelCtgry: '19', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_19', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Canal Antiestres', channelCtgry: '20', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_20', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Antenna3', channelCtgry: '21', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_21', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'AZ Corazón', channelCtgry: '22', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_22', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'},
-			{channelName: 'Telemicro Internacional', channelCtgry: '23', showTitle: 'SHOWS_ENT_PNL_6_TITLE', showDescription: 'FOOTER_CHANNEL_ENT_23', showDescriptionContent: 'SHOWS_ENT_PNL_6_DESC_CNTNT'}
-        	
-		
-		];
+
+        var entertainmentCategory = [
+            {channelName: 'Hola! TV', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_1'},
+            {channelName: 'RCN Novelas', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_2'},
+            {channelName: 'Caribvision', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_3'},
+            {channelName: 'Latele Novela', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_4'},
+            {channelName: 'Canal 52 MX', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_5'},
+            {channelName: 'TVC Latino', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_6'},
+            {channelName: 'TV Quisqueya', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_7'},
+            {channelName: 'Tempo', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_8'},
+            {channelName: 'A 3 Series', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_9'},
+            {channelName: 'Teleformula', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_10'},
+            {channelName: 'Tele Pacífico', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_11'},
+            {channelName: 'Tele Medellin', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_12'},
+            {channelName: 'Tele Caribe', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_13'},
+            {channelName: 'Tele Antioquia', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_14'},
+            {channelName: 'JBN', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_15'},
+            {channelName: 'HITN', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_16'},
+            {channelName: 'Cosmovisión', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_17'},
+            {channelName: 'Canal Tro', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_18'},
+            {channelName: 'Canal Sur', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_19'},
+            {channelName: 'Canal Antiestres', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_20'},
+            {channelName: 'Antenna3', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_21'},
+            {channelName: 'AZ Corazón', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_22'},
+            {channelName: 'Telemicro Internacional', showUrl: 'FOOTER_CHANNEL_ENTERTAINMENT_23'}
+        ];
 
 
         return {
             getSports: function () {
-                return sports_Ctgry;
+                return sportsCategory;
             },
 
             getKids: function () {
-                return kids_Ctgry;
+                return kidsCategory;
             },
 
             getGeneral: function () {
-                return general_Ctgry;
+                return generalCategory;
             },
 
             getNews: function () {
-                return news_Ctgry;
+                return newsCategory;
             },
-			
-			getMusic: function () {
-				return music_Ctgry;
-			},
-			
-			getEdu: function () {
-				return edu_Ctgry;
-			},
-			
-			getLifestyle: function () {
-				return lifestyle_Ctgry;
-			},
-			
-			getFaith: function () {
-				return faith_Ctgry;
-			},
-			
-			getEnt: function () {
-				return ent_Ctgry;
-			}
+
+            getMusic: function () {
+                return musicCategory;
+            },
+
+            getEducation: function () {
+                return educationCategory;
+            },
+
+            getLifestyle: function () {
+                return lifestyleCategory;
+            },
+
+            getFaith: function () {
+                return faithCategory;
+            },
+
+            getEntertainment: function () {
+                return entertainmentCategory;
+            }
         };
     }]);
 }(angular.module('app')));
