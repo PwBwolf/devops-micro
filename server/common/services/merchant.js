@@ -1299,3 +1299,70 @@ function sendUpgradeEmail(user, cb) {
         }
     });
 }
+
+function sendPaidSubscriptionEndedEmail(user, cb) {
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.subscriptionCanceledEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'reactivate-subscription')
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('merchant - sendPaidSubscriptionEndedEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('merchant - sendPaidSubscriptionEndedEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserChangesForCancel(user, currentValues, cb) {
+    user.status = currentValues.status;
+    user.cancelDate = currentValues.cancelDate;
+    user.cancelOn = currentValues.cancelOn;
+    user.save(function (err) {
+        if (err) {
+            logger.logError('merchant - revertUserChangesForCancel - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForCancel(user, currentValues, cb) {
+    user.account.billingDate = currentValues.billingDate;
+    user.account.paymentPending = currentValues.paymentPending;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('merchant - revertAccountChangesForCancel - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function setUserActiveInAio(email, status, cb) {
+    if (status === 'active' || status === 'registered') {
+        aio.updateUserStatus(email, true, function (err) {
+            if (err) {
+                logger.logError('merchant - setUserActiveInAio - error setting user status to active in aio: ' + email);
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    } else {
+        if (cb) {
+            cb();
+        }
+    }
+}
