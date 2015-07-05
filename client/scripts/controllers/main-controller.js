@@ -7,13 +7,9 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
 
-        /// wp-pull-data-test ///
-        $scope.wpData = wpDataSvc.getWpData;
-
         $scope.session = {};
 
-        var aioWindow,
-            aioWindowTimeout;
+        var aioWindow, aioWindowTimeout;
 
         activate();
 
@@ -21,7 +17,14 @@
             getAppConfig();
             loadLanguage();
             configSeo();
+            loadFooter();
+        }
 
+        $rootScope.$on('ChangeLanguage', function (event, language) {
+            changeLanguage(language);
+        });
+
+        function loadFooter() {
             $scope.sportsCtgry = footerSvc.getSports();
             $scope.kidsCtgry = footerSvc.getKids();
             $scope.generalCtgry = footerSvc.getGeneral();
@@ -32,10 +35,6 @@
             $scope.faithCtgry = footerSvc.getFaith();
             $scope.entCtgry = footerSvc.getEnt();
         }
-
-        $rootScope.$on('ChangeLanguage', function (event, language) {
-            changeLanguage(language);
-        });
 
         function changeLanguage(language) {
             $translate.use(language);
@@ -266,10 +265,5 @@
                 aioWindow.close();
             }
         });
-    }])
-        .filter('setCount', function () {
-            return function (repo, begin, end) {
-                return repo.slice(begin, end);
-            };
-        });
+    }]);
 }(angular.module('app')));
