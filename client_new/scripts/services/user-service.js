@@ -164,6 +164,10 @@
 
             getUserChannels: function(success, error) {
                 $http.get('/api/get-user-channels').success(success).error(error);
+            },
+            
+            getPromoChannels: function(success, error) {
+                $http.get('/api/get-promo-channels').success(success).error(error);
             }
          };
     }]);

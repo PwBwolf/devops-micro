@@ -1,102 +1,32 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', function (userSvc, mediaSvc, loggerSvc, $scope) {
-        $scope.playerOptions = {
-			id: 'my-player',
-            file: '/videos/yiptv.mp4',
-			width: 902,
-			height: 370,
-            aspectratio: '16:9',
-            primary: 'flash',
-            logo: {
-                file: '/images/tv_logo.png'
-            }
-        };
-
-        $scope.channelSliderOptions = {
-            auto: false,
-            autoStart: false,
-            maxSlides: 10,
-            slideWidth: 150,
-            slideMargin: 50,
-            preloadImages: 'visible',
-            pager: false
-        };
-
-        $scope.channelGuideSliderOptions = {
-            auto: false,
-            autoStart: false,
-            maxSlides: 20,
-            slideWidth: 150,
-            slideMargin: 0,
-            infiniteLoop: false,
-            hideControlOnEnd: true,
-            preloadImages: 'visible',
-            pager: false
-        };
-
+    app.controller('promoCtrl', ['$scope', 'userSvc', 'mediaSvc', 'homeScrnsSvc', 'loggerSvc', function ($scope, userSvc, mediaSvc, homeScrnsSvc, loggerSvc ) {
+        $scope.usrScrnClasses = {};
+                
         activate();
-
         function activate() {
+            $scope.usrScrnClasses = homeScrnsSvc.getUsrClass();
             $scope.loadingChannels = true;
-            userSvc.getUserChannels(function (data) {
-                $scope.channels = data;
-                if ($scope.channels && $scope.channels.length > 0) {
-                    
-                    console.log('Amt of promo chnls: '+$scope.channels.length);
-					for(var h in $scope.channels){
-                        console.log('the promo channel name is: '+$scope.channels[h].name);
+            userSvc.getPromoChannels(function (data) {
+                $scope.promoChnls = data;
+                if ($scope.promoChnls && $scope.promoChnls.length > 0) {
+					for(var h in $scope.promoChnls){
+                        console.log('the promo channel name is: '+$scope.promoChnls[h].name);
                     /*$scope.chnlClicked = function (index) {
 			            $scope.selectedPromoChnl = index;
 						$scope.selectChannel(index);
 			        };*/
 					}
-                    
-                    
-                    //$scope.selectChannel(0);
-					//for(var g in $scope.channels){
-                        //if( g < 4){
-                            //console.log('usrChannels: '+$scope.channels[g].name);
-                            //$scope.dName = $scope.channels[g].name;
-                            
-                            /*
-    		                mediaSvc.getChannelGuide($scope.channels[g].live_external_id, $scope.channels[g].name).success(function (channelGuide) {
-                                $scope.airings = channelGuide[0].airings;
-                                console.log('this is title: '+$scope.airings[0].program.title);
-                                $scope.onAir = $scope.airings[0].program.title;
-                                $scope.loadingChannelGuide = false;
-                            }).error(function () {
-                                $scope.loadingChannelGuide = false;
-                                loggerSvc.logError('Error loading channel guide.');
-                            });
-                            */
-    		                
-                            //};
-					//};
-					
-					$scope.chnlClicked = function (index) {
-			            $scope.selectedChnl = index;
-						$scope.selectChannel(index);
-                        //$scope.selectedChnlIndex = index;
-                        //$scope.playChannel(selectedChnlIndex);
-			        };
-					
-					//for(var c in $scope.channels){
-						//$scope.selectChannel(c);
-						//console.log($scope.channels[c].name);
-						//}
                 }
                 $scope.loadingChannels = false;
             }, function () {
                 $scope.loadingChannels = false;
-                loggerSvc.logError('Error loading channel list.');
+                loggerSvc.logError('Error loading promo-channel list.');
             });
         };
-		//jwplayer("my-player").setup({ $scope.playerOptions; });
-		//console.log($scope.channels.length);
-		
-        $scope.selectChannel = function (channelIndex) {
+		/*
+        $scope.selectPromoChannel = function (channelIndex) {
             if(!$scope.loadingChannelGuide) {
                 $scope.selectedChannelIndex = channelIndex;
                 $scope.loadingChannelGuide = true;
@@ -166,6 +96,7 @@
             });
         };
         
+        */
         $scope.getTime = function (index, airing) {
             if (index === 0) {
                 return 'on now';

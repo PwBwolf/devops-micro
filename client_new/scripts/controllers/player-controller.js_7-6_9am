@@ -43,17 +43,6 @@
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
                 if ($scope.channels && $scope.channels.length > 0) {
-                    
-                    console.log('Amt of promo chnls: '+$scope.channels.length);
-					for(var h in $scope.channels){
-                        console.log('the promo channel name is: '+$scope.channels[h].name);
-                    /*$scope.chnlClicked = function (index) {
-			            $scope.selectedPromoChnl = index;
-						$scope.selectChannel(index);
-			        };*/
-					}
-                    
-                    
                     //$scope.selectChannel(0);
 					//for(var g in $scope.channels){
                         //if( g < 4){
@@ -78,8 +67,6 @@
 					$scope.chnlClicked = function (index) {
 			            $scope.selectedChnl = index;
 						$scope.selectChannel(index);
-                        //$scope.selectedChnlIndex = index;
-                        //$scope.playChannel(selectedChnlIndex);
 			        };
 					
 					//for(var c in $scope.channels){
@@ -104,7 +91,7 @@
                 mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (channelGuide) {
                     $scope.airings = channelGuide[0].airings;
                     $scope.playChannel(channelIndex);
-					console.log('this time: '+$scope.airings[channelIndex].program.title);
+					//console.log('this time: '+$scope.airings[channelIndex].program.title);
 					//$scope.onAir = $scope.airings[channelIndex].program.title;
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
@@ -113,18 +100,17 @@
                 });
             }
         };
-        
-        
+
         $scope.playChannel = function (index, airing) {
             if(index) {
-                mediaSvc.getChannel($scope.channels[index].id).success(function (channel) {
+                mediaSvc.getChannel($scope.channels[$scope.selectedChannelIndex].id).success(function (channel) {
                     $scope.playerOptions.file = channel.live_pc_url;
                     $scope.playerOptions.autoStart = true;
                     $scope.airing = airing;
-					//console.log(index+' - '+' - '+index+' - '+channel.live_pc_url);
-                    $scope.channelLogo = $scope.channels[index].image_poster;
-                    $scope.channelNumber = $scope.channels[index].number;
-                    $scope.channelName = $scope.channels[index].name;
+					//console.log(index+' - '+' - '+$scope.selectedChannelIndex+' - '+channel.live_pc_url);
+                    $scope.channelLogo = $scope.channels[$scope.selectedChannelIndex].image_poster;
+                    $scope.channelNumber = $scope.channels[$scope.selectedChannelIndex].number;
+                    $scope.channelName = $scope.channels[$scope.selectedChannelIndex].name;
 					
 					playStream();
                 }).error(function () {
@@ -165,7 +151,7 @@
 
             });
         };
-        
+
         $scope.getTime = function (index, airing) {
             if (index === 0) {
                 return 'on now';
