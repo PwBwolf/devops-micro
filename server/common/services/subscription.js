@@ -122,6 +122,15 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
+            // add locale
+            function (userObj, accountObj, callback) {
+                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
+                    }
+                    callback(null, userObj, accountObj);
+                });
+            },
             // send verification email
             function (userObj, accountObj, callback) {
                 sendVerificationEmail(userObj, function (err) {
@@ -271,6 +280,15 @@ module.exports = {
                         }
                     }
                     callback(err, userObj, accountObj);
+                });
+            },
+            // add locale
+            function (userObj, accountObj, callback) {
+                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
+                    }
+                    callback(null, userObj, accountObj);
                 });
             },
             // send verification email
@@ -448,6 +466,15 @@ module.exports = {
                             errorType = 'freeside-order-insert';
                         }
                         callback(err, userObj, accountObj);
+                    });
+                },
+                // add locale
+                function (userObj, accountObj, callback) {
+                    billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
+                        if (err) {
+                            logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
+                        }
+                        callback(null, userObj, accountObj);
                     });
                 },
                 // send verification email
@@ -1282,7 +1309,7 @@ module.exports = {
             },
             // update user
             function (userObj, sessionId, billingDate, callback) {
-                if(billingDate) {
+                if (billingDate) {
                     userObj.cancelOn = moment(billingDate).subtract(1, 'days').toDate().toUTCString();
                 } else {
                     userObj.cancelOn = (new Date()).toUTCString();
