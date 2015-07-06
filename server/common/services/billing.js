@@ -300,6 +300,33 @@ module.exports = {
                 }
             }
         });
+    },
+
+    updateLocale: function (sessionId, locale, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        console.log(locale);
+        client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
+            [
+                'session_id', sessionId,
+                'locale', locale
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateLocale - error in updating locale 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateLocale - error in updating locale 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateLocale - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
     }
 };
 

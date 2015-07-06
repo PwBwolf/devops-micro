@@ -109,6 +109,15 @@ module.exports = {
                 });
                 callback(null, userObj, accountObj);
             },
+            // add locale
+            function (userObj, accountObj, callback) {
+                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
+                    }
+                    callback(null, userObj, accountObj);
+                });
+            },
             // send verification email
             function (userObj, accountObj, callback) {
                 sendVerificationEmail(userObj, function (err) {

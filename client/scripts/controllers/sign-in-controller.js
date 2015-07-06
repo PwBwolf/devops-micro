@@ -104,7 +104,7 @@
                                 }).result.then(function () {
                                         $location.path('/upgrade-subscription');
                                     });
-                            } else if ($scope.user.paymentPending) {
+                            } else if ($scope.user.paymentPending && !$scope.user.cancelOn) {
                                 $modal.open({
                                     templateUrl: 'modalWindow',
                                     controller: 'modalCtrl',

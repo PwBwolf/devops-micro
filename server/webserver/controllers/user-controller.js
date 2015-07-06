@@ -712,6 +712,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
+            var defaultLanguage = user.preferences.defaultLanguage;
             user.preferences.defaultLanguage = req.body.language;
             user.save(function (err) {
                 if (err) {
@@ -719,9 +720,40 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                return res.status(200).end();
+                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('userController - updatePreferences - error logging into freeside: ' + req.email.toLowerCase());
+                        logger.logError(err);
+                        rollbackPreferences(user, defaultLanguage);
+                        return res.status(500).end();
+                    }
+                    billing.updateLocale(sessionId, user.preferences.defaultLanguage + '_US', function (err) {
+                        if (err) {
+                            logger.logError('userController - updatePreferences - error updating locale in freeside: ' + req.email.toLowerCase());
+                            logger.logError(err);
+                            rollbackPreferences(user, defaultLanguage);
+                            return res.status(500).end();
+                        }
+                        return res.status(200).end();
+                    });
+                });
             });
         });
+
+        function rollbackPreferences(user, defaultLanguage, cb) {
+            user.preferences.defaultLanguage = defaultLanguage;
+            user.save(function (err) {
+                if (err) {
+                    if (err) {
+                        logger.logError('userController - updatePreferences - error rolling back update: ' + user.email);
+                        logger.logError(err);
+                    }
+                    if (cb) {
+                        cb(err);
+                    }
+                }
+            });
+        }
     },
 
     upgradeSubscription: function (req, res) {
