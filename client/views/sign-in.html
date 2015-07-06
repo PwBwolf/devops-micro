@@ -3,14 +3,17 @@
 
         <div class="container">
             <div class="form-box">
-                
-                <div class="message" ng-show="redirectTo.indexOf('/upgrade-subscription') >= 0" translate="SIGN_IN_UPGRADE_SUBSCRIPTION">
+
+                <div class="message" ng-show="redirectTo.indexOf('/upgrade-subscription') >= 0">
+                    <h3 translate="SIGN_IN_UPGRADE_SUBSCRIPTION"></h3>
                 </div>
-                <div class="message" ng-show="redirectTo === '/reactivate-subscription'" translate="SIGN_IN_REACTIVATE_SUBSCRIPTION">
+                <div class="message" ng-show="redirectTo === '/reactivate-subscription'">
+                    <h3 translate="SIGN_IN_REACTIVATE_SUBSCRIPTION"></h3>
                 </div>
-                <div class="message_" ng-hide="redirectTo">
-					<h2 style="font-weight:bold; font-size:xx-large" translate="SIGN_IN_MESSAGE"></h2>
-					<h3 translate="SIGN_IN_MESSAGE_2"></h3>
+                <div ng-hide="redirectTo">
+                    <h2 style="font-weight:bold; font-size:xx-large" translate="SIGN_IN_MESSAGE"></h2>
+
+                    <h3 translate="SIGN_IN_MESSAGE_2"></h3>
                 </div>
                 <br><br>
 

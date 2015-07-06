@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     moment = require('moment'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
+    billing = require('../../common/services/billing'),
     dbYip = mongoose.createConnection(config.db),
     dbMerchant = mongoose.createConnection(config.merchantDb),
     User = dbYip.model('User'),
@@ -45,10 +46,30 @@ module.exports = {
                     if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate) {
                         refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
-                    if(user && user.account) {
-                        billingDate = user.account.billingDate;
+                    if (user) {
+                        billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                            if (err) {
+                                logger.logError('merchantController - doesUsernameExist - error logging in to billing system: ' + req.query.email);
+                                logger.logError(err);
+                                return res.status(200).send({error: 'server-error'});
+                            } else {
+                                billing.getBillingDate(sessionId, function (err, billDate) {
+                                    if (err) {
+                                        logger.logError('merchantController - doesUsernameExist - error fetching billing date: ' + req.query.email);
+                                        logger.logError(err);
+                                        return res.status(200).send({error: 'server-error'});
+                                    } else {
+                                        if (billDate) {
+                                            billingDate = billDate;
+                                        }
+                                        return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
                     }
-                    return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
                 });
             });
         } catch (ex) {

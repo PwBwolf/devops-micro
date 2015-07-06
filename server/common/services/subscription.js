@@ -1666,29 +1666,6 @@ module.exports = {
         });
     },
 
-    updateToMerchantBilling: function (email, cb) {
-        User.findOne({email: email}).populate('account').exec(function (err, userObj) {
-            if (err) {
-                logger.logError('subscription - updateToMerchantBilling - error fetching user: ' + email);
-                cb(err);
-            } else {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
-                    if (err) {
-                        logger.logError('subscription - updateToMerchantBilling - error fetching user: ' + email);
-                        cb(err);
-                    } else {
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
-                            if (err) {
-                                logger.logError('subscription - updateToMerchantBilling - error updating user in billing system: ' + userObj.email);
-                            }
-                            cb(err);
-                        });
-                    }
-                });
-            }
-        });
-    },
-
     sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail,
 
     sendAccountVerifiedEmail: sendAccountVerifiedEmail
