@@ -19,22 +19,30 @@
             if ($scope.form.$valid) {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
                     function (data) {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        if(data === 'registered') {
-                            $location.path('/sign-up-success');
+                        if (data === 'registered') {
+                            $rootScope.signUpSuccessUrl = '/sign-up-success';
+                            $location.path('/processing-order');
                         } else {
-                            $location.path('/sign-up-success-login');
+                            $rootScope.signUpSuccessUrl = '/sign-up-success-login';
+                            $location.path('/processing-order');
                         }
                     },
                     function (error) {
-                        if(error === 'UserExists') {
+                        if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                        } else if (error === 'PaymentPending') {
+                            $rootScope.signUpSuccessUrl = '/sign-up-success-payment-pending';
+                            $location.path('/processing-order');
+                        } else if (error === 'PaymentPendingActive') {
+                            $rootScope.signUpSuccessUrl = '/sign-up-success-payment-pending-active';
+                            $location.path('/processing-order');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
@@ -42,26 +50,25 @@
                     }
                 );
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.firstName.$dirty = true;
-            $scope.form.lastName.$dirty = true;
-            $scope.form.email.$dirty = true;
-            $scope.form.telephone.$dirty = true;
-            $scope.form.password.$dirty = true;
-            $scope.form.confirmPassword.$dirty = true;
-            $scope.form.cardName.$dirty = true;
-            $scope.form.cardNumber.$dirty = true;
-            $scope.form.address.$dirty = true;
-            $scope.form.city.$dirty = true;
-            $scope.form.state.$dirty = true;
-            $scope.form.cvv.$dirty = true;
-            $scope.form.expiryDate.$dirty = true;
-            $scope.form.zipCode.$dirty = true;
-            $scope.form.disclaimer.$dirty = true;
+        function setFormTouched() {
+            $scope.form.firstName.$touched = true;
+            $scope.form.lastName.$touched = true;
+            $scope.form.email.$touched = true;
+            $scope.form.telephone.$touched = true;
+            $scope.form.password.$touched = true;
+            $scope.form.cardName.$touched = true;
+            $scope.form.cardNumber.$touched = true;
+            $scope.form.address.$touched = true;
+            $scope.form.city.$touched = true;
+            $scope.form.state.$touched = true;
+            $scope.form.cvv.$touched = true;
+            $scope.form.expiryDate.$touched = true;
+            $scope.form.zipCode.$touched = true;
+            $scope.form.disclaimer.$touched = true;
         }
 
     }]);

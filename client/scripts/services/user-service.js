@@ -62,7 +62,7 @@
                 if (user === undefined) {
                     user = currentUser;
                 }
-                return user.title !== userRoles.title;
+                return user.role.title !== userRoles.anon.title;
             },
 
             isSignUpAllowed: function (email, type, success, error) {
@@ -75,6 +75,10 @@
 
             signUp: function (user, success, error) {
                 $http.post('/api/sign-up', user).success(success).error(error);
+            },
+
+            merchantSignUp: function (user, success, error) {
+                $http.post('/api/merchant-sign-up', user).success(success).error(error);
             },
 
             signIn: function (user, success, error) {
@@ -164,10 +168,6 @@
 
             getUserChannels: function(success, error) {
                 $http.get('/api/get-user-channels').success(success).error(error);
-            },
-            
-            getPromoChannels: function(success, error) {
-                $http.get('/api/get-promo-channels').success(success).error(error);
             }
          };
     }]);

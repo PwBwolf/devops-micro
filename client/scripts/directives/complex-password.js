@@ -10,11 +10,9 @@
                 function validate(password) {
                     if(password) {
                         var hasUpperCase = /[A-Z]/.test(password);
-                        var hasLowerCase = /[a-z]/.test(password);
                         var hasNumbers = /\d/.test(password);
-                        var hasNonAlphas = /\W|_/.test(password);
-                        var characterGroupCount = hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphas;
-                        ctrl.$setValidity('complexity', (password.length >= 8) && (characterGroupCount > 3));
+                        var characterGroupCount = hasUpperCase + hasNumbers;
+                        ctrl.$setValidity('complexity', (password.length >= 6) && (characterGroupCount >= 2));
                         return password;
                     } else {
                         ctrl.$setValidity('complexity', true);

@@ -1,16 +1,19 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="SIGN_IN_HEADING"></span></h1>
 
         <div class="container">
             <div class="form-box">
-                <div>&nbsp;</div>
-                <div>&nbsp;</div>
-                <div class="message" ng-show="redirectTo === '/upgrade-subscription'" translate="SIGN_IN_UPGRADE_SUBSCRIPTION">
+
+                <div class="message" ng-show="redirectTo.indexOf('/upgrade-subscription') >= 0">
+                    <h3 translate="SIGN_IN_UPGRADE_SUBSCRIPTION"></h3>
                 </div>
-                <div class="message" ng-show="redirectTo === '/reactivate-subscription'" translate="SIGN_IN_REACTIVATE_SUBSCRIPTION">
+                <div class="message" ng-show="redirectTo === '/reactivate-subscription'">
+                    <h3 translate="SIGN_IN_REACTIVATE_SUBSCRIPTION"></h3>
                 </div>
-                <div class="message" ng-hide="redirectTo" translate="SIGN_IN_MESSAGE">
+                <div ng-hide="redirectTo">
+                    <h2 style="font-weight:bold; font-size:xx-large" translate="SIGN_IN_MESSAGE"></h2>
+
+                    <h3 translate="SIGN_IN_MESSAGE_2"></h3>
                 </div>
                 <br><br>
 

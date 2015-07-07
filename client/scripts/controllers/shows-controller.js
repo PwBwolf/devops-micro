@@ -5,22 +5,21 @@
         init();
 
         function init() {
-            $scope.shows1 = showsSvc.getShows1();
-            $scope.shows2 = showsSvc.getShows2();
-            $scope.shows3 = showsSvc.getShows3();
-            $scope.showClasses = showsSvc.getShowClasses();
+            $scope.sports = showsSvc.getSports();
+            $scope.news = showsSvc.getNews();
+            $scope.entertainment = showsSvc.getEntertainment();
         }
 
-        $scope.itemClicked1 = function (index) {
-            $scope.selectedIndex1 = index;
+        $scope.itemClickedSports = function (index) {
+            $scope.selectedIndexSports = index;
         };
 
-        $scope.itemClicked2 = function (index) {
-            $scope.selectedIndex2 = index;
+        $scope.itemClickedNews = function (index) {
+            $scope.selectedIndexNews = index;
         };
 
-        $scope.itemClicked3 = function (index) {
-            $scope.selectedIndex3 = index;
+        $scope.itemClickedEntertainment = function (index) {
+            $scope.selectedIndexEntertainment = index;
         };
     }]);
 }(angular.module('app')));

@@ -1,58 +1,57 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'footerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, footerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
         $scope.session = {};
 
-        var aioWindow,
-            aioWindowTimeout;
+        var aioWindow, aioWindowTimeout;
 
         activate();
 
         function activate() {
-            $scope.webSliders = webStorage.local.get('webSliders') || [];
-            $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
             getAppConfig();
             loadLanguage();
             configSeo();
+            loadFooter();
         }
 
         $rootScope.$on('ChangeLanguage', function (event, language) {
             changeLanguage(language);
         });
 
+        function loadFooter() {
+            $scope.sportsCategory = footerSvc.getSports();
+            $scope.kidsCategory = footerSvc.getKids();
+            $scope.generalCategory = footerSvc.getGeneral();
+            $scope.newsCategory = footerSvc.getNews();
+            $scope.musicCategory = footerSvc.getMusic();
+            $scope.educationCategory = footerSvc.getEducation();
+            $scope.lifestyleCategory = footerSvc.getLifestyle();
+            $scope.faithCategory = footerSvc.getFaith();
+            $scope.entertainmentCategory = footerSvc.getEntertainment();
+        }
+
         function changeLanguage(language) {
             $translate.use(language);
             webStorage.local.add('language', language);
-            $scope.language = language;
+            $rootScope.language = language;
+            if ($route.current) {
+                $rootScope.title = $route.current.title[$rootScope.language] || $route.current.title;
+                $rootScope.description = $route.current.description[$rootScope.language] || $route.current.description;
+            }
             $rootScope.$broadcast('LanguageChanged', language);
         }
 
         function getAppConfig() {
             appSvc.getAppConfig().success(function (response) {
                 $scope.appConfig = response;
-                getWebSliders();
             }).error(function () {
                 loggerSvc.logError($filter('translate')('MAIN_ERROR_APP_CONFIG'));
             });
-        }
-
-        function getWebSliders() {
-            if ($scope.appConfig.webSliderVersion !== webStorage.get('webSliderVersion') || !$scope.webSliders || $scope.webSliders.length === 0) {
-                appSvc.getWebSliders().success(function (data) {
-                    webStorage.local.add('webSliderVersion', $scope.appConfig.webSliderVersion);
-                    webStorage.local.add('webSliders', data);
-                    $scope.webSliders = data;
-                    $scope.webSliderLoaded = $scope.webSliders && $scope.webSliders.length !== 0;
-                    if ($location.path() === '/') {
-                        $route.reload();
-                    }
-                });
-            }
         }
 
         function configSeo() {
@@ -64,6 +63,16 @@
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
             changeLanguage(language);
         }
+
+        $scope.$on('$routeChangeSuccess', function () {
+            if ($routeParams.lang) {
+                changeLanguage($routeParams.lang);
+            }
+        });
+
+        $scope.goToCmsUrl = function (urlName) {
+            $window.location = $scope.appConfig.cmsUrl + $filter('translate')(urlName);
+        };
 
         $scope.changeLanguage = function () {
             var currentLanguage = $translate.use();
@@ -114,8 +123,14 @@
         $scope.openAio = function () {
             if ($scope.user.status === 'canceled') {
                 $location.path('/reactivate-subscription');
-            } else if ($scope.user.status === 'trial-ended' || $scope.user.status === 'comp-ended') {
+            } else if ($scope.user.status === 'trial-ended') {
+                $location.path('/upgrade-subscription').search('utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + $scope.language);
+            } else if ($scope.user.status === 'comp-ended') {
                 $location.path('/upgrade-subscription');
+            } else if ($scope.user.paymentPending && $scope.user.cancelOn) {
+                loggerSvc.logError($filter('translate')('MAIN_SERVICES_NOT_AVAILABLE'));
+            } else if ($scope.user.paymentPending) {
+                $location.path('/change-credit-card');
             } else {
                 var browser = browserSvc.getBrowserName();
                 if (aioWindow && !aioWindow.closed) {
@@ -239,8 +254,7 @@
         function afterSignOut() {
             $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
-            $location.path('/');
-
+            $location.path('/').search('');
         }
 
         $window.onunload = function () {
@@ -252,27 +266,5 @@
                 aioWindow.close();
             }
         });
-		
-
-		$rootScope.$on("$locationChangeStart", function(event, newLoc, oldLoc) {
-			var dBtns = [$('#Shws'), $('#Ntwrks'), $('#Abt')];
-			var baseLoc = 'https://'+$location.host()+'/';
-			//var baseLoc = 'http://'+$location.host()+':3000/'
-			
-			if(newLoc != baseLoc){
-				for(var b = 0; b < dBtns.length; b++){
-					dBtns[b].css('display', 'none');
-				}
-				//console.log('not home. from: '+baseLoc+' to '+newLoc);
-			} else {
-				for(var c = 0; c < dBtns.length; c++){
-					dBtns[c].css('display', 'inline-block');
-				}
-				//console.log('this is home '+newLoc);
-			} 
-			//console.log('moving from: '+oldLoc+' -  to '+newLoc);
-		});
-
-		
     }]);
 }(angular.module('app')));
