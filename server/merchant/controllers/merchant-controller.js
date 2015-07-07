@@ -46,7 +46,7 @@ module.exports = {
                     if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate) {
                         refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
-                    if (user) {
+                    if (user && user.account.type === 'paid' && (user.status === 'registered' || user.status === 'active')) {
                         billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
                                 logger.logError('merchantController - doesUsernameExist - error logging in to billing system: ' + req.query.email);
