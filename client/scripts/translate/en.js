@@ -352,7 +352,7 @@
             INDEX_JOIN_NOW: 'Join Now',
             INDEX_TRY_FREE: 'Try for 7 Days',
             INDEX_WATCH_NOW: 'Watch Now',
-            INDEX_NETWORKS: 'Networks',
+            INDEX_NETWORKS: 'Channels',
             INDEX_SHOWS_BY_CATEGORY: 'Shows by Category',
             INDEX_ACCOUNT: 'Account',
             INDEX_ADMIN: 'Admin',
