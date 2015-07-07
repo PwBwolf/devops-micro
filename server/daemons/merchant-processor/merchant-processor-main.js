@@ -48,6 +48,7 @@ worker.register({
                                 callback(new Error('username-not-found'));
                             });
                         } else {
+                            var paymentPending = dbUser.account.paymentPending;
                             if (dbUser.status === 'failed') {
                                 savePayment(params, 'failure', 'account-error', function () {
                                     callback(new Error('account-error'));
@@ -96,7 +97,7 @@ worker.register({
                                                 }
                                             });
                                         } else {
-                                            merchantService.makeCashPayment(params.username.toLowerCase(), function (err) {
+                                            merchantService.makeCashPayment(params.username.toLowerCase(), paymentPending, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                     logger.logError(err);

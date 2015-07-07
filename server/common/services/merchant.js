@@ -1048,25 +1048,63 @@ module.exports = {
         });
     },
 
-    makeCashPayment: function (email, cb) {
-        User.findOne({email: email}).populate('account').exec(function (err, userObj) {
-            if (err) {
-                logger.logError('merchant - updateToMerchantBilling - error fetching user: ' + email);
-                cb(err);
-            } else {
+    makeCashPayment: function (userEmail, paymentPending, cb) {
+        async.waterfall([
+            // get user
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('merchant - makeCashPayment - error fetching user: ' + userEmail);
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // update billing
+            function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
-                        logger.logError('merchant - updateToMerchantBilling - error fetching user: ' + email);
-                        cb(err);
-                    } else {
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
-                            if (err) {
-                                logger.logError('merchant - updateToMerchantBilling - error updating user in billing system: ' + userObj.email);
-                            }
-                            cb(err);
-                        });
+                        logger.logError('merchant - makeCashPayment - error logging into freeside: ' + userEmail);
                     }
+                    callback(err, userObj, sessionId);
                 });
+            },
+            // update billing details
+            function (userObj, sessionId, callback) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
+                    if (err) {
+                        logger.logError('merchant - makeCashPayment - error updating user in billing system: ' + userObj.email);
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // add package if payment pending
+            function (userObj, sessionId, callback) {
+                if (paymentPending) {
+                    billing.hasPaidActivePackage(sessionId, function (err, result) {
+                        if (err) {
+                            logger.logError('merchant - makeCashPayment - error getting current packages: ' + userObj.email);
+                            callback(err);
+                        } else if (!result) {
+                            billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                                if (err) {
+                                    logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
+                                }
+                                callback(err);
+                            });
+                        } else {
+                            callback(err);
+                        }
+                    });
+                } else {
+                    callback(null);
+                }
+            }
+        ], function (err) {
+            if (err) {
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
             }
         });
     }
