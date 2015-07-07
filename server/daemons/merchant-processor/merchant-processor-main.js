@@ -48,7 +48,6 @@ worker.register({
                                 callback(new Error('username-not-found'));
                             });
                         } else {
-                            var paymentPending = dbUser.account.paymentPending;
                             if (dbUser.status === 'failed') {
                                 savePayment(params, 'failure', 'account-error', function () {
                                     callback(new Error('account-error'));
@@ -365,4 +364,3 @@ function rollbackAccountForPayment(accountId, merchant, paymentPending, firstMer
         }
     });
 }
-
