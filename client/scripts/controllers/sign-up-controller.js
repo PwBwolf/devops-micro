@@ -4,6 +4,7 @@
     app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.mv = {disclaimer: true};
+        $scope.formSubmit = false;
 
         activate();
 
@@ -69,6 +70,7 @@
             $scope.form.expiryDate.$touched = true;
             $scope.form.zipCode.$touched = true;
             $scope.form.disclaimer.$touched = true;
+            $scope.formSubmit = true;
         }
 
     }]);

@@ -639,6 +639,7 @@
             SIGN_UP_DISCLAIMER_END: '',
             SIGN_UP_DISCLAIMER_REQUIRED: 'In order to use YipTV services you need to accept our Terms of Use and Privacy Policy',
             SIGN_UP_PRIVACY_POLICY: 'Privacy Policy',
+            SIGN_UP_FORM_INVALID: 'You have not entered all the required fields',
             SIGN_UP_USER_EXISTS: 'This email is already registered with YipTV. Please use another email address.',
             SIGN_UP_FAILED: 'User sign up failed. Please contact customer support at',
             SIGN_UP_PROBLEM: 'Having trouble signing up? Contact Customer support at:',
