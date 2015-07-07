@@ -17,29 +17,29 @@
 		</div>
 	</div>
 	
-	<div id="teir_2" class="sgstdChnls" data-ng-controller="playerCtrl">
+	<div id="teir_2" class="sgstdChnls" data-ng-controller="promoCtrl">
 		<!--<div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div>-->
-		<div data-id="23" class="{{usrScrnClasses[0].className}} {{usrScrnClasses[2].className}}" data-ng-class="{'{{usrScrnClasses[1].className}}':$index == selectedIndex}" data-ng-click="itemClicked($index)" data-ng-repeat="usrS in usrSgstns">
+		<div data-id="23" class="{{usrScrnClasses[0].className}} {{usrScrnClasses[2].className}}" data-ng-class="{'{{usrScrnClasses[1].className}}':$index == selectedIndex}" data-ng-click="itemClicked($index)" data-ng-repeat="usrS in promoChnls">
 			
 			<div id="scrnHldr" data-ng-class="($index==selectedIndex) ? '{{usrScrnClasses[4].className}}' : '{{usrScrnClasses[3].className}}'">
-				<img ng-src="{{usrS.chnlIdImg}}" />
+				<img ng-src="{{usrS.image_poster}}"/>
 				<div class="chnLbl">
-					<span>{{usrS.sgstdTme}}</span><br /><span>{{usrS.sgstdDsc}}</span>
+					<span>{{usrS.name}}</span><br /><span>{{usrS.sgstdDsc}}</span>
 				</div>
-				<img ng-src="{{usrS.sgstdScrn}}"/>
+                <img ng-src="{{usrS.image_url}}" />
 			</div>
 			
 			<div id="scrnHldr" data-ng-class="($index==selectedIndex) ? '{{usrScrnClasses[3].className}}' : '{{usrScrnClasses[4].className}}'">
-				<img ng-src="{{usrS.chnlIdImg}}" />
+                <img ng-src="{{usrS.image_poster}}"/>
 				<article>
 					<aside>
-						<h3>{{usrS.sgstdTme}}</h3>
+						<h3>{{usrS.startTime}}</h3>
 						<p>{{usrS.sgstdDsc}}</p>
 						<p>{{usrS.sgstdDscCntnt}}</p>
 					</aside>
 				</article>
 				<!-- div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div -->
-				<img ng-src="{{usrS.sgstdDscImg}}"/>
+				<img ng-src="{{usrS.image_url}}" />
 			</div>
 			
 		</div>

@@ -7,12 +7,13 @@
         activate();
         function activate() {
             $scope.usrScrnClasses = homeScrnsSvc.getUsrClass();
+            
             $scope.loadingChannels = true;
             userSvc.getPromoChannels(function (data) {
                 $scope.promoChnls = data;
                 if ($scope.promoChnls && $scope.promoChnls.length > 0) {
 					for(var h in $scope.promoChnls){
-                        console.log('the promo channel name is: '+$scope.promoChnls[h].name);
+                        //console.log('the promo channel name is: '+$scope.promoChnls[h].name);
                     /*$scope.chnlClicked = function (index) {
 			            $scope.selectedPromoChnl = index;
 						$scope.selectChannel(index);

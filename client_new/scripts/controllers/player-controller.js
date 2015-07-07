@@ -45,8 +45,8 @@
                 if ($scope.channels && $scope.channels.length > 0) {
                     
                     console.log('Amt of promo chnls: '+$scope.channels.length);
-					for(var h in $scope.channels){
-                        console.log('the promo channel name is: '+$scope.channels[h].name);
+					for(var p in $scope.channels){
+                        //console.log('the promo channel name is: '+$scope.channels[p].name);
                     /*$scope.chnlClicked = function (index) {
 			            $scope.selectedPromoChnl = index;
 						$scope.selectChannel(index);
@@ -104,7 +104,7 @@
                 mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (channelGuide) {
                     $scope.airings = channelGuide[0].airings;
                     $scope.playChannel(channelIndex);
-					console.log('this time: '+$scope.airings[channelIndex].program.title);
+					//console.log('this time: '+$scope.airings[channelIndex].program.title);
 					//$scope.onAir = $scope.airings[channelIndex].program.title;
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
