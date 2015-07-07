@@ -28,21 +28,12 @@
                         });
                     },
                     function (error) {
-                        if (error === 'PaidUser') {
+                        if(error === 'PaidUser') {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED'));
-                            $scope.saving = false;
-                        } else if (error === 'PaymentPendingActive') {
-                            userSvc.getUserProfile(function () {
-                                $location.path('/upgrade-subscription-success-payment-pending');
-                                $scope.saving = false;
-                            }, function () {
-                                loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
-                                $scope.saving = false;
-                            });
                         } else {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
-                            $scope.saving = false;
                         }
+                        $scope.saving = false;
                     });
             } else {
                 setFormDirty();

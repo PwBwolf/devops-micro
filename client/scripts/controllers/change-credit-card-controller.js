@@ -19,18 +19,11 @@
                 userSvc.changeCreditCard(
                     $scope.mv,
                     function () {
-                        userSvc.getUserProfile(function () {
-                            $location.path('/change-credit-card-success');
-                            $scope.saving = false;
-                        }, function () {
-                            loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_ACCOUNT_REFRESH_ERROR'));
-                            $scope.saving = false;
-                        });
+                        $location.path('/change-credit-card-success');
+                        $scope.saving = false;
                     }, function (error) {
                         if(error === 'FreeUser') {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_FREE_USER_ERROR'));
-                        } else if(error === 'PaymentPending') {
-                            loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_PAYMENT_ERROR'));
                         } else {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }

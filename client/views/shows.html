@@ -3,22 +3,22 @@
         <div class="shows-container container">
             <div class="category-title"><span class="category-line-left"></span><span class="category-name" translate="SHOWS_TITLE_SPORTS"></span><span class="category-line-right"></span></div>
             <div class="shows-category">
-                <div class="panel panel-default col-md-2 panel-closed" data-ng-class="{'panel-open':$index == selectedIndexSports}" data-ng-click="itemClickedSports($index)" data-ng-repeat="show in sports">
-                    <div class="show-panel" data-ng-class="($index===selectedIndexSports) ? 'back' : 'front'">
-                        <div class="panel-body"><img data-ng-src="{{show.banner}}"/></div>
+                <div class="{{showClasses[2].className}} {{showClasses[3].className}} {{showClasses[4].className}} {{showClasses[0].className}}" data-ng-class="{'{{showClasses[1].className}}':$index == selectedIndex1}" data-ng-click="itemClicked1($index)" data-ng-repeat="show in shows1">
+                    <div class="show-panel" data-ng-class="($index===selectedIndex1) ? '{{showClasses[6].className}}' : '{{showClasses[5].className}}'">
+                        <div class="panel-body"><img data-ng-src="{{show.showBanner}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.channelDescription}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescriptionContent}}"></dd>
                             </dl>
                         </div>
                     </div>
-                    <div class="show-panel" data-ng-class="($index===selectedIndexSports) ? 'front' : 'back'">
-                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channel}}"/></div>
+                    <div class="show-panel" data-ng-class="($index===selectedIndex1) ? '{{showClasses[5].className}}' : '{{showClasses[6].className}}'">
+                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channelId}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.description}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescription}}"></dd>
                             </dl>
                         </div>
                     </div>
@@ -26,22 +26,22 @@
             </div>
             <div class="category-title"><span class="category-line-left"></span><span class="category-name" translate="SHOWS_TITLE_NEWS"></span><span class="category-line-right"></span></div>
             <div class="shows-category">
-                <div class="panel panel-default col-md-2 panel-closed" data-ng-class="{'panel-open':$index === selectedIndexNews}" data-ng-click="itemClickedNews($index)" data-ng-repeat="show in news">
-                    <div class="show-panel" data-ng-class="($index===selectedIndexNews) ? 'back' : 'front'">
-                        <div class="panel-body"><img data-ng-src="{{show.banner}}"/></div>
+                <div class="{{showClasses[2].className}} {{showClasses[3].className}} {{showClasses[4].className}} {{showClasses[0].className}}" data-ng-class="{'{{showClasses[1].className}}':$index === selectedIndex2}" data-ng-click="itemClicked2($index)" data-ng-repeat="show in shows2">
+                    <div class="show-panel" data-ng-class="($index===selectedIndex2) ? '{{showClasses[6].className}}' : '{{showClasses[5].className}}'">
+                        <div class="panel-body"><img data-ng-src="{{show.showBanner}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.channelDescription}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescriptionContent}}"></dd>
                             </dl>
                         </div>
                     </div>
-                    <div class="show-panel" data-ng-class="($index===selectedIndexNews) ? 'front' : 'back'">
-                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channel}}"/></div>
+                    <div class="show-panel" data-ng-class="($index===selectedIndex2) ? '{{showClasses[5].className}}' : '{{showClasses[6].className}}'">
+                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channelId}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.description}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescription}}"></dd>
                             </dl>
                         </div>
                     </div>
@@ -49,22 +49,22 @@
             </div>
             <div class="category-title"><span class="category-line-left"></span><span class="category-name" translate="SHOWS_TITLE_ENTERTAINMENT"></span><span class="category-line-right"></span></div>
             <div class="shows-category">
-                <div class="panel panel-default col-md-2 panel-closed" data-ng-class="{'panel-open':$index===selectedIndexEntertainment}" data-ng-click="itemClickedEntertainment($index)" data-ng-repeat="show in entertainment">
-                    <div class="show-panel" data-ng-class="($index===selectedIndexEntertainment) ? 'back' : 'front'">
-                        <div class="panel-body"><img data-ng-src="{{show.banner}}"/></div>
+                <div class="{{showClasses[2].className}} {{showClasses[3].className}} {{showClasses[4].className}} {{showClasses[0].className}}" data-ng-class="{'{{showClasses[1].className}}':$index===selectedIndex3}" data-ng-click="itemClicked3($index)" data-ng-repeat="show in shows3">
+                    <div class="show-panel" data-ng-class="($index===selectedIndex3) ? '{{showClasses[6].className}}' : '{{showClasses[5].className}}'">
+                        <div class="panel-body"><img data-ng-src="{{show.showBanner}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.channelDescription}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescriptionContent}}"></dd>
                             </dl>
                         </div>
                     </div>
-                    <div class="show-panel" data-ng-class="($index===selectedIndexEntertainment) ? 'front' : 'back'">
-                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channel}}"/></div>
+                    <div class="show-panel" data-ng-class="($index===selectedIndex3) ? '{{showClasses[5].className}}' : '{{showClasses[6].className}}'">
+                        <div class="panel-body"><img class="back-image" data-ng-src="{{show.channelId}}"/></div>
                         <div class="panel-footer">
                             <dl>
-                                <dt translate="{{show.title}}"></dt>
-                                <dd translate="{{show.description}}"></dd>
+                                <dt translate="{{show.showTitle}}"></dt>
+                                <dd translate="{{show.showDescription}}"></dd>
                             </dl>
                         </div>
                     </div>

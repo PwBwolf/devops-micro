@@ -1,16 +1,43 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeCtrl', ['appSvc', '$scope', '$window', function (appSvc, $scope, $window) {
-        activate();
-
+    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', '$', '$filter', 'prflButtons', function (appSvc, $scope, $window, $location, $, $filter, prflButtons) {
+        $scope.prflSlctns = [];
+		
+		activate();
+		init();
         function activate() {
             if ($scope.session.signOut) {
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
         }
+		
+		//var dUser = $scope.user.firstName;
+		//console.log('dUser: '+dUser);
+		
+		function init(){
+			$scope.prflSlctns = prflButtons.getPfrlSlctns();
+			$scope.dUsr = $scope.user;
+		}
+		
+		
+		$scope.isSlctd = false;
+		$scope.slctdPrflItm = -1; // Whatever the default selected index is, use -1 for no selection
+		$scope.slctdAcctPnl = -1;
 
+	    $scope.prflItmSlctd = function ($index) { $scope.slctdPrflItm = $index; };  // Flip card on click
+		$scope.acctPnlSlctd = function (pnl) { $scope.slctdAcctPnl = pnl; console.log('pnl: '+pnl) };		
+		$scope.getPrsnlInfo = function (){
+			//$scope.usrDataInfo = { "usrPrfl": "views/user-info.html" };
+			//$('#langPrefs').attr('id', 'usrPrfl').attr('data-ng-include', 'usrDataInfo.usrPrfl');
+			console.log('the wing');
+		}
+		
+		$scope.prflPrefs = function(){
+			
+		}
+		
         $scope.$watch(function () {
             return window.innerWidth;
         }, function (value) {
@@ -42,5 +69,24 @@
                     break;
             }
         });
-    }]);
+		
+		$scope.usrDataFile = {
+			//"prefs": "views/home-prefs.html",
+			//"prefs": "views/user-prefs.html",
+			"cntnt": "views/home-scrns.html",
+			"chnls": "views/home-chnls.html",
+			"guide": "views/home-guide.html",
+			"langPrefs": "views/preferences.html",
+			"usrPrfl": "views/user-info.html",
+			"usrPwd": "views/change-password.html"
+		}
+		
+		
+    }])
+	.filter('setCount', function(){
+		return function(repo, begin, end){
+			return repo.slice(begin, end);
+		}
+	})
+	
 }(angular.module('app')));

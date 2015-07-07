@@ -55,9 +55,6 @@
 
                         <div class="error-message" ng-show="form.password.$dirty && form.password.$error.required" translate="COMP_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$dirty && !form.password.$error.required && form.password.$error.complexity" translate="COMP_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
-                        <div>
-                            <ul class="passwordStrength" password-strength="password"></ul>
-                        </div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="COMP_SIGN_UP_CONFIRM_PASSWORD"></span><br>
                         <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">

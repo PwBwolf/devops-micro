@@ -38,14 +38,6 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up-free-success',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-free-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
             .when('/sign-up/complimentary/:compCode',
             {
                 title: title,
@@ -54,27 +46,19 @@
                 controller: 'complimentarySignUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up/idt',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/idt-sign-up.html',
-                controller: 'idtSignUpCtrl',
-                access: access.anon
-            })
-            .when('/processing-order',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/processing-order.html',
-                controller: 'processingOrderCtrl',
-                access: access.anon
-            })
             .when('/sign-up-success',
             {
                 title: title,
                 description: description,
                 templateUrl: 'views/sign-up-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/sign-up-success-free',
+            {
+                title: title,
+                description: description,
+                templateUrl: 'views/sign-up-success-free.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
@@ -170,8 +154,9 @@
             {
                 title: title,
                 description: description,
-                templateUrl: 'views/user-home.html',
-                controller: 'userHomeCtrl',
+                //templateUrl: 'views/user-home.html',
+				templateUrl: 'views/home.html',
+                controller: 'homeCtrl',
                 access: access.user
             })
             .when('/account',

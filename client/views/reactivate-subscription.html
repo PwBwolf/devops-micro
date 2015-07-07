@@ -39,7 +39,7 @@
                         <div class="error-message" ng-show="form.cardNumber.$dirty && form.cardNumber.$error.card" translate="REACTIVATE_SUBSCRIPTION_CARD_NUMBER_ERROR"></div>
                     </div>
                     <div class="form-container">
-                        <div class="half-form">
+                        <div class="two-third-form">
                             <span class="label-text" translate="REACTIVATE_SUBSCRIPTION_EXPIRY_DATE"></span>
                             <br>
                             <input autocomplete="off" id="expiryDate" maxlength="9" required payments-validate="expiry" payments-format="expiry" name="expiryDate" ng-model="mv.expiryDate" class="text-box" ng-class="{'text-box-error': form.expiryDate.$dirty && form.expiryDate.$invalid}">
@@ -47,7 +47,7 @@
                             <div class="error-message" ng-show="form.expiryDate.$dirty && form.expiryDate.$error.required" translate="REACTIVATE_SUBSCRIPTION_EXPIRY_DATE_REQUIRED"></div>
                             <div class="error-message" ng-show="form.expiryDate.$dirty && !form.expiryDate.$error.required && form.expiryDate.$error.expiry" translate="REACTIVATE_SUBSCRIPTION_EXPIRY_DATE_INVALID"></div>
                         </div>
-                        <div class="half-form">
+                        <div class="one-third-form">
                             <span class="label-text" translate="REACTIVATE_SUBSCRIPTION_CVV"></span>
                             <br><input autocomplete="off" type="password" id="cvv" name="cvv" ng-model="mv.cvv" required maxlength="4" class="text-box" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-class="{'text-box-error': form.cvv.$dirty && form.cvv.$invalid}">
 

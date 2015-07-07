@@ -1,12 +1,12 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="PREFERENCES_HEADING"></span></h1>
+        <!-- h1><span translate="PREFERENCES_HEADING"></span></h1 -->
 
-        <div class="container">
+        <div class="container l_Prefs">
             <div class="form-box">
                 <form name="form" id="form" ng-submit="updatePreferences()" novalidate>
-                    <div>&nbsp;</div>
-                    <div>&nbsp;</div>
+                    <!-- div>&nbsp;</div>
+                    <div>&nbsp;</div -->
                     <span class="label-text" translate="PREFERENCES_PREFERRED_LANGUAGE"></span><br>
 
                     <select id="language" name="language" required ng-model="mv.language" class="text-box drop-down-list" ng-class="{'text-box-error': form.language.$dirty && form.language.$invalid}">

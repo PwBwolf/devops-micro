@@ -30,14 +30,6 @@
                     function (error) {
                         if(error === 'PaidActiveUser') {
                             loggerSvc.logError($filter('translate')('REACTIVATE_SUBSCRIPTION_ALREADY_ACTIVE'));
-                        } else if (error === 'PaymentPendingActive') {
-                            userSvc.getUserProfile(function () {
-                                $location.path('/reactivate-subscription-success-payment-pending');
-                                $scope.saving = false;
-                            }, function () {
-                                loggerSvc.logError($filter('translate')('REACTIVATE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
-                                $scope.saving = false;
-                            });
                         } else {
                             loggerSvc.logError($filter('translate')('REACTIVATE_SUBSCRIPTION_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }

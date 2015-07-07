@@ -11,43 +11,6 @@
     display: none !important;
 }
 
-#channelLinks {
-    background-color: rgba(48, 42, 58, 0.95);
-    width: inherit;
-    text-align: center;
-}
-
-#channelLinks dl {
-    margin-bottom: 30px !important;
-    text-align: left;
-}
-
-#channelLinks dt {
-    color: white;
-    font-size: 95%;
-    font-weight: bolder !important;
-    text-transform: capitalize;
-    margin-bottom: 8px;
-}
-
-#channelLinks dd {
-    color: rgb(129, 198, 255);
-    font-size: 85%;
-    white-space: normal;
-}
-
-#channelLinks dd + dd {
-    margin-bottom: 2px;
-}
-
-#channelLinks .line {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 auto;
-    padding: 2%;
-    width: auto;
-}
-
 .off {
     display: none !important;
 }
@@ -228,7 +191,7 @@
 
     #brand img {
         width: auto;
-        height: 60px;
+        height: 80px;
         display: block !important;
         margin: 0 auto;
         position: absolute;
@@ -261,7 +224,7 @@
     }
 
     .image-docked {
-        height: 50px !important;
+        height: 65px !important;
         transition: all 1s ease-in-out;
         -webkit-transition: all 1s ease-in-out;
         -moz-transition: all 1s ease-in-out;
@@ -302,7 +265,7 @@
     #menu {
         width: 100%;
         font-weight: bold;
-        font-size: 80%;
+		font-size:80%;
     }
 
     #menuItems {
@@ -702,41 +665,40 @@
         padding: 2%;
         width: 55%;
     }
+	
+	#leftContent ol{
+	  display: table;
+	  margin-left: 5%;
+	  padding-left: 0;
+	  list-style: none;
+  	}
 
-    #leftContent ol {
-        display: table;
-        margin-left: 5%;
-        padding-left: 0;
-        list-style: none;
+    #leftContent li:before{
+      content: counter(table-ol) ".";
+      display: table-cell;
+      padding-right: 0.4em;
+      text-align: right;
     }
+	
+	#leftContent li {
+		font-size: 90%;
+		list-style-type:decimal;
+		list-style-position:inside;
+		line-height:1.5em;
+		
+	    display: table-row;
+	    counter-increment: table-ol;
+	}
 
-    #leftContent li:before {
-        content: counter(table-ol) ".";
-        display: table-cell;
-        padding-right: 0.4em;
-        text-align: right;
-    }
+	#downloadButtons {
+		margin-bottom: 4%;
+	}
 
-    #leftContent li {
-        font-size: 90%;
-        list-style-type: decimal;
-        list-style-position: inside;
-        line-height: 1.5em;
-
-        display: table-row;
-        counter-increment: table-ol;
-    }
-
-    #downloadButtons {
-        margin: 4% auto;
-        text-align: center;
-    }
-
-    #finePrint {
-        font-size: 75%;
-        line-height: 1.4em;
-    }
-
+	#finePrint {
+		font-size:75%;
+		line-height:1.4em;
+	}
+	
     #rightContent {
         width: 39%;
     }
@@ -769,9 +731,10 @@
 
     #footerBox {
         width: 100%;
-        height: auto;
+        height: 100px;
         position: relative;
-        margin-bottom: 30px;
+        font-size: 12px;
+        margin-bottom: 0px;
         padding: 0px;
         color: black;
         transition: all 1s ease-in-out;
@@ -783,11 +746,7 @@
     }
 
     #footerBox a {
-        color: rgb(129, 198, 255);
-    }
-
-    #footerBox a:hover {
-        color: rgb(254, 254, 254);
+        color: grey;
     }
 
     #footerBox .jumbotron {
@@ -796,14 +755,24 @@
 
     #footerLinks li, #legalLinks li {
         list-style: none;
-        list-style-type: none;
         color: white;
     }
 
-    #footerLinks {
-        padding: 2% 5%;
+    #legalLinks {
+        background: white;
+        padding: 1% 5% 4%;
         text-align: center;
         text-transform: capitalize;
+    }
+
+    #legalLinks li  {
+        display: inline;
+    }
+
+    #legalLinks li:nth-child(n+2)::before{
+        content: '|';
+        margin: 0 2%;
+        color:grey;
     }
 
     #footerLinks li {
@@ -814,27 +783,6 @@
         content: '|';
         margin: 0 2%;
         color: grey;
-    }
-
-    #legalLinks {
-        background: white;
-        padding: 1% 5% 4%;
-        text-align: center;
-        text-transform: capitalize;
-    }
-
-    #legalLinks li {
-        display: inline;
-    }
-
-    #legalLinks li:nth-child(n+2)::before {
-        content: '|';
-        margin: 0 2%;
-        color: grey;
-    }
-
-    #legalLinks a:hover {
-        color: dimgrey;
     }
 
     .footer-subscription {
@@ -865,6 +813,26 @@
 
     .footer-subscription button:nth-child(even) {
         margin-right: 4px;
+    }
+
+    #footerLinks {
+        padding: 1% 5% 1%;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    #footerLinks ul {
+        padding-top: 1%;
+    }
+
+    #footerLinks li {
+        display: inline;
+    }
+
+    #footerLinks li:nth-child(n+2)::before {
+        content: '|';
+        margin: 0 2%;
+        color: grey;
     }
 
     footer {

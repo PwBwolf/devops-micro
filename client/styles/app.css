@@ -40,11 +40,6 @@ input[type="checkbox"] {
     display: none;
 }
 
-input[type="radio"] {
-    margin-left: 10px;
-    display: none;
-}
-
 label:before {
     content: "";
     display: inline-block;
@@ -76,15 +71,6 @@ label {
 }
 
 input[type="checkbox"]:checked + label:before {
-    content: "\2713";
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
-    font-size: 15px;
-    color: white;
-    text-align: center;
-    line-height: 15px;
-}
-
-input[type="radio"]:checked + label:before {
     content: "\2713";
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
     font-size: 15px;
@@ -200,14 +186,6 @@ input[type="radio"]:checked + label:before {
     color: #fff;
 }
 
-.cancel-on {
-    background-color: #FFF;
-    font-weight: bolder;
-    padding: 10px;
-    display: inline-block;
-    width: 340px;
-}
-
 .user-home-box {
     background-color: #fff;
 }
@@ -257,36 +235,12 @@ input[type="radio"]:checked + label:before {
     font-size: 12px;
 }
 
-.carousel-fade .carousel-inner .item {
-  opacity: 0;
-  -webkit-transition-property: opacity;
-  -moz-transition-property: opacity;
-  -o-transition-property: opacity;
-  transition-property: opacity;
-}
-.carousel-fade .carousel-inner .active {
-  opacity: 1 !important;
-}
-.carousel-fade .carousel-inner .active.left,
-.carousel-fade .carousel-inner .active.right {
-  left: 0;
-  opacity: 0;
-  z-index: 1;
-}
-.carousel-fade .carousel-inner .next.left,
-.carousel-fade .carousel-inner .prev.right {
-  opacity: 1;
-}
-.carousel-fade .carousel-control {
-  z-index: 2;
-}
-
 #carouselBanner .carousel-indicators {
-    bottom: -30px;
+    bottom: 30px;
     left: 0;
-    width: 100%;
+    width: 80%;
     margin: 0px;
-    text-align: center;
+    text-align: right;
     z-index: 9999;
 }
 
@@ -312,7 +266,7 @@ input[type="radio"]:checked + label:before {
 
 .bolder-text {
     font-weight: bolder;
-    font-family: 'gotham-boldgotham-bold';
+    font-family: 'gotham-bookgotham-book';
 }
 
 .justify-text {
@@ -422,10 +376,6 @@ input[type="radio"]:checked + label:before {
     border-radius: 10px;
     padding: 0px;
     margin: 0px;
-}
-
-.sign-up-button {
-    background: #5FC503;
 }
 
 .modal-button {
@@ -560,7 +510,7 @@ a.import-button:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
-    border: 1px solid;
+    border: 1px dashed dimgrey;
 }
 
 .drop-down-list {
@@ -571,7 +521,7 @@ a.import-button:hover {
 .text-box-error {
     background: #FFFFFF;
     border: 2px solid;
-    border-color: rgb(228, 29, 29) !important;
+    border-color: rgb(228, 29, 29);
     color: #000000;
     font-family: "radikallight";
     font-size: 20px;
@@ -605,24 +555,6 @@ a.import-button:hover {
     text-decoration: underline;
 }
 
-ul.passwordStrength {
-    display: inline;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    vertical-align: 2px;
-    width: 100%;
-}
-
-.point {
-    background: #DDD;
-    border-radius: 2px;
-    display: inline-block;
-    height: 10px;
-    margin-right: 1px;
-    width: 19.5%;
-}
-
 .heading {
     text-transform: uppercase;
 }
@@ -631,14 +563,7 @@ ul.passwordStrength {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
-    text-transform: capitalize;
-}
-
-.sign-up-message {
-    font-family: 'gotham-bookgotham-book';
-    font-size: 16px;
-    padding-left: 0;
-    text-transform: none;
+    text-transform: uppercase;
 }
 
 .checkbox {
@@ -786,10 +711,6 @@ ul.passwordStrength {
     .form-box {
         width: 100%;
     }
-
-    .order-summary-title {
-        text-align: left;
-    }
 }
 
 @media screen and (max-width: 767px) {
@@ -849,14 +770,6 @@ ul.passwordStrength {
     .content-area h1 {
         font-size: 24px;
     }
-
-    .label-text {
-        font-size: 15px;
-    }
-
-    .error-message {
-        font-size: 15px;
-    }
 }
 
 @media screen and (max-width: 479px) {
@@ -896,11 +809,6 @@ ul.passwordStrength {
     .user-home-box .caption button {
         font-size: 14px;
         padding: 10px;
-        width: 250px;
-    }
-
-    .cancel-on {
-        font-size: 14px;
         width: 250px;
     }
 }

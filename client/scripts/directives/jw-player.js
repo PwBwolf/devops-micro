@@ -6,8 +6,10 @@
             restrict: 'EC',
             link: function (scope, element, attrs) {
                 scope.$watch(attrs.setup, function (setup) {
-                    jwplayer(attrs.id).remove();
-                    jwplayer(attrs.id).setup(setup);
+                    //if(setup.file) {
+                            jwplayer(attrs.id).remove();
+                            jwplayer(attrs.id).setup(setup);
+                    //}
                 }, true);
             }
         };

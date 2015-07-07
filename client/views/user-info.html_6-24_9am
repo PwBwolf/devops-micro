@@ -1,0 +1,69 @@
+<div class="content-area">
+    <div class="content-box">
+        <!-- h1><span translate="CHANGE_PASSWORD_HEADING"></span></h1 -->
+        <div class="container l_Prefs">
+            <div class="form-box" data-ng-controller="updateProfileCtrl">
+                <!--div>&nbsp;</div>
+                <div>&nbsp;</div-->
+                <!-- form name="form" id="form" ng-submit="changePassword()" novalidate>
+                    <span class="label-text" translate="CHANGE_PASSWORD_CURRENT_PASSWORD"></span><br>
+                    <input autofocus required ng-model="mv.currentPassword" name="currentPassword" type="password" class="text-box" ng-class="{'text-box-error': form.currentPassword.$dirty && form.currentPassword.$invalid}">
+                    <div class="error-message" ng-show="form.currentPassword.$dirty && form.currentPassword.$error.required" translate="CHANGE_PASSWORD_CURRENT_PASSWORD_REQUIRED"></div>
+                    <br><br><span class="label-text" translate="CHANGE_PASSWORD_NEW_PASSWORD"></span><br>
+                    <input complex-password not-same-as="mv.currentPassword" ng-model="mv.newPassword" name="newPassword" maxlength="20" type="password" autocomplete="off" class="text-box" ng-class="{'text-box-error': form.newPassword.$dirty && form.newPassword.$invalid}" required>
+                    <div class="error-message" ng-show="form.newPassword.$dirty && form.newPassword.$error.required" translate="CHANGE_PASSWORD_NEW_PASSWORD_REQUIRED"></div>
+                    <div class="error-message" ng-show="form.newPassword.$dirty && !form.newPassword.$error.required && form.newPassword.$error.complexity" translate="CHANGE_PASSWORD_NEW_PASSWORD_NOT_COMPLEX"></div>
+                    <div class="error-message" ng-show="form.newPassword.$dirty && !form.newPassword.$error.required && !form.newPassword.$error.complexity && form.newPassword.$error.notSameAs" translate="CHANGE_PASSWORD_NEW_PASSWORD_SAME"></div>
+                    <br><br><span class="label-text" translate="CHANGE_PASSWORD_CONFIRM_PASSWORD"></span> <br>
+                    <input required autocomplete="off" same-as="mv.newPassword" ng-model="mv.confirmPassword" name="confirmPassword" type="password" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid}">
+                    <div class="error-message" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required" translate="CHANGE_PASSWORD_CONFIRM_PASSWORD_REQUIRED"></div>
+                    <div class="error-message" ng-show="form.confirmPassword.$dirty && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="CHANGE_PASSWORD_CONFIRM_PASSWORD_NO_MATCH"></div>
+                    <br><br><br>
+                    <button type="submit" class="submit-button" translate="CHANGE_PASSWORD_BUTTON"></button>
+                </form -->
+				
+				<form name="form" id="form" ng-submit="updateUserProfile()" novalidate>
+                    <div class="form-container">
+                        <!-- div class="full-form">
+                            <h3 translate="SIGN_UP_ACCOUNT_INFO"></h3>
+                        </div -->
+                        <div class="half-form">
+                            <span class="label-text" translate="SIGN_UP_FIRST_NAME"></span>
+                            <br><input autofocus valid-name autocomplete="off" id="firstName" placeholder="{{dUsr.firstName}}" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
+
+                            <div class="error-message" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="SIGN_UP_FIRST_NAME_REQUIRED"></div>
+                            <div class="error-message" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="SIGN_UP_FIRST_NAME_INVALID"></div>
+                        </div>
+                        <div class="half-form">
+                            <span class="label-text" translate="SIGN_UP_LAST_NAME"></span>
+                            <br><input valid-name autocomplete="off" placeholder="{{dUsr.lastName}}" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="text-box" required ng-class="{'text-box-error': form.lastName.$dirty && form.lastName.$invalid}">
+
+                            <div class="error-message" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="SIGN_UP_LAST_NAME_REQUIRED">Enter your last name</div>
+                            <div class="error-message" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="SIGN_UP_LAST_NAME_INVALID"></div>
+                        </div>
+                    </div>
+                    <div class="full-form">
+                        <span class="label-text" translate="SIGN_UP_EMAIL"></span><br>
+                        <input autocomplete="off" type="text" placeholder="{{dUsr.email}}" maxlength="50" required is-email is-sign-up-allowed="paid" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}">
+
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="SIGN_UP_EMAIL_INVALID"></div>
+                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.isSignUpAllowed" translate="SIGN_UP_EMAIL_EXISTS"></div>
+                    </div>
+                    <div class="full-form">
+                        <span class="label-text" translate="SIGN_UP_TELEPHONE"></span><br>
+                        <input autocomplete="off" type="text" placeholder="{{dUsr.telephone}}" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
+
+                        <div class="error-message" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="SIGN_UP_TELEPHONE_REQUIRED"></div>
+                        <div class="error-message" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="SIGN_UP_TELEPHONE_INVALID"></div>
+                    </div>
+                    <div class="full-form">
+                        <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
+                    </div>
+                    <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
+                    <div class="full-form center-form"><span translate="SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="SIGN_UP_SIGN_IN"></a></div>
+				</form>
+            </div>
+        </div>
+    </div>
+</div>
