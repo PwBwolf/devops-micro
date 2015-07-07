@@ -1,9 +1,8 @@
-<div class="usr_Prefs_pnl" data-ng-controller='playerCtrl'>
-	
+<div class="usr_Prefs_pnl" data-ng-controller='_promoCtrl'>
 	<!-- /// === user channels - btm half of the nav banner === /// -->
 	<div class="usr_Prfl_n_Chnls">
 		<ul>
-			<li data-ng-repeat="chnls in channels"><img ng-src="{{chnls.image_url}}" data-ng-click="chnlClicked($index);" /><span data-ng-show="($index === selectedChnl) ? true : false">this is channel index: {{onAir}}</span></li>
+			<li data-ng-repeat="chnl in _promoChnls"><img ng-src="{{chnl.image_url}}" data-ng-click="chnlClicked($index);" /><span data-ng-show="($index === selectedChnl) ? true : false">this is channel index: {{onAir}}</span></li>
 		</ul>
 	</div>	
 </div>

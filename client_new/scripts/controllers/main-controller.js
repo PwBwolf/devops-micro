@@ -263,14 +263,14 @@
 				for(var b = 0; b < dBtns.length; b++){
 					dBtns[b].css('display', 'none');
 				}
-				console.log('not home. from: '+baseLoc+' to '+newLoc);
+				//console.log('not home. from: '+baseLoc+' to '+newLoc);
 			} else {
 				for(var c = 0; c < dBtns.length; c++){
 					dBtns[c].css('display', 'inline-block');
 				}
-				console.log('this is home '+newLoc);
+				//console.log('this is home '+newLoc);
 			} 
-			console.log('moving from: '+oldLoc+' -  to '+newLoc);
+			//console.log('moving from: '+oldLoc+' -  to '+newLoc);
 		});
 
 		

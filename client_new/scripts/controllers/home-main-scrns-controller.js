@@ -97,10 +97,10 @@
 			//});
 		
 		
-		console.log('this is me: ' +$scope.usrFavs[0].favDesc);
-		console.log('this is from: '+$scope.usrSgstns[4].chnlIdImg);
-		console.log('this is why: ' +$scope.prodLvls[2].lvlStatus);
-		console.log('this is test: ' +$scope.allChannels[1].streamLoc);
+		//console.log('this is me: ' +$scope.usrFavs[0].favDesc);
+		//console.log('this is from: '+$scope.usrSgstns[4].chnlIdImg);
+		//console.log('this is why: ' +$scope.prodLvls[2].lvlStatus);
+		//console.log('this is test: ' +$scope.allChannels[1].streamLoc);
 		
 		//console.log('this is '+$scope.special[0].dname+' dname');
 		//console.log('call test '+$scope.callMyTest.testing; );

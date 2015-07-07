@@ -7,17 +7,17 @@
 		<div id="my-player" class="mnScrn posNlne"><img data-ng-src="{{usrMnScrn.mnView}}" /></div>
 		<!--span id='errLog'></span-->
 		<div class="mnFavs posNlne" data-ng-controller="playerCtrl">
-			<div class="favScrn posNlne" data-id="{{usrF.favShwTme}}" data-ng-repeat="usrF in channels | setCount:0:4" data-ng-click="playChannel($index);"> <!-- createH(usrF.tmsId); -->
+			<div class="favScrn posNlne" data-id="{{usrF.startTime}}" data-ng-repeat="usrF in channels | limitTo:4" data-ng-click="chnlClicked($index);"> <!-- createH(usrF.tmsId); -->
 				<img ng-src="{{usrF.image_url}}" />
 				<div class="chnLbl">
-					<span>{{onAir}}</span><br /><span>{{usrF.favDesc}}</span>
+					<span>{{usrF.name}}</span><br /><span>{{usrF.favDesc}}</span>
 				</div>
 				<img ng-src="{{usrF.image_poster}}" />
 			</div>
 		</div>
 	</div>
 	
-	<div id="teir_2" class="sgstdChnls">
+	<div id="teir_2" class="sgstdChnls" data-ng-controller="playerCtrl">
 		<!--<div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div>-->
 		<div data-id="23" class="{{usrScrnClasses[0].className}} {{usrScrnClasses[2].className}}" data-ng-class="{'{{usrScrnClasses[1].className}}':$index == selectedIndex}" data-ng-click="itemClicked($index)" data-ng-repeat="usrS in usrSgstns">
 			
@@ -28,7 +28,6 @@
 				</div>
 				<img ng-src="{{usrS.sgstdScrn}}"/>
 			</div>
-			
 			
 			<div id="scrnHldr" data-ng-class="($index==selectedIndex) ? '{{usrScrnClasses[3].className}}' : '{{usrScrnClasses[4].className}}'">
 				<img ng-src="{{usrS.chnlIdImg}}" />
@@ -41,7 +40,6 @@
 				</article>
 				<!-- div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div -->
 				<img ng-src="{{usrS.sgstdDscImg}}"/>
-				
 			</div>
 			
 		</div>
