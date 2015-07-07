@@ -352,7 +352,7 @@
             INDEX_JOIN_NOW: 'Únase Ahora',
             INDEX_TRY_FREE: 'Probar por 7 días',
             INDEX_WATCH_NOW: 'Mirar ahora',
-            INDEX_NETWORKS: 'Redes y Canales',
+            INDEX_NETWORKS: 'Canales',
             INDEX_SHOWS_BY_CATEGORY: 'Programación por Categoria',
             INDEX_ACCOUNT: 'Cuenta',
             INDEX_ADMIN: 'Administracion',
