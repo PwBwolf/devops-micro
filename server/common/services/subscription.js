@@ -267,6 +267,15 @@ module.exports = {
                 });
                 callback(null, userObj, accountObj);
             },
+            // add locale
+            function (userObj, accountObj, callback) {
+                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
+                    }
+                    callback(null, userObj, accountObj);
+                });
+            },
             // add paid package in freeside
             function (userObj, accountObj, callback) {
                 billing.orderPackage(freeSideSessionId, config.freeSidePaidPackagePart, function (err) {
@@ -280,15 +289,6 @@ module.exports = {
                         }
                     }
                     callback(err, userObj, accountObj);
-                });
-            },
-            // add locale
-            function (userObj, accountObj, callback) {
-                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
-                    }
-                    callback(null, userObj, accountObj);
                 });
             },
             // send verification email
