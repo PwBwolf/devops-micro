@@ -54,6 +54,7 @@
             CHANGE_CREDIT_CARD_ACCESS_ERROR: 'You cannot change your credit card. Please contact customer support at',
             CHANGE_CREDIT_CARD_PAYMENT_ERROR: 'We were unable to process payment on your card. Please check your credit card information.',
             CHANGE_CREDIT_CARD_FREE_USER_ERROR: 'Trial users cannot add a credit card to their account',
+            CHANGE_CREDIT_CARD_COMP_USER_ERROR: 'Complimentary users cannot add a credit card to their account',
             CHANGE_CREDIT_CARD_ACCOUNT_REFRESH_ERROR: 'Please close and re-open the YipTV application browser window',
             CHANGE_CREDIT_CARD_SUCCESS_HEADING: 'Credit Card Changed',
             CHANGE_CREDIT_CARD_SUCCESS_MESSAGE: 'Your credit card has been changed successfully',
