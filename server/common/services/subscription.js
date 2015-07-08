@@ -546,7 +546,7 @@ module.exports = {
                     } else {
                         if (!userObj) {
                             logger.logError('subscription - upgradeSubscription - user not found: ' + userEmail);
-                            callback('UserNoFound');
+                            callback('UserNotFound');
                         } else if (userObj.status === 'failed') {
                             callback('FailedUser');
                         } else if (userObj.account.type === 'paid') {
@@ -807,7 +807,10 @@ module.exports = {
                         logger.logError('subscription - reactivateSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else {
-                        if ((userObj.status === 'active' || userObj.status === 'registered') && userObj.account.type === 'paid') {
+                        if(!userObj) {
+                            logger.logError('subscription - reactivateSubscription - user not found: ' + userEmail);
+                            callback('UserNotFound');
+                        } else if ((userObj.status === 'active' || userObj.status === 'registered') && userObj.account.type === 'paid') {
                             callback('PaidActiveUser');
                         } else if (userObj.account.type === 'free' || userObj.account.type === 'comp') {
                             callback('NonPaidUser');
@@ -1280,10 +1283,13 @@ module.exports = {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
                         callback(err);
+                    } else if(!userObj) {
+                        logger.logError('subscription - cancelSubscription - user not found: ' + userEmail);
+                        callback('UserNoFound');
                     } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
                         callback('NonActiveUser');
-                    } else if (userObj.account.type === 'free') {
-                        callback('FreeUser');
+                    } else if (userObj.account.type !== 'free') {
+                        callback('NonPaidUser');
                     } else {
                         callback(null, userObj);
                     }
