@@ -129,8 +129,6 @@ module.exports = {
             name: req.body.name,
             email: req.body.email,
             telephone: req.body.telephone,
-            ymId: req.body.ymId,
-            skypeId: req.body.skypeId,
             country: req.body.country,
             interest: req.body.interest,
             details: req.body.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;'),

@@ -17,7 +17,7 @@
             },
 
             saveContactUs: function (data, success, error) {
-                $http.post('/api/save-contact-us', data).success(success).error(error);
+                $http.post('/api/contact-us', data).success(success).error(error);
             },
 
             saveVisitor: function (visitor, success, error) {

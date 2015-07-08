@@ -571,6 +571,9 @@ module.exports = {
             if (user.account.type === 'free') {
                 return res.status(409).send('FreeUser');
             }
+            if (user.account.type === 'comp') {
+                return res.status(409).send('CompUser');
+            }
             async.waterfall([
                 // login to freeside
                 function (callback) {
