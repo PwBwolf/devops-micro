@@ -3,8 +3,8 @@
 
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate',
-        'pascalprecht.translate', 'webStorageModule', 'angularPayments',
-        'ui.bootstrap', 'ngTable', 'rwdImageMaps'
+        'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap',
+        'angulartics', 'angulartics.google.analytics', 'angulartics.google.tagmanager'
     ]);
     angular.module('app').value('_', window._);
     angular.module('app').value('toastr', window.toastr);
