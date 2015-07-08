@@ -2,7 +2,7 @@
     'use strict';
 
     app.controller('homeScrnsCtrl', ['$scope', '$filter', 'homeScrnsSvc', 'accessurlsvc', 'accesskeysvc', function ($scope, $filter, homeScrnsSvc, accessurlsvc, accesskeysvc) {
-		$scope.usrMnScrn = {};
+		//$scope.usrMnScrn = {};
 		$scope.usrSubScrn = {};
 		$scope.usrFavs = [];
 		$scope.usrSgstns = [];
@@ -38,7 +38,7 @@
 		init();
 		function init(){
 			
-			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
+			//$scope.usrMnScrn = homeScrnsSvc.getUsrData();
 			$scope.usrSubScrn = homeScrnsSvc.getUsrSubData();
 			$scope.usrFavs = homeScrnsSvc.getUsrFavs();
 			$scope.usrSgstns = homeScrnsSvc.getUsrSgstns();

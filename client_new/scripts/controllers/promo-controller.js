@@ -26,6 +26,13 @@
                 loggerSvc.logError('Error loading promo-channel list.');
             });
         };
+        
+		$scope.selectedIndex = -1; // Whatever the default selected index is, use -1 for no selection
+
+	    $scope.itemClicked = function ($index) {
+	    	$scope.selectedIndex = $index; // Flip card on click
+	    };
+        
 		/*
         $scope.selectPromoChannel = function (channelIndex) {
             if(!$scope.loadingChannelGuide) {

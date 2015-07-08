@@ -1,22 +1,19 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'homeScrnsSvc', 'loggerSvc', '$scope', function (userSvc, mediaSvc, homeScrnsSvc, loggerSvc, $scope) {
-        $scope.usrMnScrn = {};
-        
-        
+    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', function (userSvc, mediaSvc, loggerSvc, $scope) {
         $scope.playerOptions = {
-            id: 'my-player',
+			id: 'my-player',
             file: '/videos/yiptv.mp4',
-            width: 902,
-            height: 370,
+			width: 902,
+			height: 370,
             aspectratio: '16:9',
             primary: 'flash',
             logo: {
                 file: '/images/tv_logo.png'
             }
         };
-        /*
+
         $scope.channelSliderOptions = {
             auto: false,
             autoStart: false,
@@ -38,21 +35,23 @@
             preloadImages: 'visible',
             pager: false
         };
-        */
-        
 
         activate();
 
         function activate() {
-			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
-            
             $scope.loadingChannels = true;
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
                 if ($scope.channels && $scope.channels.length > 0) {
                     
-                    //console.log('Amt of promo chnls: '+$scope.channels.length);
-					
+                    console.log('Amt of promo chnls: '+$scope.channels.length);
+					for(var p in $scope.channels){
+                        //console.log('the promo channel name is: '+$scope.channels[p].name);
+                    /*$scope.chnlClicked = function (index) {
+			            $scope.selectedPromoChnl = index;
+						$scope.selectChannel(index);
+			        };*/
+					}
                     
                     
                     //$scope.selectChannel(0);
@@ -82,11 +81,6 @@
                         //$scope.selectedChnlIndex = index;
                         //$scope.playChannel(selectedChnlIndex);
 			        };
-                    
-                    $scope.watchNow = function (index) {
-                        $scope.selectedStream = index;
-                        $scope.playChannel(index);
-                    }
 					
 					//for(var c in $scope.channels){
 						//$scope.selectChannel(c);
@@ -104,18 +98,14 @@
 		
         $scope.selectChannel = function (channelIndex) {
             if(!$scope.loadingChannelGuide) {
-                //$scope.selectedChannelIndex = channelIndex;
+                $scope.selectedChannelIndex = channelIndex;
                 $scope.loadingChannelGuide = true;
 				//console.log('chnl log: '+channelIndex);
                 mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (channelGuide) {
                     $scope.airings = channelGuide[0].airings;
-                    //$scope.playChannel(channelIndex);
-                    $scope.onAir = $scope.airings[0].program.title;
-					// for(var p in $scope.airings){
-//                         console.log('chnl: '+$scope.airings[p].startTime);
-//                     }
-					//console.log('this time: '+$scope.airings[].length);
-					//console.log('air: '+$scope.airings )
+                    $scope.playChannel(channelIndex);
+					//console.log('this time: '+$scope.airings[channelIndex].program.title);
+					//$scope.onAir = $scope.airings[channelIndex].program.title;
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
@@ -131,15 +121,11 @@
                     $scope.playerOptions.file = channel.live_pc_url;
                     $scope.playerOptions.autoStart = true;
                     $scope.airing = airing;
-					//console.log(programDetails+' - '+' - '+index+' - '+channel.live_pc_url);
-                   
-                    $scope.channelLogo = $scope.channels[index].image_url;
+					//console.log(index+' - '+' - '+index+' - '+channel.live_pc_url);
+                    $scope.channelLogo = $scope.channels[index].image_poster;
                     $scope.channelNumber = $scope.channels[index].number;
                     $scope.channelName = $scope.channels[index].name;
-                    
-                    $scope.programDetails = $scope.getProgramDetails;
-					//console.log('p d: '+$scope.programDetails);
-                    
+					
 					playStream();
                 }).error(function () {
                     loggerSvc.logError('Error loading channel.');
@@ -152,8 +138,8 @@
                 // good for fullScrn //
                 // width: "100%",    //
                 // aspectratio: "16:9"//
-                //aspectratio: $scope.playerOptions.aspectratio,
-                width: 912,
+
+                width: 902,
                 height: 370,
                 playlist: [{
                     image: $scope.channelLogo,
