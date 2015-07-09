@@ -55,7 +55,7 @@
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="SIGN_UP_TELEPHONE_INVALID"></div>
                     </div>
-                    <div class="full-form"><span class="label-text" translate="SIGN_UP_PASSWORD"></span><br>
+                    <div class="full-form"><span class="label-text" translate="SIGN_UP_PASSWORD"></span><br><span class="label-text-info" translate="SIGN_UP_PASSWORD_INFO"></span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}">
 
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="SIGN_UP_PASSWORD_REQUIRED"></div>
