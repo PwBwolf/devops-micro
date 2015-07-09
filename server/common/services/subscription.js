@@ -1285,10 +1285,10 @@ module.exports = {
                         callback(err);
                     } else if(!userObj) {
                         logger.logError('subscription - cancelSubscription - user not found: ' + userEmail);
-                        callback('UserNoFound');
+                        callback('UserNotFound');
                     } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
                         callback('NonActiveUser');
-                    } else if (userObj.account.type !== 'free') {
+                    } else if (userObj.account.type === 'free' || userObj.account.type === 'comp') {
                         callback('NonPaidUser');
                     } else {
                         callback(null, userObj);
