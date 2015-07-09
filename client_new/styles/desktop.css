@@ -324,7 +324,15 @@ label:before{ display:none !important; }
 .usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
 .usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
 .usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; cursor: pointer; }
-.usr_Prfl_n_Chnls li span { background-color: #337AB7; vertical-align: top; padding: 7px; color:white; }
+.usr_Prfl_n_Chnls li > div { background-color: #337AB7; vertical-align: top; position: relative; display:inline-block; padding:5px; }
+.usr_Prfl_n_Chnls li span { background-color: #337AB7; vertical-align: top; padding: 2px; color:white; }
+
+#smChannelDesc { line-height: 1.051;}
+#smChannelDesc p { margin-bottom: 0px !important;}
+    /*.smChnlDesc { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; }*/
+    .program-details-header, .program-details-body { font-size:60%; font-weight:normal; background-color: transparent !important; }
+    .program-details-body {  }
+    
 
 #welcome {
     float: right;

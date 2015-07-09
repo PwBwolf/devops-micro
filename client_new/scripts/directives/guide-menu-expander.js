@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.directive('menuScroller', ['$window', function ($window) {
+    app.directive('guideExpander', ['$window', function ($window) {
         return {
             restrict: 'A',
             link: function () {

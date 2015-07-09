@@ -235,7 +235,46 @@ header {
 				.favScrn:nth-child(even){ float:right;}
 				
 		
-		.sgstdChnls { background:; height:33.33%; width:100%; }
+		.sgstdChnls { 
+            background:; height:33.33%; width:100%; 
+			-webkit-transition:all 1s ease-in-out;
+			-moz-transition:all 1s ease-in-out;
+			-o-transition:all 1s ease-in-out;
+			transition:all 1s ease-in-out;
+        }
+        .sgstdChnls_min { 
+            background:; height:4.33%; width:100%; 
+            -webkit-transition:all 1s ease-in-out;
+		    -moz-transition:all 1s ease-in-out;
+		    -o-transition:all 1s ease-in-out;
+		    transition:all 1s ease-in-out;
+        }
+        .scrnsMinimize {
+            height:393px;
+            -webkit-transition:all 1s ease-in-out;
+		    -moz-transition:all 1s ease-in-out;
+		    -o-transition:all 1s ease-in-out;
+		    transition:all 1s ease-in-out;
+        }
+        .scrnsMaximize {
+            height:555px;
+            -webkit-transition:all 1s ease-in-out;
+		    -moz-transition:all 1s ease-in-out;
+		    -o-transition:all 1s ease-in-out;
+		    transition:all 1s ease-in-out;
+        }
+        .ease {
+            -webkit-transition:all 1s ease-in-out;
+		    -moz-transition:all 1s ease-in-out;
+		    -o-transition:all 1s ease-in-out;
+		    transition:all 1s ease-in-out;
+        }
+        
+        .usr_Guide_pnl_min {
+            background:lightgrey; width:inherit; height:35px; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding-top:4px;
+        }
+        
+        #scrns { }
 			#scrnHldr {
 				/*-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.275);
 				-moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.275);
@@ -328,13 +367,13 @@ header {
 
 			}
 			.frontFlip {
-				-webkit-transition:width 1s ease-in-out;
+			-webkit-transition:width 1s ease-in-out;
 				-moz-transition:width 1s ease-in-out;
 				-o-transition:width 1s ease-in-out;
 				transition:width 1s ease-in-out;
 	
-				-webkit-transform-style: preserve-3d; 
-				-moz-transform-style: preserve-3d; 
+			    -webkit-transform-style: preserve-3d; 
+			    -moz-transform-style: preserve-3d; 
 			    -o-transform-style: preserve-3d; 
 			    transform-style: preserve-3d;
 				
@@ -343,6 +382,7 @@ header {
 			#holder { width:90%; height:100px; display:inline-block; vertical-align:middle; position:absolute; margin-left:120px; }
 			#holder div { position:absolute; width:inherit; height:inherit; }
 			#pcHdr span { display:inline-block; vertical-align:middle; }
+            
 			/*.faceBack { transform: perspective(1000px) rotateY(-180deg); }
 			.faceFront { transform: perspective(1000px) rotateY(0deg); }*/
 			

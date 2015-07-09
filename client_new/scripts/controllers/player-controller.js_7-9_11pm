@@ -223,18 +223,17 @@
 
         $scope.getProgramDetails = function(airing) {
             var programDetails = '<p style="text-align: left;"><span class="program-details-header">On Now: </span><span class="program-details-body">' + airing.program.title + '</span></p>';
-            if(airing.duration && airing.startTime) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, airing) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + airing.duration + ' min</span></p>';
+            if(airing.duration) {
+                programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, airing) + '</span></p>';
+            }
+            if(airing.startTime) {
+                programDetails += '<p style="text-align: left"><span class="program-details-header">Duration: </span><span class="program-details-body">' + airing.duration + ' minutes</span></p>';
             }
             /*
-            if(airing.startTime) {
-                programDetails += '<p style="text-align: left"></p>';
-            }
-             */
             if(airing.program.shortDescription) {
                 programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + airing.program.shortDescription + '</span></p>';
             }
-           
+            */
             return programDetails;
         };
 		

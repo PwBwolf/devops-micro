@@ -2,7 +2,7 @@
 	<!-- /// === user channels - btm half of the nav banner === /// -->
 	<div class="usr_Prfl_n_Chnls">
 		<ul>
-			<li data-ng-repeat="chnl in channels"><img ng-src="{{chnl.image_url}}" data-ng-mouseover="chnlHover($index);" data-ng-click="chnlClicked($index);" /><span data-ng-show="($index === chnlHovered) ? true : false">{{details}}</span></li>
+			<li data-ng-repeat="chnl in channels"><img ng-src="{{chnl.image_url}}" data-ng-mouseover="chnlHover($index);" data-ng-click="chnlClicked($index);" /><div data-ng-show="($index === chnlHovered) ? true : false"><div channel-hover></div></div></li>
 		</ul>
 	</div>	
 </div>
