@@ -10,8 +10,6 @@ var _ = require('lodash'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     AppConfig = mongoose.model('AppConfig'),
-    Version = mongoose.model('Version'),
-    WebSlider = mongoose.model('WebSlider'),
     ComplimentaryCode = mongoose.model('ComplimentaryCode'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
@@ -27,35 +25,16 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            Version.findOne({}, {_id: false}, function (err, version) {
-                if (err) {
-                    logger.logError('appController - getAppConfig - error fetching versions');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                var props = {
-                    environment: process.env.NODE_ENV,
-                    url: config.url,
-                    aioPortalUrl: config.aioPortalUrl,
-                    cmsUrl: config.cmsUrl,
-                    freePreviewTime: config.freePreviewTime,
-                    webSliderVersion: version.webSliderVersion,
-                    graceNoteImageUrl: config.graceNoteImageUrl
-                };
-                appConfig = _.assign(appConfig._doc, props);
-                return res.json(appConfig);
-            });
-        });
-    },
-
-    getWebSliders: function (req, res) {
-        WebSlider.find({}, {_id: false}, {sort: {order: 1}}, function (err, sliders) {
-            if (err) {
-                logger.logError('appController - getWebSlider - error fetching web sliders');
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.json(sliders);
+            var props = {
+                environment: process.env.NODE_ENV,
+                url: config.url,
+                aioPortalUrl: config.aioPortalUrl,
+                cmsUrl: config.cmsUrl,
+                freePreviewTime: config.freePreviewTime,
+                graceNoteImageUrl: config.graceNoteImageUrl
+            };
+            appConfig = _.assign(appConfig._doc, props);
+            return res.json(appConfig);
         });
     },
 
