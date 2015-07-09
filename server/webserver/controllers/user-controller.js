@@ -64,7 +64,7 @@ module.exports = {
             } else {
                 if (user.status === 'failed') {
                     logger.logError('userController - signUp - user with failed status: ' + req.body.email.toLowerCase());
-                    return res.status(500).end();
+                    return res.status(409).send('FailedAccount');
                 } else {
                     if (type === 'free') {
                         logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
@@ -157,7 +157,7 @@ module.exports = {
             } else {
                 if (user.status === 'failed') {
                     logger.logError('userController - merchantSignUp - user with failed status: ' + req.body.email.toLowerCase());
-                    return res.status(500).end();
+                    return res.status(409).send('FailedAccount');
                 } else {
                     if (user.account.type === 'free') {
                         merchant.upgradeSubscriptionSignUp(user.email, req.body, function (err, status) {
