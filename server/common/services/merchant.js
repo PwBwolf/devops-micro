@@ -558,7 +558,7 @@ module.exports = {
                     } else {
                         if (!userObj) {
                             logger.logError('merchant - upgradeSubscription - user not found: ' + userEmail);
-                            callback('UserNoFound');
+                            callback('UserNotFound');
                         } else if (userObj.status === 'failed') {
                             callback('FailedUser');
                         } else if (userObj.account.type === 'paid') {
