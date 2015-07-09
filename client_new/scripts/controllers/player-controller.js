@@ -86,8 +86,13 @@
                     $scope.watchNow = function (index) {
                         $scope.selectedStream = index;
                         $scope.playChannel(index);
-                    }
+                    };
 					
+                    
+                    $scope.chnlHover = function (index) {
+                        $scope.chnlHovered = index;
+                        $scope.selectChannel(index);     
+                    };
 					//for(var c in $scope.channels){
 						//$scope.selectChannel(c);
 						//console.log($scope.channels[c].name);
@@ -111,6 +116,8 @@
                     $scope.airings = channelGuide[0].airings;
                     //$scope.playChannel(channelIndex);
                     $scope.onAir = $scope.airings[0].program.title;
+                    //$scope.details = $scope.getProgramDetails($scope.airings[0]);
+                    //console.log('p d: '+$scope.details);
 					// for(var p in $scope.airings){
 //                         console.log('chnl: '+$scope.airings[p].startTime);
 //                     }
@@ -232,5 +239,7 @@
 		
 		
 		
-    }]);
+    }])
+    .directive
+    ;
 }(angular.module('app')));

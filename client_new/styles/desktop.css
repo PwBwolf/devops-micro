@@ -323,7 +323,8 @@ label:before{ display:none !important; }
 .usr_Prfl_n_Chnls { height:inherit; width:100%; background:white; overflow:hidden; padding:0 1%; }
 .usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
 .usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
-.usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; }
+.usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; cursor: pointer; }
+.usr_Prfl_n_Chnls li span { background-color: #337AB7; vertical-align: top; padding: 7px; color:white; }
 
 #welcome {
     float: right;
