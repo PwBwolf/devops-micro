@@ -52,7 +52,7 @@
                 if ($scope.channels && $scope.channels.length > 0) {
                     
                     //console.log('Amt of promo chnls: '+$scope.channels.length);
-					
+
                     
                     
                     //$scope.selectChannel(0);
@@ -75,23 +75,23 @@
     		                
                             //};
 					//};
-					
-					$scope.chnlClicked = function (index) {
-			            $scope.selectedChnl = index;
-						$scope.selectChannel(index);
+
+                    $scope.chnlClicked = function (index) {
+                        $scope.selectedChnl = index;
+                        $scope.selectChannel(index);
                         //$scope.selectedChnlIndex = index;
                         //$scope.playChannel(selectedChnlIndex);
-			        };
+                    };
                     
                     $scope.watchNow = function (index) {
                         $scope.selectedStream = index;
                         $scope.playChannel(index);
                     };
-					
+
                     
                     $scope.chnlHover = function (index) {
                         $scope.chnlHovered = index;
-                        $scope.selectChannel(index);     
+                        $scope.selectChannel(index);
                     };
 					//for(var c in $scope.channels){
 						//$scope.selectChannel(c);
@@ -116,6 +116,7 @@
                     $scope.airings = channelGuide[0].airings;
                     //$scope.playChannel(channelIndex);
                     $scope.onAir = $scope.airings[0].program.title;
+                    //$scope.channelLogo = $scope.airings[0].image_url;
                     $scope.details = $scope.getProgramDetails($scope.airings[0]);
                     //console.log('p d: '+$scope.details);
 					// for(var p in $scope.airings){
@@ -147,7 +148,7 @@
                     $scope.programDetails = $scope.getProgramDetails;
 					//console.log('p d: '+$scope.programDetails);
                     
-					playStream();
+                    playStream();
                 }).error(function () {
                     loggerSvc.logError('Error loading channel.');
                 });

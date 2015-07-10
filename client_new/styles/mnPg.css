@@ -250,7 +250,7 @@ header {
 		    transition:all 1s ease-in-out;
         }
         .scrnsMinimize {
-            height:393px;
+            height:393px; pointer-events: none;
             -webkit-transition:all 1s ease-in-out;
 		    -moz-transition:all 1s ease-in-out;
 		    -o-transition:all 1s ease-in-out;

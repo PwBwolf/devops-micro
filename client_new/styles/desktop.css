@@ -297,6 +297,7 @@ label:before{ display:none !important; }
 }
 
 .usr_Prefs_pnl { background:rgb(213,213,213); width:100%; height:75px; margin:10px 0px 2px; } 
+.usr_Prefs_pnl_maximized { background:rgb(213,213,213); width:100%; height:340px; margin:10px 0px 2px; } 
 	.logoBox { width:10%; height:auto; padding:8px 0 0 8px; top:0; left:0; vertical-align: top !important; } 
 	.logoBox img { width:75%; height: auto; }
 	
@@ -320,7 +321,7 @@ label:before{ display:none !important; }
 				.usr_alrtData span { background:rgb(100,100,100); padding: 14px 2px 0 10px; height:inherit; position: inherit; top:0px; display:inherit; white-space:nowrap; } 
 					
 
-.usr_Prfl_n_Chnls { height:inherit; width:100%; background:white; overflow:hidden; padding:0 1%; }
+.usr_Prfl_n_Chnls { height:75px; width:100%; background:white; overflow:hidden; padding:0 1%; position: absolute; bottom:0px; }
 .usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
 .usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
 .usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; cursor: pointer; }
@@ -329,7 +330,7 @@ label:before{ display:none !important; }
 
 #smChannelDesc { line-height: 1.051;}
 #smChannelDesc p { margin-bottom: 0px !important;}
-    /*.smChnlDesc { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; }*/
+    .smChnlDesc { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; }
     .program-details-header, .program-details-body { font-size:60%; font-weight:normal; background-color: transparent !important; }
     .program-details-body {  }
     
