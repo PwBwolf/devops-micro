@@ -384,7 +384,7 @@ module.exports = {
                         logger.logError('merchant - reactivateSubscriptionSignUp - error fetching user: ' + userEmail);
                         callback(err);
                     } else {
-                        if(!userObj) {
+                        if (!userObj) {
                             logger.logError('merchant - reactivateSubscriptionSignUp - user not found: ' + userEmail);
                             callback('UserNotFound');
                         } else if ((userObj.status === 'active' || userObj.status === 'registered') && userObj.account.type === 'paid') {
@@ -1052,21 +1052,34 @@ module.exports = {
     },
 
     makeCashPayment: function (userEmail, paymentPending, cb) {
+        var currentValues, errorType;
         async.waterfall([
-            // get user
+            // get user and update
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
                         logger.logError('merchant - makeCashPayment - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.cancelOn) {
+                        currentValues = {cancelOn: userObj.cancelOn};
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('merchant - makeCashPayment - error saving user: ' + userEmail);
+                            }
+                            callback(err, userObj);
+                        });
+                    } else {
+                        callback(null, userObj);
                     }
-                    callback(err, userObj);
                 });
             },
-            // update billing
+            // login
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('merchant - makeCashPayment - error logging into freeside: ' + userEmail);
+                        errorType = 'freeside-login';
                     }
                     callback(err, userObj, sessionId);
                 });
@@ -1076,6 +1089,7 @@ module.exports = {
                 billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - makeCashPayment - error updating user in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
                     }
                     callback(err, userObj, sessionId);
                 });
@@ -1086,25 +1100,38 @@ module.exports = {
                     billing.hasPaidActivePackage(sessionId, function (err, result) {
                         if (err) {
                             logger.logError('merchant - makeCashPayment - error getting current packages: ' + userObj.email);
-                            callback(err);
+                            callback(err, userObj);
                         } else if (!result) {
                             billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
                                 if (err) {
                                     logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
+                                    errorType = 'freeside-order-package';
                                 }
-                                callback(err);
+                                callback(err, userObj);
                             });
                         } else {
-                            callback(err);
+                            callback(err, userObj);
                         }
                     });
                 } else {
-                    callback(null);
+                    callback(null, userObj);
                 }
             }
-        ], function (err) {
+        ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-order-package':
+                        if (currentValues) {
+                            userObj.cancelOn = currentValues.cancelOn;
+                            userObj.save(function () {
+                                logger.logError('merchant - makeCashPayment - error reverting cancelOn in user: ' + userObj.email);
+                            });
+                        }
+                        break;
+                }
             }
             if (cb) {
                 cb(err);
