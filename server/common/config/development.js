@@ -5,6 +5,7 @@ module.exports = {
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     merchantPort: 4000,
+    notificationPort: 5000,
     email: {
         host: '172.16.10.6',
         port: 25,

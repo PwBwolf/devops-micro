@@ -10,6 +10,7 @@ module.exports = {
     cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     merchantPort: 4000,
+    notificationPort: 5000,
     email: {
         host: 'dev.yiptv.com',
         port: 25,

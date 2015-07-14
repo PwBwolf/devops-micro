@@ -21,16 +21,16 @@ var connect = require('gulp-connect');
  * And then dump them inside .tmp
  */
 gulp.task('partials', function () {
-    return gulp.src('../client/**/*.html') // Read all our partials
+    return gulp.src('../client/**/*.html') //Read all our partials
         .pipe($.minifyHtml({
             empty: true,
             spare: true,
             quotes: true
         }))
-        .pipe($.ngHtml2js({ // Convert HTML to injectable JavaScript
-            moduleName: 'app' // Note: This should correspond to our main module name in our app.
+        .pipe($.ngHtml2js({ //Convert HTML to injectable JavaScript
+            moduleName: 'app' //Note: This should correspond to our main module name in our app.
         }))
-        .pipe(gulp.dest('.tmp'))// Dump everything in .tmp when done
+        .pipe(gulp.dest('.tmp')) //Dump everything in .tmp when done
         .pipe($.size());
 });
 
@@ -49,19 +49,19 @@ gulp.task('roles', function () {
  * destination dist directory
  */
 gulp.task('webapp', ['partials', 'roles'], function () {
-    var htmlFilter = $.filter('*.html'); // Filter out each HTML file
-    var jsFilter = $.filter('**/*.js'); // Filter out each JS file
-    var cssFilter = $.filter('**/*.css'); // Filter out each CSS file
+    var htmlFilter = $.filter('*.html'); //Filter out each HTML file
+    var jsFilter = $.filter('**/*.js'); //Filter out each JS file
+    var cssFilter = $.filter('**/*.css'); //Filter out each CSS file
     var assets;
 
     return gulp.src('../client/*.html') // Read index.html
-        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { // Inject each processed partial output by the partials task
+        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
             addRootSlash: false,
-            addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+            addPrefix: '../build' //Make the following tasks look for the file in the correct path (build/.tmp)
         }))
-        .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
+        .pipe(assets = $.useref.assets()) //Concatenate all our CSS and JS files, take only the concatenated files
         .pipe($.rev()) // Rev the files by prefixing them with the file hash
         .pipe(jsFilter) // Take only the Javascript files
         .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
@@ -90,23 +90,23 @@ gulp.task('webapp', ['partials', 'roles'], function () {
  * destination dist directory
  */
 gulp.task('webapp-nominify', ['partials', 'roles'], function () {
-    var jsFilter = $.filter('**/*.js');	// Filter out each JS file
+    var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var assets;
 
-    return gulp.src('../client/*.html')	// Read index.html
-        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), {	// Inject each processed partial output by the partials task
+    return gulp.src('../client/*.html') //Read index.html
+        .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
             addRootSlash: false,
-            addPrefix: '../build' // Make the following tasks look for the file in the correct path (build/.tmp)
+            addPrefix: '../build' //Make the following tasks look for the file in the correct path (build/.tmp)
         }))
-        .pipe(assets = $.useref.assets()) // Concatenate all our CSS and JS files, take only the concatenated files
-        .pipe($.rev())	// Rev the files by prefixing them with the file hash
-        .pipe(jsFilter)	// Take only the Javascript files
-        .pipe($.ngAnnotate()) // Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
-        .pipe(jsFilter.restore())	// Restore non-JS files back to the stream
-        .pipe(assets.restore())	// Restore all other files (we were only working on concatenated CSS/JS till now)
-        .pipe($.useref())	// Finish replacing all CSS and JS links with our processed, concatenated, minified files
+        .pipe(assets = $.useref.assets()) //Concatenate all our CSS and JS files, take only the concatenated files
+        .pipe($.rev()) //Rev the files by prefixing them with the file hash
+        .pipe(jsFilter) //Take only the Javascript files
+        .pipe($.ngAnnotate()) //Run them through ng-annotate to expand AngularJs dependency injection annotations to their full forms
+        .pipe(jsFilter.restore()) //Restore non-JS files back to the stream
+        .pipe(assets.restore()) //Restore all other files (we were only working on concatenated CSS/JS till now)
+        .pipe($.useref()) //Finish replacing all CSS and JS links with our processed, concatenated, minified files
         .pipe($.revReplace())
         .pipe(gulp.dest('dist/client'))
         .pipe($.size());
@@ -117,7 +117,7 @@ gulp.task('webapp-nominify', ['partials', 'roles'], function () {
  * Read each image, optimize it and save it in the destination folder.
  */
 gulp.task('images', function () {
-    return gulp.src('../client/images/**/*') // Get images from specified dir and all subdirs.
+    return gulp.src('../client/images/**/*') //Get images from specified dir and all subdirs.
         .pipe($.imagemin({
             optimizationLevel: 3,
             progressive: true,
@@ -170,6 +170,7 @@ gulp.task('server', function (cb) {
     gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
     gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
     gulp.src('../server/merchant/**/*', {dot: true}).pipe(gulp.dest('dist/server/merchant'));
+    gulp.src('../server/notification/**/*', {dot: true}).pipe(gulp.dest('dist/server/notification'));
     cb();
 });
 
@@ -190,6 +191,7 @@ function replaceAndCopy(source, destination, text, replacementText) {
 function postDeploy(cb) {
     replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
     replaceAndCopy('../server/merchant/app.js', 'dist/server/merchant', 'development', argv.env);
+    replaceAndCopy('../server/notification/app.js', 'dist/server/notification', 'development', argv.env);
     replaceAndCopy(['../server/common/database/fixtures.js', '../server/common/database/cleanup.js'], 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/notify-build.js', 'dist/tools', 'development', argv.env);
     replaceAndCopy('../tools/update-database.js', 'dist/tools', 'development', argv.env);
@@ -260,6 +262,7 @@ function bumpVersion(versionFile, destination) {
 gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function (cb) {
     buildDaemon('dist/server/daemons', 'rule-engine');
     buildDaemon('dist/server/daemons', 'merchant-processor');
+    buildDaemon('dist/server/daemons', 'notification-processor');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -409,7 +412,7 @@ gulp.task('daemon:deploy', function (cb) {
 /*****************************************************************/
 gulp.task('connect', function () {
     fs.createDirSync('../logs');
-    // Start the Node server to provide the API
+    //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
     nodemon({cwd: '../server/webserver', script: 'app.js', ext: 'js'});
 
@@ -434,7 +437,7 @@ gulp.task('serve', ['connect', 'watch'], function () {
 
 gulp.task('merchant', function () {
     fs.createDirSync('../logs');
-    // Start the Node server to provide the API
+    //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
     nodemon({cwd: '../server/merchant', script: 'app.js', ext: 'js'});
 });
@@ -482,14 +485,14 @@ var testFiles = [
 ];
 
 gulp.task('test', function () {
-    // Be sure to return the stream
+    //Be sure to return the stream
     return gulp.src('./dummy.js')
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
         }))
         .on('error', function (err) {
-            // Make sure failed tests cause gulp to exit non-zero
+            //Make sure failed tests cause gulp to exit non-zero
             throw err;
         });
 });
