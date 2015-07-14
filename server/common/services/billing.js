@@ -118,7 +118,7 @@ module.exports = {
         );
     },
 
-    updateCreditCard: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateBilling: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
@@ -138,16 +138,16 @@ module.exports = {
                 'payname', payName
             ], function (err, response) {
                 if (err) {
-                    logger.logError('billing - updateCreditCard - error in updating credit card 1');
+                    logger.logError('billing - updateBilling - error in updating billing 1');
                     logger.logError(err);
                     callback(err);
                 } else {
                     if (response.error) {
-                        logger.logError('billing - updateCreditCard - error in updating credit card 2');
+                        logger.logError('billing - updateBilling - error in updating billing 2');
                         logger.logError(response.error);
                         callback(response.error);
                     } else {
-                        logger.logInfo('billing - updateCreditCard - response');
+                        logger.logInfo('billing - updateBilling - response');
                         logger.logInfo(response);
                         callback(null);
                     }
