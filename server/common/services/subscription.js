@@ -1327,10 +1327,10 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // change credit card to dummy and modify billing address
+            // modify billing address
             function (userObj, sessionId, callback) {
                 var address = 'To be canceled on ' + moment(userObj.cancelOn).format('MM/DD/YYYY');
-                billing.updateCreditCard(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'CARD', '4242424242424242', '12/2035', '123', '', function (err) {
+                billing.updateBilling(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1642,10 +1642,10 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // change credit card to dummy and modify billing address
+            // modify billing address
             function (userObj, sessionId, callback) {
                 var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                billing.updateCreditCard(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'CARD', '4242424242424242', '12/2035', '123', '', function (err) {
+                billing.updateBilling(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';

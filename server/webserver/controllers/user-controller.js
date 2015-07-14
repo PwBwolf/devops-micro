@@ -586,7 +586,7 @@ module.exports = {
                 },
                 // update credit card
                 function (sessionId, callback) {
-                    billing.updateCreditCard(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
+                    billing.updateBilling(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
                         if (err) {
                             logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + user.email);
                         }
