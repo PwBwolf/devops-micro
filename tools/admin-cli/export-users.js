@@ -22,7 +22,7 @@ User.find({}).populate('account').exec(function (err, users) {
         logger.logError('adminCLI - exportUsers - no users found!');
         process.exit(0);
     } else {
-        console.log('Email,First Name, Last Name, Telephone, Status, Type, FreeSide Customer Number, AIO Account ID, Is Payment Pending, Create Date, Upgrade Date, Cancel Date, Cancel On Date, Valid Till Date, Complimentary Code, Referred By, Merchant');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Type","FreeSide Customer Number","AIO Account ID","Is Payment Pending","Create Date","Upgrade Date","Cancel Date","Cancel On Date","Valid Till Date","Complimentary Code","Referred By","Merchant"');
         for (var i = 0; i < users.length; i++) {
             if (users[i].account) {
                 console.log(
@@ -39,24 +39,24 @@ User.find({}).populate('account').exec(function (err, users) {
 
 function formatDate(date) {
     if (date) {
-        return moment(date).format('MM/DD/YYYY');
+        return '"' + moment(date).format('MM/DD/YYYY') + '"';
     } else {
-        return '';
+        return '""';
     }
 }
 
 function formatString(value) {
     if (value) {
-        return value;
+        return '"' + value + '"';
     } else {
-        return '';
+        return '""';
     }
 }
 
 function formatBoolean(value) {
     if (value) {
-        return value;
+        return '"' + value + '"';
     } else {
-        return false;
+        return 'false';
     }
 }
