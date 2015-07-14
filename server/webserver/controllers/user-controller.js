@@ -216,10 +216,10 @@ module.exports = {
             if (user.status === 'registered') {
                 return res.status(409).send('UnverifiedAccount');
             }
-            user.lastSignedInDate = (new Date()).toUTCString();
+            user.lastLoginTime = (new Date()).toUTCString();
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - signIn - error saving user lastSignedInDate: ' + req.body.email.toLowerCase());
+                    logger.logError('userController - signIn - error saving user lastLoginTime: ' + req.body.email.toLowerCase());
                     logger.logError(err);
                 }
             });
