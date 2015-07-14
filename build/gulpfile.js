@@ -200,6 +200,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-freeside-users.js', 'dist/tools/admin-cli', 'development', argv.env);
 
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {
@@ -436,6 +437,13 @@ gulp.task('merchant', function () {
     // Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
     nodemon({cwd: '../server/merchant', script: 'app.js', ext: 'js'});
+});
+
+gulp.task('notification', function () {
+    fs.createDirSync('../logs');
+    // Start the Node server to provide the API
+    var nodemon = require('gulp-nodemon');
+    nodemon({cwd: '../server/notification', script: 'app.js', ext: 'js'});
 });
 
 gulp.task('reload-html', function () {

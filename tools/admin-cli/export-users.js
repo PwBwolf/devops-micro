@@ -4,28 +4,59 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
+    moment = require('moment'),
     mongoose = require('../../server/node_modules/mongoose');
 
 var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
 require('../../server/common/setup/models')(modelsPath);
-var Account = mongoose.model('Account');
+var User = mongoose.model('User');
 
-Account.find({}).populate('primaryUser').exec(function (err, accounts) {
+User.find({}).populate('account').exec(function (err, users) {
     if (err) {
-        logger.logError('adminCLI - exportUsers - error fetching accounts');
+        logger.logError('adminCLI - exportUsers - error fetching users');
         logger.logError(err);
         process.exit(1);
-    } else if (!accounts || accounts.length === 0) {
-        logger.logError('adminCLI - exportUsers - no accounts found!');
+    } else if (!users || users.length === 0) {
+        logger.logError('adminCLI - exportUsers - no users found!');
         process.exit(0);
     } else {
-        for (var i = 0; i < accounts.length; i++) {
-            if (accounts[i].primaryUser && accounts[i].freeSideCustomerNumber) {
-                console.log(accounts[i].freeSideCustomerNumber + ',' + accounts[i].primaryUser.email + ',' + accounts[i].primaryUser.createdAt.getTime());
+        console.log('Email,First Name, Last Name, Telephone, Status, Type, FreeSide Customer Number, AIO Account ID, Payment Pending, Create Date, Upgrade Date, Cancel Date, Cancel On Date, Valid Till Date, Complimentary Code, Referred By, Merchant');
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].account) {
+                console.log(
+                    users[i].email + ',' + users[i].firstName + ',' + users[i].lastName + ',' + users[i].telephone + ',' + users[i].status + ',' +
+                    users[i].account.type + ',' + formatString(users[i].account.freeSideCustomerNumber) + ',' + formatString(users[i].account.aioAccountId) + ',' + formatBoolean(users[i].account.paymentPending) + ',' +
+                    formatDate(users[i].createdAt) + ',' + formatDate(users[i].upgradeDate) + ',' + formatDate(users[i].cancelDate) + ',' + formatDate(users[i].cancelOn) + ',' + formatDate(users[i].validTill) + ',' +
+                    formatString(users[i].account.complimentaryCode) + ',' + formatString(users[i].account.referredBy) + ',' + formatString(users[i].account.merchant)
+                );
             }
         }
         process.exit(0);
     }
 });
+
+function formatDate(date) {
+    if (date) {
+        return moment(date).format('MM/DD/YYYY');
+    } else {
+        return '';
+    }
+}
+
+function formatString(value) {
+    if (value) {
+        return value;
+    } else {
+        return '';
+    }
+}
+
+function formatBoolean(value) {
+    if (value) {
+        return value;
+    } else {
+        return false;
+    }
+}
