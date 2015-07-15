@@ -28,22 +28,18 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            $rootScope.signUpSuccessUrl = '/sign-up-success';
-                            $location.path('/processing-order');
+                            $location.path('/sign-up-success');
                         } else {
-                            $rootScope.signUpSuccessUrl = '/sign-up-success-login';
-                            $location.path('/processing-order');
+                            $location.path('/sign-up-success-login');
                         }
                     },
                     function (error) {
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentPending') {
-                            $rootScope.signUpSuccessUrl = '/sign-up-success-payment-pending';
-                            $location.path('/processing-order');
+                            $location.path('/sign-up-success-payment-pending');
                         } else if (error === 'PaymentPendingActive') {
-                            $rootScope.signUpSuccessUrl = '/sign-up-success-payment-pending-active';
-                            $location.path('/processing-order');
+                            $location.path('/sign-up-success-payment-pending-active');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }
