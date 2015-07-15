@@ -3,7 +3,9 @@
 
     app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', '$', '$filter', 'prflButtons', function (appSvc, $scope, $window, $location, $, $filter, prflButtons) {
         $scope.prflSlctns = [];
-		
+        //var d;
+		//$scope.d = new Date();
+        
 		activate();
 		init();
         function activate() {
@@ -27,7 +29,7 @@
 		$scope.slctdAcctPnl = -1;
 
 	    $scope.prflItmSlctd = function ($index) { $scope.slctdPrflItm = $index; };  // Flip card on click
-		$scope.acctPnlSlctd = function (pnl) { $scope.slctdAcctPnl = pnl; console.log('pnl: '+pnl) };		
+		$scope.acctPnlSlctd = function (pnl) { $scope.slctdAcctPnl = pnl; console.log('pnl: '+pnl) };
 		$scope.getPrsnlInfo = function (){
 			//$scope.usrDataInfo = { "usrPrfl": "views/user-info.html" };
 			//$('#langPrefs').attr('id', 'usrPrfl').attr('data-ng-include', 'usrDataInfo.usrPrfl');

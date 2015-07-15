@@ -1,14 +1,24 @@
 (function (app){
     'use strict';
 
-    app.directive('channelExpander', function($log){
+    app.directive('channelExpander', function($log, $window){
         return {
-            restrict: 'A',
+            restrict: 'E',
             replace: true,
-            template: '<div data-ng-bind-html=details></div>',
+            //template: '<div>{{test}} time to do it<div data-ng-repeat="air in airings">{{air.program.title}}. Start-Time: {{air.startTime}} Runtime: {{air.duration}}</div></div>',
+            template: '<div id="channelPreviewPanel" class="channelPreview" data-ng-bind-html=showListings></div>',
             link: function(scope, el, attrs){
-                attrs.$set('class', 'smChnlDesc');
-                attrs.$set('id', 'smChannelDesc');
+                //attrs.$set('id', 'channelPreviewPanel');
+                //attrs.$set('class', 'channelPreview');
+                
+                //var scrns = $window.document.getElementById('scrns');
+                  //attrs.$set('channel-expander', '');
+                //console.log($(scrns).length);
+                //console.log('it works');
+                //$(scrns).attr('class', 'scrnsMinimize');
+                
+                //attrs.$set('class', 'smChnlDesc');
+                //attrs.$set('id', 'smChannelDesc');
                 //$log.log('poster image submitted: '+el.html());
                 //$log.log('ID attr set to: '+attrs.testAttr);
             }

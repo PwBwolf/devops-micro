@@ -19,7 +19,7 @@ body,html { font-size:14px; }
 .jumbotron p { font-size:;}
 
 
-.modal-btm-space { margin-bottom:3%;}
+.modal-btm-space { margin-bottom:3%; }
 
 
 /* //// =========================================== //// */
@@ -244,13 +244,14 @@ header {
         }
         .sgstdChnls_min { 
             background:; height:4.33%; width:100%; 
+            pointer-events:none;
             -webkit-transition:all 1s ease-in-out;
 		    -moz-transition:all 1s ease-in-out;
 		    -o-transition:all 1s ease-in-out;
 		    transition:all 1s ease-in-out;
         }
         .scrnsMinimize {
-            height:393px; pointer-events: none;
+            height:393px;
             -webkit-transition:all 1s ease-in-out;
 		    -moz-transition:all 1s ease-in-out;
 		    -o-transition:all 1s ease-in-out;
@@ -274,6 +275,48 @@ header {
             background:lightgrey; width:inherit; height:35px; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; padding-top:4px;
         }
         
+        
+        /* /// CHANNEL PREVIEW PANEL /// */
+        .channelPreview {
+            background: #454545; position:relative; color: white;
+            width: 100%; height:77%; padding:1%;
+            overflow-y: hidden; overflow-x:auto; vertical-align: top;
+            white-space:nowrap;
+        }
+        .channelPreview > div {
+            white-space: normal; 
+            width:35%;
+            height:100%;
+            display: inline-table;
+            padding: 1%;
+            background:#999;
+            margin-right:1%;
+            border-radius:4px;
+            box-shadow:-4px 4px 1px #333;
+            
+        }
+        .channelPreview img { 
+            position:relative; 
+            width:80px; 
+            float:right; 
+            margin: 10px;
+            border-radius:4px;
+            border:rgb(200, 200, 200) 1px solid;
+            box-shadow: 2px 3px 2px #444;
+        }
+        .channelPreview > div > p {
+            margin-bottom:0px;
+            text-indent:-20px;
+            margin-left:20px;
+        }
+        .channelPreview > div > p:not(:last-child) {
+            white-space: nowrap;
+            text-indent:0px;
+            margin-left:0px;
+        }
+        
+        
+
         #scrns { }
 			#scrnHldr {
 				/*-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.275);
@@ -326,13 +369,15 @@ header {
 			.sgstdChnl img { width:auto; height: 100%; }
 			.sgstdChnl article {
 				position:absolute; width:62%; height:100%;
-				float:right; right:8px; background:grey; display:inline;
-				overflow-x:hidden; overflow-y:scroll; padding:2%;
+				float:right; right:8px; display:inline;
+                background:grey url(../images/smm-background.jpg) 50% 50% no-repeat;
+                background-size: cover;  padding:2%;
+				overflow-x:hidden; overflow-y:scroll;
 			}
-			.sgstdChnl article h3 { color:white; margin-top:0px; }
-			.sgstdChnl article p { color:#ABE4EA; font-size: 115%; }
-			.sgstdChnl article p+p { color:white; font-size:95%; white-space: normal; width: 280px;} 
-			
+			.sgstdChnl article h4 { color:black; margin:0 0 5px; position:relative; display:inline-block; width:150px; white-space: normal; vertical-align: top; }
+			.sgstdChnl article p:nth-child(-n+3){ color:rgb(183,108,29); position:relative; display:inline-block; padding:3px; vertical-align: top;z }    
+			.sgstdChnl article p { color:dimgrey; font-size:95%; white-space: nowrap;} 
+			.sgstdChnl article p:last-child { white-space: normal; color:black; width: 300px; padding:2px;}
 			.back { 
 				/*background:rgb(204,51,102);
 				pointer-events:none;*/

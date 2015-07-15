@@ -12,15 +12,13 @@
             userSvc.getPromoChannels(function (data) {
                 $scope.promoChnls = data;
                 if ($scope.promoChnls && $scope.promoChnls.length > 0) {
-                    //$scope.title = $scope.promoChnls[0].name;
-                    for(var h in $scope.promoChnls){
+					for(var h in $scope.promoChnls){
                         //console.log('the promo channel name is: '+$scope.promoChnls[h].name);
-                        //$scope.title = $scope.promoChnls[h].program.name;
                     /*$scope.chnlClicked = function (index) {
-                        $scope.selectedPromoChnl = index;
-                        $scope.selectChannel(index);
-                        };*/
-                    };
+			            $scope.selectedPromoChnl = index;
+						$scope.selectChannel(index);
+			        };*/
+					}
                 }
                 $scope.loadingChannels = false;
             }, function () {
@@ -106,7 +104,7 @@
             });
         };
         
-        
+        */
         $scope.getTime = function (index, airing) {
             if (index === 0) {
                 return 'on now';
@@ -139,9 +137,7 @@
             } else {
                 return $scope.appConfig.graceNoteImageUrl + uri;
             }
-        }; 
-        */
-        
+        };
 
         $scope.getProgramDetails = function(airing) {
             var programDetails = '<p style="text-align: left"><span class="program-details-header">Program: </span>' + airing.program.title + '</p>';
@@ -156,7 +152,10 @@
             }
             return programDetails;
         };
-
-
+		
+		
+		
+		
+		
     }]);
 }(angular.module('app')));

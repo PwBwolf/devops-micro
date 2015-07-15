@@ -24,7 +24,7 @@
 			<div id="scrnHldr" data-ng-class="($index==selectedIndex) ? '{{usrScrnClasses[4].className}}' : '{{usrScrnClasses[3].className}}'">
 				<img ng-src="{{usrS.image_poster}}"/>
 				<div class="chnLbl">
-					<span>{{usrS.name}}</span><br /><span>{{usrS.sgstdDsc}}</span>
+					<span>{{usrS.name}}</span><br /><span>{{usrS.program.title}}</span>
 				</div>
                 <img ng-src="{{usrS.image_url}}" />
 			</div>
@@ -33,9 +33,11 @@
                 <img ng-src="{{usrS.image_promo_cover}}"/>
 				<article>
 					<aside>
-						<h3>{{usrS.startTime}}</h3>
-						<p>{{usrS.sgstdDsc}}</p>
-						<p>{{usrS.sgstdDscCntnt}}</p>
+						<h4>{{usrS.program.title}}</h4>
+						<p>{{usrS.program.season}}</p>
+                        <p>{{usrS.program.episode}}</p>
+						<p>Runtime: {{usrS.runtime}} minutes</p>
+                        <p>{{usrS.program.longDescription}}</p>
 					</aside>
 				</article>
 				<!-- div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div -->

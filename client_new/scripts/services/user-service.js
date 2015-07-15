@@ -49,6 +49,9 @@
             userRoles: userRoles,
             user: currentUser,
             getUserProfile: getUserProfile,
+            updateUserProfile: function (data, success, error) {
+                $http.post('/api/update-user-profile', data).success(success).error(error);
+            },
             clearUser: clearUser,
 
             authorize: function (accessLevel, role) {
