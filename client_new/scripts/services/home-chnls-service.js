@@ -10,6 +10,14 @@
 			
 		];
 		
+        var marqueeData = [
+            {type: 'e', message: 'HEADER_MARQUEE_TEXT_1'},
+            {type: 'e', message: 'HEADER_MARQUEE_TEXT_2'},
+            {type: 'a', message: 'HEADER_MARQUEE_TEXT_3'},
+            {type: 'e', message: 'HEADER_MARQUEE_TEXT_4'},
+            {type: 'a', message: 'HEADER_MARQUEE_TEXT_5'}
+        ];
+        
 		var usrPrfrdChnls = [
 			{ chnl: "images/chnl_imgs/Channels1.jpg" }, { chnl: "images/chnl_imgs/Channels2.jpg" }, { chnl: "images/chnl_imgs/Channels3.jpg" },
 			{ chnl: "images/chnl_imgs/Channels4.jpg" }, { chnl: "images/chnl_imgs/Channels5.jpg" }, { chnl: "images/chnl_imgs/Channels6.jpg" },
@@ -30,6 +38,7 @@
 		var usrPrfsFctry = {};
 			usrPrfsFctry.getUsrData = function(){ return usrData; };
 			usrPrfsFctry.getPrfrdChnls = function(){ return usrPrfrdChnls; };
+            usrPrfsFctry.getMarqueeData = function(){ return marqueeData; };
 			
 			usrPrfsFctry.sendUsrData = function(){
 			

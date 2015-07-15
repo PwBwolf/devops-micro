@@ -19,12 +19,15 @@
         $scope.updateUserProfile = function () {
             if ($scope.form.$valid) {
                 $scope.mv.type = 'paid';
-                $scope.mv.referredBy = $rootScope.referredBy;
+                //$scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = { defaultLanguage: $scope.language || 'en' };
+                
                 $scope.saving = true;
                 userSvc.isSignedIn(
-                    // $scope.mv,
+                    $scope.mv,
                     function (data) {
+                        //console.log('time');
+                        
                         //$rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if(data === 'user') {
@@ -34,16 +37,16 @@
                             //$location.path('/sign-up-success-login');
 							console.log('not user: '+data)
                         }
-                    }
-                    /*
+                    },
+                    
                     function (error) {
-                                            if(error === 'User Error') {
-                                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
-                                            } else {
-                                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
-                                            }
-                                            $scope.saving = false;
-                                        }*/
+                        if(error === 'User Error') {
+                            loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                        } else {
+                            loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                        }
+                        $scope.saving = false;
+                    }
                     
                 );
             } else {

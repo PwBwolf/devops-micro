@@ -45,10 +45,8 @@
 
         function activate() {
 			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
-            $scope.isVisible = false;
-            $scope.loadingChannels = true;
             
-            $scope.imgURL = "http://yipt.tmsimg.com/";
+            $scope.loadingChannels = true;
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
                 if ($scope.channels && $scope.channels.length > 0) {
@@ -80,12 +78,8 @@
 
                     $scope.chnlClicked = function (index) {
                         $scope.selectedChnl = index;
-                        $scope.selectChannel(index);
-                        $scope.isVisible = true; 
-                        //$scope.test = $scope.channels[index].name;
-                        //$scope.test1 = $scope.airings
-                        //console.log(index+' clicked & title: '+$scope.channels[index].name);
-                        //$scope.playChannel(index);
+                        //$scope.selectChannel(index);
+                        $scope.playChannel(index);
                         //$scope.channelExpander = "channel-expander";
                         //$scope.selectedChnlIndex = index;
                         //$scope.playChannel(selectedChnlIndex);
@@ -99,11 +93,11 @@
                     
                     $scope.chnlHover = function (index) {
                         $scope.chnlHovered = index;
-                        $scope.selectOnAir(index);
+                        $scope.selectChannel(index);
                         //$scope.channelExpander = "channel-hover";
                     };
-                    //for(var c in $scope.channels){
-				        //$scope.selectChannel(c);
+					//for(var c in $scope.channels){
+						//$scope.selectChannel(c);
 						//console.log($scope.channels[c].name);
 						//}
                 }
@@ -116,43 +110,21 @@
 		//jwplayer("my-player").setup({ $scope.playerOptions; });
 		//console.log($scope.channels.length);
 		
-        $scope.selectOnAir = function(channelIndex) {
-            if(!$scope.loadingChannelGuide) {
-                $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (showPreview) {
-                    $scope.onAir = showPreview[0].airings;
-                    $scope.onAirTitle = $scope.onAir[0].program.title;
-                    $scope.details = $scope.getProgramDetails($scope.onAir[0]);
-                    
-                    $scope.loadingChannelGuide = false;
-                }).error(function() {
-                    $scope.loadingChannelGuide = false;
-                    loggerSvc.logError('Error loading channel guide.');
-                });
-            }
-            
-        };
-        
         $scope.selectChannel = function (channelIndex) {
             if(!$scope.loadingChannelGuide) {
                 //$scope.selectedChannelIndex = channelIndex;
                 $scope.loadingChannelGuide = true;
 				//console.log('chnl log: '+channelIndex);
                 mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (channelGuide) {
-                    $scope.showTimes = channelGuide[0].airings;
-                    //console.log($scope.showTimes.length);
-                    $scope.showListings = [];
-                    //$scope.showListings = $scope.getChannelDetails($scope.showTimes);
+                    $scope.airings = channelGuide[0].airings;
                     //$scope.playChannel(channelIndex);
-                    //$scope.onAir = $scope.airings[0].program.title;
+                    $scope.onAir = $scope.airings[0].program.title;
                     //$scope.channelLogo = $scope.airings[0].image_url;
-                    //$scope.details = $scope.getProgramDetails($scope.airings[0]);
-                    //$scope.channelLineup = $scope.getChannelDetails()
-                    //console.log('p d: '+$scope.showListings[0].name);
-					for(var p in $scope.showTimes){
-                        $scope.showListings[p] = $scope.getChannelDetails($scope.showTimes[p]);
-                         //console.log('chnl: show '+p+' start-Time: '+$scope.showListings[p].callSign);
-                    }
+                    $scope.details = $scope.getProgramDetails($scope.airings[0]);
+                    //console.log('p d: '+$scope.details);
+					// for(var p in $scope.airings){
+//                         console.log('chnl: '+$scope.airings[p].startTime);
+//                     }
 					//console.log('this time: '+$scope.airings[].length);
 					//console.log('air: '+$scope.airings )
                     $scope.loadingChannelGuide = false;
@@ -255,39 +227,25 @@
 
         $scope.getProgramDetails = function(airing) {
             var programDetails = '<p style="text-align: left;"><span class="program-details-header">On Now: </span><span class="program-details-body">' + airing.program.title + '</span></p>';
-            if(!airing.duration && !airing.startTime) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">Not Available</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">Not Available</span></p>';
-                } else {
-                    programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, airing) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + airing.duration + ' min</span></p>';
-            }   
-            
-            if(!airing.program.shortDescription) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">Not Available</span></p>';
-                } else {
-                    programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + airing.program.shortDescription + '</span></p>';
+            if(airing.duration && airing.startTime) {
+                programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, airing) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + airing.duration + ' min</span></p>';
+            }
+            /*
+            if(airing.startTime) {
+                programDetails += '<p style="text-align: left"></p>';
+            }
+             */
+            if(airing.program.shortDescription) {
+                programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + airing.program.shortDescription + '</span></p>';
             }
            
             return programDetails;
         };
-
-        $scope.getChannelDetails = function(show) {
-            var channelDetails = '<div style="background:#444;"><img src="'+$scope.imgURL+show.program.preferredImage.uri+'" /><p style="text-align: left;"><span class="program-details-header">On Now: </span><span class="program-details-body">' + show.program.title + '</span></p>';
-            if(!show.duration && !show.startTime) {
-                channelDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">Not Available</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">Not Available</span></p>';
-                } else {
-                    channelDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, show) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + show.duration + ' min</span></p>';
-            }
-            
-            if(!show.program.shortDescription) {
-                channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">Not Available</span></p>';
-                } else {
-                    channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + show.program.shortDescription + '</span></p></div>';
-            }
-           
-            return channelDetails;
-        };
-        
-        
+		
+		
+		
+		
+		
     }]);
 
 }(angular.module('app')));

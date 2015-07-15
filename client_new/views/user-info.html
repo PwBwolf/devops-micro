@@ -2,7 +2,7 @@
     <div class="content-box">
         <!-- h1><span translate="CHANGE_PASSWORD_HEADING"></span></h1 -->
         <div class="container l_Prefs">
-            <div class="form-box" data-ng-controller="updateProfileCtrl">
+            <div class="form-box" data-ng-controller="userUpdateProfileCtrl">
 				
 				<form name="form" id="form" ng-submit="updateUserProfile()" novalidate>
                     <div class="form-container">
@@ -43,7 +43,6 @@
                         <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
                     </div>
                     <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
-                    <div class="full-form center-form"><span translate="SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="SIGN_UP_SIGN_IN"></a></div>
 				</form>
             </div>
         </div>
