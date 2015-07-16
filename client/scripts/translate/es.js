@@ -602,7 +602,7 @@
             SIGN_UP_EMAIL_EXISTS: 'Usted ya tiene cuenta con nosotros. Por favor ingresar.',
             SIGN_UP_EMAIL_REQUIRED: 'Introduzca su direccion de correo electronico',
             SIGN_UP_PASSWORD: 'Contraseña',
-            SIGN_UP_PASSWORD_INFO: '(must be 6 characters or more and contain at least one upper case letter and one number)',
+            SIGN_UP_PASSWORD_INFO: '(debe tener al menos 6 caracteres, una mayúscula y un número)',
             SIGN_UP_PASSWORD_REQUIRED: 'Introduzca su contrasena',
             SIGN_UP_PASSWORD_NOT_COMPLEX: 'Contrasena debe tener al menos 6 caracteres, 1 letra mayuscula y 1 numero',
             SIGN_UP_CONFIRM_PASSWORD: 'Confirmar contraseña',
