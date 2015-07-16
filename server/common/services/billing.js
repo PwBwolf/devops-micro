@@ -304,7 +304,6 @@ module.exports = {
 
     updateLocale: function (sessionId, locale, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        console.log(locale);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
                 'session_id', sessionId,

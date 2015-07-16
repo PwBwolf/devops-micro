@@ -1,6 +1,6 @@
 'use strict';
 
-if(!process.env.MONGO_PWD) {
+if (!process.env.MONGO_PWD) {
     console.log('MongoDB password not set! Please set the MONGO_PWD environment variable. Exiting...');
     process.exit(1);
 }
@@ -30,14 +30,15 @@ module.exports = {
     refundPeriodInDays: 3,
     cmsUrl: 'http://www.yiptv.com/live-tv/',
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',
-    freeSideFreePackagePart: 6,
-    freeSidePaidPackagePart: 3,
-    freeSideComplimentaryPackagePart: 8,
+    freeSideFreePackageParts: [6],
+    freeSidePaidPackageParts: [3],
+    freeSideComplimentaryPackageParts: [8],
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://10.100.10.102',
     aioPortalUrl: 'http://content.yiptv.com',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 27}],
-    aioPaidPackages: [{'packageid' : 1}, {'packageid' : 66}, {'packageid' : 62}, {'packageid' : 27}]
+    aioFreePackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 27}],
+    aioPaidPackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 62}, {'packageid': 27}],
+    aioComplimentaryPackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 62}, {'packageid': 27}]
 };

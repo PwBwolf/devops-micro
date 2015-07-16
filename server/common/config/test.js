@@ -30,14 +30,15 @@ module.exports = {
     refundPeriodInDays: 3,
     cmsUrl: 'http://test.yiptv.net/live-tv/',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
-    freeSideFreePackagePart: 6,
-    freeSidePaidPackagePart: 4,
-    freeSideComplimentaryPackagePart: 15,
+    freeSideFreePackageParts: [6, 15],
+    freeSidePaidPackageParts: [6, 15, 4],
+    freeSideComplimentaryPackageParts: [6, 15, 4],
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://172.16.10.100',
     aioPortalUrl: 'http://209.18.77.106',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
     aioFreePackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 27}],
-    aioPaidPackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 62}, {'packageid': 27}]
+    aioPaidPackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 62}, {'packageid': 27}],
+    aioComplimentaryPackages: [{'packageid': 1}, {'packageid': 66}, {'packageid': 62}, {'packageid': 27}]
 };
