@@ -39,10 +39,6 @@
             $translate.use(language);
             webStorage.local.add('language', language);
             $rootScope.language = language;
-            if ($route.current) {
-                $rootScope.title = $route.current.title[$rootScope.language] || $route.current.title;
-                $rootScope.description = $route.current.description[$rootScope.language] || $route.current.description;
-            }
             $rootScope.$broadcast('LanguageChanged', language);
         }
 
