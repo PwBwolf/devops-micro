@@ -13,14 +13,10 @@
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
-                    function (data) {
+                    function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        if(data === 'registered') {
-                            $location.path('/sign-up-free-success');
-                        } else {
-                            $location.path('/sign-up-success-login');
-                        }
+                        $location.path('/free-sign-up-success');
                     },
                     function (error) {
                         if (error === 'UserExists') {

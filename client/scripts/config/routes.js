@@ -38,11 +38,11 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up-free-success',
+            .when('/free-sign-up-success',
             {
                 title: title,
                 description: description,
-                templateUrl: 'views/sign-up-free-success.html',
+                templateUrl: 'views/free-sign-up-success.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
@@ -86,19 +86,19 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success-payment-pending',
+            .when('/sign-up-success-payment-failure',
             {
                 title: title,
                 description: description,
-                templateUrl: 'views/sign-up-success-payment-pending.html',
+                templateUrl: 'views/sign-up-success-payment-failure.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success-payment-pending-active',
+            .when('/sign-up-success-payment-failure-active',
             {
                 title: title,
                 description: description,
-                templateUrl: 'views/sign-up-success-payment-pending-active.html',
+                templateUrl: 'views/sign-up-success-payment-failure-active.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
@@ -195,30 +195,6 @@
                 title: title,
                 description: description,
                 templateUrl: 'views/preferences-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/reactivate-subscription',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/reactivate-subscription.html',
-                controller: 'reactivateSubscriptionCtrl',
-                access: access.user
-            })
-            .when('/reactivate-subscription-success',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/reactivate-subscription-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/reactivate-subscription-success-payment-pending',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/reactivate-subscription-success-payment-pending.html',
                 controller: 'commonCtrl',
                 access: access.user
             })

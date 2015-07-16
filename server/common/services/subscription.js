@@ -24,167 +24,155 @@ module.exports = {
     newFreeUser: function (user, cb) {
         var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
         async.waterfall([
-                // create user in db
-                function (callback) {
-                    createUser(user, null, function (err, userObj) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error creating user: ' + user.email);
-                        }
-                        callback(err, userObj);
-                    });
-                },
-                // create account in db
-                function (userObj, callback) {
-                    createAccount(user, userObj, 'free', function (err, accountObj) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error creating account: ' + user.email);
-                            errorType = 'db-account-insert';
-                        }
-                        callback(err, userObj, accountObj);
-                    });
-                },
-                // update user with account
-                function (userObj, accountObj, callback) {
-                    userObj.account = accountObj;
-                    userObj.save(function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error updating user with account details: ' + user.email);
-                            errorType = 'db-user-update';
-                        }
-                        callback(err, userObj, accountObj);
-                    });
-                },
-                // create user in aio and add packages
-                function (userObj, accountObj, callback) {
-                    aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreePackages, function (err, data) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
-                            errorType = 'aio-user-insert';
-                        }
-                        if (data) {
-                            aioAccountId = data.account;
-                        }
-                        callback(err, userObj, accountObj);
-                    });
-                },
-                // set aio account id in account
-                function (userObj, accountObj, callback) {
-                    accountObj.aioAccountId = aioAccountId;
-                    accountObj.save(function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error updating aio account id in account: ' + userObj.email);
-                            logger.logError(err);
-                        }
-                    });
-                    callback(null, userObj, accountObj);
-                },
-                // set aio user inactive
-                function (userObj, accountObj, callback) {
-                    aio.updateUserStatus(userObj.email, false, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error setting aio user inactive: ' + userObj.email);
-                            logger.logError(err);
-                        }
-                        callback(null, userObj, accountObj);
-                    });
-                },
-                // create user in freeside
-                function (userObj, accountObj, callback) {
-                    var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
-                            errorType = 'freeside-user-insert';
-                        }
-                        freeSideCustomerNumber = customerNumber;
-                        freeSideSessionId = sessionId;
-                        callback(err, userObj, accountObj);
-                    });
-                },
-                // update freeside customer number in account
-                function (userObj, accountObj, callback) {
-                    accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
-                    accountObj.save(function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error updating billing system customer number in account: ' + userObj.email);
-                            logger.logError(err);
-                        }
-                    });
-                    callback(null, userObj, accountObj);
-                },
-                // add free packages in freeside
-                function (userObj, accountObj, callback) {
-                    async.eachSeries(
-                        config.freeSideFreePackageParts,
-                        function (item, callback) {
-                            billing.orderPackage(freeSideSessionId, item, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - newFreeUser - error ordering packages in freeside: ' + userObj.email);
-                                    errorType = 'freeside-order-insert';
-                                }
-                                callback(err);
-                            });
-                        },
-                        function (err) {
-                            callback(err, userObj, accountObj);
-                        }
-                    );
-                },
-                // add locale
-                function (userObj, accountObj, callback) {
-                    billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
-                        }
-                        callback(null, userObj, accountObj);
-                    });
-                },
-                // send verification email
-                function (userObj, accountObj, callback) {
-                    sendVerificationEmail(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error sending verification email: ' + userObj.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - newFreeUser - verification email sent: ' + userObj.email);
-                        }
-                    });
-                    callback(null, userObj, accountObj);
-                },
-                // delete user from visitor
-                function (userObj, accountObj, callback) {
-                    deleteVisitor(userObj.email, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error deleting visitor: ' + userObj.email);
-                            logger.logError(err);
-                        }
-                    });
-                    callback(null, userObj, accountObj);
-                }
-            ],
-            function (err, userObj, accountObj) {
-                if (err) {
-                    logger.logError(err);
-                    switch (errorType) {
-                        case 'freeside-order-insert':
-                        case 'freeside-user-insert':
-                            setDbUserFailed(userObj);
-                            break;
-                        case 'aio-user-insert':
-                        case 'db-user-update':
-                            removeDbAccount(accountObj);
-                            removeDbUser(userObj);
-                            break;
-                        case 'db-account-insert':
-                            removeDbUser(userObj);
+            // create user in db
+            function (callback) {
+                createUser(user, null, function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating user: ' + user.email);
                     }
-                }
-                if (cb) {
-                    cb(err);
+                    callback(err, userObj);
+                });
+            },
+            // create account in db
+            function (userObj, callback) {
+                createAccount(user, userObj, 'free', function (err, accountObj) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating account: ' + user.email);
+                        errorType = 'db-account-insert';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // update user with account
+            function (userObj, accountObj, callback) {
+                userObj.account = accountObj;
+                userObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating user with account details: ' + user.email);
+                        errorType = 'db-user-update';
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // create user in aio and add packages
+            function (userObj, accountObj, callback) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreePackages, function (err, data) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
+                        errorType = 'aio-user-insert';
+                    }
+                    if (data) {
+                        aioAccountId = data.account;
+                    }
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // set aio account id in account
+            function (userObj, accountObj, callback) {
+                accountObj.aioAccountId = aioAccountId;
+                accountObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating aio account id in account: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // set aio user inactive
+            function (userObj, accountObj, callback) {
+                aio.updateUserStatus(userObj.email, false, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error setting aio user inactive: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                    callback(null, userObj, accountObj);
+                });
+            },
+            // create user in freeside
+            function (userObj, accountObj, callback) {
+                var password = userObj.createdAt.getTime();
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
+                        errorType = 'freeside-user-insert';
+                    }
+                    freeSideCustomerNumber = customerNumber;
+                    freeSideSessionId = sessionId;
+                    callback(err, userObj, accountObj);
+                });
+            },
+            // update freeside customer number in account
+            function (userObj, accountObj, callback) {
+                accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
+                accountObj.save(function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error updating billing system customer number in account: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // add free packages in freeside
+            function (userObj, accountObj, callback) {
+                async.eachSeries(
+                    config.freeSideFreePackageParts,
+                    function (item, callback) {
+                        billing.orderPackage(freeSideSessionId, item, function (err) {
+                            if (err) {
+                                logger.logError('subscription - newFreeUser - error ordering packages in freeside: ' + userObj.email);
+                                errorType = 'freeside-order-insert';
+                            }
+                            callback(err);
+                        });
+                    },
+                    function (err) {
+                        callback(err, userObj, accountObj);
+                    }
+                );
+            },
+            // send verification email
+            function (userObj, accountObj, callback) {
+                sendVerificationEmail(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error sending verification email: ' + userObj.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - newFreeUser - verification email sent: ' + userObj.email);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            },
+            // delete user from visitor
+            function (userObj, accountObj, callback) {
+                deleteVisitor(userObj.email, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error deleting visitor: ' + userObj.email);
+                        logger.logError(err);
+                    }
+                });
+                callback(null, userObj, accountObj);
+            }
+        ], function (err, userObj, accountObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-order-insert':
+                    case 'freeside-user-insert':
+                        setDbUserFailed(userObj);
+                        break;
+                    case 'aio-user-insert':
+                    case 'db-user-update':
+                        removeDbAccount(accountObj);
+                        removeDbUser(userObj);
+                        break;
+                    case 'db-account-insert':
+                        removeDbUser(userObj);
                 }
             }
-        )
-        ;
+            if (cb) {
+                cb(err);
+            }
+        });
     },
 
     newPaidUser: function (user, cb) {
@@ -257,7 +245,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, password, userObj.telephone, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, password, userObj.telephone, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newPaidUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -277,15 +265,6 @@ module.exports = {
                     }
                 });
                 callback(null, userObj, accountObj);
-            },
-            // add locale
-            function (userObj, accountObj, callback) {
-                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
-                    }
-                    callback(null, userObj, accountObj);
-                });
             },
             // add paid packages in freeside
             function (userObj, accountObj, callback) {
@@ -338,10 +317,12 @@ module.exports = {
                 switch (errorType) {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
+                        updateAioPackages(userObj.email, config.aioFreePackages);
+                        updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
-                        err = new Error('PaymentPending');
+                        err = new Error('PaymentFailed');
                         break;
                     case 'freeside-order-insert':
                     case 'freeside-user-insert':
@@ -456,7 +437,7 @@ module.exports = {
                 // create user in freeside
                 function (userObj, accountObj, callback) {
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';
@@ -494,15 +475,6 @@ module.exports = {
                             callback(err, userObj, accountObj);
                         }
                     );
-                },
-                // add locale
-                function (userObj, accountObj, callback) {
-                    billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
-                        if (err) {
-                            logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
-                        }
-                        callback(null, userObj, accountObj);
-                    });
                 },
                 // send verification email
                 function (userObj, accountObj, callback) {
@@ -585,7 +557,6 @@ module.exports = {
                                 type: userObj.account.type,
                                 complimentaryCode: userObj.account.complimentaryCode,
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate,
@@ -595,7 +566,6 @@ module.exports = {
                             userObj.account.type = 'paid';
                             userObj.account.complimentaryCode = undefined;
                             userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.account.paymentPending = false;
                             userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
@@ -809,7 +779,7 @@ module.exports = {
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
-                        var errorCode = userObj.status === 'registered' ? 'PaymentPending' : 'PaymentPendingActive';
+                        var errorCode = userObj.status === 'registered' ? 'PaymentFailed' : 'PaymentFailedActive';
                         err = new Error(errorCode);
                         break;
                 }
@@ -846,13 +816,11 @@ module.exports = {
                         } else {
                             currentValues = {
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate
                             };
                             userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.account.paymentPending = false;
                             userObj.status = 'active';
                             userObj.cancelDate = undefined;
                             if (!userObj.account.firstCardPaymentDate) {
@@ -1028,7 +996,7 @@ module.exports = {
                         sendReactivateEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
-                        err = new Error('PaymentPendingActive');
+                        err = new Error('PaymentFailedActive');
                         break;
                 }
             }
@@ -1092,7 +1060,6 @@ module.exports = {
                                         validTill: userObj.validTill,
                                         type: userObj.account.type,
                                         billingDate: userObj.account.billingDate,
-                                        paymentPending: userObj.account.paymentPending,
                                         complimentaryCode: userObj.account.complimentaryCode
                                     };
                                     userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
@@ -1102,7 +1069,6 @@ module.exports = {
                                     userObj.account.type = 'comp';
                                     userObj.account.complimentaryCode = newUser.code;
                                     userObj.account.billingDate = undefined;
-                                    userObj.account.paymentPending = false;
                                     if (newUser.firstName) {
                                         currentUser = {
                                             firstName: userObj.firstName,
@@ -1463,12 +1429,11 @@ module.exports = {
             },
             // send email
             function (userObj, callback) {
-                var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + userObj.preferences.defaultLanguage;
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: userObj.email,
                     subject: config.trialPeriodCompleteEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription' + params)
+                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
@@ -1625,10 +1590,8 @@ module.exports = {
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
                             billingDate: userObj.account.billingDate,
-                            paymentPending: userObj.account.paymentPending
                         };
                         userObj.account.billingDate = undefined;
-                        userObj.account.paymentPending = false;
                         userObj.status = 'canceled';
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
@@ -1752,7 +1715,6 @@ function createAccount(user, userObj, type, cb) {
     var accountObj = new Account({
         type: type,
         merchant: 'YIPTV',
-        paymentPending: false,
         primaryUser: userObj,
         users: [userObj],
         createdAt: now
@@ -1835,7 +1797,6 @@ function deleteVisitor(email, cb) {
 function revertAccountPaymentDetails(email, account, cb) {
     account.type = 'free';
     account.startDate = (new Date()).toUTCString();
-    account.paymentPending = true;
     account.firstCardPaymentDate = undefined;
     account.billingDate = undefined;
     account.save(function (err) {
@@ -1935,7 +1896,6 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
     user.account.type = currentValues.type;
     user.account.complimentaryCode = currentValues.complimentaryCode;
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
     user.account.save(function (err) {
         if (err) {
@@ -1950,7 +1910,6 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
 
 function revertAccountChangesForReactivate(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
     user.account.save(function (err) {
         if (err) {
@@ -1965,7 +1924,6 @@ function revertAccountChangesForReactivate(user, currentValues, cb) {
 
 function revertAccountChangesForComplimentary(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.type = currentValues.type;
     user.account.complimentaryCode = currentValues.complimentaryCode;
     user.account.save(function (err) {
@@ -1981,7 +1939,6 @@ function revertAccountChangesForComplimentary(user, currentValues, cb) {
 
 function revertAccountChangesForCancel(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForCancel - error reverting account changes: ' + email);
@@ -2043,7 +2000,6 @@ function setUserActiveInAio(email, status, cb) {
 }
 
 function updateAccountOnPaymentDeclined(user, currentValues, cb) {
-    user.account.paymentPending = true;
     user.account.billingDate = currentValues.billingDate;
     user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
     user.account.save(function (err) {
@@ -2196,6 +2152,30 @@ function sendPaidSubscriptionEndedEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendPaidSubscriptionEndedEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function updateAioPackages(email, packages, cb) {
+    aio.updateUserPackages(email, packages, function (err) {
+        if (err) {
+            logger.logError('subscription - updateAioPackages - error updating aio packages:' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function updateFreeSideBilling(sessionId, address, city, state, zip, county, payBy, payInfo, payDate, payCvv, payName, cb) {
+    billing.updateBilling(sessionId, address, city, state, zip, county, payBy, payInfo, payDate, payCvv, payName, function (err) {
+        if (err) {
+            logger.logError('subscription - updateFreeSideBilling - error updating freeside billing:' + email);
+            logger.logError(err);
         }
         if (cb) {
             cb(err);

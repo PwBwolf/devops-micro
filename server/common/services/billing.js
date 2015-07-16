@@ -31,7 +31,7 @@ module.exports = {
         });
     },
 
-    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
+    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, locale, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.new_customer_minimal',
             [
@@ -55,7 +55,8 @@ module.exports = {
                 'paycvv', payCvv,
                 'payname', payName,
                 'username', email,
-                '_password', password
+                '_password', password,
+                'locale', locale
             ], function (err, response) {
                 if (err) {
                     logger.logError('billing - createCustomer - error in creating customer 1');

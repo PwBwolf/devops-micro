@@ -121,101 +121,89 @@
         }
 
         $scope.openAio = function () {
-            if ($scope.user.status === 'canceled') {
-                $location.path('/reactivate-subscription');
-            } else if ($scope.user.status === 'trial-ended') {
-                $location.path('/upgrade-subscription').search('utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + $scope.language);
-            } else if ($scope.user.status === 'comp-ended') {
-                $location.path('/upgrade-subscription');
-            } else if ($scope.user.paymentPending && $scope.user.cancelOn) {
-                loggerSvc.logError($filter('translate')('MAIN_SERVICES_NOT_AVAILABLE'));
-            } else if ($scope.user.paymentPending) {
-                $location.path('/change-credit-card');
-            } else {
-                var browser = browserSvc.getBrowserName();
-                if (aioWindow && !aioWindow.closed) {
-                    aioWindow.focus();
-                    if (browser === 'firefox' || browser === 'ie' || browser === 'unknown') {
-                        $modal.open({
-                            templateUrl: 'modalWindow',
-                            controller: 'modalCtrl',
-                            size: 'sm',
-                            backdrop: 'static',
-                            resolve: {
-                                title: function () {
-                                    return $scope.appConfig.appName;
-                                },
-                                body: function () {
-                                    return $filter('translate')('MAIN_VIDEO_PORTAL_ALREADY_OPEN');
-                                },
-                                showOkButton: function () {
-                                    return true;
-                                },
-                                showYesButton: function () {
-                                    return false;
-                                },
-                                showNoButton: function () {
-                                    return false;
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    if (aioWindowTimeout) {
-                        clearTimeout(aioWindowTimeout);
-                        aioWindowTimeout = undefined;
-                    }
-                    aioWindow = $window.open('', '_blank');
-                    userSvc.getAioToken(function (response) {
-                        if (!response.username || !response.sso_token) {
-                            if (aioWindow && !aioWindow.closed) {
-                                aioWindow.close();
-                                aioWindow = undefined;
-                            }
-                            $location.path('/error');
-                        } else {
-                            aioWindow.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
-                            if (response.isGuest) {
-                                aioWindowTimeout = $window.setTimeout(function () {
-                                    if (aioWindow && !aioWindow.closed) {
-                                        aioWindow.close();
-                                        aioWindow = undefined;
-                                        $modal.open({
-                                            templateUrl: 'modalWindow',
-                                            controller: 'modalCtrl',
-                                            size: 'sm',
-                                            backdrop: 'static',
-                                            resolve: {
-                                                title: function () {
-                                                    return $scope.appConfig.appName;
-                                                },
-                                                body: function () {
-                                                    return $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
-                                                },
-                                                showOkButton: function () {
-                                                    return true;
-                                                },
-                                                showYesButton: function () {
-                                                    return false;
-                                                },
-                                                showNoButton: function () {
-                                                    return false;
-                                                }
-                                            }
-                                        });
-                                    }
-                                }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
+            var browser = browserSvc.getBrowserName();
+            if (aioWindow && !aioWindow.closed) {
+                aioWindow.focus();
+                if (browser === 'firefox' || browser === 'ie' || browser === 'unknown') {
+                    $modal.open({
+                        templateUrl: 'modalWindow',
+                        controller: 'modalCtrl',
+                        size: 'sm',
+                        backdrop: 'static',
+                        resolve: {
+                            title: function () {
+                                return $scope.appConfig.appName;
+                            },
+                            body: function () {
+                                return $filter('translate')('MAIN_VIDEO_PORTAL_ALREADY_OPEN');
+                            },
+                            showOkButton: function () {
+                                return true;
+                            },
+                            showYesButton: function () {
+                                return false;
+                            },
+                            showNoButton: function () {
+                                return false;
                             }
                         }
-                    }, function () {
-                        loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
+                    });
+                }
+            } else {
+                if (aioWindowTimeout) {
+                    clearTimeout(aioWindowTimeout);
+                    aioWindowTimeout = undefined;
+                }
+                aioWindow = $window.open('', '_blank');
+                userSvc.getAioToken(function (response) {
+                    if (!response.username || !response.sso_token) {
                         if (aioWindow && !aioWindow.closed) {
                             aioWindow.close();
                             aioWindow = undefined;
                         }
                         $location.path('/error');
-                    });
-                }
+                    } else {
+                        aioWindow.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
+                        if (response.isGuest) {
+                            aioWindowTimeout = $window.setTimeout(function () {
+                                if (aioWindow && !aioWindow.closed) {
+                                    aioWindow.close();
+                                    aioWindow = undefined;
+                                    $modal.open({
+                                        templateUrl: 'modalWindow',
+                                        controller: 'modalCtrl',
+                                        size: 'sm',
+                                        backdrop: 'static',
+                                        resolve: {
+                                            title: function () {
+                                                return $scope.appConfig.appName;
+                                            },
+                                            body: function () {
+                                                return $filter('translate')('MAIN_FREE_PREVIEW_ENDED');
+                                            },
+                                            showOkButton: function () {
+                                                return true;
+                                            },
+                                            showYesButton: function () {
+                                                return false;
+                                            },
+                                            showNoButton: function () {
+                                                return false;
+                                            }
+                                        }
+                                    });
+                                }
+                            }, $scope.appConfig.freePreviewTime ? $scope.appConfig.freePreviewTime : 120000);
+                        }
+                    }
+                }, function () {
+                    loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
+                    if (aioWindow && !aioWindow.closed) {
+                        aioWindow.close();
+                        aioWindow = undefined;
+                    }
+                    $location.path('/error');
+                });
             }
         };
 

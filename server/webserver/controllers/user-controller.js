@@ -65,73 +65,71 @@ module.exports = {
                 if (user.status === 'failed') {
                     logger.logError('userController - signUp - user with failed status: ' + req.body.email.toLowerCase());
                     return res.status(409).send('FailedAccount');
+                } else if (type === 'free') {
+                    logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
+                    return res.status(409).send('UserExists');
+                } else if (type === 'paid' && user.account.type === 'free') {
+                    subscription.upgradeSubscription(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
+                } else if (type === 'paid' && user.account.type === 'paid' && user.status === 'canceled') {
+                    subscription.reactivateSubscription(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
+                } else if (type === 'paid' && user.account.type === 'comp' && user.status === 'comp-ended') {
+                    subscription.upgradeSubscription(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
+                } else if (type === 'comp' && user.account.type === 'free') {
+                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
+                } else if (type === 'comp' && user.account.type === 'paid' && user.status === 'canceled') {
+                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
+                } else if (type === 'comp' && user.account.type === 'comp' && user.status === 'comp-ended') {
+                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
                 } else {
-                    if (type === 'free') {
-                        logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
-                        return res.status(409).send('UserExists');
-                    } else if (type === 'paid' && user.account.type === 'free') {
-                        subscription.upgradeSubscription(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (type === 'paid' && user.account.type === 'paid' && user.status === 'canceled') {
-                        subscription.reactivateSubscription(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (type === 'paid' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                        subscription.upgradeSubscription(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (type === 'comp' && user.account.type === 'free') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (type === 'comp' && user.account.type === 'paid' && user.status === 'canceled') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (type === 'comp' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else {
-                        return res.status(409).send('UserExists');
-                    }
+                    return res.status(409).send('UserExists');
                 }
             }
         });
@@ -260,7 +258,6 @@ module.exports = {
                     telephone: user.telephone,
                     type: account.type,
                     status: user.status,
-                    paymentPending: account.paymentPending,
                     cancelOn: user.cancelOn
                 });
             });
@@ -613,58 +610,49 @@ module.exports = {
                 },
                 // if payment pending then order package
                 function (sessionId, callback) {
-                    if (user.account.paymentPending) {
-                        billing.hasPaidActivePackage(sessionId, function (err, result) {
-                            if (err) {
-                                logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
-                                callback(err);
-                            } else if (!result) {
-                                billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                                    if (err) {
-                                        if (err === '_decline') {
-                                            logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
-                                        } else {
-                                            logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
-                                        }
-                                        logger.logError(err);
+                    billing.hasPaidActivePackage(sessionId, function (err, result) {
+                        if (err) {
+                            logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
+                            callback(err);
+                        } else if (!result) {
+                            billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                                if (err) {
+                                    if (err === '_decline') {
+                                        logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
+                                    } else {
+                                        logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
                                     }
-                                    callback(err);
-                                });
-                            } else {
+                                    logger.logError(err);
+                                }
                                 callback(err);
-                            }
-                        });
-                    } else {
-                        callback(null);
-                    }
+                            });
+                        } else {
+                            callback(err);
+                        }
+                    });
                 },
                 // update account if payment done
                 function (callback) {
-                    if (user.account.paymentPending) {
-                        user.account.paymentPending = false;
-                        if (!user.account.firstCardPaymentDate) {
-                            user.account.firstCardPaymentDate = (new Date()).toUTCString();
-                        }
-                        if (!user.account.billingDate) {
-                            user.account.billingDate = (new Date()).toUTCString();
-                        }
-                        user.account.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - changeCreditCard - error updating account: ' + user.email);
-                                logger.logError(err);
-                            }
-                            callback(err);
-                        });
-                    } else {
-                        callback(null);
+                    if (!user.account.firstCardPaymentDate) {
+                        user.account.firstCardPaymentDate = (new Date()).toUTCString();
                     }
+                    if (!user.account.billingDate) {
+                        user.account.billingDate = (new Date()).toUTCString();
+                    }
+                    user.account.save(function (err) {
+                        if (err) {
+                            logger.logError('userController - changeCreditCard - error updating account: ' + user.email);
+                            logger.logError(err);
+                        }
+                        callback(err);
+                    });
                 }
             ], function (err) {
                 if (err) {
                     logger.logError(err);
                     if (err === '_decline') {
                         subscription.sendCreditCardPaymentFailureEmail(user);
-                        return res.status(500).end('PaymentPending');
+                        return res.status(500).end('PaymentFailed');
                     } else {
                         return res.status(500).end();
                     }

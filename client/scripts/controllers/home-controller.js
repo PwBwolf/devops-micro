@@ -9,6 +9,9 @@
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
+            if ($scope.appConfig.url !== $window.location.href) {
+                $window.location.href = $scope.appConfig.url;
+            }
         }
 
         $scope.$watch(function () {
@@ -42,5 +45,6 @@
                     break;
             }
         });
+
     }]);
 }(angular.module('app')));
