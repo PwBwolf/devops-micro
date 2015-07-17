@@ -53,7 +53,7 @@ module.exports = {
             },
             // create user in aio
             function (userObj, accountObj, callback) {
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidPackages, function (err, data) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidUserPackages, function (err, data) {
                     if (err) {
                         logger.logError('merchant - newPaidUser - error creating user in aio: ' + userObj.email);
                         errorType = 'aio-user-insert';
@@ -236,7 +236,7 @@ module.exports = {
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscriptionSignUp - error updating user packages to paid in aio: ' + userObj.email);
                         errorType = 'aio-package-update';
@@ -603,7 +603,7 @@ module.exports = {
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscription - error updating user packages to paid in aio: ' + userObj.email);
                         errorType = 'aio-package-update';
@@ -1279,7 +1279,7 @@ function revertAccountChangesForReactivate(user, currentValues, cb) {
 }
 
 function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
+    var packages = type === 'free' ? config.aioFreeUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
             logger.logError('merchant - revertPackagesInAio - error setting back package in aio: ' + email);

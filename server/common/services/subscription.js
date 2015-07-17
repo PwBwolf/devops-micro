@@ -56,7 +56,7 @@ module.exports = {
             },
             // create user in aio and add packages
             function (userObj, accountObj, callback) {
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreePackages, function (err, data) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreeUserPackages, function (err, data) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
                         errorType = 'aio-user-insert';
@@ -115,7 +115,7 @@ module.exports = {
             // add free packages in freeside
             function (userObj, accountObj, callback) {
                 async.eachSeries(
-                    config.freeSideFreePackageParts,
+                    config.freeSideFreeUserPackageParts,
                     function (item, callback) {
                         billing.orderPackage(freeSideSessionId, item, function (err) {
                             if (err) {
@@ -210,7 +210,7 @@ module.exports = {
             },
             // create user in aio
             function (userObj, accountObj, callback) {
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidPackages, function (err, data) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidUserPackages, function (err, data) {
                     if (err) {
                         logger.logError('subscription - newPaidUser - error creating user in aio: ' + userObj.email);
                         errorType = 'aio-user-insert';
@@ -269,7 +269,7 @@ module.exports = {
             // add paid packages in freeside
             function (userObj, accountObj, callback) {
                 async.eachSeries(
-                    config.freeSidePaidPackageParts,
+                    config.freeSidePaidUserPackageParts,
                     function (item, callback) {
                         billing.orderPackage(freeSideSessionId, item, function (err) {
                             if (err) {
@@ -317,7 +317,7 @@ module.exports = {
                 switch (errorType) {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
-                        updateAioPackages(userObj.email, config.aioFreePackages);
+                        updateAioPackages(userObj.email, config.aioFreeUserPackages);
                         updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
@@ -402,7 +402,7 @@ module.exports = {
                 },
                 // create user in aio
                 function (userObj, accountObj, callback) {
-                    aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioComplimentaryPackages, function (err, data) {
+                    aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioComplimentaryUserPackages, function (err, data) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in aio: ' + userObj.email);
                             errorType = 'aio-user-insert';
@@ -461,7 +461,7 @@ module.exports = {
                 // add complimentary package in freeside
                 function (userObj, accountObj, callback) {
                     async.eachSeries(
-                        config.freeSideComplimentaryPackageParts,
+                        config.freeSideComplimentaryUserPackageParts,
                         function (item, callback) {
                             billing.orderPackage(freeSideSessionId, item, function (err) {
                                 if (err) {
@@ -604,23 +604,19 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in aio if user status is trial-ended or comp-ended
+            // change status to active in aio
             function (userObj, callback) {
-                if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
-                    aio.updateUserStatus(userObj.email, true, function (err) {
-                        if (err) {
-                            logger.logError('subscription - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
-                            errorType = 'aio-status-update';
-                        }
-                        callback(err, userObj);
-                    });
-                } else {
-                    callback(null, userObj);
-                }
+                aio.updateUserStatus(userObj.email, true, function (err) {
+                    if (err) {
+                        logger.logError('subscription - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
+                        errorType = 'aio-status-update';
+                    }
+                    callback(err, userObj);
+                });
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error updating user packages to paid in aio: ' + userObj.email);
                         errorType = 'aio-package-update';
@@ -654,17 +650,7 @@ module.exports = {
             },
             // update user information in freeside
             function (userObj, sessionId, callback) {
-                var address = newUser.address ? newUser.address : userObj.account.merchant;
-                var city = newUser.city ? newUser.city : 'West Palm Beach';
-                var state = newUser.state ? newUser.state : 'FL';
-                var zip = newUser.zipCode ? newUser.zipCode : '00000';
-                var country = 'US';
-                var payBy = newUser.cardNumber ? 'CARD' : 'BILL';
-                var payInfo = newUser.cardNumber ? newUser.cardNumber : '';
-                var payDate = newUser.expiryDate ? newUser.expiryDate : '';
-                var payCvv = newUser.cvv ? newUser.cvv : '';
-                var payName = newUser.cardName ? newUser.cardName : '';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, address, city, state, zip, country, userObj.email, userObj.telephone, payBy, payInfo, payDate, payCvv, payName, function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address, newUser.city, newUser.state, newUser.zipCode, 'US', userObj.email, userObj.telephone, 'CARD', newUser.cardNumber, newUser.expiryDate, newUser.cvv, newUser.cardName, function (err) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1116,7 +1102,7 @@ module.exports = {
                     },
                     // change packages in aio to paid ones
                     function (userObj, callback) {
-                        aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                        aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user packages to paid in aio: ' + userObj.email);
                                 errorType = 'aio-package-update';
@@ -1721,6 +1707,7 @@ function createAccount(user, userObj, type, cb) {
     });
     if (type === 'free') {
         accountObj.startDate = (new Date()).toUTCString();
+        accountObj.premiumEndDate = moment(accountObj.startDate).add(7, 'days');
     }
     if (type === 'paid') {
         accountObj.firstCardPaymentDate = now;
@@ -1797,6 +1784,7 @@ function deleteVisitor(email, cb) {
 function revertAccountPaymentDetails(email, account, cb) {
     account.type = 'free';
     account.startDate = (new Date()).toUTCString();
+    account.premiumEndDate = moment(account.startDate).add(7, 'days');
     account.firstCardPaymentDate = undefined;
     account.billingDate = undefined;
     account.save(function (err) {
@@ -1951,7 +1939,7 @@ function revertAccountChangesForCancel(user, currentValues, cb) {
 }
 
 function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
+    var packages = type === 'free' ? config.aioFreeUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
             logger.logError('subscription - revertPackagesInAio - error setting back package in aio: ' + email);

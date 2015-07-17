@@ -17,7 +17,8 @@ var Account = new Schema({
     firstCardPaymentDate: Date,
     firstMerchantPaymentDate: Date,
     billingDate: Date,
-    startDate: Date
+    startDate: Date,
+    premiumEndDate: Date
 }, {collection: 'Accounts'});
 
 mongoose.model('Account', Account);

@@ -9,7 +9,6 @@ var _ = require('lodash'),
     Visitor = mongoose.model('Visitor'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
-    AppConfig = mongoose.model('AppConfig'),
     ComplimentaryCode = mongoose.model('ComplimentaryCode'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
@@ -19,23 +18,16 @@ var _ = require('lodash'),
 
 module.exports = {
     getAppConfig: function (req, res) {
-        AppConfig.findOne({}, {_id: false}, function (err, appConfig) {
-            if (err) {
-                logger.logError('appController - getAppConfig - error fetching app config');
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            var props = {
-                environment: process.env.NODE_ENV,
-                url: config.url,
-                aioPortalUrl: config.aioPortalUrl,
-                cmsUrl: config.cmsUrl,
-                freePreviewTime: config.freePreviewTime,
-                graceNoteImageUrl: config.graceNoteImageUrl
-            };
-            appConfig = _.assign(appConfig._doc, props);
-            return res.json(appConfig);
-        });
+        var appConfig = {
+            appName: config.appName,
+            environment: process.env.NODE_ENV,
+            url: config.url,
+            homeUrl: config.homeUrl,
+            aioPortalUrl: config.aioPortalUrl,
+            cmsUrl: config.cmsUrl,
+            customerCareNumber: config.customerCareNumber
+        };
+        return res.json(appConfig);
     },
 
     getCountries: function (req, res) {

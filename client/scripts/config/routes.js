@@ -46,12 +46,6 @@
                 controller: 'idtSignUpCtrl',
                 access: access.anon
             })
-            .when('/processing-order',
-            {
-                templateUrl: 'views/processing-order.html',
-                controller: 'processingOrderCtrl',
-                access: access.anon
-            })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
@@ -70,9 +64,9 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success-payment-failure-active',
+            .when('/sign-up-success-payment-failure-login',
             {
-                templateUrl: 'views/sign-up-success-payment-failure-active.html',
+                templateUrl: 'views/sign-up-success-payment-failure-login.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
@@ -163,12 +157,6 @@
             .when('/upgrade-subscription-success',
             {
                 templateUrl: 'views/upgrade-subscription-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/upgrade-subscription-success-payment-pending',
-            {
-                templateUrl: 'views/upgrade-subscription-success-payment-pending.html',
                 controller: 'commonCtrl',
                 access: access.user
             })

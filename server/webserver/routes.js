@@ -32,7 +32,6 @@ var _ = require('lodash'),
         {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
         {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
         {path: '/api/upgrade-subscription', httpMethod: 'POST', middleware: [UserCtrl.upgradeSubscription], accessLevel: accessLevels.user},
-        {path: '/api/reactivate-subscription', httpMethod: 'POST', middleware: [UserCtrl.reactivateSubscription], accessLevel: accessLevels.user},
         {path: '/api/cancel-subscription', httpMethod: 'POST', middleware: [UserCtrl.cancelSubscription], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',

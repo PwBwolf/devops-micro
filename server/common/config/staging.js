@@ -20,6 +20,7 @@ module.exports = {
     db: 'mongodb://localhost/yiptv',
     merchantDb: 'mongodb://localhost/merchant',
     url: 'https://staging.yiptv.net/',
+    homeUrl: 'https://staging.yiptv.net/',
     imageUrl: 'https://staging.yiptv.net/images/',
     secretToken: 'yip#tv@staging#346',
     ruleEngineRecurrence: '0 0 0 * * *',
@@ -30,14 +31,14 @@ module.exports = {
     refundPeriodInDays: 3,
     cmsUrl: '',
     freeSideSelfServiceApiUrl: '',
-    freeSideFreePackageParts: [6, 15],
-    freeSidePaidPackageParts: [6, 15, 4],
-    freeSideComplimentaryPackageParts: [15],
+    freeSideFreeUserPackageParts: [17, 18],
+    freeSidePaidUserPackageParts: [17, 18, 16],
+    freeSideComplimentaryUserPackageParts: [15],
     aioApiUrl: '',
     aioPortalUrl: '',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePackages: [{'packageid': 76}, {'packageid': 74}],
-    aioPaidPackages: [{'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
-    aioComplimentaryPackages: [{'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
+    aioFreeUserPackages: [{'packageid': 76}, {'packageid': 74}],
+    aioPaidUserPackages: [{'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
+    aioComplimentaryUserPackages: [{'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
 };

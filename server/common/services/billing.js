@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('../setup/config'),
+    _ = require('lodash'),
     logger = require('../../common/setup/logger'),
     xmlrpc = require('xmlrpc');
 
@@ -294,7 +295,12 @@ module.exports = {
                 } else if (response.dates && response.dates.length > 0) {
                     logger.logInfo('billing - getBillingDate - response');
                     logger.logInfo(response);
-                    callback(null, new Date(response.dates[0].bill_date * 1000));
+                    var index = _.findIndex(response.dates, {'amount': config.paidBasicPackageAmount});
+                    if (index >= 0) {
+                        callback(null, new Date(response.dates[index].bill_date * 1000));
+                    } else {
+                        callback(null, null);
+                    }
                 } else {
                     logger.logInfo('billing - getBillingDate - billing date not found');
                     callback(null, null);

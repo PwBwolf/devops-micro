@@ -39,7 +39,7 @@
                         } else if (error === 'PaymentFailed') {
                             $location.path('/sign-up-success-payment-failure');
                         } else if (error === 'PaymentFailedActive') {
-                            $location.path('/sign-up-success-payment-failure-active');
+                            $location.path('/sign-up-success-payment-failure-login');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }

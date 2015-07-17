@@ -7,20 +7,41 @@ var htmlparser = require('htmlparser2'),
     translationString = '',
     innerTags = [];
 
+function translate(translation, outputFile) {
+    fs.appendFile(outputFile, translation + ': \'' + translations[translation] + '\',\n', function (err) {
+        if (!err) {
+            console.log('Translation added to file successfully');
+        } else {
+            console.log('Error while adding translation ' + translation + 'to output file', err);
+        }
+    });
+}
+
+var writeToFile = function (outputFile) {
+    fs.writeFile(outputFile, '', function (err) {
+        var translation = null;
+        if (!err) {
+            for (translation in translations) {
+                translate(translation, outputFile);
+            }
+        } else {
+            console.log('Error while removing old data from output file :', err);
+        }
+    });
+};
 
 var parser = new htmlparser.Parser({
     onopentag: function (name, attribs) {
         if (attribs.translate) {
             translationString = '';
             translate = attribs.translate;
-        }
-        else if (translate) {
+        } else if (translate) {
             var attrs = '';
-            for(var attrib in attribs) {
+            for (var attrib in attribs) {
                 attrs += ' ' + attrib + '="' + attribs[attrib] + '"';
-            };
-            innerTags.push('<'+ name + attrs +'>');
-            translationString += '<'+ name + attrs +'>';
+            }
+            innerTags.push('<' + name + attrs + '>');
+            translationString += '<' + name + attrs + '>';
         }
     },
     ontext: function (text) {
@@ -30,9 +51,9 @@ var parser = new htmlparser.Parser({
     },
     onclosetag: function (tagname) {
         if (translate !== null) {
-            if(innerTags.length) {
-                innerTags.splice(innerTags.length-1, 1);
-                translationString += '</'+ tagname +'>';
+            if (innerTags.length) {
+                innerTags.splice(innerTags.length - 1, 1);
+                translationString += '</' + tagname + '>';
             }
             else {
                 translations[translate] = translationString.replace(/(\r\n|\n|\r|\s+)/gm, ' ').replace(/'/g, '&#39;').trim();
@@ -58,28 +79,6 @@ if (typeof process.argv[2] !== 'undefined') {
         }
 
     });
-}
-else {
+} else {
     console.log('No file specified');
 }
-
-var writeToFile = function (outputFile) {
-    fs.writeFile(outputFile, '', function (err, data) {
-        var translation = null;
-        if (!err) {
-            for (translation in translations) {
-                fs.appendFile(outputFile, translation + ': \'' + translations[translation] + '\',\n', function (err) {
-                    if (!err) {
-                        console.log('Translation added to file successfully');
-                    }
-                    else {
-                        console.log('Error while adding translation ' + translation + 'to output file', err);
-                    }
-                });
-            }
-        }
-        else {
-            console.log('Error while removing old data from output file :', err);
-        }
-    });
-};

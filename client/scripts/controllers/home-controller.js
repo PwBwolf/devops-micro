@@ -9,8 +9,8 @@
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
-            if ($scope.appConfig.url !== $window.location.href) {
-                $window.location.href = $scope.appConfig.url;
+            if ($scope.appConfig.homeUrl && $window.location.href !== $scope.appConfig.homeUrl) {
+                $window.location.href = $scope.appConfig.homeUrl;
             }
         }
 

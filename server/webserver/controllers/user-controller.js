@@ -607,55 +607,11 @@ module.exports = {
                         }
                     });
                     callback(null, sessionId);
-                },
-                // if payment pending then order package
-                function (sessionId, callback) {
-                    billing.hasPaidActivePackage(sessionId, function (err, result) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error getting current packages: ' + user.email);
-                            callback(err);
-                        } else if (!result) {
-                            billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                                if (err) {
-                                    if (err === '_decline') {
-                                        logger.logError('userController - changeCreditCard - credit card declined: ' + user.email);
-                                    } else {
-                                        logger.logError('userController - changeCreditCard - error ordering package in freeside: ' + user.email);
-                                    }
-                                    logger.logError(err);
-                                }
-                                callback(err);
-                            });
-                        } else {
-                            callback(err);
-                        }
-                    });
-                },
-                // update account if payment done
-                function (callback) {
-                    if (!user.account.firstCardPaymentDate) {
-                        user.account.firstCardPaymentDate = (new Date()).toUTCString();
-                    }
-                    if (!user.account.billingDate) {
-                        user.account.billingDate = (new Date()).toUTCString();
-                    }
-                    user.account.save(function (err) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error updating account: ' + user.email);
-                            logger.logError(err);
-                        }
-                        callback(err);
-                    });
                 }
             ], function (err) {
                 if (err) {
                     logger.logError(err);
-                    if (err === '_decline') {
-                        subscription.sendCreditCardPaymentFailureEmail(user);
-                        return res.status(500).end('PaymentFailed');
-                    } else {
-                        return res.status(500).end();
-                    }
+                    return res.status(500).end();
                 } else {
                     return res.status(200).end();
                 }
@@ -671,9 +627,6 @@ module.exports = {
                 logger.logError('userController - getAioToken - error getting token from aio: ' + user);
                 logger.logError(err);
                 return res.status(500).end();
-            }
-            if (!req.email && data) {
-                data.isGuest = true;
             }
             return res.send(data);
         });
@@ -751,17 +704,6 @@ module.exports = {
         subscription.upgradeSubscription(req.email, req.body, function (err) {
             if (err) {
                 logger.logError('userController - upgradeSubscription - error during upgrade subscription: ' + req.email);
-                logger.logError(err);
-                return res.status(500).send(err.message);
-            }
-            return res.status(200).end();
-        });
-    },
-
-    reactivateSubscription: function (req, res) {
-        subscription.reactivateSubscription(req.email, req.body, function (err) {
-            if (err) {
-                logger.logError('userController - reactivateSubscription - error during reactivate subscription: ' + req.email);
                 logger.logError(err);
                 return res.status(500).send(err.message);
             }

@@ -1,7 +1,7 @@
 'use strict';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-var fs = require('../server/node_modules/fs-extended');
+var fs = require('../../../server/node_modules/fs-extended/index');
 
 var logFile = fs.createWriteStream(__dirname + '/update-database.log', {flags: 'w'});
 var logStdOut = process.stdout;
@@ -11,12 +11,12 @@ console.log = function (d) {
     logStdOut.write(d + '\n');
 };
 
-var config = require('../server/common/setup/config'),
-    mongoose = require('../server/node_modules/mongoose'),
+var config = require('../../../server/common/setup/config'),
+    mongoose = require('../../../server/node_modules/mongoose/index'),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
-require('../server/common/setup/models')(modelsPath);
+require('../../../server/common/setup/models')(modelsPath);
 
 var Users = mongoose.model('User');
 

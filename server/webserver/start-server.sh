@@ -17,4 +17,4 @@ cd $cwd
 
 # send email notifying new build
 cd ..
-node ../tools/notify-build.js
+node ../tools/deployment-scripts/notify-build.js
