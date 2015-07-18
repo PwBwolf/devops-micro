@@ -366,8 +366,8 @@ module.exports = {
                 createComplimentaryUser(user, cc, cb);
             }
         });
-        var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
 
+        var errorType, aioAccountId, freeSideCustomerNumber, freeSideSessionId;
         function createComplimentaryUser(user, cc, cb) {
             async.waterfall([
                 // create user in db
@@ -1703,10 +1703,10 @@ function createAccount(user, userObj, type, cb) {
         merchant: 'YIPTV',
         primaryUser: userObj,
         users: [userObj],
-        createdAt: now
+        createdAt: now,
+        startDate: now
     });
     if (type === 'free') {
-        accountObj.startDate = (new Date()).toUTCString();
         accountObj.premiumEndDate = moment(accountObj.startDate).add(7, 'days');
     }
     if (type === 'paid') {
@@ -1783,7 +1783,6 @@ function deleteVisitor(email, cb) {
 
 function revertAccountPaymentDetails(email, account, cb) {
     account.type = 'free';
-    account.startDate = (new Date()).toUTCString();
     account.premiumEndDate = moment(account.startDate).add(7, 'days');
     account.firstCardPaymentDate = undefined;
     account.billingDate = undefined;
