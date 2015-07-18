@@ -115,7 +115,7 @@ module.exports = {
             // add free packages in freeside
             function (userObj, accountObj, callback) {
                 async.eachSeries(
-                    config.freeSideFreeUserPackageParts,
+                    config.freeSideFreePremiumUserPackageParts,
                     function (item, callback) {
                         billing.orderPackage(freeSideSessionId, item, function (err) {
                             if (err) {
@@ -1600,22 +1600,22 @@ module.exports = {
                     }
                 });
             },
+            // update to free package in aio
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
+                        errorType = 'aio-update-package';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
             // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // update to free package in aio
-            function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aiofreePackage, function (err, sessionId) {
-                    if (err) {
-                        logger.logError('subscription - cancelSubscription - error updating to free package: ' + userObj.email);
-                        errorType = 'aio-update-package';
                     }
                     callback(err, userObj, sessionId);
                 });
@@ -1630,7 +1630,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel existing package
+            // cancel paid basic and premium package
             function (userObj, sessionId, callback) {
                 billing.cancelPackageByType(sessionId, 'paid', function (err) {
                     if (err) {
