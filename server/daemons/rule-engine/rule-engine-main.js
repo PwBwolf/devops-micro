@@ -12,10 +12,10 @@ var CronJob = require('cron').CronJob,
 require('../../common/setup/models')(modelsPath);
 var ruleEngine = require('./rule-engine');
 require('./fact-providers/free-user-provider');
-require('./fact-providers/canceled-user-provider');
+require('./fact-providers/cancel-user-provider');
 require('./fact-providers/complimentary-user-provider');
 require('./post-processors/free-user-processor');
-require('./post-processors/canceled-user-processor');
+require('./post-processors/cancel-user-processor');
 require('./post-processors/complimentary-user-processor');
 var factProviders = config.factProviders;
 

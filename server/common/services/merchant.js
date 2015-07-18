@@ -1279,7 +1279,7 @@ function revertAccountChangesForReactivate(user, currentValues, cb) {
 }
 
 function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreeUserPackages : config.aioPaidUserPackages;
+    var packages = type === 'free' ? config.aioFreePremiumUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
             logger.logError('merchant - revertPackagesInAio - error setting back package in aio: ' + email);
