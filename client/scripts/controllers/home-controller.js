@@ -9,9 +9,6 @@
                 $scope.session.signOut = undefined;
                 $window.location.reload();
             }
-            if ($scope.appConfig.homeUrl && $window.location.href !== $scope.appConfig.homeUrl) {
-                $window.location.href = $scope.appConfig.homeUrl;
-            }
         }
 
         $scope.$watch(function () {

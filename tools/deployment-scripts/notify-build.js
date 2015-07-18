@@ -7,7 +7,7 @@ var email = require('../../server/common/services/email');
 var moment = require('../../server/node_modules/moment/moment');
 var sf = require('../../server/node_modules/sf/sf');
 var fs = require('../../server/node_modules/fs-extended/index');
-var versionJson = fs.readJSONSync('../../client/version.json');
+var versionJson = fs.readJSONSync('../client/version.json');
 
 var mailOptions = {
     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
