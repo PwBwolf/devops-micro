@@ -11,7 +11,7 @@
                     <br>
                     <button ng-show="user.type === 'paid' && !user.cancelOn" goto="/change-credit-card" type="button" translate="ACCOUNT_CHANGE_CREDIT_CARD"></button>
                     <br ng-show="user.type === 'paid' && !user.cancelOn">
-                    <button ng-show="user.type === 'free'" goto="/upgrade-subscription?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_{{language}}" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION"></button>
+                    <button ng-show="user.type === 'free'" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION"></button>
                     <br ng-show="user.type === 'free'">
                     <button ng-show="user.type === 'paid' && !user.cancelOn" ng-disabled="saving" ng-click="cancelSubscription()" type="button" translate="ACCOUNT_CANCEL_SUBSCRIPTION"></button>
                     <br ng-show="user.type === 'paid' && !user.cancelOn">

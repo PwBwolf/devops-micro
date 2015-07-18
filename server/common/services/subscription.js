@@ -1455,7 +1455,7 @@ module.exports = {
     endComplimentarySubscription: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // set user status to 'comp-ended'
+            // set user status to 'active' and 'free'
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1600,14 +1600,14 @@ module.exports = {
                     }
                 });
             },
-            // update to free package in aio
+            // update to free packages in aio
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err, sessionId) {
+                aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
-                        errorType = 'aio-update-package';
+                        errorType = 'aio-package-update';
                     }
-                    callback(err, userObj, sessionId);
+                    callback(err, userObj);
                 });
             },
             // login to freeside
@@ -1632,7 +1632,7 @@ module.exports = {
             },
             // cancel paid basic and premium package
             function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'paid', function (err) {
+                billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-cancel-package';
@@ -1657,14 +1657,14 @@ module.exports = {
                     case 'db-account-update':
                         revertUserChangesForCancel(userObj, currentValues);
                         break;
-                    case 'aio-status-update':
+                    case 'aio-package-update':
                         revertAccountChangesForCancel(userObj, currentValues);
                         revertUserChangesForCancel(userObj, currentValues);
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
                     case 'freeside-cancel-package':
-                        setUserActiveInAio(userObj.email, currentValues.status);
+                        updateAioPackages(userObj.email, config.aioPaidUserPackages);
                         revertAccountChangesForCancel(userObj, currentValues);
                         revertUserChangesForCancel(userObj, currentValues);
                         break;
@@ -1927,6 +1927,7 @@ function revertAccountChangesForComplimentary(user, currentValues, cb) {
 
 function revertAccountChangesForCancel(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
+    user.account.type = currentValues.type;
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForCancel - error reverting account changes: ' + email);

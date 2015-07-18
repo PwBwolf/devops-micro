@@ -2,6 +2,7 @@
 
 var config = require('../setup/config'),
     _ = require('lodash'),
+    async = require('async'),
     logger = require('../../common/setup/logger'),
     xmlrpc = require('xmlrpc');
 
@@ -243,7 +244,7 @@ module.exports = {
     cancelPackageByType: function (sessionId, type, callback) {
         getPackages(sessionId, function (err, packages) {
             if (err) {
-                logger.logError('billing - removeActivePackage - error in getting packages');
+                logger.logError('billing - cancelPackageByType - error getting packages');
                 logger.logError(err);
                 callback(err);
             } else if (packages && packages.length > 0) {
@@ -264,11 +265,51 @@ module.exports = {
                 if (packageNumber) {
                     cancelPackage(sessionId, packageNumber, function (err) {
                         if (err) {
-                            logger.logError('billing - cancelPackageByType - error in canceling package');
+                            logger.logError('billing - cancelPackageByType - error canceling package');
                             logger.logError(err);
                         }
                         callback(err);
                     });
+                } else {
+                    callback(null);
+                }
+            } else {
+                callback(null);
+            }
+        });
+    },
+
+    cancelPackages: function (sessionId, packageParts, callback) {
+        getPackages(sessionId, function (err, packages) {
+            if (err) {
+                logger.logError('billing - cancelPackages - error getting packages');
+                logger.logError(err);
+                callback(err);
+            } else if (packages && packages.length > 0) {
+                var packageNumbers = [];
+                for (var i = 0; i < packageParts.length; i++) {
+                    for (var j = 0; j < packages.length; j++) {
+                        if (packages[j].pkgpart === String(packageParts[i])) {
+                            packageNumbers.push(packages[j].pkgnum);
+                            break;
+                        }
+                    }
+                }
+                if (packageNumbers.length > 0) {
+                    async.eachSeries(
+                        packageNumbers,
+                        function (packageNumber, callback) {
+                            cancelPackage(sessionId, packageNumber, function (err) {
+                                if (err) {
+                                    logger.logError('billing - cancelPackages - error removing packages');
+                                }
+                                callback(err);
+                            });
+                        },
+                        function (err) {
+                            callback(err);
+                        }
+                    );
                 } else {
                     callback(null);
                 }
@@ -345,16 +386,22 @@ function cancelPackage(sessionId, packageNumber, callback) {
         if (err) {
             logger.logError('billing - cancelPackage - error in canceling package 1');
             logger.logError(err);
-            callback(err);
+            if (callback) {
+                callback(err);
+            }
         } else {
             if (response.error) {
                 logger.logError('billing - cancelPackage - error in canceling package 2');
                 logger.logError(response.error);
-                callback(response.error);
+                if (callback) {
+                    callback(response.error);
+                }
             } else {
                 logger.logInfo('billing - cancelPackage - response');
                 logger.logInfo(response);
-                callback(null);
+                if (callback) {
+                    callback(null);
+                }
             }
         }
     });

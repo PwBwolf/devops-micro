@@ -28,6 +28,8 @@ module.exports = {
     freeSideFreePremiumUserPackageParts: [17, 18],
     freeSidePaidUserPackageParts: [17, 18, 16],
     freeSideComplimentaryUserPackageParts: [15],
+    freeSidePaidBasicPackagePart: 16,
+    freeSidePremiumPackagePart: 18,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://172.16.10.100',
     aioPortalUrl: 'http://209.18.77.106',

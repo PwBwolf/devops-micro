@@ -24,12 +24,11 @@ function sendReminderEmail(user, subjectDays, bodyDays) {
 }
 
 function sendLastButOneReminderEmail(user) {
-    var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.lastButOneReminderEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
+        html: sf(config.lastButOneReminderEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -62,12 +61,11 @@ function suspendAndSendEmail(user) {
     if (config.cancelSubscriptionForTrialUsers) {
         subscription.endFreeTrial(user.email);
     } else {
-        var params = '?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + user.preferences.defaultLanguage;
         var mailOptions = {
             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
             to: user.email,
             subject: config.trialPeriodCompleteEmailSubject[user.preferences.defaultLanguage],
-            html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription' + params)
+            html: sf(config.trialPeriodCompleteEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
         };
         email.sendEmail(mailOptions, function (err) {
             if (err) {

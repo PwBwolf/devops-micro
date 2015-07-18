@@ -7,6 +7,7 @@ module.exports = {
     root: rootPath,
     factProviders: {},
     postProcessors: {},
+    appName: 'YipTV',
     paidBasicPackageAmount: '14.99',
     customerCareNumber: '855-919-4788',
     contactUsEmailSubject: 'New Contact Us Request',
