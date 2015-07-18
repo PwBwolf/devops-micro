@@ -56,7 +56,7 @@ module.exports = {
             },
             // create user in aio and add packages
             function (userObj, accountObj, callback) {
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreeUserPackages, function (err, data) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioFreePremiumUserPackages, function (err, data) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user in aio: ' + userObj.email);
                         errorType = 'aio-user-insert';
@@ -317,7 +317,7 @@ module.exports = {
                 switch (errorType) {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
-                        updateAioPackages(userObj.email, config.aioFreeUserPackages);
+                        updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
                         updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
@@ -1560,7 +1560,7 @@ module.exports = {
     endPaidSubscription: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
-            // set user status to 'canceled' and set canceledDate to current date
+            // set user status to 'active' and type to 'free' and set canceledDate to current date
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1575,10 +1575,12 @@ module.exports = {
                             status: userObj.status,
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
-                            billingDate: userObj.account.billingDate,
+                            type: userObj.account.type,
+                            billingDate: userObj.account.billingDate
                         };
                         userObj.account.billingDate = undefined;
-                        userObj.status = 'canceled';
+                        userObj.account.type = 'free';
+                        userObj.status = 'active';
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
@@ -1598,16 +1600,6 @@ module.exports = {
                     }
                 });
             },
-            // change status to inactive in aio
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, false, function (err) {
-                    if (err) {
-                        logger.logError('subscription - cancelSubscription - error updating aio customer to inactive: ' + userObj.email);
-                        errorType = 'aio-status-update';
-                    }
-                    callback(err, userObj);
-                });
-            },
             // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
@@ -1618,10 +1610,19 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
+            // update to free package in aio
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aiofreePackage, function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating to free package: ' + userObj.email);
+                        errorType = 'aio-update-package';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
             // modify billing address
             function (userObj, sessionId, callback) {
-                var address = 'Canceled by user on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                billing.updateBilling(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
+                billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1938,7 +1939,7 @@ function revertAccountChangesForCancel(user, currentValues, cb) {
 }
 
 function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreeUserPackages : config.aioPaidUserPackages;
+    var packages = type === 'free' ? config.aioFreePremiumUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
             logger.logError('subscription - revertPackagesInAio - error setting back package in aio: ' + email);

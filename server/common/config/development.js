@@ -2,7 +2,6 @@
 
 module.exports = {
     environment: 'development',
-    cleanup: ['Account', 'User', 'ContactUs', 'Visitor'],
     port: 3000,
     merchantPort: 4000,
     notificationPort: 5000,
@@ -34,7 +33,7 @@ module.exports = {
     aioPortalUrl: 'http://209.18.77.106',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreeUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}],
+    aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}],
     aioPaidUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
     aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
 };

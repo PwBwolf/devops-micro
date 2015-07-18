@@ -25,7 +25,7 @@ module.exports.getCanceledUsers = function () {
                 def.resolve([]);
             }
         }, function (err) {
-            logger.logError('canceledUserProvider - getCanceledUsers - error fetching canceled accounts');
+            logger.logError('cancelUserProvider - getCanceledUsers - error fetching canceled accounts');
             logger.logError(err);
             def.reject(err);
         }
@@ -50,7 +50,7 @@ module.exports.getCancelPendingUsers = function () {
                 def.resolve([]);
             }
         }, function (err) {
-            logger.logError('canceledUserProvider - getCanceledUsers - error fetching cancel pending accounts');
+            logger.logError('cancelUserProvider - getCanceledUsers - error fetching cancel pending accounts');
             logger.logError(err);
             def.reject(err);
         }
