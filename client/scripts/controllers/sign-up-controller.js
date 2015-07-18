@@ -36,10 +36,10 @@
                     function (error) {
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
-                        } else if (error === 'PaymentPending') {
-                            $location.path('/sign-up-success-payment-pending');
-                        } else if (error === 'PaymentPendingActive') {
-                            $location.path('/sign-up-success-payment-pending-active');
+                        } else if (error === 'PaymentFailed') {
+                            $location.path('/sign-up-success-payment-failure');
+                        } else if (error === 'PaymentFailedActive') {
+                            $location.path('/sign-up-success-payment-failure-login');
                         } else {
                             loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                         }

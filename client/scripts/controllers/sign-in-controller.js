@@ -76,7 +76,7 @@
                                         }
                                     }
                                 }).result.then(function () {
-                                        $location.path('/upgrade-subscription').search('utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_' + $scope.language);
+                                        $location.path('/upgrade-subscription');
                                     });
                             } else if ($scope.user.status === 'comp-ended') {
                                 $modal.open({

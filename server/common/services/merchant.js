@@ -53,7 +53,7 @@ module.exports = {
             },
             // create user in aio
             function (userObj, accountObj, callback) {
-                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidPackages, function (err, data) {
+                aio.createUser(userObj.email, userObj._id, userObj.firstName + ' ' + userObj.lastName, userObj.password, userObj.email, config.aioUserPin, config.aioPaidUserPackages, function (err, data) {
                     if (err) {
                         logger.logError('merchant - newPaidUser - error creating user in aio: ' + userObj.email);
                         errorType = 'aio-user-insert';
@@ -88,7 +88,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, 'Merchant', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'Merchant', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('merchant - newPaidUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -108,15 +108,6 @@ module.exports = {
                     }
                 });
                 callback(null, userObj, accountObj);
-            },
-            // add locale
-            function (userObj, accountObj, callback) {
-                billing.updateLocale(freeSideSessionId, userObj.preferences.defaultLanguage + '_US', function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error updating locale in freeside: ' + userObj.email);
-                    }
-                    callback(null, userObj, accountObj);
-                });
             },
             // send verification email
             function (userObj, accountObj, callback) {
@@ -186,7 +177,6 @@ module.exports = {
                                 type: userObj.account.type,
                                 complimentaryCode: userObj.account.complimentaryCode,
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
@@ -195,7 +185,6 @@ module.exports = {
                             userObj.account.type = 'paid';
                             userObj.account.complimentaryCode = undefined;
                             userObj.account.billingDate = undefined;
-                            userObj.account.paymentPending = true;
                             userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
@@ -247,7 +236,7 @@ module.exports = {
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscriptionSignUp - error updating user packages to paid in aio: ' + userObj.email);
                         errorType = 'aio-package-update';
@@ -396,12 +385,10 @@ module.exports = {
                         } else {
                             currentValues = {
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate
                             };
                             userObj.account.billingDate = undefined;
-                            userObj.account.paymentPending = true;
                             userObj.status = 'active';
                             userObj.cancelDate = undefined;
                             if (newUser.firstName) {
@@ -570,7 +557,6 @@ module.exports = {
                                 type: userObj.account.type,
                                 complimentaryCode: userObj.account.complimentaryCode,
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
@@ -579,7 +565,6 @@ module.exports = {
                             userObj.account.type = 'paid';
                             userObj.account.complimentaryCode = undefined;
                             userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.account.paymentPending = false;
                             userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
@@ -618,7 +603,7 @@ module.exports = {
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
-                aio.updateUserPackages(userObj.email, config.aioPaidPackages, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscription - error updating user packages to paid in aio: ' + userObj.email);
                         errorType = 'aio-package-update';
@@ -779,14 +764,12 @@ module.exports = {
                         } else {
                             currentValues = {
                                 billingDate: userObj.account.billingDate,
-                                paymentPending: userObj.account.paymentPending,
                                 status: userObj.status,
                                 cancelDate: userObj.cancelDate
                             };
                             userObj.status = 'active';
                             userObj.cancelDate = undefined;
                             userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.account.paymentPending = false;
                             userObj.save(function (err) {
                                 if (err) {
                                     logger.logError('merchant - reactivateSubscription - error saving user: ' + userEmail);
@@ -950,10 +933,8 @@ module.exports = {
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
                             billingDate: userObj.account.billingDate,
-                            paymentPending: userObj.account.paymentPending
                         };
                         userObj.account.billingDate = undefined;
-                        userObj.account.paymentPending = false;
                         userObj.status = 'canceled';
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
@@ -1051,7 +1032,7 @@ module.exports = {
         });
     },
 
-    makeCashPayment: function (userEmail, paymentPending, cb) {
+    makeCashPayment: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
             // get user and update
@@ -1096,26 +1077,22 @@ module.exports = {
             },
             // add package if payment pending
             function (userObj, sessionId, callback) {
-                if (paymentPending) {
-                    billing.hasPaidActivePackage(sessionId, function (err, result) {
-                        if (err) {
-                            logger.logError('merchant - makeCashPayment - error getting current packages: ' + userObj.email);
+                billing.hasPaidActivePackage(sessionId, function (err, result) {
+                    if (err) {
+                        logger.logError('merchant - makeCashPayment - error getting current packages: ' + userObj.email);
+                        callback(err, userObj);
+                    } else if (!result) {
+                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                            if (err) {
+                                logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
+                                errorType = 'freeside-order-package';
+                            }
                             callback(err, userObj);
-                        } else if (!result) {
-                            billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                                if (err) {
-                                    logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
-                                    errorType = 'freeside-order-package';
-                                }
-                                callback(err, userObj);
-                            });
-                        } else {
-                            callback(err, userObj);
-                        }
-                    });
-                } else {
-                    callback(null, userObj);
-                }
+                        });
+                    } else {
+                        callback(err, userObj);
+                    }
+                });
             }
         ], function (err, userObj) {
             if (err) {
@@ -1161,7 +1138,6 @@ function createAccount(user, userObj, type, cb) {
     var accountObj = new Account({
         type: type,
         merchant: 'YIPTV',
-        paymentPending: true,
         primaryUser: userObj,
         users: [userObj],
         createdAt: now
@@ -1278,7 +1254,6 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
     user.account.type = currentValues.type;
     user.account.complimentaryCode = currentValues.complimentaryCode;
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.save(function (err) {
         if (err) {
             logger.logError('merchant - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
@@ -1292,7 +1267,6 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
 
 function revertAccountChangesForReactivate(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.save(function (err) {
         if (err) {
             logger.logError('merchant - revertAccountChangesForReactivate - error reverting account changes: ' + email);
@@ -1305,7 +1279,7 @@ function revertAccountChangesForReactivate(user, currentValues, cb) {
 }
 
 function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreePackages : config.aioPaidPackages;
+    var packages = type === 'free' ? config.aioFreeUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
         if (err) {
             logger.logError('merchant - revertPackagesInAio - error setting back package in aio: ' + email);
@@ -1414,7 +1388,6 @@ function revertUserChangesForCancel(user, currentValues, cb) {
 
 function revertAccountChangesForCancel(user, currentValues, cb) {
     user.account.billingDate = currentValues.billingDate;
-    user.account.paymentPending = currentValues.paymentPending;
     user.account.save(function (err) {
         if (err) {
             logger.logError('merchant - revertAccountChangesForCancel - error reverting account changes: ' + email);

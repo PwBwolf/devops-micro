@@ -15,7 +15,6 @@ module.exports = {
         };
         client.post(config.aioApiUrl + '/ws/AddCustomer.php', args, function (data) {
             logger.logInfo('aio - createUser - response');
-            logger.logInfo(data);
             var jsonData = JSON.parse(data);
             logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
@@ -63,7 +62,6 @@ module.exports = {
         };
         client.post(config.aioApiUrl + '/ws/UpdateCustomerStatus.php', args, function (data) {
             logger.logInfo('aio - updateUserStatus - response');
-            logger.logInfo(data);
             var jsonData = JSON.parse(data);
             logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
@@ -88,7 +86,6 @@ module.exports = {
         };
         client.post(config.aioApiUrl + '/ws/UpdateCustomerPackages.php', args, function (data) {
             logger.logInfo('aio - updateUserPackages - response');
-            logger.logInfo(data);
             var jsonData = JSON.parse(data);
             logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {
@@ -113,7 +110,6 @@ module.exports = {
         };
         client.post(config.aioApiUrl + '/ws/UpdateCustomer.php', args, function (data) {
             logger.logInfo('aio - updatePassword - response');
-            logger.logInfo(data);
             var jsonData = JSON.parse(data);
             logger.logInfo(jsonData);
             if (jsonData.responseCode !== 0) {

@@ -146,10 +146,6 @@
                 $http.post('/api/upgrade-subscription', data).success(success).error(error);
             },
 
-            reactivateSubscription: function (data, success, error) {
-                $http.post('/api/reactivate-subscription', data).success(success).error(error);
-            },
-
             changeCreditCard: function (data, success, error) {
                 $http.post('/api/change-credit-card', data).success(success).error(error);
             },
@@ -164,10 +160,6 @@
 
             updatePreferences: function(data, success, error) {
                 $http.post('/api/update-preferences', data).success(success).error(error);
-            },
-
-            getUserChannels: function(success, error) {
-                $http.get('/api/get-user-channels').success(success).error(error);
             }
          };
     }]);

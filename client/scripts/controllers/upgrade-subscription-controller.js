@@ -31,7 +31,7 @@
                         if (error === 'PaidUser') {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED'));
                             $scope.saving = false;
-                        } else if (error === 'PaymentPendingActive') {
+                        } else if (error === 'PaymentFailedActive') {
                             userSvc.getUserProfile(function () {
                                 $location.path('/upgrade-subscription-success-payment-pending');
                                 $scope.saving = false;

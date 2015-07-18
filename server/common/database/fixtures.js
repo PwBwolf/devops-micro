@@ -14,21 +14,20 @@ require('../setup/models')(modelsPath);
 
 var models = {
     'Countries': mongoose.model('Country'),
-    'States': mongoose.model('State'),
-    'AppConfig': mongoose.model('AppConfig')
+    'States': mongoose.model('State')
 };
 
 function processFixture(fqn) {
     var def = Q.defer();
     var collectionContent = fs.readJSONSync(__dirname + '/' + fqn);
-    if(models[collectionContent.type]) {
-        models[collectionContent.type].collection.remove(function(err){
-            if(err) {
-                console.log('Could not delete '+collectionContent.type+' first...file not processed');
+    if (models[collectionContent.type]) {
+        models[collectionContent.type].collection.remove(function (err) {
+            if (err) {
+                console.log('Could not delete ' + collectionContent.type + ' first...file not processed');
                 def.reject();
             } else {
-                models[collectionContent.type].collection.insert(collectionContent.docs, {}, function(err) {
-                    if(err) {
+                models[collectionContent.type].collection.insert(collectionContent.docs, {}, function (err) {
+                    if (err) {
                         console.log('Something went wrong when inserting ' + fqn + ' to the database!');
                         def.reject();
                     }
@@ -43,15 +42,15 @@ function processFixture(fqn) {
 var options = {
     followLinks: false,
     listeners: {
-        files: function(root, files) {
+        files: function (root, files) {
             var fixturePromises = [];
-            for(var i = 0; i < files.length; i++) {
-                if(files[i].name.indexOf('.json') > -1) {
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].name.indexOf('.json') > -1) {
                     fixturePromises.push(processFixture(files[i].name));
                 }
             }
 
-            Q.all(fixturePromises).then(function(){
+            Q.all(fixturePromises).then(function () {
                 process.exit();
             }, function (err) {
                 console.log('Something went wrong while inserting fixtures:', err);
@@ -64,4 +63,4 @@ var options = {
 };
 
 // create a route using the crawler
-var route  = crawler.walkSync(__dirname, options);
+var route = crawler.walkSync(__dirname, options);

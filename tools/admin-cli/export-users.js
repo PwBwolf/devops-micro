@@ -27,7 +27,7 @@ User.find({}).populate('account').exec(function (err, users) {
             if (users[i].account) {
                 console.log(
                     formatString(users[i].email) + ',' + formatString(users[i].firstName) + ',' + formatString(users[i].lastName) + ',' + formatString(users[i].telephone) + ',' + formatString(users[i].status) + ',' +
-                    formatString(users[i].account.type) + ',' + formatString(users[i].account.freeSideCustomerNumber) + ',' + formatString(users[i].account.aioAccountId) + ',' + formatBoolean(users[i].account.paymentPending) + ',' +
+                    formatString(users[i].account.type) + ',' + formatString(users[i].account.freeSideCustomerNumber) + ',' + formatString(users[i].account.aioAccountId) + ',' +
                     formatDate(users[i].createdAt) + ',' + formatDate(users[i].upgradeDate) + ',' + formatDate(users[i].cancelDate) + ',' + formatDate(users[i].cancelOn) + ',' + formatDate(users[i].validTill) + ',' +
                     formatString(users[i].account.complimentaryCode) + ',' + formatString(users[i].account.referredBy) + ',' + formatString(users[i].account.merchant)
                 );

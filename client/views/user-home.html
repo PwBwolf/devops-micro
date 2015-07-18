@@ -5,14 +5,8 @@
 
             <div class="caption">
                 <div id="userHomeBox">
-                    <button ng-click="openAio()" ng-show="user.status === 'active'" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
-                    <br ng-show="user.status === 'active'">
-                    <button goto="/upgrade-subscription?utm_source=yiptv&utm_medium=not_set&utm_content=upgrade_to_paid&utm_campaign=trial_conv_{{language}}" ng-show="user.type === 'free' && user.status === 'trial-ended'" type="button" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
-                    <br ng-show="user.type === 'free' && user.status === 'trial-ended'">
-                    <button goto="/upgrade-subscription" ng-show="user.type === 'comp' && user.status === 'comp-ended'" type="button" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
-                    <br ng-show="user.type === 'comp' && user.status === 'comp-ended'">
-                    <button goto="/reactivate-subscription" ng-show="user.type === 'paid' && user.status === 'canceled'" type="button" translate="USER_HOME_REACTIVATE_SUBSCRIPTION"></button>
-                    <br ng-show="user.type === 'paid' && user.status === 'canceled'">
+                    <button ng-click="openAio()" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
+                    <br>
                     <button goto="/account" type="button" translate="USER_HOME_ACCOUNT"></button>
                     <br>
                     <button goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND"></button>
