@@ -151,7 +151,7 @@
                     //console.log('p d: '+$scope.showListings[0].name);
 					for(var p in $scope.showTimes){
                         $scope.showListings[p] = $scope.getChannelDetails($scope.showTimes[p]);
-                         console.log('chnl: show '+p+' start-Time: '+$scope.showListings[p].callSign);
+                        //console.log('chnl: show '+p+' start-Time: '+$scope.showTimes[p].startTime);
                     }
 					//console.log('this time: '+$scope.airings[].length);
 					//console.log('air: '+$scope.airings )
