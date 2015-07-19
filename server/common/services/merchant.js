@@ -283,7 +283,7 @@ module.exports = {
                 billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscriptionSignUp - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
                 });
@@ -345,7 +345,7 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-cancel-package':
+                    case 'freeside-package-remove':
                         revertUserPackagesInAio(userObj.email, currentValues.type);
                         setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
@@ -471,7 +471,7 @@ module.exports = {
                 billing.cancelPackageByType(sessionId, 'paid', function (err) {
                     if (err) {
                         logger.logError('merchant - reactivateSubscriptionSignUp - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
                 });
@@ -516,7 +516,7 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-cancel-package':
+                    case 'freeside-package-remove':
                         setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForReactivate(userObj, currentValues);
                         revertUserChangesForReactivate(userObj, currentValues, currentUser);
@@ -650,7 +650,7 @@ module.exports = {
                 billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj, sessionId);
                 });
@@ -669,7 +669,7 @@ module.exports = {
                                     errorType = 'payment-declined';
                                 } else {
                                     logger.logError('merchant - upgradeSubscription - error ordering package in freeside: ' + userObj.email);
-                                    errorType = 'freeside-order-package';
+                                    errorType = 'freeside-package-insert';
                                 }
                             }
                             callback(err, userObj);
@@ -726,8 +726,8 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-cancel-package':
-                    case 'freeside-order-package':
+                    case 'freeside-package-remove':
+                    case 'freeside-package-insert':
                         revertUserPackagesInAio(userObj.email, currentValues.type);
                         setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
@@ -837,7 +837,7 @@ module.exports = {
                 billing.cancelPackageByType(sessionId, 'paid', function (err) {
                     if (err) {
                         logger.logError('merchant - reactivateSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj, sessionId);
                 });
@@ -856,7 +856,7 @@ module.exports = {
                                     errorType = 'payment-declined';
                                 } else {
                                     logger.logError('merchant - reactivateSubscription - error ordering package in freeside: ' + userObj.email);
-                                    errorType = 'freeside-order-package';
+                                    errorType = 'freeside-package-insert';
                                 }
                             }
                             callback(err, userObj);
@@ -896,8 +896,8 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-cancel-package':
-                    case 'freeside-order-package':
+                    case 'freeside-package-remove':
+                    case 'freeside-package-insert':
                         setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForReactivate(userObj, currentValues);
                         revertUserChangesForReactivate(userObj, currentValues, currentUser);
@@ -991,7 +991,7 @@ module.exports = {
                 billing.cancelPackageByType(sessionId, 'paid', function (err) {
                     if (err) {
                         logger.logError('subscription - endPaidSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-cancel-package';
+                        errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
                 });
@@ -1019,7 +1019,7 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-cancel-package':
+                    case 'freeside-package-remove':
                         setUserActiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForCancel(userObj, currentValues);
                         revertUserChangesForCancel(userObj, currentValues);
@@ -1085,7 +1085,7 @@ module.exports = {
                         billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
                             if (err) {
                                 logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
-                                errorType = 'freeside-order-package';
+                                errorType = 'freeside-package-insert';
                             }
                             callback(err, userObj);
                         });
@@ -1100,7 +1100,7 @@ module.exports = {
                 switch (errorType) {
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-order-package':
+                    case 'freeside-package-insert':
                         if (currentValues) {
                             userObj.cancelOn = currentValues.cancelOn;
                             userObj.save(function () {
