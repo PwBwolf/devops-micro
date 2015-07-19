@@ -35,8 +35,8 @@ module.exports = {
     aioPortalUrl: 'http://209.18.77.106',
     aioUserPin: '1234',
     aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}],
-    aioFreeUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}],
-    aioPaidUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
-    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 27}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
+    aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}],
+    aioFreeUserPackages: [{'packageid': 1}, {'packageid': 76}],
+    aioPaidUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
+    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
 };
