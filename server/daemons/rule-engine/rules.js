@@ -17,7 +17,7 @@ function buildRules() {
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
-                    var created = fact.createdAt;
+                    var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 4) {
                         cb(true);
                         return;
@@ -39,7 +39,7 @@ function buildRules() {
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
-                    var created = fact.createdAt;
+                    var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 6) {
                         cb(true);
                         return;
@@ -61,7 +61,7 @@ function buildRules() {
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
-                    var created = fact.createdAt;
+                    var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 7) {
                         cb(true);
                         return;
@@ -76,14 +76,14 @@ function buildRules() {
             }
         },
         {
-            'name': 'free-user-8-deactivation',
-            'description': 'Deactivate user on the 8th day and send notification email',
+            'name': 'free-user-8-deactivate-premium',
+            'description': 'Deactivate premium package on the 8th day and send notification email',
             'priority': 1,
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
-                    var created = fact.createdAt;
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered') && fact.premiumEndDate) {
+                    var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 8) {
                         cb(true);
                         return;
@@ -105,7 +105,7 @@ function buildRules() {
             'condition': function (fact, cb) {
                 var moment = require('moment');
                 if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'trial-ended') {
-                    var created = fact.createdAt;
+                    var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 9) {
                         cb(true);
                         return;

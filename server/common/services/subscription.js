@@ -1043,6 +1043,7 @@ module.exports = {
                                     currentValues = {
                                         status: userObj.status,
                                         cancelDate: userObj.cancelDate,
+                                        complimentaryEndDate: userObj.complimentaryEndDate,
                                         upgradeDate: userObj.upgradeDate,
                                         validTill: userObj.validTill,
                                         type: userObj.account.type,
@@ -1053,6 +1054,7 @@ module.exports = {
                                     userObj.upgradeDate = (new Date()).toUTCString();
                                     userObj.validTill = moment(userObj.upgradeDate).add(cc.duration, 'days').utc();
                                     userObj.cancelDate = undefined;
+                                    userObj.complimentaryEndDate = undefined;
                                     userObj.account.type = 'comp';
                                     userObj.account.complimentaryCode = newUser.code;
                                     userObj.account.billingDate = undefined;
@@ -1348,10 +1350,10 @@ module.exports = {
         });
     },
 
-    endFreeTrial: function (userEmail, cb) {
+    removePremiumPackage: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // set user status to 'trial-ended'
+            // remove premiumEndDate
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1359,26 +1361,24 @@ module.exports = {
                         callback(err);
                     } else {
                         currentValues = {
-                            status: userObj.status,
-                            cancelDate: userObj.cancelDate
+                            premiumEndDate: userObj.account.premiumEndDate
                         };
-                        userObj.status = 'trial-ended';
-                        userObj.cancelDate = (new Date()).toUTCString();
-                        userObj.save(function (err) {
+                        userObj.account.premiumEndDate = undefined;
+                        userObj.account.save(function (err) {
                             if (err) {
-                                logger.logError('subscription - endFreeTrial - error updating user: ' + userObj.email);
+                                logger.logError('subscription - endPremiumChannels - error updating account: ' + userObj.email);
                             }
                             callback(err, userObj);
                         });
                     }
                 });
             },
-            // change status to inactive in aio
+            // update to free packages in aio
             function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, false, function (err) {
+                aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
                     if (err) {
-                        logger.logError('subscription - endFreeTrial - error updating aio customer status to inactive: ' + userObj.email);
-                        errorType = 'aio-status-update';
+                        logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
+                        errorType = 'aio-package-update';
                     }
                     callback(err, userObj);
                 });
@@ -1387,28 +1387,17 @@ module.exports = {
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
-                        logger.logError('subscription - endFreeTrial - error logging into billing system: ' + userObj.email);
+                        logger.logError('subscription - endPremiumChannels - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
                     }
                     callback(err, userObj, sessionId);
                 });
             },
-            // change billing address
+            // cancel premium package
             function (userObj, sessionId, callback) {
-                var address = 'Trial ended on ' + moment(userObj.cancelDate).format('MM/DD/YYYY');
-                billing.updateAddress(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', function (err) {
+                billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
                     if (err) {
-                        logger.logError('subscription - endFreeTrial - error updating billing system with trial address: ' + userObj.email);
-                        errorType = 'freeside-user-update';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // cancel existing package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'free', function (err) {
-                    if (err) {
-                        logger.logError('subscription - endFreeTrial - error removing active package: ' + userObj.email);
+                        logger.logError('subscription - endPremiumChannels - error removing premium package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
@@ -1424,10 +1413,10 @@ module.exports = {
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('subscription - endFreeTrial - error sending suspension email to ' + mailOptions.to);
+                        logger.logError('subscription - endPremiumChannels - error sending premium package ended email to ' + mailOptions.to);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('subscription - endFreeTrial - suspension email sent to ' + mailOptions.to);
+                        logger.logInfo('subscription - endPremiumChannels - premium package ended email sent to ' + mailOptions.to);
                     }
                     callback(null, userObj);
                 });
@@ -1436,14 +1425,13 @@ module.exports = {
             if (err) {
                 logger.logError(err);
                 switch (errorType) {
-                    case 'aio-status-update':
-                        revertUserChangesForCancel(userObj, currentValues);
+                    case 'aio-package-update':
+                        revertAccountChangesForRemovePremiumPackage(userObj, currentValues);
                         break;
-                    case 'freeside-user-update':
                     case 'freeside-login':
                     case 'freeside-package-remove':
-                        setUserActiveInAio(userObj.email, currentValues.status);
-                        revertUserChangesForCancel(userObj, currentValues);
+                        updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        revertAccountChangesForRemovePremiumPackage(userObj, currentValues);
                         break;
                 }
             }
@@ -1464,13 +1452,11 @@ module.exports = {
                         callback(err);
                     } else {
                         currentValues = {
-                            status: userObj.status,
                             complimentaryEndDate: userObj.complimentaryEndDate,
                             validTill: userObj.validTill,
                             complimentaryCode: userObj.account.complimentaryCode,
                             type: userObj.account.type
                         };
-                        userObj.status = 'active';
                         userObj.complimentaryEndDate = (new Date()).toUTCString();
                         userObj.validTill = undefined;
                         userObj.account.complimentaryCode = undefined;
@@ -1602,7 +1588,6 @@ module.exports = {
                         callback('FreeUser');
                     } else {
                         currentValues = {
-                            status: userObj.status,
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
                             type: userObj.account.type,
@@ -1610,7 +1595,6 @@ module.exports = {
                         };
                         userObj.account.billingDate = undefined;
                         userObj.account.type = 'free';
-                        userObj.status = 'active';
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
@@ -1875,6 +1859,7 @@ function revertUserChangesForReactivate(user, currentValues, currentUser, cb) {
 function revertUserChangesForComplimentary(user, currentValues, currentUser, cb) {
     user.status = currentValues.status;
     user.cancelDate = currentValues.cancelDate;
+    user.complimentaryEndDate = currentValues.complimentaryEndDate;
     user.upgradeDate = currentValues.upgradeDate;
     user.validTill = currentValues.validTill;
     if (currentUser) {
@@ -1896,7 +1881,6 @@ function revertUserChangesForComplimentary(user, currentValues, currentUser, cb)
 }
 
 function revertUserChangesForCancel(user, currentValues, cb) {
-    user.status = currentValues.status;
     user.cancelDate = currentValues.cancelDate;
     user.cancelOn = currentValues.cancelOn;
     user.save(function (err) {
@@ -1911,7 +1895,6 @@ function revertUserChangesForCancel(user, currentValues, cb) {
 }
 
 function revertUserChangesForComplimentaryEnded(user, currentValues, cb) {
-    user.status = currentValues.status;
     user.complimentaryEndDate = currentValues.complimentaryEndDate;
     user.validTill = currentValues.validTill;
     user.save(function (err) {
@@ -1998,6 +1981,19 @@ function revertAccountChangesForComplimentaryEnded(user, currentValues, cb) {
     });
 }
 
+function revertAccountChangesForRemovePremiumPackage(user, currentValues, cb) {
+    user.account.premiumEndDate = currentValues.premiumEndDate;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForRemovePremiumPackage - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
 function revertUserPackagesInAio(email, type, cb) {
     var packages = type === 'free' ? config.aioFreePremiumUserPackages : config.aioPaidUserPackages;
     aio.updateUserPackages(email, packages, function (err) {
@@ -2012,39 +2008,15 @@ function revertUserPackagesInAio(email, type, cb) {
 }
 
 function setUserInactiveInAio(email, status, cb) {
-    if (status === 'trial-ended' || status === 'comp-ended' || status === 'canceled') {
-        aio.updateUserStatus(email, false, function (err) {
-            if (err) {
-                logger.logError('subscription - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
-                logger.logError(err);
-            }
-            if (cb) {
-                cb(err);
-            }
-        });
-    } else {
-        if (cb) {
-            cb();
+    aio.updateUserStatus(email, false, function (err) {
+        if (err) {
+            logger.logError('subscription - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
+            logger.logError(err);
         }
-    }
-}
-
-function setUserActiveInAio(email, status, cb) {
-    if (status === 'active' || status === 'registered') {
-        aio.updateUserStatus(email, true, function (err) {
-            if (err) {
-                logger.logError('subscription - setUserActiveInAio - error setting user status to active in aio: ' + email);
-                logger.logError(err);
-            }
-            if (cb) {
-                cb(err);
-            }
-        });
-    } else {
         if (cb) {
-            cb();
+            cb(err);
         }
-    }
+    });
 }
 
 function updateAccountOnPaymentDeclined(user, currentValues, cb) {
