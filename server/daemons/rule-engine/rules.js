@@ -98,6 +98,50 @@ function buildRules() {
             }
         },
         {
+            'name': 'free-user-9-reacquire',
+            'description': 'Try and reacquire the user on the 9th day',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'trial-ended') {
+                    var created = fact.createdAt;
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 9) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'freeUser9';
+                cb();
+            }
+        },
+        {
+            'name': 'canceled-user-next-day',
+            'description': 'Send reacquire email next day of cancellation',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.status === 'canceled' && fact.type === 'paid') {
+                    var canceled = fact.cancelDate;
+                    if (moment.utc().startOf('day').diff(moment(canceled).utc().startOf('day'), 'days') === 1) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'canceledNextDay';
+                cb();
+            }
+        },
+        {
             'name': 'cancel-user',
             'description': 'Cancel users if cancellation requested on last billing day',
             'priority': 1,
