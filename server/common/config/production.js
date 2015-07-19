@@ -25,7 +25,6 @@ module.exports = {
     ruleEngineRecurrence: '0 0 0 * * *',
     contactUsEmailList: 'support@yiptv.com',
     cloudSpongeDomainKey: 'GMQU3G2VW72CLFRVWS2N',
-    cancelSubscriptionForTrialUsers: true,
     complimentarySignUpUrl: 'https://yiptv.com/sign-up/complimentary/',
     refundPeriodInDays: 3,
     cmsUrl: 'http://www.yiptv.com/live-tv/',
