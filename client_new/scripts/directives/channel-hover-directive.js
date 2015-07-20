@@ -10,7 +10,7 @@
                 var scrns = $window.document.getElementById('scrns');
                 var smm = $window.document.getElementById('teir_2');
                 var chnls = $window.document.getElementById('chnlMenuHldr');
-                var guide = $window.document.getElementById('userguide');
+                var guide = $window.document.getElementById('guide');
                 var qlBox = $window.document.getElementsByClassName('quickLookBox');
                 
                 attrs.$set('class', 'smChnlDesc ease');
@@ -24,10 +24,10 @@
                         //scope.test = "it's ";
                         //$(e.target).attr('class', ':active');
                         $(qlBox).attr('class', 'off');
-                        $(smm).attr('class', 'sgstdChnls_min');
+                        $(smm).attr('class', 'sgstdChnls_min ease');
                         $(scrns).attr('class', 'scrnsMinimize');
-                        $(chnls).attr('class', 'usr_Prefs_pnl_max');
-                        $(guide).attr('class', 'usr_Guide_pnl_min');
+                        $(chnls).attr('class', 'usr_Prefs_pnl_max ease');
+                        //$(guide).attr('class', 'usr_Guide_pnl_min');
                         
                         attrs.$set('class', '');
                         attrs.$set('id', 'smChannelDesc_off');

@@ -299,7 +299,7 @@ label:before{ display:none !important; }
 }
 
 .usr_Prefs_pnl { background:rgb(213,213,213); width:100%; height:75px; margin:10px 0px 2px; } 
-.usr_Prefs_pnl_max { background:rgb(213,213,213); width:100%; height:340px; margin:10px 0px 2px; } 
+.usr_Prefs_pnl_max { background:rgb(213,213,213); width:100%; height:305px; margin:10px 0px 2px; } 
 	.logoBox { width:10%; height:auto; padding:8px 0 0 8px; top:0; left:0; vertical-align: top !important; } 
 	.logoBox img { width:75%; height: auto; }
 	
@@ -323,7 +323,7 @@ label:before{ display:none !important; }
 				.usr_alrtData span { background:rgb(100,100,100); padding: 14px 10px 0; height:inherit; position: inherit; width: 100%; top:0px; display:inherit; white-space:nowrap; } 
 					
 
-.usr_Prfl_n_Chnls { height:75px; width:100%; background:white; overflow:hidden; padding:0 1%; position: absolute; bottom:0px; }
+.usr_Prfl_n_Chnls { height:75px; width:100%; overflow:hidden; padding:0 4px; position: relative; top: 5px; }
 .usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
 .usr_Prfl_n_Chnls img { padding: 4px; margin-left:4px; }
 .usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
@@ -341,8 +341,8 @@ label:before{ display:none !important; }
     .smChnlDesc-enter, .smChnlDesc-leave { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; height:100px; }
     .smChnlDesc-enter { width: 300px; }
     .smChnlDesc-leave { width: 0px; }
-    .program-details-header, .program-details-body { font-size:60%; font-weight:normal; }
-    .program-details-body {  }
+    .program-details-header, .program-details-body { font-size:60%; color: #444; font-weight: bolder; text-transform: uppercase; }
+    .program-details-body { text-transform: initial; color:#eee; }
     
 
 #welcome {
