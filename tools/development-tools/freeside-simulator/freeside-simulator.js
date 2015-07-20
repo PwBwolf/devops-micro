@@ -2,9 +2,9 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var xmlrpc = require('../../server/node_modules/xmlrpc');
+var xmlrpc = require('../../../server/node_modules/xmlrpc');
 var simulatorConfig = require('./simulator-config');
-var logger = require('../../server/common/setup/logger');
+var logger = require('../../../server/common/setup/logger');
 
 var server = xmlrpc.createServer(simulatorConfig.serverOptions);
 
