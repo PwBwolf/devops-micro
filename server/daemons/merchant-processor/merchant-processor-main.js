@@ -65,25 +65,10 @@ worker.register({
                                             callback(err);
                                         });
                                     } else {
-                                        if (dbUser.account.type === 'free' || (dbUser.account.type === 'comp' && dbUser.status === 'comp-ended')) {
+                                        if (dbUser.account.type === 'free') {
                                             merchantService.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
-                                                    logger.logError(err);
-                                                    rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
-                                                    savePayment(params, 'failure', 'server-error', function () {
-                                                        callback(err);
-                                                    });
-                                                } else {
-                                                    savePayment(params, 'success', '', function () {
-                                                        callback(null, 'success');
-                                                    });
-                                                }
-                                            });
-                                        } else if (dbUser.account.type === 'paid' && dbUser.status === 'canceled') {
-                                            merchantService.reactivateSubscription(params.username.toLowerCase(), {}, function (err) {
-                                                if (err) {
-                                                    logger.logError('merchantProcessorMain - makePayment - error reactivating user: ' + params.username);
                                                     logger.logError(err);
                                                     rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
@@ -155,10 +140,6 @@ worker.register({
                             } else if (dbUser.account.type === 'comp' || dbUser.account.type === 'free') {
                                 saveRefund(params, 'failure', 'account-error', function () {
                                     callback(new Error('account-error'));
-                                });
-                            } else if (dbUser.account.type === 'paid' && dbUser.status === 'canceled') {
-                                saveRefund(params, 'failure', 'canceled-account', function () {
-                                    callback(new Error('canceled-account'));
                                 });
                             } else if (dbUser && dbUser.account && !dbUser.account.firstCardPaymentDate && dbUser.account.firstMerchantPaymentDate) {
                                 var refundLastDate = moment(dbUser.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();

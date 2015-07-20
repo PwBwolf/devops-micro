@@ -36,6 +36,7 @@ module.exports = {
     freeSideFreePackagePart: 17,
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
+    freeSideComplimentaryPackagePart: 15,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: '',
     aioPortalUrl: '',

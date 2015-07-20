@@ -9,14 +9,14 @@
                 </div>
             </div>
         </div>
-        <div class="container message-box" ng-show="user.type === 'comp' && user.status === 'active'">
+        <div class="container message-box" ng-show="user.type === 'comp'">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <p class="text-center" translate="UPGRADE_SUBSCRIPTION_COMP_ACTIVE_USER"></p>
                 </div>
             </div>
         </div>
-        <div class="container" ng-show="user.type === 'free' || (user.type === 'comp' && user.status === 'comp-ended')">
+        <div class="container" ng-show="user.type === 'free'">
             <div class="form-box">
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>

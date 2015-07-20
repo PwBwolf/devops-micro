@@ -220,19 +220,15 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in aio if user status is trial-ended or comp-ended
+            // change status to active in aio
             function (userObj, callback) {
-                if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
-                    aio.updateUserStatus(userObj.email, true, function (err) {
-                        if (err) {
-                            logger.logError('merchant - upgradeSubscriptionSignUp - error setting status to active in aio: ' + userObj.email);
-                            errorType = 'aio-status-update';
-                        }
-                        callback(err, userObj);
-                    });
-                } else {
-                    callback(null, userObj);
-                }
+                aio.updateUserStatus(userObj.email, true, function (err) {
+                    if (err) {
+                        logger.logError('merchant - upgradeSubscriptionSignUp - error setting status to active in aio: ' + userObj.email);
+                        errorType = 'aio-status-update';
+                    }
+                    callback(err, userObj);
+                });
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
@@ -363,176 +359,6 @@ module.exports = {
         });
     },
 
-    reactivateSubscriptionSignUp: function (userEmail, newUser, cb) {
-        var currentValues, currentUser, errorType;
-        async.waterfall([
-            // update user and account
-            function (callback) {
-                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error fetching user: ' + userEmail);
-                        callback(err);
-                    } else {
-                        if (!userObj) {
-                            logger.logError('merchant - reactivateSubscriptionSignUp - user not found: ' + userEmail);
-                            callback('UserNotFound');
-                        } else if ((userObj.status === 'active' || userObj.status === 'registered') && userObj.account.type === 'paid') {
-                            callback('PaidActiveUser');
-                        } else if (userObj.account.type === 'free' || userObj.account.type === 'comp') {
-                            callback('NonPaidUser');
-                        } else if (userObj.status === 'failed') {
-                            callback('FailedUser');
-                        } else {
-                            currentValues = {
-                                billingDate: userObj.account.billingDate,
-                                status: userObj.status,
-                                cancelDate: userObj.cancelDate
-                            };
-                            userObj.account.billingDate = undefined;
-                            userObj.status = 'active';
-                            userObj.cancelDate = undefined;
-                            if (newUser.firstName) {
-                                currentUser = {
-                                    firstName: userObj.firstName,
-                                    lastName: userObj.lastName,
-                                    telephone: userObj.telephone,
-                                    hashedPassword: userObj.hashedPassword,
-                                    salt: userObj.salt
-                                };
-                                userObj.firstName = newUser.firstName;
-                                userObj.lastName = newUser.lastName;
-                                userObj.telephone = newUser.telephone;
-                                userObj.password = newUser.password;
-                            }
-                            userObj.save(function (err) {
-                                if (err) {
-                                    logger.logError('merchant - reactivateSubscriptionSignUp - error saving user: ' + userEmail);
-                                    callback(err, userObj);
-                                } else {
-                                    userObj.account.save(function (err) {
-                                        if (err) {
-                                            logger.logError('merchant - reactivateSubscriptionSignUp - error saving account: ' + userEmail);
-                                            errorType = 'db-account-update';
-                                        }
-                                        callback(err, userObj);
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            },
-            // change status to active in aio
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, true, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error setting status to active in aio: ' + userObj.email);
-                        errorType = 'aio-status-update';
-                    }
-                    callback(err, userObj);
-                });
-            },
-            // if password has changed set new password in aio
-            function (userObj, callback) {
-                if (newUser.password) {
-                    aio.updatePassword(userObj.email, newUser.password, function (err) {
-                        if (err) {
-                            logger.logError('merchant - reactivateSubscriptionSignUp - error updating password in aio: ' + userObj.email);
-                            errorType = 'aio-password-update';
-                        }
-                        callback(err, userObj);
-                    });
-                } else {
-                    callback(null, userObj);
-                }
-            },
-            // login to freeside
-            function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error logging into billing system: ' + userObj.email);
-                        errorType = 'freeside-login';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // update user information in freeside
-            function (userObj, sessionId, callback) {
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Merchant', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error updating user in billing system: ' + userObj.email);
-                        errorType = 'freeside-user-update';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // cancel existing package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'paid', function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-package-remove';
-                    }
-                    callback(err, userObj);
-                });
-            },
-            // send email
-            function (userObj, callback) {
-                sendReactivateEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error sending reactivated email: ' + userObj.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('merchant - reactivateSubscriptionSignUp - reactivated email sent: ' + userObj.email);
-                    }
-                });
-                callback(null, userObj);
-            },
-            // delete user from visitor
-            function (userObj, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscriptionSignUp - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
-                callback(null, userObj);
-            }
-        ], function (err, userObj) {
-            if (err) {
-                logger.logError(err);
-                switch (errorType) {
-                    case 'db-account-update':
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'aio-status-update':
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'aio-password-update':
-                        setUserInactiveInAio(userObj.email, currentValues.status);
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'freeside-user-update':
-                    case 'freeside-login':
-                    case 'freeside-package-remove':
-                        setUserInactiveInAio(userObj.email, currentValues.status);
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                }
-            }
-            if (cb) {
-                if (userObj) {
-                    cb(err, userObj.status);
-                } else {
-                    cb(err);
-                }
-            }
-        });
-    },
-
     upgradeSubscription: function (userEmail, newUser, cb) {
         var currentValues, currentUser, errorType;
         async.waterfall([
@@ -587,19 +413,15 @@ module.exports = {
                     }
                 });
             },
-            // change status to active in aio if user status is trial-ended or comp-ended
+            // change status to active in aio
             function (userObj, callback) {
-                if (currentValues.status === 'trial-ended' || currentValues.status === 'comp-ended') {
-                    aio.updateUserStatus(userObj.email, true, function (err) {
-                        if (err) {
-                            logger.logError('merchant - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
-                            errorType = 'aio-status-update';
-                        }
-                        callback(err, userObj);
-                    });
-                } else {
-                    callback(null, userObj);
-                }
+                aio.updateUserStatus(userObj.email, true, function (err) {
+                    if (err) {
+                        logger.logError('merchant - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
+                        errorType = 'aio-status-update';
+                    }
+                    callback(err, userObj);
+                });
             },
             // change packages in aio to paid ones
             function (userObj, callback) {
@@ -745,185 +567,16 @@ module.exports = {
         });
     },
 
-    reactivateSubscription: function (userEmail, newUser, cb) {
-        var currentValues, currentUser, errorType;
-        async.waterfall([
-            // update user and account
-            function (callback) {
-                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error fetching user: ' + userEmail);
-                        callback(err);
-                    } else {
-                        if ((userObj.status === 'active' || userObj.status === 'registered') && userObj.account.type === 'paid') {
-                            callback('PaidActiveUser');
-                        } else if (userObj.account.type === 'free' || userObj.account.type === 'comp') {
-                            callback('NonPaidUser');
-                        } else if (userObj.status === 'failed') {
-                            callback('FailedUser');
-                        } else {
-                            currentValues = {
-                                billingDate: userObj.account.billingDate,
-                                status: userObj.status,
-                                cancelDate: userObj.cancelDate
-                            };
-                            userObj.status = 'active';
-                            userObj.cancelDate = undefined;
-                            userObj.account.billingDate = (new Date()).toUTCString();
-                            userObj.save(function (err) {
-                                if (err) {
-                                    logger.logError('merchant - reactivateSubscription - error saving user: ' + userEmail);
-                                    callback(err, userObj);
-                                } else {
-                                    userObj.account.save(function (err) {
-                                        if (err) {
-                                            logger.logError('merchant - reactivateSubscription - error saving account: ' + userEmail);
-                                            errorType = 'db-account-update';
-                                        }
-                                        callback(err, userObj);
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            },
-            // change status to active in aio
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, true, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error setting status to active in aio: ' + userObj.email);
-                        errorType = 'aio-status-update';
-                    }
-                    callback(err, userObj);
-                });
-            },
-            // if password has changed set new password in aio
-            function (userObj, callback) {
-                if (newUser.password) {
-                    aio.updatePassword(userObj.email, newUser.password, function (err) {
-                        if (err) {
-                            logger.logError('merchant - reactivateSubscription - error updating password in aio: ' + userObj.email);
-                            errorType = 'aio-password-update';
-                        }
-                        callback(err, userObj);
-                    });
-                } else {
-                    callback(null, userObj);
-                }
-            },
-            // login to freeside
-            function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error logging into billing system: ' + userObj.email);
-                        errorType = 'freeside-login';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // update user information in freeside
-            function (userObj, sessionId, callback) {
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error updating user in billing system: ' + userObj.email);
-                        errorType = 'freeside-user-update';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // cancel existing package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'paid', function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-package-remove';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // order paid package
-            function (userObj, sessionId, callback) {
-                billing.hasPaidActivePackage(sessionId, function (err, result) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error getting current packages: ' + userObj.email);
-                        callback(err, userObj);
-                    } else if (!result) {
-                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                            if (err) {
-                                if (err === '_decline') {
-                                    logger.logError('merchant - reactivateSubscription - credit card declined: ' + userObj.email);
-                                    errorType = 'payment-declined';
-                                } else {
-                                    logger.logError('merchant - reactivateSubscription - error ordering package in freeside: ' + userObj.email);
-                                    errorType = 'freeside-package-insert';
-                                }
-                            }
-                            callback(err, userObj);
-                        });
-                    } else {
-                        callback(err, userObj);
-                    }
-                });
-            },
-            // send email
-            function (userObj, callback) {
-                sendReactivateEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('merchant - reactivateSubscription - error sending reactivated email: ' + userObj.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('merchant - reactivateSubscription - reactivated email sent: ' + userObj.email);
-                    }
-                });
-                callback(null, userObj);
-            }
-        ], function (err, userObj) {
-            if (err) {
-                logger.logError(err);
-                switch (errorType) {
-                    case 'db-account-update':
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'aio-status-update':
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'aio-password-update':
-                        setUserInactiveInAio(userObj.email, currentValues.status);
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                    case 'freeside-user-update':
-                    case 'freeside-login':
-                    case 'freeside-package-remove':
-                    case 'freeside-package-insert':
-                        setUserInactiveInAio(userObj.email, currentValues.status);
-                        revertAccountChangesForReactivate(userObj, currentValues);
-                        revertUserChangesForReactivate(userObj, currentValues, currentUser);
-                        break;
-                }
-            }
-            if (cb) {
-                if (userObj) {
-                    cb(err, userObj.status);
-                } else {
-                    cb(err);
-                }
-            }
-        });
-    },
-
     endPaidSubscription: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
-            // set user status to 'canceled' and set canceledDate to current date
+            // set user status to 'active' and 'free'
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
                         logger.logError('subscription - endPaidSubscription - error fetching user: ' + userEmail);
                         callback(err);
-                    } else if (userObj.status === 'canceled' || userObj.status === 'failed') {
+                    } else if (userObj.status === 'failed') {
                         callback('NonActiveUser');
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
@@ -932,10 +585,10 @@ module.exports = {
                             status: userObj.status,
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
-                            billingDate: userObj.account.billingDate,
+                            billingDate: userObj.account.billingDate
                         };
                         userObj.account.billingDate = undefined;
-                        userObj.status = 'canceled';
+                        userObj.status = 'active';
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
@@ -1229,26 +882,7 @@ function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
     });
 }
 
-function revertUserChangesForReactivate(user, currentValues, currentUser, cb) {
-    user.status = currentValues.status;
-    user.cancelDate = currentValues.cancelDate;
-    if (currentUser) {
-        user.firstName = currentUser.firstName;
-        user.lastName = currentUser.lastName;
-        user.telephone = currentUser.telephone;
-        user.hashedPassword = currentUser.hashedPassword;
-        user.salt = currentUser.salt;
-    }
-    user.save(function (err) {
-        if (err) {
-            logger.logError('merchant - revertUserChangesForReactivate - error reverting user changes: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
+
 
 function revertAccountChangesForUpgrade(user, currentValues, cb) {
     user.account.type = currentValues.type;
@@ -1257,19 +891,6 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
     user.account.save(function (err) {
         if (err) {
             logger.logError('merchant - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function revertAccountChangesForReactivate(user, currentValues, cb) {
-    user.account.billingDate = currentValues.billingDate;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('merchant - revertAccountChangesForReactivate - error reverting account changes: ' + email);
             logger.logError(err);
         }
         if (cb) {
@@ -1292,37 +913,10 @@ function revertUserPackagesInAio(email, type, cb) {
 }
 
 function setUserInactiveInAio(email, status, cb) {
-    if (status === 'trial-ended' || status === 'comp-ended' || status === 'canceled') {
-        aio.updateUserStatus(email, false, function (err) {
-            if (err) {
-                logger.logError('merchant - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
-                logger.logError(err);
-            }
-            if (cb) {
-                cb(err);
-            }
-        });
-    } else {
-        if (cb) {
-            cb();
-        }
-    }
-}
-
-function sendReactivateEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.reactivateSubscriptionEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.reactivateSubscriptionEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
+    aio.updateUserStatus(email, false, function (err) {
         if (err) {
-            logger.logError('merchant - sendReactivateEmail - error sending email: ' + user.email);
+            logger.logError('merchant - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
             logger.logError(err);
-        } else {
-            logger.logInfo('merchant - sendReactivateEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
@@ -1356,7 +950,7 @@ function sendPaidSubscriptionEndedEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.subscriptionCanceledEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'reactivate-subscription')
+        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
