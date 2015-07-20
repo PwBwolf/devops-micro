@@ -300,19 +300,22 @@ header {
             width:80px; 
             float:right; 
             margin: 10px;
+            margin-left:15px;
             border-radius:4px;
             border:rgb(200, 200, 200) 1px solid;
             box-shadow: 2px 3px 2px #444;
         }
         .channelPreview > div > p {
-            margin-bottom:0px;
+            margin: 2px 0 0 20px;
             text-indent:-20px;
-            margin-left:20px;
+            line-height:0.85em;
         }
         .channelPreview > div > p:not(:last-child) {
             white-space: nowrap;
             text-indent:0px;
             margin-left:0px;
+            line-height:1.0em;
+            margin-top: 0px;
         }
         
         

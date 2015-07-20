@@ -325,10 +325,15 @@ label:before{ display:none !important; }
 
 .usr_Prfl_n_Chnls { height:75px; width:100%; background:white; overflow:hidden; padding:0 1%; position: absolute; bottom:0px; }
 .usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
+.usr_Prfl_n_Chnls img { padding: 4px; margin-left:4px; }
 .usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
-.usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; cursor: pointer; }
-.usr_Prfl_n_Chnls li > div { background-color: #337AB7; vertical-align: top; position: relative; display:inline-block; padding:5px; }
-.usr_Prfl_n_Chnls li span { background-color: #337AB7; vertical-align: top; padding: 2px; color:white; }
+.usr_Prfl_n_Chnls li { display:inline; vertical-align: middle; cursor: pointer; background-color:rgb(69,69,69); padding:3% 0; box-shadow: 3px 13px 7px #222 inset; border-radius: 3px; }
+.usr_Prfl_n_Chnls li:hover { background-color:rgb(109,109,109); }
+.usr_Prfl_n_Chnls li:active { background-color:rgb(153,153,153); }
+.usr_Prfl_n_Chnls li > div { /*background-color: #337AB7;*/ vertical-align: top; position: relative; display:inline-block; padding:7px 5px; border-left: thin solid lightgrey; }
+.usr_Prfl_n_Chnls li span { /*background-color: #337AB7;*/ vertical-align: top; padding: 2px; color:white; }
+
+.channelSelected { background-color:rgb(153,153,153); }
 
 #smChannelDesc { line-height: 1.051;}
 #smChannelDesc p { margin-bottom: 0px !important;}
@@ -336,7 +341,7 @@ label:before{ display:none !important; }
     .smChnlDesc-enter, .smChnlDesc-leave { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; height:100px; }
     .smChnlDesc-enter { width: 300px; }
     .smChnlDesc-leave { width: 0px; }
-    .program-details-header, .program-details-body { font-size:60%; font-weight:normal; background-color: transparent !important; }
+    .program-details-header, .program-details-body { font-size:60%; font-weight:normal; }
     .program-details-body {  }
     
 

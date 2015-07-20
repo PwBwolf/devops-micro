@@ -17,11 +17,12 @@
                 attrs.$set('id', 'smChannelDesc');
                 
                 
-                el.closest('li').bind('click', function() {
-                    //console.log($(scrns).attr('class'));
+                el.closest('li').bind('click', function(evt) {
+                    //console.log($(this).attr('class'));
                     if( $(scrns).hasClass("scrnsOpen" )){
                     //if(el){
                         //scope.test = "it's ";
+                        //$(e.target).attr('class', ':active');
                         $(qlBox).attr('class', 'off');
                         $(smm).attr('class', 'sgstdChnls_min');
                         $(scrns).attr('class', 'scrnsMinimize');

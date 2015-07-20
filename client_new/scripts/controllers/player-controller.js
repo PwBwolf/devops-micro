@@ -48,7 +48,7 @@
             $scope.isVisible = false;
             $scope.loadingChannels = true;
             
-            $scope.imgURL = "http://yipt.tmsimg.com/";
+            //$scope.imgURL = "http://yipt.tmsimg.com/";
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
                 if ($scope.channels && $scope.channels.length > 0) {
@@ -271,7 +271,7 @@
         };
 
         $scope.getChannelDetails = function(show) {
-            var channelDetails = '<div style="background:#444;"><img src="'+$scope.imgURL+show.program.preferredImage.uri+'" /><p style="text-align: left;"><span class="program-details-header">On Now: </span><span class="program-details-body">' + show.program.title + '</span></p>';
+            var channelDetails = '<div style="background:#444;"><img src="'+$scope.getImage(show.program.preferredImage.uri)+'" /><p style="text-align: left;"><span class="program-details-header">On Now: </span><span class="program-details-body">' + show.program.title + '</span></p>';
             if(!show.duration && !show.startTime) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">Not Available</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">Not Available</span></p>';
                 } else {

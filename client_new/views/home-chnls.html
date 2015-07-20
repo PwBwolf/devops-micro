@@ -4,8 +4,8 @@
     
     <div id="chnlMenu" class="usr_Prfl_n_Chnls">
         <ul>
-            <li data-ng-repeat="chnl in channels">
-                <img ng-src="{{chnl.image_url}}" data-ng-mouseover="chnlHover($index);" data-ng-click="chnlClicked($index);"/>
+            <li data-ng-repeat="chnl in channels" data-ng-click="chnlClicked($index);" data-ng-class="($index === selectedChnl) ? channelSelected : off" >
+                <img ng-src="{{chnl.image_url}}" data-ng-mouseover="chnlHover($index);"/>
                 <div id="quickLook" class="quickLookBox" data-ng-show="($index === chnlHovered) ? true : false">
                     <channel-hover></channel-hover>
                 </div>
