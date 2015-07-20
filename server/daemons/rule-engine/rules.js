@@ -104,7 +104,7 @@ function buildRules() {
             'enabled': true,
             'condition': function (fact, cb) {
                 var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free' && fact.status === 'trial-ended') {
+                if (fact.doctype === 'user' && fact.type === 'free') {
                     var created = fact.startDate;
                     if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 9) {
                         cb(true);
@@ -116,28 +116,6 @@ function buildRules() {
             'consequence': function (cb) {
                 this.process = true;
                 this.postProcessorKey = 'freeUser9';
-                cb();
-            }
-        },
-        {
-            'name': 'canceled-user-next-day',
-            'description': 'Send reacquire email next day of cancellation',
-            'priority': 1,
-            'enabled': true,
-            'condition': function (fact, cb) {
-                var moment = require('moment');
-                if (fact.doctype === 'user' && fact.status === 'canceled' && fact.type === 'paid') {
-                    var canceled = fact.cancelDate;
-                    if (moment.utc().startOf('day').diff(moment(canceled).utc().startOf('day'), 'days') === 1) {
-                        cb(true);
-                        return;
-                    }
-                }
-                cb(false);
-            },
-            'consequence': function (cb) {
-                this.process = true;
-                this.postProcessorKey = 'canceledNextDay';
                 cb();
             }
         },

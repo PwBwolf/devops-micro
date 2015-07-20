@@ -78,50 +78,10 @@ module.exports = {
                             return res.status(200).send(status);
                         }
                     });
-                } else if (type === 'paid' && user.account.type === 'paid' && user.status === 'canceled') {
-                    subscription.reactivateSubscription(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
-                } else if (type === 'paid' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                    subscription.upgradeSubscription(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
                 } else if (type === 'comp' && user.account.type === 'free') {
                     subscription.convertToComplimentary(user.email, req.body, function (err, status) {
                         if (err) {
                             logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
-                } else if (type === 'comp' && user.account.type === 'paid' && user.status === 'canceled') {
-                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error converting paid to complimentary: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
-                } else if (type === 'comp' && user.account.type === 'comp' && user.status === 'comp-ended') {
-                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error converting complimentary to complimentary: ' + req.body.email.toLowerCase());
                             logger.logError(err);
                             return res.status(500).send(err.message);
                         } else {
@@ -156,40 +116,18 @@ module.exports = {
                 if (user.status === 'failed') {
                     logger.logError('userController - merchantSignUp - user with failed status: ' + req.body.email.toLowerCase());
                     return res.status(409).send('FailedAccount');
+                } else if (user.account.type === 'free') {
+                    merchant.upgradeSubscriptionSignUp(user.email, req.body, function (err, status) {
+                        if (err) {
+                            logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send(err.message);
+                        } else {
+                            return res.status(200).send(status);
+                        }
+                    });
                 } else {
-                    if (user.account.type === 'free') {
-                        merchant.upgradeSubscriptionSignUp(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (user.account.type === 'paid' && user.status === 'canceled') {
-                        merchant.reactivateSubscriptionSignUp(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - signUp - error in reactivating subscription: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else if (user.account.type === 'comp' && user.status === 'comp-ended') {
-                        merchant.upgradeSubscriptionSignUp(user.email, req.body, function (err, status) {
-                            if (err) {
-                                logger.logError('userController - merchantSignUp - error upgrading from complimentary to paid: ' + req.body.email.toLowerCase());
-                                logger.logError(err);
-                                return res.status(500).send(err.message);
-                            } else {
-                                return res.status(200).send(status);
-                            }
-                        });
-                    } else {
-                        return res.status(409).send('UserExists');
-                    }
+                    return res.status(409).send('UserExists');
                 }
             }
         });
@@ -465,7 +403,7 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            if (_.contains(['active', 'canceled', 'trial-ended', 'comp-ended'], user.status)) {
+            if (_.contains(['active'], user.status)) {
                 return res.status(409).send('UserActivated');
             }
             if (user.status !== 'registered') {
