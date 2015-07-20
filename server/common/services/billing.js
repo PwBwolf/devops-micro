@@ -216,69 +216,6 @@ module.exports = {
         });
     },
 
-    cancelPackage: cancelPackage,
-
-    getPackages: getPackages,
-
-    hasPaidActivePackage: function (sessionId, callback) {
-        getPackages(sessionId, function (err, packages) {
-            if (err) {
-                logger.logError('billing - hasPaidActivePackage - error in getting packages');
-                logger.logError(err);
-                callback(err);
-            } else if (packages && packages.length > 0) {
-                var status = false;
-                for (var i = 0; i < packages.length; i++) {
-                    if (packages[i].pkgpart === String(config.freeSidePaidPackagePart) && packages[i].status === 'active') {
-                        status = true;
-                        break;
-                    }
-                }
-                callback(null, status);
-            } else {
-                callback(null, false);
-            }
-        });
-    },
-
-    cancelPackageByType: function (sessionId, type, callback) {
-        getPackages(sessionId, function (err, packages) {
-            if (err) {
-                logger.logError('billing - cancelPackageByType - error getting packages');
-                logger.logError(err);
-                callback(err);
-            } else if (packages && packages.length > 0) {
-                var packagePart, packageNumber;
-                if (type === 'comp') {
-                    packagePart = config.freeSideComplimentaryPackagePart;
-                } else if (type === 'free') {
-                    packagePart = config.freeSideFreePackagePart;
-                } else {
-                    packagePart = config.freeSidePaidPackagePart;
-                }
-                for (var i = 0; i < packages.length; i++) {
-                    if (packages[i].pkgpart === String(packagePart)) {
-                        packageNumber = packages[i].pkgnum;
-                        break;
-                    }
-                }
-                if (packageNumber) {
-                    cancelPackage(sessionId, packageNumber, function (err) {
-                        if (err) {
-                            logger.logError('billing - cancelPackageByType - error canceling package');
-                            logger.logError(err);
-                        }
-                        callback(err);
-                    });
-                } else {
-                    callback(null);
-                }
-            } else {
-                callback(null);
-            }
-        });
-    },
-
     cancelPackages: function (sessionId, packageParts, callback) {
         getPackages(sessionId, function (err, packages) {
             if (err) {

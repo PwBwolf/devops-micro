@@ -276,7 +276,7 @@ module.exports = {
             },
             // cancel existing package
             function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
+                billing.cancelPackages(sessionId, currentValues.type, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscriptionSignUp - error removing active package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
@@ -469,7 +469,7 @@ module.exports = {
             },
             // cancel existing package
             function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
+                billing.cancelPackages(sessionId, currentValues.type, function (err) {
                     if (err) {
                         logger.logError('merchant - upgradeSubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
@@ -479,26 +479,17 @@ module.exports = {
             },
             // order paid package
             function (userObj, sessionId, callback) {
-                billing.hasPaidActivePackage(sessionId, function (err, result) {
+                billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
                     if (err) {
-                        logger.logError('merchant - upgradeSubscription - error getting current packages: ' + userObj.email);
-                        callback(err, userObj);
-                    } else if (!result) {
-                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                            if (err) {
-                                if (err === '_decline') {
-                                    logger.logError('merchant - upgradeSubscription - credit card declined: ' + userObj.email);
-                                    errorType = 'payment-declined';
-                                } else {
-                                    logger.logError('merchant - upgradeSubscription - error ordering package in freeside: ' + userObj.email);
-                                    errorType = 'freeside-package-insert';
-                                }
-                            }
-                            callback(err, userObj);
-                        });
-                    } else {
-                        callback(err, userObj);
+                        if (err === '_decline') {
+                            logger.logError('merchant - upgradeSubscription - credit card declined: ' + userObj.email);
+                            errorType = 'payment-declined';
+                        } else {
+                            logger.logError('merchant - upgradeSubscription - error ordering package in freeside: ' + userObj.email);
+                            errorType = 'freeside-package-insert';
+                        }
                     }
+                    callback(err, userObj);
                 });
             },
             // send verification email if registered
@@ -641,7 +632,7 @@ module.exports = {
             },
             // cancel existing package
             function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, 'paid', function (err) {
+                billing.cancelPackages(sessionId, 'paid', function (err) {
                     if (err) {
                         logger.logError('subscription - endPaidSubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
@@ -730,21 +721,12 @@ module.exports = {
             },
             // add package if payment pending
             function (userObj, sessionId, callback) {
-                billing.hasPaidActivePackage(sessionId, function (err, result) {
+                billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
                     if (err) {
-                        logger.logError('merchant - makeCashPayment - error getting current packages: ' + userObj.email);
-                        callback(err, userObj);
-                    } else if (!result) {
-                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
-                            if (err) {
-                                logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
-                                errorType = 'freeside-package-insert';
-                            }
-                            callback(err, userObj);
-                        });
-                    } else {
-                        callback(err, userObj);
+                        logger.logError('merchant - makeCashPayment - error ordering package in freeside: ' + userObj.email);
+                        errorType = 'freeside-package-insert';
                     }
+                    callback(err, userObj);
                 });
             }
         ], function (err, userObj) {
@@ -881,7 +863,6 @@ function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
         }
     });
 }
-
 
 
 function revertAccountChangesForUpgrade(user, currentValues, cb) {

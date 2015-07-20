@@ -550,7 +550,7 @@ module.exports = {
                             callback('FailedUser');
                         } else if (userObj.account.type === 'paid') {
                             callback('PaidUser');
-                        } else if (userObj.account.type === 'comp' && (userObj.status === 'active' || userObj.status === 'registered')) {
+                        } else if (userObj.account.type === 'comp') {
                             callback('ActiveCompUser');
                         } else {
                             currentValues = {
@@ -558,7 +558,6 @@ module.exports = {
                                 billingDate: userObj.account.billingDate,
                                 firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 premiumEndDate: userObj.account.premiumEndDate,
-                                status: userObj.status,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
                                 complimentaryEndDate: userObj.complimentaryEndDate
@@ -566,7 +565,6 @@ module.exports = {
                             userObj.account.type = 'paid';
                             userObj.account.billingDate = (new Date()).toUTCString();
                             userObj.account.premiumEndDate = undefined;
-                            userObj.status = currentValues.status === 'registered' ? 'registered' : 'active';
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
                             userObj.complimentaryEndDate = undefined;
@@ -602,16 +600,6 @@ module.exports = {
                             });
                         }
                     }
-                });
-            },
-            // change status to active in aio
-            function (userObj, callback) {
-                aio.updateUserStatus(userObj.email, true, function (err) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription - error setting status to active in aio: ' + userObj.email);
-                        errorType = 'aio-status-update';
-                    }
-                    callback(err, userObj);
                 });
             },
             // change packages in aio to paid ones
@@ -658,24 +646,13 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel existing package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackageByType(sessionId, currentValues.type, function (err) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription - error removing active package: ' + userObj.email);
-                        errorType = 'freeside-package-remove';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
             // order paid package
             function (userObj, sessionId, callback) {
-                billing.hasPaidActivePackage(sessionId, function (err, result) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription - error getting current packages: ' + userObj.email);
-                        callback(err, userObj);
-                    } else if (!result) {
-                        billing.orderPackage(sessionId, config.freeSidePaidPackagePart, function (err) {
+                var packages = currentValues.premiumEndDate ? [config.freeSidePaidBasicPackagePart] : [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart];
+                async.eachSeries(
+                    packages,
+                    function (item, callback) {
+                        billing.orderPackage(sessionId, item, function (err) {
                             if (err) {
                                 if (err === '_decline') {
                                     logger.logError('subscription - upgradeSubscription - credit card declined: ' + userObj.email);
@@ -685,15 +662,16 @@ module.exports = {
                                     errorType = 'freeside-package-insert';
                                 }
                             }
-                            callback(err, userObj);
+                            callback(err);
                         });
-                    } else {
-                        callback(err, userObj);
+                    },
+                    function (err) {
+                        callback(err, userObj, sessionId);
                     }
-                });
+                );
             },
             // send verification email if registered
-            function (userObj, callback) {
+            function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
                     sendVerificationEmail(userObj, function (err) {
                         if (err) {
@@ -713,55 +691,68 @@ module.exports = {
                         }
                     });
                 }
-                callback(null, userObj);
+                callback(null, userObj, sessionId);
             },
             // delete user from visitor
-            function (userObj, callback) {
+            function (userObj, sessionId, callback) {
                 deleteVisitor(userObj.email, function (err) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error deleting visitor: ' + userObj.email);
                         logger.logError(err);
                     }
                 });
-                callback(null, userObj);
+                callback(null, userObj, sessionId);
             }
-        ], function (err, userObj) {
+        ], function (err, userObj, sessionId) {
             if (err) {
                 logger.logError(err);
                 switch (errorType) {
                     case 'db-account-update':
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
                         break;
-                    case 'aio-status-update':
-                        revertAccountChangesForUpgrade(userObj, currentValues);
-                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
-                        break;
                     case 'aio-package-update':
-                        setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
                         break;
                     case 'aio-password-update':
-                        revertUserPackagesInAio(userObj.email, currentValues.type);
-                        setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        if (userObj.account.premiumEndDate) {
+                            updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        } else {
+                            updateAioPackages(userObj.email, config.aioFreeUserPackages);
+                        }
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
-                    case 'freeside-package-remove':
                     case 'freeside-package-insert':
-                        revertUserPackagesInAio(userObj.email, currentValues.type);
-                        setUserInactiveInAio(userObj.email, currentValues.status);
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        if (userObj.account.premiumEndDate) {
+                            updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        } else {
+                            updateAioPackages(userObj.email, config.aioFreeUserPackages);
+                        }
                         break;
                     case 'payment-declined':
-                        updateAccountOnPaymentDeclined(userObj, currentValues);
+                        revertAccountChangesForUpgrade(userObj, currentValues);
+                        revertUserChangesForUpgradeFailure(userObj, currentValues);
+                        if (userObj.account.premiumEndDate) {
+                            updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        } else {
+                            updateAioPackages(userObj.email, config.aioFreeUserPackages);
+                            billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
+                                if (err) {
+                                    logger.logError('subscription - upgradeSubscription - error canceling premium package: ' + userObj.email);
+                                    logger.logError(err);
+                                }
+                            });
+                        }
+                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
                             sendVerificationEmail(userObj);
                         } else {
-                            sendUpgradeEmail(userObj);
+                            sendUpgradeFailedEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
@@ -1578,8 +1569,22 @@ function revertAccountPaymentDetails(email, account, cb) {
     });
 }
 
+function revertUserChangesForUpgradeFailure(user, currentValues, cb) {
+    user.cancelDate = currentValues.cancelDate;
+    user.upgradeDate = currentValues.upgradeDate;
+    user.complimentaryEndDate = currentValues.complimentaryEndDate;
+    user.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertUserChangesForUpgradeFailure - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
 function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
-    user.status = currentValues.status;
     user.cancelDate = currentValues.cancelDate;
     user.upgradeDate = currentValues.upgradeDate;
     user.complimentaryEndDate = currentValues.complimentaryEndDate;
@@ -1724,45 +1729,6 @@ function revertAccountChangesForRemovePremiumPackage(user, currentValues, cb) {
     });
 }
 
-function revertUserPackagesInAio(email, type, cb) {
-    var packages = type === 'free' ? config.aioFreePremiumUserPackages : config.aioPaidUserPackages;
-    aio.updateUserPackages(email, packages, function (err) {
-        if (err) {
-            logger.logError('subscription - revertPackagesInAio - error setting back package in aio: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function setUserInactiveInAio(email, status, cb) {
-    aio.updateUserStatus(email, false, function (err) {
-        if (err) {
-            logger.logError('subscription - setUserInactiveInAio - error setting user status to inactive in aio: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function updateAccountOnPaymentDeclined(user, currentValues, cb) {
-    user.account.billingDate = currentValues.billingDate;
-    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('subscription - updateAccountPaymentDeclined - error updating account on payment declined: ' + user.email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
 function sendUpgradeEmail(user, cb) {
     var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
     var mailOptions = {
@@ -1777,6 +1743,27 @@ function sendUpgradeEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendUpgradeFailedEmail(user, cb) {
+    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.upgradeSubscriptionFailedEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.upgradeSubscriptionFailedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendUpgradeFailedEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendUpgradeFailedEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
