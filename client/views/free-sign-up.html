@@ -5,8 +5,20 @@
         <div class="container">
             <div class="form-box">
                 <div class="form-container">
-                    <div class="full-form">
-                        <div class="message" translate="FREE_SIGN_UP_MESSAGE"></div>
+                    <div class="free-sign-up">
+                        <div class="row">
+                            <div class="col-md-12"><h3 translate="FREE_SIGN_UP_MESSAGE"></h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul>
+                                    <li translate="FREE_SIGN_UP_BULLET1"></li>
+                                    <li translate="FREE_SIGN_UP_BULLET2"></li>
+                                    <li translate="FREE_SIGN_UP_BULLET3"></li>
+                                    <li translate="FREE_SIGN_UP_BULLET4"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
@@ -41,7 +53,7 @@
                         <div class="error-message" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>
                     </div>
-                    <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD"></span><br>
+                    <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD"></span><br><span class="label-text-info" translate="FREE_SIGN_UP_PASSWORD_INFO"></span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$dirty && form.password.$invalid}">
 
                         <div class="error-message" ng-show="form.password.$dirty && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>

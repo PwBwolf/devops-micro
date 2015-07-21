@@ -751,7 +751,7 @@ module.exports = {
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
                             sendVerificationEmail(userObj);
-                        } else {
+                        } else if (newUser.firstName) {
                             sendUpgradeFailedEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);

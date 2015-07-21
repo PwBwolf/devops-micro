@@ -28,12 +28,6 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            .when('/free-sign-up-success',
-            {
-                templateUrl: 'views/free-sign-up-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
             .when('/sign-up/complimentary/:compCode',
             {
                 templateUrl: 'views/complimentary-sign-up.html',
@@ -44,6 +38,12 @@
             {
                 templateUrl: 'views/idt-sign-up.html',
                 controller: 'idtSignUpCtrl',
+                access: access.anon
+            })
+            .when('/free-sign-up-success',
+            {
+                templateUrl: 'views/free-sign-up-success.html',
+                controller: 'commonCtrl',
                 access: access.anon
             })
             .when('/sign-up-success',
@@ -178,6 +178,12 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
+            .when('/change-password-success',
+            {
+                templateUrl: 'views/change-password-success.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/refer-a-friend',
             {
                 templateUrl: 'views/refer-a-friend.html',
@@ -189,12 +195,6 @@
                 templateUrl: 'views/refer-a-friend-success.html',
                 controller: 'commonCtrl',
                 access: access.public
-            })
-            .when('/change-password-success',
-            {
-                templateUrl: 'views/change-password-success.html',
-                controller: 'commonCtrl',
-                access: access.user
             })
             .when('/leadership',
             {
