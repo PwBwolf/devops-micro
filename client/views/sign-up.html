@@ -1,24 +1,40 @@
 <div class="content-area">
     <div class="content-box">
         <div class="container">
-            <img class="img-responsive" ng-src="/images/pages/{{language}}/signup.jpg"/>
-
             <div class="form-box">
-
                 <div class="row">
-                    <div class="col-md-12"><h3 translate="SIGN_UP_ORDER_SUMMARY"></h3></div>
+                    <div class="col-md-12 text-center uppercase-text bolder-text"><h3 translate="SIGN_UP_SUB_HEADING"></h3></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3 order-summary-title"><span translate="SIGN_UP_ORDER"></span></div>
-                    <div class="col-md-9 bolder-text"><span translate="SIGN_UP_ORDER_DETAILS"></span></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 order-summary-title"><span translate="SIGN_UP_FEE"></span></div>
-                    <div class="col-md-9"><span translate="SIGN_UP_FEE_DETAILS"></span></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 order-summary-title"><span translate="SIGN_UP_TERMS"></span></div>
-                    <div class="col-md-9 bolder-text"><span translate="SIGN_UP_TERMS_DETAILS"></span></div>
+                <div class="sign-up-order">
+                    <div class="row">
+                        <div class="col-md-12 uppercase-text"><h3 translate="SIGN_UP_ORDER_SUMMARY"></h3></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li translate="SIGN_UP_BULLET1"></li>
+                                <li translate="SIGN_UP_BULLET2"></li>
+                                <li translate="SIGN_UP_BULLET3"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9"><span translate="SIGN_UP_ITEM1"></span></div>
+                        <div class="col-xs-3 text-right"><span translate="SIGN_UP_AMOUNT1"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9"><span translate="SIGN_UP_ITEM2"></span></div>
+                        <div class="col-xs-3 text-right"><span translate="SIGN_UP_AMOUNT2"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9 bolder-text"><span translate="SIGN_UP_ITEM_TOTAL"></span></div>
+                        <div class="col-xs-3 bolder-text text-right"><span translate="SIGN_UP_AMOUNT_TOTAL"></span></div>
+                    </div>
                 </div>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
                     <div class="form-container">
@@ -139,11 +155,8 @@
                         <div>&nbsp;</div>
                         <div class="error-message text-center" style="width:98%" ng-show="formSubmit && form.$invalid" translate="SIGN_UP_FORM_INVALID"></div>
                     </div>
-                    <div class="full-form">
-                        <div class="bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
-                    </div>
-                    <div class="full-form" style="padding-top:0">
-                        <span class="message" translate="SIGN_UP_MESSAGE"></span>
+                    <div class="full-form" style="padding-top:0px;">
+                        <div class="bold-text text-center"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                     </div>
                 </form>
             </div>

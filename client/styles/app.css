@@ -161,12 +161,12 @@ input[type="radio"]:checked + label:before {
 }
 
 #accountBox {
-    position:relative;
+    position: relative;
     margin: 0 auto;
 }
 
 #userHomeBox {
-    position:relative;
+    position: relative;
     margin: 0 auto;
 }
 
@@ -258,27 +258,31 @@ input[type="radio"]:checked + label:before {
 }
 
 .carousel-fade .carousel-inner .item {
-  opacity: 0;
-  -webkit-transition-property: opacity;
-  -moz-transition-property: opacity;
-  -o-transition-property: opacity;
-  transition-property: opacity;
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
 }
+
 .carousel-fade .carousel-inner .active {
-  opacity: 1 !important;
+    opacity: 1 !important;
 }
+
 .carousel-fade .carousel-inner .active.left,
 .carousel-fade .carousel-inner .active.right {
-  left: 0;
-  opacity: 0;
-  z-index: 1;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
 }
+
 .carousel-fade .carousel-inner .next.left,
 .carousel-fade .carousel-inner .prev.right {
-  opacity: 1;
+    opacity: 1;
 }
+
 .carousel-fade .carousel-control {
-  z-index: 2;
+    z-index: 2;
 }
 
 #carouselBanner .carousel-indicators {
@@ -424,8 +428,39 @@ input[type="radio"]:checked + label:before {
     margin: 0px;
 }
 
+.free-sign-up {
+    padding: 10px 30px 30px 30px;
+}
+
+.free-sign-up ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.free-sign-up li {
+    list-style-type: disc;
+}
+
 .sign-up-button {
-    background: #5FC503;
+    background: #56287B;
+}
+
+.sign-up-order {
+    background: #E7E8E9;
+    padding: 10px 30px 30px 30px;
+}
+
+.sign-up-order hr {
+    border-top: 1px solid #000;
+}
+
+.sign-up-order ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.sign-up-order li {
+    list-style-type: disc;
 }
 
 .modal-button {
@@ -792,10 +827,6 @@ ul.passwordStrength {
     .form-box {
         width: 100%;
     }
-
-    .order-summary-title {
-        text-align: left;
-    }
 }
 
 @media screen and (max-width: 767px) {
@@ -810,13 +841,7 @@ ul.passwordStrength {
 
     .form-box {
         width: 100%;
-        font-size: 17px;
-        margin-top: 0px;
-    }
-
-    .form-box {
-        width: 100%;
-        font-size: 17px;
+        font-size: 15px;
         margin-top: 0px;
     }
 }
