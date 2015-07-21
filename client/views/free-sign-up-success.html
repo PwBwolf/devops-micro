@@ -1,30 +1,51 @@
 <div class="content-area">
-    <div class="content-box message ">
+    <div class="content-box">
+        <div class="container success-box">
+            <div class="row sign-up-success">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <h2 class="bolder-text uppercase-text sign-up-header-color text-center" translate="FREE_SIGN_UP_SUCCESS_HEADING"></h2>
 
-        <div class="container message-box">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2 style="font-weight:bold; font-size:xx-large; text-align:left !important;"><span translate="FREE_SIGN_UP_SUCCESS_HEADING"></span></h2>
+                    <h3 class="bold-text" translate="FREE_SIGN_UP_SUCCESS_SUB_HEADING"></h3>
 
-                    <h3 style="font-weight:bold; text-align:left" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_1"></h3>
+                    <div translate="FREE_SIGN_UP_SUCCESS_LINE1"></div>
+                    <br/>
 
-                    <p style="margin-top:0px; text-align:left; color:dimgrey;" class="text-center" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_2"></p>
-                    <h4 style="font-weight:bolder; margin-top:30px" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_3"></h4>
+                    <div translate="FREE_SIGN_UP_SUCCESS_LINE2"></div>
+                    <br/>
 
-                    <p style="margin-top:0px; text-align:left; color:dimgrey;" class="text-center" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_4"></p>
+                    <div><span translate="FREE_SIGN_UP_SUCCESS_LINE3_PART1"></span> <a href ng-click="goToCmsUrl(\'CMS_URL_FAQS\')" translate="FREE_SIGN_UP_SUCCESS_FAQS"></a> <span translate="FREE_SIGN_UP_SUCCESS_LINE3_PART2"></span> <span ng-bind="appConfig.customerCareNumber"></span></div>
+                    <br/>
 
-                    <p style="margin-top:0px; text-align:left; color:dimgrey;" class="text-center" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_5"></p>
-
-                    <div id="signUpFreeSubmit" style="width:40%; margin:4% auto 0;"><a href="/sign-in" style="width:100%; height: auto; font-size:x-large; font-weight:bold; color:white; text-transform:uppercase; background-color:#A03269" class="btn btn-default" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_6"></a></div>
-                    <p style="margin-top:20px; text-align:left; color:dimgrey;" class="text-center" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_7"></p>
-
-                    <div id="downloadButtons">
-                        <a id="android" href="https://play.google.com/store/apps/details?id=com.yiptv.android.client2"><img style="margin:10px" src="images/google-play.png"/></a>
-                        <a id="apple" href="https://itunes.apple.com/us/app/yiptv/id972197370?mt=8&ign-mpt=uo%3D4"><img style="margin:10px" src="images/app-store.png"/></a>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <button goto="/sign-in"><img class="img-responsive" src="images/pages/{{language}}/button-login-watch-now.png"/></button>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <button goto="/sign-up/paid"><img class="img-responsive" src="images/pages/{{language}}/button-continue-to-premium.png"/></button>
+                        </div>
                     </div>
-                    <h4 style="font-weight:bolder; margin-top:30px" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_8"></h4>
 
-                    <p style="margin-top:20px; text-align:left; color:dimgrey;" class="text-center" translate="FREE_SIGN_UP_SUCCESS_MESSAGE_9"></p>
+                    <h4 class="text-center" translate="FREE_SIGN_UP_SUCCESS_LINE4"></h4>
+                    <br/>
+
+                    <div class="text-center">
+                        <a id="android" href="https://play.google.com/store/apps/details?id=com.yiptv.android.client2"><img class="app-button" src="images/google-play.png"/></a>
+                        <a id="apple" href="https://itunes.apple.com/us/app/yiptv/id972197370?mt=8&ign-mpt=uo%3D4"><img class="app-button" src="images/app-store.png"/></a>
+                    </div>
+
+                    <h3 class="bold-text" translate="FREE_SIGN_UP_SUCCESS_LINE5"></h3>
+                    <ul>
+                        <li translate="FREE_SIGN_UP_SUCCESS_BULLET1"></li>
+                        <li translate="FREE_SIGN_UP_SUCCESS_BULLET2"></li>
+                        <li translate="FREE_SIGN_UP_SUCCESS_BULLET3"></li>
+                        <li translate="FREE_SIGN_UP_SUCCESS_BULLET4"></li>
+                    </ul>
+                    <br/>
+                    <br/>
+                    <button goto="/sign-up/paid"><img class="text-center img-responsive" src="images/pages/{{language}}/upgrade-to-premium.png"/></button>
+                    <br/>
+                    <div class="bold-text text-center"><h3><span translate="FREE_SIGN_UP_SUCCESS_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                 </div>
             </div>
         </div>
