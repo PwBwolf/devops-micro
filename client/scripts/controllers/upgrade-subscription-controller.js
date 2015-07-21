@@ -33,7 +33,7 @@
                             $scope.saving = false;
                         } else if (error === 'PaymentFailedActive') {
                             userSvc.getUserProfile(function () {
-                                $location.path('/upgrade-subscription-success-payment-pending');
+                                loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_PAYMENT_FAILED'));
                                 $scope.saving = false;
                             }, function () {
                                 loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
