@@ -7,6 +7,8 @@
                 <div id="userHomeBox">
                     <button ng-click="openAio()" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
                     <br>
+                    <button ng-show="user.type === 'free'" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION"></button>
+                    <br ng-show="user.type === 'free'">
                     <button goto="/account" type="button" translate="USER_HOME_ACCOUNT"></button>
                     <br>
                     <button goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND"></button>

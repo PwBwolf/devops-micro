@@ -249,7 +249,7 @@ input[type="radio"]:checked + label:before {
     padding: 10px 25px;
     margin: 20px;
     font-family: 'radikalregular';
-    width: 340px;
+    width: 390px;
 }
 
 .raf-fine-print {
@@ -879,6 +879,11 @@ ul.passwordStrength {
         font-size: 12px;
         padding: 5px 5px;
         margin: 0;
+    }
+
+    .user-home-box .caption button {
+        font-size: 18px;
+        width: 350px;
     }
 
     .center-form {

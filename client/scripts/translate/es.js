@@ -646,6 +646,7 @@
             UPGRADE_SUBSCRIPTION_CITY_INVALID: 'Introduzca ciudad valida',
             UPGRADE_SUBSCRIPTION_SUBMIT_BUTTON: 'Actualizar',
             UPGRADE_SUBSCRIPTION_FAILED: 'Suscripcion de actualizacion fallo. Por favor, pongase en contacto con atencion al cliente',
+            UPGRADE_SUBSCRIPTION_PAYMENT_FAILED: 'Unable to charge your card. Please check your card details and click "Upgrade" again.',
             UPGRADE_SUBSCRIPTION_PROBLEM: 'Problemas actualizando? Pongase en contacto con atencion al cliente',
             UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Por favor cierre y vuelva a abrir la ventana del navegador de la aplicacion YipTV.',
             UPGRADE_SUBSCRIPTION_ALREADY_UPGRADED: 'No se puede actualizar la suscripcion porque uste lla es un usuario pagado.',
