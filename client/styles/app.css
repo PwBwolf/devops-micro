@@ -141,6 +141,10 @@ input[type="radio"]:checked + label:before {
     height: 241px;
 }
 
+.app-button {
+    margin: 10px;
+}
+
 .banner {
     float: left;
     width: 100%;
@@ -412,6 +416,16 @@ input[type="radio"]:checked + label:before {
     margin: 0 auto;
 }
 
+.success-box {
+    width: 800px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: 0 auto;
+
+}
+
 .submit-button {
     background: #A03269;
     width: 98%;
@@ -441,6 +455,24 @@ input[type="radio"]:checked + label:before {
     list-style-type: disc;
 }
 
+.sign-up-success ul {
+    padding-left: 30px;
+}
+
+.sign-up-success a {
+    color: black;
+    text-decoration: underline;
+}
+
+.sign-up-success li {
+    list-style-type: disc;
+    font-size: 90%;
+}
+
+.sign-up-header-color {
+    color: #291753;
+}
+
 .sign-up-button {
     background: #56287B;
 }
@@ -461,6 +493,7 @@ input[type="radio"]:checked + label:before {
 
 .sign-up-order li {
     list-style-type: disc;
+    font-size: 90%;
 }
 
 .modal-button {
@@ -824,9 +857,10 @@ ul.passwordStrength {
         width: 100%;
     }
 
-    .form-box {
+    .success-box {
         width: 100%;
     }
+
 }
 
 @media screen and (max-width: 767px) {
@@ -938,5 +972,11 @@ ul.passwordStrength {
     .cancel-on {
         font-size: 14px;
         width: 250px;
+    }
+
+    .submit-button {
+        height: 60px;
+        line-height: 60px;
+        font-size: 15px;
     }
 }
