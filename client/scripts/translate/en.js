@@ -546,7 +546,7 @@
             SIGN_IN_FAILED: 'Sign In failed',
             SIGN_IN_NO_VERIFICATION_EMAIL: 'Did not receive verification email?',
             SIGN_IN_RESEND_VERIFICATION: 'Request Again',
-            SIGN_IN_UPGRADE_SUBSCRIPTION: 'You need to sign in before you can upgrade your subscription.',
+            SIGN_IN_UPGRADE_SUBSCRIPTION: 'You need to sign in before you can upgrade to premium membership.',
             SIGN_UP_SUB_HEADING: 'My YipTV Premium Membership',
             SIGN_UP_QUESTIONS: 'Questions? Call Customer Care at',
             SIGN_UP_ORDER_SUMMARY: 'Order Summary - Premium Membership',

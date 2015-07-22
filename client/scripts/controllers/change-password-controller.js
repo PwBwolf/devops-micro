@@ -5,10 +5,12 @@
 
         $scope.changePassword = function () {
             if ($scope.form.$valid) {
+                $scope.saving = true;
                 userSvc.changePassword(
                     $scope.mv,
                     function () {
                         $location.path('/change-password-success');
+                        $scope.saving = false;
                     },
                     function (response) {
                         if (response === 'Unauthorized') {
@@ -16,6 +18,7 @@
                         } else {
                             loggerSvc.logError($filter('translate')('CHANGE_PASSWORD_ERROR'));
                         }
+                        $scope.saving = false;
                     });
             } else {
                 setFormDirty();

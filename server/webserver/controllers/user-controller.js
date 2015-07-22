@@ -275,7 +275,7 @@ module.exports = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: user.email,
                     subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, resetUrl)
+                    html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber,resetUrl)
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
@@ -350,7 +350,7 @@ module.exports = {
                             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                             to: user.email,
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
                         };
                         email.sendEmail(mailOptions, function (err) {
                             if (err) {
@@ -421,7 +421,7 @@ module.exports = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: user.email,
                     subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
+                    html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
@@ -476,7 +476,7 @@ module.exports = {
                             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                             to: user.email,
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
                         };
                         email.sendEmail(mailOptions, function (err) {
                             if (err) {
