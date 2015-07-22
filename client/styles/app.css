@@ -712,6 +712,7 @@ ul.passwordStrength {
     font-family: 'gotham-bookgotham-book';
     font-size: 14px;
     padding-left: 0;
+    font-style:italic;
 }
 
 .sign-up-message {

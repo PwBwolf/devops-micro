@@ -204,6 +204,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-freeside-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-password.js', 'dist/tools/admin-cli', 'development', argv.env);
 
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {
