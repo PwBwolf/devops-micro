@@ -1165,8 +1165,8 @@ module.exports = {
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: userObj.email,
-                    subject: config.trialPeriodCompleteEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.trialPeriodCompleteEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+                    subject: config.premiumRemovedEmailSubject[userObj.preferences.defaultLanguage],
+                    html: sf(config.premiumRemovedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
