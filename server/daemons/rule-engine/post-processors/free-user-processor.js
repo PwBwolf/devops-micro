@@ -74,14 +74,24 @@ function sendReacquireEmail(user) {
     });
 }
 
-module.exports.send4DayReminderEmail = function (user) {
+module.exports.send2DayReminderEmail = function (user) {
     delete user.postProcessorKey;
-    sendReminderEmail(user, '3', '4');
+    sendReminderEmail(user, '5', '2');
+};
+
+module.exports.send3DayReminderEmail = function (user) {
+    delete user.postProcessorKey;
+    sendReminderEmail(user, '4', '3');
+};
+
+module.exports.send5DayReminderEmail = function (user) {
+    delete user.postProcessorKey;
+    sendReminderEmail(user, '2', '5');
 };
 
 module.exports.send6DayReminderEmail = function (user) {
     delete user.postProcessorKey;
-    sendLastButOneReminderEmail(user, '1', '6');
+    sendLastButOneReminderEmail(user);
 };
 
 module.exports.send7DayReminderEmail = function (user) {
@@ -99,7 +109,9 @@ module.exports.send9DayReacquireEmail = function (user) {
     sendReacquireEmail(user);
 };
 
-config.postProcessors.freeUser4 = module.exports.send4DayReminderEmail;
+config.postProcessors.freeUser2 = module.exports.send2DayReminderEmail;
+config.postProcessors.freeUser3 = module.exports.send3DayReminderEmail;
+config.postProcessors.freeUser5 = module.exports.send5DayReminderEmail;
 config.postProcessors.freeUser6 = module.exports.send6DayReminderEmail;
 config.postProcessors.freeUser7 = module.exports.send7DayReminderEmail;
 config.postProcessors.freeUser8 = module.exports.send8DaySuspendPremium;

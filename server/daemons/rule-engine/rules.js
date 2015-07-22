@@ -9,8 +9,8 @@ function buildRules() {
     var def = Q.defer();
     var ruleData = [
         {
-            'name': 'free-user-4-reminder',
-            'description': 'Send a reminder email to a free user after 4 days',
+            'name': 'free-user-2-reminder',
+            'description': 'Send a reminder email to a free user after 2 days',
             'priority': 1,
             'enabled': true,
             'on': 1,
@@ -18,7 +18,7 @@ function buildRules() {
                 var moment = require('moment');
                 if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
                     var created = fact.startDate;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 4) {
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 2) {
                         cb(true);
                         return;
                     }
@@ -27,7 +27,53 @@ function buildRules() {
             },
             'consequence': function (cb) {
                 this.process = true;
-                this.postProcessorKey = 'freeUser4';
+                this.postProcessorKey = 'freeUser2';
+                cb();
+            }
+        },
+        {
+            'name': 'free-user-3-reminder',
+            'description': 'Send a reminder email to a free user after 3 days',
+            'priority': 1,
+            'enabled': true,
+            'on': 1,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
+                    var created = fact.startDate;
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 3) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'freeUser3';
+                cb();
+            }
+        },
+        {
+            'name': 'free-user-5-reminder',
+            'description': 'Send a reminder email to a free user after 5 days',
+            'priority': 1,
+            'enabled': true,
+            'on': 1,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.type === 'free' && (fact.status === 'active' || fact.status === 'registered')) {
+                    var created = fact.startDate;
+                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 5) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'freeUser5';
                 cb();
             }
         },
@@ -94,28 +140,6 @@ function buildRules() {
             'consequence': function (cb) {
                 this.process = true;
                 this.postProcessorKey = 'freeUser8';
-                cb();
-            }
-        },
-        {
-            'name': 'free-user-9-reacquire',
-            'description': 'Try and reacquire the user on the 9th day',
-            'priority': 1,
-            'enabled': true,
-            'condition': function (fact, cb) {
-                var moment = require('moment');
-                if (fact.doctype === 'user' && fact.type === 'free') {
-                    var created = fact.startDate;
-                    if (moment.utc().startOf('day').diff(moment(created).utc().startOf('day'), 'days') === 9) {
-                        cb(true);
-                        return;
-                    }
-                }
-                cb(false);
-            },
-            'consequence': function (cb) {
-                this.process = true;
-                this.postProcessorKey = 'freeUser9';
                 cb();
             }
         },
