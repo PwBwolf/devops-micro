@@ -1159,7 +1159,7 @@ module.exports = {
                     }
                     callback(err, userObj);
                 });
-            },
+            }/*,
             // send email
             function (userObj, callback) {
                 var mailOptions = {
@@ -1177,7 +1177,7 @@ module.exports = {
                     }
                     callback(null, userObj);
                 });
-            }
+            }*/
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
