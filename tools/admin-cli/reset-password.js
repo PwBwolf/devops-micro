@@ -88,7 +88,7 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                             to: user.email,
                             subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName)
+                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
                         };
                         emailService.sendEmail(mailOptions, function (err) {
                             if (err) {

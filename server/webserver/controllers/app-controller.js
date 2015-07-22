@@ -111,18 +111,32 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            var mailOptions = {
+            var mailOptionsSupport = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.contactUsEmailList,
                 subject: config.contactUsEmailSubject,
                 html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
             };
-            email.sendEmail(mailOptions, function (err) {
+            var mailOptionsUser = {
+                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                to: contactUs.email,
+                subject: config.contactUsEmailSubject,
+                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
+            };
+            email.sendEmail(mailOptionsSupport, function (err) {
                 if (err) {
-                    logger.logError('appController - saveContactUs - error sending contact us email: ' + req.body.email);
+                    logger.logError('appController - saveContactUs - error sending contact us email to support: ' + req.body.email);
                     logger.logError(err);
                 } else {
-                    logger.logInfo('appController - saveContactUs - contact us email sent to ' + mailOptions.to);
+                    logger.logInfo('appController - saveContactUs - contact us email sent to support: ' + mailOptionsSupport.to);
+                }
+            });
+            email.sendEmail(mailOptionsUser, function (err) {
+                if (err) {
+                    logger.logError('appController - saveContactUs - error sending contact us email to user: ' + req.body.email);
+                    logger.logError(err);
+                } else {
+                    logger.logInfo('appController - saveContactUs - contact us email sent to user: ' + mailOptionsUser.to);
                 }
             });
             return res.status(200).end();

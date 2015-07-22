@@ -1528,7 +1528,7 @@ function sendVerificationEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, verificationUrl)
+        html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
     };
     email.sendEmail(mailOptions, function (err) {
         if (cb) {
@@ -1798,7 +1798,7 @@ function sendCreditCardPaymentFailureEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.creditCardPaymentFailureEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+        html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, signInUrl)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -1819,7 +1819,7 @@ function sendAccountVerifiedEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
+        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, signInUrl)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
@@ -1860,7 +1860,7 @@ function sendPaidSubscriptionEndedEmail(user, cb) {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.subscriptionCanceledEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.url + 'upgrade-subscription')
+        html: sf(config.subscriptionCanceledEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, config.url + 'upgrade-subscription')
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
