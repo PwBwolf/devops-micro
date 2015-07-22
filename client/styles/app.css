@@ -142,7 +142,13 @@ input[type="radio"]:checked + label:before {
 }
 
 .app-button {
-    margin: 10px;
+    margin: 10px 5px;
+}
+
+
+.app-link {
+    display:block;
+    margin: 0 auto 5px;
 }
 
 .banner {
