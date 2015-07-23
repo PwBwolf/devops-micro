@@ -311,7 +311,11 @@ module.exports = {
                 }
             }
         );
-    }
+    },
+
+    cancelPackage: cancelPackage,
+
+    getPackages: getPackages
 };
 
 function cancelPackage(sessionId, packageNumber, callback) {
