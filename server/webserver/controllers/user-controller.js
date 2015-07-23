@@ -134,7 +134,7 @@ module.exports = {
     },
 
     signIn: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+        User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - signIn - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
@@ -159,6 +159,9 @@ module.exports = {
                     logger.logError(err);
                 }
             });
+            if (user.oldInactiveUser && user.oldInactiveUser > 0) {
+                addFreeTvCampaign(user);
+            }
             var token = jwt.encode({
                 email: req.body.email.toLowerCase(),
                 role: user.role,
@@ -275,7 +278,7 @@ module.exports = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: user.email,
                     subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber,resetUrl)
+                    html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, resetUrl)
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {
@@ -667,4 +670,63 @@ function getGuestCounter() {
         getGuestCounter.count = 0;
     }
     return getGuestCounter.count;
+}
+
+function addFreeTvCampaign(user, cb) {
+    var freeSideSessionId;
+    async.waterfall([
+        function (callback) {
+            aio.updateUserStatus(user.email, true, function (err) {
+                if (err) {
+                    logger.logError('userController - addFreeTvCampaign - error changing user to active: ' + user.email);
+                    logger.logError(err);
+                }
+                callback(null);
+            });
+        },
+        function (callback) {
+            user.oldInactiveUser = 0;
+            user.account.startDate = (new Date()).toUTCString();
+            user.account.premiumEndDate = moment(user.account.startDate).add(7, 'days');
+            user.save(function (err) {
+                if (err) {
+                    logger.logError('userController - addFreeTvCampaign - error saving user: ' + user.email);
+                    logger.logError(err);
+                }
+                callback(null);
+            });
+        },
+        function (callback) {
+            user.account.save(function (err) {
+                if (err) {
+                    logger.logError('userController - addFreeTvCampaign - error saving account: ' + user.email);
+                    logger.logError(err);
+                }
+                callback(null);
+            });
+        },
+        function (callback) {
+            billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                if (err) {
+                    logger.logError('userController - addFreeTvCampaign - error logging into freeside: ' + user.email);
+                    logger.logError(err);
+                }
+                freeSideSessionId = sessionId;
+                callback(null);
+            });
+        },
+        function (callback) {
+            billing.orderPackage(freeSideSessionId, config.freeSidePremiumPackagePart, function (err) {
+                if (err) {
+                    logger.logError('userController - addFreeTvCampaign - error adding premium package: ' + user.email);
+                    logger.logError(err);
+                }
+                callback(null);
+            });
+        }
+    ], function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
 }

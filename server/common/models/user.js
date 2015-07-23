@@ -18,6 +18,8 @@ var User = new Schema({
         },
         required: true
     },
+    activated: Boolean,
+    oldInactiveUser: Number,
     status: {type: String, required: true},
     createdAt: {type: Date, required: true},
     upgradeDate: {type: Date, required: false},
