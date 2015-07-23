@@ -1,18 +1,18 @@
 {
-  "name": "migration-scripts",
-  "version": "0.0.1",
-  "description": "Migration Scripts",
-  "main": "main.js",
-  "dependencies": {
-    "async": "^1.4.0",
-    "cli-table": "^0.3.1",
-    "fs-extended": "^0.2.0",
-    "lodash": "^3.9.3",
-    "moment": "^2.10.3",
-    "mongodb": "^2.0.39",
-    "mongoose": "^4.0.8",
-    "node-uuid": "^1.4.3",
-    "prompt": "^0.2.14",
-    "sf": "^0.1.7"
-  }
+    "name": "migration-scripts",
+    "version": "0.0.1",
+    "description": "Migration Scripts",
+    "main": "main.js",
+    "dependencies": {
+        "async": "^1.4.0",
+        "cli-table": "^0.3.1",
+        "fs-extended": "^0.2.0",
+        "lodash": "^3.9.3",
+        "moment": "^2.10.3",
+        "mongodb": "^2.0.39",
+        "mongoose": "~3.8.8",
+        "node-uuid": "^1.4.3",
+        "prompt": "^0.2.14",
+        "sf": "^0.1.7"
+    }
 }
