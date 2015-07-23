@@ -270,7 +270,7 @@
             if(!show.program.shortDescription) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">Not Available</span></p>';
                 } else {
-                    channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + show.program.shortDescription + '</span></p></div>';
+                    channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + show.program.longDescription + '</span></p></div>';
             }
            
             return channelDetails;
@@ -291,40 +291,15 @@
               
               scope.closeVisible = true;
               element.bind('click', function(evt) {
-                  //console.log($(this).attr('class'));
-                  //if( $(scrns).hasClass("scrnsOpen" )){
-                  //if(el){
-                      //scope.test = "it's ";
-                      //$(e.target).attr('class', ':active');
                       
                       $(scope.smm).switchClass('sgstdChnls_min', 'sgstdChnls', 500, 'easeInOutQuad');
                       $(scope.scrns).switchClass('scrnsMinimized', 'scrnsMaximized', 500, 'easeInOutQuad');
-                      $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
+                      $(scope.qlBox).toggleClass('off');
                       $(scope.chnls).attr('class', 'usrPrefsPnl');
                       
-                      //element.attr('isVisible', 'false');
-                      //attrs.$set('isVisible', 'false');
                       scope.isVisible = false;
                       scope.closeVisible = false;
-                      
-                      //$(smm).attr('class', 'sgstdChnls_min ease');
-                      //$(scrns).attr('class', 'scrnsMinimize');
-                      //$(chnls).attr('class', 'usrPrefsPnlMax');
-                      //$(guide).attr('class', 'usr_Guide_pnl_min');
-                      
-                      //attrs.$set('class', '');
-                      //attrs.$set('id', 'smChannelDesc_off');
-                  //} else {
-                      //console.log($(qlBox).attr('class')+' - ailed');
-                      //scope.isVisible = true;
-                      //$(scrns).removeClass('scrnsOpen');
-                      
-                      //scope.$apply(scope.closeBtn());
-                      
-                      //} else {
-                      //console.log('screen\'s already open');
-                      //}
-                  
+
               });
               
           }
