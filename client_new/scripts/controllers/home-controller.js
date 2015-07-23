@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', '$', '$filter', 'prflButtons', function (appSvc, $scope, $window, $location, $, $filter, prflButtons) {
+    app.controller('homeCtrl', ['appSvc', '$scope', '$window', '$location', '$', '$filter', '$compile', 'prflButtons', function (appSvc, $scope, $window, $location, $, $filter, $compile, prflButtons) {
         $scope.prflSlctns = [];
         //var d;
 		//$scope.d = new Date();
@@ -20,7 +20,7 @@
 		
 		function init(){
 			$scope.prflSlctns = prflButtons.getPfrlSlctns();
-			$scope.dUsr = $scope.user;
+			$scope.dUsr = $scope.user;        
 		}
 		
 		
@@ -89,6 +89,6 @@
 		return function(repo, begin, end){
 			return repo.slice(begin, end);
 		}
-	})
+	});
 	
 }(angular.module('app')));

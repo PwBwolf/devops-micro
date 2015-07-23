@@ -6,10 +6,14 @@
             restrict: 'E',
             replace: true,
             //template: '<div>{{test}} time to do it<div data-ng-repeat="air in airings">{{air.program.title}}. Start-Time: {{air.startTime}} Runtime: {{air.duration}}</div></div>',
-            template: '<div id="channelPreviewPanel" class="channelPreview ease" data-ng-bind-html=showListings></div>',
+            template: '<div data-ng-bind-html=showListings></div>',
             link: function(scope, el, attrs){
-                //attrs.$set('id', 'channelPreviewPanel');
-                //attrs.$set('class', 'channelPreview');
+                
+                //el.prepend($(closeBtn));
+                //var dEl = el.find($('div'));
+                //console.log('amt: '+dEl.length);
+                attrs.$set('id', 'channelPreviewPanel');
+                attrs.$set('class', 'channelPreview');
                 
                 //var scrns = $window.document.getElementById('scrns');
                   //attrs.$set('channel-expander', '');

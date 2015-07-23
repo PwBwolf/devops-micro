@@ -53,7 +53,6 @@
             
 			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
             $scope.isVisible = false;
-            $scope.closeVisible = false;
             $scope.loadingChannels = true;
             
             //$scope.imgURL = "http://yipt.tmsimg.com/";
@@ -61,11 +60,42 @@
                 $scope.channels = data;
                 if ($scope.channels && $scope.channels.length > 0) {
                     
+                    //console.log('Amt of promo chnls: '+$scope.channels.length);
+
+                    
+                    
+                    //$scope.selectChannel(0);
+					//for(var g in $scope.channels){
+                        //if( g < 4){
+                            //console.log('usrChannels: '+$scope.channels[g].name);
+                            //$scope.dName = $scope.channels[g].name;
+                            
+                            /*
+    		                mediaSvc.getChannelGuide($scope.channels[g].live_external_id, $scope.channels[g].name).success(function (channelGuide) {
+                                $scope.airings = channelGuide[0].airings;
+                                console.log('this is title: '+$scope.airings[0].program.title);
+                                $scope.onAir = $scope.airings[0].program.title;
+                                $scope.loadingChannelGuide = false;
+                            }).error(function () {
+                                $scope.loadingChannelGuide = false;
+                                loggerSvc.logError('Error loading channel guide.');
+                            });
+                            */
+    		                
+                            //};
+					//};
+
                     $scope.chnlClicked = function (index) {
                         $scope.selectedChnl = index;
                         $scope.selectChannel(index);
                         $scope.isVisible = true; 
-
+                        //$scope.test = $scope.channels[index].name;
+                        //$scope.test1 = $scope.airings
+                        //console.log(index+' clicked & title: '+$scope.channels[index].name);
+                        //$scope.playChannel(index);
+                        //$scope.channelExpander = "channel-expander";
+                        //$scope.selectedChnlIndex = index;
+                        //$scope.playChannel(selectedChnlIndex);
                     };
                     
                     $scope.watchNow = function (index) {
@@ -76,8 +106,12 @@
                     $scope.chnlHover = function (index) {
                         $scope.chnlHovered = index;
                         $scope.selectOnAir(index);
+                        //$scope.channelExpander = "channel-hover";
                     };
-
+                    //for(var c in $scope.channels){
+				        //$scope.selectChannel(c);
+						//console.log($scope.channels[c].name);
+						//}
                 }
                 $scope.loadingChannels = false;
             }, function () {
@@ -87,23 +121,19 @@
             
             $scope.showCloseBtn = function(ev,attrs){
                 /* $on('insertItem',function(ev,attrs){ */
-                    if(angular.element('#closeBtn').length){
-                        console.log('button already exists');
-                        $scope.closeVisible = true;
-                    } else {
-                        var prevPnl = angular.element('#chnlMenuHldr');
-                        var closethispanel = angular.element(document.createElement('closepnl'));
-                        var el = $compile( closethispanel )( $scope );
+                var prevPnl = angular.element('#chnlMenuHldr');
+                var closethispanel = angular.element(document.createElement('closepnl'));
+                var el = $compile( closethispanel )( $scope );
 
-                          //where do you want to place the new element?
-                        angular.element(prevPnl).append(closethispanel);
-                        console.log('close clicked');
-                    }
-                
+                  //where do you want to place the new element?
+                angular.element(prevPnl).append(closethispanel);
+                console.log('close clicked');
 
                   //$scope.insertHere = el;
             };
         };
+		//jwplayer("my-player").setup({ $scope.playerOptions; });
+		//console.log($scope.channels.length);
        
         $scope.selectOnAir = function(channelIndex) {
             if(!$scope.loadingChannelGuide) {
@@ -131,11 +161,25 @@
                     $scope.showTimes = channelGuide[0].airings;
                     //console.log($scope.showTimes.length);
                     $scope.showListings = [];
-
+                    //$scope.showListings = $scope.getChannelDetails($scope.showTimes);
+                    //$scope.playChannel(channelIndex);
+                    //$scope.onAir = $scope.airings[0].program.title;
+                    //$scope.channelLogo = $scope.airings[0].image_url;
+                    //$scope.details = $scope.getProgramDetails($scope.airings[0]);
+                    //$scope.channelLineup = $scope.getChannelDetails()
+                    //console.log('p d: '+$scope.showListings[0].name);
 					for(var p in $scope.showTimes){
                         $scope.showListings[p] = $scope.getChannelDetails($scope.showTimes[p]);
                         //console.log('chnl: show '+p+' start-Time: '+$scope.showTimes[p].startTime);
                     }
+                    
+                    //console.log('it is: '+$scope.showListings.length);
+                    
+                    //$(listing).closest('div').attr('id', 'mine');
+                    //var panel = $window.document.getElementById('channelPreviewPanel');
+                    //var panelCntnt = $(panel).find('div:first-child');
+                        //$(panelCntnt).attr('test', 'testing');
+                    //console.log($(panel).find('div').length);
                     
                     /// TARGET GENERATED LISTING ///
                         //var listing = $scope.showListings[0];
@@ -144,6 +188,8 @@
                         //console.log('the attr: '+$(listing).closest('div').attr('class'));
                     /// ------------------------ ///
                     
+					//console.log('this time: '+$scope.airings[].length);
+					//console.log('air: '+$scope.airings )
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
@@ -282,30 +328,23 @@
         return {
           restrict: 'E',
           replace: true, 
-          template: '<span data-ng-show=closeVisible>My chart</span>',
+          template: '<span>My chart</span>',
           link: function (scope, element, attrs) {
               attrs.$set('id', 'closeBtn');
               attrs.$set('class', 'closeBtn label label-danger');
-              //element.attr('isVisible', 'true');
               element.text('CLOSE');
               
-              scope.closeVisible = true;
               element.bind('click', function(evt) {
                   //console.log($(this).attr('class'));
                   //if( $(scrns).hasClass("scrnsOpen" )){
                   //if(el){
                       //scope.test = "it's ";
                       //$(e.target).attr('class', ':active');
-                      
                       $(scope.smm).switchClass('sgstdChnls_min', 'sgstdChnls', 500, 'easeInOutQuad');
                       $(scope.scrns).switchClass('scrnsMinimized', 'scrnsMaximized', 500, 'easeInOutQuad');
-                      $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
+                      $(scope.qlBox).removeClass('off');
                       $(scope.chnls).attr('class', 'usrPrefsPnl');
                       
-                      //element.attr('isVisible', 'false');
-                      //attrs.$set('isVisible', 'false');
-                      scope.isVisible = false;
-                      scope.closeVisible = false;
                       
                       //$(smm).attr('class', 'sgstdChnls_min ease');
                       //$(scrns).attr('class', 'scrnsMinimize');
