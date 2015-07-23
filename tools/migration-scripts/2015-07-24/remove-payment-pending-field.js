@@ -5,7 +5,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var fs = require('fs-extended');
 var mongoose = require('../../../server/node_modules/mongoose/index');
 var config = require('../../../server/common/setup/config');
-var logFile = fs.createWriteStream(__dirname + '/update-account-fields.log', {flags: 'w'});
+var logFile = fs.createWriteStream(__dirname + '/remove-payment-pending-field.log', {flags: 'w'});
 var logStdOut = process.stdout;
 var modelsPath = config.root + '/server/common/models';
 var db = mongoose.connect(config.db);
@@ -29,5 +29,4 @@ Accounts.update({}, {$unset: {paymentPending: ''}}, {upsert: false, multi: true}
     setTimeout(function () {
         process.exit(0);
     }, 3000);
-
 });

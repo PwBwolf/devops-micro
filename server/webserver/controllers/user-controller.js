@@ -685,7 +685,7 @@ function addFreeTvCampaign(user, cb) {
             });
         },
         function (callback) {
-            user.oldInactiveUser = 0;
+            user.oldInactiveUser = user.oldInactiveUser * -1;
             user.account.startDate = (new Date()).toUTCString();
             user.account.premiumEndDate = moment(user.account.startDate).add(7, 'days');
             user.save(function (err) {
