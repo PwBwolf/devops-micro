@@ -91,9 +91,11 @@ function migrate(account, cb) {
                 }
                 callback(err);
             });
-        },
-
+        }
     ], function (err) {
+        if (err) {
+            console.log(err);
+        }
         cb(err);
     });
 }

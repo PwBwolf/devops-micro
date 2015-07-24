@@ -76,6 +76,7 @@ function migrate(account, cb) {
             });
         }
     ], function (err) {
+        console.log(err);
         cb(err);
     });
 }

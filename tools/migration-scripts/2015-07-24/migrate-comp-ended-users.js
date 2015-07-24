@@ -95,6 +95,9 @@ function migrate(account, cb) {
             });
         }
     ], function (err) {
+        if (err) {
+            console.log(err);
+        }
         cb(err);
     });
 }
