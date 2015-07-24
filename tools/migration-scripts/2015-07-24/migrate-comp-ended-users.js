@@ -66,6 +66,7 @@ function migrate(account, cb) {
             account.primaryUser.save(function (err) {
                 if (err) {
                     console.log('Error saving user ' + email);
+                    callback(err);
                 } else {
                     account.save(function (err) {
                         if (err) {
