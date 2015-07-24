@@ -61,6 +61,7 @@ function migrate(account, cb) {
             account.type = 'free';
             account.primaryUser.status = 'active';
             account.primaryUser.oldInactiveUser = 200;
+            account.complimentaryCode = undefined;
             account.primaryUser.save(function (err) {
                 if (err) {
                     console.log('Error saving user ' + email);
