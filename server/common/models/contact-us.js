@@ -12,7 +12,6 @@ var ContactUs = new Schema({
     details: {type: String, required: true},
     createdAt: {type: Date, required: true},
     deleted: Boolean
-
 }, {collection: 'ContactUs'});
 
 mongoose.model('ContactUs', ContactUs);

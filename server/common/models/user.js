@@ -18,7 +18,6 @@ var User = new Schema({
         },
         required: true
     },
-    activated: Boolean,
     oldInactiveUser: Number,
     status: {type: String, required: true},
     createdAt: {type: Date, required: true},
@@ -32,22 +31,7 @@ var User = new Schema({
     resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
-        defaultLanguage: {type: String, required: true, lowercase: true},
-        favoriteChannels: [{type: Schema.Types.ObjectId, ref: 'Channel'}],
-        defaultChannel: {type: Schema.Types.ObjectId, ref: 'Channel'},
-        timezone: String
-    },
-    profile: {
-        age: Number,
-        sex: String,
-        address: {
-            address1: String,
-            address2: String,
-            city: String,
-            state: String,
-            country: String,
-            zip: String
-        }
+        defaultLanguage: {type: String, required: true, lowercase: true}
     }
 }, {collection: 'Users'});
 

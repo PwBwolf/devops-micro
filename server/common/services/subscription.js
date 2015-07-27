@@ -1134,7 +1134,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
+                        logger.logError('subscription - endPremiumChannels - error updating to free packages: ' + userObj.email);
                         errorType = 'aio-package-update';
                     }
                     callback(err, userObj);
@@ -1160,24 +1160,24 @@ module.exports = {
                     callback(err, userObj);
                 });
             }/*,
-            // send email
-            function (userObj, callback) {
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.premiumRemovedEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.premiumRemovedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('subscription - endPremiumChannels - error sending premium package ended email to ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - endPremiumChannels - premium package ended email sent to ' + mailOptions.to);
-                    }
-                    callback(null, userObj);
-                });
-            }*/
+             // send email
+             function (userObj, callback) {
+             var mailOptions = {
+             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+             to: userObj.email,
+             subject: config.premiumRemovedEmailSubject[userObj.preferences.defaultLanguage],
+             html: sf(config.premiumRemovedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+             };
+             email.sendEmail(mailOptions, function (err) {
+             if (err) {
+             logger.logError('subscription - endPremiumChannels - error sending premium package ended email to ' + mailOptions.to);
+             logger.logError(err);
+             } else {
+             logger.logInfo('subscription - endPremiumChannels - premium package ended email sent to ' + mailOptions.to);
+             }
+             callback(null, userObj);
+             });
+             }*/
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
@@ -1420,6 +1420,171 @@ module.exports = {
                     }
                 });
                 callback(null, userObj);
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'aio-package-update':
+                        revertAccountChangesForCancel(userObj, currentValues);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-package-remove':
+                        updateAioPackages(userObj.email, config.aioPaidUserPackages);
+                        revertAccountChangesForCancel(userObj, currentValues);
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    dunning5Days: function (userEmail, cb) {
+        var errorType;
+        async.waterfall([
+            // get user
+            function (callback) {
+                User.findOne({email: userEmail}, function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - dunning5Days - error fetching user: ' + userEmail);
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // update to free packages in aio
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aioDunning5DayPackages, function (err) {
+                    if (err) {
+                        logger.logError('subscription - dunning5Days - error updating to free packages: ' + userObj.email);
+                        errorType = 'aio-package-update';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - dunning5Days - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel premium package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
+                    if (err) {
+                        logger.logError('subscription - dunning5Days - error removing premium package: ' + userObj.email);
+                        errorType = 'freeside-package-remove';
+                    }
+                    callback(err, userObj);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-login':
+                    case 'freeside-package-remove':
+                        updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    dunning10Days: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            // set user status to 'active' and type to 'free' and set canceledDate to current date
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.status === 'failed') {
+                        callback('NonActiveUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        currentValues = {
+                            cancelDate: userObj.cancelDate,
+                            cancelOn: userObj.cancelOn,
+                            type: userObj.account.type,
+                            billingDate: userObj.account.billingDate
+                        };
+                        userObj.account.billingDate = undefined;
+                        userObj.account.type = 'free';
+                        userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            // update to free packages in aio
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
+                        errorType = 'aio-package-update';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // modify billing address
+            function (userObj, sessionId, callback) {
+                billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel paid basic and premium package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
+                        errorType = 'freeside-package-remove';
+                    }
+                    callback(err, userObj);
+                });
             }
         ], function (err, userObj) {
             if (err) {

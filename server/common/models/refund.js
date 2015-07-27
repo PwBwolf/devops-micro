@@ -15,6 +15,6 @@ var Refund = new Schema({
     amount: Number,
     currency: String,
     payload: Object
-}, { collection: 'Refunds' });
+}, {collection: 'Refunds'});
 
 mongoose.model('Refund', Refund);

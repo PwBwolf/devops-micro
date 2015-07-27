@@ -196,12 +196,6 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/leadership',
-            {
-                templateUrl: 'views/leadership.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/contact-us',
             {
                 templateUrl: 'views/contact-us.html',

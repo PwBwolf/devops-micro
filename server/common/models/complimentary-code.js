@@ -16,7 +16,6 @@ var ComplimentaryCode = new Schema({
     duration: {type: Number, required: true},
     maximumAccounts: {type: Number, required: true},
     accountCount: {type: Number, required: true}
-
 }, {collection: 'ComplimentaryCodes'});
 
 mongoose.model('ComplimentaryCode', ComplimentaryCode);

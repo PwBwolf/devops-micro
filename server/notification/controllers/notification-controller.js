@@ -6,35 +6,35 @@ var mongoose = require('mongoose'),
     config = require('../../common/setup/config'),
     billing = require('../../common/services/billing'),
     db = mongoose.createConnection(config.db),
-    User = db.model('User'),
-    Notification = db.model('Notification'),
+    NotificationClient = db.model('NotificationClient'),
+    NotificationLog = db.model('NotificationLog'),
     monq = require('monq'),
-    queueDb = monq(config.merchantDb),
-    queue = queueDb.queue('api-requests');
+    queueDb = monq(config.db),
+    queue = queueDb.queue('notification-api-requests');
 
 module.exports = {
 
     executeDunning: function (req, res) {
-        var apiLog = new ApiLog();
-        apiLog.name = 'make-payment';
-        apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
-        apiLog.apiKey = req.query.apiKey;
-        apiLog.body = req.body;
+        var log = new NotificationLog();
+        log.name = 'execute-dunning';
+        log.requestTime = (new Date()).toUTCString();
+        log.notificationClientId = req.query.clientId;
+        log.apiKey = req.query.apiKey;
+        log.body = req.body;
         try {
-            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+            validateCredentials(req.query.clientId, req.query.apiKey, function (err, result) {
                 if (err) {
-                    logger.logError('merchantController - makePayment - error validating credentials');
+                    logger.logError('notificationController - executeDunning - error validating credentials');
                     logger.logError(err);
                     return res.status(200).send({error: 'server-error'});
                 }
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                req.body.merchantId = req.query.merchantId;
-                queue.enqueue('makePayment', req.body, function (err) {
+                req.body.clientId = req.query.clientId;
+                queue.enqueue('executeDunning', req.body, function (err) {
                     if (err) {
-                        logger.logError('merchantController - makePayment - error adding job to queue');
+                        logger.logError('notificationController - executeDunning - error adding job to queue');
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     } else {
@@ -43,14 +43,14 @@ module.exports = {
                 });
             });
         } catch (ex) {
-            logger.logError('merchantController - makePayment - exception');
+            logger.logError('notificationController - executeDunning - exception');
             logger.logError(ex);
             return res.status(200).send({error: 'server-error'});
         } finally {
-            apiLog.responseTime = (new Date()).toUTCString();
-            apiLog.save(function (err) {
+            log.responseTime = (new Date()).toUTCString();
+            log.save(function (err) {
                 if (err) {
-                    logger.logError('merchantController - makePayment - error saving api log');
+                    logger.logError('notificationController - executeDunning - error saving notification log');
                     logger.logError(err);
                 }
             });
@@ -58,18 +58,18 @@ module.exports = {
     }
 };
 
-function validateCredentials(merchantId, apiKey, cb) {
-    if (merchantId && apiKey) {
-        if (!(/^[0-9a-fA-F]{24}$/.test(merchantId))) {
+function validateCredentials(clientId, apiKey, cb) {
+    if (clientId && apiKey) {
+        if (!(/^[0-9a-fA-F]{24}$/.test(clientId))) {
             cb(null, false);
         } else {
-            Merchant.findOne({_id: merchantId}, function (err, merchant) {
+            NotificationClient.findOne({_id: clientId}, function (err, client) {
                 if (err) {
-                    logger.logError('merchantController - validateCredentials - error fetching merchant: ' + merchantId);
+                    logger.logError('notificationController - validateCredentials - error fetching notification client: ' + clientId);
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (merchant && merchant.apiKey === apiKey));
+                    cb(null, (client && client.apiKey === apiKey));
                 }
             });
         }

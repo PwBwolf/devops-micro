@@ -9,6 +9,6 @@ var Visitor = new Schema({
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
     createdAt: {type: Date, required: true},
     updatedAt: Date
-}, { collection: 'Visitors' });
+}, {collection: 'Visitors'});
 
 mongoose.model('Visitor', Visitor);

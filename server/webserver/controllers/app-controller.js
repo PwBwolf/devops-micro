@@ -22,7 +22,6 @@ module.exports = {
             appName: config.appName,
             environment: process.env.NODE_ENV,
             url: config.url,
-            homeUrl: config.homeUrl,
             aioPortalUrl: config.aioPortalUrl,
             cmsUrl: config.cmsUrl,
             customerCareNumber: config.customerCareNumber

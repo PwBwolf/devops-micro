@@ -25,7 +25,6 @@
         .ng-hide {
             display: none !important;
         }
-
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
         }
@@ -44,29 +43,25 @@
 </head>
 <body>
 <!--[if lt IE 9]>
-<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
+<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <header id="desktopHeader">
     <div id="brand">
         <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
 
-        <div id="language" class="menu-button"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
+        <div id="language" class="menu-button"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a></div>
         <div class="menu-button">
-            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN">Sign In</a>
-            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT">Sign Out</a>
+            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
+            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
         </div>
-        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM">FAQ</a></div>
-        <div class="contact-number" translate="INDEX_CONTACT_NUMBER">Call us toll free: <a href="tel:+18559194788">855-919-4788</a></div>
+        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a></div>
+        <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
     </div>
     <nav id="navBar">
         <div id="menu">
             <div id="menuItems">
                 <div style="display:none"><img src="images/mini-logo.png"></div>
-                <menuItem id="top" bookmark style="display:none">Top ^</menuItem>
-                <menuItem id="shows" bookmark home-only access-level="accessLevels.anon" translate="INDEX_SHOWS_BY_CATEGORY"></menuItem>
-                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_NETWORKS')" translate="INDEX_NETWORKS"></a></menuItem>
-                <menuItem home-only access-level="accessLevels.anon"><a href="#" ng-click="goToCmsUrl('CMS_URL_ABOUT_US')" translate="INDEX_ABOUT_US"></a></menuItem>
+                <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
                 <menuItem home-only id="joinNow" access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
@@ -95,9 +90,6 @@
                     <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href ng-click="goToCmsUrl('CMS_URL_NETWORKS')" access-level="accessLevels.anon" translate="INDEX_NETWORKS"></a>
-                        </li>
-                        <li>
                             <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
                             <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
                         </li>
@@ -116,9 +108,11 @@
 <div id="topBox" ng-view autoscroll="true"></div>
 
 <footer class="top-shadow">
-    <div id="wpdata" data-ng-show="false"><a href="#" data-ng-click="wpData()">here</a><br/><br/></div>
     <div translate="INDEX_COPYRIGHT"></div>
-    <div id="socialMedia" translate="FOOTER_SOCIAL_MEDIA"></div>
+    <div id="socialMedia">
+        <a target="_blank" href="https://www.facebook.com/pages/Yiptv/670093559720356?fref=ts"><img src="images/facebook.png" alt=""/></a>
+        <a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>
+    </div>
 </footer>
 
 <!--[if lt IE 9]>
@@ -162,9 +156,7 @@
 <script src="scripts/directives/password-strength.js"></script>
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
-<script src="scripts/directives/bootstrap-carousel.js"></script>
 <script src="scripts/directives/goto.js"></script>
-<script src="scripts/directives/banner-resize.js"></script>
 <script src="scripts/directives/home-only.js"></script>
 <script src="scripts/directives/bookmark.js"></script>
 <script src="scripts/translate/en.js"></script>
@@ -175,11 +167,8 @@
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/browser-service.js"></script>
-<script src="scripts/services/shows-service.js"></script>
-<script src="scripts/services/footer-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
-<script src="scripts/controllers/shows-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
 <script src="scripts/controllers/idt-sign-up-controller.js"></script>

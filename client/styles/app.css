@@ -145,29 +145,9 @@ input[type="radio"]:checked + label:before {
     margin: 10px 5px;
 }
 
-
 .app-link {
-    display:block;
+    display: block;
     margin: 0 auto 5px;
-}
-
-.banner {
-    float: left;
-    width: 100%;
-    position: relative;
-    background: #fff;
-}
-
-.banner .banner-wrap {
-    position: relative;
-    margin: 0 auto;
-    width: 1350px;
-}
-
-.banner img {
-    float: left;
-    width: 100%;
-    z-index: 9;
 }
 
 #accountBox {
@@ -178,16 +158,6 @@ input[type="radio"]:checked + label:before {
 #userHomeBox {
     position: relative;
     margin: 0 auto;
-}
-
-#footerJoinButton {
-    color: black !important;
-    font-weight: normal !important;
-}
-
-#footerTrialButton {
-    color: white !important;
-    font-weight: normal !important;
 }
 
 .toast-error {
@@ -267,65 +237,8 @@ input[type="radio"]:checked + label:before {
     font-size: 12px;
 }
 
-.carousel-fade .carousel-inner .item {
-    opacity: 0;
-    -webkit-transition-property: opacity;
-    -moz-transition-property: opacity;
-    -o-transition-property: opacity;
-    transition-property: opacity;
-}
-
-.carousel-fade .carousel-inner .active {
-    opacity: 1 !important;
-}
-
-.carousel-fade .carousel-inner .active.left,
-.carousel-fade .carousel-inner .active.right {
-    left: 0;
-    opacity: 0;
-    z-index: 1;
-}
-
-.carousel-fade .carousel-inner .next.left,
-.carousel-fade .carousel-inner .prev.right {
-    opacity: 1;
-}
-
-.carousel-fade .carousel-control {
-    z-index: 2;
-}
-
-#carouselBanner .carousel-indicators {
-    bottom: -30px;
-    left: 0;
-    width: 100%;
-    margin: 0px;
-    text-align: center;
-    z-index: 9999;
-}
-
-#carouselBanner .carousel-indicators li {
-    width: 12px;
-    height: 12px;
-    margin: 0px 3px;
-    background-color: #121826;
-    border: 1px solid #ffffff;
-    border-radius: 12px;
-}
-
-#carouselBanner .carousel-indicators .active {
-    width: 12px;
-    height: 12px;
-    margin: 0px 3px;
-    background-color: #aaa;
-}
-
 .numbered-list li {
     list-style-type: decimal !important;
-}
-
-.carousel li {
-    margin-right: 0;
 }
 
 .bolder-text {
@@ -546,25 +459,6 @@ a.import-button:hover {
     padding-left: 20px;
 }
 
-.leadership-name {
-    color: #A03269;
-    font-size: 19px;
-    font-weight: bold;
-}
-
-.leadership-description {
-    color: #000;
-    font-size: 16px;
-    min-height: 160px;
-}
-
-.leadership-image {
-    float: left;
-    padding: 0 10px 5px 0;
-    width: 160px;
-    height: 160px;
-}
-
 .paragraph-area {
     margin-top: 60px;
 }
@@ -574,45 +468,7 @@ a.import-button:hover {
     font-size: 16px;
 }
 
-.about-us-header {
-    color: #A03269;
-    font-weight: bold;
-}
-
-.press-release {
-    margin-top: 60px;
-}
-
-.press-release-title {
-    color: #000;
-    font-weight: bold;
-    text-align: center;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.press-release-sub-title {
-    color: #000;
-    text-align: center;
-    font-style: italic;
-}
-
 .numbered-header {
-    color: #A03269;
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.paragraph-header {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.tous-sub-header {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.tous-main-header {
     color: #A03269;
     font-weight: bold;
     font-family: 'gotham-bookgotham-book';
@@ -716,7 +572,7 @@ ul.passwordStrength {
     font-family: 'gotham-bookgotham-book';
     font-size: 14px;
     padding-left: 0;
-    font-style:italic;
+    font-style: italic;
 }
 
 .sign-up-message {
@@ -754,20 +610,6 @@ ul.passwordStrength {
     float: left;
     width: 100%;
     padding: 0px 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.two-third-form {
-    float: left;
-    width: 65%;
-    padding: 5% 0% 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.one-third-form {
-    float: left;
-    width: 33%;
-    padding: 5% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
@@ -849,9 +691,6 @@ ul.passwordStrength {
 }
 
 @media screen and (max-width: 1350px) {
-    .banner .banner-wrap {
-        width: 100%;
-    }
 
     .user-home-wrap {
         width: 100%;
@@ -937,11 +776,7 @@ ul.passwordStrength {
 
 @media screen and (max-width: 479px) {
 
-    .banner {
-        overflow: hidden;
-    }
-
-    .two-third-form, .one-third-form, .half-form {
+    .half-form {
         width: 100%;
     }
 
