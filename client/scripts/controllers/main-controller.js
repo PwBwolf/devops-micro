@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'footerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, footerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -16,24 +16,11 @@
             getAppConfig();
             loadLanguage();
             configSeo();
-            loadFooter();
         }
 
         $rootScope.$on('ChangeLanguage', function (event, language) {
             changeLanguage(language);
         });
-
-        function loadFooter() {
-            $scope.sportsCategory = footerSvc.getSports();
-            $scope.kidsCategory = footerSvc.getKids();
-            $scope.generalCategory = footerSvc.getGeneral();
-            $scope.newsCategory = footerSvc.getNews();
-            $scope.musicCategory = footerSvc.getMusic();
-            $scope.educationCategory = footerSvc.getEducation();
-            $scope.lifestyleCategory = footerSvc.getLifestyle();
-            $scope.faithCategory = footerSvc.getFaith();
-            $scope.entertainmentCategory = footerSvc.getEntertainment();
-        }
 
         function changeLanguage(language) {
             $translate.use(language);
@@ -67,7 +54,7 @@
         });
 
         $scope.goToCmsUrl = function (urlName) {
-            $window.location = $scope.appConfig.cmsUrl + $filter('translate')(urlName);
+            $window.open($scope.appConfig.cmsUrl + $filter('translate')(urlName), '_blank');
         };
 
         $scope.changeLanguage = function () {

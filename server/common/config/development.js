@@ -14,7 +14,6 @@ module.exports = {
     db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
     merchantDb: 'mongodb://yipUser:y1ptd3v@localhost/merchant',
     url: 'http://localhost:3000/',
-    homeUrl: 'http://localhost:3000/',
     imageUrl: 'http://localhost:3000/images/',
     secretToken: 'yip#tv@dev#712',
     ruleEngineRecurrence: '0 * * * * *',
@@ -40,5 +39,6 @@ module.exports = {
     aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}],
     aioFreeUserPackages: [{'packageid': 1}, {'packageid': 76}],
     aioPaidUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
-    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}]
+    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
+    aioDunning5DayPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 75}]
 };

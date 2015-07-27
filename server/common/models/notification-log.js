@@ -3,14 +3,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ApiLog = new Schema({
+var NotificationLog = new Schema({
     name: String,
     requestTime: Date,
     responseTime: Date,
-    merchantId: String,
+    notificationClientId: String,
     apiKey: String,
     params: Object,
     body: Object
-}, {collection: 'ApiLogs'});
+}, { collection: 'NotificationLogs' });
 
-mongoose.model('ApiLog', ApiLog);
+mongoose.model('NotificationLog', NotificationLog);

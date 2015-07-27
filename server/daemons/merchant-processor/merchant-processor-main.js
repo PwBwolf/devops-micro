@@ -180,7 +180,7 @@ worker.register({
 });
 
 worker.start();
-logger.logInfo('merchantProcessor - merchant processor daemon has started');
+logger.logInfo('merchantProcessorMain - merchant processor daemon has started');
 
 function makePaymentInputValidation(params, cb) {
     var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
@@ -217,10 +217,8 @@ function savePayment(params, isSuccess, reason, cb) {
         if (err) {
             logger.logError('merchantProcessorMain - savePayment - error saving Payment');
             logger.logError(err);
-            cb(err);
-        } else {
-            cb(null);
         }
+        cb(err);
     });
 }
 
@@ -259,10 +257,8 @@ function saveRefund(params, isSuccess, reason, cb) {
         if (err) {
             logger.logError('merchantProcessorMain - saveRefund - error saving Refund');
             logger.logError(err);
-            cb(err);
-        } else {
-            cb(null);
         }
+        cb(err);
     });
 }
 
@@ -302,7 +298,7 @@ function updateAccountForPayment(email, accountId, merchantId, cb) {
                             if (!account.firstMerchantPaymentDate && firstMerchantPaymentDate) {
                                 account.firstMerchantPaymentDate = firstMerchantPaymentDate;
                             }
-                            if(!account.billingDate) {
+                            if (!account.billingDate) {
                                 account.billingDate = (new Date()).toUTCString();
                             }
                             account.save(function (err) {

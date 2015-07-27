@@ -15,6 +15,6 @@ var Payment = new Schema({
     amount: Number,
     currency: String,
     payload: Object
-}, { collection: 'Payments' });
+}, {collection: 'Payments'});
 
 mongoose.model('Payment', Payment);
