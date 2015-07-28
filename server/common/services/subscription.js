@@ -1512,7 +1512,7 @@ module.exports = {
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
+                        logger.logError('subscription - dunning10Days - error fetching user: ' + userEmail);
                         callback(err);
                     } else if (userObj.status === 'failed') {
                         callback('NonActiveUser');
@@ -1531,12 +1531,12 @@ module.exports = {
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
                             if (err) {
-                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
+                                logger.logError('subscription - dunning10Days - error saving user with canceled status: ' + userObj.email);
                                 callback(err);
                             } else {
                                 userObj.account.save(function (err) {
                                     if (err) {
-                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
+                                        logger.logError('subscription - dunning10Days - error updating account: ' + userObj.email);
                                         errorType = 'db-account-update';
                                     }
                                     callback(err, userObj);
@@ -1550,7 +1550,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error updating to free packages: ' + userObj.email);
+                        logger.logError('subscription - dunning10Days - error updating to free packages: ' + userObj.email);
                         errorType = 'aio-package-update';
                     }
                     callback(err, userObj);
@@ -1560,7 +1560,7 @@ module.exports = {
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                        logger.logError('subscription - dunning10Days - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
                     }
                     callback(err, userObj, sessionId);
@@ -1570,7 +1570,7 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
+                        logger.logError('subscription - dunning10Days - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
                     }
                     callback(err, userObj, sessionId);
@@ -1580,7 +1580,7 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
+                        logger.logError('subscription - dunning10Days - error removing active package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
