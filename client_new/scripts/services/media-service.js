@@ -11,6 +11,16 @@
                     params: {channelId: channelId}
                 });
             },
+            
+            getChannels: function (api_key) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/get-channels',
+                    params: {
+                        api_key: api_key,
+                    }
+                });
+            },
 
             getChannelGuide: function (stationId, name) {
                 return $http({

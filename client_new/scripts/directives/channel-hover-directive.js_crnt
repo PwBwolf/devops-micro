@@ -21,11 +21,6 @@
                 
                 el.closest('li').bind('click', function(evt) {
                     //console.log($(this).attr('class'));
-                    var target = $(this).prop("tagName").toLowerCase();
-                        target = $(target).index(this);
-                        scope.$apply(scope.getTarget(target));
-                        console.log('target: '+target);
-                    
                     if( $(scope.scrns).hasClass("scrnsMaximized" )){
                     //if(el){
                         //scope.test = "it's ";
@@ -44,10 +39,6 @@
                         //console.log($(qlBox).attr('class')+' - ailed');
                         //scope.isVisible = true;
                         $(scope.scrns).removeClass('scrnsOpen');
-                        
-                        //var target = $(this).attr('class');
-                        //var target = $(this).prop("tagName").toLowerCase();
-                        //target = $(target).index(this);
                         
                         scope.$apply(scope.showCloseBtn());
                         

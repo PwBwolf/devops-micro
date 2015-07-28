@@ -146,8 +146,7 @@
             };
             
             $scope.getTarget = function(target){
-                //$scope.channelIndex = target;
-                $scope.channelIndex = $scope.channels[target].image_url
+                $scope.channelIndex = target;
                 console.log('the target: '+$scope.channelIndex);
             };
         };
@@ -399,6 +398,7 @@
           link: function (scope, element, attrs) {
               attrs.$set('id', 'closeBtn');
               attrs.$set('class', 'closeBtn label label-danger');
+              //element.attr('isVisible', 'true');
               element.text('CLOSE');
               
               scope.closeVisible = true;
@@ -409,28 +409,66 @@
                       $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
                       $(scope.chnls).attr('class', 'usrPrefsPnl');
                       
+                      //element.attr('isVisible', 'false');
+                      //attrs.$set('isVisible', 'false');
                       scope.isVisible = false;
                       scope.closeVisible = false;
-                      scope.logoVisible = false;
 
               });
               
-          } 
+          }
         };
     })
     .directive('mylogo', function () {
         return {
             restrict: 'E',
             replace: true, 
-            template: '<div data-ng-show=logoVisible; style="background:rgba(200,200,200,0.85) url({{channelIndex}}) 50% no-repeat; background-size: contain;"></div>',
+            //scope: { listIndex: '@' },
+          //template: '<img data-ng-show=logoVisible data-ng-src="" />',
+            //template: '<div data-ng-show=logoVisible list-index=></div>',
+            template: '<div data-ng-show=logoVisible; style="background:url({{}})"></div>',
             link: function (scope, element, attrs) {
+                //scope.brandImage = scope.channelIndex;
+                scope.brandImage = scope.channels[scope.channelIndex].image_url;
+                //scope.listIndex = scope.channelIndex;
+              
                 attrs.$set('id', 'channelBrand');
                 attrs.$set('class', 'brand_logo ');
                 //attrs.$set('listIndex', scope.channelIndex);
                 console.log('current channel: '+scope.channelIndex);
                 
-                scope.logoVisible = true;
+                //scope.listIndex = scope.channelIndex;
+                /*scope.$watch("listIndex", function(){
+                    if(scope.channelIndex !== 0){
+                        scope.listIndex = scope.channelIndex;
+                        console.log('changed: '+scope.channelIndex);
+                        //scope.brandImage = scope.channels[scope.n].image_url;
+                        //console.log('n v: '+newValue+' - o v: '+oldValue);
+                    }
+                });*/
                 
+                attrs.$set('style', 'background:rgba(200,200,200,0.90) url('+scope.brandImage+') 50% no-repeat; background-size: contain;');
+              //attrs.$set('channel', ''+scope.channelIndex);
+              //attrs.$set('data-ng-src', ''+scope.brandImage);
+              //element.attr('isVisible', 'true');
+              //element.text('CLOSE');
+              
+                scope.logoVisible = true;
+              /*
+              element.bind('click', function(evt) {
+
+                      $(scope.smm).switchClass('sgstdChnls_min', 'sgstdChnls', 500, 'easeInOutQuad');
+                      $(scope.scrns).switchClass('scrnsMinimized', 'scrnsMaximized', 500, 'easeInOutQuad');
+                      $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
+                      $(scope.chnls).attr('class', 'usrPrefsPnl');
+                      
+                      //element.attr('isVisible', 'false');
+                      //attrs.$set('isVisible', 'false');
+                      scope.isVisible = false;
+                      scope.closeVisible = false;
+
+              });
+              */
             }
         };
     })

@@ -331,18 +331,22 @@ label:before{ display:none !important; }
 /* .usr_Prfl_n_Chnls li > div { /*background-color: #337AB7;/ vertical-align: top; position: relative; display:inline-block; padding:7px 5px; border-left: thin solid lightgrey; } */
 .usr_Prfl_n_Chnls li span { /*background-color: #337AB7;*/ vertical-align: top; padding: 2px; color:rgb(221,221,221); }
 
-.quickLookBox { vertical-align: top; position: relative; display:inline-block; padding:7px 5px; border-left: thin solid lightgrey; }
+.quickLookBox { vertical-align: top; width:30%; position: relative; display:inline-block; padding:7px 5px; border-left: thin solid lightgrey; }
 
 .channelSelected { background-color:rgb(153,153,153); }
 
-#smChannelDesc { line-height: 1.051;}
-#smChannelDesc p { margin-bottom: 0px !important;}
-    .smChnlDesc { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; width: 300px; height:70px; }
-    .smChnlDesc-enter, .smChnlDesc-leave { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; height:100px; }
-    .smChnlDesc-enter { width: 300px; }
-    .smChnlDesc-leave { width: 0px; }
+#smChannelDesc { line-height: 1.051; overflow:hidden; }
+#channelGuideDesc { line-height: 1.031; overflow:auto; }
+#smChannelDesc p, #channelGuideDesc p { margin-bottom: 0px !important; overflow:hidden;}
+    .smChnlDesc { position:relative; display: inline-block; vertical-align:top; font-size:0.8em; width: 100%; height:auto; }
+    .chnlDesc > div { overflow: hidden; background:cadetblue; width:35%; display: inline-block; vertical-align: top; padding:6px; }
+    .chnlDesc-enter, .chnlDesc-leave { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; height:100px; }
+    .chnlDesc-enter { width: 300px; }
+    .chnlDesc-leave { width: 0px; }
     .program-details-header, .program-details-body { font-size:60%; color: #444; font-weight: bolder; text-transform: uppercase; }
     .program-details-body { text-transform: initial; color:#eee; }
+    .channel-details-header, .channel-details-body { font-size:55%; color: #343; font-weight: bolder; text-transform: uppercase; }
+    .channel-details-body { text-transform: initial; color:#fff; }
     
 
 #welcome {

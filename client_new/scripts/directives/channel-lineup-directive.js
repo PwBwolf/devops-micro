@@ -1,11 +1,11 @@
 (function (app){
     'use strict';
 
-    app.directive('channelHover', function($log, $window){
+    app.directive('channelLineup', function($log, $window){
         return {
             restrict: 'E',
             replace: true,
-            template: '<div data-ng-bind-html=details></div>',
+            template: '<div data-ng-bind-html=dChnlLnup></div>',
             link: function(scope, el, attrs){
                 /*
                 var scrns = $window.document.getElementById('scrns');
@@ -15,17 +15,12 @@
                                 var qlBox = $window.document.getElementsByClassName('quickLookBox');*/
                 
                 
-                attrs.$set('class', 'smChnlDesc');
-                attrs.$set('id', 'smChannelDesc');
+                attrs.$set('class', 'chnlDesc');
+                attrs.$set('id', 'channelGuideDesc');
                 
                 
-                el.closest('li').bind('click', function(evt) {
+                /*el.closest('li').bind('click', function(evt) {
                     //console.log($(this).attr('class'));
-                    var target = $(this).prop("tagName").toLowerCase();
-                        target = $(target).index(this);
-                        scope.$apply(scope.getTarget(target));
-                        console.log('target: '+target);
-                    
                     if( $(scope.scrns).hasClass("scrnsMaximized" )){
                     //if(el){
                         //scope.test = "it's ";
@@ -45,17 +40,13 @@
                         //scope.isVisible = true;
                         $(scope.scrns).removeClass('scrnsOpen');
                         
-                        //var target = $(this).attr('class');
-                        //var target = $(this).prop("tagName").toLowerCase();
-                        //target = $(target).index(this);
-                        
                         scope.$apply(scope.showCloseBtn());
                         
                     } else {
                         console.log('screen\'s already open');
                     }
                     
-                });
+                });*/
                 
                 
                 //attrs.$set('channel-expander', '');

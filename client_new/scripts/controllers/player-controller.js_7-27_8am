@@ -57,21 +57,18 @@
 			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
             $scope.isVisible = false;
             $scope.closeVisible = false;
-            $scope.logoVisible = false;
             $scope.loadingChannels = true;
             $scope.loadingStations = true;
             
             //$scope.imgURL = "http://yipt.tmsimg.com/";
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
-                
                 if ($scope.channels && $scope.channels.length > 0) {
+                    
                     $scope.chnlClicked = function (index) {
                         $scope.selectedChnl = index;
                         $scope.selectChannel(index);
                         $scope.prvwPnl(index);
-                        //$scope.brandImage = $scope.channels[index].image_url;
-                        //console.log('brand: '+$scope.brandImage);
                         $scope.isVisible = true; 
 
                     };
@@ -99,7 +96,7 @@
             //});
             
             //for (var p in $scope.stations){
-            //angular.forEach($scope.stations, function() {
+            //angular.forEach($scope.stations, function(value, key) {
                 //console.log('amt: '+ $scope.stations[p].id);
                 
                 mediaSvc.getChannelGuide($scope.stations[0].id, $scope.stations[0].name).success(function (channelView) {
@@ -117,38 +114,26 @@
                     loggerSvc.logError('Error loading channel guide.');
                 });
                 
-                //});
+                //};
             
             
-            //$scope.showCloseBtn = function(evt, attrs){
-            $scope.showCloseBtn = function(){
+            $scope.showCloseBtn = function(ev,attrs){
                 /* $on('insertItem',function(ev,attrs){ */
-                    //console.log('itis: '+evt.target.id);
-                    
                     if(angular.element('#closeBtn').length){
                         console.log('button already exists');
                         $scope.closeVisible = true;
-                        $scope.logoVisible = true;
                     } else {
-                        var prvwPnl = angular.element('#chnlMenuHldr');
-                        var closethispanel = angular.element(document.createElement('closepnl')), 
-                            channelIdent = angular.element(document.createElement('mylogo'));
-                        var el = $compile( channelIdent )( $scope ), el1 = $compile( closethispanel )( $scope );
-                        
-                        
+                        var prevPnl = angular.element('#chnlMenuHldr');
+                        var closethispanel = angular.element(document.createElement('closepnl'));
+                        var el = $compile( closethispanel )( $scope );
+
                           //where do you want to place the new element?
-                        angular.element(prvwPnl).append(closethispanel).append(channelIdent);
-                        console.log('close appended');
+                        angular.element(prevPnl).append(closethispanel);
+                        console.log('close clicked');
                     }
                 
-                    //$scope.channelIndex = target;
+
                   //$scope.insertHere = el;
-            };
-            
-            $scope.getTarget = function(target){
-                //$scope.channelIndex = target;
-                $scope.channelIndex = $scope.channels[target].image_url
-                console.log('the target: '+$scope.channelIndex);
             };
         };
        
@@ -202,20 +187,12 @@
         };
         
         $scope.prvwPnl = function(index){
-            
-            //var thisBrandImage = angular.element('#channelBrand').attr('class');
-            // var thisBrandImage = angular.element('#channelBrand');
-//                 $scope.$watch( $(thisBrandImage).attr('class'), function(evt){
-//                     this.$on('change', )
-//                 })
-//
-            //console.log('brand: '+thisBrandImage);
-            var thisPreviewPnl = $window.document.getElementById('channelPreviewPanel').getElementsByTagName('div')[0];
+            var thisPreviewPnl = $window.document.getElementById('channelPreviewPanel').getElementsByTagName('div')[0];   ///('div:first');
                 $(thisPreviewPnl).bind('click', function(evt){
                     $scope.playChannel(index);
                     console.log('done');
                 });
-                //console.log('prvw html: '+$(thisPreviewPnl).html());   ///closest('div').html());
+                console.log('it: '+$(thisPreviewPnl).html());   ///closest('div').html());
         };
         
         $scope.playChannel = function (index, airing) {
@@ -230,7 +207,7 @@
                     $scope.channelNumber = $scope.channels[index].number;
                     $scope.channelName = $scope.channels[index].name;
                     
-                    //$scope.programDetails = $scope.getProgramDetails;
+                    $scope.programDetails = $scope.getProgramDetails;
 					//console.log('p d: '+$scope.programDetails);
                     
                     playStream();
@@ -382,7 +359,7 @@
             }
             
             if(!chnl.program.shortDescription) {
-                ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Description: </span><span class="channel-details-body">Not Available</span></p></div>';
+                ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Description: </span><span class="channel-details-body">Not Available</span></p>';
                 } else {
                     ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Description: </span><span class="channel-details-body">' + chnl.program.shortDescription + '</span></p></div>';
             }
@@ -399,6 +376,7 @@
           link: function (scope, element, attrs) {
               attrs.$set('id', 'closeBtn');
               attrs.$set('class', 'closeBtn label label-danger');
+              //element.attr('isVisible', 'true');
               element.text('CLOSE');
               
               scope.closeVisible = true;
@@ -409,30 +387,15 @@
                       $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
                       $(scope.chnls).attr('class', 'usrPrefsPnl');
                       
+                      //element.attr('isVisible', 'false');
+                      //attrs.$set('isVisible', 'false');
                       scope.isVisible = false;
                       scope.closeVisible = false;
-                      scope.logoVisible = false;
 
               });
               
-          } 
+          }
         };
-    })
-    .directive('mylogo', function () {
-        return {
-            restrict: 'E',
-            replace: true, 
-            template: '<div data-ng-show=logoVisible; style="background:rgba(200,200,200,0.85) url({{channelIndex}}) 50% no-repeat; background-size: contain;"></div>',
-            link: function (scope, element, attrs) {
-                attrs.$set('id', 'channelBrand');
-                attrs.$set('class', 'brand_logo ');
-                //attrs.$set('listIndex', scope.channelIndex);
-                console.log('current channel: '+scope.channelIndex);
-                
-                scope.logoVisible = true;
-                
-            }
-        };
-    })
+    });
 
 }(angular.module('app')));
