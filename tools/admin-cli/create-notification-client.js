@@ -67,7 +67,7 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        NotificationClient.findOne({email: result.email}, function (err, client) {
+        NotificationClient.findOne({email: result.email.toLowerCase()}, function (err, client) {
             if (err) {
                 logger.logError('adminCLI - createNotificationClient - error in checking if email exists');
                 logger.logError(err);
