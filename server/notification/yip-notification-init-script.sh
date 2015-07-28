@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-merchant
+# service yip-notification
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
