@@ -68,7 +68,7 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        MerchantYip.findOne({email: result.email}, function (err, mer) {
+        MerchantYip.findOne({email: result.email.toLowerCase()}, function (err, mer) {
             if (err) {
                 logger.logError('adminCLI - createMerchant - error in checking if email exists');
                 logger.logError(err);
