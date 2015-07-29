@@ -28,14 +28,16 @@ worker.register({
                     logger.logError('notificationProcessorMain - executeDunning - validation error');
                     logger.logError(err);
                     saveDunning(params, 'failure', err, function () {
-                        callback(err);
+                        callback(new Error(err));
                     });
                 } else {
                     User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('notificationProcessorMain - executeDunning - error fetching user: ' + params.username);
-                            logger.logError(err);
-                            callback(err);
+                            logger.logError(new Error(err));
+                            saveDunning(params, 'failure', err, function () {
+                                callback(new Error(err));
+                            });
                         } else if (!dbUser) {
                             saveDunning(params, 'failure', 'username-not-found', function () {
                                 callback(new Error('username-not-found'));
@@ -51,7 +53,7 @@ worker.register({
                         } else {
                             switch (params.days) {
                                 case 5:
-                                    subscription.dunning5Days(params.username, function (err) {
+                                    subscription.dunning5Days(params.username.toLowerCase(), function (err) {
                                         if (err) {
                                             logger.logError('notificationProcessorMain - executeDunning - error executing dunning 5 days: ' + params.username);
                                             logger.logError(err);
@@ -66,7 +68,7 @@ worker.register({
                                     });
                                     break;
                                 case 10:
-                                    subscription.dunning10Days(params.username, function (err) {
+                                    subscription.dunning10Days(params.username.toLowerCase(), function (err) {
                                         if (err) {
                                             logger.logError('notificationProcessorMain - executeDunning - error executing dunning 10 days: ' + params.username);
                                             logger.logError(err);
