@@ -2055,7 +2055,7 @@ function updateAioPackages(email, packages, cb) {
 function updateFreeSideBilling(sessionId, address, city, state, zip, county, payBy, payInfo, payDate, payCvv, payName, cb) {
     billing.updateBilling(sessionId, address, city, state, zip, county, payBy, payInfo, payDate, payCvv, payName, function (err) {
         if (err) {
-            logger.logError('subscription - updateFreeSideBilling - error updating freeside billing:' + email);
+            logger.logError('subscription - updateFreeSideBilling - error updating freeside billing');
             logger.logError(err);
         }
         if (cb) {
