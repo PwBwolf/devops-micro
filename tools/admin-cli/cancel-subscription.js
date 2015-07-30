@@ -59,7 +59,9 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                 }, 3000);
             } else {
                 logger.logInfo('adminCLI - cancelSubscription - user subscription canceled');
-                process.exit(0);
+                setTimeout(function () {
+                    process.exit(0);
+                }, 10000);
             }
         });
     }
