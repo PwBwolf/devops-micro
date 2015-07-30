@@ -551,7 +551,7 @@ module.exports = {
                         } else if (userObj.account.type === 'paid') {
                             callback('PaidUser');
                         } else if (userObj.account.type === 'comp') {
-                            callback('ActiveCompUser');
+                            callback('ComplimentaryUser');
                         } else {
                             currentValues = {
                                 type: userObj.account.type,
@@ -810,7 +810,7 @@ module.exports = {
                                 } else if (userObj.account.type === 'paid') {
                                     callback('ActivePaidUser');
                                 } else if (userObj.account.type === 'comp') {
-                                    callback('ActiveCompUser');
+                                    callback('ComplimentaryUser');
                                 } else {
                                     currentValues = {
                                         cancelDate: userObj.cancelDate,
