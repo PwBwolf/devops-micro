@@ -568,7 +568,7 @@ module.exports = {
                         logger.logError('subscription - endPaidSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else if (userObj.status === 'failed') {
-                        callback('NonActiveUser');
+                        callback('FailedUser');
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
                     } else {

@@ -1026,7 +1026,7 @@ module.exports = {
                         logger.logError('subscription - cancelSubscription - user not found: ' + userEmail);
                         callback('UserNotFound');
                     } else if (userObj.status === 'failed') {
-                        callback('NonActiveUser');
+                        callback('FailedUser');
                     } else if (userObj.account.type === 'free' || userObj.account.type === 'comp') {
                         callback('NonPaidUser');
                     } else {
@@ -1340,7 +1340,7 @@ module.exports = {
                         logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else if (userObj.status === 'failed') {
-                        callback('NonActiveUser');
+                        callback('FailedUser');
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
                     } else {
@@ -1515,7 +1515,7 @@ module.exports = {
                         logger.logError('subscription - dunning10Days - error fetching user: ' + userEmail);
                         callback(err);
                     } else if (userObj.status === 'failed') {
-                        callback('NonActiveUser');
+                        callback('FailedUser');
                     } else if (userObj.account.type === 'free') {
                         callback('FreeUser');
                     } else {
