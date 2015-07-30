@@ -658,6 +658,7 @@
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_BULLET2: 'Click on the <span class="bolder-text">Upgrade to Premium Membership</span> button an re-submit your Credit card information',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART1: 'If you prefer, call Customer Care at:',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART2: 'and we will be happy to assist you.',
+            truconnectSIGN_UP_SUB_HEADING: "Truconnect's My YipTV Premium Membership",
             UNDER_CONSTRUCTION_HEADING: 'Under Construction',
             UNDER_CONSTRUCTION_MESSAGE: 'The page you are looking is under construction and will be available shortly',
             UPGRADE_SUBSCRIPTION_HEADING: 'Upgrade to Premium Membership',

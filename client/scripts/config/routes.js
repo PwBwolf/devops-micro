@@ -40,6 +40,22 @@
                 controller: 'idtSignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up/:source',
+            {
+                title: 'Custom sign Up page',
+                description: "Custom description's are here",
+                keywords: 'Custom keyword',
+                templateUrl: function(params){ 
+                				var partners = ["truconnect"]
+                				if( partners.indexOf(params.source) > -1 )
+                				{
+                					return 'views/' + params.source + '-sign-up.html';
+                				}else
+                					redirectTo: '/not-found';
+                			},
+                controller: 'genericSignUpCtrl',
+                access: access.anon
+            })
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
@@ -296,5 +312,14 @@
                 }
             }
         });
+        
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.title = current.$$route.title;
+            $rootScope.description = current.$$route.description;
+            $rootScope.keywords = current.$$route.keywords;
+            $rootScope.source = current.params.source || "";
+            console.log('onroutechangesucces', $rootScope, $route, $location, current);
+        });
+        
     }]);
 }(angular.module('app')));

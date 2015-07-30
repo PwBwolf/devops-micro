@@ -18,6 +18,7 @@ var User = new Schema({
         },
         required: true
     },
+    source: {type: String, default:'web'},
     activated: Boolean,
     oldInactiveUser: Number,
     status: {type: String, required: true},
