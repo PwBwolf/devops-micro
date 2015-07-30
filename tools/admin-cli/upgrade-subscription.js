@@ -14,6 +14,7 @@ var modelsPath = config.root + '/server/common/models',
 
 require('../../server/common/setup/models')(modelsPath);
 var subscription = require('../../server/common/services/subscription');
+var User = db.model('User');
 
 var schema = {
     properties: {
@@ -23,6 +24,24 @@ var schema = {
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
+                User.findOne({email: value.toLowerCase()}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('adminCLI - upgradeSubscription - error fetching user: ' + value.toLowerCase());
+                        process.exit(1);
+                    } else if (!userObj) {
+                        logger.logError('adminCLI - upgradeSubscription - user not found: ' + value.toLowerCase());
+                        process.exit(1);
+                    } else if (userObj.status === 'failed') {
+                        logger.logError('adminCLI - upgradeSubscription - failed user: ' + value.toLowerCase());
+                        process.exit(1);
+                    } else if (userObj.account.type === 'paid') {
+                        logger.logError('adminCLI - upgradeSubscription - paid user: ' + value.toLowerCase());
+                        process.exit(1);
+                    } else if (userObj.account.type === 'comp') {
+                        logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + value.toLowerCase());
+                        process.exit(1);
+                    }
+                });
                 return value && value.trim() && value.trim().length <= 50;
             }
         },
@@ -104,7 +123,7 @@ var schema = {
             conform: function (value) {
                 var states = JSON.parse(fs.readFileSync(__dirname + '/../../server/common/database/states.json', 'utf8'));
                 var index = _.findIndex(states.docs, {code: value});
-                return (index > 0);
+                return (index >= 0);
             }
         },
         zipCode: {
@@ -133,10 +152,17 @@ prompt.get(schema, function (err, result) {
             if (err) {
                 logger.logError('adminCLI - upgradeSubscription - error upgrading user');
                 logger.logError(err);
-                logger.logInfo('adminCLI - upgradeSubscription - reverting to free user');
+                if (err.message) {
+                    logger.logError(err.message);
+                }
+                var timeout = 1000;
+                if (err.message === 'PaymentFailed' || err.message === 'PaymentFailedActive') {
+                    logger.logInfo('adminCLI - upgradeSubscription - reverting to free user');
+                    timeout = 10000;
+                }
                 setTimeout(function () {
                     process.exit(1);
-                }, 15000);
+                }, timeout);
             } else {
                 logger.logInfo('adminCLI - upgradeSubscription - user subscription upgraded');
                 process.exit(0);
