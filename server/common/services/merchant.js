@@ -819,6 +819,12 @@ function sendVerificationEmail(user, cb) {
         html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
     };
     email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('merchant - sendVerificationEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('merchant - sendVerificationEmail - email sent successfully: ' + user.email);
+        }
         if (cb) {
             cb(err);
         }

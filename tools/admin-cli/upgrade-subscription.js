@@ -171,7 +171,7 @@ prompt.get(schema, function (err, result) {
                 setTimeout(function () {
                     logger.logInfo('adminCLI - upgradeSubscription - user subscription upgraded');
                     process.exit(0);
-                }, 1000);
+                }, 10000);
             }
         });
     }
