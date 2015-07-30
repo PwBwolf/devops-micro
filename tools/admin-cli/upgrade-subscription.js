@@ -158,14 +158,20 @@ prompt.get(schema, function (err, result) {
                 var timeout = 1000;
                 if (err.message === 'PaymentFailed' || err.message === 'PaymentFailedActive') {
                     logger.logInfo('adminCLI - upgradeSubscription - reverting to free user');
+                    logger.logInfo('please wait...');
                     timeout = 10000;
                 }
                 setTimeout(function () {
+                    logger.logError('adminCLI - upgradeSubscription - error upgrading user');
                     process.exit(1);
                 }, timeout);
             } else {
                 logger.logInfo('adminCLI - upgradeSubscription - user subscription upgraded');
-                process.exit(0);
+                logger.logInfo('please wait');
+                setTimeout(function () {
+                    logger.logInfo('adminCLI - upgradeSubscription - user subscription upgraded');
+                    process.exit(0);
+                }, 1000);
             }
         });
     }
