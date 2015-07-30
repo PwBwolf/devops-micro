@@ -4,7 +4,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
-    subscription = require('../../server/common/services/subscription'),
     mongoose = require('../../server/node_modules/mongoose');
 
 logger.cli();
@@ -28,8 +27,9 @@ var modelsPath = config.root + '/server/common/models',
 
 require('../../server/common/setup/models')(modelsPath);
 var Users = mongoose.model('User');
+var subscription = require('../../server/common/services/subscription');
 
-Users.findOne({email: email.toLowerCase()}, function (err, user) {
+Users.findOne({email: email.toLowerCase()}).populate('account').exec(function (err, user) {
     if (err) {
         logger.logError('adminCLI - cancelSubscription - error fetching user: ' + email.toLowerCase());
         logger.logError(err);
@@ -40,10 +40,10 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
     } else if (user.status === 'failed') {
         logger.logError('adminCLI - cancelSubscription - failed user: ' + email.toLowerCase());
         process.exit(1);
-    } else if (user.status !== 'free') {
+    } else if (user.account.type === 'free') {
         logger.logError('adminCLI - cancelSubscription - free user: ' + email.toLowerCase());
         process.exit(1);
-    } else if (user.status !== 'comp') {
+    } else if (user.account.type === 'comp') {
         logger.logError('adminCLI - cancelSubscription - complimentary user: ' + email.toLowerCase());
         process.exit(1);
     } else {
