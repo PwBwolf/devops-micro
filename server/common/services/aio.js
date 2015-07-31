@@ -76,7 +76,7 @@ module.exports = {
         });
     },
 
-    updateUserPackages: function(username, packages, callback) {
+    updateUserPackages: function (username, packages, callback) {
         var client = new Client();
         var args = {
             data: {username: username, packages: packages},
@@ -100,7 +100,7 @@ module.exports = {
         });
     },
 
-    updatePassword: function(username, password, callback) {
+    updatePassword: function (username, password, callback) {
         var client = new Client();
         var args = {
             data: {username: username, password: password},

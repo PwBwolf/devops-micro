@@ -313,6 +313,30 @@ module.exports = {
         );
     },
 
+    changeEmail: function (sessionId, newEmail, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.edit_contact', [
+            'session_id', sessionId,
+            'emailaddress', newEmail
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - changeEmail - error in changing email address 1');
+                logger.logError(err);
+                callback(err);
+            } else {
+                if (response.error) {
+                    logger.logError('billing - changeEmail - error in changing email address 2');
+                    logger.logError(response.error);
+                    callback(response.error);
+                } else {
+                    logger.logInfo('billing - changeEmail - response');
+                    logger.logInfo(response);
+                    callback(null);
+                }
+            }
+        });
+    },
+
     cancelPackage: cancelPackage,
 
     getPackages: getPackages

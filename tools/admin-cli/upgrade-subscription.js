@@ -20,29 +20,35 @@ var schema = {
     properties: {
         email: {
             description: 'User Email',
-            pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm,
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
-                User.findOne({email: value.toLowerCase()}).populate('account').exec(function (err, userObj) {
-                    if (err) {
-                        logger.logError('adminCLI - upgradeSubscription - error fetching user: ' + value.toLowerCase());
-                        process.exit(1);
-                    } else if (!userObj) {
-                        logger.logError('adminCLI - upgradeSubscription - user not found: ' + value.toLowerCase());
-                        process.exit(1);
-                    } else if (userObj.status === 'failed') {
-                        logger.logError('adminCLI - upgradeSubscription - failed user: ' + value.toLowerCase());
-                        process.exit(1);
-                    } else if (userObj.account.type === 'paid') {
-                        logger.logError('adminCLI - upgradeSubscription - paid user: ' + value.toLowerCase());
-                        process.exit(1);
-                    } else if (userObj.account.type === 'comp') {
-                        logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + value.toLowerCase());
-                        process.exit(1);
-                    }
-                });
-                return value && value.trim() && value.trim().length <= 50;
+                var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+                regex.lastIndex = 0;
+                var isEmail = regex.test(value);
+                if (value && value.trim() && value.trim().length <= 50 && isEmail) {
+                    User.findOne({email: value.toLowerCase()}).populate('account').exec(function (err, userObj) {
+                        if (err) {
+                            logger.logError('adminCLI - upgradeSubscription - error fetching user: ' + value.toLowerCase());
+                            process.exit(1);
+                        } else if (!userObj) {
+                            logger.logError('adminCLI - upgradeSubscription - user not found: ' + value.toLowerCase());
+                            process.exit(1);
+                        } else if (userObj.status === 'failed') {
+                            logger.logError('adminCLI - upgradeSubscription - failed user: ' + value.toLowerCase());
+                            process.exit(1);
+                        } else if (userObj.account.type === 'paid') {
+                            logger.logError('adminCLI - upgradeSubscription - paid user: ' + value.toLowerCase());
+                            process.exit(1);
+                        } else if (userObj.account.type === 'comp') {
+                            logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + value.toLowerCase());
+                            process.exit(1);
+                        }
+                    });
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         cardName: {
