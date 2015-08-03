@@ -27,7 +27,7 @@ worker.register({
                 if (err) {
                     logger.logError('notificationProcessorMain - executeDunning - validation error');
                     logger.logError(err);
-                    saveDunning(params, 'failure', 'server-error', function () {
+                    saveDunning(params, 'failure', err, function () {
                         callback(new Error(err));
                     });
                 } else {

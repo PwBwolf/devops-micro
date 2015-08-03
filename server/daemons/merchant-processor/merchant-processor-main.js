@@ -31,7 +31,7 @@ worker.register({
                 if (err) {
                     logger.logError('merchantProcessorMain - makePayment - validation error');
                     logger.logError(err);
-                    savePayment(params, 'failure', 'server-error', function () {
+                    savePayment(params, 'failure', err, function () {
                         callback(new Error(err));
                     });
                 } else {
@@ -116,7 +116,7 @@ worker.register({
                 if (err) {
                     logger.logError('merchantProcessorMain - makeRefund - validation error');
                     logger.logError(err);
-                    saveRefund(params, 'failure', 'server-error', function () {
+                    saveRefund(params, 'failure', err, function () {
                         callback(new Error(err));
                     });
                 } else {
