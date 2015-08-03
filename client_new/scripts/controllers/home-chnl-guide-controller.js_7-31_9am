@@ -13,7 +13,7 @@
 			$scope._5pm = homeChnlGuideSvc.getGdeData6();
 			$scope._6pm = homeChnlGuideSvc.getGdeData7();
             
-            $scope.stations = [{id: '47620', name: 'TELESUR', color: 'burlywood'}, {id: '44448', name: 'CENTROA', color: 'cadetblue'}, {id: '55912', name: 'TRO', color: 'darkgrey'}, {id: '65269', name: 'CSMOTV', color: 'darksalmon'}, {id: '59350', name: 'JBN', color: 'goldenrod'}];
+            $scope.stations = [{id: '47620', name: 'TELESUR'}, {id: '44448', name: 'CENTROA'}, {id: '55912', name: 'TRO'}, {id: '65269', name: 'CSMOTV'}, {id: '59350', name: 'JBN'}];
             //angular.forEach(stations, function(value, key) {
             //  this.push(key + ': ' + value);
             //});
@@ -22,120 +22,17 @@
             //for (var p in $scope.stations){
             var chnlGdeHldr = angular.element('#channelGuidePanel');
             
-            
-            /// ==== OPTION ONE ==== ///
-            /// ==================== ///
-            /*
-            for( var p in $scope.stations ){
-                console.log('name: '+$scope.stations[p].name+ ' | id: '+$scope.stations[p].id+' key: '+p);
-                
-                mediaSvc.getChannelGuide($scope.stations[p].id, $scope.stations[p].name).success(function (channelView){
-                    $scope.inLineup = channelView[0].airings;
-                    $scope.dChnlLnup = [];
-                    for (var s in $scope.inLineup){
-                        
-                         // working for displaying all channels // 
-                        if( $scope.inLineup.length <= 1 ){
-                            console.log('only one airing');
-                            
-                        } else {
-                            var chnlGde = [], linkShow = [], dCntnt = [];
-                            //var chnlGdeHldr = angular.element('#channelGuidePanel');
-                                chnlGde = angular.element(document.createElement('div'));
-                                $(chnlGde).attr('channel-lineup', '');
-                            
-                            $scope.dChnlLnup[s] = $scope.getChannelLineup($scope.inLineup[s]);
-                            $scope.timeSpan($scope.inLineup[s].duration);
-                            
-                            dCntnt = $compile(chnlGde)($scope);
-                            
-                            angular.element(chnlGdeHldr).append(dCntnt[s]);
-                            
-                        }
-
-                    }
-                    $scope.loadingStations = false;
-                }).error(function() {
-                    $scope.loadingStations = false;
-                    loggerSvc.logError('Error loading tv channel guide.');
-                });
-                
-            }
-            */
-            
-            /// ==== OPTION TWO ==== ///
-            /// ==================== ///
-            
             angular.forEach($scope.stations, function(value, key) {
+                //console.log('amt: '+ $scope.stations[p].id);
                 console.log('name: '+value.name+ ' | id: '+value.id+' key: '+key);
                 
                 mediaSvc.getChannelGuide(value.id, value.name).success(function (channelView) {
-                    
-                    var dStation = channelView[0].callSign;
-                    var inLineup = channelView[0].airings;
+                    $scope.inLineup = channelView[0].airings;
+                    //$scope.inLineupTitle = $scope.inLineup[0].program.title;
                     $scope.dChnlLnup = [];
-                    
-                    console.log('station: '+dStation+' - amtShows: '+inLineup.length);
-                    var chnlGde = [], linkShow = [], dCntnt = [];
-                    //var chnlGdeHldr = angular.element('#channelGuidePanel');
-                        
-                        //chnlGde = angular.element(document.createElement('div'));
-                        //$(chnlGde).attr('id', dStation);
-                        //angular.element(chnlGdeHldr).append(chnlGde);
-                        /*
-                        angular.forEach(inLineup, function(data){
-                            console.log('chnl: '+dStation+' - title: '+data.program.title+' time#'+data.duration);
-                        
-                        })
-                        */
-                        setChannelLineup();
-                      
-                    function setChannelLineup(){
-                        chnlGde = angular.element(document.createElement('div'));
-                        $(chnlGde).attr('chnl', dStation);
-                        angular.forEach(inLineup, function(data){
-                            //console.log('chnl: '+dStation+' - title: '+data.program.title+' time#'+data.duration);
-                            $scope.ChannelLineup = '<div style="width:'+$scope.timeSpan(data.duration)+'"><img src="'+$scope.getImage(data.program.preferredImage.uri)+'" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + data.program.title + '</span></p>';
-                            if(!data.duration && !data.startTime) {
-                                $scope.ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">Not Available</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">Not Available</span></p>';
-                                } else {
-                                    $scope.ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">' + $scope.getTime(1, data) + '</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">' + data.duration + ' min</span></p></div>';
-                            } 
-                            //return ChannelLineup;
-                            
-                            //$scope.dChnlLnup = $scope.getChannelLineup(data);
-                            $(chnlGde).append($scope.ChannelLineup);
-                            //console.log(ChannelLineup);
-                            //$(chnlGde).attr('channel-lineup','');
-                            //return $scope.ChannelLineup;
-                            $(chnlGde).attr('class', 'chnlDesc');
-                            //attrs.$set('style', 'width:'+timeSpan);
-                            $(chnlGde).attr('id', 'channelGuideDesc');
-                            
-                        });
-                        //$(chnlGde).append($scope.ChannelLineup);
-                        //dCntnt = $compile(chnlGde)($scope);
-                        angular.element(chnlGdeHldr).append(chnlGde);
-                    }
-                    
-                    
-                    /*
-                    function setChannelLineup(){
-                        chnlGde = angular.element(document.createElement('div'));
-                        $(chnlGde).attr('chnl', dStation);
-                        //angular.forEach(inLineup, function(data){
-                        for(var b in inLineup){
-                            //console.log('chnl: '+dStation+' - title: '+data.program.title+' time#'+data.duration);
-                            $scope.dChnlLnup = $scope.getChannelLineup(data);
-                            $(chnlGde).attr('channel-lineup','');
-                            
-                        };
-                        dCntnt = $compile(chnlGde)($scope);
-                        angular.element(chnlGdeHldr).append(chnlGde);
-                    }
-                    */
-                    
-                    /*for (var s in $scope.inLineup){
+                    //console.log('amt: '+$scope.inLineup.length);   ///[1].program.title);
+                    for (var s in $scope.inLineup){
+                    //angular.forEach($scope.inLineup, function(value, key){
                         
                          // working for displaying all channels // 
                         if( $scope.inLineup.length <= 1 ){
@@ -146,28 +43,41 @@
                             //var chnlGdeHldr = angular.element('#channelGuidePanel');
                                 chnlGde = angular.element(document.createElement('div'));
                                 $(chnlGde).attr('channel-lineup', '');
-                            
+                                //$(chnlGde[s]).attr('id', 'show_'+s);
+                                //$(chnlGde[s]).attachDirective('div', 'channelLineup');
+                                //console.log('sent');
+                                //linkShow = $compile(chnlGde);
+                                //dCntnt = linkShow($scope);
+                                
+                                //dCntnt = $compile(chnlGde)($scope);
+                                //el.append(dCntnt);
+                            //var el = $compile( $(chnlGde[s]) )( $scope );  //// , el1 = $compile( closethispanel )( $scope );
+                        
+                              //where do you want to place the new element?
                             $scope.dChnlLnup[s] = $scope.getChannelLineup($scope.inLineup[s]);
                             $scope.timeSpan($scope.inLineup[s].duration);
+                            
                             
                             dCntnt = $compile(chnlGde)($scope);
                             
                             angular.element(chnlGdeHldr).append(dCntnt[s]);
                             
                         }
-
-                    }*/
+                        //console.log(s+': guides appended');
+                        //$scope.dChnlLnup[s] = $scope.getChannelLineup($scope.inLineup[s]);
+                        //$scope.timeSpan($scope.inLineup[s].duration);
+                        //$scope.$apply($scope.timeSpan($scope.inLineup[s].duration));
+                        
+                        //console.log('value: '+value+ '| key: '+key);
+                        //});
+                        //init();
+                    }
                     $scope.loadingStations = false;
                 }).error(function() {
                     $scope.loadingStations = false;
                     loggerSvc.logError('Error loading tv channel guide.');
                 });
-                
             });
-            
-            /// ==== OPTIONS END ==== ///
-            /// ===================== ///
-            
             
             $scope.timeSpan = function(time){
                 //var timeS = time * 2+'px';
@@ -307,8 +217,7 @@
             return {
                 restrict: 'A',
                 replace: true,
-                //template: '<div data-ng-bind-html=dChnlLnup></div>',
-                template: '<div></div>',
+                template: '<div data-ng-bind-html=dChnlLnup></div>',
                 link: function(scope, el, attrs){
                     //var template = '<div data-ng-bind-html=dChnlLnup></div>';
                     //var linkShow = $compile(template);

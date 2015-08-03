@@ -336,17 +336,18 @@ label:before{ display:none !important; }
 .channelSelected { background-color:rgb(153,153,153); }
 
 #smChannelDesc { line-height: 1.051; overflow:hidden; }
-#channelGuideDesc { line-height: 1.031; overflow:auto; }
-#smChannelDesc p, #channelGuideDesc p { margin-bottom: 0px !important; overflow:hidden;}
+#channelGuideDesc { line-height: 0.900; }
+#smChannelDesc p, #channelGuideDesc p { margin-bottom: 0px !important; overflow:hidden; vertical-align: top; /*display: inline;*/ }
+#channelGuideDesc p:last-child { display: block; top: -3px; }    
     .smChnlDesc { position:relative; display: inline-block; vertical-align:top; font-size:0.8em; width: 100%; height:auto; }
-    .chnlDesc > div { overflow: hidden; background:cadetblue; width:35%; display: inline-block; vertical-align: top; padding:6px; }
+    .chnlDesc > div { overflow: hidden; border-right:2px solid; height: 60px; width:21%; display: inline-block; vertical-align: top; padding:6px; }
     .chnlDesc-enter, .chnlDesc-leave { position:relative; display: inline-block; vertical-align:inherit; font-size:0.8em; height:100px; }
     .chnlDesc-enter { width: 300px; }
     .chnlDesc-leave { width: 0px; }
     .program-details-header, .program-details-body { font-size:60%; color: #444; font-weight: bolder; text-transform: uppercase; }
     .program-details-body { text-transform: initial; color:#eee; }
-    .channel-details-header, .channel-details-body { font-size:55%; color: #343; font-weight: bolder; text-transform: uppercase; }
-    .channel-details-body { text-transform: initial; color:#fff; }
+    .channel-details-header, .channel-details-body { font-size:50%; color: #343; font-weight: bolder; text-transform: uppercase; }
+    .channel-details-body { text-transform: uppercase; color:#fff; }
     
 
 #welcome {

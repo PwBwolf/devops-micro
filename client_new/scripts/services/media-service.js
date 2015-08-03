@@ -26,7 +26,8 @@
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel-guide',
-                    params: {stationId: stationId, name: name}
+                    params: {stationId: stationId, name: name},
+                    cache: true,
                 });
             }
         };

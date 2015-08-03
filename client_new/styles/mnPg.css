@@ -541,7 +541,7 @@ header {
 		border-top:; border-bottom: 1px solid lightgrey; 
 		height:100%; width:100%; overflow:auto;
 	}
-	.usr_GdeMdle_Dsc img { float:left; width:10%; height:auto; margin-right:7px; vertical-align:middle; }
+	.usr_GdeMdle_Dsc img { float:left; width:32px; height:auto; margin-right:7px; vertical-align:top; }
 	.usr_GdeMdle_Dsc span.showtitle { color:white; padding-right:6px; font-variant:small-caps; font-size:105%; }  
 	.usr_GdeMdle_Dsc span.showtitle::after{
 		content: ':';
