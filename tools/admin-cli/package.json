@@ -6,6 +6,7 @@
   "dependencies": {
     "async": "^1.2.1",
     "cli-table": "^0.3.1",
+    "fs-extended": "^0.2.0",
     "lodash": "^3.9.3",
     "moment": "^2.10.2",
     "node-uuid": "^1.4.3",

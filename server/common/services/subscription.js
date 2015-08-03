@@ -1495,7 +1495,7 @@ module.exports = {
                 switch (errorType) {
                     case 'freeside-login':
                     case 'freeside-package-remove':
-                        updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
+                        updateAioPackages(userObj.email, config.aioPaidUserPackages);
                         break;
                 }
             }
