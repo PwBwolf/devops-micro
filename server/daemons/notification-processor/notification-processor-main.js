@@ -27,7 +27,7 @@ worker.register({
                 if (err) {
                     logger.logError('notificationProcessorMain - executeDunning - validation error');
                     logger.logError(err);
-                    saveDunning(params, 'failure', err, function () {
+                    saveDunning(params, 'failure', 'server-error', function () {
                         callback(new Error(err));
                     });
                 } else {
@@ -35,7 +35,7 @@ worker.register({
                         if (err) {
                             logger.logError('notificationProcessorMain - executeDunning - error fetching user: ' + params.username);
                             logger.logError(new Error(err));
-                            saveDunning(params, 'failure', err, function () {
+                            saveDunning(params, 'failure', 'server-error', function () {
                                 callback(new Error(err));
                             });
                         } else if (!dbUser) {
@@ -57,7 +57,7 @@ worker.register({
                                         if (err) {
                                             logger.logError('notificationProcessorMain - executeDunning - error executing dunning 5 days: ' + params.username);
                                             logger.logError(err);
-                                            saveDunning(params, 'failure', err, function () {
+                                            saveDunning(params, 'failure', 'server-error', function () {
                                                 callback(err);
                                             });
                                         } else {
@@ -72,7 +72,7 @@ worker.register({
                                         if (err) {
                                             logger.logError('notificationProcessorMain - executeDunning - error executing dunning 10 days: ' + params.username);
                                             logger.logError(err);
-                                            saveDunning(params, 'failure', err, function () {
+                                            saveDunning(params, 'failure', 'server-error', function () {
                                                 callback(err);
                                             });
                                         } else {
