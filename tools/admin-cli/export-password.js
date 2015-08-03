@@ -24,7 +24,7 @@ User.find({}).populate('account').exec(function (err, users) {
         console.log('FreeSide Customer Number,Email,Password');
         for (var i = 0; i < users.length; i++) {
             if (users[i].account) {
-                console.log(users[i].account.freeSideCustomerNumber + ',' + users[i].email + ',' + users[i].createdAt.getTime());
+                console.log(users[i].account.freeSideCustomerNumber + ',' + users[i].email + ',' + users[i].createdAt.getTime()+',');
             }
         }
         process.exit(0);

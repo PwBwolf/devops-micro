@@ -4,3 +4,4 @@ node_modules/
 npm-debug.log
 erl_crash.dump
 *.iml
+*.log
