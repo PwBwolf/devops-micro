@@ -1,8 +1,6 @@
 <div class="content-area">
     <div class="content-box">
         <div class="container">
-            <img class="img-responsive" ng-src="/images/pages/{{language}}/signup.jpg"/>
-
             <div class="form-box">
                 <div class="row">
                     <div class="col-md-12"><h3 translate="IDT_SIGN_UP_ORDER_SUMMARY"></h3></div>
@@ -21,6 +19,10 @@
                 </div>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
                     <div class="form-container">
+                        <div class="full-form center-form">
+                            <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="card" value="card"><label for="card" translate="IDT_SIGN_UP_PAY_BY_CC"></label>
+                            <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="cash" value="cash"><label for="cash" translate="IDT_SIGN_UP_PAY_BY_CASH"></label>
+                        </div>
                         <div class="full-form">
                             <h3 translate="IDT_SIGN_UP_ACCOUNT_INFO"></h3>
                         </div>
@@ -41,7 +43,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="IDT_SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="paid" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
+                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="{{getSignUpType()}}" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
 
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="IDT_SIGN_UP_EMAIL_REQUIRED"></div>
                         <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" translate="IDT_SIGN_UP_EMAIL_INVALID"></div>
@@ -63,14 +65,10 @@
                             <ul class="passwordStrength" password-strength="password"></ul>
                         </div>
                     </div>
-                    <div class="full-form">
-                        <h3 translate="IDT_SIGN_UP_BILLING_INFO"></h3>
-                    </div>
-                    <div class="full-form center-form">
-                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="card" value="card"><label for="card" translate="IDT_SIGN_UP_PAY_BY_CC"></label>
-                        <input type="radio" class="check-box" ng-model="mv.paymentType" name="paymentType" id="cash" value="cash"><label for="cash" translate="IDT_SIGN_UP_PAY_BY_CASH"></label>
-                    </div>
                     <div ng-show="mv.paymentType==='card'">
+                        <div class="full-form">
+                            <h3 translate="IDT_SIGN_UP_BILLING_INFO"></h3>
+                        </div>
                         <div class="full-form">
                             <span class="label-text" translate="IDT_SIGN_UP_CARD_NAME"></span>
                             <br><input valid-name autocomplete="off" type="text" id="cardName" name="cardName" ng-model="mv.cardName" maxlength="128" required class="text-box" ng-class="{'text-box-error': form.cardName.$touched && form.cardName.$invalid}">
@@ -144,9 +142,6 @@
                     </div>
                     <div class="full-form">
                         <div class="bolder-text"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
-                    </div>
-                    <div class="full-form" style="padding-top:0">
-                        <span class="message" translate="SIGN_UP_MESSAGE"></span>
                     </div>
                 </form>
             </div>

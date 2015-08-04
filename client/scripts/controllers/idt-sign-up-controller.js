@@ -3,7 +3,7 @@
 
     app.controller('idtSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
-        $scope.mv = {disclaimer: true, paymentType: 'card'};
+        $scope.mv = {disclaimer: true, paymentType: 'cash'};
 
         activate();
 
@@ -14,6 +14,14 @@
                 loggerSvc.logError($filter('translate')('SIGN_UP_STATE_LOAD_ERROR'));
             });
         }
+
+        $scope.getSignUpType = function () {
+            if ($scope.mv.paymentType === 'card') {
+                return 'paid';
+            } else {
+                return 'free';
+            }
+        };
 
         $scope.signUp = function () {
             if ($scope.mv.paymentType === 'card') {
@@ -35,13 +43,13 @@
                         },
                         function (error) {
                             if (error === 'UserExists') {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                                loggerSvc.logError($filter('translate')('IDT_SIGN_UP_USER_EXISTS'));
                             } else if (error === 'PaymentFailed') {
                                 $location.path('/sign-up-success-payment-pending');
                             } else if (error === 'PaymentFailedActive') {
                                 $location.path('/sign-up-success-payment-pending-active');
                             } else {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                                loggerSvc.logError($filter('translate')('IDT_SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                             }
                             $scope.saving = false;
                         }
@@ -51,35 +59,28 @@
                 }
             } else {
                 if ($scope.form.firstName.$valid && $scope.form.lastName.$valid && $scope.form.telephone.$valid && $scope.form.password.$valid && $scope.form.disclaimer.$valid) {
-                    $scope.mv.type = 'paid';
+                    $scope.mv.type = 'free';
                     $scope.mv.referredBy = $rootScope.referredBy;
                     $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
                     $scope.saving = true;
-                    userSvc.merchantSignUp(
+                    userSvc.signUp(
                         $scope.mv,
-                        function (data) {
+                        function () {
                             $rootScope.referredBy = undefined;
                             $scope.saving = false;
-                            if (data === 'registered') {
-                                $location.path('/sign-up-success');
-                            } else {
-                                $location.path('/sign-up-success-login');
-                            }
+                            $location.path('/free-sign-up-success');
                         },
                         function (error) {
                             if (error === 'UserExists') {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
-                            } else if (error === 'PaymentFailed') {
-                                $location.path('/sign-up-success-payment-pending');
-                            } else if (error === 'PaymentFailedActive') {
-                                $location.path('/sign-up-success-payment-pending-active');
+                                loggerSvc.logError($filter('translate')('IDT_SIGN_UP_USER_EXISTS'));
                             } else {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                                loggerSvc.logError($filter('translate')('IDT_SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
                             }
                             $scope.saving = false;
                         }
                     );
-                } else {
+                }
+                else {
                     setFormTouched();
                 }
             }
