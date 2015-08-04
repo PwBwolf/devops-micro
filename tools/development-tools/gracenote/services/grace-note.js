@@ -24,7 +24,7 @@ module.exports = {
         };
         client.get(graceNoteApiUrl + '/lineups/' + graceNoteLineupId + '/grid', args, function (data) {
             logger.logInfo('graceNote - getChannelGuide - response');
-			//var jsonData = JSON.parse(data);
+            //var jsonData = JSON.parse(data);
             //logger.logInfo(data);
             if (data.errorCode) {
                 callback(data.errorMessage);

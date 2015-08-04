@@ -1,17 +1,17 @@
 <div>
-	{{channel.callSign}} <br>
-  	<table cellspacing="0" cellpadding="0">
-   	<colgroup span="1"></colgroup>
+    {{channel.callSign}} <br>
+    <table cellspacing="0" cellpadding="0">
+    <colgroup span="1"></colgroup>
 
-   	<tbody>
-     	<tr ng-repeat="days in dates" ng-init="rowIndex = $index">
-         	<td align="center" ng-repeat="day in days">
-			 	<table style="border:none">
-			 		<tr><th style="border: none"><a href="#/program/{{rowIndex*5+$index}}">{{channel.airings[rowIndex*5+$index].program.title}}</a></th></tr>
-			 		<tr><img ng-src="http://yipt.tmsimg.com/assets/{{channel.airings[rowIndex*5+$index].program.preferredImage.uri}}" style="width:128px;height:128px;"></tr>
-				</table>
-        	</td>
-     	</tr>
- 	</tbody>
- 	</table>
+    <tbody>
+        <tr ng-repeat="days in dates" ng-init="rowIndex = $index">
+            <td align="center" ng-repeat="day in days">
+                <table style="border:none">
+                    <tr><th style="border: none"><a href="#/program/{{rowIndex*5+$index}}">{{channel.airings[rowIndex*5+$index].program.title}}</a></th></tr>
+                    <tr><img ng-src="http://yipt.tmsimg.com/assets/{{channel.airings[rowIndex*5+$index].program.preferredImage.uri}}" style="width:128px;height:128px;"></tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+    </table>
 </div>

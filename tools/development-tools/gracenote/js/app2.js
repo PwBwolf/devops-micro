@@ -1,7 +1,7 @@
 var customerApp = angular.module('myApp', ['ngRoute']);
  customerApp.config(['$routeProvider','$locationProvider', function($routeProvider,$locationProvider) {
             $routeProvider.
-			when('/',{
+            when('/',{
                 templateUrl: 'empty.html',
                 controller: "testCtrl"
             }).
@@ -15,14 +15,14 @@ var customerApp = angular.module('myApp', ['ngRoute']);
         }]);
 
 customerApp.controller('channelGuideCtrl', ['$scope', '$http', function ($scope, $http) {
-	$http.get('/channelguide').success(function(data) {
-		$scope.channels = data.channelsDB;
-		$scope.message = 'this is channel guide page';
-	})
+    $http.get('/channelguide').success(function(data) {
+        $scope.channels = data.channelsDB;
+        $scope.message = 'this is channel guide page';
+    })
 }]);
 
 customerApp.controller('testCtrl', ['$scope', '$http', function ($scope, $http) {
-	$http.get('/').success(function(data) {
-		$scope.test = 'this test page';
-	})
+    $http.get('/').success(function(data) {
+        $scope.test = 'this test page';
+    })
 }]);

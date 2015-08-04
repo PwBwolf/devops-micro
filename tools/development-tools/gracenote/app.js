@@ -17,5 +17,5 @@ app.use(express.static('js'));
 app.use(express.static('views'));
 
 var server=app.listen(port,function () {
-	logger.logInfo('server is running on port '+port);
+    logger.logInfo('server is running on port '+port);
 });
