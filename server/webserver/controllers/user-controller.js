@@ -11,7 +11,6 @@ var mongoose = require('mongoose'),
     config = require('../../common/setup/config'),
     email = require('../../common/services/email'),
     subscription = require('../../common/services/subscription'),
-    merchant = require('../../common/services/merchant'),
     aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
@@ -82,44 +81,6 @@ module.exports = {
                     subscription.convertToComplimentary(user.email, req.body, function (err, status) {
                         if (err) {
                             logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
-                } else {
-                    return res.status(409).send('UserExists');
-                }
-            }
-        });
-    },
-
-    merchantSignUp: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError('userController - merchantSignUp - error fetching user: ' + req.body.email.toLowerCase());
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                merchant.newPaidUser(req.body, function (err) {
-                    if (err) {
-                        logger.logError('userController - merchantSignUp - error in new paid user creation: ' + req.body.email.toLowerCase());
-                        logger.logError(err);
-                        return res.status(500).send(err.message);
-                    } else {
-                        return res.status(200).send('registered');
-                    }
-                });
-            } else {
-                if (user.status === 'failed') {
-                    logger.logError('userController - merchantSignUp - user with failed status: ' + req.body.email.toLowerCase());
-                    return res.status(409).send('FailedAccount');
-                } else if (user.account.type === 'free') {
-                    merchant.upgradeSubscriptionSignUp(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
                             logger.logError(err);
                             return res.status(500).send(err.message);
                         } else {

@@ -568,7 +568,7 @@ module.exports = {
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
                             userObj.complimentaryEndDate = undefined;
-                            if (!userObj.account.firstCardPaymentDate) {
+                            if (!userObj.account.firstCardPaymentDate && newUser.address) {
                                 userObj.account.firstCardPaymentDate = (new Date()).toUTCString();
                             }
                             if (newUser.firstName) {
@@ -638,7 +638,7 @@ module.exports = {
             },
             // update user information in freeside
             function (userObj, sessionId, callback) {
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address, newUser.city, newUser.state, newUser.zipCode, 'US', userObj.email, userObj.telephone, 'CARD', newUser.cardNumber, newUser.expiryDate, newUser.cvv, newUser.cardName, function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : userObj.account.merchant, newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL', newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.telephone, newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '', newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '', newUser.cardName ? newUser.cardName : '', function (err) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1603,6 +1603,70 @@ module.exports = {
                         updateAioPackages(userObj.email, config.aioPaidUserPackages);
                         revertAccountChangesForCancel(userObj, currentValues);
                         revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    processCashPayment: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            // get user and update
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - processCashPayment - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.cancelOn) {
+                        currentValues = {cancelOn: userObj.cancelOn};
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - processCashPayment - error saving user: ' + userEmail);
+                            }
+                            callback(err, userObj);
+                        });
+                    } else {
+                        callback(null, userObj);
+                    }
+                });
+            },
+            // login
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - processCashPayment - error logging into freeside: ' + userEmail);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // update billing details
+            function (userObj, sessionId, callback) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
+                    if (err) {
+                        logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                        if (currentValues) {
+                            userObj.cancelOn = currentValues.cancelOn;
+                            userObj.save(function () {
+                                logger.logError('subscription - processCashPayment - error reverting cancelOn in user: ' + userObj.email);
+                            });
+                        }
                         break;
                 }
             }
