@@ -87,49 +87,6 @@ module.exports = {
         }
     },
 
-    makeRefund: function (req, res) {
-        var apiLog = new ApiLog();
-        apiLog.name = 'make-refund';
-        apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
-        apiLog.apiKey = req.query.apiKey;
-        apiLog.body = req.body;
-        try {
-            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
-                if (err) {
-                    logger.logError('merchantController - makeRefund - error validating credentials');
-                    logger.logError(err);
-                    return res.status(200).send({error: 'server-error'});
-                }
-                if (!result) {
-                    return res.status(200).send({error: 'unauthorized'});
-                }
-                req.body.merchantId = req.query.merchantId;
-                queue.enqueue('makeRefund', req.body, function (err) {
-                    if (err) {
-                        logger.logError('merchantController - makeRefund - error adding job to queue');
-                        logger.logError(err);
-                        return res.status(200).send({error: 'server-error'});
-                    } else {
-                        return res.status(200).send({error: '', result: 'success'});
-                    }
-                });
-            });
-        } catch (ex) {
-            logger.logError('merchantController - makeRefund - exception');
-            logger.logError(ex);
-            return res.status(200).send({error: 'server-error'});
-        } finally {
-            apiLog.responseTime = (new Date()).toUTCString();
-            apiLog.save(function (err) {
-                if (err) {
-                    logger.logError('merchantController - makeRefund - error saving api log');
-                    logger.logError(err);
-                }
-            });
-        }
-    },
-
     makePayment: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'make-payment';
@@ -167,6 +124,49 @@ module.exports = {
             apiLog.save(function (err) {
                 if (err) {
                     logger.logError('merchantController - makePayment - error saving api log');
+                    logger.logError(err);
+                }
+            });
+        }
+    },
+
+    makeRefund: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'make-refund';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.merchantId = req.query.merchantId;
+        apiLog.apiKey = req.query.apiKey;
+        apiLog.body = req.body;
+        try {
+            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+                if (err) {
+                    logger.logError('merchantController - makeRefund - error validating credentials');
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                }
+                if (!result) {
+                    return res.status(200).send({error: 'unauthorized'});
+                }
+                req.body.merchantId = req.query.merchantId;
+                queue.enqueue('makeRefund', req.body, function (err) {
+                    if (err) {
+                        logger.logError('merchantController - makeRefund - error adding job to queue');
+                        logger.logError(err);
+                        return res.status(200).send({error: 'server-error'});
+                    } else {
+                        return res.status(200).send({error: '', result: 'success'});
+                    }
+                });
+            });
+        } catch (ex) {
+            logger.logError('merchantController - makeRefund - exception');
+            logger.logError(ex);
+            return res.status(200).send({error: 'server-error'});
+        } finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('merchantController - makeRefund - error saving api log');
                     logger.logError(err);
                 }
             });
