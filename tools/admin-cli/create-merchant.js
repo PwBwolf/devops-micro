@@ -30,7 +30,7 @@ var schema = {
         fullName: {
             description: 'Merchant full name',
             pattern: /^[a-zA-Z0-9\s\-,.']+$/,
-            message: 'Enter a valid name',
+            message: 'Enter a valid full name',
             required: true,
             conform: function (value) {
                 return value && value.trim();
@@ -39,7 +39,7 @@ var schema = {
         email: {
             description: 'Email',
             pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm,
-            message: 'Enter a valid and unique email address',
+            message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
                 return value && value.trim();
@@ -84,7 +84,7 @@ prompt.get(schema, function (err, result) {
                 process.exit(1);
             } else {
                 if (mer) {
-                    logger.logError('adminCLI - createMerchant - name already registered');
+                    logger.logError('adminCLI - createMerchant - short name already exists');
                     process.exit(1);
                 } else {
                     var merchant = new MerchantYip(result);
