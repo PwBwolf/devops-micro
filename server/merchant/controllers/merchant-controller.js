@@ -43,7 +43,7 @@ module.exports = {
                         return res.status(200).send({error: 'server-error'});
                     }
                     var refundLastDate, billingDate;
-                    if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate) {
+                    if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate && user.account.type === 'paid') {
                         refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
                     if (user && user.account.type === 'paid' && (user.status === 'registered' || user.status === 'active')) {
