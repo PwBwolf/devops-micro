@@ -22,15 +22,15 @@ User.find({}).populate('account').exec(function (err, users) {
         logger.logError('adminCLI - exportUsers - no users found!');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Telephone","Status","Type","FreeSide Customer Number","AIO Account ID","Is Payment Pending","Create Date","Upgrade Date","Cancel Date","Cancel On Date","Valid Till Date","Complimentary Code","Referred By","Merchant"');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Type","FreeSide Customer Number","AIO Account ID","Is Payment Pending","Create Date","Upgrade Date","Cancel Date","Cancel On Date","Valid Till Date","Complimentary Code","Referred By","Merchant","Old Status","Start Date"');
         for (var i = 0; i < users.length; i++) {
             if (users[i].account) {
                 console.log(
                     formatString(users[i].email) + ',' + formatString(users[i].firstName) + ',' + formatString(users[i].lastName) + ',' + formatString(users[i].telephone) + ',' + formatString(users[i].status) + ',' +
                     formatString(users[i].account.type) + ',' + formatString(users[i].account.freeSideCustomerNumber) + ',' + formatString(users[i].account.aioAccountId) + ',' +
                     formatDate(users[i].createdAt) + ',' + formatDate(users[i].upgradeDate) + ',' + formatDate(users[i].cancelDate) + ',' + formatDate(users[i].cancelOn) + ',' + formatDate(users[i].validTill) + ',' +
-                    formatString(users[i].account.complimentaryCode) + ',' + formatString(users[i].account.referredBy) + ',' + formatString(users[i].account.merchant)
-                );
+                    formatString(users[i].account.complimentaryCode) + ',' + formatString(users[i].account.referredBy) + ',' + formatString(users[i].account.merchant) + ',' + formatString(users[i].oldInactiveUser) + ',' + formatDate(users[i].account.startDate)
+                    );
             }
         }
         process.exit(0);
@@ -53,10 +53,3 @@ function formatString(value) {
     }
 }
 
-function formatBoolean(value) {
-    if (value) {
-        return '"' + value + '"';
-    } else {
-        return 'false';
-    }
-}
