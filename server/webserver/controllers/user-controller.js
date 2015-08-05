@@ -14,84 +14,104 @@ var mongoose = require('mongoose'),
     aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
+    Merchant = mongoose.model('Merchant'),
     Account = mongoose.model('Account');
 
 module.exports = {
     signUp: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError('userController - signUp - error fetching user: ' + req.body.email.toLowerCase());
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            var type = req.body.type;
-            if (!user) {
-                if (type === 'free') {
-                    subscription.newFreeUser(req.body, function (err) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send('registered');
-                        }
-                    });
-                } else if (type === 'paid') {
-                    subscription.newPaidUser(req.body, function (err) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send('registered');
-                        }
-                    });
-                } else if (type === 'comp') {
-                    subscription.newComplimentaryUser(req.body, function (err) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send('registered');
-                        }
-                    });
+        if (req.body.merchant) {
+            Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
+                if (err) {
+                    logger.logError('userController - signUp - error fetching merchant: ' + req.body.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(500).end();
+                } else if (!merchant) {
+                    logger.logError('userController - signUp - merchant not found: ' + req.body.email.toLowerCase());
+                    return res.status(500).send('InvalidMerchant');
                 } else {
-                    logger.logError('userController - signUp - invalid type + ' + type + ': ' + req.body.email.toLowerCase());
+                    return doSignUp(req, res);
+                }
+            });
+        } else {
+            return doSignUp(req, res);
+        }
+
+        function doSignUp(req, res) {
+            User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
+                if (err) {
+                    logger.logError('userController - signUp - error fetching user: ' + req.body.email.toLowerCase());
+                    logger.logError(err);
                     return res.status(500).end();
                 }
-            } else {
-                if (user.status === 'failed') {
-                    logger.logError('userController - signUp - user with failed status: ' + req.body.email.toLowerCase());
-                    return res.status(409).send('FailedAccount');
-                } else if (type === 'free') {
-                    logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
-                    return res.status(409).send('UserExists');
-                } else if (type === 'paid' && user.account.type === 'free') {
-                    subscription.upgradeSubscription(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
-                } else if (type === 'comp' && user.account.type === 'free') {
-                    subscription.convertToComplimentary(user.email, req.body, function (err, status) {
-                        if (err) {
-                            logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send(err.message);
-                        } else {
-                            return res.status(200).send(status);
-                        }
-                    });
+                var type = req.body.type;
+                if (!user) {
+                    if (type === 'free') {
+                        subscription.newFreeUser(req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).send(err.message);
+                            } else {
+                                return res.status(200).send('registered');
+                            }
+                        });
+                    } else if (type === 'paid') {
+                        subscription.newPaidUser(req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).send(err.message);
+                            } else {
+                                return res.status(200).send('registered');
+                            }
+                        });
+                    } else if (type === 'comp') {
+                        subscription.newComplimentaryUser(req.body, function (err) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).send(err.message);
+                            } else {
+                                return res.status(200).send('registered');
+                            }
+                        });
+                    } else {
+                        logger.logError('userController - signUp - invalid type + ' + type + ': ' + req.body.email.toLowerCase());
+                        return res.status(500).end();
+                    }
                 } else {
-                    return res.status(409).send('UserExists');
+                    if (user.status === 'failed') {
+                        logger.logError('userController - signUp - user with failed status: ' + req.body.email.toLowerCase());
+                        return res.status(409).send('FailedAccount');
+                    } else if (type === 'free') {
+                        logger.logError('userController - signUp - re-sign up of free non-failed user not allowed: ' + req.body.email.toLowerCase());
+                        return res.status(409).send('UserExists');
+                    } else if (type === 'paid' && user.account.type === 'free') {
+                        subscription.upgradeSubscription(user.email, req.body, function (err, status) {
+                            if (err) {
+                                logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).send(err.message);
+                            } else {
+                                return res.status(200).send(status);
+                            }
+                        });
+                    } else if (type === 'comp' && user.account.type === 'free') {
+                        subscription.convertToComplimentary(user.email, req.body, function (err, status) {
+                            if (err) {
+                                logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
+                                logger.logError(err);
+                                return res.status(500).send(err.message);
+                            } else {
+                                return res.status(200).send(status);
+                            }
+                        });
+                    } else {
+                        return res.status(409).send('UserExists');
+                    }
                 }
-            }
-        });
+            });
+        }
     },
 
     signIn: function (req, res) {
