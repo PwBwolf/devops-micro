@@ -19,7 +19,16 @@ var MerchantYip = dbYip.model('Merchant'),
 var schema = {
     properties: {
         name: {
-            description: 'Merchant name',
+            description: 'Merchant short name',
+            pattern: /^[A-Z]+$/,
+            message: 'Enter a valid short name in uppercase up to a maximum of 8 alphabets',
+            required: true,
+            conform: function (value) {
+                return value && value.trim() && value.trim().length <= 8;
+            }
+        },
+        fullName: {
+            description: 'Merchant full name',
             pattern: /^[a-zA-Z0-9\s\-,.']+$/,
             message: 'Enter a valid name',
             required: true,
@@ -68,14 +77,14 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        MerchantYip.findOne({email: result.email.toLowerCase()}, function (err, mer) {
+        MerchantYip.findOne({name: result.name.toUpperCase()}, function (err, mer) {
             if (err) {
-                logger.logError('adminCLI - createMerchant - error in checking if email exists');
+                logger.logError('adminCLI - createMerchant - error in checking if name exists');
                 logger.logError(err);
                 process.exit(1);
             } else {
                 if (mer) {
-                    logger.logError('adminCLI - createMerchant - email address already registered');
+                    logger.logError('adminCLI - createMerchant - name already registered');
                     process.exit(1);
                 } else {
                     var merchant = new MerchantYip(result);
