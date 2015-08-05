@@ -60,7 +60,7 @@
             } else {
                 if ($scope.form.firstName.$valid && $scope.form.lastName.$valid && $scope.form.telephone.$valid && $scope.form.password.$valid && $scope.form.disclaimer.$valid) {
                     $scope.mv.type = 'free';
-                    $scope.mv.merchant = 'IDT';
+                    $scope.mv.merchant = 'IDTXXXXXX';
                     $scope.mv.referredBy = $rootScope.referredBy;
                     $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
                     $scope.saving = true;
