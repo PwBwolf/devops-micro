@@ -482,7 +482,7 @@
             UPGRADE_SUBSCRIPTION_CARD_NUMBER: 'Credit Card Number',
             UPGRADE_SUBSCRIPTION_CARD_NUMBER_REQUIRED: 'Enter your credit card number',
             UPGRADE_SUBSCRIPTION_CARD_NUMBER_ERROR: 'Enter a valid credit card number',
-            UPGRADE_SUBSCRIPTION_CVV: 'CVV',
+            UPGRADE_SUBSCRIPTION_CVV: 'CVV (3 digit security code)',
             UPGRADE_SUBSCRIPTION_CVV_REQUIRED: 'Enter your CVV',
             UPGRADE_SUBSCRIPTION_CARD_NUMBER_CVV_ERROR: 'Enter a valid CVV',
             UPGRADE_SUBSCRIPTION_EXPIRY_DATE: 'Expiration Date (MM/YY)',

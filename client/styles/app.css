@@ -730,6 +730,10 @@ ul.passwordStrength {
         left: 10%;
     }
 
+    .half-form {
+        width: 100%;
+    }
+
     .language {
         margin-right: -60px;
     }
@@ -786,10 +790,6 @@ ul.passwordStrength {
 }
 
 @media screen and (max-width: 479px) {
-
-    .half-form {
-        width: 100%;
-    }
 
     a.import-button {
         font-size: 12px;
