@@ -273,12 +273,22 @@ module.exports = {
                 } else if (response.dates && response.dates.length > 0) {
                     logger.logInfo('billing - getBillingDate - response');
                     logger.logInfo(response);
+                    /*
                     var index = _.findIndex(response.dates, {'amount': config.paidBasicPackageAmount});
                     if (index >= 0) {
                         callback(null, new Date(response.dates[index].bill_date * 1000));
                     } else {
                         callback(null, null);
+                    }*/
+                    // workaround till freeside provides pkgpart
+                    var nextBillingDate = response.dates[0].bill_date;
+                    for(var i = 1; i < response.dates.length; i++) {
+                        if(response.dates[i].bill_date > nextBillingDate) {
+                            nextBillingDate = response.dates[i].bill_date;
+                        }
                     }
+                    callback(null, new Date(nextBillingDate * 1000));
+                    // end workaround
                 } else {
                     logger.logInfo('billing - getBillingDate - billing date not found');
                     callback(null, null);
