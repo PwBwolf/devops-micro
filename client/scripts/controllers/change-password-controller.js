@@ -21,14 +21,14 @@
                         $scope.saving = false;
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.currentPassword.$dirty = true;
-            $scope.form.newPassword.$dirty = true;
-            $scope.form.confirmPassword.$dirty = true;
+        function setFormTouched() {
+            $scope.form.currentPassword.$touched = true;
+            $scope.form.newPassword.$touched = true;
+            $scope.form.confirmPassword.$touched = true;
         }
 
     }]);

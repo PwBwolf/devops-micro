@@ -24,13 +24,13 @@
                     $scope.saving = false;
                 });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.email.$dirty = true;
-            $scope.form.emailList.$dirty = true;
+        function setFormTouched() {
+            $scope.form.email.$touched = true;
+            $scope.form.emailList.$touched = true;
         }
 
     }]);

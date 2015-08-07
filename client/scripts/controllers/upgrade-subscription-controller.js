@@ -45,20 +45,20 @@
                         }
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.cardName.$dirty = true;
-            $scope.form.cardNumber.$dirty = true;
-            $scope.form.address.$dirty = true;
-            $scope.form.city.$dirty = true;
-            $scope.form.state.$dirty = true;
-            $scope.form.cvv.$dirty = true;
-            $scope.form.expiryDate.$dirty = true;
-            $scope.form.zipCode.$dirty = true;
-            $scope.form.disclaimer.$dirty = true;
+        function setFormTouched() {
+            $scope.form.cardName.$touched = true;
+            $scope.form.cardNumber.$touched = true;
+            $scope.form.address.$touched = true;
+            $scope.form.city.$touched = true;
+            $scope.form.state.$touched = true;
+            $scope.form.cvv.$touched = true;
+            $scope.form.expiryDate.$touched = true;
+            $scope.form.zipCode.$touched = true;
+            $scope.form.disclaimer.$touched = true;
         }
 
     }]);

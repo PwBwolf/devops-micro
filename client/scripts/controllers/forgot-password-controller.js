@@ -17,12 +17,12 @@
                         $scope.saving = false;
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.email.$dirty = true;
+        function setFormTouched() {
+            $scope.form.email.$touched = true;
         }
     }]);
 }(angular.module('app')));

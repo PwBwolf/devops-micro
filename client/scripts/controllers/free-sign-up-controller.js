@@ -4,6 +4,7 @@
     app.controller('freeSignUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.mv = {disclaimer: true};
+        $scope.formSubmit = false;
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
@@ -27,18 +28,19 @@
                         $scope.saving = false;
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.firstName.$dirty = true;
-            $scope.form.lastName.$dirty = true;
-            $scope.form.email.$dirty = true;
-            $scope.form.telephone.$dirty = true;
-            $scope.form.password.$dirty = true;
-            $scope.form.confirmPassword.$dirty = true;
+        function setFormTouched() {
+            $scope.form.firstName.$touched = true;
+            $scope.form.lastName.$touched = true;
+            $scope.form.email.$touched = true;
+            $scope.form.telephone.$touched = true;
+            $scope.form.password.$touched = true;
+            $scope.form.confirmPassword.$touched = true;
             $scope.form.disclaimer.$dirty = true;
+            $scope.formSubmit = true;
         }
 
     }]);
