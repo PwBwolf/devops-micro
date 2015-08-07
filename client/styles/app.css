@@ -93,10 +93,6 @@ input[type="radio"]:checked + label:before {
     line-height: 15px;
 }
 
-.navbar-header {
-    width: 100%;
-}
-
 .logo {
     float: left;
 }
