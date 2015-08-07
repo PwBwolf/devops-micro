@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$modal', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter, $modal) {
+    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$modal', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         activate();
 
@@ -38,13 +38,13 @@
                         $scope.saving = false;
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.email.$dirty = true;
-            $scope.form.password.$dirty = true;
+        function setFormTouched() {
+            $scope.form.email.$touched = true;
+            $scope.form.password.$touched = true;
         }
     }]);
 }(angular.module('app')));

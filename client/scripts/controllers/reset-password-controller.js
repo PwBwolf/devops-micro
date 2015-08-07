@@ -44,13 +44,13 @@
                     }
                 );
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.newPassword.$dirty = true;
-            $scope.form.confirmPassword.$dirty = true;
+        function setFormTouched() {
+            $scope.form.newPassword.$touched = true;
+            $scope.form.confirmPassword.$touched = true;
         }
 
     }]);
