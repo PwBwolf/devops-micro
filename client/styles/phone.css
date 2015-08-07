@@ -24,7 +24,7 @@
         height: 60px;
         padding: 0px !important;
         background: rgba(229, 229, 231, .91);
-        z-index: 9980;
+        z-index: 998;
     }
 
     .logo img {
@@ -148,11 +148,11 @@
         width: auto;
         height: 50px;
         background: rgba(229, 229, 231, .91) !important;
-        z-index: 9980;
+        z-index: 998;
         padding: 0px !important;
     }
 
-    #brand {
+    #headerBrand {
         height: 50px;
         text-transform: uppercase;
         border-bottom: solid 1px lightgrey;
@@ -160,7 +160,7 @@
         z-index: 50;
     }
 
-    #brand img {
+    #headerBrand img {
         width: auto;
         height: 70px;
         display: block !important;
@@ -173,13 +173,7 @@
         -moz-transition: all 1s ease-in-out;
         -ms-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
-        z-index: 9999;
-    }
-
-    #brand #faq {
-        width: auto;
-        padding-left: 1%;
-        padding-right: 1%;
+        z-index: 998;
     }
 
     .contact-number {
@@ -187,7 +181,7 @@
         height: 100%;
         padding: 10px 0;
         color: black;
-        text-align: center;
+        text-align: right;
         vertical-align: middle;
         border-top: thin solid whitesmoke;
     }
@@ -199,17 +193,19 @@
         -moz-transition: all 1s ease-in-out;
         -ms-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
-        z-index: 9999;
+        z-index: 998;
     }
 
     .menu-button {
-        width: 10%;
+        width: auto;
         height: 100%;
         background: rgba(210, 210, 210, 0.9);
         margin-left: 1px;
         padding: 2px;
         float: right;
         padding-top: 17px;
+        padding-left: 1%;
+        padding-right: 1%;
         color: black;
         text-align: center;
         vertical-align: middle;
@@ -309,7 +305,7 @@
         color: grey;
         border-top: solid 1px lightgrey;
         padding: 10px;
-        z-index: 9990;
+        z-index: 998;
     }
 }
 
@@ -320,7 +316,7 @@
         height: 100%;
         padding: 10px 0;
         color: black;
-        text-align: center;
+        text-align: right;
         vertical-align: middle;
         border-top: thin solid whitesmoke;
     }
@@ -330,7 +326,7 @@
         height: 50px;
         padding: 0px !important;
         background: rgba(229, 229, 231, .91);
-        z-index: 9980;
+        z-index: 998;
     }
 
     .logo img {
@@ -371,7 +367,6 @@
     .nav-btn {
         float: right;
         padding: 2% 1% 0;
-        right: 12%;
     }
 
     [contentEditable=true]:focus {
@@ -465,7 +460,7 @@
         background: rgba(254, 254, 254, .5);
         color: rgba(62, 25, 77, .94);
         border-bottom: solid 1px lightgrey;
-        z-index: 9990;
+        z-index: 998;
     }
 
     #menu {
@@ -491,11 +486,11 @@
         background: rgba(253, 253, 253, .91);
         text-transform: uppercase;
         text-align: center;
-        font-size: 6px;
+        font-size: 7px;
         color: grey;
         border-top: solid 1px lightgrey;
         padding: 10px;
-        z-index: 9990;
+        z-index: 998;
     }
 
     #socialMedia {
