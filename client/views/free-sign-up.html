@@ -74,7 +74,12 @@
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="FREE_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
                     <div class="full-form">
-                        <button ng-disabled="saving" type="submit" class="submit-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
+                        <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
+                        <div>&nbsp;</div>
+                        <div class="progress" ng-show="saving">
+                            <div class="progress-bar progress-bar-pink progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            </div>
+                        </div>
                     </div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN"></a></div>
