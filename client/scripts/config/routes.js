@@ -36,8 +36,8 @@
             })
             .when('/sign-up/idt',
             {
-                templateUrl: 'views/idt-sign-up.html',
-                controller: 'idtSignUpCtrl',
+                templateUrl: 'views/free-sign-up.html',
+                controller: 'freeSignUpCtrl',
                 access: access.anon
             })
             .when('/free-sign-up-success',
@@ -208,21 +208,9 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/customer-support',
-            {
-                templateUrl: 'views/customer-support.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/error',
             {
                 templateUrl: 'views/error.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/under-construction',
-            {
-                templateUrl: 'views/under-construction.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

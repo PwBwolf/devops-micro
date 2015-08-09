@@ -8,7 +8,7 @@
         width: auto;
         height: 60px;
         background: rgba(229, 229, 231, .91);
-        z-index: 9980;
+        z-index: 998;
     }
 
     .logo img {
@@ -22,6 +22,20 @@
 
     .language {
         display: none;
+    }
+
+    #welcome {
+        padding: 0;
+        text-transform: uppercase;
+        margin: 0 auto;
+        float: right;
+        white-space: nowrap;
+    }
+
+    #welcome:hover {
+        cursor: default;
+        color: rgba(62, 25, 77, 0.941176);;
+        border-bottom: none;
     }
 
     .navbar {
@@ -131,20 +145,20 @@
         width: auto;
         height: 50px;
         background: rgba(229, 229, 231, .91) !important;
-        z-index: 9980;
+        z-index: 998;
         margin-bottom: 34px;
         font-size: 90%;
         padding: 0px !important;
     }
 
-    #brand {
+    #headerBrand {
         height: 50px;
         text-transform: uppercase;
         border-bottom: solid 1px lightgrey;
         z-index: 50;
     }
 
-    #brand img {
+    #headerBrand img {
         width: auto;
         height: 60px;
         display: block !important;
@@ -152,22 +166,16 @@
         position: absolute;
         top: 10px;
         left: 20px;
+        z-index: 998;
         transition: all 1s ease-in-out;
         -webkit-transition: all 1s ease-in-out;
         -moz-transition: all 1s ease-in-out;
         -ms-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
-        z-index: 9999;
-    }
-
-    #brand #faq {
-        width: auto;
-        padding-left: 2%;
-        padding-right: 2%;
     }
 
     .contact-number {
-        width: 30%;
+        width: 35%;
         height: 100%;
         margin-left: 1px;
         padding: 2px;
@@ -185,17 +193,19 @@
         -moz-transition: all 1s ease-in-out;
         -ms-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
-        z-index: 9999;
+        z-index: 998;
     }
 
     .menu-button {
-        width: 13%;
+        width: auto;
         height: 100%;
         background: rgba(210, 210, 210, 0.9);
         margin-left: 1px;
         padding: 2px;
         float: right;
         padding-top: 17px;
+        padding-left: 1%;
+        padding-right: 1%;
         color: black;
         text-align: center;
         vertical-align: middle;
@@ -214,13 +224,12 @@
         background: rgba(254, 254, 254, .95);
         color: rgba(62, 25, 77, .94);
         border-bottom: solid 1px lightgrey;
-        z-index: 701;
     }
 
     #menu {
         width: 100%;
         font-weight: bold;
-        font-size: 80%;
+        font-size: 90%;
     }
 
     #menuItems {
@@ -261,25 +270,32 @@
         background: rgba(253, 253, 253, .91);
         text-transform: uppercase;
         text-align: center;
-        font-size: 9px;
+        font-size: 8px;
         color: grey;
         border-top: solid 1px lightgrey;
-        padding: 10px;
-        z-index: 9990;
+        padding: 10px 0px;
+        z-index: 998;
     }
 
     #socialMedia {
-        width: 17%;
+        width: 10%;
         text-align: center;
-        float: right;
-        padding: 0px;
+        padding: 0;
         position: relative;
-        top: -21px;
+        top: -10px;
+    }
+
+    #copyright {
+        width: 90%;
+        text-align: center;
+        padding: 0;
+        position: relative;
+        top: -10px;
     }
 
     #socialMedia img {
         width: auto;
-        height: 25px;
+        height: 20px;
         filter: grayscale(100%);
         -webkit-filter: grayscale(100%);
         -moz-filter: grayscale(100%);

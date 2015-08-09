@@ -41,17 +41,17 @@
                         $scope.saving = false;
                     });
             } else {
-                setFormDirty();
+                setFormTouched();
             }
         };
 
-        function setFormDirty() {
-            $scope.form.name.$dirty = true;
-            $scope.form.interest.$dirty = true;
-            $scope.form.email.$dirty = true;
-            $scope.form.telephone.$dirty = true;
-            $scope.form.details.$dirty = true;
-            $scope.form.country.$dirty = true;
+        function setFormTouched() {
+            $scope.form.name.$touched = true;
+            $scope.form.interest.$touched = true;
+            $scope.form.email.$touched = true;
+            $scope.form.telephone.$touched = true;
+            $scope.form.details.$touched = true;
+            $scope.form.country.$touched = true;
         }
     }]);
 }(angular.module('app')));

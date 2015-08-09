@@ -13,41 +13,9 @@
 			$scope._5pm = homeChnlGuideSvc.getGdeData6();
 			$scope._6pm = homeChnlGuideSvc.getGdeData7();
             
-            $scope.stations = [{id: '47620', name: 'TELESUR', color: 'burlywood'}, {id: '44448', name: 'CENTROA', color: 'cadetblue'}, {id: '55912', name: 'TRO', color: 'darkgrey'}, {id: '65269', name: 'CSMOTV', color: 'darksalmon'}], {id: '59350', name: 'JBN', color: 'goldenrod'}
-            var dt = $filter('date')(new Date(), 'h:00 a');
+            $scope.stations = [{id: '47620', name: 'TELESUR', color: 'burlywood'}, {id: '44448', name: 'CENTROA', color: 'cadetblue'}, {id: '55912', name: 'TRO', color: 'darkgrey'}, {id: '65269', name: 'CSMOTV', color: 'darksalmon'}];  /// , {id: '59350', name: 'JBN', color: 'goldenrod'}
+            var dt = $filter('date')(new Date(), 'h');
             console.log('dt: '+dt);
-            
-            $scope.getTimeSlot = function (){
-                var timeSlot = new Date();
-                //var timeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
-                var timeSlot = $filter('date')( new Date(timeSlot.getTime() + (60 * 60 * 1000)), 'h:00 a');
-                //return pad(timeSlot.getHours())+ ':' +pad(timeSlot.getMinutes());
-                //return pad(timeSlot.getHours())+ ':00'; 
-                //$scope.getNextTimeSlot(timeSlot);
-                return timeSlot;
-            };
-            
-            /*
-            $scope.getNextTimeSlot = function (dt){
-                            var crntSlot = new Date();
-                            for (var l = 2; l < 12; l++ ){
-                                var cnt = 60 * l ;
-                                var newTimeSlot = $filter('date')(new Date(crntSlot.getTime() + (cnt * 60 * 1000)), 'h:00 a');
-                                //console.log('logtime: '+cnt);
-                                //var nextTimeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
-                                //var nextTimeSlot = $filter('date')( new Date(timeSlot.getTime() + (60 * 60 * 1000)), 'h:00 a');
-                                //return pad(nextTimeSlot.getHours())+ ':' +pad(nextTimeSlot.getMinutes());
-                                //return pad(nextTimeSlot.getHours())+ ':00'; 
-                                console.log('timeslot: '+newTimeSlot);
-                                //return newTimeSLot;
-                                
-                                //$(timeModule).append(timeModuleItem_others)[l];  
-                            };
-                            
-                        };*/
-            
-            
-            
             
             /// ALL USER CHANNELS AVAILABLE BELOW ///
             userSvc.getUserChannels(function (data) {
@@ -55,58 +23,13 @@
                 
 
             });
-            /////////////////////////////////////////
-            
-            
-            mediaSvc.getChannels('david', function(mydata){
-                console.log('mine: '+mydata.length);
-            });
             
             $scope.logoVisible = false;
             $scope.loadingStations = true;
             //for (var p in $scope.stations){
             var chnlGdeHldr = angular.element('#channelGuidePanel');
-            var timeHeaderBar = angular.element(document.createElement('div')), timeModule = angular.element(document.createElement('ul')), timeModuleItem_first = angular.element(document.createElement('li'));
-                timeHeaderBar.attr('id', 'guideHeader').attr('class', 'guideHeader');
-                
-            $(timeModuleItem_first).attr('class', 'timeModuleItem').html(dt);
-            //$(timeModuleItem_others).attr('class', 'timeModuleItem').html($scope.getTimeSlot());
-            $(timeModule).prepend(timeModuleItem_first);
-            //$scope.getNextTimeSlot();
-            $scope.getNextTimeSlot = function (){
-                var crntSlot = new Date();
-                for (var l = 1; l < 12; l++ ){
-                    var cnt = 60 * l;
-                    var newTimeSlot = [];
-                        newTimeSlot[l] = $filter('date')(new Date(crntSlot.getTime() + (cnt * 60 * 1000)), 'h:00 a');
-                    //console.log('logtime: '+cnt);
-                    //var nextTimeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
-                    //var nextTimeSlot = $filter('date')( new Date(timeSlot.getTime() + (60 * 60 * 1000)), 'h:00 a');
-                    //return pad(nextTimeSlot.getHours())+ ':' +pad(nextTimeSlot.getMinutes());
-                    //return pad(nextTimeSlot.getHours())+ ':00'; 
-                    //console.log('timeslot: '+newTimeSlot[l]);
-                    //return newTimeSLot;
-                    
-                    //$(timeModule).append(timeModuleItem_others)[l];
-                    //var timeElement = angular.element(document.createElement('li'));
-                    //$(timeElement).attr('class', 'timeModuleItem').html('callstack');
-                    //$(timeModule).append(timeElement);
-                    
-                    var timeModuleItem_others = angular.element(document.createElement('li'));
-                    $(timeModuleItem_others).attr('class', 'timeModuleItem').html(newTimeSlot[l]);
-                    $(timeModule).append(timeModuleItem_others);
-                    //return newTimeSlot;
-                    console.log('nTS: '+newTimeSlot[l]);
-                };
-                //return newTimeSlot;
-                
-            };
-            $scope.getNextTimeSlot();
-            //$(timeModule).prepend(timeModuleItem_first).append(timeModuleItem_others);
-            //$(timeModule).append(timeModuleItem_others);
-            $(timeHeaderBar).append(timeModule);
-            //console.log('usr: '+thisData);
             
+            //console.log('usr: '+thisData);
             
             angular.forEach($scope.stations, function(value, key) {
             //angular.forEach($scope.userChannels[0], function( value, key){
@@ -134,7 +57,7 @@
                         $(userChnlGde).attr('chnl', dStation).attr('style', 'background:'+value.color).prepend(userChnlLogo);
                         
                         angular.forEach(inLineup, function(data){
-                            var dShowStartTime = $scope.getStartTime(1, data), dShowEndTime = $scope.getEndTime(1, data), dNextTimeSlot = $scope.getTimeSlot(), firstShowTime = dt+':00';
+                            var dShowStartTime = $scope.getStartTime(1, data), dShowEndTime = $scope.getEndTime(1, data), dNextTimeSlot = $scope.getNextTimeSlot(), firstShowTime = dt+':00';
                             console.log('chnl: '+dStation+' - title: '+data.program.title+' dur: '+data.duration+' sT: '+dShowStartTime+' hour: '+dt+':00 - nexthour: '+dNextTimeSlot);
                             
                             
@@ -153,7 +76,7 @@
                                 //}
                         });
 
-                        angular.element(chnlGdeHldr).prepend(timeHeaderBar).append(userChnlGde);
+                        angular.element(chnlGdeHldr).append(userChnlGde);
                     }
                     
                     $scope.loadingStations = false;
@@ -170,8 +93,8 @@
             
             $scope.timeSpan = function(time){
                 //var timeS = time * 2+'px';
-                $scope.timeS = time * 4+'px';
-                console.log('span: '+$scope.timeS);
+                $scope.timeS = time * 3+'px';
+                //console.log('span: '+$scope.timeS);
                 return $scope.timeS;
             }
             
@@ -276,14 +199,12 @@
             return pad(showEndTime.getHours()) + ':' + pad(showEndTime.getMinutes());
         };
         
-        /*
-        $scope.getTimeSlot = function (){
-                    var timeSlot = new Date();
-                    var nextTimeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
-                    //return pad(nextTimeSlot.getHours())+ ':' +pad(nextTimeSlot.getMinutes());
-                    return pad(nextTimeSlot.getHours())+ ':00'; 
-                };*/
-        
+        $scope.getNextTimeSlot = function (){
+            var timeSlot = new Date();
+            var nextTimeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
+            //return pad(nextTimeSlot.getHours())+ ':' +pad(nextTimeSlot.getMinutes());
+            return pad(nextTimeSlot.getHours())+ ':00'; 
+        };
 
         function pad(number) {
             var r = String(number);

@@ -87,19 +87,19 @@ header {
     width: auto;
     height: 50px;
     background: rgba(229, 229, 231, .91) !important;
-    z-index: 9980;
+    z-index: 998;
     margin-bottom: 34px;
     padding: 0px !important;
 }
 
-#brand {
+#headerBrand {
     height: 50px;
     text-transform: uppercase;
     border-bottom: solid 1px lightgrey;
     z-index: 50;
 }
 
-#brand img {
+#headerBrand img {
     width: auto;
     height: 70px;
     margin: 0 0 0 31px;
@@ -109,17 +109,11 @@ header {
     -moz-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
-    z-index: 9999;
+    z-index: 998;
 }
 
-#brand span {
+#headerBrand span {
     display: inline-block;
-}
-
-#brand #faq {
-    width: auto;
-    padding-left: 2%;
-    padding-right: 2%;
 }
 
 .order-summary-title {
@@ -145,17 +139,19 @@ header {
     -moz-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
-    z-index: 9999;
+    z-index: 998;
 }
 
 .menu-button {
-    width: 10%;
+    width: auto;
     height: 100%;
     background: rgba(210, 210, 210, 0.9);
     margin-left: 1px;
     padding: 2px;
     float: right;
     padding-top: 15px;
+    padding-left: 1%;
+    padding-right: 1%;
     color: black;
     text-align: center;
     vertical-align: middle;
@@ -211,10 +207,19 @@ header {
 }
 
 #welcome {
+    padding: 0;
+    text-transform: uppercase;
+    margin: 0 auto;
     float: right;
-    right: 5%;
     white-space: nowrap;
 }
+
+#welcome:hover {
+    cursor: default;
+    color: rgba(62, 25, 77, 0.941176);;
+    border-bottom: none;
+}
+
 
 footer {
     width: 100%;
@@ -228,17 +233,24 @@ footer {
     font-size: 9px;
     color: grey;
     border-top: solid 1px lightgrey;
-    padding: 10px;
-    z-index: 9990;
+    padding: 10px 5px;
+    z-index: 998;
 }
 
 #socialMedia {
     width: 20%;
     text-align: center;
-    right: 40px;
-    padding: 0px;
+    padding: 0;
     position: relative;
-    top: -22px;
+    top: -10px;
+}
+
+#copyright {
+    width: 80%;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    top: -10px;
 }
 
 #socialMedia img {

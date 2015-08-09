@@ -48,11 +48,13 @@
             $scope.scrns = $window.document.getElementById('scrns');
             $scope.smm = $window.document.getElementById('teir_2');
             $scope.chnls = $window.document.getElementById('chnlMenuHldr');
-            $scope.guide = $window.document.getElementById('userguide');
+            $scope.guide = $window.document.getElementById('userGuide');
             $scope.qlBox = $window.document.getElementsByClassName('quickLookBox');
             
             //$scope.onNow = $scope.prvwPnl.firstElementChild();
             //console.log('top: '+$scope.prvwPnl.length);
+            //$scope.guide = angular.element('userGuide');
+            //console.log('log: '+$($scope.guide).attr('class'));
             
 			$scope.usrMnScrn = homeScrnsSvc.getUsrData();
             $scope.isVisible = false;
@@ -81,10 +83,13 @@
                         $scope.playChannel(index);
                     };
                     
+                    /*
                     $scope.chnlHover = function (index) {
                         $scope.chnlHovered = index;
                         $scope.selectOnAir(index);
                     };
+                    */
+                    
 
                 }
                 $scope.loadingChannels = false;

@@ -67,8 +67,7 @@
             //for (var p in $scope.stations){
             var chnlGdeHldr = angular.element('#channelGuidePanel');
             var timeHeaderBar = angular.element(document.createElement('div')), timeModule = angular.element(document.createElement('ul')), timeModuleItem_first = angular.element(document.createElement('li'));
-                timeHeaderBar.attr('id', 'guideHeader').attr('class', 'guideHeader');
-                
+            //$(chnlGdeHldr).append();
             $(timeModuleItem_first).attr('class', 'timeModuleItem').html(dt);
             //$(timeModuleItem_others).attr('class', 'timeModuleItem').html($scope.getTimeSlot());
             $(timeModule).prepend(timeModuleItem_first);

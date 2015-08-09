@@ -25,6 +25,7 @@
         .ng-hide {
             display: none !important;
         }
+
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
         }
@@ -46,15 +47,21 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <header id="desktopHeader">
-    <div id="brand">
+    <div id="headerBrand">
         <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
 
-        <div id="language" class="menu-button"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a></div>
-        <div class="menu-button">
-            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
-            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
+        <div id="language" class="menu-button">
+            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
         </div>
-        <div id="faq" class="menu-button" access-level="accessLevels.user"><a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a></div>
+        <div class="menu-button" access-level="accessLevels.anon">
+            <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
+        </div>
+        <div class="menu-button" access-level="accessLevels.user">
+            <a href="#" ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
+        </div>
+        <div class="menu-button" access-level="accessLevels.user">
+            <a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a>
+        </div>
         <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
     </div>
     <nav id="navBar">
@@ -65,9 +72,7 @@
                 <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
                 <menuItem home-only id="joinNow" access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
                 <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
-                <menuItem id="welcome">
-                    <div access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
-                </menuItem>
+                <div id="welcome" access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
             </div>
         </div>
     </nav>
@@ -87,7 +92,8 @@
                     </ul>
                 </div>
                 <div class="nav-btn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_ANON_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.user" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
@@ -108,10 +114,8 @@
 <div id="topBox" ng-view autoscroll="true"></div>
 
 <footer class="top-shadow">
-    <div translate="INDEX_COPYRIGHT"></div>
-    <div id="socialMedia" translate="INDEX_SOCIAL_MEDIA">
-
-    </div>
+    <span id="socialMedia" translate="INDEX_SOCIAL_MEDIA"></span>
+    <span id="copyright" translate="INDEX_COPYRIGHT"></span>
 </footer>
 
 <!--[if lt IE 9]>
@@ -170,7 +174,6 @@
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
 <script src="scripts/controllers/sign-up-controller.js"></script>
-<script src="scripts/controllers/idt-sign-up-controller.js"></script>
 <script src="scripts/controllers/free-sign-up-controller.js"></script>
 <script src="scripts/controllers/complimentary-sign-up-controller.js"></script>
 <script src="scripts/controllers/sign-in-controller.js"></script>
