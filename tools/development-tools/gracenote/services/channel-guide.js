@@ -20,10 +20,10 @@ var daysRetrieve = process.argv[2];
 var daysKeep = process.argv[3];
 
 if(daysRetrieve > 15 || daysRetrieve === undefined) {
-    daysRetrieve = 15;
+    daysRetrieve = 14;
 } else if (daysRetrieve < 0) {
     daysRetrieve = 1;
-}
+}	
 
 if(daysKeep < 0 || daysKeep === undefined) {
     daysKeep = 5;
@@ -78,37 +78,6 @@ function getChannelGuide(graceNote, stationId, channelDB) {
     
         logger.logInfo(data.length);
         
-        /*
-        // old channels shoud be removed from DB
-        var oldchannels = [];
-        for(var k = 0; k < channelDB.length; k++) {
-            console.log('channels length: '+channelDB.length + ' index k: '+ k);
-            var isChannelExist = false;
-            for(var m = 0; m < data.length; m++) {
-                if(channelDB[k].stationId === data[m].stationId) {
-                    isChannelExist = true;
-                    break;
-                }
-            }
-            // channel does not exist
-            if(isChannelExist === false) {
-                channelDB.splice(k, 1);
-                console.log('stationIDs: index '+k+' _id '+stationIDs[k].dbID);
-                var dbID = stationIDs[k].dbID;
-                
-                Channel.remove({ _id: stationIDs[k].dbID }, function (err) {
-                    if (err) {
-                        logger.logError('could not remove channel from DB:'+err);
-                    } else {
-                        // removed!
-                        logger.logInfo('remove channel not exist with index: '+k);
-                    }
-                });
-                stationIDs.splice(k, 1);
-                k--;
-            }
-        }
-        */
         // save channel
         for(var j = 0; j < data.length; j++) {
             var isNewChannel = newChannel(data[j], stationIDs);
@@ -187,13 +156,18 @@ function updateChannel(channel, dataGN, startTimeDB) {
         var newLength = channel.airings.length;
         for(var i = 0; i < data[0].airings.length; i++) {
             if(newLength > 0) {
-               if(data[0].airings[i].startTime > channel.airings[newLength-1].startTime) {
+                
+                if(data[0].airings[i].startTime > channel.airings[newLength-1].startTime) {
                     logger.logInfo('--push program into channel: ');
                     channel.airings.push(data[0].airings[i]);
+                    channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
+                    channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
                 }
             } else {
                 logger.logInfo('--push program into channel: ');
                 channel.airings.push(data[0].airings[i]);
+                channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
+                channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
             }
         }
 
@@ -220,7 +194,11 @@ function saveChannel(Channel, channel) {
         var newChannel = new Channel(data[0]);
         logger.logInfo('--save channel start--');
         logger.logInfo('airings in the channel: '+data[0].airings.length);
-
+        
+        for(var i = 0; i < newChannel.airings.length; i++) {
+            newChannel.airings[i].startTime = date.isoDate(new Date(newChannel.airings[i].startTime));
+            newChannel.airings[i].endTime = date.isoDate(new Date(newChannel.airings[i].endTime));
+        }
         //Lets save it
         newChannel.save(function (err, userObj) {
             if (err) {

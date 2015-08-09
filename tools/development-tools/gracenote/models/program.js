@@ -4,8 +4,8 @@ var mongoose = require('../../../../server/node_modules/mongoose');
 var Schema = mongoose.Schema;
 
 var Program = new Schema({
-    startTime: String,
-    endTime: String,
+    startTime: Date,
+    endTime: Date,
     duration: Number,
     ratings: {
         body: String,
@@ -36,7 +36,7 @@ var Program = new Schema({
         entityType: String,
         preferredImage: {
             uri: String,
-            Height: String,
+            height: String,
             width: String,
             size: String,
             aspect: String,

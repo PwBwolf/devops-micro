@@ -9,11 +9,13 @@
         }).
         when('/channelguide',{
             templateUrl: 'channelguide.html',
-            controller: "channelGuideCtrl"
+            //controller: "channelGuideCtrl"
+            controller: "channelListCtrl"
         }).
         when('/channelguide/:stationid',{
             templateUrl: 'channel.html',
-            controller: "channelCtrl"
+            //controller: "channelCtrl"
+            controller: "channelInfoCtrl"
         }).
         when('/program/:programid',{
             templateUrl: 'empty.html',
@@ -21,7 +23,8 @@
         }).
         when('/channelguide/:stationid/:programid',{
             templateUrl: 'program.html',
-            controller: "programCtrl"
+            //controller: "programCtrl"
+            controller: "programDetailCtrl"
         }).
         otherwise({
             redirectTo: '/'             

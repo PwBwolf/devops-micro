@@ -18,9 +18,35 @@
                     }, function(res) {
                         return $q.reject(res);
                     });
-                 }
-                 return promise;
-              }
+                }
+                return promise;
+            },
+            
+            getChannelList: function(req, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/channellist',
+                    params: {stationIds: req.stationIds}
+                }).success(success).error(error);
+                
+            },
+            
+            getChannelInfo: function(req, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/channellist/channel',
+                    params: {stationId: req.stationId, hour: req.hour, period: req.period}
+                }).success(success).error(error);
+                
+            },
+            
+            getProgramDetail: function(req, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/channellist/channel/program',
+                    params: {tmsid: req.tmsid, stationId: req.stationId}
+                }).success(success).error(error);
+            }
         }
    }])
 }(angular.module('myApp')));

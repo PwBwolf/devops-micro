@@ -1,7 +1,7 @@
 'use strict';
 
 var logger = require('../../../../server/common/setup/logger');
-var channelGuideCtrl = require('../controllers/channel-guide-controller');
+var channelGuideCtrl = require('../controllers/channel-guide-controller1');
 
 module.exports=function(app, root)
 {
@@ -10,7 +10,11 @@ module.exports=function(app, root)
         res.sendFile('index.html', {"root": root + '/views'})
     });
     
-    app.get('/channelguide', channelGuideCtrl.getChannelGuide);
+    app.get('/channellist', channelGuideCtrl.getChannelList);
+    
+    app.get('/channellist/channel', channelGuideCtrl.getChannelInfo);
+    
+    app.get('/channellist/channel/program', channelGuideCtrl.getProgramDetail);
     
     app.get('/about',function(req, res){
 
