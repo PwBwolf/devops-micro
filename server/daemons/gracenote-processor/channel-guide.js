@@ -3,8 +3,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 //Lets load the mongoose module in our program
+var config = require('../../common/setup/config');
 var mongoose = require('../../node_modules/mongoose');
-var graceNote = require('./grace-note');
+var graceNote = require('../../common/services/grace-note');
 var async = require('../../node_modules/async');
 var date = require('../../common/services/date');
 var logger = require('../../common/setup/logger');
@@ -12,7 +13,7 @@ var logger = require('../../common/setup/logger');
 require('../../../tools/development-tools/gracenote/models/program');
 require('../../../tools/development-tools/gracenote/models/channel');
 
-var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@localhost/yiptv');
+var dbYip = mongoose.createConnection(config.db);
 var Program = dbYip.model('Program');
 var Channel = dbYip.model('Channel');
 
