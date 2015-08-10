@@ -144,6 +144,28 @@ function buildRules() {
             }
         },
         {
+            'name': 'pre-cancel-user',
+            'description': 'Remove paid basic package from freeside one day before actual cancellation',
+            'priority': 1,
+            'enabled': true,
+            'condition': function (fact, cb) {
+                var moment = require('moment');
+                if (fact.doctype === 'user' && fact.status === 'active' && fact.type === 'paid') {
+                    var cancelOn = fact.cancelOn;
+                    if (moment.utc().startOf('day').diff(moment(cancelOn).utc().startOf('day'), 'days') === 0) {
+                        cb(true);
+                        return;
+                    }
+                }
+                cb(false);
+            },
+            'consequence': function (cb) {
+                this.process = true;
+                this.postProcessorKey = 'preCanceledUser';
+                cb();
+            }
+        },
+        {
             'name': 'cancel-user',
             'description': 'Cancel users if cancellation requested on last billing day',
             'priority': 1,
