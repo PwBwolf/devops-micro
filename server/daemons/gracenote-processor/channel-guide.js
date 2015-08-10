@@ -20,7 +20,7 @@ var Channel = dbYip.model('Channel');
 var daysRetrieve = process.argv[2];
 var daysKeep = process.argv[3];
 
-if(daysRetrieve > 15 || daysRetrieve === undefined) {
+if(daysRetrieve > 14 || daysRetrieve === undefined) {
     daysRetrieve = 14;
 } else if (daysRetrieve < 0) {
     daysRetrieve = 1;
