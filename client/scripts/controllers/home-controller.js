@@ -1,11 +1,11 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeCtrl', ['appSvc', '$scope', '$window','webStorage', function (appSvc, $scope, $window, webStorage) {
+    app.controller('homeCtrl', ['appSvc', '$scope', '$window', 'webStorage', function (appSvc, $scope, $window, webStorage) {
 
         var key = {
-            en: {'localhost': '', 'int.yiptv.net': 'http://int.yiptv.net/blog/index.php/yiptv/', 'test.yiptv.net': 'http://test.yiptv.net/live-tv/index.php/yiptv/', 'yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv/', 'www.yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv/'},
-            es: {'localhost': '', 'int.yiptv.net': 'http://int.yiptv.net/blog/index.php/yiptv-home-2/', 'test.yiptv.net': 'http://test.yiptv.net/live-tv/index.php/yiptv-home-2/', 'yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv-home-2/', 'www.yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv-home-2/'}
+            en: {'localhost': '', '172.16.10.8': 'http://int.yiptv.net/blog/index.php/yiptv/', 'int.yiptv.net': 'http://int.yiptv.net/blog/index.php/yiptv/', '172.16.10.11': 'http://test.yiptv.net/live-tv/index.php/yiptv/', 'test.yiptv.net': 'http://test.yiptv.net/live-tv/index.php/yiptv/', 'yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv/', 'www.yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv/'},
+            es: {'localhost': '', '172.16.10.8': 'http://int.yiptv.net/blog/index.php/yiptv-home-2/', 'int.yiptv.net': 'http://int.yiptv.net/blog/index.php/yiptv-home-2/', '172.16.10.11': 'http://test.yiptv.net/live-tv/index.php/yiptv-home-2/', 'test.yiptv.net': 'http://test.yiptv.net/live-tv/index.php/yiptv-home-2/', 'yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv-home-2/', 'www.yiptv.com': 'http://yiptv.com/live-tv/index.php/yiptv-home-2/'}
         };
 
         activate();
