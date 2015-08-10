@@ -186,6 +186,31 @@ module.exports = {
         });
     },
 
+    updateUserProfile: function (req, res) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - updateUserProfile - error fetching user: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            user.firstName = req.body.firstName;
+            user.lastName = req.body.lastName;
+            user.telephone = req.body.telephone;
+            user.save(function (err) {
+                if (err) {
+                    logger.logError('userController - updateUserProfile - error saving user: ' + req.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(500).end();
+                } else {
+                    return res.status(200).end();
+                }
+            });
+        });
+    },
+
     verifyUser: function (req, res) {
         User.findOne({verificationCode: req.body.code}, function (err, user) {
             if (err) {
