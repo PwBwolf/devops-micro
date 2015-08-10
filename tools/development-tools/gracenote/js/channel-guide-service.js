@@ -44,7 +44,7 @@
                 $http({
                     method: 'GET',
                     url: '/channellist/channel/program',
-                    params: {tmsid: req.tmsid, stationId: req.stationId}
+                    params: {tmsId: req.tmsId, stationId: req.stationId, startTime: req.startTime}
                 }).success(success).error(error);
             }
         }

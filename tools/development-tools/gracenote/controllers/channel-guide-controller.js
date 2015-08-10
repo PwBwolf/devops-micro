@@ -98,31 +98,35 @@ module.exports = {
         var startTime = date.isoDate(nowTime);
         logger.logInfo('getChannelInfo startTime:' + startTime);
 
-        var endTime = date.isoDate(dateAdd(nowTime, req.query.hour ? 'hour' : 'day', req.query.period));
+        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 15)) : date.isoDate(dateAdd(nowTime, req.query.hour ? 'hour' : 'day', req.query.period));
         logger.logInfo('getChannelInfo endTime:' + endTime);
 
         //Channel.find({stationId : req.query.stationId, airings: {$elemMatch: {endTime: {$gte: startTime, $lte: endTime}}}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
         //Channel.find({stationId : req.query.stationId, 'airings.endTime' : {$gt : startTime, $lt : endTime}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
         //Channel.find({stationId : req.query.stationId}, {airings: {$elemMatch:{endTime: {$gt: startTime, $lt: endTime}}} }, function(err, channelsDB) {
         //Channel.find({stationId : req.query.stationId}).populate({path: 'airings', match: {endTime:{$gt: startTime, $lt: endTime}}, select:'startTime endTime title program.tmsId, program.preferredImage.uri'}).exec( function(err, channelsDB) {
-        Channel.aggregate([{$match: {stationId : req.query.stationId}}, {$unwind: "$airings"}, {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], function(err, channelsDB) {
+        Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
+                           {$unwind: "$airings"}, 
+                           {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, 
+                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], 
+                           function(err, channelsDB) {
             if (err) {
-                    logger.logInfo('find error: ' + err);
-                } else {
-                    logger.logInfo('airings found');
-    
-                    res.json({
-                        channelsDB : channelsDB
-                    });
-                }
-            });
+                logger.logInfo('find error: ' + err);
+            } else {
+                logger.logInfo('airings found');
+
+                res.json({
+                    channelsDB : channelsDB
+                });
+            }
+        });
     },
 
     getProgramDetail : function(req, res) {
 
         Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
                            {$unwind: '$airings'}, 
-                           {$match: {'airings.program.tmsId': req.query.tmsid}}, 
+                           {$match: {'airings.program.tmsId': req.query.tmsId, 'airings.startTime': date.isoDate(new Date(req.query.startTime))}}, 
                            {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, "airings.duration": true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, 'airings.program.genres': true, callSign : true}}], 
                            function(err, channelsDB) {
             if (err) {

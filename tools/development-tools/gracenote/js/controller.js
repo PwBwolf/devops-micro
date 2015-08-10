@@ -93,14 +93,14 @@
     }]);
     
     myApp.controller('channelInfoCtrl', ['$scope', '$routeParams', 'channelGuideSvc', 'channelSvc', function ($scope, $routeParams, channelGuideSvc, channelSvc) {
-        console.log('channelCtrl result: channel index '+$routeParams.stationid);
+        console.log('channelInfoCtrl result: channel index '+$routeParams.stationid);
         
         channelSvc.setChannel($routeParams.stationid);
         
-        var req = {stationId: '0', hour: true, period: 2};
+        var req = {stationId: '0', hour: true, period: undefined};
         req.stationId = $routeParams.stationid;
         req.hour = true;
-        req.period = 6;
+        req.period = undefined;
         
         channelGuideSvc.getChannelInfo(
             req,
@@ -154,9 +154,10 @@
         console.log('programCtrl result: channel index '+$routeParams.stationid+' and airings program index '+$routeParams.programid);
         $scope.channelId = $routeParams.stationid;
         
-        var req = {tmsId: '0'};
-        req.tmsid = $routeParams.programid;
+        var req = {tmsId: '0', stationId: '0', startTime: '0'};
+        req.tmsId = $routeParams.programid;
         req.stationId = $routeParams.stationid;
+        req.startTime = $routeParams.starttime;
         
         channelGuideSvc.getProgramDetail(
             req,
