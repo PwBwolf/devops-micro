@@ -18,6 +18,10 @@
                     updateCss();
                 }, true);
 
+                $scope.$watch('profileCallCompleted', function () {
+                    updateCss();
+                }, true);
+
                 attrs.$observe('accessLevel', function (al) {
                     if (al) {
                         accessLevel = $scope.$eval(al);
@@ -26,12 +30,14 @@
                 });
 
                 function updateCss() {
-                    if (userRole && accessLevel) {
+                    if (userRole && accessLevel && $scope.profileCallCompleted) {
                         if (!userSvc.authorize(accessLevel, userRole)) {
                             element.css('display', 'none');
                         } else {
                             element.css('display', prevDisplay);
                         }
+                    } else {
+                        element.css('display', 'none');
                     }
                 }
             }

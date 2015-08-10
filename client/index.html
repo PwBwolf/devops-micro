@@ -53,11 +53,11 @@
         <div id="language" class="menu-button">
             <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
         </div>
-        <div class="menu-button" access-level="accessLevels.anon">
-            <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
-        </div>
         <div class="menu-button" access-level="accessLevels.user">
             <a href ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
+        </div>
+        <div class="menu-button" access-level="accessLevels.anon">
+            <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
         </div>
         <div class="menu-button" access-level="accessLevels.user">
             <a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a>
