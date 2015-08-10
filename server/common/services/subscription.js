@@ -1114,7 +1114,7 @@ module.exports = {
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
-                        logger.logError('subscription - endFreeTrial - error fetching user: ' + userEmail);
+                        logger.logError('subscription - removePremiumPackage - error fetching user: ' + userEmail);
                         callback(err);
                     } else {
                         currentValues = {
@@ -1123,7 +1123,7 @@ module.exports = {
                         userObj.account.premiumEndDate = undefined;
                         userObj.account.save(function (err) {
                             if (err) {
-                                logger.logError('subscription - endPremiumChannels - error updating account: ' + userObj.email);
+                                logger.logError('subscription - removePremiumPackage - error updating account: ' + userObj.email);
                             }
                             callback(err, userObj);
                         });
@@ -1134,7 +1134,7 @@ module.exports = {
             function (userObj, callback) {
                 aio.updateUserPackages(userObj.email, config.aioFreeUserPackages, function (err) {
                     if (err) {
-                        logger.logError('subscription - endPremiumChannels - error updating to free packages: ' + userObj.email);
+                        logger.logError('subscription - removePremiumPackage - error updating to free packages: ' + userObj.email);
                         errorType = 'aio-package-update';
                     }
                     callback(err, userObj);
@@ -1144,7 +1144,7 @@ module.exports = {
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
-                        logger.logError('subscription - endPremiumChannels - error logging into billing system: ' + userObj.email);
+                        logger.logError('subscription - removePremiumPackage - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
                     }
                     callback(err, userObj, sessionId);
@@ -1154,7 +1154,7 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
                     if (err) {
-                        logger.logError('subscription - endPremiumChannels - error removing premium package: ' + userObj.email);
+                        logger.logError('subscription - removePremiumPackage - error removing premium package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
@@ -1192,6 +1192,44 @@ module.exports = {
                         break;
                 }
             }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    removePaidBasicPackage: function (userEmail, cb) {
+        var errorType, currentValues;
+        async.waterfall([
+            // remove premiumEndDate
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - removePaidBasicPackage - error fetching user: ' + userEmail);
+                        callback(err);
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - removePaidBasicPackage - error logging into billing system: ' + userObj.email);
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // cancel paid basic package
+            function (userObj, sessionId, callback) {
+                billing.cancelPackages(sessionId, [config.freeSidePaidBasicPackagePart], function (err) {
+                    if (err) {
+                        logger.logError('subscription - removePaidBasicPackage - error removing paid basic package: ' + userObj.email);
+                    }
+                    callback(err);
+                });
+            }
+        ], function (err) {
             if (cb) {
                 cb(err);
             }

@@ -71,32 +71,8 @@ module.exports = {
         }
     },
 
-
     getUserChannels: function (req, res) {
         fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
-            if (err) {
-                logger.logError('Error reading channels.json' + err);
-                return res.status(500).end();
-            } else {
-                var channels;
-                try {
-                    channels = JSON.parse(data);
-                } catch (ex) {
-                    logger.logError('Error parsing channels.json file. Correct format errors and try again.');
-                    return res.status(500).end();
-                }
-                if (!channels || channels.length === 0) {
-                    logger.logError('channels.json file is empty');
-                    return res.status(500).end();
-                } else {
-                    return res.json(channels);
-                }
-            }
-        });
-    },
-
-    getPromoChannels: function (req, res) {
-        fs.readFile(__dirname + '/promos.json', 'utf8', function (err, data) {
             if (err) {
                 logger.logError('Error reading channels.json' + err);
                 return res.status(500).end();
