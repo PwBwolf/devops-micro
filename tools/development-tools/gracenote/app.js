@@ -10,7 +10,6 @@ var app = module.exports = express();
 var views = __dirname;
 require('./router/main')(app, views);
 
-app.use(express.static('services'));
 app.use(express.static('controllers'));
 app.use(express.static('../../../client'));
 app.use(express.static('js'));

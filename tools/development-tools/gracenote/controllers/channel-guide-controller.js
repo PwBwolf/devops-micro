@@ -1,8 +1,7 @@
 'use strict';
 
-//Lets load the mongoose module in our program
+// Lets load the mongoose module in our program
 var mongoose = require('../../../../server/node_modules/mongoose');
-var graceNote = require('../services/grace-note');
 var async = require('../../../../server/node_modules/async');
 var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
@@ -19,98 +18,48 @@ var startTime = date.isoDate(nowTime);
 logger.logInfo(startTime);
 
 var temp = new Date();
-//temp.setDate(temp.getDate() - 5);
+// temp.setDate(temp.getDate() - 5);
 temp.setMinutes(temp.getMinutes() - 30);
 var startTimeDB = date.isoDate(temp);
 
 nowTime.setHours(nowTime.getHours() + 5);
 var endTime = date.isoDate(nowTime);
 var stationID = '';
-//var stationID = '44448';
+// var stationID = '44448';
 
 var stationIDs = [];
 
 module.exports = {
-    getChannelGuide: function (req, res) {
+    getChannelGuide : function(req, res) {
         async.waterfall([
-            function(callback) {
-                Channel.find({}, function(err, channelsDB) {
-                    if(err) {
-                        logger.logInfo('find error: '+err);
-                        callback(err);
-                    } else {
-                        logger.logInfo('documents found in channelsDB: '+channelsDB.length);
-                        
-                        res.json({channelsDB: channelsDB});
-                        callback(null, channelsDB);
-                    }
-                });
-            },
-            /*
-            function(channelsDB, callback) {
-                graceNote.getChannelGuide(stationID, startTime, endTime, function (err, data) {
-                    if (err) {
-                        logger.logInfo(err);
-                        return res.status(500).end();
-                    }
-
-                    logger.logInfo(data.length);
-                    //console.log(data[0]);
-                    
-                    for(var i = 0; i < channelsDB.length; i++) {
-                        stationIDs.push({stationID: channelsDB[i].stationId, dbID: channelsDB[i]._id});
-                        logger.logInfo(JSON.parse(JSON.stringify(stationIDs[i])));
-                    }
-                    
-                    // old channels shoud be removed from DB
-                    var oldchannels = [];
-                    for(var k = 0; k < channelsDB.length; k++) {
-                        var isChannelExist = false;
-                        for(var m = 0; m < data.length; m++) {
-                            if(channelsDB[k].stationId === data[m].stationId) {
-                                isChannelExist = true;
-                                break;
-                            }
+                function(callback) {
+                    Channel.find({
+                        stationId : {
+                            $in : [ '44448', '55912' ]
                         }
-                        // channel does not exist
-                        if(isChannelExist === false) {
-                            channelsDB[k].remove();
-                            
-                            Channel.remove({ _id: stationIDs[k].dbID }, function (err) {
-                                if (err) {
-                                    logger.logError('could not remove channel from DB:'+err);
-                                } else {
-                                    // removed!
-                                    logger.logInfo('remove channel not exist with index: '+k);
-                                }
-                            });
-                            stationIDs[k].remove();
-                            k--;
-                        }
-                    }
-                    
-                    // save channel
-                    for(var j = 0; j < data.length; j++) {
-                        var isNewChannel = newChannel(data[j], stationIDs);
-                        if(isNewChannel.new) {
-                            logger.logInfo('new channel found, save to db');
-                            saveChannel(Channel, data[j], channelsDB);
+                    }, {
+                        stationId : true,
+                        preferredImage : true,
+                        callSign : true,
+                        "airings.startTime" : true,
+                        "airings.endTime" : true,
+                        "airings.program.preferredImage" : true,
+                        "airings.program.title" : true
+                    }, function(err, channelsDB) {
+                        if (err) {
+                            logger.logInfo('find error: ' + err);
+                            callback(err);
                         } else {
-                            logger.logInfo('channel exists in db with index ' + isNewChannel.index + ', update db');
-                            //logger.logInfo(data[j]);
-                            updateChannel(channelsDB[isNewChannel.index], data[j], startTimeDB);
-                        }
-                    }
-                    res.json({channelsDB: channelsDB});
-                    logger.logInfo('pass channel info to client');
-                    //console.log(channelsDB);
-                    //console.log(channelsDB[0].airings[0].program);
-                    //res.json({channelsB: channelsDB[0].airings[0].program.title});
-                    callback(err, data);
-                })
-            }*/
+                            logger.logInfo('documents found in channelsDB: '
+                                    + channelsDB.length);
 
-        ], function (err) {
+                            res.json({
+                                channelsDB : channelsDB
+                            });
+                            callback(null, channelsDB);
+                        }
+                    });
+                }, ], function(err) {
             if (err) {
                 logger.logError(err);
                 return res.status(500).end();
@@ -118,95 +67,108 @@ module.exports = {
                 logger.logInfo('get channel guide, return!');
             }
         });
+    },
+
+    getChannelList : function(req, res) {
+
+        Channel.find(req.query.stationIds === undefined ? {} : {
+            stationId : {
+                $in : req.query.stationIds
+            }
+        }, {
+            stationId : true,
+            "preferredImage.uri" : true,
+            callSign : true
+        }, function(err, channelsDB) {
+            if (err) {
+                logger.logInfo('find error: ' + err);
+            } else {
+                logger.logInfo('documents found in channelsDB: '
+                        + channelsDB.length);
+
+                res.json({
+                    channelsDB : channelsDB
+                });
+            }
+        });
+    },
+
+    getChannelInfo : function(req, res) {
+        var nowTime = new Date();
+        var startTime = date.isoDate(nowTime);
+        logger.logInfo('getChannelInfo startTime:' + startTime);
+
+        var endTime = date.isoDate(dateAdd(nowTime, req.query.hour ? 'hour' : 'day', req.query.period));
+        logger.logInfo('getChannelInfo endTime:' + endTime);
+
+        //Channel.find({stationId : req.query.stationId, airings: {$elemMatch: {endTime: {$gte: startTime, $lte: endTime}}}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
+        //Channel.find({stationId : req.query.stationId, 'airings.endTime' : {$gt : startTime, $lt : endTime}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
+        //Channel.find({stationId : req.query.stationId}, {airings: {$elemMatch:{endTime: {$gt: startTime, $lt: endTime}}} }, function(err, channelsDB) {
+        //Channel.find({stationId : req.query.stationId}).populate({path: 'airings', match: {endTime:{$gt: startTime, $lt: endTime}}, select:'startTime endTime title program.tmsId, program.preferredImage.uri'}).exec( function(err, channelsDB) {
+        Channel.aggregate([{$match: {stationId : req.query.stationId}}, {$unwind: "$airings"}, {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], function(err, channelsDB) {
+            if (err) {
+                    logger.logInfo('find error: ' + err);
+                } else {
+                    logger.logInfo('airings found');
+    
+                    res.json({
+                        channelsDB : channelsDB
+                    });
+                }
+            });
+    },
+
+    getProgramDetail : function(req, res) {
+
+        Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
+                           {$unwind: '$airings'}, 
+                           {$match: {'airings.program.tmsId': req.query.tmsid}}, 
+                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, "airings.duration": true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, 'airings.program.genres': true, callSign : true}}], 
+                           function(err, channelsDB) {
+            if (err) {
+                logger.logInfo('find error: ' + err);
+            } else {
+                logger.logInfo('documents found in channelsDB: '
+                        + channelsDB.length);
+
+                res.json({
+                    channelsDB : channelsDB[0]
+                });
+            }
+        });
     }
 };
 
-function newChannel(data, stationIDs) {
-    var channel = {new: true, index: null};
-    if(stationIDs === undefined) {
-        logger.logInfo('first time run');
-        return channel;
+function dateAdd(date, interval, units) {
+    var ret = new Date(date); // don't change original date
+    switch (interval.toLowerCase()) {
+    case 'year':
+        ret.setFullYear(ret.getFullYear() + units);
+        break;
+    case 'quarter':
+        ret.setMonth(ret.getMonth() + 3 * units);
+        break;
+    case 'month':
+        ret.setMonth(ret.getMonth() + units);
+        break;
+    case 'week':
+        ret.setDate(ret.getDate() + 7 * units);
+        break;
+    case 'day':
+        ret.setDate(ret.getDate() + units);
+        break;
+    case 'hour':
+        ret.setTime(ret.getTime() + units * 3600000);
+        break;
+    case 'minute':
+        ret.setTime(ret.getTime() + units * 60000);
+        break;
+    case 'second':
+        ret.setTime(ret.getTime() + units * 1000);
+        break;
+    default:
+        ret = undefined;
+        break;
     }
-        
-    for( var i = 0; i < stationIDs.length; i++) {
-        if(data.stationId === stationIDs[i].stationID) {
-            channel.new = false;
-            channel.index = i;
-            return channel;	
-        }
-    }
-    return channel;
-}
-
-function saveProgram(Program, data) {
-    //Lets create a new user
-    var program = new Program(data);
-
-    //Lets save it
-    program.save(function (err, userObj) {
-        if (err) {
-            logger.logInfo(err);
-        } else {
-            logger.logInfo('saved program successfully:', userObj);
-        }
-    });
-}
-
-function updateChannel(channel, data, startTimeDB) {
-    logger.logInfo('airings length: '+channel.airings.length);
-    logger.logInfo('airings startTime in db: '+channel.airings[0].startTime+' VS airings startTime frome gracenote: '+data.airings[0].startTime);
-
-    var count = 0;
-    for(var j = 0; j < channel.airings.length; j++) {
-        if(channel.airings[j].startTime < startTimeDB) {
-            count++;
-        } else {
-            break;	
-        }
-    }
-    logger.logInfo('old programs dropped off from channel: '+count);		
-    channel.airings.splice(0, count);
-    
-    var newLength = channel.airings.length;
-    for(var i = 0; i < data.airings.length; i++) {
-        if(newLength > 0) {
-           if(data.airings[i].startTime > channel.airings[newLength-1].startTime) {
-                logger.logInfo('--push program into channel: ');
-                channel.airings.push(data.airings[i]);
-            }
-        } else {
-            logger.logInfo('--push program into channel: ');
-            channel.airings.push(data.airings[i]);
-        }
-    }
-    
-    logger.logInfo('airings length: '+channel.airings.length);
-    
-    channel.save(function (err, userObj) {
-        if (err) {
-            logger.logInfo('updateChannel - save got error: '+err);
-        } else {
-            //logger.logInfo('update channel successfully:', userObj);
-            logger.logInfo('update channel successfully');
-        }
-    });
-}
-
-function saveChannel(Channel, data, channelsDB) {
-    //Lets create a new user
-    var channel = new Channel(data);
-    logger.logInfo('--save channel start--');
-    logger.logInfo('airings in the channel: '+data.airings.length);
-    //console.log(data);
-    channelsDB.push(data);
-    //console.log(channelsDB[0]);
-    //Lets save it
-    channel.save(function (err, userObj) {
-        if (err) {
-            logger.logInfo(err);
-        } else {
-            //logger.logInfo('saved channel successfully:', userObj);
-            logger.logInfo('saved channel successfully:');
-        }
-    });
+    return ret;
 }
