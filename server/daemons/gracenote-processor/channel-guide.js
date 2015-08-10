@@ -152,23 +152,25 @@ function updateChannel(channel, dataGN, startTimeDB) {
         channel.airings.splice(0, count);
 
         logger.logInfo('program left: '+channel.airings.length);
+        
+        var index = 0;
+        for(var i = 0; i < channel.airings.length; i++) {
+            if(data[0].airings[0].startTime === channel.airings[i].startTime) {
+                index = i;
+                break;
+            }
+        }
+            
+        channel.airings.splice(index, channel.airings.length - index);
 
+        logger.logInfo('program left: '+channel.airings.length);
+        
         var newLength = channel.airings.length;
         for(var i = 0; i < data[0].airings.length; i++) {
-            if(newLength > 0) {
-                
-                if(data[0].airings[i].startTime > channel.airings[newLength-1].startTime) {
-                    logger.logInfo('--push program into channel: ');
-                    channel.airings.push(data[0].airings[i]);
-                    channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
-                    channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
-                }
-            } else {
-                logger.logInfo('--push program into channel: ');
-                channel.airings.push(data[0].airings[i]);
-                channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
-                channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
-            }
+            logger.logInfo('--push program into channel: ');
+            channel.airings.push(data[0].airings[i]);
+            channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
+            channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
         }
 
         logger.logInfo('airings length: '+channel.airings.length);
