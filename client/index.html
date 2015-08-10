@@ -50,17 +50,20 @@
     <div id="headerBrand">
         <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
 
-        <div id="language" class="menu-button">
+        <div class="menu-button">
             <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
+        </div>
+        <div class="menu-button" access-level="accessLevels.user">
+            <a href ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
         </div>
         <div class="menu-button" access-level="accessLevels.anon">
             <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
         </div>
         <div class="menu-button" access-level="accessLevels.user">
-            <a href="#" ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
-        </div>
-        <div class="menu-button" access-level="accessLevels.user">
             <a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a>
+        </div>
+        <div style="float: right">
+            <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
         </div>
         <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
     </div>
