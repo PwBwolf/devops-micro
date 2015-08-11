@@ -257,42 +257,22 @@ module.exports = {
     },
 
     getBillingDate: function (sessionId, callback) {
-        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        client.methodCall('FS.ClientAPI_XMLRPC.renew_info', [
-            'session_id', sessionId
-        ], function (err, response) {
+        getPackages(sessionId, function (err, packages) {
             if (err) {
-                logger.logError('billing - getBillingDate - error in getting billing date 1');
+                logger.logError('billing - getBillingDate - error getting packages');
                 logger.logError(err);
                 callback(err);
-            } else {
-                if (response.error) {
-                    logger.logError('billing - getBillingDate - error in getting billing date 2');
-                    logger.logError(response.error);
-                    callback(response.error);
-                } else if (response.dates && response.dates.length > 0) {
-                    logger.logInfo('billing - getBillingDate - response');
-                    logger.logInfo(response);
-                    /*
-                    var index = _.findIndex(response.dates, {'amount': config.paidBasicPackageAmount});
-                    if (index >= 0) {
-                        callback(null, new Date(response.dates[index].bill_date * 1000));
-                    } else {
-                        callback(null, null);
-                    }*/
-                    // workaround till freeside provides pkgpart
-                    var nextBillingDate = response.dates[0].bill_date;
-                    for(var i = 1; i < response.dates.length; i++) {
-                        if(response.dates[i].bill_date > nextBillingDate) {
-                            nextBillingDate = response.dates[i].bill_date;
-                        }
-                    }
-                    callback(null, new Date(nextBillingDate * 1000));
-                    // end workaround
+            } else if (packages && packages.length > 0) {
+                console.log(packages);
+                var index = _.findIndex(packages, {'pkgpart': config.freeSidePaidBasicPackagePart.toString()});
+                console.log('index'+ index);
+                if (index >= 0) {
+                    callback(null, new Date(packages[index].bill * 1000));
                 } else {
-                    logger.logInfo('billing - getBillingDate - billing date not found');
                     callback(null, null);
                 }
+            } else {
+                callback(null, null);
             }
         });
     },
