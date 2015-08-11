@@ -161,6 +161,14 @@ function updateChannel(channel, dataGN, startTimeDB) {
                 break;
             }
         }
+        
+        if(channel.airings.length > 0 && index == 0) {
+            for(var i = 0; i < channel.airings.length; i++) {
+                if(data[0].airings[0].startTime > channel.airings[i].endTime) {
+                    index++; 
+                }
+            }
+        }
             
         channel.airings.splice(index, channel.airings.length - index);
 
