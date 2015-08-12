@@ -16,18 +16,18 @@
                     <br><br>
                     <span class="label-text" translate="RAF_ENTER_FRIENDS_EMAIL"></span>
                     <br>
-                    <textarea autofocus valid-email-list id="emailList" name="emailList" class="text-box text-area" ng-model="mv.emailList" value="" required ng-class="{'text-box-error': form.emailList.$touched && form.emailList.$invalid}"></textarea>
+                    <textarea autofocus valid-email-list id="emailList" name="emailList" class="text-box text-area" ng-model="mv.emailList" value="" required ng-class="{'text-box-error': form.emailList.$dirty && form.emailList.$invalid}"></textarea>
                     <br>
 
-                    <div ng-show="form.emailList.$touched && form.emailList.$error.required" class="error-message" translate="RAF_EMAIL_LIST_REQUIRED"></div>
-                    <div ng-show="form.emailList.$touched && !form.emailList.$error.required && form.emailList.$error.validEmailList" class="error-message" translate="RAF_EMAIL_LIST_INVALID"></div>
+                    <div ng-show="form.emailList.$dirty && form.emailList.$error.required" class="error-message" translate="RAF_EMAIL_LIST_REQUIRED"></div>
+                    <div ng-show="form.emailList.$dirty && !form.emailList.$error.required && form.emailList.$error.validEmailList" class="error-message" translate="RAF_EMAIL_LIST_INVALID"></div>
                     <br>
                     <div ng-show="user.email === ''">
                         <span class="label-text" translate="RAF_MY_EMAIL"></span><br>
-                        <input name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
+                        <input name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}"/>
 
-                        <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="RAF_EMAIL_REQUIRED"></div>
-                        <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="RAF_EMAIL_INVALID"></div>
+                        <div ng-show="form.email.$dirty && form.email.$error.required" class="error-message" translate="RAF_EMAIL_REQUIRED"></div>
+                        <div ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="RAF_EMAIL_INVALID"></div>
                         <br>
                     </div>
                     <br>

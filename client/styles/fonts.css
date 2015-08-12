@@ -21,6 +21,17 @@
 }
 
 @font-face {
+    font-family: 'radikalmedium';
+    src: url('fonts/nootype_-_radikal_medium-webfont.eot');
+    src: url('fonts/nootype_-_radikal_medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/nootype_-_radikal_medium-webfont.woff2') format('woff2'),
+         url('fonts/nootype_-_radikal_medium-webfont.woff') format('woff'),
+         url('fonts/nootype_-_radikal_medium-webfont.ttf') format('truetype'),
+         url('fonts/nootype_-_radikal_medium-webfont.svg#radikalmedium') format('svg');
+    font-weight: normal; font-style: normal;
+}
+
+@font-face {
     font-family: 'radikallight';
     src: url('fonts/nootype_-_radikal_light-webfont.eot');
     src: url('fonts/nootype_-_radikal_light-webfont.eot?#iefix') format('embedded-opentype'),
@@ -31,6 +42,27 @@
     font-weight: normal; font-style: normal;
 }
 
+@font-face {
+    font-family: 'radikalblack';
+    src: url('fonts/nootype_-_radikal_black-webfont.eot');
+    src: url('fonts/nootype_-_radikal_black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/nootype_-_radikal_black-webfont.woff2') format('woff2'),
+         url('fonts/nootype_-_radikal_black-webfont.woff') format('woff'),
+         url('fonts/nootype_-_radikal_black-webfont.ttf') format('truetype'),
+         url('fonts/nootype_-_radikal_black-webfont.svg#radikalblack') format('svg');
+    font-weight: normal; font-style: normal;
+}
+
+@font-face {
+    font-family: 'gotham-mediumgotham-medium';
+    src: url('fonts/gothmmed_0-webfont.eot');
+    src: url('fonts/gothmmed_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/gothmmed_0-webfont.woff2') format('woff2'),
+         url('fonts/gothmmed_0-webfont.woff') format('woff'),
+         url('fonts/gothmmed_0-webfont.ttf') format('truetype'),
+         url('fonts/gothmmed_0-webfont.svg#gotham-mediumgotham-medium') format('svg');
+    font-weight: normal; font-style: normal;
+}
 @font-face {
     font-family: 'gotham-lightgotham-light';
     src: url('fonts/gothmlig_0-webfont.eot');
@@ -69,5 +101,15 @@
          url('fonts/bebas_-webfont.woff') format('woff'),
          url('fonts/bebas_-webfont.ttf') format('truetype'),
          url('fonts/bebas_-webfont.svg#bebasregular') format('svg');
+    font-weight: normal; font-style: normal;
+}
+
+@font-face {
+  	font-family: 'Glyphicons Halflings';
+  	src: url('fonts/glyphicons-halflings-regular.eot');
+  	src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+  		 url('fonts/glyphicons-halflings-regular.woff') format('woff'), 
+		 url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+		 url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
     font-weight: normal; font-style: normal;
 }

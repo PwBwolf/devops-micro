@@ -19,11 +19,16 @@
                 attrs.$set('id', 'smChannelDesc');
                 
                 
-                el.closest('li').bind('click', function(evt) {
+                el.closest('li').on('click', function(evt) {
                     //console.log($(this).attr('class'));
                     var target = $(this).prop("tagName").toLowerCase();
                         target = $(target).index(this);
+                        
+                        //prvwPnl(target);
+                        //scope.$apply(scope.prvwPnl(target));
                         scope.$apply(scope.getTarget(target));
+                        
+                        
                         console.log('target: '+target);
                     
                     //if( $(scope.scrns).hasClass("scrnsMaximized" )){
