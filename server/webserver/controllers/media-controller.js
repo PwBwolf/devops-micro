@@ -92,6 +92,30 @@ module.exports = {
                 }
             }
         });
+    },
+    
+    getPromoChannels: function (req, res) {
+        fs.readFile(__dirname + '/promos.json', 'utf8', function (err, data) {
+            if (err) {
+                logger.logError('Error reading promos.json' + err);
+                return res.status(500).end();
+            } else {
+                var promoPanels;
+                try {
+                    promoPanels = JSON.parse(data);
+                } catch (ex) {
+                    logger.logError('Error parsing promos.json file. Correct format errors and try again.');
+                    return res.status(500).end();
+                }
+                if (!promoPanels || promoPanels.length === 0) {
+                    logger.logError('channels.json file is empty');
+                    return res.status(500).end();
+                } else {
+                    return res.json(promoPanels);
+                }
+            }
+        });
     }
+    
 };
 
