@@ -15,6 +15,36 @@ var mongoose = require('mongoose'),
     queue = queueDb.queue('api-requests');
 
 module.exports = {
+    verifyCredentials: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'verify-credentials';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.merchantId = req.query.merchantId;
+        apiLog.apiKey = req.query.apiKey;
+        try {
+            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+                if (err) {
+                    logger.logError('merchantController - verifyCredentials - error validating credentials');
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                }
+                return res.status(200).send({result: result});
+            });
+        } catch (ex) {
+            logger.logError('merchantController - verifyCredentials - exception');
+            logger.logError(ex);
+            return res.status(200).send({error: 'server-error'});
+        } finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('merchantController - verifyCredentials - error saving api log');
+                    logger.logError(err);
+                }
+            });
+        }
+    },
+
     doesUsernameExist: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'does-username-exist';

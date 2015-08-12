@@ -24,7 +24,8 @@ module.exports = {
             url: config.url,
             aioPortalUrl: config.aioPortalUrl,
             cmsUrl: config.cmsUrl,
-            customerCareNumber: config.customerCareNumber
+            customerCareNumber: config.customerCareNumber,
+            graceNoteImageUrl: config.graceNoteImageUrl
         };
         return res.json(appConfig);
     },
