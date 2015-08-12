@@ -20,7 +20,7 @@ module.exports = {
         };
         client.get(config.graceNoteApiUrl + '/lineups/' + config.graceNoteLineupId + '/grid', args, function (data) {
             logger.logInfo('graceNote - getChannelGuide - response');
-            logger.logInfo(data);
+            //logger.logInfo(data);
             if (data.errorCode) {
                 callback(data.errorMessage);
             } else {
@@ -28,6 +28,30 @@ module.exports = {
             }
         }).on('error', function (err) {
             logger.logError('graceNote - getChannelGuide - error in getting channel guide');
+            logger.logError(err);
+            callback(err);
+        });
+    },
+
+    getChannelList: function (callback) {
+        var client = new Client();
+        var args = {
+            parameters: {
+                api_key: config.graceNoteApiKey
+            },
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.get(config.graceNoteApiUrl + '/lineups/' + config.graceNoteLineupId + '/channels', args, function (data) {
+            logger.logInfo('graceNote - getChannelList - response');
+            //logger.logInfo(data);
+            if (data.errorCode) {
+                callback(data.errorMessage);
+            } else {
+                callback(null, data);
+            }
+        }).on('error', function (err) {
+            logger.logError('graceNote - getChannelList - error in getting channel list');
             logger.logError(err);
             callback(err);
         });

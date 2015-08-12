@@ -1,15 +1,16 @@
 'use strict';
 
 // Lets load the mongoose module in our program
+var config = require('../../../../server/common/setup/config');
 var mongoose = require('../../../../server/node_modules/mongoose');
 var async = require('../../../../server/node_modules/async');
 var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
 
-require('../models/program');
-require('../models/channel');
+require('../../../../server/common/models/program');
+require('../../../../server/common/models/channel');
 
-var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@localhost/yiptv');
+var dbYip = mongoose.createConnection(config.db);
 var Program = dbYip.model('Program');
 var Channel = dbYip.model('Channel');
 
@@ -30,6 +31,14 @@ var stationID = '';
 var stationIDs = [];
 
 module.exports = {
+    getAppConfig : function (req, res) {
+        
+        var appConfig = {
+            graceNoteImageUrl: config.graceNoteImageUrl
+        };
+        return res.json(appConfig);
+    },
+        
     getChannelGuide : function(req, res) {
         async.waterfall([
                 function(callback) {

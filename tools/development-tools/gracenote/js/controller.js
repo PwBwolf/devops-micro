@@ -41,9 +41,38 @@
         })*/
     }]);
     
+    myApp.controller('appConfigCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
+        
+        channelGuideSvc.getAppConfig()
+        .then(function(data) {
+            $scope.graceNoteImageUrl = data.appConfig.graceNoteImageUrl;
+            console.log('appConfigCtrl calls channelGuideSvc.getAppConfig to get graceNoteImageUrl');
+
+        }, function(res) {
+            if(res.status === 500) {
+                console.log(res.status);
+            } else { 
+                console.log(res.status);
+            }
+        });
+    }]);
+    
     myApp.controller('channelListCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
        
         var req = {stationIds: []};
+        
+        channelGuideSvc.getAppConfig()
+        .then(function(data) {
+            $scope.graceNoteImageUrl = data.graceNoteImageUrl;
+            console.log('channelListCtrl calls channelGuideSvc.getAppConfig');
+
+        }, function(res) {
+            if(res.status === 500) {
+                console.log(res.status);
+            } else { 
+                console.log(res.status);
+            }
+        });
         
         channelGuideSvc.getChannelList(
             req,
@@ -102,6 +131,19 @@
         req.hour = true;
         req.period = undefined;
         
+        channelGuideSvc.getAppConfig()
+        .then(function(data) {
+            $scope.graceNoteImageUrl = data.graceNoteImageUrl;
+            console.log('channelListCtrl calls channelGuideSvc.getAppConfig');
+
+        }, function(res) {
+            if(res.status === 500) {
+                console.log(res.status);
+            } else { 
+                console.log(res.status);
+            }
+        });
+        
         channelGuideSvc.getChannelInfo(
             req,
             function (data) {
@@ -158,6 +200,19 @@
         req.tmsId = $routeParams.programid;
         req.stationId = $routeParams.stationid;
         req.startTime = $routeParams.starttime;
+        
+        channelGuideSvc.getAppConfig()
+        .then(function(data) {
+            $scope.graceNoteImageUrl = data.graceNoteImageUrl;
+            console.log('channelListCtrl calls channelGuideSvc.getAppConfig');
+
+        }, function(res) {
+            if(res.status === 500) {
+                console.log(res.status);
+            } else { 
+                console.log(res.status);
+            }
+        });
         
         channelGuideSvc.getProgramDetail(
             req,

@@ -8,7 +8,7 @@
             <td align="center" ng-repeat="day in days">
                 <table style="border:none">
                     <tr><th style="border: none"><a ng-href="#/channelguide/{{channel[rowIndex*5+$index].stationId}}/{{channel[rowIndex*5+$index].airings.program.tmsId}}/{{channel[rowIndex*5+$index].airings.startTime}}">{{channel[rowIndex*5+$index].airings.program.title}}</a></th></tr>
-                    <tr><img ng-src="http://yipt.tmsimg.com/assets/{{channel[rowIndex*5+$index].airings.program.preferredImage.uri}}" style="width:128px;height:128px;"></tr>
+                    <tr><img ng-src="{{graceNoteImageUrl}}{{channel[rowIndex*5+$index].airings.program.preferredImage.uri}}" style="width:128px;height:128px;"></tr>
                     <tr align="center" ><td style="border: none" style="border: none">StartTime: {{channel[rowIndex*5+$index].airings.startTime}}</td></tr>
                     <tr align="center"><td style="border: none">EndTime: {{channel[rowIndex*5+$index].airings.endTime}}</td></tr>
                 </table>

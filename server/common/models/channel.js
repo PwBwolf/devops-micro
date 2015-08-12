@@ -1,7 +1,7 @@
 'use strict';
 
 var Program = require('./program');
-var mongoose = require('../../../../server/node_modules/mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Channel = new Schema({
     channel: String,

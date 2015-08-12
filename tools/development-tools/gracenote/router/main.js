@@ -16,6 +16,8 @@ module.exports=function(app, root)
     
     app.get('/channellist/channel/program', channelGuideCtrl.getProgramDetail);
     
+    app.get('/appconfig', channelGuideCtrl.getAppConfig);
+    
     app.get('/about',function(req, res){
 
         logger.logInfo('About page');

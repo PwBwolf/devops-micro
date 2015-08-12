@@ -6,7 +6,27 @@
         var data = [],
             lastRequestFailed = true,
             promise;
+        
+        var appConfig = {};
+        var promiseAppConfig;
+        var lastAppConfigReqFailed = true;
+        
         return {
+            getAppConfig: function() {
+                if(!promiseAppConfig || lastAppConfigReqFailed) {
+                    // $http returns a promise, so we don't need to create one with $q
+                    promiseAppConfig = $http.get('/appconfig')
+                    .then(function(res) {
+                        lastAppConfigReqFailed = false;
+                        appConfig = res.data;
+                        return appConfig;
+                    }, function(res) {
+                        return $q.reject(res);
+                    });
+                }
+                return promiseAppConfig;
+            },
+        
             getChannelGuide: function() {
                 if(!promise || lastRequestFailed) {
                     // $http returns a promise, so we don't need to create one with $q
