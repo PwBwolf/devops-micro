@@ -13,7 +13,8 @@ var _ = require('../../node_modules/lodash/lodash');
 
 require('../../common/models/channel');
 
-var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
+//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
+var dbYip = mongoose.createConnection(config.db);
 var Channel = dbYip.model('Channel');
 
 //var daysRetrieve = process.argv[2];
