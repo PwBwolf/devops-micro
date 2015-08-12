@@ -751,8 +751,6 @@ module.exports = {
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
                             sendVerificationEmail(userObj);
-                        } else if (newUser.firstName) {
-                            sendUpgradeFailedEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
@@ -1199,7 +1197,6 @@ module.exports = {
     },
 
     removePaidBasicPackage: function (userEmail, cb) {
-        var errorType, currentValues;
         async.waterfall([
             // remove premiumEndDate
             function (callback) {
@@ -2010,27 +2007,6 @@ function sendUpgradeEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function sendUpgradeFailedEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.upgradeSubscriptionFailedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.upgradeSubscriptionFailedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendUpgradeFailedEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendUpgradeFailedEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
