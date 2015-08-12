@@ -1,0 +1,25 @@
+<div class="content-area">
+    <div class="content-box">
+        <h1><span translate="PREFERENCES_HEADING"></span></h1>
+
+        <div class="container">
+            <div class="form-box">
+                <form name="form" id="form" ng-submit="updatePreferences()" novalidate>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                    <span class="label-text" translate="PREFERENCES_PREFERRED_LANGUAGE"></span><br>
+
+                    <select id="language" name="language" required ng-model="mv.language" class="text-box drop-down-list" ng-class="{'text-box-error': form.language.$touched && form.language.$invalid}">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                    <br>
+                    <div class="error-message" ng-show="form.language.$touched && form.language.$error.required" translate="PREFERENCES_PREFERRED_LANGUAGE_REQUIRED"></div>
+                    <div class="full-form">
+                        <button ng-disabled="saving" class="submit-button" type="submit" translate="PREFERENCES_SUBMIT_BUTTON"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
