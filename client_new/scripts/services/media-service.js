@@ -12,7 +12,6 @@
                 });
             },
             
-            /*
             getChannels: function (api_key) {
                 return $http({
                     method: 'GET',
@@ -20,15 +19,6 @@
                     params: {
                         api_key: api_key,
                     }
-                });
-            },
-            */
-            
-            getChannels: function (user) {
-                return $http({
-                    method: 'GET',
-                    url: '/api/get-channels',
-                    params: {duser: user}
                 });
             },
 

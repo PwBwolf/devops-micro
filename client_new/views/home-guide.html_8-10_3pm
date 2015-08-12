@@ -1,9 +1,0 @@
-<div id="userGuide" class="usrGuidePnl" data-ng-controller='homeChnlGuideCtrl'>
-	<div class='posNlne usr_GdeMdle' >
-		<!-- div class="usr_GdeMdle_Tme">12pm</div -->
-		<div id='channelGuidePanel' class='usr_GdeMdle_Dsc'>
-            <!-- div channel-lineup></div -->
-		</div>
-	</div>	
-	
-</div>
