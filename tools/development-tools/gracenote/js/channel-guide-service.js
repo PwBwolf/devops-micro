@@ -45,7 +45,7 @@
             getChannelList: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist',
+                    url: '/metadata/api/channellist',
                     params: {stationIds: req.stationIds}
                 }).success(success).error(error);
                 
@@ -54,7 +54,7 @@
             getChannelInfo: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist/channel',
+                    url: '/metadata/api/channelinfo',
                     params: {stationId: req.stationId, hour: req.hour, period: req.period}
                 }).success(success).error(error);
                 
@@ -63,7 +63,7 @@
             getProgramDetail: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist/channel/program',
+                    url: '/metadata/api/programdetail',
                     params: {tmsId: req.tmsId, stationId: req.stationId, startTime: req.startTime}
                 }).success(success).error(error);
             }

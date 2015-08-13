@@ -11,24 +11,9 @@ require('../../../../server/common/models/program');
 require('../../../../server/common/models/channel');
 
 var dbYip = mongoose.createConnection(config.db);
-var Program = dbYip.model('Program');
+//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
+
 var Channel = dbYip.model('Channel');
-
-var nowTime = new Date();
-var startTime = date.isoDate(nowTime);
-logger.logInfo(startTime);
-
-var temp = new Date();
-// temp.setDate(temp.getDate() - 5);
-temp.setMinutes(temp.getMinutes() - 30);
-var startTimeDB = date.isoDate(temp);
-
-nowTime.setHours(nowTime.getHours() + 5);
-var endTime = date.isoDate(nowTime);
-var stationID = '';
-// var stationID = '44448';
-
-var stationIDs = [];
 
 module.exports = {
     getAppConfig : function (req, res) {
@@ -54,18 +39,18 @@ module.exports = {
                         "airings.endTime" : true,
                         "airings.program.preferredImage" : true,
                         "airings.program.title" : true
-                    }, function(err, channelsDB) {
+                    }, function(err, channelsDb) {
                         if (err) {
                             logger.logInfo('find error: ' + err);
                             callback(err);
                         } else {
-                            logger.logInfo('documents found in channelsDB: '
-                                    + channelsDB.length);
+                            logger.logInfo('documents found in channelsDb: '
+                                    + channelsDb.length);
 
                             res.json({
-                                channelsDB : channelsDB
+                                channelsDb : channelsDb
                             });
-                            callback(null, channelsDB);
+                            callback(null, channelsDb);
                         }
                     });
                 }, ], function(err) {
@@ -88,15 +73,15 @@ module.exports = {
             stationId : true,
             "preferredImage.uri" : true,
             callSign : true
-        }, function(err, channelsDB) {
+        }, function(err, channelsDb) {
             if (err) {
                 logger.logInfo('find error: ' + err);
             } else {
-                logger.logInfo('documents found in channelsDB: '
-                        + channelsDB.length);
+                logger.logInfo('documents found in channelsDb: '
+                        + channelsDb.length);
 
                 res.json({
-                    channelsDB : channelsDB
+                    channelsDb : channelsDb
                 });
             }
         });
@@ -118,14 +103,14 @@ module.exports = {
                            {$unwind: "$airings"}, 
                            {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, 
                            {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], 
-                           function(err, channelsDB) {
+                           function(err, channelsDb) {
             if (err) {
                 logger.logInfo('find error: ' + err);
             } else {
                 logger.logInfo('airings found');
 
                 res.json({
-                    channelsDB : channelsDB
+                    channelsDb : channelsDb
                 });
             }
         });
@@ -136,16 +121,28 @@ module.exports = {
         Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
                            {$unwind: '$airings'}, 
                            {$match: {'airings.program.tmsId': req.query.tmsId, 'airings.startTime': date.isoDate(new Date(req.query.startTime))}}, 
-                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, "airings.duration": true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, 'airings.program.genres': true, callSign : true}}], 
-                           function(err, channelsDB) {
+                           {$project: {stationId: true, 
+                                       'airings.program.preferredImage.uri' : true, 
+                                       'airings.duration': true, 
+                                       'airings.endTime' : true, 
+                                       'airings.startTime' : true, 
+                                       'airings.program.tmsId' : true, 
+                                       'airings.program.title' : true, 
+                                       'airings.program.genres': true, 
+                                       'airings.program.longDescription': true,
+                                       'airings.program.topCast': true,
+                                       'airings.program.directors': true,
+                                       'airings.program.entityType': true,
+                                       callSign : true}}], 
+                           function(err, channelsDb) {
             if (err) {
                 logger.logInfo('find error: ' + err);
             } else {
-                logger.logInfo('documents found in channelsDB: '
-                        + channelsDB.length);
+                logger.logInfo('documents found in channelsDb: '
+                        + channelsDb.length);
 
                 res.json({
-                    channelsDB : channelsDB[0]
+                    channelsDb : channelsDb[0]
                 });
             }
         });

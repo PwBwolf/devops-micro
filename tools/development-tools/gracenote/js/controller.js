@@ -8,13 +8,13 @@
         channelGuideSvc.getChannelGuide()
         .then(function(data) {
             var dates = [];
-            for (var i = 0; i < data.channelsDB.length; i++ ) {
+            for (var i = 0; i < data.channelsDb.length; i++ ) {
                 if (i % 5 == 0) dates.push([]);
                 dates[dates.length-1].push(i);
             }
             
             $scope.dates = dates;
-            $scope.channels = data.channelsDB;
+            $scope.channels = data.channelsDb;
             console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide');
 
         }, function(res) {
@@ -29,14 +29,14 @@
         $http.get('/channelguide').success(function(data) {
             channelGuide = data;
             var dates = [];
-            for (var i = 0; i < data.channelsDB.length; i++ ) {
+            for (var i = 0; i < data.channelsDb.length; i++ ) {
                 if (i % 5 == 0) dates.push([]);
                 dates[dates.length-1].push(i);
             }
             
             $scope.dates = dates;
 
-            $scope.channels = data.channelsDB;
+            $scope.channels = data.channelsDb;
             
         })*/
     }]);
@@ -59,7 +59,8 @@
     
     myApp.controller('channelListCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
        
-        var req = {stationIds: []};
+        //var req = {stationIds: []};
+        var req = {stationIds: ['44448', '55912']};
         
         channelGuideSvc.getAppConfig()
         .then(function(data) {
@@ -78,13 +79,13 @@
             req,
             function (data) {
                 var dates = [];
-                for (var i = 0; i < data.channelsDB.length; i++ ) {
+                for (var i = 0; i < data.channelsDb.length; i++ ) {
                     if (i % 5 == 0) dates.push([]);
                     dates[dates.length-1].push(i);
                 }
                 
                 $scope.dates = dates;
-                $scope.channels = data.channelsDB;
+                $scope.channels = data.channelsDb;
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide');
             },
             function (error) {
@@ -101,13 +102,13 @@
         channelGuideSvc.getChannelGuide()
         .then(function(data) {
             var dates = [];
-            for (var i = 0; i < data.channelsDB[$routeParams.stationid].airings.length; i++ ) {
+            for (var i = 0; i < data.channelsDb[$routeParams.stationid].airings.length; i++ ) {
                 if (i % 5 == 0) dates.push([]);
                 dates[dates.length-1].push(i);
             }
             
             $scope.dates = dates;
-            $scope.channel = data.channelsDB[$routeParams.stationid];
+            $scope.channel = data.channelsDb[$routeParams.stationid];
             $scope.channelid = $routeParams.stationid;
             console.log('airings length: '+$scope.channel.airings.length);
             console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for channel');
@@ -148,13 +149,13 @@
             req,
             function (data) {
                 var dates = [];
-                for (var i = 0; i < data.channelsDB.length; i++ ) {
+                for (var i = 0; i < data.channelsDb.length; i++ ) {
                     if (i % 5 == 0) dates.push([]);
                     dates[dates.length-1].push(i);
                 }
                 
                 $scope.dates = dates;
-                $scope.channel = data.channelsDB;
+                $scope.channel = data.channelsDb;
                 $scope.channelid = $routeParams.stationid;
                 console.log('airings length: '+$scope.channel.length);
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for channel airings');
@@ -179,8 +180,8 @@
         $scope.channelId = $routeParams.stationid;
         channelGuideSvc.getChannelGuide()
         .then(function(data) {
-            $scope.channelTitle = data.channelsDB[$routeParams.stationid].callSign;
-            $scope.program = data.channelsDB[$routeParams.stationid].airings[$routeParams.programid];
+            $scope.channelTitle = data.channelsDb[$routeParams.stationid].callSign;
+            $scope.program = data.channelsDb[$routeParams.stationid].airings[$routeParams.programid];
             console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for program');
 
         }, function(res) {
@@ -217,8 +218,8 @@
         channelGuideSvc.getProgramDetail(
             req,
             function (data) {
-                $scope.channelTitle = data.channelsDB.callSign;
-                $scope.program = data.channelsDB.airings;
+                $scope.channelTitle = data.channelsDb.callSign;
+                $scope.program = data.channelsDb.airings;
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for program');
             },
             function (error) {

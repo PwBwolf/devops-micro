@@ -10,11 +10,11 @@ module.exports=function(app, root)
         res.sendFile('index.html', {"root": root + '/views'})
     });
     
-    app.get('/channellist', channelGuideCtrl.getChannelList);
+    app.get('/metadata/api/channellist', channelGuideCtrl.getChannelList);
     
-    app.get('/channellist/channel', channelGuideCtrl.getChannelInfo);
+    app.get('/metadata/api/channelinfo', channelGuideCtrl.getChannelInfo);
     
-    app.get('/channellist/channel/program', channelGuideCtrl.getProgramDetail);
+    app.get('/metadata/api/programdetail', channelGuideCtrl.getProgramDetail);
     
     app.get('/appconfig', channelGuideCtrl.getAppConfig);
     
