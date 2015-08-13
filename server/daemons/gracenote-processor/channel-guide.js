@@ -5,7 +5,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 //Lets load the mongoose module in our program
 var config = require('../../common/setup/config');
 var mongoose = require('mongoose');
-var async = require('../../node_modules/async');
 var graceNote = require('../../common/services/grace-note');
 var date = require('../../common/services/date');
 var logger = require('../../common/setup/logger');
@@ -13,15 +12,11 @@ var _ = require('../../node_modules/lodash/lodash');
 
 require('../../common/models/channel');
 
-//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
 var dbYip = mongoose.createConnection(config.db);
 var Channel = dbYip.model('Channel');
 
-//var daysRetrieve = process.argv[2];
-//var daysKeep = process.argv[3];
-
-var daysRetrieve = config.graceNoteDaysRetrieve;
-var daysKeep = config.graceNoteDaysKeep;
+var daysRetrieve = process.argv[2];
+var daysKeep = process.argv[3];
 
 if(daysRetrieve > 14 || daysRetrieve === undefined) {
     daysRetrieve = 14;
@@ -33,110 +28,82 @@ if(daysKeep < 0 || daysKeep === undefined) {
     daysKeep = 5;
 }
 
-var stationIds = [];
+var now = new Date();
+var startTime = date.isoDate(now);
+logger.logInfo(startTime);
 
-//setInterval(function() {
-    var now = new Date();
-    var startTime = date.isoDate(now);
-    logger.logInfo('startTime'+startTime);
+var temp = new Date();
+temp.setDate(temp.getDate() - daysKeep);
+//temp.setMinutes(temp.getMinutes() - 30);
+var startTimeDB = date.isoDate(temp);
 
-    var temp = new Date();
-    temp.setDate(temp.getDate() - daysKeep);
-    var startTimeDb = date.isoDate(temp);
+now.setDate(now.getDate() + daysRetrieve);
+var endTime = date.isoDate(now);
 
-    now.setDate(now.getDate() + daysRetrieve);
-    var endTime = date.isoDate(now);
-    logger.logInfo('endTime '+endTime);
-    
-    async.waterfall([
-         function(callback) {
-             Channel.find({}, function(err, channels) {
-                 if(err) {
-                     logger.logError('channel-guide - Channel.find error: '+err);
-                 } else {
-                     logger.logInfo('Channel.find documents found in db: '+channels.length);
-                     for(var i = 0; i < channels.length; i++) {
-                         stationIds.push({stationId: channels[i].stationId, dbId: channels[i]._id});
-                         logger.logInfo(stationIds[i]);
-                     }
-                 }
-                 callback(err, channels);
-             });
-         }, 
-         
-         function(channels, callback) {
-             graceNote.getChannelList(function (err, data) {
-                 if (err) {
-                     logger.logError('channel-guide - getChannelGuide error: '+err);
-                 } else {
-                     logger.logInfo('getChannelList from gracenote length: '+data.length);
-                 }
-                 callback(err, channels, data);
-             });
-         },
-         
-         function(channels, data, callback) {
-             async.eachSeries(
-                 data, 
-                 function (channelGn, cb) {
-                     if(channels.length === 0) {
-                         logger.logInfo('getChannelGuide new channel found, save to db');
-                         saveChannel(channelGn, function (err, newChannel) {
-                             if (err) {
-                                 logger.logError('channel-guide - saveChannel - error save new channel: ' + err);
-                             }
-                             cb(err, newChannel);
-                         });
-                     } else {
-                         var bNewChannel = true;
-                         var i = 0;
-                         for(; i < stationIds.length; i++) {
-                             if(stationIds[i].stationId === channelGn.stationId) {
-                                 bNewChannel = false;
-                                 break;
-                             }
-                         }
-                         
-                         if(bNewChannel) {
-                             logger.logInfo('getChannelGuide new channel found, save to db');
-                             saveChannel(channelGn, function (err, newChannel) {
-                                 if (err) {
-                                     logger.logError('channel-guide - saveChannel - error save new channel: ' + err);
-                                 }
-                                 cb(err, newChannel);
-                             });
-                         } else {
-                             logger.logInfo('getChannelGuide channel exists in db with index '+i+', update db');
-                             updateChannel(channels[i], channelGn, startTimeDb, function (err, channel) {
-                                 if(err) {
-                                     logger.logError('channel-guide updateChannel - error save old channel: ' + err);
-                                 }
-                                 cb(err, channel);
-                             });
-                         } 
-                     }
-                 },
-                 function (err) {
-                     callback(err);
-                     logger.logInfo('gracenote metadata retrieval succeed! ');
-                 }
-             );
-         }], 
-         
-         function(err) {
-         if (err) {
-             logger.logError('channel-guide async.waterfall error: '+err);
-         } else {
-             logger.logInfo('get channel guide succeed!');
-         }
-         setTimeout(function () {
-             process.exit(0);
-         }, 3000);
+logger.logInfo('endTime '+endTime);
+
+var stationIDs = [];
+
+Channel.find({}, function(err, channels) {
+    if(err) {
+        logger.logError('channel-guide - Channel.find error: '+err);
+    } else {
+        logger.logInfo('Channel.find documents found in db: '+channels.length);
+        for(var i = 0; i < channels.length; i++) {
+            stationIDs.push({stationid: channels[i].stationId, dbid: channels[i]._id});
+            logger.logInfo(stationIDs[i]);
+        }
+        
+        getChannelGuide(channels);
+    }
+});
+
+setTimeout(function() {
+    process.exit();
+}, 150000);
+
+function getChannelGuide(channelDB) {
+    graceNote.getChannelList(function (err, data) {
+        if (err) {
+            logger.logError('channel-guide - getChannelGuide error: '+err);
+        } else {
+            logger.logInfo(data.length);
+            
+            // save channel
+            for(var j = 0; j < data.length; j++) {
+                var isNewChannel = newChannel(data[j], stationIDs);
+                if(isNewChannel.bNew) {
+                    logger.logInfo('getChannelGuide new channel found, save to db');
+                    saveChannel(data[j]);
+                } else {
+                    logger.logInfo('getChannelGuide channel exists in db with index '+isNewChannel.index+', update db');
+                    //logger.logInfo(data[j]);
+                    updateChannel(channelDB[isNewChannel.index], data[j], startTimeDB);
+                }
+            }
+        }
+
     });
-//}, config.graceNoteProcessInterval);
+}
 
-function updateChannel(channel, dataGn, startTimeDb, cb) {
-    graceNote.getChannelGuide(dataGn.stationId, startTime, endTime, function (err, data) {
+function newChannel(data, stationIDs) {
+    var channel = {bNew: true, index: null};
+    if(stationIDs === undefined) {
+        return channel;
+    }
+
+    _.find(stationIDs, function(item, index) {
+        if( item.stationid == data.stationId) {
+            channel.bNew = false;
+            channel.index = index;
+            return channel;
+        }
+    });
+    return channel;
+}
+
+function updateChannel(channel, dataGN, startTimeDB) {
+    graceNote.getChannelGuide(dataGN.stationId, startTime, endTime, function (err, data) {
         if (err) {
             logger.logError('channel-guide - updateChannel error: '+err);
         } else {
@@ -145,7 +112,7 @@ function updateChannel(channel, dataGn, startTimeDb, cb) {
             
             var count = 0;
             for(var j = 0; j < channel.airings.length; j++) {
-                if(channel.airings[j].startTime < startTimeDb) {
+                if(channel.airings[j].startTime < startTimeDB) {
                     count++;
                 } else {
                     break;	
@@ -187,15 +154,17 @@ function updateChannel(channel, dataGn, startTimeDb, cb) {
             logger.logInfo('updateChannel program length in total: '+channel.airings.length);
     
             channel.save(function (err) {
-                if (cb) {
-                    cb(err, channel);
+                if (err) {
+                    logger.logError('updateChannel channel.save error: '+err);
+                } else {
+                    logger.logInfo('updateChannel channel updated successfully');
                 }
             });
         }
     });
 }
 
-function saveChannel(channel, cb) {
+function saveChannel(channel) {
     graceNote.getChannelGuide(channel.stationId, startTime, endTime, function (err, data) {
         if (err) {
             logger.logError('channel-guide graceNote.getChannelGuide error: '+err);
@@ -211,8 +180,10 @@ function saveChannel(channel, cb) {
             }
             //Lets save it
             newChannel.save(function (err) {
-                if (cb) {
-                    cb(err, newChannel);
+                if (err) {
+                    logger.logError('channel-guide newChannel.save error: '+err);
+                } else {
+                    logger.logInfo('save new channel successfully:');
                 }
             });
         }

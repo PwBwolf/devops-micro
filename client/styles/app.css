@@ -40,6 +40,11 @@ input[type="checkbox"] {
     display: none;
 }
 
+input[type="radio"] {
+    margin-left: 10px;
+    display: none;
+}
+
 label:before {
     content: "";
     display: inline-block;
@@ -79,8 +84,13 @@ input[type="checkbox"]:checked + label:before {
     line-height: 15px;
 }
 
-.navbar-header {
-    width: 100%;
+input[type="radio"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
 }
 
 .logo {
@@ -127,43 +137,23 @@ input[type="checkbox"]:checked + label:before {
     height: 241px;
 }
 
-.banner {
-    float: left;
-    width: 100%;
-    position: relative;
-    background: #fff;
+.app-button {
+    margin: 10px 5px;
 }
 
-.banner .banner-wrap {
-    position: relative;
-    margin: 0 auto;
-    width: 1350px;
-}
-
-.banner img {
-    float: left;
-    width: 100%;
-    z-index: 9;
+.app-link {
+    display: block;
+    margin: 0 auto 5px;
 }
 
 #accountBox {
-    position:relative;
+    position: relative;
     margin: 0 auto;
 }
 
 #userHomeBox {
-    position:relative;
+    position: relative;
     margin: 0 auto;
-}
-
-#footerJoinButton {
-    color: black !important;
-    font-weight: normal !important;
-}
-
-#footerTrialButton {
-    color: white !important;
-    font-weight: normal !important;
 }
 
 .toast-error {
@@ -184,6 +174,14 @@ input[type="checkbox"]:checked + label:before {
     width: 100%;
     text-align: center;
     color: #fff;
+}
+
+.cancel-on {
+    background-color: #FFF;
+    font-weight: bolder;
+    padding: 10px;
+    display: inline-block;
+    width: 340px;
 }
 
 .user-home-box {
@@ -227,7 +225,7 @@ input[type="checkbox"]:checked + label:before {
     padding: 10px 25px;
     margin: 20px;
     font-family: 'radikalregular';
-    width: 340px;
+    width: 390px;
 }
 
 .raf-fine-print {
@@ -235,38 +233,24 @@ input[type="checkbox"]:checked + label:before {
     font-size: 12px;
 }
 
-#carouselBanner .carousel-indicators {
-    bottom: 30px;
-    left: 0;
-    width: 80%;
-    margin: 0px;
-    text-align: right;
-    z-index: 9999;
-}
-
-#carouselBanner .carousel-indicators li {
-    width: 12px;
-    height: 12px;
-    margin: 0px 3px;
-    background-color: #121826;
-    border: 1px solid #ffffff;
-    border-radius: 12px;
-}
-
-#carouselBanner .carousel-indicators .active {
-    width: 12px;
-    height: 12px;
-    margin: 0px 3px;
-    background-color: #aaa;
-}
-
-.carousel li {
-    margin-right: 0;
+.numbered-list li {
+    list-style-type: decimal !important;
 }
 
 .bolder-text {
     font-weight: bolder;
-    font-family: 'gotham-bookgotham-book';
+    font-family: 'gotham-boldgotham-bold';
+}
+.progress {
+    width: 98%;
+}
+
+.progress-bar-purple {
+    background-color: #8356A2;
+}
+
+.progress-bar-pink {
+    background-color: #BE6193;
 }
 
 .justify-text {
@@ -362,6 +346,16 @@ input[type="checkbox"]:checked + label:before {
     margin: 0 auto;
 }
 
+.success-box {
+    width: 800px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: 0 auto;
+
+}
+
 .submit-button {
     background: #A03269;
     width: 98%;
@@ -376,6 +370,60 @@ input[type="checkbox"]:checked + label:before {
     border-radius: 10px;
     padding: 0px;
     margin: 0px;
+}
+
+.free-sign-up {
+    padding: 10px 30px 30px 30px;
+}
+
+.free-sign-up ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.free-sign-up li {
+    list-style-type: disc;
+}
+
+.sign-up-success ul {
+    padding-left: 30px;
+}
+
+.sign-up-success a {
+    color: black;
+    text-decoration: underline;
+}
+
+.sign-up-success li {
+    list-style-type: disc;
+    font-size: 90%;
+}
+
+.sign-up-header-color {
+    color: #291753;
+}
+
+.sign-up-button {
+    background: #56287B;
+}
+
+.sign-up-order {
+    background: #E7E8E9;
+    padding: 10px 30px 30px 30px;
+}
+
+.sign-up-order hr {
+    border-top: 1px solid #000;
+}
+
+.sign-up-order ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.sign-up-order li {
+    list-style-type: disc;
+    font-size: 90%;
 }
 
 .modal-button {
@@ -418,25 +466,6 @@ a.import-button:hover {
     padding-left: 20px;
 }
 
-.leadership-name {
-    color: #A03269;
-    font-size: 19px;
-    font-weight: bold;
-}
-
-.leadership-description {
-    color: #000;
-    font-size: 16px;
-    min-height: 160px;
-}
-
-.leadership-image {
-    float: left;
-    padding: 0 10px 5px 0;
-    width: 160px;
-    height: 160px;
-}
-
 .paragraph-area {
     margin-top: 60px;
 }
@@ -446,45 +475,7 @@ a.import-button:hover {
     font-size: 16px;
 }
 
-.about-us-header {
-    color: #A03269;
-    font-weight: bold;
-}
-
-.press-release {
-    margin-top: 60px;
-}
-
-.press-release-title {
-    color: #000;
-    font-weight: bold;
-    text-align: center;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.press-release-sub-title {
-    color: #000;
-    text-align: center;
-    font-style: italic;
-}
-
 .numbered-header {
-    color: #A03269;
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.paragraph-header {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.tous-sub-header {
-    font-weight: bold;
-    font-family: 'gotham-bookgotham-book';
-}
-
-.tous-main-header {
     color: #A03269;
     font-weight: bold;
     font-family: 'gotham-bookgotham-book';
@@ -510,7 +501,7 @@ a.import-button:hover {
     padding: 0 1%;
     width: 98%;
     border-radius: 5px;
-    border: 1px dashed dimgrey;
+    border: 1px solid;
 }
 
 .drop-down-list {
@@ -521,7 +512,7 @@ a.import-button:hover {
 .text-box-error {
     background: #FFFFFF;
     border: 2px solid;
-    border-color: rgb(228, 29, 29);
+    border-color: rgb(228, 29, 29) !important;
     color: #000000;
     font-family: "radikallight";
     font-size: 20px;
@@ -555,6 +546,24 @@ a.import-button:hover {
     text-decoration: underline;
 }
 
+ul.passwordStrength {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: 2px;
+    width: 100%;
+}
+
+.point {
+    background: #DDD;
+    border-radius: 2px;
+    display: inline-block;
+    height: 10px;
+    margin-right: 1px;
+    width: 19.5%;
+}
+
 .heading {
     text-transform: uppercase;
 }
@@ -563,7 +572,21 @@ a.import-button:hover {
     font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
-    text-transform: uppercase;
+    text-transform: capitalize;
+}
+
+.label-text-info {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 14px;
+    padding-left: 0;
+    font-style: italic;
+}
+
+.sign-up-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: none;
 }
 
 .checkbox {
@@ -594,20 +617,6 @@ a.import-button:hover {
     float: left;
     width: 100%;
     padding: 0px 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.two-third-form {
-    float: left;
-    width: 65%;
-    padding: 5% 0% 0px 0px;
-    margin: 0px 0px 0px 0px;
-}
-
-.one-third-form {
-    float: left;
-    width: 33%;
-    padding: 5% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
@@ -689,9 +698,6 @@ a.import-button:hover {
 }
 
 @media screen and (max-width: 1350px) {
-    .banner .banner-wrap {
-        width: 100%;
-    }
 
     .user-home-wrap {
         width: 100%;
@@ -708,9 +714,10 @@ a.import-button:hover {
         width: 100%;
     }
 
-    .form-box {
+    .success-box {
         width: 100%;
     }
+
 }
 
 @media screen and (max-width: 767px) {
@@ -719,19 +726,17 @@ a.import-button:hover {
         left: 10%;
     }
 
+    .half-form {
+        width: 100%;
+    }
+
     .language {
         margin-right: -60px;
     }
 
     .form-box {
         width: 100%;
-        font-size: 17px;
-        margin-top: 0px;
-    }
-
-    .form-box {
-        width: 100%;
-        font-size: 17px;
+        font-size: 15px;
         margin-top: 0px;
     }
 }
@@ -770,22 +775,27 @@ a.import-button:hover {
     .content-area h1 {
         font-size: 24px;
     }
+
+    .label-text {
+        font-size: 15px;
+    }
+
+    .error-message {
+        font-size: 15px;
+    }
 }
 
 @media screen and (max-width: 479px) {
-
-    .banner {
-        overflow: hidden;
-    }
-
-    .two-third-form, .one-third-form, .half-form {
-        width: 100%;
-    }
 
     a.import-button {
         font-size: 12px;
         padding: 5px 5px;
         margin: 0;
+    }
+
+    .user-home-box .caption button {
+        font-size: 18px;
+        width: 350px;
     }
 
     .center-form {
@@ -810,5 +820,16 @@ a.import-button:hover {
         font-size: 14px;
         padding: 10px;
         width: 250px;
+    }
+
+    .cancel-on {
+        font-size: 14px;
+        width: 250px;
+    }
+
+    .submit-button {
+        height: 60px;
+        line-height: 60px;
+        font-size: 15px;
     }
 }
