@@ -198,7 +198,7 @@ module.exports = {
                 logger.logError('billing - checkAndOrderPackage - error getting packages');
                 logger.logError(err);
                 callback(err);
-            } else if (packages && packages.length > 0 && _.findIndex(packages, {'pkgpart': packagePart.toString()}) > 0) {
+            } else if (packages && packages.length > 0 && _.findIndex(packages, {'pkgpart': packagePart.toString()}) > -1) {
                 logger.logInfo('billing - checkAndOrderPackage - package exists not added again');
                 callback(null);
             } else {

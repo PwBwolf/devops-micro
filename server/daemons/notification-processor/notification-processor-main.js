@@ -111,6 +111,7 @@ worker.register({
                         callback(new Error(err));
                     });
                 } else {
+                    params.currency = 'USD';
                     User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('notificationProcessorMain - paymentReceived - error fetching user: ' + params.username);

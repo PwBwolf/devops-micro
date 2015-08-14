@@ -73,7 +73,7 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 req.body.clientId = req.query.clientId;
-                queue.enqueue('paymenReceived', req.body, function (err) {
+                queue.enqueue('paymentReceived', req.body, function (err) {
                     if (err) {
                         logger.logError('notificationController - paymentReceived - error adding job to queue');
                         logger.logError(err);
