@@ -27,6 +27,7 @@ module.exports = {
     complimentarySignUpUrl: 'https://app.yiptv.com/sign-up/complimentary/',
     refundPeriodInDays: 3,
     cmsUrl: 'http://www.yiptv.com/live-tv/',
+    metaDataRetrievalRecurrence: '0 0 2 * * *',
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',
     freeSideFreePremiumUserPackageParts: [6, 9],
     freeSideFreeUserPackageParts: [6],
