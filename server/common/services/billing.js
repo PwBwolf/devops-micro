@@ -190,28 +190,25 @@ module.exports = {
         );
     },
 
-    orderPackage: function (sessionId, packagePart, callback) {
-        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        client.methodCall('FS.ClientAPI_XMLRPC.order_pkg', [
-            'session_id', sessionId,
-            'pkgpart', packagePart,
-            'quantity', 1,
-            'svcpart', 'none'
-        ], function (err, response) {
+    orderPackage: orderPackage,
+
+    checkAndOrderPackage: function (sessionId, packagePart, callback) {
+        getPackages(sessionId, function (err, packages) {
             if (err) {
-                logger.logError('billing - orderPackage - error in ordering package 1');
+                logger.logError('billing - checkAndOrderPackage - error getting packages');
                 logger.logError(err);
                 callback(err);
+            } else if (packages && packages.length > 0 && _.findIndex(packages, {'pkgpart': packagePart.toString()}) > -1) {
+                logger.logInfo('billing - checkAndOrderPackage - package exists not added again');
+                callback(null);
             } else {
-                if (response.error) {
-                    logger.logError('billing - orderPackage - error in ordering package 2');
-                    logger.logError(response.error);
-                    callback(response.error);
-                } else {
-                    logger.logInfo('billing - orderPackage - response');
-                    logger.logInfo(response);
-                    callback(null);
-                }
+                orderPackage(sessionId, packagePart, function (err) {
+                    if (err) {
+                        logger.logError('billing - checkAndOrderPackage - error ordering package');
+                        logger.logError(err);
+                    }
+                    callback(err);
+                });
             }
         });
     },
@@ -263,9 +260,7 @@ module.exports = {
                 logger.logError(err);
                 callback(err);
             } else if (packages && packages.length > 0) {
-                console.log(packages);
                 var index = _.findIndex(packages, {'pkgpart': config.freeSidePaidBasicPackagePart.toString()});
-                console.log('index'+ index);
                 if (index >= 0) {
                     callback(null, new Date(packages[index].bill * 1000));
                 } else {
@@ -380,6 +375,32 @@ function getPackages(sessionId, callback) {
                 logger.logInfo('billing - getPackages - response');
                 logger.logInfo(response);
                 callback(null, response.cust_pkg);
+            }
+        }
+    });
+}
+
+function orderPackage(sessionId, packagePart, callback) {
+    var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+    client.methodCall('FS.ClientAPI_XMLRPC.order_pkg', [
+        'session_id', sessionId,
+        'pkgpart', packagePart,
+        'quantity', 1,
+        'svcpart', 'none'
+    ], function (err, response) {
+        if (err) {
+            logger.logError('billing - orderPackage - error in ordering package 1');
+            logger.logError(err);
+            callback(err);
+        } else {
+            if (response.error) {
+                logger.logError('billing - orderPackage - error in ordering package 2');
+                logger.logError(response.error);
+                callback(response.error);
+            } else {
+                logger.logInfo('billing - orderPackage - response');
+                logger.logInfo(response);
+                callback(null);
             }
         }
     });
