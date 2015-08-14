@@ -20,7 +20,7 @@ module.exports = {
         };
         client.get(config.graceNoteApiUrl + '/lineups/' + config.graceNoteLineupId + '/grid', args, function (data) {
             logger.logInfo('graceNote - getChannelGuide - response');
-            //logger.logInfo(data);
+            logger.logInfo(data);
             if (data.errorCode) {
                 callback(data.errorMessage);
             } else {
@@ -44,7 +44,7 @@ module.exports = {
         };
         client.get(config.graceNoteApiUrl + '/lineups/' + config.graceNoteLineupId + '/channels', args, function (data) {
             logger.logInfo('graceNote - getChannelList - response');
-            //logger.logInfo(data);
+            logger.logInfo(data);
             if (data.errorCode) {
                 callback(data.errorMessage);
             } else {

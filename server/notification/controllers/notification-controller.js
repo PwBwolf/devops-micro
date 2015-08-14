@@ -1,10 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    moment = require('moment'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
-    billing = require('../../common/services/billing'),
     db = mongoose.createConnection(config.db),
     NotificationClient = db.model('NotificationClient'),
     NotificationLog = db.model('NotificationLog'),
@@ -51,6 +49,49 @@ module.exports = {
             log.save(function (err) {
                 if (err) {
                     logger.logError('notificationController - executeDunning - error saving notification log');
+                    logger.logError(err);
+                }
+            });
+        }
+    },
+
+    paymentReceived: function (req, res) {
+        var log = new NotificationLog();
+        log.name = 'payment-received';
+        log.requestTime = (new Date()).toUTCString();
+        log.notificationClientId = req.query.clientId;
+        log.apiKey = req.query.apiKey;
+        log.body = req.body;
+        try {
+            validateCredentials(req.query.clientId, req.query.apiKey, function (err, result) {
+                if (err) {
+                    logger.logError('notificationController - paymentReceived - error validating credentials');
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                }
+                if (!result) {
+                    return res.status(200).send({error: 'unauthorized'});
+                }
+                req.body.clientId = req.query.clientId;
+                queue.enqueue('paymentReceived', req.body, function (err) {
+                    if (err) {
+                        logger.logError('notificationController - paymentReceived - error adding job to queue');
+                        logger.logError(err);
+                        return res.status(200).send({error: 'server-error'});
+                    } else {
+                        return res.status(200).send({error: '', result: 'success'});
+                    }
+                });
+            });
+        } catch (ex) {
+            logger.logError('notificationController - paymentReceived - exception');
+            logger.logError(ex);
+            return res.status(200).send({error: 'server-error'});
+        } finally {
+            log.responseTime = (new Date()).toUTCString();
+            log.save(function (err) {
+                if (err) {
+                    logger.logError('notificationController - paymentReceived - error saving notification log');
                     logger.logError(err);
                 }
             });
