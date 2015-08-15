@@ -71,9 +71,9 @@
                     $scope.chnlClicked = function (index) {
                         $scope.selectedChnl = index;
                         $scope.selectChannel(index);
-                        $scope.prvwPnl(index);
-                        //$scope.brandImage = $scope.channels[index].image_url;
-                        //console.log('brand: '+$scope.brandImage);
+                        //$scope.prvwPnl(index);
+                        $scope.brandImage = $scope.channels[index].image_url;
+                        console.log('brand: '+$scope.brandImage);
                         $scope.isVisible = true; 
 
                     };
@@ -157,6 +157,9 @@
             };
             
         };
+        
+        //// ==== ACTIVATE END ==== ////
+        
        
         $scope.selectOnAir = function(channelIndex) {
             if(!$scope.loadingChannelGuide) {
@@ -188,6 +191,11 @@
 					for(var p in $scope.showTimes){
                         $scope.showListings[p] = $scope.getChannelDetails($scope.showTimes[p]);
                         //console.log('chnl: show '+p+' start-Time: '+$scope.showTimes[p].startTime);
+                        /*
+                        $scope.showListings[0].on('click', function(){
+                            console.log('got em');
+                        });
+                        */
                     }
                     //console.log('slct: '+$scope.onNow.length);
                     
@@ -207,7 +215,7 @@
             }
         };
         
-        $scope.prvwPnl = function(index){
+        $scope.prvwPnl = function(el){
             
             //var thisBrandImage = angular.element('#channelBrand').attr('class');
             // var thisBrandImage = angular.element('#channelBrand');
@@ -216,8 +224,13 @@
 //                 })
 //
             //console.log('brand: '+thisBrandImage);
-            var thisPreviewPnl = $window.document.getElementById('channelPreviewPanel').getElementsByTagName('div')[0];
-                $(thisPreviewPnl).bind('click', function(evt){
+            
+            console.log( $(el).attr('id')+' clicked' );
+            //var thisPreviewPnl = $window.document.getElementById('channelPreviewPanel').getElementsByTagName('div')[0];
+            
+            var thisPreviewPnl = angular.element('#channelPreviewPanel').find('div')[0];
+            console.log('found '+$(thisPreviewPnl).prop("tagName"));
+                $(thisPreviewPnl).on('click', function(evt){
                     $scope.playChannel(index);
                     console.log('done');
                 });
@@ -378,7 +391,7 @@
            
             return channelDetails;
         };
-        
+        /*
         $scope.getChannelLineup = function(chnl) {
             var ChannelLineup = '<div><img src="'+$scope.getImage(chnl.program.preferredImage.uri)+'" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + chnl.program.title + '</span></p>';
             if(!chnl.duration && !chnl.startTime) {
@@ -395,7 +408,7 @@
            
             return ChannelLineup;
         };
-        
+        */
     }])
     .directive('closepnl', function () {
         return {
