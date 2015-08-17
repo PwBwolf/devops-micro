@@ -12,14 +12,9 @@
             userSvc.getPromoChannels(function (data) {
                 $scope.promoChnls = data;
                 if ($scope.promoChnls && $scope.promoChnls.length > 0) {
-                    //$scope.title = $scope.promoChnls[0].name;
                     for(var h in $scope.promoChnls){
                         console.log('the promo channel name is: '+$scope.promoChnls[h].name);
-                        //$scope.title = $scope.promoChnls[h].program.name;
-                    /*$scope.chnlClicked = function (index) {
-                        $scope.selectedPromoChnl = index;
-                        $scope.selectChannel(index);
-                        };*/
+
                     };
                 }
                 $scope.loadingChannels = false;

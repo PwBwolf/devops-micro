@@ -22,70 +22,6 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up/paid',
-            {
-                title: 'Register for Live Internet TV Streaming - YipTV',
-                description: 'Sign up for YipTV live internet tv streaming and enjoy 100+ domestic and worldwide channels online.',
-                templateUrl: 'views/sign-up.html',
-                controller: 'signUpCtrl',
-                access: access.anon
-            })
-            .when('/sign-up/free',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/free-sign-up.html',
-                controller: 'freeSignUpCtrl',
-                access: access.anon
-            })
-            .when('/sign-up/complimentary/:compCode',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/complimentary-sign-up.html',
-                controller: 'complimentarySignUpCtrl',
-                access: access.anon
-            })
-            .when('/sign-up-success',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/sign-up-success-free',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-success-free.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/sign-up-success-login',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-success-login.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/sign-up-success-payment-pending',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-success-payment-pending.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/sign-up-success-payment-pending-active',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/sign-up-success-payment-pending-active.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
             .when('/invite/:referralCode',
             {
                 title: title,
@@ -154,7 +90,6 @@
             {
                 title: title,
                 description: description,
-                //templateUrl: 'views/user-home.html',
 				templateUrl: 'views/home.html',
                 controller: 'homeCtrl',
                 access: access.user
@@ -287,14 +222,6 @@
                 controller: 'commonCtrl',
                 access: access.user
             })
-            .when('/leadership',
-            {
-                title: 'YipTV Management and Board of Directors Team',
-                description: 'YipTV has an experienced and highly qualified management team who are aware about customer needs and demands. Explore detailed information about our leadership.',
-                templateUrl: 'views/leadership.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/contact-us',
             {
                 title: 'YipTV Contact Information',
@@ -324,14 +251,6 @@
                 title: title,
                 description: description,
                 templateUrl: 'views/error.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
-            .when('/under-construction',
-            {
-                title: title,
-                description: description,
-                templateUrl: 'views/under-construction.html',
                 controller: 'commonCtrl',
                 access: access.public
             })

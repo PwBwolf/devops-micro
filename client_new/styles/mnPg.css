@@ -148,7 +148,7 @@ body,html { font-size:14px; }
 	#teir_1 { overflow:hidden; }
 	#teir_2 { overflow-x: scroll; overflow-y:hidden; white-space:nowrap; }
 		.mainVwrs { background:; height:66.66%; }
-			.mnScrn { /*background:#209;*/ width:71.45%; height:100%; vertical-align:top !important; }
+			.mnScrn {width:71.45%; height:100%; vertical-align:top !important; }
 			.mnScrn img { width:100%; height:auto; }
 			.mnFavs { background:rgb(211,211,211); width:28.55%; height:100%; vertical-align:top !important; }
 				.favScrn { width:49.15%; height:50%; margin-right:2px; overflow:hidden; }

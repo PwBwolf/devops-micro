@@ -1,9 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeChnlsCtrl', ['$scope', '$', 'homeChnlsSvc', '$filter', '$window', function ($scope, $, homeChnlsSvc, $filter, $window) {
-		$scope.usrData = [];
-		$scope.usrPrfrdChnls = [];
+    app.controller('headerCtrl', ['$scope', '$', 'headerSvc', '$filter', function ($scope, $, headerSvc, $filter) {
         $scope.mrqeData = [];
 		
         $scope.counter = 0;
@@ -14,9 +12,7 @@
             $scope.format = $filter('date')(new Date(), 'HH:mm a');
             
 			$scope.dUser = $scope.user;
-			$scope.usrData = homeChnlsSvc.getUsrData();
-			$scope.usrPrfrdChnls = homeChnlsSvc.getPrfrdChnls();
-            $scope.mrqeData = homeChnlsSvc.getMarqueeData();
+            $scope.mrqeData = headerSvc.getMarqueeData();
             
 
             var text = $scope.mrqeData;

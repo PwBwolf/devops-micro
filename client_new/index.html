@@ -13,12 +13,6 @@
     <!-- build:css styles/desktop.css media="only screen and (min-width: 1025px)" -->
     <link rel="stylesheet" media="only screen and (min-width: 1025px)" href="styles/desktop.css">
     <!-- endbuild -->
-    <!-- build:css styles/tablet.css media="only screen and (min-width: 768px) and (max-width: 1024px)" -->
-    <link rel="stylesheet" media="only screen and (min-width: 768px) and (max-width: 1024px)" href="styles/tablet.css">
-    <!-- endbuild -->
-    <!-- build:css styles/phone.css media="only screen and (max-width: 767px)" -->
-    <link rel="stylesheet" media="only screen and (max-width: 767px)" href="styles/phone.css">
-    <!-- endbuild -->
     <link rel="alternate" href="http://yiptv.com{{currentRoute}}?lang=es" hreflang="es"/>
     <link rel="alternate" href="http://yiptv.com{{currentRoute}}" hreflang="x-default"/>
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
@@ -87,12 +81,12 @@
 	    <div id="brand">
 			<span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
 			
-			<div class="usr_Prfl_n_Data" data-ng-controller="homeChnlsCtrl" >
+			<div class="usr_Prfl_n_Data" data-ng-controller="headerCtrl" >
 				<div class="usr_Prfl posNlne">
 					<span id="uName" class="usr_PrflName">{{dUser.firstName}}</span>
 					<div class="usr_time posNlne" current-time></div><div id="alert" class="usr_time posNlne btn-info">event</div>
 				</div>
-				<div class="usr_alrtData posNlne"><span><p id="my_text" event-alert_off style="font-size:100%">{{usrData[0].usrmessage}}</p></span></div>
+				<div class="usr_alrtData posNlne"><span><p id="my_text" event-alert style="font-size:100%">{{usrData[0].usrmessage}}</p></span></div>
 			</div>
 
 	        <div id="language" class="menu-button"><a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope">Español</a></div>
@@ -145,7 +139,6 @@
 	
 	<div id="mnHldr" class="jumbotron">
 			<div id="errTest" data-ng-show="true"></div>
-			<!-- view placeholder - the ng-view(equals&quotes) may conflict with ng-ver above 1.2 if so remove them -->
 			<div id="pnlCntnr" class="container" data-ng-view></div>
 	</div>
 	
@@ -233,11 +226,11 @@
 <script src="scripts/services/home-main-scrns-service.js"></script>
 <script src="scripts/services/home-prefs-service.js"></script>
 <script src="scripts/services/home-networks-service.js"></script>
-<script src="scripts/services/home-chnls-service.js"></script>
+<script src="scripts/services/header-service.js"></script>
 <script src="scripts/services/home-chnl-guide-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
-<script src="scripts/controllers/home-chnls-controller.js"></script>
+<script src="scripts/controllers/header-controller.js"></script>
 <script src="scripts/controllers/home-chnl-guide-controller.js"></script>
 <script src="scripts/controllers/home-prefs-controller.js"></script>
 <script src="scripts/controllers/home-main-scrns-controller.js"></script>

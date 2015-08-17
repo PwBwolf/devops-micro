@@ -1,27 +1,11 @@
 (function (app) {
     'use strict';
 
-    app.controller('homeChnlGuideCtrl', ['$scope', '$', 'homeChnlGuideSvc','userSvc', 'mediaSvc', '$filter', '$compile', function ($scope, $, homeChnlGuideSvc, userSvc, mediaSvc, $filter, $compile) {
+    app.controller('homeChnlGuideCtrl', ['$scope', '$', 'userSvc', 'mediaSvc', '$filter', '$compile', function ($scope, $, userSvc, mediaSvc, $filter, $compile) {
 
 		init();
 		function init(){
-            
-			$scope._12pm = homeChnlGuideSvc.getGdeData1();
-			$scope._1pm = homeChnlGuideSvc.getGdeData2();
-			$scope._2pm = homeChnlGuideSvc.getGdeData3();
-			$scope._3pm = homeChnlGuideSvc.getGdeData4();
-			$scope._4pm = homeChnlGuideSvc.getGdeData5();
-			$scope._5pm = homeChnlGuideSvc.getGdeData6();
-			$scope._6pm = homeChnlGuideSvc.getGdeData7();
-            
-            $scope.stations = [
-                {id: '47620', name: 'TELESUR', color: 'burlywood'}, 
-                {id: '44448', name: 'CENTROA', color: 'cadetblue'}, 
-                {id: '55912', name: 'TRO', color: 'darkgrey'}, 
-                {id: '65269', name: 'CSMOTV', color: 'darksalmon'},
-                {id: '59350', name: 'JBN', color: 'goldenrod'}
-            ];
-            
+
             var dt = $filter('date')(new Date(), 'h:00 a');
             console.log('dt: '+dt);
             
@@ -35,16 +19,12 @@
 
             $scope.logoVisible = false;
             $scope.loadingStations = true;
-            //for (var p in $scope.stations){
             var chnlGdeHldr = angular.element('#channelGuidePanel');
-            //alert($(chnlGdeHldr).offsetTop);
             
             var timeHeaderBar = angular.element(document.createElement('div')), timeModule = angular.element(document.createElement('ul')), timeModuleItem_first = angular.element(document.createElement('li'));
                 timeHeaderBar.attr('id', 'guideHeader').attr('class', 'guideHeader');
             $(timeModuleItem_first).attr('class', 'timeModuleItem').html(dt);
-            //$(timeModuleItem_others).attr('class', 'timeModuleItem').html($scope.getTimeSlot());
             $(timeModule).prepend(timeModuleItem_first);
-            //$scope.getNextTimeSlot();
             $scope.getNextTimeSlot = function (){
                 var crntSlot = new Date();
                 for (var l = 1; l < 12; l++ ){
@@ -55,8 +35,7 @@
                     var timeModuleItem_others = angular.element(document.createElement('li'));
                     $(timeModuleItem_others).attr('class', 'timeModuleItem').html(newTimeSlot[l]);
                     $(timeModule).append(timeModuleItem_others);
-                    //return newTimeSlot;
-                    //console.log('nTS: '+newTimeSlot[l]);
+
                 };
                 return $scope.newTimeSlot;
                 
@@ -77,44 +56,14 @@
                 console.log('scrolling...');
                 
                 if( !guideDocked && ($(timeHeaderBar).offset().top - scrollTop() < 729)){
-                //if(!guideDocked && ($(timeHeaderBar).offset().top - scrollTop() < 729) && ($(timeHeaderBar).offset().left < 1)){
-                //if(!guideDocked && ($(timeHeaderBar).offset().top - scrollTop() < 729)){
-                //if(!guideDocked){
-                    //timeHeaderBar.style.top = 0;
-                    //timeHeaderBar.style.position = 'fixed';
-                    //timeHeaderBar.className = 'docked';
-                    
+
                     console.log('auto: '+$(timeHeaderBar).offset().left);
-                    //$(timeHeaderBar).attr('style', 'position:fixed');
                     $(timeHeaderBar).attr('style', 'position:fixed; left:'+$(timeHeaderBar).offset().left+'px;').next().attr('style', 'margin-top:33px');
-                    //if($(timeHeaderBar).scrollLeft() > 0){
-                    //    console.log('leftscroll: '+$(timeHeaderBar).scrollLeft());
-                    //}
-                    
-                    /*
-                    $scope.$watch( $(chnlGdeHldr).offset().left, function(evt){
-                        this.$on('change', function(){
-                            console.log('leftPos: '+$(chnlGdeHldr).offset().left);
-                        })
-                    })
-                    */
                     
                     console.log('scroll: '+$(timeHeaderBar).scrollLeft());
-                    //console.log('top: '+scrollTop());
-                    //console.log('place: '+$(timeHeaderBar).offset().top);
                     guideDocked = true;
-                    //} else if( guideDocked && scrollTop() <= guideTop ){
-                    } /*
-                    else if( guideDocked ){
-                                             //timeHeaderBar.style.position = 'relative';
-                                             //$(timeHeaderBar).attr('style', 'position:'+guideTop+'px');
-                                             $(timeHeaderBar).attr('style', 'position:relative');
-                                             
-                                             //timeHeaderBar.className = timeHeaderBar.className.replace('docked', '');
-                                        
-                                            guideDocked = false;    
-                                            }*/
-                    
+                } 
+
                 
             });
             
@@ -123,8 +72,6 @@
             /// ALL USER CHANNELS AVAILABLE BELOW ///
             userSvc.getUserChannels(function (data) {
                 $scope.dUserChannels = data;
-                
-                //console.log('leng: '+$scope.dUserChannels.length);
                 
                 angular.forEach($scope.dUserChannels, function( value, key ){
    
@@ -136,7 +83,6 @@
                         var inLineup = channelView[0].airings;
                         $scope.dChnlLnup = [];
                         $scope.dStation = channelView[0].callSign;
-                        //console.log('station: '+dStation+' - amtShows: '+inLineup.length);
                         console.log('it is: '+$scope.getImage(dLogo));
                     
                     
@@ -216,9 +162,7 @@
             };
             
             $scope.showCloseBtn = function(){
-                /* $on('insertItem',function(ev,attrs){ */
-                    //console.log('itis: '+evt.target.id);
-                    
+
                     if(angular.element('#closeBtn').length){
                         console.log('button already exists');
                         $scope.closeVisible = true;
