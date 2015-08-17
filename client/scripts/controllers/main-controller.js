@@ -7,6 +7,7 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
         $scope.session = {};
+        $scope.app = {eventData: 'Welcome to YipTV'};
 
         var aioWindow, aioWindowTimeout;
 

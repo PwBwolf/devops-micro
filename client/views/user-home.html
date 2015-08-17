@@ -1,21 +1,66 @@
-<div class="content-area">
-    <div class="user-home-box">
-        <div class="user-home-wrap">
-            <img src="images/background.jpg" alt="...">
+<header access-level="accessLevels.user">
+    <div id="headerBrand">
+        <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
-            <div class="caption">
-                <div id="userHomeBox">
-                    <button ng-click="openAio()" type="button" translate="USER_HOME_WATCH_NOW">Watch Now</button>
-                    <br>
-                    <button ng-show="user.type === 'free'" goto="/upgrade-subscription" type="button" translate="ACCOUNT_UPGRADE_SUBSCRIPTION"></button>
-                    <br ng-show="user.type === 'free'">
-                    <button goto="/account" type="button" translate="USER_HOME_ACCOUNT"></button>
-                    <br>
-                    <button goto="/refer-a-friend" type="button" translate="USER_HOME_REFER_FRIEND"></button>
-                    <br>
-                    <button goto="/contact-us" type="button" translate="USER_HOME_CONTACT_US"></button>
+        <div class="menu-header">
+            <div class="menu-sub-header position-div">
+                <span class="menu-user-name" ng-bind="user.firstName"></span>
+
+                <div class="header-time position-div" current-time></div>
+                <div class="header-event position-div btn-info" translate="USER_HOME_EVENT"></div>
+            </div>
+            <div class="event-data position-div"><span><marquee ng-bind="app.eventData"></marquee></span></div>
+        </div>
+        <div class="menu-button">
+            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a></div>
+        <div class="menu-button">
+            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
+        </div>
+    </div>
+
+    <nav id="navBar">
+        <div class="menu">
+            <div id="headerButtons" class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary" data-toggle="collapse" data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="profileDropDown">
+                    <input type="radio" name="options" id="optionProfile" autocomplete="off"><span translate="USER_HOME_PROFILE"></span>
+                </label>
+                <label class="btn btn-primary" data-toggle="collapse" data-target="#billingDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="billingDropDown">
+                    <input type="radio" name="options" id="optionBilling" autocomplete="off"><span translate="USER_HOME_BILLING"></span>
+                </label>
+            </div>
+            <div id="dropDowns">
+                <div class="panel">
+                    <div class="collapse" id="profileDropDown">
+                        <div class="well" data-toggle="buttons">
+                            <button id="preferencesButton" class="btn btn-default" data-parent="#buttonDropDowns" data-toggle="collapse" data-target="#preferencesDropDown" aria-expanded="false" aria-controls="preferencesDropDown" translate="USER_HOME_PREFERENCES"></button>
+                            <button id="userInfoButton" class="btn btn-default" data-parent="#buttonDropDowns" data-toggle="collapse" data-target="#userInfoDropDown" aria-expanded="false" aria-controls="userInfoDropDown" translate="USER_HOME_USER_INFO"></button>
+                            <button id="changePasswordButton" class="btn btn-default" data-parent="#buttonDropDowns" data-toggle="collapse" data-target="#changePasswordDropDown" aria-expanded="false" aria-controls="changePasswordDropDown" translate="USER_HOME_CHANGE_PASSWORD"></button>
+                        </div>
+                        <div id="buttonDropDowns">
+                            <div class="panel">
+                                <div class="collapse" id="preferencesDropDown">
+                                    <div class="well" id="preferencesContent" ng-include="'views/preferences.html'"></div>
+                                </div>
+                                <div class="collapse" id="userInfoDropDown">
+                                    <div class="well" id="userInfoContent" ng-include="'views/user-info.html'"></div>
+                                </div>
+                                <div class="collapse" id="changePasswordDropDown">
+                                    <div class="well" id="changePasswordContent" ng-include src="'views/change-password.html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="billingDropDown">
+                        <div id="upgradeDropDown" class="well">
+                            <div id="upgradeContent" ng-include="'views/upgrade-subscription.html'"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </nav>
+</header>
+<div id="scrns" class="ease scrnsMaximized" ng-include="usrDataFile.cntnt"></div>
+<div id="chnls" ng-include="usrDataFile.chnls"></div>
+<div id="guide" ng-include="usrDataFile.guide"></div>

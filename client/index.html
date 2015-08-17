@@ -39,6 +39,7 @@
     <!-- build:css styles/app.css -->
     <link rel="stylesheet" href="styles/fonts.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
+    <link rel="stylesheet" href="styles/new.css"/>
     <!-- endbuild -->
     <title>YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
@@ -46,21 +47,15 @@
 <!--[if lt IE 9]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<header id="desktopHeader">
+<header id="desktopHeader" access-level="accessLevels.anon">
     <div id="headerBrand">
-        <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
+        <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
         <div class="menu-button">
             <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
         </div>
-        <div class="menu-button" access-level="accessLevels.user">
-            <a href ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
-        </div>
         <div class="menu-button" access-level="accessLevels.anon">
             <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
-        </div>
-        <div class="menu-button" access-level="accessLevels.user">
-            <a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a>
         </div>
         <div style="float: right">
             <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
@@ -68,19 +63,17 @@
         <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
     </div>
     <nav id="navBar">
-        <div id="menu">
+        <div class="menu">
             <div id="menuItems">
                 <div style="display:none"><img src="images/mini-logo.png"></div>
                 <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
-                <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
                 <menuItem home-only id="joinNow" access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
-                <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
-                <div id="welcome" access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
             </div>
         </div>
     </nav>
 </header>
-<header id="phoneHeader">
+
+<header id="phoneHeader" access-level="accessLevels.anon">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -96,15 +89,12 @@
                 </div>
                 <div class="nav-btn btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_ANON_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.user" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
-                            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
                         </li>
                         <li>
                             <a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW"></a>
-                            <a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT"></a>
                         </li>
                     </ul>
                 </div>
@@ -165,6 +155,13 @@
 <script src="scripts/directives/goto.js"></script>
 <script src="scripts/directives/home-only.js"></script>
 <script src="scripts/directives/bookmark.js"></script>
+<script src="scripts/directives/channel-airing.js"></script>
+<script src="scripts/directives/channel.js"></script>
+<script src="scripts/directives/channel-expander.js"></script>
+<script src="scripts/directives/channel-hover.js"></script>
+<script src="scripts/directives/channel-logo.js"></script>
+<script src="scripts/directives/current-time.js"></script>
+<script src="scripts/directives/profile-panel.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>
@@ -173,6 +170,8 @@
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/browser-service.js"></script>
+<script src="scripts/services/home-main-scrns-service.js"></script>
+<script src="scripts/services/media-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
@@ -193,7 +192,12 @@
 <script src="scripts/controllers/change-password-controller.js"></script>
 <script src="scripts/controllers/resend-verification-controller.js"></script>
 <script src="scripts/controllers/refer-a-friend-controller.js"></script>
-<script src="scripts/controllers/invite-controller.js"></script>
+<script src="scripts/controllers/home-chnl-guide-controller.js"></script>
+<script src="scripts/controllers/home-chnls-controller.js"></script>
+<script src="scripts/controllers/home-main-scrns-controller.js"></script>
+<script src="scripts/controllers/player-controller.js"></script>
+<script src="scripts/controllers/promo-controller.js"></script>
+<script src="scripts/controllers/update-profile-controller.js"></script>
 
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->

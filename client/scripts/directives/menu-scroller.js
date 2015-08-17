@@ -7,7 +7,7 @@
             link: function () {
                 var topBtn = angular.element('#top');
                 var navBar = $window.document.getElementById('navBar');
-                var brand = $window.document.getElementById('brand');
+                var brand = $window.document.getElementById('headerBrand');
                 var navTop = navBar.offsetTop;
                 var navLogo = brand.querySelector('img');
                 var navDocked = false;
