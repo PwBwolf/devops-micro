@@ -163,7 +163,7 @@ header {
 }
 
 .menu-button {
-    width: 10%;
+    width: 9%;
     height: 100%;
     background: rgba(210, 210, 210, 0.9);
     margin-left: 1px;
@@ -337,9 +337,11 @@ label:before{ display:none !important; }
 
 #smChannelDesc { line-height: 1.051; overflow:hidden; }
 #channelGuideDesc { line-height: 0.900; }
+/*#channelGuideDesc:first-child { top: 20px; }*/
 #smChannelDesc p, #channelGuideDesc p { margin-bottom: 0px !important; overflow:hidden; vertical-align: top; /*display: inline;*/ }
 #channelGuideDesc p:last-child { display: block; top: -3px; }    
     .smChnlDesc { position:relative; display: inline-block; vertical-align:top; font-size:0.8em; width: 100%; height:auto; }
+    .chnlDesc:first-child { top: 20px; }
     .chnlDesc > div { overflow: hidden; border-right:2px solid; height: 60px; display: inline-block; vertical-align: top; padding:6px; }
     .chnlDesc > div:first-child { width:60px; height: 60px; position:fixed; border-right:4px groove; z-index:8;}
     .chnlDesc > div:nth-child(2){ margin-left: 60px; }

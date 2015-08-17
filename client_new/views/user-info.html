@@ -1,14 +1,11 @@
 <div class="content-area">
     <div class="content-box">
-        <!-- h1><span translate="CHANGE_PASSWORD_HEADING"></span></h1 -->
         <div class="container l_Prefs">
             <div class="form-box" data-ng-controller="userUpdateProfileCtrl">
 				
 				<form name="form" id="form" ng-submit="updateUserProfile()" novalidate>
                     <div class="form-container">
-                        <!-- div class="full-form">
-                            <h3 translate="SIGN_UP_ACCOUNT_INFO"></h3>
-                        </div -->
+
                         <div class="half-form">
                             <span class="label-text" translate="SIGN_UP_FIRST_NAME"></span>
                             <br><input autofocus valid-name autocomplete="off" id="firstName" placeholder="{{dUsr.firstName}}" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
