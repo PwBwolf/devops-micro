@@ -65,7 +65,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-program-detail',
-                    params: {tmsId: req.tmsId, stationId: req.stationId, startTime: req.startTime}
+                    params: {tmsId: req.tmsId, stationId: req.stationId}
                 }).success(success).error(error);
             }
         }

@@ -66,12 +66,13 @@ module.exports = {
 
         Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
                            {$unwind: '$airings'}, 
-                           {$match: {'airings.program.tmsId': req.query.tmsId, 'airings.startTime': date.isoDate(new Date(req.query.startTime))}}, 
+                           //{$match: {'airings.program.tmsId': req.query.tmsId, 'airings.startTime': date.isoDate(new Date(req.query.startTime))}},
+                           {$match: {'airings.program.tmsId': req.query.tmsId}},
                            {$project: {stationId: true, 
                                        'airings.program.preferredImage.uri' : true, 
-                                       'airings.duration': true, 
-                                       'airings.endTime' : true, 
-                                       'airings.startTime' : true, 
+                                       //'airings.duration': true, 
+                                       //'airings.endTime' : true, 
+                                       //'airings.startTime' : true, 
                                        'airings.program.tmsId' : true, 
                                        'airings.program.title' : true, 
                                        'airings.program.genres': true, 
@@ -79,7 +80,8 @@ module.exports = {
                                        'airings.program.topCast': true,
                                        'airings.program.directors': true,
                                        'airings.program.entityType': true,
-                                       callSign : true}}], 
+                                       callSign : true}},
+                           {$limit: 1}], 
                            function(err, channelsDb) {
             if (err) {
                 logger.logError('channel-guide-controller - getProgramDetail - failed to retrieve program detail from db: ' + err);

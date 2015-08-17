@@ -21,7 +21,7 @@
             templateUrl: 'empty.html',
             controller: "preProgramCtrl"
         }).
-        when('/channelguide/:stationid/:programid/:starttime',{
+        when('/channelguide/:stationid/:programid',{
             templateUrl: 'program.html',
             //controller: "programCtrl"
             controller: "programDetailCtrl"
