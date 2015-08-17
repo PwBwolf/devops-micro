@@ -152,11 +152,6 @@
                         
                             angular.forEach(inLineup, function(data){
                                 var dShowStartTime = $scope.getStartTime(1, data), dShowEndTime = $scope.getEndTime(1, data), dNextTimeSlot = $scope.getTimeSlot(), firstShowTime = dt+':00';
-                                //console.log('chnl: '+dStation+' - title: '+data.program.title+' dur: '+data.duration+' sT: '+dShowStartTime+' hour: '+dt+':00 - nexthour: '+dNextTimeSlot);
-                                //console.log('dLngth: '+data.program.preferredImge.uri);
-                            
-                                /// comment out the if statement line to view all shows and times ///
-                                //if( dShowStartTime > firstShowTime && dShowEndTime <= dNextTimeSlot){
                                 
                                 if(!data.program.preferredImage.uri) { 
                                     $scope.ChannelLineup = '<div style="width:'+$scope.timeSpan(data.duration)+'"><img src="../images/f-logo.png" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + data.program.title + '</span></p>';
@@ -191,78 +186,10 @@
                             }
                             
                 });
-                //return $scope.dUserChannels;
             });
-            /////////////////////////////////////////
-            
-            
-            
-            
-            //angular.forEach($scope.dUserChannels, function(data, index) {
-            /* angular.forEach($scope.stations, function( value, key){
-                //console.log('name: '+data.identifier+ ' | id: '+data.name+' key: '+index);
-                //console.log('name: '+value.id+ ' | id: '+value.name+' key: '+key);
-                
-                mediaSvc.getChannelGuide(value.id, value.name).success(function (channelView) {
-                    
-                    var dLogo = channelView[0].preferredImage.uri;
-                    var dStation = channelView[0].callSign;
-                    var inLineup = channelView[0].airings;
-                    $scope.dChnlLnup = [];
-                    
-                    //console.log('station: '+dStation+' - amtShows: '+inLineup.length);
-                    //console.log('it is: '+$scope.getImage(dLogo));
-                    
-                    
-                    var userChnlGde = [], linkShow = [], dCntnt = [], userChnlLogo = [];
 
-                        setChannelLineup();
-                      
-                    function setChannelLineup(){
-                        userChnlGde = angular.element(document.createElement('div'));
-                        userChnlLogo = angular.element(document.createElement('div'));
-                        $(userChnlLogo).attr('id', 'chnl-guide-logo').attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url('+$scope.getImage(dLogo)+') 50% no-repeat; background-size:contain ');
-                        $(userChnlGde).attr('chnl', dStation).attr('style', 'background:'+value.color).prepend(userChnlLogo);
-                        
-                        angular.forEach(inLineup, function(data){
-                            var dShowStartTime = $scope.getStartTime(1, data), dShowEndTime = $scope.getEndTime(1, data), dNextTimeSlot = $scope.getTimeSlot(), firstShowTime = dt+':00';
-                            //console.log('chnl: '+dStation+' - title: '+data.program.title+' dur: '+data.duration+' sT: '+dShowStartTime+' hour: '+dt+':00 - nexthour: '+dNextTimeSlot);
-                            
-                            
-                            /// comment out the if statement line to view all shows and times ///
-                            //if( dShowStartTime > firstShowTime && dShowEndTime <= dNextTimeSlot){
-                                $scope.ChannelLineup = '<div style="width:'+$scope.timeSpan(data.duration)+'"><img src="'+$scope.getImage(data.program.preferredImage.uri)+'" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + data.program.title + '</span></p>';
-                                if(!data.duration && !data.startTime) {
-                                    $scope.ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">Not Available</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">Not Available</span></p>';
-                                    } else {
-                                        $scope.ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">' + $scope.getTime(1, data) + '</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">' + data.duration + ' min</span></p></div>';
-                                }
-                            
-                                $(userChnlGde).append($scope.ChannelLineup);
-                                $(userChnlGde).attr('class', 'chnlDesc');
-                                $(userChnlGde).attr('id', 'channelGuideDesc');
-                                //}
-                        });
-
-                        angular.element(chnlGdeHldr).prepend(timeHeaderBar).append(userChnlGde);
-                    }
-                    
-                    $scope.loadingStations = false;
-                }).error(function() {
-                    $scope.loadingStations = false;
-                    loggerSvc.logError('Error loading tv channel guide.');
-                });
-                
-            }); */
-            
-            /// ==== OPTIONS END ==== ///
-            /// ===================== ///
-            
-            
             $scope.timeSpan = function(time){
-                //var timeS = time * 2+'px';
                 $scope.timeS = time * 4+'px';
-                //console.log('span: '+$scope.timeS);
                 return $scope.timeS;
             }
             
@@ -303,13 +230,10 @@
                         var el = $compile( channelIdent )( $scope ), el1 = $compile( closethispanel )( $scope );
                         
                         
-                          //where do you want to place the new element?
                         angular.element(prvwPnl).append(closethispanel).append(channelIdent);
                         console.log('close appended');
                     }
-                
-                    //$scope.channelIndex = target;
-                  //$scope.insertHere = el;
+
             };
             
             $scope.getTarget = function(target){
@@ -323,26 +247,7 @@
     /// ============ INIT END ============ /// 
 		function scrollTop() {
 			return document.body.scrollTop || document.documentElement.scrollTop;
-			//alert('when');		
 		};
-        
-        /*$scope.prvwPnl = function(index){
-            
-            //var thisBrandImage = angular.element('#channelBrand').attr('class');
-            // var thisBrandImage = angular.element('#channelBrand');
-                 //$scope.$watch( $(thisBrandImage).attr('class'), function(evt){
-                 //    this.$on('change', )
-                 //})
-
-            //console.log('brand: '+thisBrandImage);
-            //var thisPreviewPnl = $window.document.getElementById('channelPreviewPanel').getElementsByTagName('div')[0];
-            $scope.thisPreviewPnl = angular.element('channelPreviewPanel').find('div:first-child');
-                $scope.thisPreviewPnl.bind('click', function(evt){
-                    //$scope.playChannel(index);
-                    console.log('done');
-                });
-                //console.log('prvw html: '+$(thisPreviewPnl).html());   ///closest('div').html());
-        };*/
         
         
         $scope.getTime = function (index, airing) {
@@ -369,15 +274,6 @@
             var showEndTime = new Date(airing.endTime);
             return pad(showEndTime.getHours()) + ':' + pad(showEndTime.getMinutes());
         };
-        
-        /*
-        $scope.getTimeSlot = function (){
-                    var timeSlot = new Date();
-                    var nextTimeSlot = new Date(timeSlot.getTime() + (60 * 60 * 1000));
-                    //return pad(nextTimeSlot.getHours())+ ':' +pad(nextTimeSlot.getMinutes());
-                    return pad(nextTimeSlot.getHours())+ ':00'; 
-                };*/
-        
 
         function pad(number) {
             var r = String(number);
@@ -413,46 +309,10 @@
                 } else {
                     ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">' + $scope.getTime(1, chnl) + '</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">' + chnl.duration + ' min</span></p></div>';
             }
-            
-            /*if(!chnl.program.shortDescription) {
-                ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Description: </span><span class="channel-details-body">Not Available</span></p></div>';
-                } else {
-                    ChannelLineup += '<p style="text-align: left"><span class="channel-details-header">Description: </span><span class="channel-details-body">' + chnl.program.shortDescription + '</span></p></div>';
-            }*/
-           
+
             return ChannelLineup;
         };
 		       
     }])
-    /*
-    .directive('channelLineup', function($log, $window, $compile){
-            return {
-                restrict: 'A',
-                replace: true,
-                //template: '<div data-ng-bind-html=dChnlLnup></div>',
-                template: '<div></div>',
-                link: function(scope, el, attrs){
-                    //var template = '<div data-ng-bind-html=dChnlLnup></div>';
-                    //var linkShow = $compile(template);
-                    //var dCntnt = linkShow(scope);
-                    //el.append(dCntnt);
-                    //attrs.$set('data-ng-bind-html', 'dChnlLnup');
-                
-                    //var dShow = [];
-                        //dShow = el.find('div');
-                    
-                
-                    //$(dShow).attr('width', ''+scope.timeS);
-                    //scope.v = scope.inLineup.length;
-                    //for(var k in v){
-                    
-                    //}
-                    attrs.$set('class', 'chnlDesc');
-                    //attrs.$set('style', 'width:'+timeSpan);
-                    attrs.$set('id', 'channelGuideDesc');
-                    //console.log('shows: '+dShow.length);
-                }
-            }
-    });
-    */
+  
 }(angular.module('app')));

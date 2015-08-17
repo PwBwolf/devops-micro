@@ -9,7 +9,6 @@
             link: function (scope, element, attrs) {
                 attrs.$set('id', 'channelBrand');
                 attrs.$set('class', 'brand_logo ');
-                //attrs.$set('listIndex', scope.channelIndex);
                 console.log('current channel: '+scope.channelIndex);
                 
                 scope.logoVisible = true;

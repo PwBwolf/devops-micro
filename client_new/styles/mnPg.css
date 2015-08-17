@@ -14,55 +14,12 @@ body,html { font-size:14px; }
 
 
 /* //// === ammendments to bootstrap css === //// */
-.jumbotron { padding: 0 !important; /*background:rgb(211,211,211) !important; background-color:rgb(211,211,211) !important;*/ }
+.jumbotron { padding: 0 !important; }
 .jumbotron .container { width:100%; padding:0 0; }
 .jumbotron p { font-size:;}
 
 
 .modal-btm-space { margin-bottom:3%; }
-
-
-/* //// =========================================== //// */
-/* //// =============== banner new ================ //// */
-
-/*
-header {
-    width: auto;
-    height: 50px;
-    background: rgba(229, 229, 231, .91) !important;
-    z-index: 9980;
-    margin-bottom: 34px;
-    padding: 0px !important;
-}
-*/
-
-/*
-#brand {
-    height: 50px;
-    text-transform: uppercase;
-    border-bottom: solid 1px lightgrey;
-    z-index: 50;
-}
-
-#brand img {
-    width: auto;
-    height: 80px;
-    margin: 0 0 0 35px;
-    top: 10px;
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    z-index: 9999;
-}*/
-
-
-/*
-#brand span {
-    display: inline-block;
-}*/
-
 
 #brand a, #brand a:select {
     color: black !important;
@@ -129,18 +86,6 @@ header {
     color: rgba(62, 25, 77, .94);
     border-bottom: solid 1px lightgrey;
 }
-/*
-#menu {
-    width: 100%;
-    font-weight: bold;
-}
-
-#menuItems {
-    margin: 6px auto;
-    text-align: center;
-}
-*/
-
 
 #menuItems mnuItm {
     padding: 0px 20px;
@@ -166,16 +111,9 @@ header {
     width: auto;
 }
 
-
-
-
-/* //// =========================================== //// */
-/* //// ============== global prefs =============== //// */
-
 .posNlne { position:relative; display:inline-block; margin-right:-4px; vertical-align: baseline; }
 
 .usrPrefsPnl, .usr_Scrns_pnl, .usrGuidePnl {
-	/*margin-bottom:4px;*/
 	
 	transition: all 1s ease-in-out; 
 	-webkit-transition: all 1s ease-in-out;
@@ -198,46 +136,13 @@ header {
     margin:10px 0px 2px; 
 } 
 
-/* //// =========================================== //// */
-/* //// ============= usr prefs panel ============= //// */
-
-/*
-.usrPrefsPnl { background:rgb(213,213,213); width:100%; height:100px; } 
-	.logoBox { width:10%; height:auto; padding:8px 0 0 8px; top:0; left:0; vertical-align: top !important; } 
-	.logoBox img { width:75%; height: auto; }
-	
-	.usr_Prefs { width:90%; height:100%; border-left:1px solid grey; left:20px;  }
-		.usr_Prfl_n_Data { height:43%; width:100%; }
-			.usr_Prfl { width:23%; height:100%; border-right:1px solid grey; background:; }
-				.usr_Prfl_nfo, .usr_PrflName  { width:auto; height:50%; text-align:center; }
-					.usr_PrflName { background:; color:black; letter-spacing: 0.2em; font: oblique small-caps normal 1em Arial, sans-serif; }
-					.usr_Prfl_nfo { border-bottom: 1px solid grey; color:black; background:white; font: normal normal normal 0.8em 'bebasregular', Arial, sans-serif; }
-						.usr_time { width:	50%; height:100%; } 
-						.usr_prfl_btn { width:100%; height:50%; border-left: 1px solid grey; text-align:center; } .usr_prfl_btn img { height:100%; width:auto; margin:0 10%; }
-						.usr_prfl_btn span { margin: 0 5%; }
-						
-			.usr_alrtData { 
-				width:77%; height:100%; background:; font-size:16px; color:white; 
-				top:-15px; padding:5px 5px 5px 0px; letter-spacing: 0.1em; font-size:95% !important;
-				font-variant: small-caps;
-				
-				}	.usr_alrtData span { top:6px; } 
-					.usr_alrtData span:first-child { background:rgb(100,100,100); padding:13px 5px 15px 7px; border-right: 1px solid #aaa; }
-					.usr_alrtData span:last-child { padding-left: 10px; display:inherit; white-space:nowrap; }
-		
-		
-		.usr_Prfl_n_Chnls { height:57%; width:100%; background:white; overflow:hidden; padding:0 1%; }
-		.usr_Prfl_n_Chnls ul, .usr_Prfl_n_Chnls li, .usr_Prfl_n_Chnls img { height:100%; }
-		.usr_Prfl_n_Chnls ul { width:100%; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; }
-		.usr_Prfl_n_Chnls li { display:inline; vertical-align: middle;}
-*/
-
-
-
-
-/* //// =========================================== //// */
-/* //// ============= usr scrns panel ============= //// */
-#my-player, #my-player_wrapper, #sub-player, #sub-player_wrapper { position:relative; display:inline-block !important; padding-right:2px; margin-right:-4px; vertical-align: top; }
+#my-player, #my-player_wrapper, #sub-player, #sub-player_wrapper { 
+    position:relative; 
+    display:inline-block !important; 
+    padding-right:2px; 
+    margin-right:-4px; 
+    vertical-align: top; 
+}
 .usr_Scrns_pnl { background:lightgrey; width:inherit; height:555px; }
 	#teir_1, #teir_2 { width:100%; margin-bottom:5px; }
 	#teir_1 { overflow:hidden; }
