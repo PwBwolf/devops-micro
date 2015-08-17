@@ -1,11 +1,7 @@
 <div class="usr_Scrns_pnl">
 	<div id="teir_1" class="mainVwrs" data-ng-controller="playerCtrl">
-		<!-- span data-ng-controller='jwGenCtrl'>
-			<div id="myPlayer" class="mnScrn posNlne" data-ng-controller='callMyTest'><img ng-src="{{usrMnScrn.mnView}}" /></div>
-		</span -->
-		<!-- show-desc-directive data-ng-show="showTheFile();" test-attr="myAttr" class="mnScrn posNlne"><img ng-src="{{usrMnScrn.mnView}}" /></show-desc-directive -->
+
 		<div id="my-player" class="mnScrn posNlne"><img data-ng-src="{{usrMnScrn.mnView}}" /></div>
-		<!--span id='errLog'></span-->
 		<div class="mnFavs posNlne">
 			<div class="favScrn posNlne" data-id="{{usrF.startTime}}" data-ng-repeat="usrF in channels | limitTo:4" data-ng-click="watchNow($index);"> <!-- createH(usrF.tmsId); -->
 				<img ng-src="{{usrF.image_url}}" />
@@ -18,7 +14,6 @@
 	</div>
 	
 	<div id="teir_2" class="sgstdChnls ease" data-ng-controller="promoCtrl">
-		<!--<div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div>-->
 		<div data-id="23" class="{{usrScrnClasses[0].className}} {{usrScrnClasses[2].className}}" data-ng-class="{'{{usrScrnClasses[1].className}}':$index == selectedIndex}" data-ng-mouseover="itemClicked($index)" data-ng-repeat="usrS in promoChnls track by $index">
 			
 			<div id="scrnHldr" data-ng-class="($index==selectedIndex) ? '{{usrScrnClasses[4].className}}' : '{{usrScrnClasses[3].className}}'">
@@ -40,7 +35,6 @@
                         <p>{{usrS.program.longDescription}}</p>
 					</aside>
 				</article>
-				<!-- div id="subPlayer" class="mnScrn posNlne"><img ng-src="{{usrSubScrn.subView}}" /></div -->
 				<img ng-src="{{usrS.image_url}}" />
 			</div>
 			
