@@ -127,28 +127,14 @@ worker.register({
                             saveBillingPayment(params, 'failure', 'account-error', function () {
                                 callback(new Error('account-error'));
                             });
-                        } else if (dbUser.account.type === 'comp') {
+                        } else if (dbUser.account.type === 'comp' || dbUser.account.type === 'free') {
                             saveBillingPayment(params, 'failure', 'account-error', function () {
                                 callback(new Error('account-error'));
                             });
                         } else if (dbUser.account.type === 'paid') {
-                            subscription.reverseDunning5Days(params.username.toLowerCase(), function(err){
+                            subscription.reverseDunning5Days(params.username.toLowerCase(), function (err) {
                                 if (err) {
                                     logger.logError('notificationProcessorMain - paymentReceived - error executing reverse dunning 5 days: ' + params.username);
-                                    logger.logError(err);
-                                    saveBillingPayment(params, 'failure', 'server-error', function () {
-                                        callback(err);
-                                    });
-                                } else {
-                                    saveBillingPayment(params, 'success', '', function () {
-                                        callback(null, 'success');
-                                    });
-                                }
-                            });
-                        } else if (dbUser.account.type === 'free') {
-                            subscription.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
-                                if (err) {
-                                    logger.logError('notificationProcessorMain - paymentReceived - error upgrading user: ' + params.username);
                                     logger.logError(err);
                                     saveBillingPayment(params, 'failure', 'server-error', function () {
                                         callback(err);
