@@ -5,7 +5,6 @@ var mongoose = require('../../../../server/node_modules/mongoose');
 var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
 
-require('../../../../server/common/models/program');
 require('../../../../server/common/models/channel');
 
 var dbYip = mongoose.createConnection(config.db);
@@ -26,9 +25,9 @@ module.exports = {
             callSign : true
         }, function(err, channelsDb) {
             if (err) {
-                logger.logInfo('find error: ' + err);
+                logger.logError('channel-guide-controller - getChannelList - failed to retrieve channel list: ' + err);
             } else {
-                logger.logInfo('documents found in channelsDb: '
+                logger.logInfo('channel-guide-controller - getChannelList - total documents found in db: '
                         + channelsDb.length);
 
                 res.json({
@@ -41,10 +40,10 @@ module.exports = {
     getChannelInfo : function(req, res) {
         var nowTime = new Date();
         var startTime = date.isoDate(nowTime);
-        logger.logInfo('getChannelInfo startTime:' + startTime);
+        logger.logInfo('channel-guide-controller - getChannelInfo - startTime:' + startTime);
 
-        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 15)) : date.isoDate(dateAdd(nowTime, req.query.hour ? 'hour' : 'day', req.query.period));
-        logger.logInfo('getChannelInfo endTime:' + endTime);
+        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 14)) : date.isoDate(dateAdd(nowTime, 'hour', req.query.period));
+        logger.logInfo('channel-guide-controller - getChannelInfo - endTime:' + endTime);
 
         Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
                            {$unwind: "$airings"}, 
@@ -52,9 +51,9 @@ module.exports = {
                            {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], 
                            function(err, channelsDb) {
             if (err) {
-                logger.logInfo('find error: ' + err);
+                logger.logError('channel-guide-controller - getChannelInfo - failed to retrieve channel info from db: ' + err);
             } else {
-                logger.logInfo('airings found');
+                logger.logInfo('channel-guide-controller - getChannelInfo - airings found: ' + channelsDb.length);
 
                 res.json({
                     channelsDb : channelsDb
@@ -83,9 +82,9 @@ module.exports = {
                                        callSign : true}}], 
                            function(err, channelsDb) {
             if (err) {
-                logger.logInfo('find error: ' + err);
+                logger.logError('channel-guide-controller - getProgramDetail - failed to retrieve program detail from db: ' + err);
             } else {
-                logger.logInfo('documents found in channelsDb: '
+                logger.logInfo('channel-guide-controller - getProgramDetail - total documents found in channelsDb: '
                         + channelsDb.length);
 
                 res.json({

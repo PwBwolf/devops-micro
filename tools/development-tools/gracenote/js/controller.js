@@ -127,9 +127,8 @@
         
         channelSvc.setChannel($routeParams.stationid);
         
-        var req = {stationId: '0', hour: true, period: undefined};
+        var req = {stationId: '0', period: undefined};
         req.stationId = $routeParams.stationid;
-        req.hour = true;
         req.period = undefined;
     /*    
         channelGuideSvc.getAppConfig()

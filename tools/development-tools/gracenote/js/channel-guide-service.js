@@ -56,7 +56,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-channel-info',
-                    params: {stationId: req.stationId, hour: req.hour, period: req.period}
+                    params: {stationId: req.stationId, period: req.period}
                 }).success(success).error(error);
                 
             },
