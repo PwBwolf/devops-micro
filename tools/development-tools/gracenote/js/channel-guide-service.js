@@ -12,6 +12,7 @@
         var lastAppConfigReqFailed = true;
         
         return {
+        /*    
             getAppConfig: function() {
                 if(!promiseAppConfig || lastAppConfigReqFailed) {
                     // $http returns a promise, so we don't need to create one with $q
@@ -26,7 +27,7 @@
                 }
                 return promiseAppConfig;
             },
-        
+        */
             getChannelGuide: function() {
                 if(!promise || lastRequestFailed) {
                     // $http returns a promise, so we don't need to create one with $q
@@ -45,7 +46,7 @@
             getChannelList: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/metadata/api/channellist',
+                    url: '/metadata/api/get-channel-list',
                     params: {stationIds: req.stationIds}
                 }).success(success).error(error);
                 
@@ -54,7 +55,7 @@
             getChannelInfo: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/metadata/api/channelinfo',
+                    url: '/metadata/api/get-channel-info',
                     params: {stationId: req.stationId, hour: req.hour, period: req.period}
                 }).success(success).error(error);
                 
@@ -63,7 +64,7 @@
             getProgramDetail: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/metadata/api/programdetail',
+                    url: '/metadata/api/get-program-detail',
                     params: {tmsId: req.tmsId, stationId: req.stationId, startTime: req.startTime}
                 }).success(success).error(error);
             }

@@ -7,7 +7,7 @@
                 <td ng-repeat="day in days" align="center">
                     <table style="border:none">
                         <tr><th style="border: none"><a ng-href="#/channelguide/{{channels[rowIndex*5+$index].stationId}}"> {{channels[rowIndex*5+$index].callSign}} </a></th></tr>
-                        <tr><img ng-src="{{graceNoteImageUrl}}{{channels[rowIndex*5+$index].preferredImage.uri}}" style="width:128px;height:128px;"></tr>
+                        <tr><img ng-src="{{appConfig.graceNoteImageUrl}}{{channels[rowIndex*5+$index].preferredImage.uri}}" style="width:128px;height:128px;"></tr>
                     </table>
                 </td>
             </tr>

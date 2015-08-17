@@ -59,9 +59,9 @@
     
     myApp.controller('channelListCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
        
-        //var req = {stationIds: []};
-        var req = {stationIds: ['44448', '55912']};
-        
+        var req = {stationIds: []};
+        //var req = {stationIds: ['44448', '55912']};
+    /*    
         channelGuideSvc.getAppConfig()
         .then(function(data) {
             $scope.graceNoteImageUrl = data.graceNoteImageUrl;
@@ -74,7 +74,7 @@
                 console.log(res.status);
             }
         });
-        
+    */    
         channelGuideSvc.getChannelList(
             req,
             function (data) {
@@ -131,7 +131,7 @@
         req.stationId = $routeParams.stationid;
         req.hour = true;
         req.period = undefined;
-        
+    /*    
         channelGuideSvc.getAppConfig()
         .then(function(data) {
             $scope.graceNoteImageUrl = data.graceNoteImageUrl;
@@ -144,7 +144,7 @@
                 console.log(res.status);
             }
         });
-        
+    */    
         channelGuideSvc.getChannelInfo(
             req,
             function (data) {
@@ -201,7 +201,7 @@
         req.tmsId = $routeParams.programid;
         req.stationId = $routeParams.stationid;
         req.startTime = $routeParams.starttime;
-        
+    /*    
         channelGuideSvc.getAppConfig()
         .then(function(data) {
             $scope.graceNoteImageUrl = data.graceNoteImageUrl;
@@ -214,7 +214,7 @@
                 console.log(res.status);
             }
         });
-        
+    */    
         channelGuideSvc.getProgramDetail(
             req,
             function (data) {
