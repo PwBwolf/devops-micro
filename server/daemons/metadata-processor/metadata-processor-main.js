@@ -32,7 +32,7 @@ new CronJob(config.metaDataRetrievalRecurrence, function () {
         getChannelGuide();
     }, 
     function () {
-        logger.logInfo('gracenote-processor-main - CronJob - gracenote retrieval has finished');
+        logger.logInfo('metadata-processor-main - CronJob - gracenote retrieval has finished');
     },
     true,
     'America/New_York'
@@ -59,9 +59,9 @@ function getChannelGuide() {
          function(callback) {
              Channel.find({}, function(err, channels) {
                  if(err) {
-                     logger.logError('gracenote-processor-main - getChannelGuide db error: ' + err);
+                     logger.logError('metadata-processor-main - getChannelGuide db error: ' + err);
                  } else {
-                     logger.logInfo('gracenote-processor-main - getChannelGuide documents found in db: ' + channels.length);
+                     logger.logInfo('metadata-processor-main - getChannelGuide documents found in db: ' + channels.length);
                      for(var i = 0; i < channels.length; i++) {
                          stationIds.push({stationId: channels[i].stationId, dbId: channels[i]._id});
                      }
@@ -73,11 +73,45 @@ function getChannelGuide() {
          function(channels, callback) {
              graceNote.getChannelList(function (err, data) {
                  if (err) {
-                     logger.logError('gracenote-processor-main - getChannelGuide - gracenote error: ' + err);
+                     logger.logError('metadata-processor-main - getChannelGuide - gracenote error: ' + err);
                  } else {
-                     logger.logInfo('gracenote-processor-main - getChannelGuide - gracenote channel list length: ' + data.length);
+                     logger.logInfo('metadata-processor-main - getChannelGuide - gracenote channel list length: ' + data.length);
                  }
-                 callback(err, channels, data);
+                 
+                 if(channels.length ===0) {
+                     callback(err, channels, data);
+                 } else {
+                     async.eachSeries(
+                         channels,
+                         function (channelDb, cb) {
+                             var isChannelRemoved = true;
+                             var i = 0;
+                             for(; i < data.length; i++) {
+                                 if(channelDb.stationId === data[i].stationId) {
+                                     isChannelRemoved = false;
+                                     break;
+                                 }
+                             }
+                             
+                             if(isChannelRemoved) {
+                                 channelDb.status = 'removed';
+                                 channelDb.save(function(err) {
+                                     cb(err, channelDb);
+                                 });
+                             } else {
+                                 cb(null, channelDb);
+                             }
+                         },
+                         function (err) {
+                             if(err) {
+                                 logger.logError('metadata-processor-main - update channelDb status failed with err: ' + err);
+                             } else {
+                                 logger.logInfo('metadata-processor-main - update channelDb status succeed! ');
+                             }
+                             callback(err, channels, data);
+                         }
+                     );
+                 }
              });
          },
          
@@ -86,10 +120,10 @@ function getChannelGuide() {
                  data, 
                  function (channelGraceNote, cb) {
                      if(channels.length === 0) {
-                         logger.logInfo('gracenote-processor-main - getChannelGuide - new channel found in gracenote, save to db');
+                         logger.logInfo('metadata-processor-main - getChannelGuide - new channel found in gracenote, save to db');
                          saveChannel(channelGraceNote, startTime, endTime, function (err, newChannel) {
                              if (err) {
-                                 logger.logError('gracenote-processor-main - saveChannel - error save new channel: ' + err);
+                                 logger.logError('metadata-processor-main - saveChannel - error save new channel: ' + err);
                              }
                              cb(err, newChannel);
                          });
@@ -104,18 +138,18 @@ function getChannelGuide() {
                          }
                          
                          if(isNewChannel) {
-                             logger.logInfo('gracenote-processor-main - getChannelGuide - new channel found in gracenote, save to db');
+                             logger.logInfo('metadata-processor-main - getChannelGuide - new channel found in gracenote, save to db');
                              saveChannel(channelGraceNote, startTime, endTime, function (err, newChannel) {
                                  if (err) {
-                                     logger.logError('gracenote-processor-main - saveChannel - error save new channel: ' + err);
+                                     logger.logError('metadata-processor-main - saveChannel - error save new channel: ' + err);
                                  }
                                  cb(err, newChannel);
                              });
                          } else {
-                             logger.logInfo('gracenote-processor-main - getChannelGuide - channel exists in db with index ' + i + ', update db');
+                             logger.logInfo('metadata-processor-main - getChannelGuide - channel exists in db with index ' + i + ', update db');
                              updateChannel(channels[i], channelGraceNote, startTime, endTime, startTimeDb, function (err, channel) {
                                  if(err) {
-                                     logger.logError('gracenote-processor-main updateChannel - error save existing channel: ' + err);
+                                     logger.logError('metadata-processor-main updateChannel - error save existing channel: ' + err);
                                  }
                                  cb(err, channel);
                              });
@@ -123,7 +157,11 @@ function getChannelGuide() {
                      }
                  },
                  function (err) {
-                     logger.logInfo('gracenote-processor-main - gracenote retrieval succeed! ');
+                     if(err) {
+                         logger.logError('metadata-processor-main updateChannel - error save/update channels: ' + err);
+                     } else {
+                         logger.logInfo('metadata-processor-main - gracenote retrieval succeed! ');
+                     }
                      callback(err);
                  }
              );
@@ -131,9 +169,9 @@ function getChannelGuide() {
          
          function(err) {
          if (err) {
-             logger.logError('gracenote-processor-main - getChannelGuide - error: ' + err);
+             logger.logError('metadata-processor-main - getChannelGuide - error: ' + err);
          } else {
-             logger.logInfo('gracenote-processor-main - get channel guide succeed!');
+             logger.logInfo('metadata-processor-main - get channel guide succeed!');
          }
     });
 }
@@ -141,10 +179,10 @@ function getChannelGuide() {
 function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, cb) {
     graceNote.getChannelGuide(dataGraceNote.stationId, startTime, endTime, function (err, data) {
         if (err) {
-            logger.logError('gracenote-processor-main - updateChannel - error: ' + err);
+            logger.logError('metadata-processor-main - updateChannel - error: ' + err);
         } else {
         
-            logger.logInfo('gracenote-processor-main - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
+            logger.logInfo('metadata-processor-main - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
             
             var count = 0;
             for(var j = 0; j < channel.airings.length; j++) {
@@ -154,7 +192,7 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, 
                     break;
                 }
             }
-            logger.logInfo('gracenote-processor-main - updateChannel - old programs dropped off from the channel: ' + count);
+            logger.logInfo('metadata-processor-main - updateChannel - old programs dropped off from the channel: ' + count);
     
             channel.airings.splice(0, count);
             
@@ -183,7 +221,7 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, 
                 channel.airings.splice(index, channel.airings.length - index);
             }
             
-            logger.logInfo('gracenote-processor-main - updateChannel - programs left before adding programs from gracenote: ' + channel.airings.length);
+            logger.logInfo('metadata-processor-main - updateChannel - programs left before adding programs from gracenote: ' + channel.airings.length);
             
             for(i = 0; i < data[0].airings.length; i++) {
                 channel.airings.push(data[0].airings[i]);
@@ -191,7 +229,7 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, 
                 channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
             }
     
-            logger.logInfo('gracenote-processor-main - updateChannel - programs in total: ' + channel.airings.length);
+            logger.logInfo('metadata-processor-main - updateChannel - programs in total: ' + channel.airings.length);
     
             channel.save(function (err) {
                 if (cb) {
@@ -205,16 +243,18 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, 
 function saveChannel(channel, startTime, endTime, cb) {
     graceNote.getChannelGuide(channel.stationId, startTime, endTime, function (err, data) {
         if (err) {
-            logger.logError('gracenote-processor-main - saveChannel - error: ' + err);
+            logger.logError('metadata-processor-main - saveChannel - error: ' + err);
         } else {
             
             var newChannel = new Channel(data[0]);
-            logger.logInfo('gracenote-processor-main - saveChannel - programs in total: ' + data[0].airings.length);
+            logger.logInfo('metadata-processor-main - saveChannel - programs in total: ' + data[0].airings.length);
             
             for(var i = 0; i < newChannel.airings.length; i++) {
                 newChannel.airings[i].startTime = date.isoDate(new Date(newChannel.airings[i].startTime));
                 newChannel.airings[i].endTime = date.isoDate(new Date(newChannel.airings[i].endTime));
             }
+            
+            newChannel.status = 'active';
             
             newChannel.save(function (err) {
                 if (cb) {
