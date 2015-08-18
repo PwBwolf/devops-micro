@@ -41,17 +41,16 @@ new CronJob(config.metaDataRetrievalRecurrence, function () {
 function getChannelGuide() {
     var stationIds = [];
     var now = new Date();
-    var startTime = date.isoDate(now);
-    logger.logInfo('startTime' + startTime);
-
-    var temp = new Date();
-    temp.setDate(temp.getDate() - daysKeep);
-    var startTimeDb = date.isoDate(temp);
-
-    now.setDate(now.getDate() + daysRetrieve);
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
+
+    var temp = new Date(now);
+    temp.setDate(temp.getDate() - daysKeep);
+    var startTime = date.isoDate(temp);
+    logger.logInfo('startTime' + startTime);
+    
+    now.setDate(now.getDate() + daysRetrieve);
     var endTime = date.isoDate(now);
     logger.logInfo('endTime ' + endTime);
     
@@ -147,7 +146,7 @@ function getChannelGuide() {
                              });
                          } else {
                              logger.logInfo('metadata-processor-main - getChannelGuide - channel exists in db with index ' + i + ', update db');
-                             updateChannel(channels[i], channelGraceNote, startTime, endTime, startTimeDb, function (err, channel) {
+                             updateChannel(channels[i], channelGraceNote, startTime, endTime, function (err, channel) {
                                  if(err) {
                                      logger.logError('metadata-processor-main updateChannel - error save existing channel: ' + err);
                                  }
@@ -176,54 +175,17 @@ function getChannelGuide() {
     });
 }
 
-function updateChannel(channel, dataGraceNote, startTime, endTime, startTimeDb, cb) {
+function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
     graceNote.getChannelGuide(dataGraceNote.stationId, startTime, endTime, function (err, data) {
         if (err) {
             logger.logError('metadata-processor-main - updateChannel - error: ' + err);
         } else {
         
             logger.logInfo('metadata-processor-main - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
-            
-            var count = 0;
-            for(var j = 0; j < channel.airings.length; j++) {
-                if(channel.airings[j].startTime < startTimeDb) {
-                    count++;
-                } else {
-                    break;
-                }
-            }
-            logger.logInfo('metadata-processor-main - updateChannel - old programs dropped off from the channel: ' + count);
     
-            channel.airings.splice(0, count);
-            
-            var index = 0;
-            var isAiringFound = false;
-            for(var i = 0; i < channel.airings.length; i++) {
-                if(data[0].airings[0].startTime === channel.airings[i].startTime) {
-                    index = i;
-                    isAiringFound = true;
-                    break;
-                }
-            }
-            
-            if(isAiringFound) {
-                channel.airings.splice(index, channel.airings.length - index);
-            } else {
-                index = 0;
-                for(i = 0; i < channel.airings.length; i++) {
-                    if(data[0].airings[0].startTime > channel.airings[i].endTime) {
-                        index++; 
-                    } else {
-                        break;
-                    }
-                }
-                
-                channel.airings.splice(index, channel.airings.length - index);
-            }
-            
-            logger.logInfo('metadata-processor-main - updateChannel - programs left before adding programs from gracenote: ' + channel.airings.length);
-            
-            for(i = 0; i < data[0].airings.length; i++) {
+            channel.airings.splice(0, channel.airings.length);
+               
+            for(var i = 0; i < data[0].airings.length; i++) {
                 channel.airings.push(data[0].airings[i]);
                 channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
                 channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
