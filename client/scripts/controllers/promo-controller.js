@@ -1,41 +1,21 @@
 (function (app) {
     'use strict';
 
-    app.controller('promoCtrl', ['$scope', 'userSvc', 'homeScrnsSvc', 'loggerSvc', function ($scope, userSvc, homeScrnsSvc, loggerSvc) {
-        $scope.usrScrnClasses = {};
+    app.controller('promoCtrl', ['$scope', 'userSvc', 'loggerSvc', function ($scope, userSvc, loggerSvc) {
 
+        $scope.selectedPromoChannel = -1;
         activate();
-        function activate() {
-            $scope.usrScrnClasses = homeScrnsSvc.getUsrClass();
 
-            $scope.loadingChannels = true;
+        function activate() {
             userSvc.getPromoChannels(function (data) {
-                $scope.promoChnls = data;
-                $scope.loadingChannels = false;
+                $scope.promoChannels = data;
             }, function () {
-                $scope.loadingChannels = false;
-                loggerSvc.logError('Error loading promo-channel list.');
+                loggerSvc.logError('Error loading promo channel list');
             });
         }
 
-        $scope.selectedIndex = -1;
-
-        $scope.itemClicked = function ($index) {
-            $scope.selectedIndex = $index;
-        };
-
-        $scope.getProgramDetails = function (airing) {
-            var programDetails = '<p style="text-align: left"><span class="program-details-header">Program: </span>' + airing.program.title + '</p>';
-            if (airing.duration) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span>' + $scope.getTime(1, airing) + '</p>';
-            }
-            if (airing.startTime) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Duration: </span>' + airing.duration + ' minutes</p>';
-            }
-            if (airing.program.shortDescription) {
-                programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span>' + airing.program.shortDescription + '</p>';
-            }
-            return programDetails;
+        $scope.promoChannelSelected = function ($index) {
+            $scope.selectedPromoChannel = $index;
         };
     }]);
 }(angular.module('app')));

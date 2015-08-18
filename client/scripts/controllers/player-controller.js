@@ -1,18 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'homeScrnsSvc', 'loggerSvc', '$scope', '$window', '$compile', function (userSvc, mediaSvc, homeScrnsSvc, loggerSvc, $scope, $window, $compile) {
+    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', '$window', '$', function (userSvc, mediaSvc, loggerSvc, $scope, $window, $) {
         $scope.usrMnScrn = {};
 
         $scope.playerOptions = {
-            id: 'my-player',
+            id: 'yiptv-player',
             file: '/videos/yiptv.mp4',
             width: 902,
             height: 370,
             aspectratio: '16:9',
             primary: 'flash',
             logo: {
-                file: '/images/tv_logo.png'
+                file: '/images/tv-logo.png'
             }
         };
 
@@ -20,71 +20,48 @@
 
         function activate() {
 
-            $scope.scrns = $window.document.getElementById('scrns');
-            $scope.smm = $window.document.getElementById('teir_2');
-            $scope.chnls = $window.document.getElementById('chnlMenuHldr');
+            $scope.player = $window.document.getElementById('player');
+            $scope.smm = $window.document.getElementById('playerBottom');
+            $scope.channels = $window.document.getElementById('channelMenuHolder');
             $scope.guide = $window.document.getElementById('userGuide');
-            $scope.qlBox = $window.document.getElementsByClassName('quickLookBox');
-
-            $scope.usrMnScrn = homeScrnsSvc.getUsrData();
+            $scope.qlBox = $window.document.getElementsByClassName('quick-look-box');
             $scope.isVisible = false;
             $scope.closeVisible = false;
             $scope.loadingChannels = true;
 
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
-
-                if ($scope.channels && $scope.channels.length > 0) {
-                    $scope.chnlClicked = function (index) {
-                        $scope.selectedChnl = index;
-                        $scope.selectChannel(index);
-
-                        $scope.brandImage = $scope.channels[index].image_url;
-                        console.log('brand: ' + $scope.brandImage);
-                        $scope.isVisible = true;
-
-                    };
-
-                    $scope.watchNow = function (index) {
-                        $scope.selectedStream = index;
-                        $scope.playChannel(index);
-                    };
-
-                }
-                $scope.loadingChannels = false;
             }, function () {
-                $scope.loadingChannels = false;
                 loggerSvc.logError('Error loading channel list.');
             });
 
+            $scope.channelClicked = function (index) {
+                $scope.selectedChnl = index;
+                $scope.selectChannel(index);
+                $scope.brandImage = $scope.channels[index].image_url;
+                $scope.isVisible = true;
+            };
 
-            $scope.showCloseBtn = function () {
+            $scope.watchNow = function (index) {
+                $scope.playChannel(index);
+            };
 
+            $scope.showCloseButton = function () {
                 if (angular.element('#closeBtn').length) {
-                    console.log('button already exists');
                     $scope.closeVisible = true;
                     $scope.logoVisible = true;
                 } else {
-                    var prvwPnl = angular.element('#chnlMenuHldr');
-                    var closethispanel = angular.element(document.createElement('closepnl')),
-                        channelIdent = angular.element(document.createElement('mylogo'));
-                    var el = $compile(channelIdent)($scope), el1 = $compile(closethispanel)($scope);
-
-
+                    var prvwPnl = angular.element('#channelMenuHolder');
+                    var closethispanel = angular.element(document.createElement('close-panel'));
+                    var channelIdent = angular.element(document.createElement('channel-logo'));
                     angular.element(prvwPnl).append(closethispanel).append(channelIdent);
-                    console.log('close appended');
                 }
-
-
             };
 
             $scope.getTarget = function (target) {
-                $scope.channelIndex = $scope.channels[target].image_url
-                console.log('the target: ' + $scope.channelIndex);
+                $scope.channelIndex = $scope.channels[target].image_url;
             };
-
-        };
-
+        }
 
         $scope.selectOnAir = function (channelIndex) {
             if (!$scope.loadingChannelGuide) {
@@ -93,14 +70,12 @@
                     $scope.onAir = showPreview[0].airings;
                     $scope.onAirTitle = $scope.onAir[0].program.title;
                     $scope.details = $scope.getProgramDetails($scope.onAir[0]);
-
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
                     loggerSvc.logError('Error loading channel guide.');
                 });
             }
-
         };
 
         $scope.selectChannel = function (channelIndex) {
@@ -109,30 +84,21 @@
                 mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (channelGuide) {
                     $scope.showTimes = channelGuide[0].airings;
                     $scope.showListings = [];
-
                     for (var p in $scope.showTimes) {
                         $scope.showListings[p] = $scope.getChannelDetails($scope.showTimes[p]);
-
                     }
-
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
                     loggerSvc.logError('Error loading channel guide.');
                 });
-
             }
         };
 
         $scope.prvwPnl = function (el) {
-
-            console.log($(el).attr('id') + ' clicked');
-
             var thisPreviewPnl = angular.element('#channelPreviewPanel').find('div')[0];
-            console.log('found ' + $(thisPreviewPnl).prop("tagName"));
             $(thisPreviewPnl).on('click', function (evt) {
                 $scope.playChannel(index);
-                console.log('done');
             });
         };
 
@@ -142,11 +108,9 @@
                     $scope.playerOptions.file = channel.live_pc_url;
                     $scope.playerOptions.autoStart = true;
                     $scope.airing = airing;
-
                     $scope.channelLogo = $scope.channels[index].image_url;
                     $scope.channelNumber = $scope.channels[index].number;
                     $scope.channelName = $scope.channels[index].name;
-
                     playStream();
                 }).error(function () {
                     loggerSvc.logError('Error loading channel.');
@@ -155,16 +119,14 @@
         };
 
         function playStream() {
-            jwplayer('my-player').setup({
-
+            jwplayer('yiptv-player').setup({
                 width: 912,
                 height: 370,
                 playlist: [{
                     image: $scope.channelLogo,
                     sources: [
-
                         {file: $scope.playerOptions.file}
-                    ],
+                    ]
                 }],
                 rtmp: {
                     bufferlength: 3
@@ -178,9 +140,8 @@
                 ],
                 autostart: true,
                 fallback: false
-
             });
-        };
+        }
 
         $scope.getTime = function (index, airing) {
             if (index === 0) {
@@ -223,13 +184,11 @@
             } else {
                 programDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, airing) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + airing.duration + ' min</span></p>';
             }
-
             if (!airing.program.shortDescription) {
                 programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">Not Available</span></p>';
             } else {
                 programDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + airing.program.shortDescription + '</span></p>';
             }
-
             return programDetails;
         };
 
@@ -240,56 +199,12 @@
             } else {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header">Time: </span><span class="program-details-body">' + $scope.getTime(1, show) + '</span>&nbsp;<span class="program-details-header">Duration: </span><span class="program-details-body">' + show.duration + ' min</span></p>';
             }
-
             if (!show.program.shortDescription) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">Not Available</span></p>';
             } else {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header">Description: </span><span class="program-details-body">' + show.program.shortDescription + '</span></p></div>';
             }
-
             return channelDetails;
         };
-
-    }])
-        .directive('closepnl', function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                template: '<span data-ng-show=closeVisible>My chart</span>',
-                link: function (scope, element, attrs) {
-                    attrs.$set('id', 'closeBtn');
-                    attrs.$set('class', 'closeBtn label label-danger');
-                    element.text('CLOSE');
-
-                    scope.closeVisible = true;
-                    element.bind('click', function (evt) {
-
-                        $(scope.smm).switchClass('sgstdChnls_min', 'sgstdChnls', 500, 'easeInOutQuad');
-                        $(scope.scrns).switchClass('scrnsMinimized', 'scrnsMaximized', 500, 'easeInOutQuad');
-                        $(scope.qlBox).toggleClass('off');  //.find('div').toggleClass('off');
-                        $(scope.chnls).attr('class', 'usrPrefsPnl');
-
-                        scope.isVisible = false;
-                        scope.closeVisible = false;
-                        scope.logoVisible = false;
-
-                    });
-
-                }
-            };
-        })
-        .directive('mylogo', function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                template: '<div data-ng-show=logoVisible; style="background:rgba(200,200,200,0.85) url({{channelIndex}}) 50% no-repeat; background-size: contain;"></div>',
-                link: function (scope, element, attrs) {
-                    attrs.$set('id', 'channelBrand');
-                    attrs.$set('class', 'brand_logo ');
-                    scope.logoVisible = true;
-
-                }
-            };
-        });
-
+    }]);
 }(angular.module('app')));

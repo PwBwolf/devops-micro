@@ -1,0 +1,48 @@
+<div class="player-panel">
+    <div id="playerTop" class="player-top" ng-controller="playerCtrl">
+
+        <div id="yiptv-player" class="main-player position-div"><img src="images/channel-banner.jpg"/></div>
+        <div class="main-favorites position-div">
+            <div class="favorite-channel position-div" data-id="{{channel.startTime}}" ng-repeat="channel in channels | limitTo:4" ng-click="watchNow($index);">
+                <img ng-src="{{channel.image_url}}"/>
+
+                <div class="channel-label">
+                    <span>{{channel.name}}</span><br/><span>{{channel.favDesc}}</span>
+                </div>
+                <img ng-src="{{channel.image_poster}}"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="playerBottom" class="suggested-channels ease" ng-controller="promoCtrl">
+        <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseover="promoChannelSelected($index)" ng-repeat="channel in promoChannels track by $index">
+
+            <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
+                <img ng-src="{{channel.image_poster}}"/>
+
+                <div class="channel-label">
+                    <span>{{channel.name}}</span><br/><span>{{channel.program.title}}</span>
+                </div>
+                <img ng-src="{{channel.image_url}}"/>
+            </div>
+
+            <div id="channelHolderBack" ng-class="($index === selectedPromoChannel) ? 'front' : 'back'">
+                <img ng-src="{{channel.image_promo_cover}}"/>
+                <article>
+                    <aside>
+                        <h4>{{channel.program.title}}</h4>
+
+                        <p>{{channel.program.season}}</p>
+
+                        <p>{{channel.program.episode}}</p>
+
+                        <p>Runtime: {{channel.runtime}} minutes</p>
+
+                        <p>{{channel.program.longDescription}}</p>
+                    </aside>
+                </article>
+                <img ng-src="{{channel.image_url}}"/>
+            </div>
+        </div>
+    </div>
+</div>
