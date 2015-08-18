@@ -2,6 +2,15 @@
     <div id="headerBrand">
         <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
+        <div class="right-menu">
+            <div class="menu-button">
+                <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a></div>
+            <div class="menu-button">
+                <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
+            </div>
+            <div class="event-data"><span><marquee ng-bind="app.eventData"></marquee></span></div>
+
+        </div>
         <div class="menu-header">
             <div class="menu-sub-header position-div">
                 <span class="menu-user-name" ng-bind="user.firstName"></span>
@@ -9,12 +18,6 @@
                 <div class="header-time position-div" current-time></div>
                 <div class="header-event position-div btn-info" translate="USER_HOME_EVENT"></div>
             </div>
-            <div class="event-data position-div"><span><marquee ng-bind="app.eventData"></marquee></span></div>
-        </div>
-        <div class="menu-button">
-            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a></div>
-        <div class="menu-button">
-            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
         </div>
     </div>
 
@@ -61,6 +64,6 @@
         </div>
     </nav>
 </header>
-<div id="scrns" class="ease scrnsMaximized" ng-include="usrDataFile.cntnt"></div>
-<div id="chnls" ng-include="usrDataFile.chnls"></div>
-<div id="guide" ng-include="usrDataFile.guide"></div>
+<div id="scrns" class="ease scrnsMaximized" ng-include="'views/home-scrns.html'"></div>
+<div id="chnls" ng-include="'views/home-chnls.html'"></div>
+<div id="guide" ng-include="'views/home-guide.html'"></div>

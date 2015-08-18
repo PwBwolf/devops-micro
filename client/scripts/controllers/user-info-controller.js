@@ -1,15 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('updateProfileCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
-
-        $scope.mv = {disclaimer: true};
-
-        activate();
-
-        function activate() {
-            $scope.dUsr = $scope.user;
-        }
+    app.controller('userInfoCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.updateUserProfile = function () {
             if ($scope.form.$valid) {

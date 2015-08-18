@@ -132,7 +132,7 @@
                     <div class="full-form">
                         <span class="label-text" translate="SIGN_UP_STATE"></span>
                         <br>
-                        <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="text-box drop-down-list" ng-class="{'text-box-error': form.state.$touched && form.state.$invalid}">
+                        <select id="state" name="state" required ng-model="mv.state" ng-options="state.code as state.name for state in states" class="text-box dropdown-list" ng-class="{'text-box-error': form.state.$touched && form.state.$invalid}">
                             <option value="" translate="SIGN_UP_STATE_SELECT"></option>
                         </select>
 

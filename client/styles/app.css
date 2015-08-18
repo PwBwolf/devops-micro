@@ -329,7 +329,7 @@ input[type="radio"]:checked + label:before {
     font-family: 'gotham-lightgotham-light';
     font-size: 19px;
     color: #000;
-    padding: 80px 0;
+    padding: 20px 0 80px 0;
     margin: 0px;
 }
 
@@ -504,7 +504,7 @@ a.import-button:hover {
     border: 1px solid;
 }
 
-.drop-down-list {
+.dropdown-list {
     -webkit-appearance: menulist-button;
     padding: 0 0 0 1% !important;
 }

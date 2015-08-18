@@ -58,7 +58,6 @@
             $scope.form.cvv.$touched = true;
             $scope.form.expiryDate.$touched = true;
             $scope.form.zipCode.$touched = true;
-            $scope.form.disclaimer.$touched = true;
         }
 
     }]);

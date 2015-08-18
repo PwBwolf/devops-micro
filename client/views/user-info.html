@@ -1,37 +1,29 @@
-<div class="content-area">
+<div class="content-area" ng-controller="userInfoCtrl">
     <div class="content-box">
-        <div class="container l_Prefs">
-            <div class="form-box" data-ng-controller="userUpdateProfileCtrl">
+        <div class="container dropdown-width">
+            <div class="form-box">
 
                 <form name="form" id="form" ng-submit="updateUserProfile()" novalidate>
                     <div class="form-container">
 
                         <div class="half-form">
                             <span class="label-text" translate="SIGN_UP_FIRST_NAME"></span>
-                            <br><input autofocus valid-name autocomplete="off" id="firstName" placeholder="{{dUsr.firstName}}" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
+                            <br><input autofocus valid-name autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$dirty && form.firstName.$invalid}">
 
                             <div class="error-message" ng-show="form.firstName.$dirty && form.firstName.$error.required" translate="SIGN_UP_FIRST_NAME_REQUIRED"></div>
                             <div class="error-message" ng-show="form.firstName.$dirty && !form.firstName.$error.required && form.firstName.$error.validName" translate="SIGN_UP_FIRST_NAME_INVALID"></div>
                         </div>
                         <div class="half-form">
                             <span class="label-text" translate="SIGN_UP_LAST_NAME"></span>
-                            <br><input valid-name autocomplete="off" placeholder="{{dUsr.lastName}}" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="text-box" required ng-class="{'text-box-error': form.lastName.$dirty && form.lastName.$invalid}">
+                            <br><input valid-name autocomplete="off" maxlength="20" type="text" id="lastName" name="lastName" ng-model="mv.lastName" class="text-box" required ng-class="{'text-box-error': form.lastName.$dirty && form.lastName.$invalid}">
 
                             <div class="error-message" ng-show="form.lastName.$dirty && form.lastName.$error.required" translate="SIGN_UP_LAST_NAME_REQUIRED">Enter your last name</div>
                             <div class="error-message" ng-show="form.lastName.$dirty && !form.lastName.$error.required && form.lastName.$error.validName" translate="SIGN_UP_LAST_NAME_INVALID"></div>
                         </div>
                     </div>
                     <div class="full-form">
-                        <span class="label-text" translate="SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" placeholder="{{dUsr.email}}" maxlength="50" required is-email id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$dirty && form.email.$invalid}">
-
-                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.email.$dirty && !form.email.$error.required && form.email.$error.isEmail" translate="SIGN_UP_EMAIL_INVALID"></div>
-                        <div class="error-message" ng-show="form.email.$dirty && form.email.$error.isSignUpAllowed" translate="SIGN_UP_EMAIL_EXISTS"></div>
-                    </div>
-                    <div class="full-form">
                         <span class="label-text" translate="SIGN_UP_TELEPHONE"></span><br>
-                        <input autocomplete="off" type="text" placeholder="{{dUsr.telephone}}" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
+                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$dirty && form.telephone.$invalid}">
 
                         <div class="error-message" ng-show="form.telephone.$dirty && form.telephone.$error.required" translate="SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$dirty && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="SIGN_UP_TELEPHONE_INVALID"></div>
@@ -39,7 +31,6 @@
                     <div class="full-form">
                         <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
                     </div>
-                    <div class="full-form center-form"><span translate="SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                 </form>
             </div>
         </div>
