@@ -24,7 +24,6 @@ var _ = require('lodash'),
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
-        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut], accessLevel: accessLevels.user},
         {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
         {path: '/api/update-user-profile', httpMethod: 'POST', middleware: [UserCtrl.updateUserProfile], accessLevel: accessLevels.user},
@@ -73,9 +72,7 @@ module.exports = function (app) {
 };
 
 function ensureAuthorized(req, res, next) {
-    var role,
-        accessLevel;
-
+    var role, accessLevel;
     var token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
     if (!token) {
         role = userRoles.anon;

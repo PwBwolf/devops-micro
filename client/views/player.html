@@ -3,19 +3,32 @@
 
         <div id="yiptv-player" class="main-player position-div"><img src="images/channel-banner.jpg"/></div>
         <div class="main-favorites position-div">
-            <div class="favorite-channel position-div" data-id="{{channel.startTime}}" ng-repeat="channel in channels | limitTo:4" ng-click="watchNow($index);">
-                <img ng-src="{{channel.image_url}}"/>
+            <div class="favorite-channel position-div" ng-repeat="channel in channels | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNow($index);">
+                <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
+                    <img ng-src="{{channel.image_url}}"/>
 
-                <div class="channel-label">
-                    <span>{{channel.name}}</span><br/><span>{{channel.favDesc}}</span>
+                    <div class="channel-label">
+                        <span>{{channel.name}}</span>
+                    </div>
+                    <img ng-src="{{channel.image_poster}}"/>
                 </div>
-                <img ng-src="{{channel.image_poster}}"/>
+                <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
+                    <article>
+                        <aside>
+                            <h4>{{channel.title}}</h4>
+
+                            <p>{{channel.sub_title}}</p>
+
+                            <p>{{channel.description}}</p>
+                        </aside>
+                    </article>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="playerBottom" class="suggested-channels ease" ng-controller="promoCtrl">
-        <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseover="promoChannelSelected($index)" ng-repeat="channel in promoChannels track by $index">
+        <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseenter="promoChannelSelected($index)" ng-mouseleave="promoChannelSelected(-1)" ng-repeat="channel in promoChannels track by $index">
 
             <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
                 <img ng-src="{{channel.image_poster}}"/>
@@ -36,7 +49,7 @@
 
                         <p>{{channel.program.episode}}</p>
 
-                        <p>Runtime: {{channel.runtime}} minutes</p>
+                        <p><span translate="PLAYER_DURATION"></span> {{channel.runtime}} <span translate="PLAYER_MINUTES"></span></p>
 
                         <p>{{channel.program.longDescription}}</p>
                     </aside>

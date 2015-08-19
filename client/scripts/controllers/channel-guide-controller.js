@@ -53,16 +53,12 @@
                                 var startDate = date;
                                 angular.forEach(lineUp, function (data) {
                                     if (!data.program.preferredImage.uri) {
-                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + data.program.title + '</span></p>';
+                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
                                     } else {
-                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-header">Title: </span><span class="channel-details-body">' + data.program.title + '</span></p>';
+                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
                                     }
                                     startDate = null;
-                                    if (!data.duration && !data.startTime) {
-                                        $scope.channelLineUp += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">Not Available</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">Not Available</span></p>';
-                                    } else {
-                                        $scope.channelLineUp += '<p style="text-align: left"><span class="channel-details-header">Time: </span><span class="channel-details-body">' + getTime(1, data) + '</span>&nbsp;<span class="channel-details-header">Duration: </span><span class="channel-details-body">' + data.duration + ' min</span></p></div>';
-                                    }
+                                    $scope.channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
                                     $(channelGuide).append($scope.channelLineUp);
                                     $(channelGuide).attr('class', 'channel-description');
                                     $(channelGuide).attr('id', 'channelGuideDescription');
@@ -114,6 +110,9 @@
         function getTime(index, airing) {
             if (index === 0) {
                 return 'on now';
+            }
+            if (!airing) {
+                return '';
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);

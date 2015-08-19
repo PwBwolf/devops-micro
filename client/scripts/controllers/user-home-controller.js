@@ -1,16 +1,22 @@
 (function (app) {
     'use strict';
 
-    app.controller('userHomeCtrl', ['$scope', '$modal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', function ($scope, $modal, $rootScope, $location, $filter, userSvc, loggerSvc) {
+    app.controller('userHomeCtrl', ['$scope', '$', '$modal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', function ($scope, $, $modal, $rootScope, $location, $filter, userSvc, loggerSvc) {
 
-        $scope.menuButtonClicked = function (menu) {
-            $scope.selectedMenuButton = menu;
+        $scope.hideDropdown = function (id) {
+            $('#' + id).collapse('hide');
         };
 
-
-        $scope.profileButtonClicked = function (profile) {
-            $scope.selectedProfileButton = profile;
+        $scope.showProfileDropdown = function (name) {
+            $scope.profileDropdownContent = 'views/empty.html';
+            $scope.profileDropdownContent = 'views/' + name + '.html';
         };
+
+        $scope.showBillingDropdown = function (name) {
+            $scope.billingDropdownContent = 'views/empty.html';
+            $scope.billingDropdownContent = 'views/' + name + '.html';
+        };
+
 
         $scope.cancelSubscription = function () {
             $modal.open({
@@ -23,7 +29,7 @@
                         return $scope.appConfig.appName;
                     },
                     body: function () {
-                        return $filter('translate')('ACCOUNT_CANCEL_SUBSCRIPTION_CONFIRMATION');
+                        return $filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_CONFIRMATION');
                     },
                     showOkButton: function () {
                         return false;
@@ -43,12 +49,12 @@
                             $location.path('/cancel-subscription-success');
                             $scope.saving = false;
                         }, function () {
-                            loggerSvc.logError($filter('translate')('ACCOUNT_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
+                            loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
                             $scope.saving = false;
                         });
                     }, function () {
                         $scope.saving = false;
-                        loggerSvc.logError($filter('translate')('ACCOUNT_CANCEL_SUBSCRIPTION_FAILURE') + ' ' + $scope.appConfig.customerCareNumber);
+                        loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_FAILURE') + ' ' + $scope.appConfig.customerCareNumber);
                     });
                 });
         };

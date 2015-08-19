@@ -20,7 +20,7 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            $location.path('/change-credit-card-success');
+                            loggerSvc.logInfo($filter('translate')('CHANGE_CREDIT_CARD_SUCCESS'));
                             $scope.saving = false;
                         }, function () {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_ACCOUNT_REFRESH_ERROR'));

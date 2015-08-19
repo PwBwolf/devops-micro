@@ -9,7 +9,7 @@
                 userSvc.changePassword(
                     $scope.mv,
                     function () {
-                        $location.path('/change-password-success');
+                        loggerSvc.logInfo($filter('translate')('CHANGE_PASSWORD_SUCCESS'));
                         $scope.saving = false;
                     },
                     function (response) {

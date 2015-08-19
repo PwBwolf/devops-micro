@@ -566,19 +566,6 @@ module.exports = {
         });
     },
 
-    getAioToken: function (req, res) {
-        var aioGuestList = config.aioGuestAccountList;
-        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
-        aio.getToken(user, function (err, data) {
-            if (err) {
-                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.send(data);
-        });
-    },
-
     getPreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
@@ -669,14 +656,6 @@ module.exports = {
         });
     }
 };
-
-function getGuestCounter() {
-    getGuestCounter.count = ++getGuestCounter.count || 0;
-    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
-        getGuestCounter.count = 0;
-    }
-    return getGuestCounter.count;
-}
 
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;

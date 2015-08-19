@@ -5,7 +5,7 @@
         return {
             restrict: 'E',
             replace: true,
-            template: '<div ng-bind-html="programDetails"></div>',
+            template: '<div compile-html="programDetails"></div>',
             link: function (scope, el, attrs) {
                 attrs.$set('class', 'small-channel-description');
                 attrs.$set('id', 'smallChannelDescription');

@@ -19,7 +19,10 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-azcorazon.hls.adaptive.level3.net/hls-live/yiptvlive-azcorazon/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "61404"
+        "live_external_id": "61404",
+        "title": "Azcora",
+        "sub_title": "Azcora",
+        "description": "Blah blah blah"
     },
     {
         "id": "2923",
@@ -41,7 +44,10 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-cosmovision.hls.adaptive.level3.net/hls-live/yiptvlive-cosmovision/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "65269"
+        "live_external_id": "65269",
+        "title": "CSMOTV",
+        "sub_title": "CSMOTV",
+        "description": "Blah blah blah"
     },
     {
         "id": "2924",
@@ -63,7 +69,10 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-jbn.hls.adaptive.level3.net/hls-live/yiptvlive-jbn/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "59350"
+        "live_external_id": "59350",
+        "title": "JBN",
+        "sub_title": "JBN",
+        "description": "Blah blah blah"
     },
     {
         "id": "2925",
@@ -85,7 +94,10 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-maya_tv.hls.adaptive.level3.net/hls-live/yiptvlive-maya_tv/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "76093"
+        "live_external_id": "76093",
+        "title": "Maya TV",
+        "sub_title": "Maya TV",
+        "description": "Blah blah blah"
     },
     {
         "id": "2930",

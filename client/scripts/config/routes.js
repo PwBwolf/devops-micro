@@ -148,12 +148,6 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/error',
-            {
-                templateUrl: 'views/error.html',
-                controller: 'commonCtrl',
-                access: access.public
-            })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',

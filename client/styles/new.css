@@ -1,24 +1,51 @@
 #profileDropDown, #billingDropDown {
-    width: 40%;
+    width: 550px;
     left: 170px;
     margin-top: -20px;
 }
 
-#preferencesDropDown > div, #changePasswordDropDown > div, #userInfoDropDown > div, #upgradeSubscriptionDropDown > div, #changeCreditCardDropDown > div {
+.collapse-hide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    z-index: 1;
+}
+
+#preferencesDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 440px;
+    height: 285px;
+}
+
+#changePasswordDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 660px;
+}
+
+#userInfoDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
+}
+
+#upgradeSubscriptionDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
+}
+
+#changeCreditCardDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
 }
 
 #headerButtons {
     left: 170px;
     text-transform: uppercase;
     width: 42%;
-}
-
-#headerButtons > .panel {
-    display: inline-block;
-    border-radius: 0;
 }
 
 #dropDowns > .panel {
@@ -65,6 +92,7 @@
     padding: 15px !important;
     text-align: center;
     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important;
+    margin-bottom: 0;
 }
 
 label:before {
@@ -353,10 +381,10 @@ body, html {
 }
 
 #yiptv-player, #yiptv-player_wrapper {
-    position:relative;
-    display:inline-block !important;
-    padding-right:2px;
-    margin-right:-4px;
+    position: relative;
+    display: inline-block !important;
+    padding-right: 2px;
+    margin-right: -4px;
     vertical-align: top;
 }
 
@@ -401,17 +429,6 @@ body, html {
     width: 28.55%;
     height: 100%;
     vertical-align: top !important;
-}
-
-.favorite-channel {
-    width: 49.15%;
-    height: 50%;
-    margin-right: 2px;
-    overflow: hidden;
-}
-
-.favorite-channel:nth-child(even) {
-    float: right;
 }
 
 .suggested-channels {
@@ -512,18 +529,7 @@ body, html {
     margin-top: 0px;
 }
 
-#channelHolderFront {
-    overflow: hidden;
-    backface-visibility: hidden;
-    transition: transform 1s;
-    -webkit-backface-visibility: hidden;
-    -webkit-transition: -webkit-transform 1s;
-    -moz-backface-visibility: hidden;
-    -moz-transition: -moz-transform 1s;
-    position: absolute;
-}
-
-#channelHolderBack {
+#channelHolderFront, #channelHolderBack, #favoriteChannelHolderFront, #favoriteChannelHolderBack {
     overflow: hidden;
     backface-visibility: hidden;
     transition: transform 1s;
@@ -630,13 +636,42 @@ body, html {
     -o-transform: perspective(1000px) rotateY(0deg);
 }
 
-.favorite-channel img:last-child, .suggested-channel img:first-child {
+.favorite-channel {
+    width: 49.15%;
+    height: 50%;
+    margin-right: 2px;
+    overflow: hidden;
+}
+
+.favorite-channel article {
+    height: 200px;
+    width: 100%;
+    background: grey url(../images/channel-background.jpg) 50% 50% no-repeat;
+    background-size: cover;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.favorite-channel article h4 {
+    color: black;
+    margin: 0 0 5px;
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+}
+
+.favorite-channel > div:nth-child(even) {
+    float: right;
+}
+
+.favorite-channel > div img:last-child, .suggested-channel img:first-child {
     width: auto;
     height: 100%;
     cursor: pointer;
 }
 
-.favorite-channel img:first-child, .suggested-channel img:last-child {
+.favorite-channel > div img:first-child, .suggested-channel img:last-child {
     float: left;
     position: absolute;
     z-index: 5;
@@ -647,7 +682,7 @@ body, html {
     left: 0px;
 }
 
-.favorite-channel img:first-child {
+.favorite-channel > div img:first-child {
     top: 0px !important;
 }
 
@@ -655,7 +690,7 @@ body, html {
     top: 145px !important;
 }
 
-.favorite-channel img:first-child, .suggested-channel img:last-child {
+.favorite-channel > div img:first-child, .suggested-channel img:last-child {
     float: left;
     position: absolute;
     z-index: 5;
@@ -666,12 +701,12 @@ body, html {
     left: 0px;
 }
 
-.favorite-channel:nth-child(odd) div {
+.favorite-channel > div:nth-child(odd) div {
     top: 135px;
     right: 0px;
 }
 
-.favorite-channel:nth-child(even) div {
+.favorite-channel > div:nth-child(even) div {
     top: 135px;
     left: 0px;
 }

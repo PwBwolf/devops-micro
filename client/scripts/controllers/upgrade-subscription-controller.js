@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$window', function (appSvc, userSvc, loggerSvc, $scope, $location, $filter, $window) {
 
         activate();
 
@@ -20,8 +20,9 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            $location.path('/upgrade-subscription-success');
+                            loggerSvc.logInfo($filter('translate')('UPGRADE_SUBSCRIPTION_SUCCESS'));
                             $scope.saving = false;
+                            $window.location.reload();
                         }, function () {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
                             $scope.saving = false;
