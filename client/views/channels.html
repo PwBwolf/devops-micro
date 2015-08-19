@@ -1,10 +1,11 @@
 <div id="channelMenuHolder" class="channel-panel" ng-controller='playerCtrl'>
-    <div id="channelPreviewPanel" class="channel-preview" ng-bind-html="showListings" ng-show="isVisible"></div>
+    <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible">
+        <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(null, $index)" ng-bind-html="listing"></div>
+    </div>
     <div class="channel-list">
         <ul>
             <li ng-repeat="channel in channels" ng-click="channelClicked($index);">
-                <img ng-src="{{channel.image_url}}" ng-mouseover="channelHovered($index);"/>
-
+                <img ng-src="{{channel.image_url}}"/>
                 <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
                     <channel-hover></channel-hover>
                 </div>

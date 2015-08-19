@@ -54,8 +54,8 @@
             }
         });
 
-        $scope.goToCmsUrl = function (urlName) {
-            $window.open($scope.appConfig.cmsUrl + $filter('translate')(urlName), '_blank');
+        $scope.goToWordPressUrl = function (url) {
+            $window.open($scope.appConfig.wordPressUrl + $filter('translate')(url), '_blank');
         };
 
         $scope.changeLanguage = function () {

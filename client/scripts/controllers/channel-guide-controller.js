@@ -6,7 +6,6 @@
         activate();
 
         function activate() {
-            $scope.logoVisible = false;
             var date = new Date();
             var dt = $filter('date')(date, 'h:00 a');
             var channelGuideHolder = angular.element('#channelGuidePanel');
@@ -80,6 +79,11 @@
             });
         }
 
+        $scope.channelHovered = function (index) {
+            $scope.hoveredChannel = index;
+            selectOnAir(index);
+        };
+
         function timeSpan(time, guideStartTime, programStartTime) {
             if (guideStartTime && programStartTime) {
                 var hourDate = new Date(guideStartTime);
@@ -91,11 +95,6 @@
                 return (time * 4) + 'px';
             }
         }
-
-        $scope.channelHovered = function (index) {
-            $scope.hoveredChannel = index;
-            selectOnAir(index);
-        };
 
         function selectOnAir(channelIndex) {
             if (!$scope.loadingChannelGuide) {
@@ -111,22 +110,6 @@
                 });
             }
         }
-
-        $scope.showCloseButton = function () {
-            if (angular.element('#closeBtn').length) {
-                $scope.closeVisible = true;
-                $scope.logoVisible = true;
-            } else {
-                var previewPanel = angular.element('#channelMenuHolder');
-                var closePanel = angular.element(document.createElement('close-panel'));
-                var channelLogo = angular.element(document.createElement('channel-logo'));
-                angular.element(previewPanel).append(closePanel).append(channelLogo);
-            }
-        };
-
-        $scope.getTarget = function (target) {
-            $scope.channelIndex = $scope.channels[target].image_url;
-        };
 
         function getTime(index, airing) {
             if (index === 0) {

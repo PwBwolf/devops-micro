@@ -10,11 +10,8 @@
                 attrs.$set('class', 'small-channel-description');
                 attrs.$set('id', 'smallChannelDescription');
                 el.closest('li').on('click', function () {
-                    var target = $(this).prop('tagName').toLowerCase();
-                    target = $(target).index(this);
-                    scope.$apply(scope.getTarget(target));
-                    $(scope.guide).addClass('user-guide-panel-minimized');
-                    $(scope.channels).switchClass('channel-panel', 'channel-panel-max', 500, 'easeInOutQuad');
+                    $(scope.channelList).removeClass('channel-panel');
+                    $(scope.channelList).addClass('channel-panel-max');
                     scope.$apply(scope.showCloseButton());
                 });
             }

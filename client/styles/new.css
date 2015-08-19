@@ -4,7 +4,7 @@
     margin-top: -20px;
 }
 
-#billingDropDown > div, #preferencesDropDown > div, #changePasswordDropDown > div, #userInfoDropDown > div {
+#preferencesDropDown > div, #changePasswordDropDown > div, #userInfoDropDown > div, #upgradeSubscriptionDropDown > div, #changeCreditCardDropDown > div {
     overflow: hidden;
     overflow-y: auto;
     height: 440px;
@@ -707,7 +707,7 @@ body, html {
     transition: all 1s ease-in-out;
 }
 
-.user-guide-panel-minimized {
+.channel-guide-panel-minimized {
     background: lightgrey;
     width: 100%;
     height: 45px;

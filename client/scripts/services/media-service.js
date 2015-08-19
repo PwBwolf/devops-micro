@@ -20,11 +20,11 @@
                 });
             },
 
-            getChannelGuide: function (stationId, name) {
+            getChannelGuide: function (stationId) {
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel-guide',
-                    params: {stationId: stationId, name: name},
+                    params: {stationId: stationId},
                     cache: true
                 });
             }
