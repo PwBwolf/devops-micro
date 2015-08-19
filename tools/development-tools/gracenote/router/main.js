@@ -1,7 +1,7 @@
 'use strict';
 
 var logger = require('../../../../server/common/setup/logger');
-var channelGuideCtrl = require('../controllers/channel-guide-controller');
+var channelGuideCtrl = require('../../../../server/webserver/controllers/media-controller');
 var appCtrl = require('../controllers/app-controller');
 
 module.exports=function(app, root)

@@ -48,7 +48,14 @@ module.exports = {
         Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
                            {$unwind: "$airings"}, 
                            {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, 
-                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], 
+                           {$project: {stationId: true, 
+                                       'airings.program.preferredImage.uri' : true, 
+                                       'airings.endTime' : true, 
+                                       'airings.startTime' : true, 
+                                       'airings.program.tmsId' : true, 
+                                       'airings.program.title' : true,
+                                       'airings.ratings.code' : true,
+                                       callSign : true}}], 
                            function(err, channelsDb) {
             if (err) {
                 logger.logError('channel-guide-controller - getChannelInfo - failed to retrieve channel info from db: ' + err);
