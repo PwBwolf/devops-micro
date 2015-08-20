@@ -37,9 +37,9 @@ var _ = require('lodash'),
         {path: '/api/get-channel', httpMethod: 'GET', middleware: [MediaCtrl.getChannel], accessLevel: accessLevels.user},
         {path: '/api/get-channel-guide', httpMethod: 'GET', middleware: [MediaCtrl.getChannelGuide], accessLevel: accessLevels.user},
         {path: '/api/get-user-channels', httpMethod: 'GET', middleware: [MediaCtrl.getUserChannels], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo], accessLevel: accessLevels.user},
-        {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail], accessLevel: accessLevels.user},
+        {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList]},
+        {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
+        {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
