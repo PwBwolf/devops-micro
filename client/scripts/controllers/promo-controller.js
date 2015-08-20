@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('promoCtrl', ['$scope', 'userSvc', 'loggerSvc', function ($scope, userSvc, loggerSvc) {
+    app.controller('promoCtrl', ['$scope', '$filter', 'userSvc', 'loggerSvc', function ($scope, $filter, userSvc, loggerSvc) {
 
         $scope.selectedPromoChannel = -1;
         activate();
@@ -10,7 +10,7 @@
             userSvc.getPromoChannels(function (data) {
                 $scope.promoChannels = data;
             }, function () {
-                loggerSvc.logError('Error loading promo channel list');
+                loggerSvc.logError($filter('translate')('PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR'));
             });
         }
 

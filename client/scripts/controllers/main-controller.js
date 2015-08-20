@@ -9,8 +9,6 @@
         $scope.session = {};
         $scope.app = {eventData: 'Welcome to YipTV'};
 
-        var aioWindow, aioWindowTimeout;
-
         activate();
 
         function activate() {
@@ -137,19 +135,8 @@
         };
 
         function afterSignOut() {
-            $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
             $location.path('/').search('');
         }
-
-        $window.onunload = function () {
-            $rootScope.$broadcast('CloseAioWindow');
-        };
-
-        $rootScope.$on('CloseAioWindow', function () {
-            if (aioWindow && !aioWindow.closed) {
-                aioWindow.close();
-            }
-        });
     }]);
 }(angular.module('app')));

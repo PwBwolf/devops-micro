@@ -66,7 +66,7 @@
                                 angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
                             }
                         }).error(function () {
-                            loggerSvc.logError('Error loading channel guide.');
+                            loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
                         });
                     } else {
                         return 'end';
@@ -74,11 +74,6 @@
                 });
             });
         }
-
-        $scope.channelHovered = function (index) {
-            $scope.hoveredChannel = index;
-            selectOnAir(index);
-        };
 
         function timeSpan(time, guideStartTime, programStartTime) {
             if (guideStartTime && programStartTime) {
@@ -89,21 +84,6 @@
                 return (time * 4) - (diff * 4) + 'px';
             } else {
                 return (time * 4) + 'px';
-            }
-        }
-
-        function selectOnAir(channelIndex) {
-            if (!$scope.loadingChannelGuide) {
-                $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (showPreview) {
-                    $scope.onAir = showPreview[0].airings;
-                    $scope.onAirTitle = $scope.onAir[0].program.title;
-                    $scope.programDetails = $scope.getProgramDetails($scope.onAir[0]);
-                    $scope.loadingChannelGuide = false;
-                }).error(function () {
-                    $scope.loadingChannelGuide = false;
-                    loggerSvc.logError('Error loading channel guide.');
-                });
             }
         }
 

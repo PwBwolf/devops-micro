@@ -45,9 +45,9 @@
                     $scope.saving = true;
                     userSvc.cancelSubscription(function () {
                         userSvc.getUserProfile(function () {
-                            $rootScope.$broadcast('CloseAioWindow');
                             $location.path('/cancel-subscription-success');
                             $scope.saving = false;
+                            $rootScope.$broadcast('CloseDropDown', ['billingDropDown']);
                         }, function () {
                             loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
                             $scope.saving = false;
@@ -58,6 +58,12 @@
                     });
                 });
         };
+
+        $rootScope.$on('CloseDropDown', function (event, args) {
+            for (var i = 0; i < args.length; i++) {
+                $scope.hideDropdown(args[i]);
+            }
+        });
 
     }]);
 }(angular.module('app')));

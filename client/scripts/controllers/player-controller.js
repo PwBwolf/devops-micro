@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', function (userSvc, mediaSvc, loggerSvc, $scope, $window, $compile) {
+    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', '$filter', function (userSvc, mediaSvc, loggerSvc, $scope, $window, $compile, $filter) {
         activate();
 
         function activate() {
@@ -12,11 +12,10 @@
             $scope.isVisible = false;
             $scope.closeVisible = false;
             $scope.loadingChannels = true;
-
             userSvc.getUserChannels(function (data) {
                 $scope.channels = data;
             }, function () {
-                loggerSvc.logError('Error loading channel list.');
+                loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_LIST_LOAD_ERROR'));
             });
         }
 
@@ -55,20 +54,25 @@
             $scope.logoVisible = false;
         };
 
-        $scope.selectOnAir = function (channelIndex) {
-            if (!$scope.loadingChannelGuide) {
+        $scope.channelHovered = function (index) {
+            $scope.hoveredChannel = index;
+            selectOnAir(index);
+        };
+
+        function selectOnAir(channelIndex) {
+            if (!$scope.loadingChannelGuide && channelIndex > -1) {
                 $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, $scope.channels[channelIndex].name).success(function (showPreview) {
+                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id).success(function (showPreview) {
                     $scope.onAir = showPreview[0].airings;
                     $scope.onAirTitle = $scope.onAir[0].program.title;
                     $scope.programDetails = $scope.getProgramDetails($scope.onAir[0]);
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
-                    loggerSvc.logError('Error loading channel guide.');
+                    loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
                 });
             }
-        };
+        }
 
         $scope.selectChannel = function (channelIndex) {
             if (!$scope.loadingChannelGuide) {
@@ -82,7 +86,7 @@
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
-                    loggerSvc.logError('Error loading channel guide.');
+                    loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
                 });
             }
         };
@@ -96,7 +100,7 @@
                 $scope.channelName = $scope.channels[index].name;
                 playStream();
             }).error(function () {
-                loggerSvc.logError('Error loading channel.');
+                loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_LOAD_ERROR'));
             });
         };
 

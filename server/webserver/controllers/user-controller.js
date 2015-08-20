@@ -186,10 +186,10 @@ module.exports = {
         });
     },
 
-    updateUserProfile: function (req, res) {
+    updateUserInfo: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError('userController - updateUserProfile - error fetching user: ' + req.email.toLowerCase());
+                logger.logError('userController - updateUserInfo - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -201,7 +201,7 @@ module.exports = {
             user.telephone = req.body.telephone;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - updateUserProfile - error saving user: ' + req.email.toLowerCase());
+                    logger.logError('userController - updateUserInfo - error saving user: ' + req.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 } else {
