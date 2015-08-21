@@ -53,9 +53,9 @@
                                 var startDate = date;
                                 angular.forEach(lineUp, function (data) {
                                     if (!data.program.preferredImage.uri) {
-                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                                        $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
                                     } else {
-                                        $scope.channelLineUp = '<div style="width:' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                                        $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
                                     }
                                     startDate = null;
                                     $scope.channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
@@ -81,9 +81,13 @@
                 hourDate.setMinutes(0);
                 hourDate.setSeconds(0);
                 var diff = Math.floor((hourDate.getTime() - new Date(programStartTime).getTime()) / (1000 * 60));
-                return (time * 4) - (diff * 4) + 'px';
+                if (diff >= 0) {
+                    return 'width:' + ((time - diff) * 4) + 'px';
+                } else {
+                    return 'margin-left:' + (diff * -4) + 'px;' + 'width:' + (time * 4) + 'px;border-left: 1px solid';
+                }
             } else {
-                return (time * 4) + 'px';
+                return 'width:' + (time * 4) + 'px';
             }
         }
 
@@ -96,7 +100,7 @@
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);
-            return pad(startTime.getHours()) + ':' + pad(startTime.getMinutes()) + ' - ' + pad(endTime.getHours()) + ':' + pad(endTime.getMinutes());
+            return (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM' );
         }
 
         function pad(number) {

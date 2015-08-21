@@ -784,6 +784,10 @@ ul.passwordStrength {
     height: 560px;
 }
 
+#guide {
+    margin-bottom: 5px;
+}
+
 #headerButtons {
     margin-left: 13.4%;
 }
@@ -978,6 +982,7 @@ label:before {
     display: inline-block;
     padding: 7px 5px;
     border-left: thin solid lightgrey;
+    height: 100%;
 }
 
 #smallChannelDescription {

@@ -2,9 +2,9 @@
     'use strict';
 
     app.controller('playerCtrl', ['mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', '$filter', function (mediaSvc, loggerSvc, $scope, $window, $compile, $filter) {
-        
+
         $scope.selectedPromoChannel = -1;
-        
+
         activate();
 
         function activate() {
@@ -15,7 +15,7 @@
             $scope.isVisible = false;
             $scope.closeVisible = false;
             $scope.loadingChannels = true;
-            
+
             mediaSvc.getUserChannels(function (data) {
                 $scope.channels = data;
             }, function () {
@@ -147,7 +147,7 @@
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);
-            return pad(startTime.getHours()) + ':' + pad(startTime.getMinutes()) + ' - ' + pad(endTime.getHours()) + ':' + pad(endTime.getMinutes());
+            return (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes())+ ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM' );
         }
 
         function pad(number) {
