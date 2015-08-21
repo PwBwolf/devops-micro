@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('changeCreditCardCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('changeCreditCardCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$rootScope', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $rootScope, $location, $filter) {
 
         activate();
 
@@ -20,8 +20,11 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            $location.path('/change-credit-card-success');
+                            loggerSvc.logInfo($filter('translate')('CHANGE_CREDIT_CARD_SUCCESS'));
                             $scope.saving = false;
+                            $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'billingDropDown']);
+                            $scope.mv = {};
+                            setFormNotTouched();
                         }, function () {
                             loggerSvc.logError($filter('translate')('CHANGE_CREDIT_CARD_ACCOUNT_REFRESH_ERROR'));
                             $scope.saving = false;
@@ -54,6 +57,18 @@
             $scope.form.expiryDate.$touched = true;
             $scope.form.zipCode.$touched = true;
             $scope.form.disclaimer.$touched = true;
+        }
+
+        function setFormNotTouched() {
+            $scope.form.cardName.$touched = false;
+            $scope.form.cardNumber.$touched = false;
+            $scope.form.address.$touched = false;
+            $scope.form.city.$touched = false;
+            $scope.form.state.$touched = false;
+            $scope.form.cvv.$touched = false;
+            $scope.form.expiryDate.$touched = false;
+            $scope.form.zipCode.$touched = false;
+            $scope.form.disclaimer.$touched = false;
         }
     }]);
 }(angular.module('app')));

@@ -3,7 +3,7 @@
 
     var config = {
         roles: ['anon', 'user', 'admin', 'superAdmin'],
-        accessLevels: { 'public': '*', 'anon': ['anon'], 'user': ['user', 'admin', 'superAdmin'], 'admin': ['admin', 'superAdmin'], 'superAdmin': ['superAdmin'] }
+        accessLevels: {'public': '*', 'anon': ['anon'], 'user': ['user', 'admin', 'superAdmin'], 'admin': ['admin', 'superAdmin'], 'superAdmin': ['superAdmin']}
     };
 
     exports.userRoles = buildRoles(config.roles);
@@ -16,7 +16,7 @@
             intCode;
         for (role in roles) {
             intCode = parseInt(bitMask, 2);
-            userRoles[roles[role]] = { bitMask: intCode, title: roles[role] };
+            userRoles[roles[role]] = {bitMask: intCode, title: roles[role]};
             bitMask = (intCode << 1).toString(2);
         }
         return userRoles;
@@ -35,17 +35,13 @@
                     for (role in userRoles) {
                         resultBitMask += '1';
                     }
-                    accessLevels[level] = { bitMask: parseInt(resultBitMask, 2) };
-                } else {
-                    console.log('Access Control Error: Could not parse "' + accessLevelDeclarations[level] + '" as access definition for level "' + level + '"');
+                    accessLevels[level] = {bitMask: parseInt(resultBitMask, 2)};
                 }
             } else {
                 resultBitMask = 0;
                 for (role in accessLevelDeclarations[level]) {
                     if (userRoles.hasOwnProperty(accessLevelDeclarations[level][role])) {
                         resultBitMask = resultBitMask | userRoles[accessLevelDeclarations[level][role]].bitMask;
-                    } else {
-                        console.log('Access Control Error: Could not find role "' + accessLevelDeclarations[level][role] + '" in registered roles while building access for "' + level + '"');
                     }
                 }
                 accessLevels[level] = {

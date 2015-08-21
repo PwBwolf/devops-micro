@@ -4,10 +4,6 @@
     position: relative;
 }
 
-#phoneHeader {
-    display: none !important;
-}
-
 body, html {
     font-size: 14px;
     max-width: 1280px;
@@ -101,8 +97,8 @@ header {
 
 #headerBrand img {
     width: auto;
-    height: 70px;
-    margin: 0 0 0 31px;
+    height: 80px;
+    margin: 0 0 0 25px;
     top: 9px;
     transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
@@ -110,10 +106,6 @@ header {
     -ms-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
     z-index: 998;
-}
-
-#headerBrand span {
-    display: inline-block;
 }
 
 .order-summary-title {
@@ -172,7 +164,7 @@ header {
     border-bottom: solid 1px lightgrey;
 }
 
-#menu {
+.menu {
     width: 100%;
     font-weight: bold;
 }

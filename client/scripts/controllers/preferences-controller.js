@@ -19,7 +19,8 @@
                 userSvc.updatePreferences($scope.mv, function () {
                     $scope.saving = false;
                     $rootScope.$broadcast('ChangeLanguage', $scope.mv.language);
-                    $location.path('/preferences-success');
+                    $rootScope.$broadcast('CloseDropDown', ['preferencesDropDown', 'profileDropDown']);
+                    loggerSvc.logInfo($filter('translate')('PREFERENCES_SAVED'));
                 }, function () {
                     loggerSvc.logError($filter('translate')('PREFERENCES_SAVE_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                     $scope.saving = false;

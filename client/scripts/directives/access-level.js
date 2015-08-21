@@ -5,7 +5,7 @@
         return {
             restrict: 'A',
             link: function ($scope, element, attrs) {
-                var prevDisplay = element.css('display'),
+                var previousDisplay = element.css('display'),
                     userRole,
                     accessLevel;
 
@@ -34,7 +34,7 @@
                         if (!userSvc.authorize(accessLevel, userRole)) {
                             element.css('display', 'none');
                         } else {
-                            element.css('display', prevDisplay);
+                            element.css('display', previousDisplay);
                         }
                     } else {
                         element.css('display', 'none');

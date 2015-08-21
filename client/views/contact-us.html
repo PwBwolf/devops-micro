@@ -24,13 +24,13 @@
                         <div ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-message" translate="CONTACT_US_TELEPHONE_INVALID"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_COUNTRY"></span>
                         <br>
-                        <select required class="text-box drop-down-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
+                        <select required class="text-box dropdown-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
                             <option value="" translate="CONTACT_US_COUNTRY_SELECT"></option>
                         </select>
                         <div ng-show="form.country.$touched && form.country.$error.required" class="error-message" translate="CONTACT_US_COUNTRY_REQUIRED"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_INTEREST"></span>
                         <br>
-                        <select class="text-box drop-down-list" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'text-box-error': form.interest.$touched && form.interest.$invalid}">
+                        <select class="text-box dropdown-list" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'text-box-error': form.interest.$touched && form.interest.$invalid}">
                             <option value="" translate="CONTACT_US_INTEREST_SELECT"></option>
                             <option value="Technical Support" translate="CONTACT_US_INTEREST_TECHNICAL"></option>
                             <option value="Billing Support" translate="CONTACT_US_INTEREST_BILLING"></option>

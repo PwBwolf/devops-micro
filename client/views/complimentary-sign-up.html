@@ -67,7 +67,7 @@
                         <div class="error-message" ng-show="form.confirmPassword.$touched && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="COMP_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH"></div>
                     </div>
                     <div class="full-form center-form">
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="COMP_SIGN_UP_DISCLAIMER"></span><a href ng-click="goToCmsUrl('CMS_URL_TOUS')" target="_blank" translate="COMP_SIGN_UP_TERMS_OF_USE"></a> <span translate="COMP_SIGN_UP_AND"></span> <a href ng-click="goToCmsUrl('CMS_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="COMP_SIGN_UP_DISCLAIMER_END"></span></label>
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="COMP_SIGN_UP_DISCLAIMER"></span><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="COMP_SIGN_UP_TERMS_OF_USE"></a> <span translate="COMP_SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="COMP_SIGN_UP_DISCLAIMER_END"></span></label>
 
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="COMP_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
