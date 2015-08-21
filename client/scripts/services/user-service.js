@@ -155,14 +155,6 @@
 
             updatePreferences: function(data, success, error) {
                 $http.post('/api/update-preferences', data).success(success).error(error);
-            },
-
-            getUserChannels: function(success, error) {
-                $http.get('/api/get-user-channels', { cache: true }).success(success).error(error);
-            },
-
-            getPromoChannels: function(success, error) {
-                $http.get('/api/get-promo-channels', { cache: true }).success(success).error(error);
             }
          };
     }]);

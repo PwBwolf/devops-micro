@@ -785,9 +785,7 @@ ul.passwordStrength {
 }
 
 #headerButtons {
-    left: 170px;
-    text-transform: uppercase;
-    width: 42%;
+    margin-left: 13.4%;
 }
 
 #dropDowns > .panel {
@@ -854,7 +852,6 @@ label:before {
     width: 14%;
     position: relative;
     display: inline-block;
-    margin-left: 2%;
     text-align: left;
     float: right
 }
@@ -881,7 +878,6 @@ label:before {
 }
 
 .header-time {
-    width: 49%;
     height: 50%;
     font-size: 0.85em;
     font-weight: bold;
@@ -928,7 +924,7 @@ label:before {
 }
 
 .channel-list {
-    height: 75px;
+    height: 100px;
     width: 100%;
     overflow: hidden;
     padding: 0 4px;
@@ -957,7 +953,7 @@ label:before {
     vertical-align: middle;
     cursor: pointer;
     background-color: rgb(69, 69, 69);
-    padding: 3% 0;
+    padding: 35px 0;
     box-shadow: 3px 13px 7px #222 inset;
     border-radius: 3px;
 }
@@ -1009,7 +1005,7 @@ label:before {
     position: relative;
     display: inline-block;
     vertical-align: top;
-    font-size: 0.8em;
+    font-size: 1em;
     width: 100%;
     height: auto;
 }
@@ -1110,7 +1106,7 @@ body, html {
 .channel-panel {
     background: rgb(213, 213, 213);
     width: 100%;
-    height: 75px;
+    height: 100px;
     margin: 10px 0px 2px;
 }
 
@@ -1118,7 +1114,7 @@ body, html {
     background: rgb(213, 213, 213);
     width: 100%;
     height: 305px;
-    margin: 10px 0px 2px;
+    margin: 10px 0px 20px;
 }
 
 #yiptv-player, #yiptv-player_wrapper {
@@ -1155,9 +1151,12 @@ body, html {
 }
 
 .main-player {
-    width: 71.45%;
+    width: 72%;
     height: 100%;
     vertical-align: top !important;
+    background-image:url('../images/channel-banner.jpg');
+    background-repeat:no-repeat;
+    background-size:100% 100%;
 }
 
 .main-player img {
@@ -1167,9 +1166,10 @@ body, html {
 
 .main-favorites {
     background: rgb(211, 211, 211);
-    width: 28.55%;
+    width: 28.5%;
     height: 100%;
     vertical-align: top !important;
+    margin-left: -3px;
 }
 
 .suggested-channels {
@@ -1342,6 +1342,7 @@ body, html {
     display: inline-block;
     padding: 3px;
     vertical-align: top;
+    vertical-align: top;
 }
 
 .suggested-channel article p {
@@ -1380,8 +1381,9 @@ body, html {
 .favorite-channel {
     width: 49.15%;
     height: 50%;
-    margin-right: 2px;
+    margin-right: 1px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .favorite-channel article {
@@ -1406,10 +1408,15 @@ body, html {
     float: right;
 }
 
-.favorite-channel > div img:last-child, .suggested-channel img:first-child {
+.favorite-channel > div img:last-child {
     width: auto;
     height: 100%;
     cursor: pointer;
+}
+
+.suggested-channel img:first-child {
+    width: auto;
+    height: 100%;
 }
 
 .favorite-channel > div img:first-child, .suggested-channel img:last-child {
@@ -1504,7 +1511,7 @@ body, html {
     position: relative;
     cursor: pointer;
     left: -1px;
-    bottom: 100px;
+    bottom: 140px;
     padding: 8px 23px;
     border: thin solid rgb(200, 200, 200);
     border-bottom: none;
@@ -1519,7 +1526,7 @@ body, html {
     position: relative;
     cursor: pointer;
     left: -1px;
-    top: -319px;
+    top: -345px;
     padding: 8px 24px;
     border: thin solid rgb(200, 200, 200);
     border-radius: 0px;
@@ -1582,12 +1589,6 @@ body, html {
     body {
         height: auto;
         width: auto;
-    }
-}
-
-@media (max-width: 767px) {
-    .event-data {
-        font-size: 95% !important;
     }
 }
 

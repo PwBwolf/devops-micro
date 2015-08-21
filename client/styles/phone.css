@@ -1,11 +1,35 @@
-
-#desktopHeader {
+.main-favorites {
     display: none !important;
+}
+
+.main-player {
+    width: 100% !important;
 }
 
 #phoneHeader {
     position: relative;
     z-index: 101;
+}
+
+#phoneUserHeader {
+    position: relative;
+    z-index: 101;
+}
+
+.player-panel {
+    height: 370px !important;
+}
+
+.player-maximized {
+    height: 370px !important;
+}
+
+#playerTop {
+    height: 100%;
+}
+
+#playerBottom {
+    display: none !important;
 }
 
 .navbar-default {
@@ -286,7 +310,6 @@
     }
 
     #topBox {
-        top: 40px;
         position: relative;
         width: auto;
         height: auto;
@@ -366,7 +389,7 @@
 
     .nav-btn {
         float: right;
-        padding: 2% 1% 0;
+        padding: 10px 1% 0;
     }
 
     [contentEditable=true]:focus {
@@ -471,7 +494,6 @@
     }
 
     #topBox {
-        top: 40px;
         position: relative;
         width: auto;
         height: auto;

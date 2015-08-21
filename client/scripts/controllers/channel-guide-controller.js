@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('channelGuideCtrl', ['$scope', '$', 'userSvc', 'mediaSvc', '$filter', 'loggerSvc', function ($scope, $, userSvc, mediaSvc, $filter, loggerSvc) {
+    app.controller('channelGuideCtrl', ['$scope', '$', 'mediaSvc', '$filter', 'loggerSvc', function ($scope, $, mediaSvc, $filter, loggerSvc) {
 
         activate();
 
@@ -32,7 +32,7 @@
 
             $(timeHeaderBar).append(timeModule);
 
-            userSvc.getUserChannels(function (data) {
+            mediaSvc.getUserChannels(function (data) {
                 $scope.userChannels = data;
 
                 angular.forEach($scope.userChannels, function (value, key) {
@@ -66,7 +66,7 @@
                                 angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
                             }
                         }).error(function () {
-                            loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
+                            loggerSvc.logError($filter('translate')('CHANNEL_GUIDE_LOAD_ERROR'));
                         });
                     } else {
                         return 'end';
@@ -89,7 +89,7 @@
 
         function getTime(index, airing) {
             if (index === 0) {
-                return 'on now';
+                return $filter('translate')('CHANNEL_GUIDE_ON_NOW');
             }
             if (!airing) {
                 return '';

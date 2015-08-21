@@ -1,7 +1,10 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['userSvc', 'mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', '$filter', function (userSvc, mediaSvc, loggerSvc, $scope, $window, $compile, $filter) {
+    app.controller('playerCtrl', ['mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', '$filter', function (mediaSvc, loggerSvc, $scope, $window, $compile, $filter) {
+        
+        $scope.selectedPromoChannel = -1;
+        
         activate();
 
         function activate() {
@@ -12,12 +15,23 @@
             $scope.isVisible = false;
             $scope.closeVisible = false;
             $scope.loadingChannels = true;
-            userSvc.getUserChannels(function (data) {
+            
+            mediaSvc.getUserChannels(function (data) {
                 $scope.channels = data;
             }, function () {
                 loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_LIST_LOAD_ERROR'));
             });
+
+            mediaSvc.getPromoChannels(function (data) {
+                $scope.promoChannels = data;
+            }, function () {
+                loggerSvc.logError($filter('translate')('PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR'));
+            });
         }
+
+        $scope.promoChannelSelected = function ($index) {
+            $scope.selectedPromoChannel = $index;
+        };
 
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
@@ -106,7 +120,7 @@
 
         function playStream() {
             jwplayer('yiptv-player').setup({
-                width: 912,
+                width: '100%',
                 height: 370,
                 playlist: [{
                     image: $scope.channelLogo,
@@ -114,24 +128,22 @@
                         {file: $scope.tvUrl}
                     ]
                 }],
+                modes: [
+                    { type: 'html5' },
+                    { type: 'flash', src: 'scripts/external/jwplayer.flash.swf' }
+                ],
                 rtmp: {
                     bufferlength: 3
                 },
-                primary: 'flash',
-                modes: [
-                    {
-                        'type': 'flash',
-                        'src': 'scripts/external/jwplayer.flash.swf'
-                    }
-                ],
+                primary: 'html5',
                 autostart: true,
-                fallback: false
+                fallback: true
             });
         }
 
         function getTime(index, airing) {
             if (index === 0) {
-                return 'on now';
+                return $filter('translate')('PLAYER_ON_NOW');
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);
@@ -174,11 +186,11 @@
         };
 
         $scope.getChannelDetails = function (show) {
-            var channelDetails = '<div><img src="' + $scope.getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + show.program.title + '</span></p>';
+            var channelDetails = '<div><img class="hidden-xs" src="' + $scope.getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + show.program.title + '</span></p>';
             if (!show.duration && !show.startTime) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span>&nbsp;<span class="program-details-header"translate="PLAYER_DURATION"></span><span class="program-details-body"translate="PLAYER_NOT_AVAILABLE"></span></p>';
             } else {
-                channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, show) + '</span>&nbsp;<span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + show.duration + '</span>&nbsp;<span  class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
+                channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, show) + '</span></p><p><span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + show.duration + '</span>&nbsp;<span  class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
             }
             if (!show.program.shortDescription) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';

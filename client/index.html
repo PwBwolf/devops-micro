@@ -46,14 +46,15 @@
 <!--[if lt IE 9]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<header id="desktopHeader" access-level="accessLevels.anon">
+<div access-level="accessLevels.anon">
+<header id="desktopHeader" class="hidden-xs">
     <div id="headerBrand">
         <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
         <div class="menu-button">
             <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
         </div>
-        <div class="menu-button" access-level="accessLevels.anon">
+        <div class="menu-button">
             <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
         </div>
         <div style="float: right">
@@ -66,42 +67,26 @@
             <div id="menuItems">
                 <div style="display:none"><img src="images/mini-logo.png"></div>
                 <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
-                <menuItem home-only id="joinNow" access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
             </div>
         </div>
     </nav>
 </header>
 
-<header id="phoneHeader" access-level="accessLevels.anon">
+<header id="phoneHeader" class="visible-xs">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
-
-                <div class="nav-btn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_LANGUAGE_DROPDOWN" data-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav-btn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_ANON_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
-                        </li>
-                        <li>
-                            <a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW"></a>
-                        </li>
-                    </ul>
+                <div class="nav-btn">
+                    <button type="button" goto="/sign-in" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></button>
+                    <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
                 </div>
             </div>
             <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
         </div>
     </nav>
 </header>
+</div>
 
 <div id="topBox" ng-view autoscroll="true"></div>
 
@@ -153,7 +138,6 @@
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
 <script src="scripts/directives/goto.js"></script>
-<script src="scripts/directives/home-only.js"></script>
 <script src="scripts/directives/bookmark.js"></script>
 <script src="scripts/directives/channel-hover.js"></script>
 <script src="scripts/directives/channel-logo.js"></script>
@@ -190,7 +174,6 @@
 <script src="scripts/controllers/refer-a-friend-controller.js"></script>
 <script src="scripts/controllers/channel-guide-controller.js"></script>
 <script src="scripts/controllers/player-controller.js"></script>
-<script src="scripts/controllers/promo-controller.js"></script>
 <script src="scripts/controllers/user-info-controller.js"></script>
 
 <!-- inject:partials -->

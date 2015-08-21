@@ -1,7 +1,9 @@
-<div class="player-panel">
-    <div id="playerTop" class="player-top" ng-controller="playerCtrl">
+<div class="player-panel" ng-controller="playerCtrl">
+    <div id="playerTop" class="player-top">
 
-        <div id="yiptv-player" class="main-player position-div"><img src="images/channel-banner.jpg"/></div>
+        <div class="main-player position-div">
+            <div id="yiptv-player"></div>
+        </div>
         <div class="main-favorites position-div">
             <div class="favorite-channel position-div" ng-repeat="channel in channels | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNow($index);">
                 <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
@@ -27,7 +29,7 @@
         </div>
     </div>
 
-    <div id="playerBottom" class="suggested-channels ease" ng-controller="promoCtrl">
+    <div id="playerBottom" class="suggested-channels ease">
         <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseenter="promoChannelSelected($index)" ng-mouseleave="promoChannelSelected(-1)" ng-repeat="channel in promoChannels track by $index">
 
             <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
