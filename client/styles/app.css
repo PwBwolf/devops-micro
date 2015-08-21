@@ -757,19 +757,19 @@ ul.passwordStrength {
 #preferencesDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 285px;
+    height: 225px;
 }
 
 #changePasswordDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 660px;
+    height: 500px;
 }
 
 #userInfoDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 560px;
+    height: 440px;
 }
 
 #upgradeSubscriptionDropDown > div {
@@ -837,10 +837,6 @@ ul.passwordStrength {
     text-align: center;
     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important;
     margin-bottom: 0;
-}
-
-label:before {
-    display: none !important;
 }
 
 .btn-primary:hover, .btn-primary.active {

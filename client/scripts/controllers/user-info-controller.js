@@ -11,9 +11,14 @@
                 userSvc.updateUserInfo(
                     $scope.mv,
                     function () {
-                        loggerSvc.logInfo($filter('translate')('USER_INFO_UPDATE_SUCCESS'));
-                        $scope.saving = false;
-                        $rootScope.$broadcast('CloseDropDown', ['userInfoDropDown', 'profileDropDown']);
+                        userSvc.getUserProfile(function () {
+                            loggerSvc.logSuccess($filter('translate')('USER_INFO_UPDATE_SUCCESS'));
+                            $scope.saving = false;
+                            $rootScope.$broadcast('CloseDropDown', ['userInfoDropDown', 'profileDropDown']);
+                        }, function () {
+                            loggerSvc.logError($filter('translate')('USER_INFO_ACCOUNT_REFRESH_ERROR'));
+                            $scope.saving = false;
+                        });
                     },
                     function () {
                         loggerSvc.logError($filter('translate')('USER_INFO_UPDATE_FAILURE'));

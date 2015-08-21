@@ -1,15 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.directive('passwordStrength', function () {
+    app.directive('passwordStrength', ['$', function ($) {
         return {
             replace: false,
             restrict: 'A',
-
-            link: function (scope, element, attrs) {
+            scope: {passwordModel: '=passwordStrength'},
+            link: function (scope, element) {
                 var strength = {
                     colors: ['#F00', '#F90', '#E6E600', '#33CC33', '#1CAF9A'],
                     measureStrength: function (password) {
+                        if(!password) {
+                            return 5;
+                        }
                         var force = 0,
                             regex = /[$*()\\=+@%&#-/:-?{-~!"^_`\[\]]/g,
                             lowerLetters = /[a-z]+/.test(password),
@@ -50,13 +53,13 @@
                     }
                 };
 
-                scope.$watch($('#' + attrs.passwordStrength).attr('ng-model'), function () {
-                    var color = strength.getColor(strength.measureStrength($('#' + attrs.passwordStrength).val()));
+                scope.$watch('passwordModel', function () {
+                    var color = strength.getColor(strength.measureStrength(scope.passwordModel));
                     element.css({'display': 'inline'});
                     element.children('li').css({'background': '#DDD'}).slice(0, color.index).css({'background': color.color});
                 });
             },
             template: '</li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li>'
         };
-    });
+    }]);
 }(angular.module('app')));
