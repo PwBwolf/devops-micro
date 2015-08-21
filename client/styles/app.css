@@ -1524,7 +1524,6 @@ body, html {
     width: 80px;
     height: 65px;
     position: relative;
-    cursor: pointer;
     left: -1px;
     top: -345px;
     padding: 8px 24px;
