@@ -20,7 +20,7 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            loggerSvc.logInfo($filter('translate')('UPGRADE_SUBSCRIPTION_SUCCESS'));
+                            loggerSvc.logSuccess($filter('translate')('UPGRADE_SUBSCRIPTION_SUCCESS'));
                             $scope.saving = false;
                             $window.location.reload();
                         }, function () {

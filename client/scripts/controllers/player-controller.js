@@ -129,8 +129,8 @@
                     ]
                 }],
                 modes: [
-                    { type: 'html5' },
-                    { type: 'flash', src: 'scripts/external/jwplayer.flash.swf' }
+                    {type: 'html5'},
+                    {type: 'flash', src: 'scripts/external/jwplayer.flash.swf'}
                 ],
                 rtmp: {
                     bufferlength: 3
@@ -147,7 +147,7 @@
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);
-            return (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes())+ ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM' );
+            return pad(startTime.getHours()) + ':' + pad(startTime.getMinutes()) + ' - ' + pad(endTime.getHours()) + ':' + pad(endTime.getMinutes());
         }
 
         function pad(number) {

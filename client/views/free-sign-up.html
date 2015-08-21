@@ -59,7 +59,7 @@
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                         <div>
-                            <ul class="passwordStrength" password-strength="password"></ul>
+                            <ul class="passwordStrength" password-strength="mv.password"></ul>
                         </div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_CONFIRM_PASSWORD"></span><br>
