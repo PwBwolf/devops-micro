@@ -45,8 +45,8 @@
                     $scope.saving = true;
                     userSvc.cancelSubscription(function () {
                         userSvc.getUserProfile(function () {
-                            $location.path('/cancel-subscription-success');
                             $scope.saving = false;
+                            loggerSvc.logSuccess($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_SUCCESS'));
                             $rootScope.$broadcast('CloseDropDown', ['billingDropDown']);
                         }, function () {
                             loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));

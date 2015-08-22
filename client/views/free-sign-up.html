@@ -1,13 +1,15 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="FREE_SIGN_UP_HEADING"></span></h1>
-
         <div class="container">
             <div class="form-box">
+                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="FREE_SIGN_UP_HEADING"></h2></div>
+                </div>
                 <div class="form-container">
                     <div class="free-sign-up">
                         <div class="row">
-                            <div class="col-md-12"><h2 class=" bold-text sign-up-header-color" translate="FREE_SIGN_UP_MESSAGE"></h2></div>
+                            <div class="col-md-12"><h2 class=" bold-text header-color" translate="FREE_SIGN_UP_MESSAGE"></h2></div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -59,7 +61,7 @@
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                         <div>
-                            <ul class="passwordStrength" password-strength="password"></ul>
+                            <ul class="passwordStrength" password-strength="mv.password"></ul>
                         </div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_CONFIRM_PASSWORD"></span><br>

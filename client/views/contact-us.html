@@ -1,11 +1,11 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="CONTACT_US_HEADING"></span></h1>
-
         <div class="container">
             <div class="form-box">
                 <div>&nbsp;</div>
-                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="CONTACT_US_HEADING"></h2></div>
+                </div>
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="form-container">
                         <span class="label-text" translate="CONTACT_US_NAME"></span>
@@ -27,6 +27,7 @@
                         <select required class="text-box dropdown-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
                             <option value="" translate="CONTACT_US_COUNTRY_SELECT"></option>
                         </select>
+
                         <div ng-show="form.country.$touched && form.country.$error.required" class="error-message" translate="CONTACT_US_COUNTRY_REQUIRED"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_INTEREST"></span>
                         <br>

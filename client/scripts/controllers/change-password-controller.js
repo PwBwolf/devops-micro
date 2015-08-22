@@ -9,7 +9,7 @@
                 userSvc.changePassword(
                     $scope.mv,
                     function () {
-                        loggerSvc.logInfo($filter('translate')('CHANGE_PASSWORD_SUCCESS'));
+                        loggerSvc.logSuccess($filter('translate')('CHANGE_PASSWORD_SUCCESS'));
                         $scope.saving = false;
                         $rootScope.$broadcast('CloseDropDown', ['changePasswordDropDown', 'profileDropDown']);
                         $scope.mv = {};

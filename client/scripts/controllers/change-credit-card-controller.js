@@ -20,7 +20,7 @@
                     $scope.mv,
                     function () {
                         userSvc.getUserProfile(function () {
-                            loggerSvc.logInfo($filter('translate')('CHANGE_CREDIT_CARD_SUCCESS'));
+                            loggerSvc.logSuccess($filter('translate')('CHANGE_CREDIT_CARD_SUCCESS'));
                             $scope.saving = false;
                             $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'billingDropDown']);
                             $scope.mv = {};

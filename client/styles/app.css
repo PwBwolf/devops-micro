@@ -240,8 +240,13 @@ input[type="radio"]:checked + label:before {
     font-weight: bolder;
     font-family: 'gotham-boldgotham-bold';
 }
+
 .progress {
     width: 98%;
+}
+
+.progress > div {
+    border-radius: 4px;
 }
 
 .progress-bar-purple {
@@ -398,8 +403,24 @@ input[type="radio"]:checked + label:before {
     font-size: 90%;
 }
 
-.sign-up-header-color {
+.header-color {
     color: #291753;
+}
+
+.sign-in-header {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: gotham-boldgotham-bold;
+    line-height: 1.1;
+}
+
+.sign-in-sub-header {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 100;
+    line-height: 1.1;
 }
 
 .sign-up-button {
@@ -757,19 +778,19 @@ ul.passwordStrength {
 #preferencesDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 285px;
+    height: 225px;
 }
 
 #changePasswordDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 660px;
+    height: 500px;
 }
 
 #userInfoDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 560px;
+    height: 440px;
 }
 
 #upgradeSubscriptionDropDown > div {
@@ -837,10 +858,6 @@ ul.passwordStrength {
     text-align: center;
     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important;
     margin-bottom: 0;
-}
-
-label:before {
-    display: none !important;
 }
 
 .btn-primary:hover, .btn-primary.active {
@@ -1090,7 +1107,6 @@ body, html {
     position: absolute;
     background: rgba(254, 254, 254, .95);
     color: rgba(62, 25, 77, .94);
-    border-bottom: solid 1px lightgrey;
 }
 
 .position-div {
@@ -1159,9 +1175,9 @@ body, html {
     width: 72%;
     height: 100%;
     vertical-align: top !important;
-    background-image:url('../images/channel-banner.jpg');
-    background-repeat:no-repeat;
-    background-size:100% 100%;
+    background-image: url('../images/channel-banner.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .main-player img {

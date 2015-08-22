@@ -161,7 +161,6 @@ header {
     position: absolute;
     background: rgba(254, 254, 254, .95);
     color: rgba(62, 25, 77, .94);
-    border-bottom: solid 1px lightgrey;
 }
 
 .menu {

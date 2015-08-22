@@ -25,7 +25,7 @@
             <div class="menu">
                 <div id="headerButtons" class="btn-group" data-toggle="buttons">
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="profileDropDown" translate="USER_HOME_PROFILE"></button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#billingDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="billingDropDown" translate="USER_HOME_BILLING"></button>
+                    <button class="btn btn-primary" ng-hide="user.type === 'comp'" data-toggle="collapse" data-target="#billingDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="billingDropDown" translate="USER_HOME_BILLING"></button>
                 </div>
                 <div id="dropDowns">
                     <div class="panel">
