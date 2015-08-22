@@ -245,6 +245,10 @@ input[type="radio"]:checked + label:before {
     width: 98%;
 }
 
+.progress > div {
+    border-radius: 4px;
+}
+
 .progress-bar-purple {
     background-color: #8356A2;
 }
