@@ -32,3 +32,14 @@ npm update
 /etc/init.d/yip-notification-processor start
 cd ..
 ##################### Notification Processor End #######################
+
+#################### Notification Processor Start ######################
+cd  metadata-processor
+# first stop the corresponding nodejs script
+/etc/init.d/yip-metadata-processor stop
+# run npm update to install any new node modules
+npm update
+# now start the node server and redirect logs to yip-metadata-processor.log
+/etc/init.d/yip-metadata-processor start
+cd ..
+##################### Notification Processor End #######################

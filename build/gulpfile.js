@@ -281,6 +281,7 @@ gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', '
     buildDaemon('dist/server/daemons', 'rule-engine');
     buildDaemon('dist/server/daemons', 'merchant-processor');
     buildDaemon('dist/server/daemons', 'notification-processor');
+    buildDaemon('dist/server/daemons', 'metadata-processor');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -438,7 +439,7 @@ gulp.task('connect', function () {
         root: '../../client',
         livereload: true,
         port: 9000,
-        middleware: function (connect, opt) {
+        middleware: function () {
             return [
                 require('connect-history-api-fallback'),
                 require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]'])
@@ -497,10 +498,6 @@ gulp.task('watch', function () {
 /*****************************************************************/
 
 var karma = require('gulp-karma');
-
-var testFiles = [
-    '../test/client/**/*.js'
-];
 
 gulp.task('test', function () {
     //Be sure to return the stream
