@@ -17,10 +17,10 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.updatePreferences($scope.mv, function () {
+                    loggerSvc.logSuccess($filter('translate')('PREFERENCES_SAVED'));
                     $scope.saving = false;
                     $rootScope.$broadcast('ChangeLanguage', $scope.mv.language);
                     $rootScope.$broadcast('CloseDropDown', ['preferencesDropDown', 'profileDropDown']);
-                    loggerSvc.loggerSvc.logSuccess($filter('translate')('PREFERENCES_SAVED'));
                 }, function () {
                     loggerSvc.logError($filter('translate')('PREFERENCES_SAVE_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                     $scope.saving = false;
