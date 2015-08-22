@@ -2,10 +2,11 @@
 
 var mongoose = require('../../../../server/node_modules/mongoose');
 var Schema = mongoose.Schema;
+
 var Image = new Schema({
-    source: String,
-    type: String,
-    preferredImage: {
+    type: String, 
+    identifier: String,
+    images: [{preferredImage: {
         uri: String,
         height: String,
         width: String,
@@ -19,8 +20,9 @@ var Image = new Schema({
             content: String,
             lang: String
         },
-        personIds: [String]
-    }
-}, {collection: 'Images'});
+        personIds: [String]}, 
+        active: Boolean,
+        source: String}]
+    }, {collection: 'Images'});
 
 mongoose.model('Image', Image);
