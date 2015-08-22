@@ -1,7 +1,8 @@
 'use strict';
 
 var logger = require('../../../../server/common/setup/logger');
-var channelGuideCtrl = require('../../../../server/webserver/controllers/media-controller');
+//var channelGuideCtrl = require('../../../../server/webserver/controllers/media-controller');
+var channelGuideCtrl = require('../controllers/channel-guide-controller');
 var appCtrl = require('../controllers/app-controller');
 
 module.exports=function(app, root)
@@ -18,6 +19,8 @@ module.exports=function(app, root)
     app.get('/metadata/api/get-program-detail', channelGuideCtrl.getProgramDetail);
     
     app.get('/metadata/api/get-app-config', appCtrl.getAppConfig);
+    
+    app.get('/metadata/api/get-channel-logo', channelGuideCtrl.getChannelLogo);
     
     app.get('/about',function(req, res){
 

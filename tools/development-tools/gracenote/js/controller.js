@@ -79,13 +79,13 @@
             req,
             function (data) {
                 var dates = [];
-                for (var i = 0; i < data.channelsDb.length; i++ ) {
+                for (var i = 0; i < data.length; i++ ) {
                     if (i % 5 == 0) dates.push([]);
                     dates[dates.length-1].push(i);
                 }
                 
                 $scope.dates = dates;
-                $scope.channels = data.channelsDb;
+                $scope.channels = data;
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide');
             },
             function (error) {
@@ -148,13 +148,13 @@
             req,
             function (data) {
                 var dates = [];
-                for (var i = 0; i < data.channelsDb.length; i++ ) {
+                for (var i = 0; i < data.length; i++ ) {
                     if (i % 5 == 0) dates.push([]);
                     dates[dates.length-1].push(i);
                 }
                 
                 $scope.dates = dates;
-                $scope.channel = data.channelsDb;
+                $scope.channel = data;
                 $scope.channelid = $routeParams.stationid;
                 console.log('airings length: '+$scope.channel.length);
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for channel airings');
@@ -217,8 +217,8 @@
         channelGuideSvc.getProgramDetail(
             req,
             function (data) {
-                $scope.channelTitle = data.channelsDb.callSign;
-                $scope.program = data.channelsDb.airings;
+                $scope.channelTitle = data.callSign;
+                $scope.program = data.airings;
                 console.log('channelGuideCtrl calls channelGuideSvc.getChannelGuide for program');
             },
             function (error) {
@@ -228,6 +228,25 @@
     
     }]);
     
+    myApp.controller('channelLogoCtrl', ['$scope', '$routeParams', 'channelGuideSvc', function ($scope, $routeParams, channelGuideSvc) {
+        console.log('channelLogoCtrl result: channel index '+$routeParams.stationid);
+        $scope.channelId = $routeParams.stationid;
+        
+        var req = {stationId: '0'};
+        req.stationId = '44448';//$routeParams.stationid;
+
+        channelGuideSvc.getChannelLogo(
+            req,
+            function (data) {
+                $scope.image = data;
+                console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed');
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    
+    }]);
     myApp.controller('testCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('/').success(function(data) {
             $scope.test = 'this test page';
