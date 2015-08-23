@@ -1,63 +1,82 @@
-<div class="player-panel" ng-controller="playerCtrl">
-    <div id="playerTop" class="player-top">
+<div ng-controller="playerCtrl">
+    <div class="player-panel" class="clear-both">
+        <div id="playerTop" class="player-top">
 
-        <div class="main-player position-div">
-            <div id="yiptv-player"></div>
+            <div class="main-player position-div">
+                <div id="yiptv-player"></div>
+            </div>
+            <div class="main-favorites position-div">
+                <div class="favorite-channel position-div" ng-repeat="channel in channels | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNow($index);">
+                    <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
+                        <img ng-src="{{channel.image_url}}"/>
+
+                        <div class="channel-label">
+                            <span>{{channel.name}}</span>
+                        </div>
+                        <img ng-src="{{channel.image_poster}}"/>
+                    </div>
+                    <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
+                        <article>
+                            <aside>
+                                <h4>{{channel.title}}</h4>
+
+                                <p>{{channel.sub_title}}</p>
+
+                                <p>{{channel.description}}</p>
+                            </aside>
+                        </article>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="main-favorites position-div">
-            <div class="favorite-channel position-div" ng-repeat="channel in channels | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNow($index);">
-                <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
-                    <img ng-src="{{channel.image_url}}"/>
+
+        <div id="playerBottom" class="suggested-channels ease">
+            <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseenter="promoChannelSelected($index)" ng-mouseleave="promoChannelSelected(-1)" ng-repeat="channel in promoChannels track by $index">
+
+                <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
+                    <img ng-src="{{channel.image_poster}}"/>
 
                     <div class="channel-label">
-                        <span>{{channel.name}}</span>
+                        <span>{{channel.name}}</span><br/><span>{{channel.program.title}}</span>
                     </div>
-                    <img ng-src="{{channel.image_poster}}"/>
+                    <img ng-src="{{channel.image_url}}"/>
                 </div>
-                <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
+
+                <div id="channelHolderBack" ng-class="($index === selectedPromoChannel) ? 'front' : 'back'">
+                    <img ng-src="{{channel.image_promo_cover}}"/>
                     <article>
                         <aside>
-                            <h4>{{channel.title}}</h4>
+                            <h4>{{channel.program.title}}</h4>
 
-                            <p>{{channel.sub_title}}</p>
+                            <p>{{channel.program.season}}</p>
 
-                            <p>{{channel.description}}</p>
+                            <p>{{channel.program.episode}}</p>
+
+                            <p><span translate="PLAYER_DURATION"></span> {{channel.runtime}} <span translate="PLAYER_MINUTES"></span></p>
+
+                            <p>{{channel.program.longDescription}}</p>
                         </aside>
                     </article>
+                    <img ng-src="{{channel.image_url}}"/>
                 </div>
             </div>
         </div>
     </div>
+    <div id="channelMenuHolder" class="channel-panel">
+        <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible">
+            <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(null, $index)" compile-html="listing"></div>
+        </div>
+        <div class="channel-list">
+            <ul>
+                <li><img ng-src="images/filter.png"/></li>
+                <li ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
+                    <img ng-src="{{channel.image_url}}"/>
 
-    <div id="playerBottom" class="suggested-channels ease">
-        <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseenter="promoChannelSelected($index)" ng-mouseleave="promoChannelSelected(-1)" ng-repeat="channel in promoChannels track by $index">
-
-            <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
-                <img ng-src="{{channel.image_poster}}"/>
-
-                <div class="channel-label">
-                    <span>{{channel.name}}</span><br/><span>{{channel.program.title}}</span>
-                </div>
-                <img ng-src="{{channel.image_url}}"/>
-            </div>
-
-            <div id="channelHolderBack" ng-class="($index === selectedPromoChannel) ? 'front' : 'back'">
-                <img ng-src="{{channel.image_promo_cover}}"/>
-                <article>
-                    <aside>
-                        <h4>{{channel.program.title}}</h4>
-
-                        <p>{{channel.program.season}}</p>
-
-                        <p>{{channel.program.episode}}</p>
-
-                        <p><span translate="PLAYER_DURATION"></span> {{channel.runtime}} <span translate="PLAYER_MINUTES"></span></p>
-
-                        <p>{{channel.program.longDescription}}</p>
-                    </aside>
-                </article>
-                <img ng-src="{{channel.image_url}}"/>
-            </div>
+                    <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
+                        <channel-hover></channel-hover>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

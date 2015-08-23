@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$window', function (appSvc, userSvc, loggerSvc, $scope, $location, $filter, $window) {
+    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', 'webStorage', '$scope', '$location', '$filter', '$window', function (appSvc, userSvc, loggerSvc, webStorage, $scope, $location, $filter, $window) {
 
         activate();
 
@@ -19,8 +19,8 @@
                 userSvc.upgradeSubscription(
                     $scope.mv,
                     function () {
+                        webStorage.local.add('accountUpgraded', true);
                         userSvc.getUserProfile(function () {
-                            loggerSvc.logSuccess($filter('translate')('UPGRADE_SUBSCRIPTION_SUCCESS'));
                             $scope.saving = false;
                             $window.location.reload();
                         }, function () {

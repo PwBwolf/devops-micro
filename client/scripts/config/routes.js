@@ -148,6 +148,12 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
+            .when('/upgrade-subscription', // to get redirect only
+            {
+                templateUrl: 'views/user-home.html',
+                controller: 'commonCtrl',
+                access: access.user
+            })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',

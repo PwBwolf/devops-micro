@@ -37,7 +37,7 @@ module.exports = {
                     return res.status(500).end();
                 }
                 var channel = _.find(channels, function (channel) {
-                    return channel.id === req.query.channelId;
+                    return channel.id === req.query.id;
                 });
                 var now = new Date();
                 var nowTime = now.getTime();
@@ -65,8 +65,10 @@ module.exports = {
         if (req.query.stationId) {
             var now = new Date();
             var startTime = date.isoDate(now);
-            now.setDate(now.getDate() + 1);
+            now.setHours(now.getHours() + Number(req.query.hours));
             var endTime = date.isoDate(now);
+            console.log(startTime);
+            console.log(endTime);
             graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
                 if (err) {
                     logger.logError('mediaController - getUserChannels - error fetch channel guide from gracenote');

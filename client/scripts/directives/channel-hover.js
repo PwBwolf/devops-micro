@@ -12,6 +12,7 @@
                 el.closest('li').on('click', function () {
                     $(scope.channelList).removeClass('channel-panel');
                     $(scope.channelList).addClass('channel-panel-max');
+                    $(scope.player).css('margin-bottom', '350px');
                     scope.$apply(scope.showCloseButton());
                 });
             }

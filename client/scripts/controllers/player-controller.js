@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['mediaSvc', 'loggerSvc', '$scope', '$window', '$compile', '$filter', function (mediaSvc, loggerSvc, $scope, $window, $compile, $filter) {
+    app.controller('playerCtrl', ['mediaSvc', '$scope', '$rootScope', '$window', '$compile', '$filter', function (mediaSvc, $scope, $rootScope, $window, $compile, $filter) {
 
         $scope.selectedPromoChannel = -1;
 
@@ -9,20 +9,18 @@
 
         function activate() {
             $scope.channelList = $window.document.getElementById('channelMenuHolder');
+            $scope.player = $window.document.getElementById('player');
             $scope.guide = $window.document.getElementById('userGuide');
             $scope.isVisible = false;
             $scope.closeVisible = false;
 
             mediaSvc.getUserChannels(function (data) {
-                $scope.channels = data;
-            }, function () {
-                loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_LIST_LOAD_ERROR'));
+                $rootScope.channels = data;
+                $rootScope.$broadcast('ChannelsLoaded');
             });
 
             mediaSvc.getPromoChannels(function (data) {
                 $scope.promoChannels = data;
-            }, function () {
-                loggerSvc.logError($filter('translate')('PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR'));
             });
         }
 
@@ -73,14 +71,13 @@
         function selectOnAir(channelIndex) {
             if (!$scope.loadingChannelGuide && channelIndex > -1) {
                 $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id).success(function (showPreview) {
+                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, 12).success(function (showPreview) {
                     $scope.onAir = showPreview[0].airings;
                     $scope.onAirTitle = $scope.onAir[0].program.title;
                     $scope.programDetails = $scope.getProgramDetails($scope.onAir[0]);
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
-                    loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
                 });
             }
         }
@@ -88,7 +85,7 @@
         $scope.selectChannel = function (channelIndex) {
             if (!$scope.loadingChannelGuide) {
                 $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id).success(function (channelGuide) {
+                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, 12).success(function (channelGuide) {
                     $scope.showTimes = channelGuide[0].airings;
                     $scope.showListings = [];
                     for (var i = 0; i < $scope.showTimes.length; i++) {
@@ -97,7 +94,6 @@
                     $scope.loadingChannelGuide = false;
                 }).error(function () {
                     $scope.loadingChannelGuide = false;
-                    loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_GUIDE_LOAD_ERROR'));
                 });
             }
         };
@@ -110,8 +106,6 @@
                 $scope.channelNumber = $scope.channels[index].number;
                 $scope.channelName = $scope.channels[index].name;
                 playStream();
-            }).error(function () {
-                loggerSvc.logError($filter('translate')('PLAYER_CHANNEL_LOAD_ERROR'));
             });
         };
 
