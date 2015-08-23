@@ -8,13 +8,10 @@
         activate();
 
         function activate() {
-            $scope.player = $window.document.getElementById('player');
-            $scope.promo = $window.document.getElementById('playerBottom');
             $scope.channelList = $window.document.getElementById('channelMenuHolder');
             $scope.guide = $window.document.getElementById('userGuide');
             $scope.isVisible = false;
             $scope.closeVisible = false;
-            $scope.loadingChannels = true;
 
             mediaSvc.getUserChannels(function (data) {
                 $scope.channels = data;
