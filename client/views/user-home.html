@@ -25,7 +25,7 @@
             <div class="menu">
                 <div id="headerButtons" class="btn-group" data-toggle="buttons">
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="profileDropDown" translate="USER_HOME_PROFILE"></button>
-                    <button class="btn btn-primary" ng-hide="user.type === 'comp'" data-toggle="collapse" data-target="#billingDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="billingDropDown" translate="USER_HOME_BILLING"></button>
+                    <button class="btn btn-primary" ng-hide="user.type === 'comp'" data-toggle="collapse" data-target="#accountDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="accountDropDown" translate="USER_HOME_ACCOUNT"></button>
                 </div>
                 <div id="dropDowns">
                     <div class="panel">
@@ -53,23 +53,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="collapse" id="billingDropDown">
+                        <div class="collapse" id="accountDropDown">
                             <div class="well" data-toggle="buttons">
-                                <button class="collapse-hide" ng-click="hideDropdown('billingDropDown')">&#10006;</button>
+                                <button class="collapse-hide" ng-click="hideDropdown('accountDropDown')">&#10006;</button>
                                 <div ng-show="user.cancelOn" class="cancel-on"><span translate="USER_HOME_CANCEL_ON"></span> ({{user.cancelOn | date : 'M/d/yyyy'}}).</div>
-                                <button ng-show="user.type === 'free'" ng-click="showBillingDropdown('upgrade-subscription')" id="upgradeSubscriptionButton" class="btn btn-default" data-parent="#billingButtonDropDowns" data-toggle="collapse" data-target="#upgradeSubscriptionDropDown" aria-expanded="false" aria-controls="upgradeSubscriptionDropDown" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
-                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="cancelSubscription()" ng-disabled="saving" id="cancelSubscriptionButton" class="btn btn-default" data-parent="#billingButtonDropDowns" data-toggle="collapse" aria-expanded="false" translate="USER_HOME_CANCEL_SUBSCRIPTION"></button>
-                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="showBillingDropdown('change-credit-card')" id="changeCreditCardButton" class="btn btn-default" data-parent="#billingButtonDropDowns" data-toggle="collapse" data-target="#changeCreditCardDropDown" aria-expanded="false" aria-controls="changeCreditCardDropDown" translate="USER_HOME_CHANGE_CREDIT_CARD"></button>
+                                <button ng-show="user.type === 'free'" ng-click="showAccountDropdown('upgrade-subscription')" id="upgradeSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#upgradeSubscriptionDropDown" aria-expanded="false" aria-controls="upgradeSubscriptionDropDown" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
+                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="cancelSubscription()" ng-disabled="saving" id="cancelSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" aria-expanded="false" translate="USER_HOME_CANCEL_SUBSCRIPTION"></button>
+                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="showAccountDropdown('change-credit-card')" id="changeCreditCardButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#changeCreditCardDropDown" aria-expanded="false" aria-controls="changeCreditCardDropDown" translate="USER_HOME_CHANGE_CREDIT_CARD"></button>
                             </div>
-                            <div id="billingButtonDropDowns">
+                            <div id="accountButtonDropDowns">
                                 <div class="panel">
                                     <div id="upgradeSubscriptionDropDown" class="collapse">
                                         <button class="collapse-hide" ng-click="hideDropdown('upgradeSubscriptionDropDown')">&#10006;</button>
-                                        <div class="well" id="upgradeSubscriptionContent" ng-include="billingDropdownContent"></div>
+                                        <div class="well" id="upgradeSubscriptionContent" ng-include="accountDropdownContent"></div>
                                     </div>
                                     <div id="changeCreditCardDropDown" class="collapse">
                                         <button class="collapse-hide" ng-click="hideDropdown('changeCreditCardDropDown')">&#10006;</button>
-                                        <div class="well" id="changeCreditCardContent" ng-include="billingDropdownContent"></div>
+                                        <div class="well" id="changeCreditCardContent" ng-include="accountDropdownContent"></div>
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +94,5 @@
         </nav>
     </header>
 </div>
-<div id="player" class="ease player-maximized clear-both" ng-include="'views/player.html'"></div>
-<div id="channels" class="clear-both" style="margin-bottom:10px" ng-include="'views/channels.html'"></div>
+<div id="player" class="ease player-maximized clear-both" style="margin-bottom:120px" ng-include="'views/player.html'"></div>
 <div id="guide" class="clear-both" style="margin-bottom:40px" ng-include="'views/channel-guide.html'"></div>

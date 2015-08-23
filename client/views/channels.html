@@ -1,4 +1,4 @@
-<div id="channelMenuHolder" class="channel-panel" ng-controller='playerCtrl'>
+<div id="channelMenuHolder" class="channel-panel">
     <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible">
         <div ng-repeat="listing in showListings track by $index"  ng-click="watchNow(null, $index)" compile-html="listing"></div>
     </div>

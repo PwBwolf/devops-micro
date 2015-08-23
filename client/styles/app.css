@@ -1005,6 +1005,7 @@ ul.passwordStrength {
 #smallChannelDescription {
     line-height: 1.051;
     overflow: hidden;
+    margin-top: 10px;
 }
 
 #channelGuideDescription {
@@ -1264,6 +1265,7 @@ body, html {
     background: #7AA0AB url(../images/play-button.png) 80% 0% no-repeat;
     cursor: pointer;
     background-size: contain;
+    margin-left: 90px;
 }
 
 .channel-preview img {
@@ -1558,6 +1560,10 @@ body, html {
     border-bottom: thick solid #D2D2D2;
     box-shadow: 0 2px 4px #5A5A5A;
     z-index: 6;
+}
+
+.guide-header > ul {
+    background-color: #333;
 }
 
 .time-module-item {

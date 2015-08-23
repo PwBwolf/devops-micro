@@ -12,6 +12,7 @@
                 element.text('CLOSE');
                 scope.closeVisible = true;
                 element.bind('click', function () {
+                    $(scope.player).css('margin-bottom', '120px');
                     $(scope.channelList).removeClass('channel-panel-max');
                     $(scope.channelList).addClass('channel-panel');
                 });
