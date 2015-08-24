@@ -16,18 +16,22 @@
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel-guide',
-                    params: {stationId: stationId, hours: hours},
-                    cache: true
+                    params: {stationId: stationId, hours: hours}
                 });
             },
 
             getUserChannels: function (success, error) {
-                $http.get('/api/get-user-channels', {cache: true}).success(success).error(error);
+                $http.get('/api/get-user-channels').success(success).error(error);
             },
 
             getPromoChannels: function (success, error) {
-                $http.get('/api/get-promo-channels', {cache: true}).success(success).error(error);
+                $http.get('/api/get-promo-channels').success(success).error(error);
+            },
+
+            getChannelCategories: function (success, error) {
+                $http.get('/api/get-channel-categories').success(success).error(error);
             }
+
         };
     }]);
 }(angular.module('app')));

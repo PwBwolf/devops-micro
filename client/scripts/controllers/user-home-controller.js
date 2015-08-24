@@ -18,7 +18,6 @@
 
         if ($scope.user.type === 'free' && $rootScope.redirectTo === '/upgrade-subscription') {
             $scope.showDropdown('accountDropDown');
-            $scope.showDropdown('upgradeSubscriptionDropDown');
         }
 
         $scope.showProfileDropdown = function (name) {
