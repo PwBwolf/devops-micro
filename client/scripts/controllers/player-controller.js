@@ -30,7 +30,6 @@
 
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
-            $scope.selectChannel(index);
             $scope.brandImage = $scope.channels[index].image_url;
             $scope.isVisible = true;
         };
@@ -65,28 +64,15 @@
 
         $scope.channelHovered = function (index) {
             $scope.hoveredChannel = index;
-            selectOnAir(index);
+            getChannel(index);
         };
 
-        function selectOnAir(channelIndex) {
-            if (!$scope.loadingChannelGuide && channelIndex > -1) {
+        function getChannel(index) {
+            if (!$scope.loadingChannelGuide && index > -1) {
                 $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, 12).success(function (showPreview) {
-                    $scope.onAir = showPreview[0].airings;
-                    $scope.onAirTitle = $scope.onAir[0].program.title;
-                    $scope.programDetails = $scope.getProgramDetails($scope.onAir[0]);
-                    $scope.loadingChannelGuide = false;
-                }).error(function () {
-                    $scope.loadingChannelGuide = false;
-                });
-            }
-        }
-
-        $scope.selectChannel = function (channelIndex) {
-            if (!$scope.loadingChannelGuide) {
-                $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[channelIndex].live_external_id, 12).success(function (channelGuide) {
+                mediaSvc.getChannelGuide($scope.channels[index].live_external_id, 12).success(function (channelGuide) {
                     $scope.showTimes = channelGuide[0].airings;
+                    $scope.programDetails = $scope.getProgramDetails(channelGuide[0].airings[0]);
                     $scope.showListings = [];
                     for (var i = 0; i < $scope.showTimes.length; i++) {
                         $scope.showListings[i] = $scope.getChannelDetails($scope.showTimes[i]);
@@ -96,7 +82,7 @@
                     $scope.loadingChannelGuide = false;
                 });
             }
-        };
+        }
 
         $scope.playChannel = function (index, airing) {
             mediaSvc.getChannel($scope.channels[index].id).success(function (channel) {
