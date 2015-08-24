@@ -22,7 +22,7 @@
                         userSvc.getUserProfile(function () {
                             loggerSvc.logSuccess($filter('translate')('CHANGE_CREDIT_CARD_SUCCESS'));
                             $scope.saving = false;
-                            $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'billingDropDown']);
+                            $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'accountDropDown']);
                             $scope.mv = {};
                             setFormNotTouched();
                         }, function () {

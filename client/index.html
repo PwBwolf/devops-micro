@@ -47,45 +47,46 @@
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <div access-level="accessLevels.anon">
-<header id="desktopHeader" class="hidden-xs">
-    <div id="headerBrand">
-        <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
+    <header id="desktopHeader" class="hidden-xs">
+        <div id="headerBrand">
+            <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
-        <div class="menu-button">
-            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
-        </div>
-        <div class="menu-button">
-            <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
-        </div>
-        <div style="float: right">
-            <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
-        </div>
-        <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
-    </div>
-    <nav id="navBar">
-        <div class="menu">
-            <div id="menuItems">
-                <div style="display:none"><img src="images/mini-logo.png"></div>
-                <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
+            <div class="menu-button">
+                <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
             </div>
-        </div>
-    </nav>
-</header>
-
-<header id="phoneHeader" class="visible-xs">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
-                <div class="nav-btn">
-                    <button type="button" goto="/sign-in" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></button>
-                    <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
-                </div>
+            <div class="menu-button">
+                <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
+            </div>
+            <div style="float: right">
+                <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
             </div>
             <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
         </div>
-    </nav>
-</header>
+        <nav id="navBar">
+            <div class="menu">
+                <div id="menuItems">
+                    <div style="display:none"><img src="images/mini-logo.png"></div>
+                    <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <header id="phoneHeader" class="visible-xs">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
+
+                    <div class="nav-btn">
+                        <button type="button" goto="/sign-in" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></button>
+                        <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
+                    </div>
+                </div>
+                <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
+            </div>
+        </nav>
+    </header>
 </div>
 
 <div id="topBox" ng-view autoscroll="true"></div>
@@ -99,7 +100,9 @@
 <script src="bower_components/es5-shim/es5-shim.min.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
-<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>
+<script src="scripts/external/jwplayer.js"></script>
+<script type="text/javascript">jwplayer.key = "G2xm275XRmGz+cFVwR3m/6RneCY9v7e4zZEnvg==";</script>
+<!--<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>-->
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
@@ -175,6 +178,8 @@
 <script src="scripts/controllers/channel-guide-controller.js"></script>
 <script src="scripts/controllers/player-controller.js"></script>
 <script src="scripts/controllers/user-info-controller.js"></script>
+<script src="scripts/controllers/channel-filter-controller.js"></script>
+<script src="scripts/controllers/invite-controller.js"></script>
 
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
@@ -187,9 +192,9 @@
     <div class="modal-body" ng-bind="modalBody">
     </div>
     <div class="modal-footer">
-        <button ng-show="showOkButton" class="submit-button modal-button" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
-        <button ng-show="showYesButton" class="submit-button modal-button" ng-click="yes()" translate="INDEX_YES_BUTTON">Yes</button>
-        <button ng-show="showNoButton" class="submit-button modal-button" ng-click="no()" translate="INDEX_NO_BUTTON">No</button>
+        <button ng-show="showOkButton" class="submit-button modal-button" ng-click="ok()" translate="INDEX_OK_BUTTON"></button>
+        <button ng-show="showYesButton" class="submit-button modal-button" ng-click="yes()" translate="INDEX_YES_BUTTON"></button>
+        <button ng-show="showNoButton" class="submit-button modal-button" ng-click="no()" translate="INDEX_NO_BUTTON"></button>
     </div>
 </script>
 </body>

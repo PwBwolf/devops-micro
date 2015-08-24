@@ -18,15 +18,7 @@
                 userSvc.signIn(
                     $scope.mv,
                     function () {
-                        if ($rootScope.redirectTo && $rootScope.redirectTo.indexOf('?') < 0) {
-                            $location.path($rootScope.redirectTo);
-                            $rootScope.redirectTo = undefined;
-                        } else if ($rootScope.redirectTo && $rootScope.redirectTo.indexOf('?') >= 0) {
-                            $location.path($rootScope.redirectTo.split('?')[0]).search($rootScope.redirectTo.split('?')[1]);
-                            $rootScope.redirectTo = undefined;
-                        } else {
-                            $location.path('/user-home');
-                        }
+                        $location.path('/user-home');
                         $scope.saving = false;
                     },
                     function (response) {

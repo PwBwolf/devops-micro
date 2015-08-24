@@ -40,6 +40,7 @@ var _ = require('lodash'),
         {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
         {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
         {path: '/api/get-promo-channels', httpMethod: 'GET', middleware: [MediaCtrl.getPromoChannels], accessLevel: accessLevels.user},
+        {path: '/api/get-channel-categories', httpMethod: 'GET', middleware: [MediaCtrl.getChannelCategories], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {

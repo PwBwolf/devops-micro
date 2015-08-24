@@ -113,14 +113,14 @@ header {
 }
 
 .contact-number {
-    width: 25%;
+    width: 30%;
     height: 100%;
-    margin-left: 1px;
+    margin-right: 5px;
     padding: 2px;
     float: right;
     padding-top: 15px;
     color: black;
-    text-align: center;
+    text-align: right;
     vertical-align: middle;
 }
 

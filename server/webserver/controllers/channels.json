@@ -22,7 +22,11 @@
         "live_external_id": "61404",
         "title": "Azcora",
         "sub_title": "Azcora",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Sports",
+        "language": "English",
+        "region": "USA",
+        "audience": "General"
     },
     {
         "id": "2923",
@@ -47,7 +51,11 @@
         "live_external_id": "65269",
         "title": "CSMOTV",
         "sub_title": "CSMOTV",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Movies",
+        "region": "Mexico",
+        "audience": "Children",
+        "language": "Spanish"
     },
     {
         "id": "2924",
@@ -72,7 +80,11 @@
         "live_external_id": "59350",
         "title": "JBN",
         "sub_title": "JBN",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "News",
+        "region": "Brazil",
+        "audience": "Adults",
+        "language": "Italian"
     },
     {
         "id": "2925",
@@ -97,7 +109,9 @@
         "live_external_id": "76093",
         "title": "Maya TV",
         "sub_title": "Maya TV",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Sports",
+        "language": "Spanish"
     },
     {
         "id": "2930",
@@ -119,7 +133,8 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-tele_medellin.hls.adaptive.level3.net/hls-live/yiptvlive-tele_medellin/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "60278"
+        "live_external_id": "60278",
+        "genre": "News"
     },
     {
         "id": "2935",
@@ -474,28 +489,6 @@
         "live_external_id": "16800"
     },
     {
-        "id": "2984",
-        "identifier": "ANT3I",
-        "number": "2557",
-        "name": "ANT3I",
-        "image_url": "/images/channels-big/antena-3.png",
-        "image_neg_url": "http://yipt.tmsimg.com/sources/h3/NowShowing/16800/s16800_h3_aa.png",
-        "image_poster": "/images/channel-previews/natgeo.jpg",
-        "is_active": "1",
-        "is_live": "1",
-        "is_adult": "0",
-        "is_reverse_display_order": "0",
-        "is_subscriber_only": "1",
-        "has_ads": "0",
-        "live_pc_url": "http://yiptv-antenna3.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
-        "live_pc_player": "jw6",
-        "live_ios_url": "http://yiptv-antenna3.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
-        "live_ios_player": "alldigital",
-        "live_android_url": "http://yiptv-antenna3.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
-        "live_android_player": "alldigital",
-        "live_external_id": "16800"
-    },
-    {
         "id": "2985",
         "identifier": "BEIN1",
         "number": "2558",
@@ -628,28 +621,6 @@
         "live_external_id": "75044"
     },
     {
-        "id": "2997",
-        "identifier": "MGENTE",
-        "number": "2570",
-        "name": "MGENTE",
-        "image_url": "/images/channels-big/mi-gente-tv.png",
-        "image_neg_url": "http://yipt.tmsimg.com/sources/h3/NowShowing/79821/s79821_h3_aa.png",
-        "image_poster": "/images/channel-previews/natgeo.jpg",
-        "is_active": "1",
-        "is_live": "1",
-        "is_adult": "0",
-        "is_reverse_display_order": "0",
-        "is_subscriber_only": "1",
-        "has_ads": "0",
-        "live_pc_url": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
-        "live_pc_player": "jw6",
-        "live_ios_url": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
-        "live_ios_player": "alldigital",
-        "live_android_url": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
-        "live_android_player": "alldigital",
-        "live_external_id": "79821"
-    },
-    {
         "id": "2998",
         "identifier": "RTTV",
         "number": "2571",
@@ -714,28 +685,6 @@
         "live_android_url": "http://yiptv-trendy.hls.adaptive.level3.net/hls-live/yiptvlive-trendy/_definst_/live.m3u8",
         "live_android_player": "alldigital",
         "live_external_id": "82629"
-    },
-    {
-        "id": "3005",
-        "identifier": "NTN24",
-        "number": "2578",
-        "name": "NTN24",
-        "image_url": "/images/channels-big/ntn-24.png",
-        "image_neg_url": "/cache/1426197004_NTN-new.jpg",
-        "image_poster": "/images/channel-previews/natgeo.jpg",
-        "is_active": "1",
-        "is_live": "1",
-        "is_adult": "0",
-        "is_reverse_display_order": "0",
-        "is_subscriber_only": "1",
-        "has_ads": "0",
-        "live_pc_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_pc_player": "jw6",
-        "live_ios_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_ios_player": "alldigital",
-        "live_android_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_android_player": "alldigital",
-        "live_external_id": ""
     },
     {
         "id": "3006",

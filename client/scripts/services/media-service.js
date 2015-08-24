@@ -4,38 +4,34 @@
     app.factory('mediaSvc', ['$http', function ($http) {
 
         return {
-            getChannel: function (channelId) {
+            getChannel: function (id) {
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel',
-                    params: {channelId: channelId}
+                    params: {id: id}
                 });
             },
 
-            getChannels: function (user) {
-                return $http({
-                    method: 'GET',
-                    url: '/api/get-channels',
-                    params: {duser: user}
-                });
-            },
-
-            getChannelGuide: function (stationId) {
+            getChannelGuide: function (stationId, hours) {
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel-guide',
-                    params: {stationId: stationId},
-                    cache: true
+                    params: {stationId: stationId, hours: hours}
                 });
             },
 
-            getUserChannels: function(success, error) {
-                $http.get('/api/get-user-channels', { cache: true }).success(success).error(error);
+            getUserChannels: function (success, error) {
+                $http.get('/api/get-user-channels').success(success).error(error);
             },
 
-            getPromoChannels: function(success, error) {
-                $http.get('/api/get-promo-channels', { cache: true }).success(success).error(error);
+            getPromoChannels: function (success, error) {
+                $http.get('/api/get-promo-channels').success(success).error(error);
+            },
+
+            getChannelCategories: function (success, error) {
+                $http.get('/api/get-channel-categories').success(success).error(error);
             }
+
         };
     }]);
 }(angular.module('app')));

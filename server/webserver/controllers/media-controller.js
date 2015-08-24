@@ -37,7 +37,7 @@ module.exports = {
                     return res.status(500).end();
                 }
                 var channel = _.find(channels, function (channel) {
-                    return channel.id === req.query.channelId;
+                    return channel.id === req.query.id;
                 });
                 var now = new Date();
                 var nowTime = now.getTime();
@@ -65,7 +65,7 @@ module.exports = {
         if (req.query.stationId) {
             var now = new Date();
             var startTime = date.isoDate(now);
-            now.setDate(now.getDate() + 1);
+            now.setHours(now.getHours() + Number(req.query.hours));
             var endTime = date.isoDate(now);
             graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
                 if (err) {
@@ -193,6 +193,30 @@ module.exports = {
                 }
                 if (!channels || channels.length === 0) {
                     logger.logError('mediaController - getPromoChannels - promos.json file is empty');
+                    return res.status(500).end();
+                }
+                return res.json(channels);
+            }
+        });
+    },
+
+    getChannelCategories: function (req, res) {
+        fs.readFile(__dirname + '/categories.json', 'utf8', function (err, data) {
+            if (err) {
+                logger.logError('mediaController - getCategories - error reading categories.json');
+                logger.logError(err);
+                return res.status(500).end();
+            } else {
+                var channels;
+                try {
+                    channels = JSON.parse(data);
+                } catch (ex) {
+                    logger.logError('mediaController - getCategories - error parsing categories.json file');
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                if (!channels || channels.length === 0) {
+                    logger.logError('mediaController - getCategories - categories.json file is empty');
                     return res.status(500).end();
                 }
                 return res.json(channels);
