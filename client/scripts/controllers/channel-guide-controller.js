@@ -38,35 +38,45 @@
         });
 
         function getChannelGuide() {
+            $scope.channelGuideCount = 0;
             angular.forEach($rootScope.channels, function (value) {
                 mediaSvc.getChannelGuide(value.live_external_id, 6).success(function (channelView) {
                     var logo = channelView[0].preferredImage ? channelView[0].preferredImage.uri : '';
                     var station = channelView[0].callSign;
                     var lineUp = channelView[0].airings;
-                    setChannelLineup(logo, station, lineUp);
+                    var channelGuide = angular.element(document.createElement('div'));
+                    var channelLogo = angular.element(document.createElement('div'));
+                    $(channelLogo).attr('id', 'channelGuideLogo').attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
+                    $(channelGuide).attr('channel', station).prepend(channelLogo);
+                    var startDate = date;
+                    angular.forEach(lineUp, function (data) {
+                        if (!data.program.preferredImage.uri) {
+                            $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                        } else {
+                            $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                        }
+                        startDate = null;
+                        $scope.channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
+                        $(channelGuide).append($scope.channelLineUp);
+                        $(channelGuide).attr('class', 'channel-description');
+                        $(channelGuide).attr('id', 'channelGuideDescription');
+                    });
+                    angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
+                    $scope.channelGuideCount++;
+                    if($scope.channelGuideCount === $rootScope.channels.length) {
+                        $rootScope.channelGuideLoaded = true;
+                    }
+                }).error(function(){
+                    $scope.channelGuideCount++;
+                    if($scope.channelGuideCount === $rootScope.channels.length) {
+                        $rootScope.channelGuideLoaded = true;
+                    }
                 });
             });
         }
 
         function setChannelLineup(logo, station, lineUp) {
-            var channelGuide = angular.element(document.createElement('div'));
-            var channelLogo = angular.element(document.createElement('div'));
-            $(channelLogo).attr('id', 'channelGuideLogo').attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
-            $(channelGuide).attr('channel', station).prepend(channelLogo);
-            var startDate = date;
-            angular.forEach(lineUp, function (data) {
-                if (!data.program.preferredImage.uri) {
-                    $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
-                } else {
-                    $scope.channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
-                }
-                startDate = null;
-                $scope.channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
-                $(channelGuide).append($scope.channelLineUp);
-                $(channelGuide).attr('class', 'channel-description');
-                $(channelGuide).attr('id', 'channelGuideDescription');
-            });
-            angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
+
         }
 
         function timeSpan(time, guideStartTime, programStartTime) {

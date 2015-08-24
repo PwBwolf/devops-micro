@@ -761,7 +761,7 @@ ul.passwordStrength {
     }
 }
 
-#profileDropDown, #billingDropDown {
+#profileDropDown, #accountDropDown {
     width: 570px;
     left: 170px;
     margin-top: -20px;

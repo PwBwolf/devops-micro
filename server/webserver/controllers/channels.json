@@ -672,28 +672,6 @@
         "live_external_id": "82629"
     },
     {
-        "id": "3005",
-        "identifier": "NTN24",
-        "number": "2578",
-        "name": "NTN24",
-        "image_url": "/images/channels-big/ntn-24.png",
-        "image_neg_url": "/cache/1426197004_NTN-new.jpg",
-        "image_poster": "/images/channel-previews/natgeo.jpg",
-        "is_active": "1",
-        "is_live": "1",
-        "is_adult": "0",
-        "is_reverse_display_order": "0",
-        "is_subscriber_only": "1",
-        "has_ads": "0",
-        "live_pc_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_pc_player": "jw6",
-        "live_ios_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_ios_player": "alldigital",
-        "live_android_url": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-        "live_android_player": "alldigital",
-        "live_external_id": ""
-    },
-    {
         "id": "3006",
         "identifier": "TYCSPORTS",
         "number": "2579",

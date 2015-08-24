@@ -67,8 +67,6 @@ module.exports = {
             var startTime = date.isoDate(now);
             now.setHours(now.getHours() + Number(req.query.hours));
             var endTime = date.isoDate(now);
-            console.log(startTime);
-            console.log(endTime);
             graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
                 if (err) {
                     logger.logError('mediaController - getUserChannels - error fetch channel guide from gracenote');
