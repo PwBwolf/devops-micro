@@ -7,10 +7,12 @@ var logger = require('../../../../server/common/setup/logger');
 
 require('../../../../server/common/models/channel');
 require('../../image-download/models/image-data');
+require('../../image-download/models/image');
 
 var dbYip = mongoose.createConnection(config.db);
 
 var Channel = dbYip.model('Channel');
+var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
 
 module.exports = {
@@ -90,6 +92,7 @@ module.exports = {
         if(req.query.stationId === undefined) {
             return res.status(500).end();
         }
+        /*
         Channel.find({stationId: req.query.stationId}, {'preferredImage.uri': true}, function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelLogo - failed to retrieve uri');
@@ -97,8 +100,8 @@ module.exports = {
                 return res.status(500).end();
             }
             
-            ImageData.find({uri: channelsDb[0].preferredImage.uri}, function(err, images) {
-            //ImageData.find({uri: "assets/p10781404_st_v5_aa.jpg"}, function(err, images) {
+            //ImageData.find({uri: channelsDb[0].preferredImage.uri}, function(err, images) {
+            ImageData.find({uri: "assets/p9154860_st_v5_aa.jpg"}, function(err, images) {
                 if (err) {
                     logger.logError('mediaController - getChannelLogo - failed to retrieve logo');
                     logger.logError(err);
@@ -109,6 +112,23 @@ module.exports = {
                 //res.data = images[0].data;
             });
             
+        });
+        */
+        Image.find({identifier: req.query.stationId}).populate('dataId').exec(function(err, images) {
+           if(err) {
+               logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
+               logger.logError(err);
+               return res.status(500).end();
+           } else {
+               if(images.length === 0) {
+                   logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
+                   return res.status(500).end();
+               } else {
+                   res.writeHead(200, {'Content-Type': 'image'});
+                   res.end(images[0].dataId.data, 'binary');
+               }
+           }
+               
         });
     }
 };
