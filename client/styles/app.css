@@ -806,7 +806,8 @@ ul.passwordStrength {
 }
 
 #guide {
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 #headerButtons {
@@ -831,6 +832,10 @@ ul.passwordStrength {
 
 .btn-group > .btn:last-child:not(:first-child):not(.dropdown-toggle) {
     border-radius: 0px;
+}
+
+.panel-group .panel + .panel {
+    margin-top: 0px !important;
 }
 
 #headerButtons .btn {

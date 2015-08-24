@@ -22,7 +22,11 @@
         "live_external_id": "61404",
         "title": "Azcora",
         "sub_title": "Azcora",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Sports",
+        "language": "English",
+        "region": "USA",
+        "audience": "General"
     },
     {
         "id": "2923",
@@ -47,7 +51,11 @@
         "live_external_id": "65269",
         "title": "CSMOTV",
         "sub_title": "CSMOTV",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Movies",
+        "region": "Mexico",
+        "audience": "Children",
+        "language": "Spanish"
     },
     {
         "id": "2924",
@@ -72,7 +80,11 @@
         "live_external_id": "59350",
         "title": "JBN",
         "sub_title": "JBN",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "News",
+        "region": "Brazil",
+        "audience": "Adults",
+        "language": "Italian"
     },
     {
         "id": "2925",
@@ -97,7 +109,9 @@
         "live_external_id": "76093",
         "title": "Maya TV",
         "sub_title": "Maya TV",
-        "description": "Blah blah blah"
+        "description": "Blah blah blah",
+        "genre": "Sports",
+        "language": "Spanish"
     },
     {
         "id": "2930",
@@ -119,7 +133,8 @@
         "live_ios_player": "alldigital",
         "live_android_url": "http://yiptv-tele_medellin.hls.adaptive.level3.net/hls-live/yiptvlive-tele_medellin/_definst_/live.m3u8",
         "live_android_player": "alldigital",
-        "live_external_id": "60278"
+        "live_external_id": "60278",
+        "genre": "News"
     },
     {
         "id": "2935",
