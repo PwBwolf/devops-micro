@@ -63,12 +63,12 @@
                     });
                     angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
                     $scope.channelGuideCount++;
-                    if($scope.channelGuideCount === $rootScope.channels.length) {
+                    if ($scope.channelGuideCount === $rootScope.channels.length) {
                         $rootScope.channelGuideLoaded = true;
                     }
-                }).error(function(){
+                }).error(function () {
                     $scope.channelGuideCount++;
-                    if($scope.channelGuideCount === $rootScope.channels.length) {
+                    if ($scope.channelGuideCount === $rootScope.channels.length) {
                         $rootScope.channelGuideLoaded = true;
                     }
                 });
@@ -104,7 +104,7 @@
             }
             var startTime = new Date(airing.startTime);
             var endTime = new Date(airing.endTime);
-            return (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM' );
+            return (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM');
         }
 
         function pad(number) {

@@ -9,7 +9,7 @@
             link: function (scope, element, attrs) {
                 attrs.$set('id', 'closeBtn');
                 attrs.$set('class', 'close-btn label label-danger');
-                element.text('CLOSE');
+                element.text('X');
                 scope.closeVisible = true;
                 element.bind('click', function () {
                     $(scope.channelList).removeClass('channel-panel-max');

@@ -121,6 +121,34 @@ module.exports = {
         );
     },
 
+    updateInfo: function (sessionId, firstName, lastName, telephone, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
+            [
+                'session_id', sessionId,
+                'first', firstName,
+                'last', lastName,
+                'daytime', telephone
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateInfo - error in updating customer 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateInfo - error in updating customer 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateInfo - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
     updateBilling: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
