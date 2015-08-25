@@ -69,7 +69,7 @@
         </div>
         <div class="channel-list">
             <ul>
-                <li><img ng-src="images/filter.png"/></li>
+                <li><img ng-src="images/filter.png" ng-click="toggleChannelFilter()"/></li>
                 <li ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
                     <img ng-src="{{channel.image_url}}"/>
 
@@ -81,84 +81,79 @@
         </div>
     </div>
     <div id="channelFilterHolder" ng-show="showChannelFilter">
+        <div class="filter-close-btn label label-danger" ng-click="toggleChannelFilter()">X</div>
         <div class="row">
-            <div class="col-sm-8">
-                <div style="border-radius:4px;background-color:#D9D9D9;padding:5px;margin-bottom:5px">
-                    <div>Results: {{filteredChannels.length}} channels found!</div>
+            <div class="col-sm-10">
+                <div class="channel-result">
+                    <div><span translate="PLAYER_RESULTS"></span> <span ng-bind="filteredChannels.length"></span> <span translate="PLAYER_CHANNELS_FOUND"></span></div>
                     <ul>
-                        <li style="display: inline-block;padding:20px" ng-repeat="channel in filteredChannels">
-                            <img style="width:50px;height:50px" ng-src="{{channel.image_url}}"/>
+                        <li ng-repeat="channel in filteredChannels">
+                            <img ng-src="{{channel.image_url}}" ng-click="filteredChannelClicked($index)"/>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div style="background-color:#D3D3D3;padding:5px;border-radius:4px">
-                    <span style="font-weight:bolder;font-size:24px">Categories</span>
-                    <button class="btn btn-primary btn-xs" style="float: right;margin-top:8px" ng-click="clearAll()">Clear All</button>
-                </div>
-                <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingGenre">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseGenre" aria-expanded="true" aria-controls="collapseGenre">
-                                    Genre
-                                </a>
-                            </h4>
-                        </div>
+            <div class="col-sm-2">
+                <div class="channel-filters">
+                    <div class="channel-filter-categories">
+                        <span translate="PLAYER_CATEGORIES"></span>
+                        <button class="btn btn-danger btn-xs" style="float:right" ng-click="clearAll()" translate="PLAYER_CLEAR_ALL"></button>
                     </div>
-                    <div id="collapseGenre" style="border: 1px solid #ddd;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
-                        <div class="panel-body" style="padding:5px">
-                            <div ng-repeat="tag in getTags('Genre')">
-                                <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.name) > -1" ng-click="toggleGenreSelection(tag.name)" value="{{tag.name}}" type="checkbox" style="display:inline-block;margin-right:5px"/>{{tag.name}}
+                    <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingGenre">
+                                <div class="panel-title">
+                                    <a translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseGenre" aria-expanded="true" aria-controls="collapseGenre"></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingRegion">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion">
-                                    Region
-                                </a>
-                            </h4>
-                        </div>
-                    </div>
-                    <div id="collapseRegion" style="border: 1px solid #ddd;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRegion">
-                        <div class="panel-body" style="padding:5px">
-                            <div ng-repeat="tag in getTags('Region')">
-                                <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.name) > -1" ng-click="toggleRegionSelection(tag.name)" value="{{tag.name}}" type="checkbox" style="display:inline-block;margin-right:5px"/>{{tag.name}}
+                        <div id="collapseGenre" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
+                            <div class="panel-body">
+                                <div ng-repeat="tag in getTags('Genre')">
+                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.name) > -1" ng-click="toggleGenreSelection(tag.name)" value="{{tag.name}}" type="checkbox" />{{tag.name}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingAudience">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseAudience" aria-expanded="true" aria-controls="collapseAudience">
-                                    Audience
-                                </a>
-                            </h4>
-                        </div>
-                    </div>
-                    <div id="collapseAudience" style="border: 1px solid #ddd;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingAudience">
-                        <div class="panel-body" style="padding:5px">
-                            <div ng-repeat="tag in getTags('Audience')">
-                                <input name="audienceList[]" ng-checked="selectedAudiences.indexOf(tag.name) > -1" ng-click="toggleAudienceSelection(tag.name)" value="{{tag.name}}" type="checkbox" style="display:inline-block;margin-right:5px"/>{{tag.name}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingRegion">
+                                <div class="panel-title">
+                                    <a translate="PLAYER_REGION" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion"></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingLanguage">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" value="{{tag.name}}" data-parent="#categories" href data-target="#collapseLanguage" aria-expanded="true" aria-controls="collapseLanguage">
-                                    Language
-                                </a>
-                            </h4>
+                        <div id="collapseRegion" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRegion">
+                            <div class="panel-body">
+                                <div ng-repeat="tag in getTags('Region')">
+                                    <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.name) > -1" ng-click="toggleRegionSelection(tag.name)" value="{{tag.name}}" type="checkbox" />{{tag.name}}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div id="collapseLanguage" style="border: 1px solid #ddd;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingLanguage">
-                        <div class="panel-body" style="padding:5px">
-                            <div ng-repeat="tag in getTags('Language')">
-                                <input name="languageList[]" ng-checked="selectedLanguages.indexOf(tag.name) > -1" ng-click="toggleLanguageSelection(tag.name)" value="{{tag.name}}" type="checkbox" style="display:inline-block;margin-right:5px"/>{{tag.name}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingAudience">
+                                <div class="panel-title">
+                                    <a translate="PLAYER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseAudience" aria-expanded="true" aria-controls="collapseAudience"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="collapseAudience" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingAudience">
+                            <div class="panel-body" >
+                                <div ng-repeat="tag in getTags('Audience')">
+                                    <input name="audienceList[]" ng-checked="selectedAudiences.indexOf(tag.name) > -1" ng-click="toggleAudienceSelection(tag.name)" value="{{tag.name}}" type="checkbox"/>{{tag.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingLanguage">
+                                <div class="panel-title">
+                                    <a translate="PLAYER_LANGUAGE" role="button" data-toggle="collapse" value="{{tag.name}}" data-parent="#categories" href data-target="#collapseLanguage" aria-expanded="true" aria-controls="collapseLanguage"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="collapseLanguage" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingLanguage">
+                            <div class="panel-body" >
+                                <div ng-repeat="tag in getTags('Language')">
+                                    <input name="languageList[]" ng-checked="selectedLanguages.indexOf(tag.name) > -1" ng-click="toggleLanguageSelection(tag.name)" value="{{tag.name}}" type="checkbox"/>{{tag.name}}
+                                </div>
                             </div>
                         </div>
                     </div>

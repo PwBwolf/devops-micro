@@ -9,11 +9,6 @@
             link: function (scope, el, attrs) {
                 attrs.$set('class', 'small-channel-description');
                 attrs.$set('id', 'smallChannelDescription');
-                el.closest('li').on('click', function () {
-                    $(scope.channelList).removeClass('channel-panel');
-                    $(scope.channelList).addClass('channel-panel-max');
-                    scope.$apply(scope.showCloseButton());
-                });
             }
         };
     }]);
