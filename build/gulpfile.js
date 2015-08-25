@@ -44,7 +44,7 @@ gulp.task('roles', function () {
 });
 
 gulp.task('jwplayer', function () {
-    return gulp.src('../client/scripts/external/jwplayer.js')
+    return gulp.src(['../client/scripts/external/jwplayer.js', '../client/scripts/external/jwplayer.html5.js', '../client/scripts/external/jwplayer.flash.swf'])
         .pipe($.uglify())
         .pipe(gulp.dest('dist/client/scripts/external'));
 });
@@ -95,7 +95,7 @@ gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
  * Process the js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp-nominify', ['partials', 'roles'], function () {
+gulp.task('webapp-nominify', ['partials', 'roles', 'jwplayer'], function () {
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var assets;
 
