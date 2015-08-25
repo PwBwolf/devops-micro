@@ -43,12 +43,18 @@ gulp.task('roles', function () {
         .pipe(gulp.dest('dist/client/scripts/config'));
 });
 
+gulp.task('jwplayer', function () {
+    return gulp.src('../client/scripts/external/jwplayer.js')
+        .pipe($.uglify())
+        .pipe(gulp.dest('dist/client/scripts/external'));
+});
+
 /**
  * Prepare the web application.
  * Process the html, css, js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp', ['partials', 'roles'], function () {
+gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
     var htmlFilter = $.filter('*.html'); //Filter out each HTML file
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var cssFilter = $.filter('**/*.css'); //Filter out each CSS file

@@ -1003,7 +1003,6 @@ ul.passwordStrength {
     position: relative;
     display: inline-block;
     padding: 7px 5px;
-    border-left: thin solid lightgrey;
     height: 100%;
 }
 
@@ -1212,22 +1211,6 @@ body, html {
     height: 4.23%;
     width: 100%;
     pointer-events: none;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-
-.player-minimized {
-    height: 393px;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-
-.player-maximized {
-    height: 555px;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
