@@ -45,7 +45,6 @@ gulp.task('roles', function () {
 
 gulp.task('jwplayer', function () {
     return gulp.src(['../client/scripts/external/jwplayer.js', '../client/scripts/external/jwplayer.html5.js', '../client/scripts/external/jwplayer.flash.swf'])
-        .pipe($.uglify())
         .pipe(gulp.dest('dist/client/scripts/external'));
 });
 
