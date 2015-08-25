@@ -3,14 +3,16 @@
 
         <div class="container">
             <div class="form-box">
-
-                <div class="message" ng-show="redirectTo.indexOf('/upgrade-subscription') >= 0">
+                <div>&nbsp;</div>
+                <div class="sign-in-header header-color" ng-show="redirectTo.indexOf('/upgrade-subscription') >= 0">
                     <h3 translate="SIGN_IN_UPGRADE_SUBSCRIPTION"></h3>
                 </div>
-                <div ng-hide="redirectTo">
-                    <h2 translate="SIGN_IN_HEADING"></h2>
+                <div class="sign-in-header header-color" ng-hide="redirectTo">
+                    <div translate="SIGN_IN_HEADING"></div>
+                </div>
 
-                    <h3 translate="SIGN_IN_SUB_HEADING"></h3>
+                <div class="sign-in-sub-header header-color" ng-hide="redirectTo">
+                    <div translate="SIGN_IN_SUB_HEADING"></div>
                 </div>
                 <br><br>
 
@@ -34,7 +36,7 @@
                         <span class="content-text" translate="SIGN_IN_FORGOT_PASSWORD"></span>
                         <a href="/forgot-password" translate="SIGN_IN_RESET_PASSWORD"></a>
                         <span class="separator">|</span><span class="content-text" translate="SIGN_IN_NOT_REGISTERED"></span>
-                        <a href="/sign-up/paid" translate="SIGN_IN_SIGN_UP"></a><br><br>
+                        <a href="/sign-up/free" translate="SIGN_IN_SIGN_UP"></a><br><br>
                         <span class="content-text" translate="SIGN_IN_NO_VERIFICATION_EMAIL"></span>
                         <a href="/resend-verification" translate="SIGN_IN_RESEND_VERIFICATION"></a>
                     </div>

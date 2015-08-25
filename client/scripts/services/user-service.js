@@ -22,7 +22,6 @@
                     return userRoles[userRole];
                 }
             }
-            console.log('Access Control Error: Could not find role "' + roleName + '"');
             return null;
         }
 
@@ -134,12 +133,8 @@
                 }).success(success).error(error);
             },
 
-            getAioToken: function (success, error) {
-                $http({
-                    url: '/api/get-aio-token',
-                    method: 'GET',
-                    timeout: 10000
-                }).success(success).error(error);
+            updateUserInfo: function (data, success, error) {
+                $http.post('/api/update-user-info', data).success(success).error(error);
             },
 
             upgradeSubscription: function (data, success, error) {

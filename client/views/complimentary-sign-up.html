@@ -1,8 +1,10 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="COMP_SIGN_UP_HEADING"></span></h1>
-
         <div class="container message-box" ng-hide="status === 1">
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="COMP_SIGN_UP_HEADING"></h2></div>
+            </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <p ng-show="status === 0" class="text-center" translate="COMP_SIGN_UP_VERIFYING"></p>
@@ -11,9 +13,12 @@
                 </div>
             </div>
         </div>
-
         <div class="container" ng-show="status === 1">
             <div class="form-box">
+                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="COMP_SIGN_UP_HEADING"></h2></div>
+                </div>
                 <div class="form-container">
                     <div class="full-form">
                         <div class="message" translate="COMP_SIGN_UP_MESSAGE"></div>
@@ -57,7 +62,7 @@
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="COMP_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="COMP_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                         <div>
-                            <ul class="passwordStrength" password-strength="password"></ul>
+                            <ul class="passwordStrength" password-strength="mv.password"></ul>
                         </div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="COMP_SIGN_UP_CONFIRM_PASSWORD"></span><br>
@@ -67,7 +72,7 @@
                         <div class="error-message" ng-show="form.confirmPassword.$touched && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="COMP_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH"></div>
                     </div>
                     <div class="full-form center-form">
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="COMP_SIGN_UP_DISCLAIMER"></span><a href ng-click="goToCmsUrl('CMS_URL_TOUS')" target="_blank" translate="COMP_SIGN_UP_TERMS_OF_USE"></a> <span translate="COMP_SIGN_UP_AND"></span> <a href ng-click="goToCmsUrl('CMS_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="COMP_SIGN_UP_DISCLAIMER_END"></span></label>
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="COMP_SIGN_UP_DISCLAIMER"></span><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="COMP_SIGN_UP_TERMS_OF_USE"></a> <span translate="COMP_SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="COMP_SIGN_UP_DISCLAIMER_END"></span></label>
 
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="COMP_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>

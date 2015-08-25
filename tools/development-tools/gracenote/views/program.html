@@ -1,14 +1,17 @@
 <div>
     <a href="#/channelguide/{{channelId}}">{{channelTitle}}</a>
     <br>
-    <table style="border: none" cellspacing="0" cellpadding="0">
+    <table style="border: none" cellspacing="0" cellpadding="0" width="500">
         <tbody>
-            <tr ><td><img ng-src="{{graceNoteImageUrl}}{{program.program.preferredImage.uri}}" style="width:240px;height:360px;"></td></tr>
-            <th aligh="center" style="boder: none">{{program.program.title}}</th>
+            <tr ><td align="center"><img ng-src="{{appConfig.graceNoteImageUrl}}{{program.program.preferredImage.uri}}" style="width:240px;height:360px;"></td></tr>
+            <tr style="border: none"><th align="center" style="boder: none">{{program.program.title}}</th></tr>
             <tr align="center" ><td style="border: none">Genre: {{program.program.genres.toString()}}</td></tr>
-            <tr align="center" ><td style="border: none" style="border: none" style="border: none">Duration: {{program.duration}}</td></tr>
+            <tr align="center" ><td style="border: none">Directors: {{program.program.directors.toString()}}</td></tr>
+            <tr align="center" ><td style="border: none">Top cast: {{program.program.topCast.toString()}}</td></tr>
+            <!--  <tr align="center" ><td style="border: none" style="border: none" style="border: none">Duration: {{program.duration}}</td></tr>
             <tr align="center" ><td style="border: none" style="border: none">StartTime: {{program.startTime}}</td></tr>
-            <tr align="center"><td style="border: none">EndTime: {{program.endTime}}</td></tr>
+            <tr align="center"><td style="border: none">EndTime: {{program.endTime}}</td></tr> -->
+            <tr align="left"><td style="border: none"><p>Description: {{program.program.longDescription}}</p></td></tr>
         </tbody>
     </table>
 </div>

@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('upgradeSubscriptionCtrl', ['appSvc', 'userSvc', 'loggerSvc', 'webStorage', '$scope', '$location', '$filter', '$window', function (appSvc, userSvc, loggerSvc, webStorage, $scope, $location, $filter, $window) {
 
         activate();
 
@@ -19,9 +19,10 @@
                 userSvc.upgradeSubscription(
                     $scope.mv,
                     function () {
+                        webStorage.local.add('accountUpgraded', true);
                         userSvc.getUserProfile(function () {
-                            $location.path('/upgrade-subscription-success');
                             $scope.saving = false;
+                            $window.location.reload();
                         }, function () {
                             loggerSvc.logError($filter('translate')('UPGRADE_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
                             $scope.saving = false;
@@ -58,7 +59,6 @@
             $scope.form.cvv.$touched = true;
             $scope.form.expiryDate.$touched = true;
             $scope.form.zipCode.$touched = true;
-            $scope.form.disclaimer.$touched = true;
         }
 
     }]);

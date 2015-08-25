@@ -1,11 +1,11 @@
 <div class="content-area">
     <div class="content-box">
-        <h1><span translate="CONTACT_US_HEADING"></span></h1>
-
         <div class="container">
             <div class="form-box">
                 <div>&nbsp;</div>
-                <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="CONTACT_US_HEADING"></h2></div>
+                </div>
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="form-container">
                         <span class="label-text" translate="CONTACT_US_NAME"></span>
@@ -24,13 +24,14 @@
                         <div ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-message" translate="CONTACT_US_TELEPHONE_INVALID"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_COUNTRY"></span>
                         <br>
-                        <select required class="text-box drop-down-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
+                        <select required class="text-box dropdown-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
                             <option value="" translate="CONTACT_US_COUNTRY_SELECT"></option>
                         </select>
+
                         <div ng-show="form.country.$touched && form.country.$error.required" class="error-message" translate="CONTACT_US_COUNTRY_REQUIRED"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_INTEREST"></span>
                         <br>
-                        <select class="text-box drop-down-list" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'text-box-error': form.interest.$touched && form.interest.$invalid}">
+                        <select class="text-box dropdown-list" name="interest" id="interest" required ng-model="mv.interest" ng-class="{'text-box-error': form.interest.$touched && form.interest.$invalid}">
                             <option value="" translate="CONTACT_US_INTEREST_SELECT"></option>
                             <option value="Technical Support" translate="CONTACT_US_INTEREST_TECHNICAL"></option>
                             <option value="Billing Support" translate="CONTACT_US_INTEREST_BILLING"></option>

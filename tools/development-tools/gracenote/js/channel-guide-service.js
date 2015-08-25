@@ -12,6 +12,7 @@
         var lastAppConfigReqFailed = true;
         
         return {
+        /*    
             getAppConfig: function() {
                 if(!promiseAppConfig || lastAppConfigReqFailed) {
                     // $http returns a promise, so we don't need to create one with $q
@@ -26,7 +27,7 @@
                 }
                 return promiseAppConfig;
             },
-        
+        */
             getChannelGuide: function() {
                 if(!promise || lastRequestFailed) {
                     // $http returns a promise, so we don't need to create one with $q
@@ -45,7 +46,7 @@
             getChannelList: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist',
+                    url: '/metadata/api/get-channel-list',
                     params: {stationIds: req.stationIds}
                 }).success(success).error(error);
                 
@@ -54,8 +55,8 @@
             getChannelInfo: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist/channel',
-                    params: {stationId: req.stationId, hour: req.hour, period: req.period}
+                    url: '/metadata/api/get-channel-info',
+                    params: {stationId: req.stationId, period: req.period}
                 }).success(success).error(error);
                 
             },
@@ -63,8 +64,16 @@
             getProgramDetail: function(req, success, error) {
                 $http({
                     method: 'GET',
-                    url: '/channellist/channel/program',
-                    params: {tmsId: req.tmsId, stationId: req.stationId, startTime: req.startTime}
+                    url: '/metadata/api/get-program-detail',
+                    params: {tmsId: req.tmsId, stationId: req.stationId}
+                }).success(success).error(error);
+            },
+            
+            getChannelLogo: function(req, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/metadata/api/get-channel-logo',
+                    params: {stationId: req.stationId}
                 }).success(success).error(error);
             }
         }

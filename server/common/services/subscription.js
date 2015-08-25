@@ -1550,6 +1550,64 @@ module.exports = {
         });
     },
 
+    reverseDunning5Days: function (userEmail, cb) {
+        var errorType;
+        async.waterfall([
+            // get user
+            function (callback) {
+                User.findOne({email: userEmail}, function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - reverseDunning5Days - error fetching user: ' + userEmail);
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // update to free packages in aio
+            function (userObj, callback) {
+                aio.updateUserPackages(userObj.email, config.aioPaidUserPackages, function (err) {
+                    if (err) {
+                        logger.logError('subscription - reverseDunning5Days - error updating to paid packages: ' + userObj.email);
+                        errorType = 'aio-package-update';
+                    }
+                    callback(err, userObj);
+                });
+            },
+            // login to freeside
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - reverseDunning5Days - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // add premium package
+            function (userObj, sessionId, callback) {
+                billing.checkAndOrderPackage(sessionId, config.freeSidePremiumPackagePart, function (err) {
+                    if (err) {
+                        logger.logError('subscription - reverseDunning5Days - error adding premium package: ' + userObj.email);
+                        errorType = 'freeside-package-remove';
+                    }
+                    callback(err, userObj);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'freeside-login':
+                    case 'freeside-package-remove':
+                        updateAioPackages(userObj.email, config.aioDunning5DayPackages);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
     dunning10Days: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([

@@ -124,66 +124,6 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
-            .when('/account',
-            {
-                templateUrl: 'views/account.html',
-                controller: 'accountCtrl',
-                access: access.user
-            })
-            .when('/preferences',
-            {
-                templateUrl: 'views/preferences.html',
-                controller: 'preferencesCtrl',
-                access: access.user
-            })
-            .when('/preferences-success',
-            {
-                templateUrl: 'views/preferences-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/cancel-subscription-success',
-            {
-                templateUrl: 'views/cancel-subscription-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/upgrade-subscription',
-            {
-                templateUrl: 'views/upgrade-subscription.html',
-                controller: 'upgradeSubscriptionCtrl',
-                access: access.user
-            })
-            .when('/upgrade-subscription-success',
-            {
-                templateUrl: 'views/upgrade-subscription-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/change-credit-card',
-            {
-                templateUrl: 'views/change-credit-card.html',
-                controller: 'changeCreditCardCtrl',
-                access: access.user
-            })
-            .when('/change-credit-card-success',
-            {
-                templateUrl: 'views/change-credit-card-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
-            .when('/change-password',
-            {
-                templateUrl: 'views/change-password.html',
-                controller: 'changePasswordCtrl',
-                access: access.user
-            })
-            .when('/change-password-success',
-            {
-                templateUrl: 'views/change-password-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
             .when('/refer-a-friend',
             {
                 templateUrl: 'views/refer-a-friend.html',
@@ -208,11 +148,11 @@
                 controller: 'commonCtrl',
                 access: access.public
             })
-            .when('/error',
+            .when('/upgrade-subscription', // to get redirect only
             {
-                templateUrl: 'views/error.html',
+                templateUrl: 'views/user-home.html',
                 controller: 'commonCtrl',
-                access: access.public
+                access: access.user
             })
             .when('/not-found',
             {

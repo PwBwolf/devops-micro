@@ -5,7 +5,7 @@
         $routeProvider.
         when('/',{
             templateUrl: 'empty.html',
-            controller: "testCtrl"
+            controller: "channelLogoCtrl"
         }).
         when('/channelguide',{
             templateUrl: 'channelguide.html',
@@ -21,7 +21,7 @@
             templateUrl: 'empty.html',
             controller: "preProgramCtrl"
         }).
-        when('/channelguide/:stationid/:programid/:starttime',{
+        when('/channelguide/:stationid/:programid',{
             templateUrl: 'program.html',
             //controller: "programCtrl"
             controller: "programDetailCtrl"

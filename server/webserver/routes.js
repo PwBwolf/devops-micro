@@ -24,10 +24,9 @@ var _ = require('lodash'),
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
-        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut], accessLevel: accessLevels.user},
         {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
-        {path: '/api/update-user-profile', httpMethod: 'POST', middleware: [UserCtrl.updateUserProfile], accessLevel: accessLevels.user},
+        {path: '/api/update-user-info', httpMethod: 'POST', middleware: [UserCtrl.updateUserInfo], accessLevel: accessLevels.user},
         {path: '/api/get-preferences', httpMethod: 'GET', middleware: [UserCtrl.getPreferences], accessLevel: accessLevels.user},
         {path: '/api/update-preferences', httpMethod: 'POST', middleware: [UserCtrl.updatePreferences], accessLevel: accessLevels.user},
         {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
@@ -37,6 +36,11 @@ var _ = require('lodash'),
         {path: '/api/get-channel', httpMethod: 'GET', middleware: [MediaCtrl.getChannel], accessLevel: accessLevels.user},
         {path: '/api/get-channel-guide', httpMethod: 'GET', middleware: [MediaCtrl.getChannelGuide], accessLevel: accessLevels.user},
         {path: '/api/get-user-channels', httpMethod: 'GET', middleware: [MediaCtrl.getUserChannels], accessLevel: accessLevels.user},
+        {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList]},
+        {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
+        {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
+        {path: '/api/get-promo-channels', httpMethod: 'GET', middleware: [MediaCtrl.getPromoChannels], accessLevel: accessLevels.user},
+        {path: '/api/get-channel-categories', httpMethod: 'GET', middleware: [MediaCtrl.getChannelCategories], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
@@ -69,9 +73,7 @@ module.exports = function (app) {
 };
 
 function ensureAuthorized(req, res, next) {
-    var role,
-        accessLevel;
-
+    var role, accessLevel;
     var token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
     if (!token) {
         role = userRoles.anon;

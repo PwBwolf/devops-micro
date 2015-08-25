@@ -7,8 +7,7 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
         $scope.session = {};
-
-        var aioWindow, aioWindowTimeout;
+        $scope.app = {eventData: 'Welcome to YipTV'};
 
         activate();
 
@@ -53,8 +52,8 @@
             }
         });
 
-        $scope.goToCmsUrl = function (urlName) {
-            $window.open($scope.appConfig.cmsUrl + $filter('translate')(urlName), '_blank');
+        $scope.goToWordPressUrl = function (url) {
+            $window.open($scope.appConfig.wordPressUrl + $filter('translate')(url), '_blank');
         };
 
         $scope.changeLanguage = function () {
@@ -103,62 +102,6 @@
             }
         }
 
-        $scope.openAio = function () {
-            var browser = browserSvc.getBrowserName();
-            if (aioWindow && !aioWindow.closed) {
-                aioWindow.focus();
-                if (browser === 'firefox' || browser === 'ie' || browser === 'unknown') {
-                    $modal.open({
-                        templateUrl: 'modalWindow',
-                        controller: 'modalCtrl',
-                        size: 'sm',
-                        backdrop: 'static',
-                        resolve: {
-                            title: function () {
-                                return $scope.appConfig.appName;
-                            },
-                            body: function () {
-                                return $filter('translate')('MAIN_VIDEO_PORTAL_ALREADY_OPEN');
-                            },
-                            showOkButton: function () {
-                                return true;
-                            },
-                            showYesButton: function () {
-                                return false;
-                            },
-                            showNoButton: function () {
-                                return false;
-                            }
-                        }
-                    });
-                }
-            } else {
-                if (aioWindowTimeout) {
-                    clearTimeout(aioWindowTimeout);
-                    aioWindowTimeout = undefined;
-                }
-                aioWindow = $window.open('', '_blank');
-                userSvc.getAioToken(function (response) {
-                    if (!response.username || !response.sso_token) {
-                        if (aioWindow && !aioWindow.closed) {
-                            aioWindow.close();
-                            aioWindow = undefined;
-                        }
-                        $location.path('/error');
-                    } else {
-                        aioWindow.location.href = $scope.appConfig.aioPortalUrl + '/app/login.php?username=' + response.username + '&sso_token=' + response.sso_token;
-                    }
-                }, function () {
-                    loggerSvc.logError($filter('translate')('MAIN_ERROR_AIO_SSO'));
-                    if (aioWindow && !aioWindow.closed) {
-                        aioWindow.close();
-                        aioWindow = undefined;
-                    }
-                    $location.path('/error');
-                });
-            }
-        };
-
         $scope.signOut = function () {
             $modal.open({
                 templateUrl: 'modalWindow',
@@ -192,19 +135,8 @@
         };
 
         function afterSignOut() {
-            $rootScope.$broadcast('CloseAioWindow');
             $scope.session.signOut = true;
             $location.path('/').search('');
         }
-
-        $window.onunload = function () {
-            $rootScope.$broadcast('CloseAioWindow');
-        };
-
-        $rootScope.$on('CloseAioWindow', function () {
-            if (aioWindow && !aioWindow.closed) {
-                aioWindow.close();
-            }
-        });
     }]);
 }(angular.module('app')));

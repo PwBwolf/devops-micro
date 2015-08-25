@@ -43,12 +43,17 @@ gulp.task('roles', function () {
         .pipe(gulp.dest('dist/client/scripts/config'));
 });
 
+gulp.task('jwplayer', function () {
+    return gulp.src(['../client/scripts/external/jwplayer.js', '../client/scripts/external/jwplayer.html5.js', '../client/scripts/external/jwplayer.flash.swf'])
+        .pipe(gulp.dest('dist/client/scripts/external'));
+});
+
 /**
  * Prepare the web application.
  * Process the html, css, js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp', ['partials', 'roles'], function () {
+gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
     var htmlFilter = $.filter('*.html'); //Filter out each HTML file
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var cssFilter = $.filter('**/*.css'); //Filter out each CSS file
@@ -89,7 +94,7 @@ gulp.task('webapp', ['partials', 'roles'], function () {
  * Process the js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp-nominify', ['partials', 'roles'], function () {
+gulp.task('webapp-nominify', ['partials', 'roles', 'jwplayer'], function () {
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var assets;
 
@@ -281,6 +286,7 @@ gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', '
     buildDaemon('dist/server/daemons', 'rule-engine');
     buildDaemon('dist/server/daemons', 'merchant-processor');
     buildDaemon('dist/server/daemons', 'notification-processor');
+    buildDaemon('dist/server/daemons', 'metadata-processor');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });
@@ -438,7 +444,7 @@ gulp.task('connect', function () {
         root: '../../client',
         livereload: true,
         port: 9000,
-        middleware: function (connect, opt) {
+        middleware: function () {
             return [
                 require('connect-history-api-fallback'),
                 require('connect-modrewrite')(['^/api/(.*)$ http://localhost:3000/api/$1 [P]'])
@@ -497,10 +503,6 @@ gulp.task('watch', function () {
 /*****************************************************************/
 
 var karma = require('gulp-karma');
-
-var testFiles = [
-    '../test/client/**/*.js'
-];
 
 gulp.task('test', function () {
     //Be sure to return the stream

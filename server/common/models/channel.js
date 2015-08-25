@@ -7,6 +7,7 @@ var Channel = new Schema({
     channel: String,
     callSign: String,
     stationId: String,
+    status: String,
     preferredImage: {
         uri: String,
         height: String,

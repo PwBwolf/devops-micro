@@ -3,7 +3,8 @@
 var _ = require('lodash'),
     NotificationCtrl = require('./controllers/notification-controller'),
     routes = [
-        {path: '/notification/api/execute-dunning', httpMethod: 'POST', middleware: [NotificationCtrl.executeDunning]}
+        {path: '/notification/api/execute-dunning', httpMethod: 'POST', middleware: [NotificationCtrl.executeDunning]},
+        {path: '/notification/api/payment-received', httpMethod: 'POST', middleware: [NotificationCtrl.paymentReceived]}
     ];
 
 module.exports = function (app) {

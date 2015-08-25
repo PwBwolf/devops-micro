@@ -1,187 +1,168 @@
 'use strict';
 
-// Lets load the mongoose module in our program
 var config = require('../../../../server/common/setup/config');
 var mongoose = require('../../../../server/node_modules/mongoose');
-var async = require('../../../../server/node_modules/async');
 var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
 
-require('../../../../server/common/models/program');
 require('../../../../server/common/models/channel');
+require('../../image-download/models/image-data');
+require('../../image-download/models/image');
 
 var dbYip = mongoose.createConnection(config.db);
-var Program = dbYip.model('Program');
+
 var Channel = dbYip.model('Channel');
-
-var nowTime = new Date();
-var startTime = date.isoDate(nowTime);
-logger.logInfo(startTime);
-
-var temp = new Date();
-// temp.setDate(temp.getDate() - 5);
-temp.setMinutes(temp.getMinutes() - 30);
-var startTimeDB = date.isoDate(temp);
-
-nowTime.setHours(nowTime.getHours() + 5);
-var endTime = date.isoDate(nowTime);
-var stationID = '';
-// var stationID = '44448';
-
-var stationIDs = [];
+var Image = dbYip.model('Image');
+var ImageData = dbYip.model('ImageData');
 
 module.exports = {
-    getAppConfig : function (req, res) {
-        
-        var appConfig = {
-            graceNoteImageUrl: config.graceNoteImageUrl
-        };
-        return res.json(appConfig);
-    },
-        
-    getChannelGuide : function(req, res) {
-        async.waterfall([
-                function(callback) {
-                    Channel.find({
-                        stationId : {
-                            $in : [ '44448', '55912' ]
-                        }
-                    }, {
-                        stationId : true,
-                        preferredImage : true,
-                        callSign : true,
-                        "airings.startTime" : true,
-                        "airings.endTime" : true,
-                        "airings.program.preferredImage" : true,
-                        "airings.program.title" : true
-                    }, function(err, channelsDB) {
-                        if (err) {
-                            logger.logInfo('find error: ' + err);
-                            callback(err);
-                        } else {
-                            logger.logInfo('documents found in channelsDB: '
-                                    + channelsDB.length);
 
-                            res.json({
-                                channelsDB : channelsDB
-                            });
-                            callback(null, channelsDB);
-                        }
-                    });
-                }, ], function(err) {
+    getChannelList: function (req, res) {
+        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : {stationId: {$in: req.query.stationIds}}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
             if (err) {
+                logger.logError('mediaController - getChannelList - failed to retrieve channel list');
                 logger.logError(err);
                 return res.status(500).end();
-            } else {
-                logger.logInfo('get channel guide, return!');
             }
+            res.json(channelsDb);
         });
     },
 
-    getChannelList : function(req, res) {
-
-        Channel.find(req.query.stationIds === undefined ? {} : {
-            stationId : {
-                $in : req.query.stationIds
-            }
-        }, {
-            stationId : true,
-            "preferredImage.uri" : true,
-            callSign : true
-        }, function(err, channelsDB) {
-            if (err) {
-                logger.logInfo('find error: ' + err);
-            } else {
-                logger.logInfo('documents found in channelsDB: '
-                        + channelsDB.length);
-
-                res.json({
-                    channelsDB : channelsDB
-                });
-            }
-        });
-    },
-
-    getChannelInfo : function(req, res) {
+    getChannelInfo: function (req, res) {
         var nowTime = new Date();
         var startTime = date.isoDate(nowTime);
-        logger.logInfo('getChannelInfo startTime:' + startTime);
-
-        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 15)) : date.isoDate(dateAdd(nowTime, req.query.hour ? 'hour' : 'day', req.query.period));
-        logger.logInfo('getChannelInfo endTime:' + endTime);
-
-        //Channel.find({stationId : req.query.stationId, airings: {$elemMatch: {endTime: {$gte: startTime, $lte: endTime}}}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
-        //Channel.find({stationId : req.query.stationId, 'airings.endTime' : {$gt : startTime, $lt : endTime}}, {_id : false, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true }, function(err, channelsDB) {
-        //Channel.find({stationId : req.query.stationId}, {airings: {$elemMatch:{endTime: {$gt: startTime, $lt: endTime}}} }, function(err, channelsDB) {
-        //Channel.find({stationId : req.query.stationId}).populate({path: 'airings', match: {endTime:{$gt: startTime, $lt: endTime}}, select:'startTime endTime title program.tmsId, program.preferredImage.uri'}).exec( function(err, channelsDB) {
-        Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
-                           {$unwind: "$airings"}, 
-                           {$match: {"airings.endTime": {$gt: startTime, $lte: endTime}}}, 
-                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, callSign : true}}], 
-                           function(err, channelsDB) {
-            if (err) {
-                logger.logInfo('find error: ' + err);
-            } else {
-                logger.logInfo('airings found');
-
-                res.json({
-                    channelsDB : channelsDB
-                });
-            }
-        });
+        logger.logInfo('mediaController - getChannelInfo - startTime:' + startTime);
+        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 14)) : date.isoDate(dateAdd(nowTime, 'hour', req.query.period));
+        logger.logInfo('mediaController - getChannelInfo - endTime:' + endTime);
+        Channel.aggregate([{$match: {stationId: req.query.stationId}},
+                {$unwind: '$airings'},
+                {$match: {'airings.endTime': {$gt: startTime, $lte: endTime}}},
+                {
+                    $project: {
+                        stationId: true,
+                        'airings.program.preferredImage.uri': true,
+                        'airings.endTime': true,
+                        'airings.startTime': true,
+                        'airings.program.tmsId': true,
+                        'airings.program.title': true,
+                        'airings.ratings.code': true,
+                        callSign: true
+                    }
+                }],
+            function (err, channelsDb) {
+                if (err) {
+                    logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from db');
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                res.json(channelsDb);
+            });
     },
 
-    getProgramDetail : function(req, res) {
-
-        Channel.aggregate([{$match: {stationId : req.query.stationId}}, 
-                           {$unwind: '$airings'}, 
-                           {$match: {'airings.program.tmsId': req.query.tmsId, 'airings.startTime': date.isoDate(new Date(req.query.startTime))}}, 
-                           {$project: {stationId: true, 'airings.program.preferredImage.uri' : true, "airings.duration": true, 'airings.endTime' : true, 'airings.startTime' : true, 'airings.program.tmsId' : true, 'airings.program.title' : true, 'airings.program.genres': true, callSign : true}}], 
-                           function(err, channelsDB) {
+    getProgramDetail: function (req, res) {
+        Channel.aggregate([{$match: {stationId: req.query.stationId}},
+                {$unwind: '$airings'},
+                {$match: {'airings.program.tmsId': req.query.tmsId}},
+                {
+                    $project: {
+                        stationId: true,
+                        'airings.program.preferredImage.uri': true,
+                        'airings.program.tmsId': true,
+                        'airings.program.title': true,
+                        'airings.program.genres': true,
+                        'airings.program.longDescription': true,
+                        'airings.program.topCast': true,
+                        'airings.program.directors': true,
+                        'airings.program.entityType': true,
+                        callSign: true
+                    }
+                },
+                {$limit: 1}],
+            function (err, channelsDb) {
+                if (err) {
+                    logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from db');
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                res.json(channelsDb[0]);
+            });
+    },
+    
+    getChannelLogo: function(req, res) {
+        if(req.query.stationId === undefined) {
+            return res.status(500).end();
+        }
+        /*
+        Channel.find({stationId: req.query.stationId}, {'preferredImage.uri': true}, function (err, channelsDb) {
             if (err) {
-                logger.logInfo('find error: ' + err);
-            } else {
-                logger.logInfo('documents found in channelsDB: '
-                        + channelsDB.length);
-
-                res.json({
-                    channelsDB : channelsDB[0]
-                });
+                logger.logError('mediaController - getChannelLogo - failed to retrieve uri');
+                logger.logError(err);
+                return res.status(500).end();
             }
+            
+            //ImageData.find({uri: channelsDb[0].preferredImage.uri}, function(err, images) {
+            ImageData.find({uri: "assets/p9154860_st_v5_aa.jpg"}, function(err, images) {
+                if (err) {
+                    logger.logError('mediaController - getChannelLogo - failed to retrieve logo');
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                res.writeHead(200, {'Content-Type': 'image'});
+                res.end(images[0].data, 'binary');
+                //res.data = images[0].data;
+            });
+            
+        });
+        */
+        Image.find({identifier: req.query.stationId}).populate('dataId').exec(function(err, images) {
+           if(err) {
+               logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
+               logger.logError(err);
+               return res.status(500).end();
+           } else {
+               if(images.length === 0) {
+                   logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
+                   return res.status(500).end();
+               } else {
+                   res.writeHead(200, {'Content-Type': 'image'});
+                   res.end(images[0].dataId.data, 'binary');
+               }
+           }
+               
         });
     }
 };
 
 function dateAdd(date, interval, units) {
-    var ret = new Date(date); // don't change original date
+    var newDate = new Date(date);
     switch (interval.toLowerCase()) {
-    case 'year':
-        ret.setFullYear(ret.getFullYear() + units);
-        break;
-    case 'quarter':
-        ret.setMonth(ret.getMonth() + 3 * units);
-        break;
-    case 'month':
-        ret.setMonth(ret.getMonth() + units);
-        break;
-    case 'week':
-        ret.setDate(ret.getDate() + 7 * units);
-        break;
-    case 'day':
-        ret.setDate(ret.getDate() + units);
-        break;
-    case 'hour':
-        ret.setTime(ret.getTime() + units * 3600000);
-        break;
-    case 'minute':
-        ret.setTime(ret.getTime() + units * 60000);
-        break;
-    case 'second':
-        ret.setTime(ret.getTime() + units * 1000);
-        break;
-    default:
-        ret = undefined;
-        break;
+        case 'year':
+            newDate.setFullYear(newDate.getFullYear() + units);
+            break;
+        case 'quarter':
+            newDate.setMonth(newDate.getMonth() + 3 * units);
+            break;
+        case 'month':
+            newDate.setMonth(newDate.getMonth() + units);
+            break;
+        case 'week':
+            newDate.setDate(newDate.getDate() + 7 * units);
+            break;
+        case 'day':
+            newDate.setDate(newDate.getDate() + units);
+            break;
+        case 'hour':
+            newDate.setTime(newDate.getTime() + units * 3600000);
+            break;
+        case 'minute':
+            newDate.setTime(newDate.getTime() + units * 60000);
+            break;
+        case 'second':
+            newDate.setTime(newDate.getTime() + units * 1000);
+            break;
+        default:
+            newDate = undefined;
+            break;
     }
-    return ret;
+    return newDate;
 }

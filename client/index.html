@@ -46,73 +46,48 @@
 <!--[if lt IE 9]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<header id="desktopHeader">
-    <div id="headerBrand">
-        <span><a href="/"><img id="logo" src="images/logo.png" alt=""/></a></span>
+<div access-level="accessLevels.anon">
+    <header id="desktopHeader" class="hidden-xs">
+        <div id="headerBrand">
+            <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
 
-        <div class="menu-button">
-            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
-        </div>
-        <div class="menu-button" access-level="accessLevels.user">
-            <a href ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
-        </div>
-        <div class="menu-button" access-level="accessLevels.anon">
-            <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
-        </div>
-        <div class="menu-button" access-level="accessLevels.user">
-            <a href ng-click="goToCmsUrl('CMS_URL_FAQS')" translate="INDEX_FAQ_ACRONYM"></a>
-        </div>
-        <div style="float: right">
-            <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
-        </div>
-        <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
-    </div>
-    <nav id="navBar">
-        <div id="menu">
-            <div id="menuItems">
-                <div style="display:none"><img src="images/mini-logo.png"></div>
-                <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
-                <menuItem access-level="accessLevels.user"><a href="#" ng-click="openAio()" translate="INDEX_WATCH_NOW"></a></menuItem>
-                <menuItem home-only id="joinNow" access-level="accessLevels.anon"><a href="/sign-up/paid" translate="INDEX_JOIN_NOW"></a></menuItem>
-                <menuItem access-level="accessLevels.user"><a href="/account" translate="INDEX_ACCOUNT"></a></menuItem>
-                <div id="welcome" access-level="accessLevels.user"><span translate="INDEX_WELCOME"></span> <span ng-bind-template="{{user.firstName}} {{user.lastName}}!"></span></div>
+            <div class="menu-button">
+                <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
             </div>
-        </div>
-    </nav>
-</header>
-<header id="phoneHeader">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
-
-                <div class="nav-btn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" translate="INDEX_LANGUAGE_DROPDOWN" data-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav-btn btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_ANON_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                    <button type="button" class="btn btn-default dropdown-toggle" access-level="accessLevels.user" translate="INDEX_USER_DROPDOWN" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="/sign-in" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></a>
-                            <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="INDEX_SIGN_OUT"></a>
-                        </li>
-                        <li>
-                            <a href="/sign-up/paid" access-level="accessLevels.anon" translate="INDEX_JOIN_NOW"></a>
-                            <a href="/account" access-level="accessLevels.user" translate="INDEX_ACCOUNT"></a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="menu-button">
+                <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
+            </div>
+            <div style="float: right">
+                <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
             </div>
             <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
         </div>
-    </nav>
-</header>
+        <nav id="navBar">
+            <div class="menu">
+                <div id="menuItems">
+                    <div style="display:none"><img src="images/mini-logo.png"></div>
+                    <menuItem id="top" bookmark style="display:none" translate="INDEX_TOP"></menuItem>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <header id="phoneHeader" class="visible-xs">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
+
+                    <div class="nav-btn">
+                        <button type="button" goto="/sign-in" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></button>
+                        <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
+                    </div>
+                </div>
+                <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
+            </div>
+        </nav>
+    </header>
+</div>
 
 <div id="topBox" ng-view autoscroll="true"></div>
 
@@ -125,6 +100,10 @@
 <script src="bower_components/es5-shim/es5-shim.min.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
+<script src="scripts/external/jwplayer.js"></script>
+<script src="scripts/external/jwplayer.html5.js"></script>
+<script type="text/javascript">jwplayer.key = "G2xm275XRmGz+cFVwR3m/6RneCY9v7e4zZEnvg==";</script>
+<!--<script src="https://jwpsrv.com/library/B0Pzcn8cEeSAZA6sC0aurw.js"></script>-->
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/lodash/dist/lodash.js"></script>
@@ -163,8 +142,12 @@
 <script src="scripts/directives/same-as.js"></script>
 <script src="scripts/directives/not-same-as.js"></script>
 <script src="scripts/directives/goto.js"></script>
-<script src="scripts/directives/home-only.js"></script>
 <script src="scripts/directives/bookmark.js"></script>
+<script src="scripts/directives/channel-hover.js"></script>
+<script src="scripts/directives/channel-logo.js"></script>
+<script src="scripts/directives/current-time.js"></script>
+<script src="scripts/directives/close-panel.js"></script>
+<script src="scripts/directives/compile-html.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>
@@ -173,6 +156,7 @@
 <script src="scripts/services/logger-service.js"></script>
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/browser-service.js"></script>
+<script src="scripts/services/media-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
@@ -184,7 +168,6 @@
 <script src="scripts/controllers/forgot-password-controller.js"></script>
 <script src="scripts/controllers/reset-password-controller.js"></script>
 <script src="scripts/controllers/user-home-controller.js"></script>
-<script src="scripts/controllers/account-controller.js"></script>
 <script src="scripts/controllers/preferences-controller.js"></script>
 <script src="scripts/controllers/change-credit-card-controller.js"></script>
 <script src="scripts/controllers/common-controller.js"></script>
@@ -193,6 +176,10 @@
 <script src="scripts/controllers/change-password-controller.js"></script>
 <script src="scripts/controllers/resend-verification-controller.js"></script>
 <script src="scripts/controllers/refer-a-friend-controller.js"></script>
+<script src="scripts/controllers/channel-guide-controller.js"></script>
+<script src="scripts/controllers/player-controller.js"></script>
+<script src="scripts/controllers/user-info-controller.js"></script>
+<script src="scripts/controllers/channel-filter-controller.js"></script>
 <script src="scripts/controllers/invite-controller.js"></script>
 
 <!-- inject:partials -->
@@ -206,9 +193,9 @@
     <div class="modal-body" ng-bind="modalBody">
     </div>
     <div class="modal-footer">
-        <button ng-show="showOkButton" class="submit-button modal-button" ng-click="ok()" translate="INDEX_OK_BUTTON">OK</button>
-        <button ng-show="showYesButton" class="submit-button modal-button" ng-click="yes()" translate="INDEX_YES_BUTTON">Yes</button>
-        <button ng-show="showNoButton" class="submit-button modal-button" ng-click="no()" translate="INDEX_NO_BUTTON">No</button>
+        <button ng-show="showOkButton" class="submit-button modal-button" ng-click="ok()" translate="INDEX_OK_BUTTON"></button>
+        <button ng-show="showYesButton" class="submit-button modal-button" ng-click="yes()" translate="INDEX_YES_BUTTON"></button>
+        <button ng-show="showNoButton" class="submit-button modal-button" ng-click="no()" translate="INDEX_NO_BUTTON"></button>
     </div>
 </script>
 </body>

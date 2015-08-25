@@ -11,6 +11,7 @@
         activate();
 
         function activate() {
+
             if ($scope.session.signOut) {
                 $scope.session.signOut = undefined;
                 $window.location.reload();
@@ -21,5 +22,6 @@
                 $window.location.href = key[language][domain];
             }
         }
+
     }]);
 }(angular.module('app')));

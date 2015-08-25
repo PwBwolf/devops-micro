@@ -186,28 +186,68 @@ module.exports = {
         });
     },
 
-    updateUserProfile: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+    updateUserInfo: function (req, res) {
+        var errorType, currentValues;
+        async.waterfall([
+            // update user
+            function (callback) {
+                User.findOne({email: req.email.toLowerCase()}).exec(function (err, user) {
+                    if (err) {
+                        logger.logError('userController - updateUserInfo - error fetching user: ' + req.email.toLowerCase());
+                        callback(err);
+                    } else if (!user) {
+                        callback('UserNotFound');
+                    } else {
+                        currentValues = {firstName: user.firstName, lastName: user.lastName, telephone: user.telephone};
+                        user.firstName = req.body.firstName;
+                        user.lastName = req.body.lastName;
+                        user.telephone = req.body.telephone;
+                        user.save(function (err) {
+                            if (err) {
+                                logger.logError('userController - updateUserInfo - error saving user: ' + req.email.toLowerCase());
+                            }
+                            callback(err, user);
+                        });
+                    }
+                });
+            },
+            // login to freeside
+            function (user, callback) {
+                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('userController - updateUserInfo - error logging into billing system: ' + user.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, user, sessionId);
+                });
+            },
+            // change billing address
+            function (user, sessionId, callback) {
+                billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, req.body.telephone, function (err) {
+                    if (err) {
+                        logger.logError('userController - updateUserInfo - error updating billing system: ' + user.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, user);
+                });
+            }
+        ], function (err, user) {
             if (err) {
-                logger.logError('userController - updateUserProfile - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
+                if (errorType === 'freeside-user-update' || errorType === 'freeside-login') {
+                    user.firstName = currentValues.firstName;
+                    user.lastName = currentValues.lastName;
+                    user.telephone = currentValues.telephone;
+                    user.save(function (err) {
+                        if (err) {
+                            logger.logError('userController - updateUserInfo - error reverting user: ' + req.email.toLowerCase());
+                            logger.logError(err);
+                        }
+                    });
+                }
                 return res.status(500).end();
             }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            user.firstName = req.body.firstName;
-            user.lastName = req.body.lastName;
-            user.telephone = req.body.telephone;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError('userController - updateUserProfile - error saving user: ' + req.email.toLowerCase());
-                    logger.logError(err);
-                    return res.status(500).end();
-                } else {
-                    return res.status(200).end();
-                }
-            });
+            return res.status(200).end();
         });
     },
 
@@ -566,19 +606,6 @@ module.exports = {
         });
     },
 
-    getAioToken: function (req, res) {
-        var aioGuestList = config.aioGuestAccountList;
-        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
-        aio.getToken(user, function (err, data) {
-            if (err) {
-                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.send(data);
-        });
-    },
-
     getPreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
@@ -669,14 +696,6 @@ module.exports = {
         });
     }
 };
-
-function getGuestCounter() {
-    getGuestCounter.count = ++getGuestCounter.count || 0;
-    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
-        getGuestCounter.count = 0;
-    }
-    return getGuestCounter.count;
-}
 
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;

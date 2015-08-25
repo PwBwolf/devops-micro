@@ -4,10 +4,6 @@
     position: relative;
 }
 
-#phoneHeader {
-    display: none !important;
-}
-
 body, html {
     font-size: 14px;
     max-width: 1280px;
@@ -101,8 +97,8 @@ header {
 
 #headerBrand img {
     width: auto;
-    height: 70px;
-    margin: 0 0 0 31px;
+    height: 80px;
+    margin: 0 0 0 25px;
     top: 9px;
     transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
@@ -112,23 +108,19 @@ header {
     z-index: 998;
 }
 
-#headerBrand span {
-    display: inline-block;
-}
-
 .order-summary-title {
     text-align: right;
 }
 
 .contact-number {
-    width: 25%;
+    width: 30%;
     height: 100%;
-    margin-left: 1px;
+    margin-right: 5px;
     padding: 2px;
     float: right;
     padding-top: 15px;
     color: black;
-    text-align: center;
+    text-align: right;
     vertical-align: middle;
 }
 
@@ -169,10 +161,9 @@ header {
     position: absolute;
     background: rgba(254, 254, 254, .95);
     color: rgba(62, 25, 77, .94);
-    border-bottom: solid 1px lightgrey;
 }
 
-#menu {
+.menu {
     width: 100%;
     font-weight: bold;
 }
