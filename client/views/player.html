@@ -6,23 +6,15 @@
                 <div id="yiptv-player"></div>
             </div>
             <div class="main-favorites position-div">
-                <div class="favorite-channel position-div" ng-repeat="channel in channels | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNow($index);">
+                <div class="favorite-channel position-div" ng-repeat="channel in channels | filter:{favorite: true} | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNowById(channel._id);">
                     <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
-                        <img ng-src="{{channel.image_url}}"/>
-
-                        <div class="channel-label">
-                            <span>{{channel.name}}</span>
-                        </div>
-                        <img ng-src="{{channel.image_poster}}"/>
+                        <img class="img-responsive" ng-src="{{channel.logo}}"/>
                     </div>
                     <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
+                        <img class="img-responsive" ng-src="{{channel.logo}}"/>
                         <article>
                             <aside>
-                                <h4>{{channel.title}}</h4>
-
-                                <p>{{channel.sub_title}}</p>
-
-                                <p>{{channel.description}}</p>
+                                <img ng-src="/images/play-button.png"/>
                             </aside>
                         </article>
                     </div>
@@ -31,9 +23,9 @@
         </div>
 
         <div id="playerBottom" class="suggested-channels ease">
-            <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromoChannel}" ng-mouseenter="promoChannelSelected($index)" ng-mouseleave="promoChannelSelected(-1)" ng-repeat="channel in promoChannels track by $index">
+            <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromo}" ng-mouseenter="promoSelected($index)" ng-mouseleave="promoSelected(-1)" ng-repeat="channel in promos track by $index">
 
-                <div id="channelHolderFront" ng-class="($index === selectedPromoChannel) ? 'back' : 'front'">
+                <div id="channelHolderFront" ng-class="($index === selectedPromo) ? 'back' : 'front'">
                     <img ng-src="{{channel.image_poster}}"/>
 
                     <div class="channel-label">
@@ -42,7 +34,7 @@
                     <img ng-src="{{channel.image_url}}"/>
                 </div>
 
-                <div id="channelHolderBack" ng-class="($index === selectedPromoChannel) ? 'front' : 'back'">
+                <div id="channelHolderBack" ng-class="($index === selectedPromo) ? 'front' : 'back'">
                     <img ng-src="{{channel.image_promo_cover}}"/>
                     <article>
                         <aside>
@@ -65,13 +57,13 @@
 
     <div id="channelMenuHolder" class="channel-panel">
         <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible">
-            <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(null, $index)" compile-html="listing"></div>
+            <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(selectedChannel, $index)" compile-html="listing"></div>
         </div>
         <div class="channel-list">
             <div class="filter-open-btn" title="{{ 'PLAYER_CHANNEL_FILTER' | translate }}" ng-click="toggleChannelFilter()"></div>
             <ul>
                 <li ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
-                    <img ng-src="{{channel.image_url}}"/>
+                    <img ng-src="{{channel.logo}}"/>
 
                     <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
                         <channel-hover></channel-hover>
@@ -88,7 +80,7 @@
                     <div><span translate="PLAYER_RESULTS"></span> <span ng-bind="filteredChannels.length"></span> <span translate="PLAYER_CHANNELS_FOUND"></span></div>
                     <ul>
                         <li ng-repeat="channel in filteredChannels">
-                            <img ng-src="{{channel.image_url}}" ng-click="filteredChannelClicked(channel.id)"/>
+                            <img ng-src="{{channel.logo}}" ng-click="filteredChannelClicked(channel._id)"/>
                         </li>
                     </ul>
                 </div>

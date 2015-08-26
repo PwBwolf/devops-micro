@@ -6,59 +6,44 @@ var fs = require('fs'),
     logger = require('../../common/setup/logger'),
     date = require('../../common/services/date'),
     graceNote = require('../../common/services/grace-note'),
-    _ = require('lodash');
-
-var config = require('../../common/setup/config');
-var mongoose = require('../../node_modules/mongoose');
-
-require('../../common/models/channel');
-
-var dbYip = mongoose.createConnection(config.db);
-var Channel = dbYip.model('Channel');
-var CmsCategory = dbYip.model('CmsCategory');
+    moment = require('moment'),
+    mongoose = require('../../node_modules/mongoose'),
+    Channel = mongoose.model('Channel'),
+    CmsCategory = mongoose.model('CmsCategory'),
+    CmsChannel = mongoose.model('CmsChannel'),
+    User = mongoose.model('User');
 
 module.exports = {
-    getChannel: function (req, res) {
-        fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
+    getChannelUrl: function (req, res) {
+        console.log(req.query.id);
+        CmsChannel.findOne({_id: req.query.id}, function (err, channel) {
             if (err) {
-                logger.logError('mediaController - getUserChannels - error reading channels.json');
+                logger.logError('mediaController - getChannelUrl - error fetching channel');
                 logger.logError(err);
                 return res.status(500).end();
-            } else {
-                var channels;
-                try {
-                    channels = JSON.parse(data);
-                } catch (ex) {
-                    logger.logError('mediaController - getUserChannels - error parsing channels.json file');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                if (!channels || channels.length === 0) {
-                    logger.logError('mediaController - getUserChannels - channels.json file is empty');
-                    return res.status(500).end();
-                }
-                var channel = _.find(channels, function (channel) {
-                    return channel.id === req.query.id;
-                });
-                var now = new Date();
-                var nowTime = now.getTime();
-                var minusTen = new Date(nowTime - (10 * 60000));
-                var validFrom = Math.floor(minusTen.getTime() / 1000);
-                var plusTen = new Date(nowTime + (10 * 60000));
-                var validTo = Math.floor(plusTen.getTime() / 1000);
-                var url = new URI(channel.live_pc_url);
-                var path = url.pathname() + '?valid_from=' + validFrom + '&valid_to=' + validTo;
-                var hmac = crypto.createHmac('sha1', 'uFhpKCsBgF9KLlHT0E9rmQ');
-                hmac.setEncoding('hex');
-                hmac.write(path);
-                hmac.end();
-                var hash = hmac.read();
-                if (hash.length > 20) {
-                    hash = hash.substr(0, 20);
-                }
-                channel.live_pc_url = channel.live_pc_url + '?valid_from=' + validFrom + '&valid_to=' + validTo + '&hash=5' + hash;
-                return res.json(channel);
             }
+            if (!channel) {
+                logger.logError('mediaController - getChannelUrl - channel not found');
+                return res.status(500).end();
+            }
+            var now = new Date();
+            var nowTime = now.getTime();
+            var minusTen = new Date(nowTime - (10 * 60000));
+            var validFrom = Math.floor(minusTen.getTime() / 1000);
+            var plusTen = new Date(nowTime + (10 * 60000));
+            var validTo = Math.floor(plusTen.getTime() / 1000);
+            var url = new URI(channel.videoUrl);
+            var path = url.pathname() + '?valid_from=' + validFrom + '&valid_to=' + validTo;
+            var hmac = crypto.createHmac('sha1', 'uFhpKCsBgF9KLlHT0E9rmQ');
+            hmac.setEncoding('hex');
+            hmac.write(path);
+            hmac.end();
+            var hash = hmac.read();
+            if (hash.length > 20) {
+                hash = hash.substr(0, 20);
+            }
+            channel.videoUrl = channel.videoUrl + '?valid_from=' + validFrom + '&valid_to=' + validTo + '&hash=5' + hash;
+            return res.json(channel);
         });
     },
 
@@ -83,9 +68,35 @@ module.exports = {
     },
 
     getUserChannels: function (req, res) {
-        fs.readFile(__dirname + '/channels.json', 'utf8', function (err, data) {
+        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError('mediaController - getUserChannels - error reading channels.json');
+                logger.logError('mediaController - getUserChannels - error fetching user: ' + req.email);
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            var query = {$or: [{package: 'Free'}]};
+            var diff = moment.utc().startOf('day').diff(moment(user.account.startDate).utc().startOf('day'), 'days');
+            if (user.account.type === 'paid' || user.account.type === 'comp') {
+                query.$or.push({package: 'Premium'});
+                query.$or.push({package: 'Paid Basic'});
+            } else if (user.account.type === 'free' && diff <= 7) {
+                query.$or.push({package: 'Premium'});
+            }
+            CmsChannel.find(query, function (err, channels) {
+                if (err) {
+                    logger.logError('mediaController - getUserChannels - error fetching user channels: ' + req.email);
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                return res.json(channels);
+            });
+        });
+    },
+
+    getPromos: function (req, res) {
+        fs.readFile(__dirname + '/promos.json', 'utf8', function (err, data) {
+            if (err) {
+                logger.logError('mediaController - getPromos - error reading promos.json');
                 logger.logError(err);
                 return res.status(500).end();
             } else {
@@ -93,16 +104,27 @@ module.exports = {
                 try {
                     channels = JSON.parse(data);
                 } catch (ex) {
-                    logger.logError('mediaController - getUserChannels - error parsing channels.json file');
+                    logger.logError('mediaController - getPromos - error parsing promos.json file');
                     logger.logError(err);
                     return res.status(500).end();
                 }
                 if (!channels || channels.length === 0) {
-                    logger.logError('mediaController - getUserChannels - channels.json file is empty');
+                    logger.logError('mediaController - getPromos - promos.json file is empty');
                     return res.status(500).end();
                 }
                 return res.json(channels);
             }
+        });
+    },
+
+    getChannelCategories: function (req, res) {
+        CmsCategory.find({}, function (err, categories) {
+            if (err) {
+                logger.logError('mediaController - getChannelCategories - error fetching categories');
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            return res.json(categories);
         });
     },
 
@@ -175,41 +197,6 @@ module.exports = {
                 }
                 res.json(channelsDb[0]);
             });
-    },
-
-    getPromoChannels: function (req, res) {
-        fs.readFile(__dirname + '/promos.json', 'utf8', function (err, data) {
-            if (err) {
-                logger.logError('mediaController - getPromoChannels - error reading promos.json');
-                logger.logError(err);
-                return res.status(500).end();
-            } else {
-                var channels;
-                try {
-                    channels = JSON.parse(data);
-                } catch (ex) {
-                    logger.logError('mediaController - getPromoChannels - error parsing promos.json file');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                if (!channels || channels.length === 0) {
-                    logger.logError('mediaController - getPromoChannels - promos.json file is empty');
-                    return res.status(500).end();
-                }
-                return res.json(channels);
-            }
-        });
-    },
-
-    getChannelCategories: function (req, res) {
-        CmsCategory.find({}, function (err, categories) {
-            if (err) {
-                logger.logError('mediaController - getChannelCategories - error fetching categories');
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.json(categories);
-        });
     }
 };
 
