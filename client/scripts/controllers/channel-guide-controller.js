@@ -38,10 +38,9 @@
         });
 
         function getChannelGuide() {
-            $scope.channelGuideCount = 0;
-            angular.forEach($rootScope.channels, function (value) {
+            async.eachSeries($rootScope.channels, function (value, callback) {
                 mediaSvc.getChannelGuide(value.live_external_id, 6).success(function (channelView) {
-                    var logo = channelView[0].preferredImage ? channelView[0].preferredImage.uri : '';
+                    var logo = value.image_url;
                     var station = channelView[0].callSign;
                     var lineUp = channelView[0].airings;
                     var channelGuide = angular.element(document.createElement('div'));
@@ -62,21 +61,12 @@
                         $(channelGuide).attr('id', 'channelGuideDescription');
                     });
                     angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
-                    $scope.channelGuideCount++;
-                    if ($scope.channelGuideCount === $rootScope.channels.length) {
-                        $rootScope.channelGuideLoaded = true;
-                    }
+                    callback();
                 }).error(function () {
-                    $scope.channelGuideCount++;
-                    if ($scope.channelGuideCount === $rootScope.channels.length) {
-                        $rootScope.channelGuideLoaded = true;
-                    }
+
+                    callback();
                 });
             });
-        }
-
-        function setChannelLineup(logo, station, lineUp) {
-
         }
 
         function timeSpan(time, guideStartTime, programStartTime) {

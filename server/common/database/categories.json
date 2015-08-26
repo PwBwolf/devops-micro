@@ -1,0 +1,47 @@
+{
+    "type": "CmsCategories",
+    "docs": [
+        {
+            "name": "Genre",
+            "tags": [
+                "Sports",
+                "Kids",
+                "General",
+                "News",
+                "Music",
+                "Educational",
+                "Lifestyle",
+                "Faith",
+                "Entertainment"
+            ]
+        },
+        {
+            "name": "Region",
+            "tags": [
+                "Global",
+                "USA",
+                "Mexico",
+                "Colombia",
+                "Brazil",
+                "Dominican Republic",
+                "Venezula",
+                "Honduras",
+                "Spain",
+                "Argentina",
+                "Bolivia",
+                "English",
+                "Caribbean",
+                "Latin America",
+                "Chile"
+            ]
+        },
+        {
+            "name": "Language",
+            "tags": ["English", "Spanish"]
+        },
+        {
+            "name": "Audience",
+            "tags": ["All", "General", "Adult", "Children"]
+        }
+    ]
+}

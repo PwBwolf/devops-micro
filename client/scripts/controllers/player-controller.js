@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['_', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', function (_, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter) {
+    app.controller('playerCtrl', ['_', '$', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', function (_, $, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter) {
 
 
         $scope.selectedPromoChannel = -1;
@@ -29,7 +29,7 @@
             });
 
             mediaSvc.getChannelCategories(function (data) {
-                $rootScope.channelCategories = data.categories;
+                $rootScope.channelCategories = data;
             });
         }
 
@@ -47,14 +47,15 @@
             getChannelGuide(index);
         };
 
-        $scope.filteredChannelClicked = function (index) {
+        $scope.filteredChannelClicked = function (channelId) {
+            var index = _.findIndex($rootScope.channels, {id: channelId});
             $scope.selectedChannel = index;
-            $scope.brandImage = $scope.filteredChannels[index].image_url;
+            $scope.brandImage = $rootScope.channels[index].image_url;
             $scope.isVisible = true;
             $($scope.channelList).removeClass('channel-panel');
             $($scope.channelList).addClass('channel-panel-max');
             $scope.showCloseButton();
-            getFilteredChannelGuide(index);
+            getChannelGuide(index);
         };
 
         $scope.watchNow = function (index, play) {
@@ -67,6 +68,7 @@
 
         $scope.toggleChannelFilter = function () {
             $scope.filteredChannels = $rootScope.channels;
+            $scope.clearAll();
             $scope.showChannelFilter = !$scope.showChannelFilter;
         };
 
@@ -110,17 +112,6 @@
 
         function getChannelGuide(index) {
             mediaSvc.getChannelGuide($scope.channels[index].live_external_id, 12).success(function (channelGuide) {
-                $scope.showTimes = channelGuide[0].airings;
-                $scope.programDetails = $scope.getProgramDetails(channelGuide[0].airings[0]);
-                $scope.showListings = [];
-                for (var i = 0; i < $scope.showTimes.length; i++) {
-                    $scope.showListings[i] = $scope.getChannelDetails($scope.showTimes[i]);
-                }
-            });
-        }
-
-        function getFilteredChannelGuide(index) {
-            mediaSvc.getChannelGuide($scope.filteredChannels[index].live_external_id, 12).success(function (channelGuide) {
                 $scope.showTimes = channelGuide[0].airings;
                 $scope.programDetails = $scope.getProgramDetails(channelGuide[0].airings[0]);
                 $scope.showListings = [];
@@ -298,6 +289,5 @@
             }
             filterChannels();
         };
-    }
-    ]);
+    }]);
 }(angular.module('app')));
