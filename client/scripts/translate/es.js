@@ -207,6 +207,7 @@
             PLAYER_REGION: 'Region',
             PLAYER_AUDIENCE: 'Audience',
             PLAYER_LANGUAGE: 'Language',
+            PLAYER_CHANNEL_FILTER: 'Filtro de Canal',
             PLAYER_CHANNEL_LOAD_ERROR: 'Error al subir canal',
             PLAYER_CHANNEL_LIST_LOAD_ERROR: 'Error al subir lista de canales',
             PLAYER_CHANNEL_GUIDE_LOAD_ERROR: 'Error al subir guía de canales',
