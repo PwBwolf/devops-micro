@@ -29,7 +29,7 @@
             });
 
             mediaSvc.getChannelCategories(function (data) {
-                $rootScope.channelCategories = data.categories;
+                $rootScope.channelCategories = data;
             });
         }
 

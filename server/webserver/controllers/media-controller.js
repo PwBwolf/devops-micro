@@ -15,6 +15,7 @@ require('../../common/models/channel');
 
 var dbYip = mongoose.createConnection(config.db);
 var Channel = dbYip.model('Channel');
+var CmsCategory = dbYip.model('CmsCategory');
 
 module.exports = {
     getChannel: function (req, res) {
@@ -201,26 +202,13 @@ module.exports = {
     },
 
     getChannelCategories: function (req, res) {
-        fs.readFile(__dirname + '/categories.json', 'utf8', function (err, data) {
+        CmsCategory.find({}, function (err, categories) {
             if (err) {
-                logger.logError('mediaController - getCategories - error reading categories.json');
+                logger.logError('mediaController - getChannelCategories - error fetching categories');
                 logger.logError(err);
                 return res.status(500).end();
-            } else {
-                var channels;
-                try {
-                    channels = JSON.parse(data);
-                } catch (ex) {
-                    logger.logError('mediaController - getCategories - error parsing categories.json file');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                if (!channels || channels.length === 0) {
-                    logger.logError('mediaController - getCategories - categories.json file is empty');
-                    return res.status(500).end();
-                }
-                return res.json(channels);
             }
+            return res.json(categories);
         });
     }
 };
