@@ -1,0 +1,17 @@
+{
+    "type": "CmsAds",
+    "docs": [
+        {
+            "name": "Genre"
+        },
+        {
+            "name": "Region"
+        },
+        {
+            "name": "Language"
+        },
+        {
+            "name": "Audience"
+        }
+    ]
+}

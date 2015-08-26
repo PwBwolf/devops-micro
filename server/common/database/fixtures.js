@@ -14,7 +14,10 @@ require('../setup/models')(modelsPath);
 
 var models = {
     'Countries': mongoose.model('Country'),
-    'States': mongoose.model('State')
+    'States': mongoose.model('State'),
+    'CmsCategories': mongoose.model('CmsCategory'),
+    'CmsChannels': mongoose.model('CmsChannel'),
+    'CmsAds': mongoose.model('CmsAd')
 };
 
 function processFixture(fqn) {
@@ -23,7 +26,7 @@ function processFixture(fqn) {
     if (models[collectionContent.type]) {
         models[collectionContent.type].collection.remove(function (err) {
             if (err) {
-                console.log('Could not delete ' + collectionContent.type + ' first...file not processed');
+                console.log('Could not delete ' + collectionContent.type + '. File not processed');
                 def.reject();
             } else {
                 models[collectionContent.type].collection.insert(collectionContent.docs, {}, function (err) {
@@ -39,6 +42,7 @@ function processFixture(fqn) {
     }
     return def.promise;
 }
+
 var options = {
     followLinks: false,
     listeners: {

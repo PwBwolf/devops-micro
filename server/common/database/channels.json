@@ -1,0 +1,14 @@
+{
+    "type": "CmsChannels",
+    "docs": [
+        {
+            "name": "Alabama"
+        },
+        {
+            "name": "Alaska"
+        },
+        {
+            "name": "American Samoa"
+        }
+    ]
+}

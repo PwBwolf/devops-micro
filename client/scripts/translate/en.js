@@ -207,6 +207,7 @@
             PLAYER_REGION: 'Region',
             PLAYER_AUDIENCE: 'Audience',
             PLAYER_LANGUAGE: 'Language',
+            PLAYER_CHANNEL_FILTER: 'Channel Filter',
             PLAYER_CHANNEL_LOAD_ERROR: 'Error loading channel',
             PLAYER_CHANNEL_LIST_LOAD_ERROR: 'Error loading channel list',
             PLAYER_CHANNEL_GUIDE_LOAD_ERROR: 'Error loading channel guide',
