@@ -18,7 +18,7 @@ var ImageData = dbYip.model('ImageData');
 module.exports = {
 
     getChannelList: function (req, res) {
-        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : {stationId: {$in: req.query.stationIds}}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
+        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelList - failed to retrieve channel list');
                 logger.logError(err);
@@ -89,9 +89,9 @@ module.exports = {
     },
     
     getChannelLogo: function(req, res) {
-        if(req.query.stationId === undefined) {
-            return res.status(500).end();
-        }
+        //if(req.query.stationId === undefined) {
+        //    return res.status(500).end();
+        //}
         /*
         Channel.find({stationId: req.query.stationId}, {'preferredImage.uri': true}, function (err, channelsDb) {
             if (err) {
@@ -114,21 +114,26 @@ module.exports = {
             
         });
         */
-        Image.find({identifier: req.query.stationId}).populate('dataId').exec(function(err, images) {
-           if(err) {
+
+        Image.find(req.query.stationIds === undefined ? {active: true, type: 'channel'} : Array.isArray(req.query.stationIds) ? {identifier: {$in: req.query.stationIds}} : {identifier: req.query.stationIds})
+        .populate('dataId').exec(function(err, images) {
+            if(err) {
                logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
                logger.logError(err);
                return res.status(500).end();
-           } else {
+            } else {
                if(images.length === 0) {
                    logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
                    return res.status(500).end();
                } else {
                    res.writeHead(200, {'Content-Type': 'image'});
-                   res.end(images[0].dataId.data, 'binary');
+                   var imageData;
+                   for(var i = 0; i < images.length; i++) {
+                       imageData += ('$' + images[i].dataId.data);
+                   }
+                   res.end(imageData, 'binary');
                }
-           }
-               
+            }  
         });
     }
 };

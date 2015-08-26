@@ -232,20 +232,63 @@
         console.log('channelLogoCtrl result: channel index '+$routeParams.stationid);
         $scope.channelId = $routeParams.stationid;
         
-        var req = {stationId: '0'};
-        req.stationId = '44448';//$routeParams.stationid;
-
+        //var req = {stationIds: []};
+        var req = {stationIds: []};//$routeParams.stationid;
+        //var req = {stationIds: ['92197']};
+        $scope.images = [];
+        
         channelGuideSvc.getChannelLogo(
             req,
             function (data) {
-                $scope.image = data;
-                console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed');
+                var images = data.split('$');
+                
+                var dates = [];
+                for (var i = 0; i < images.length-1; i++ ) {
+                    if (i % 5 == 0) dates.push([]);
+                    dates[dates.length-1].push(i);
+                }
+                
+                $scope.dates = dates;
+                
+                for(var i = 1; i < images.length; i ++) {
+                    $scope.images.push(images[i]);
+                    console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed with index: ' + i);
+                }
+                $scope.image = $scope.images[0];
             },
             function (error) {
                 console.log(error);
             }
         );
-    
+        
+        /*
+        var req = {stationIds: []};
+        channelGuideSvc.getChannelList(
+            req,
+            function (data) {
+                var request = {stationId: null};
+                for (var i = 0; i < data.length; i++ ) {
+                    request.stationId = data[i].stationId;
+                    channelGuideSvc.getChannelLogo(
+                        request,
+                        function (image) {
+                            $scope.image = image;
+                            console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed');
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
+                    setTimeout(function(){
+                        console.log('Display channel logo');
+                    }, 5000);
+                }
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    */
     }]);
     myApp.controller('testCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('/').success(function(data) {

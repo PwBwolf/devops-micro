@@ -73,7 +73,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-channel-logo',
-                    params: {stationId: req.stationId}
+                    params: {stationIds: req.stationIds}
                 }).success(success).error(error);
             }
         }

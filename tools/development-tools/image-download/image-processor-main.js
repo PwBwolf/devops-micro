@@ -22,8 +22,8 @@ var dbYip = mongoose.createConnection(config.db);
 var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
 
-var daysRetrieve = 1;
-var daysKeep = 0;
+var daysRetrieve = 14;
+var daysKeep = 5;
 
 if(daysRetrieve > 14 || daysRetrieve === undefined) {
     daysRetrieve = 14;
@@ -73,7 +73,8 @@ function imageDownload() {
         function(callback) {
             Image.find({type: 'channel'}, function(err, images) {
                 if(err) {
-                    logger.logError('imageProcessorMain - imageDownload - failed to retrieve channel images from db with error: ' + err);
+                    logger.logError('imageProcessorMain - imageDownload - failed to retrieve channel images from db');
+                    logger.logError(err);
                 } else {
                     logger.logInfo('imageProcessorMain - imageDownload - images type channel found in db: ' + images.length);
                     
@@ -91,7 +92,8 @@ function imageDownload() {
         function(images, callback) {
             graceNote.getChannelList(function (err, data) {
                 if (err) {
-                    logger.logError('imageProcessorMain - imageDownload - gracenote error: ' + err);
+                    logger.logError('imageProcessorMain - imageDownload - gracenote error');
+                    logger.logError(err);
                     callback(err);
                     return;
                 } else {
@@ -149,7 +151,8 @@ function imageDownload() {
                     },
                     function (err) {
                         if(err) {
-                            logger.logError('imageProcessorMain - saveImage - type channel failed with err: ' + err);
+                            logger.logError('imageProcessorMain - saveImage - type channel failed');
+                            logger.logError(err);
                             callback(err);
                             return;
                         } else {
@@ -182,7 +185,8 @@ function imageDownload() {
                     },
                     function (err) {
                         if(err) {
-                            logger.logError('imageProcessorMain - download image status failed with err: ' + err);
+                            logger.logError('imageProcessorMain - download image status failed');
+                            logger.logError(err);
                         } else {
                             logger.logInfo('imageProcessorMain - download image status succeed! ');
                         }
@@ -201,7 +205,8 @@ function imageDownload() {
             logger.logInfo('imageProcessorMain - imageDownload - start program image download process');
             Image.find({type: 'program'}, function(err, images) {
                 if(err) {
-                    logger.logError('imageProcessorMain - imageDownload - failed to retrieve program images from db with error: ' + err);
+                    logger.logError('imageProcessorMain - imageDownload - failed to retrieve program images from db');
+                    logger.logError(err);
                 } else {
                     logger.logInfo('imageProcessorMain - imageDownload - images type program found in db: ' + images.length);
                     imageCount = images.length;
@@ -219,7 +224,8 @@ function imageDownload() {
                 function (channelGraceNote, cb) {
                     graceNote.getChannelGuide(channelGraceNote.stationId, startTime, endTime, function (err, dataPrograms) {
                         if (err) {
-                            logger.logError('imageProcessorMain - imageDownload - failed to getChannelGuide from gracenote with error: ' + err);
+                            logger.logError('imageProcessorMain - imageDownload - failed to getChannelGuide from gracenote');
+                            logger.logError(err);
                             cb(err);
                             return;
                         } else {
@@ -269,7 +275,8 @@ function imageDownload() {
                                 },
                                 function (err) {
                                     if(err) {
-                                        logger.logError('imageProcessorMain - saveImage - type program failed with err: ' + err);
+                                        logger.logError('imageProcessorMain - saveImage - type program failed');
+                                        logger.logError(err);
                                         cb(err);
                                         return;
                                     } else {
@@ -283,7 +290,8 @@ function imageDownload() {
                 },
                 function (err) {
                     if(err) {
-                        logger.logError('imageProcessorMain - saveImage - error save/update images: ' + err);
+                        logger.logError('imageProcessorMain - saveImage - error save/update images');
+                        logger.logError(err);
                     } else {
                         logger.logInfo('imageProcessorMain - gracenote retrieval succeed! ');
                     }
@@ -313,7 +321,8 @@ function imageDownload() {
                     },
                     function (err) {
                         if(err) {
-                            logger.logError('imageProcessorMain - download image status failed with err: ' + err);
+                            logger.logError('imageProcessorMain - download image status failed');
+                            logger.logError(err);
                         } else {
                             logger.logInfo('imageProcessorMain - download image status succeed! ');
                         }
@@ -382,7 +391,8 @@ function imageDownload() {
         
         function(err) {
         if (err) {
-            logger.logError('imageProcessorMain - imageDownload - error: ' + err);
+            logger.logError('imageProcessorMain - imageDownload - failed');
+            logger.logError(err);
             process.exit(1);
         } else {
             logger.logInfo('imageProcessorMain - imageDownload succeed!');
@@ -445,7 +455,7 @@ function saveImageToDb(configUrl, uri, filename, cb) {
                             break;
                         case 'tif':
                         case 'tiff':
-                            contentType = 'image/tif';
+                            contentType = 'image/tiff';
                             break;
                         default:
                             contentType = 'image/' + ext;
