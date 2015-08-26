@@ -678,7 +678,7 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     }
                 );
-            },            
+            },
             // send verification email if registered
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
