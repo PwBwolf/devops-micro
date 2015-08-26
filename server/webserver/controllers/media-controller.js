@@ -106,7 +106,7 @@ module.exports = {
     },
 
     getChannelList: function (req, res) {
-        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : {stationId: {$in: req.query.stationIds}}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
+        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelList - failed to retrieve channel list');
                 logger.logError(err);
