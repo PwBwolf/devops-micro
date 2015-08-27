@@ -646,19 +646,28 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // order paid package
+            //remove previous packages.
             function (userObj, sessionId, callback) {
-                var packages = currentValues.premiumEndDate ? [config.freeSidePaidBasicPackagePart] : [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart];
+                billing.cancelPackages(sessionId, config.freeSideFreePremiumUserPackageParts, function (err) {
+                    if (err) {
+                        logger.logError('subscription - upgradeSubscription - error removing active package: ' + userObj.email);
+                        errorType = 'freeside-package-remove';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            // add paid packages in freeside
+            function (userObj, accountObj, callback) {
                 async.eachSeries(
-                    packages,
+                    config.freeSidePaidUserPackageParts,
                     function (item, callback) {
-                        billing.orderPackage(sessionId, item, function (err) {
+                        billing.orderPackage(freeSideSessionId, item, function (err) {
                             if (err) {
                                 if (err === '_decline') {
-                                    logger.logError('subscription - upgradeSubscription - credit card declined: ' + userObj.email);
+                                    logger.logError('subscription - newPaidUser - credit card declined: ' + userObj.email);
                                     errorType = 'payment-declined';
                                 } else {
-                                    logger.logError('subscription - upgradeSubscription - error ordering package in freeside: ' + userObj.email);
+                                    logger.logError('subscription - newPaidUser - error ordering package in freeside: ' + userObj.email);
                                     errorType = 'freeside-package-insert';
                                 }
                             }
@@ -666,7 +675,7 @@ module.exports = {
                         });
                     },
                     function (err) {
-                        callback(err, userObj, sessionId);
+                        callback(err, userObj, accountObj);
                     }
                 );
             },
@@ -725,6 +734,7 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
+                    case 'freeside-package-remove':
                     case 'freeside-package-insert':
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);

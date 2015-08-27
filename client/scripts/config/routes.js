@@ -40,6 +40,19 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up/:source',
+            {
+                templateUrl: function(params){ 
+                				var partners = ["truconn"]
+                				if( partners.indexOf(params.source) > -1 )
+                				{
+                					return 'views/' + params.source + '-sign-up.html';
+                				}else
+                					redirectTo: '/not-found';
+                			},
+                controller: 'genericSignUpCtrl',
+                access: access.anon
+            })
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
@@ -218,5 +231,12 @@
                 }
             }
         });
+        
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            
+            $rootScope.source = current.params.source || "";
+            
+        });
+        
     }]);
 }(angular.module('app')));
