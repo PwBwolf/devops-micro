@@ -42,14 +42,14 @@
             })
             .when('/sign-up/:source',
             {
-                templateUrl: function(params){ 
-                				var partners = ["truconn"]
-                				if( partners.indexOf(params.source) > -1 )
-                				{
-                					return 'views/' + params.source + '-sign-up.html';
-                				}else
-                					redirectTo: '/not-found';
-                			},
+                templateUrl: function (params) {
+                    var partners = ['truconn'];
+                    if (partners.indexOf(params.source) > -1) {
+                        return 'views/' + params.source + '-sign-up.html';
+                    } else {
+                        return 'views/not-found.html';
+                    }
+                },
                 controller: 'genericSignUpCtrl',
                 access: access.anon
             })
@@ -231,12 +231,10 @@
                 }
             }
         });
-        
-        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            
-            $rootScope.source = current.params.source || "";
-            
+
+        $rootScope.$on('$routeChangeSuccess', function (event, current) {
+            $rootScope.source = current.params.source || '';
         });
-        
+
     }]);
 }(angular.module('app')));

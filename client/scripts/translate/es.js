@@ -384,7 +384,7 @@
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_BULLET2: 'Haz clic en el botón <span class="bolder-text">Actualiza a Membresía Premium</span> y vulve a ingresar tu información de tarjeta de crédito',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART1: 'Si prefiere, llame a Atención al Cliente al:',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART2: 'y estaremos encantados en ayudarle.',
-            truconnSIGN_UP_SUB_HEADING: 'Mi YipTV suscripción Premium de TruConnect',
+            TRUCONN_SIGN_UP_SUB_HEADING: 'Mi YipTV suscripción Premium de TruConnect',
             UPGRADE_SUBSCRIPTION_MESSAGE: 'Usted esta actualizando su cuenta a una cuenta de pago. Su tarjeta de credito sera cargada $14.99 cada mes. Usted puede cancelar su suscripcion en cualquier momento yendo a Cuenta > Cancelar Suscripcion.',
             UPGRADE_SUBSCRIPTION_BILLING_INFO: 'Introduzca sus datos de su tarjeta de credito. Si necesita ayuda, llame',
             UPGRADE_SUBSCRIPTION_CARD_NAME: 'Nombre en tarjeta de crédito',
