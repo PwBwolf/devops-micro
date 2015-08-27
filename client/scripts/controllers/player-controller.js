@@ -53,7 +53,7 @@
         };
 
         $scope.watchNow = function (index, rowIndex) {
-            if(rowIndex === 0) {
+            if (rowIndex === 0) {
                 $scope.playChannel(index);
             }
         };
@@ -128,12 +128,8 @@
             jwplayer('yiptv-player').setup({
                 width: '100%',
                 height: 360,
-                playlist: [{
-                    image: $scope.channelLogo,
-                    sources: [
-                        {file: $scope.tvUrl}
-                    ]
-                }],
+                file: $scope.tvUrl,
+                image: $scope.channelLogo,
                 modes: [
                     {type: 'html5'},
                     {type: 'flash', src: 'scripts/external/jwplayer.flash.swf'}
@@ -141,9 +137,10 @@
                 rtmp: {
                     bufferlength: 3
                 },
-                primary: 'html5',
+                primary: 'flash',
                 autostart: true,
-                fallback: true
+                fallback: true,
+                androidhls: true
             });
         }
 
@@ -165,7 +162,9 @@
         }
 
         $scope.getImage = function (uri) {
-            if (uri.indexOf('/images/') === 0) {
+            if (!uri) {
+                return '/images/empty.png';
+            } else if (uri.indexOf('/images/') === 0) {
                 return uri;
             } else {
                 return $scope.appConfig.graceNoteImageUrl + uri;
@@ -177,7 +176,7 @@
         };
 
         $scope.getProgramDetails = function (airing) {
-            var programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body">' + airing.program.title + '</span></p>';
+            var programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body">' + (airing.program.title ? airing.program.title : $filter('translate')('PLAYER_NOT_AVAILABLE')) + '</span></p>';
             if (!airing.duration && !airing.startTime) {
                 programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span>&nbsp;<span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
             } else {
@@ -192,7 +191,7 @@
         };
 
         $scope.getChannelDetails = function (show) {
-            var channelDetails = '<div><img class="hidden-xs" src="' + $scope.getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + show.program.title + '</span></p>';
+            var channelDetails = '<div><img class="hidden-xs" src="' + $scope.getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + (show.program.title ? show.program.title : $filter('translate')('PLAYER_NOT_AVAILABLE')) + '</span></p>';
             if (!show.duration && !show.startTime) {
                 channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span>&nbsp;<span class="program-details-header"translate="PLAYER_DURATION"></span><span class="program-details-body"translate="PLAYER_NOT_AVAILABLE"></span></p>';
             } else {

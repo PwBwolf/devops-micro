@@ -1582,7 +1582,7 @@ body, html {
     position: relative;
     cursor: pointer;
     left: -1px;
-    bottom: 140px;
+    bottom: 125px;
     padding: 8px 23px;
     border: thin solid rgb(200, 200, 200);
     border-bottom: none;

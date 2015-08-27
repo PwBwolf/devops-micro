@@ -1,12 +1,13 @@
 'use strict';
 
-var fs = require('fs'),
-    crypto = require('crypto'),
+var crypto = require('crypto'),
     URI = require('URIjs'),
     logger = require('../../common/setup/logger'),
     date = require('../../common/services/date'),
+    config = require('../../common/setup/config'),
     graceNote = require('../../common/services/grace-note'),
     moment = require('moment'),
+    PythonShell = require('python-shell'),
     mongoose = require('../../node_modules/mongoose'),
     Channel = mongoose.model('Channel'),
     CmsCategory = mongoose.model('CmsCategory'),
@@ -16,7 +17,6 @@ var fs = require('fs'),
 
 module.exports = {
     getChannelUrl: function (req, res) {
-        console.log(req.query.id);
         CmsChannel.findOne({_id: req.query.id}, function (err, channel) {
             if (err) {
                 logger.logError('mediaController - getChannelUrl - error fetching channel');
@@ -27,24 +27,20 @@ module.exports = {
                 logger.logError('mediaController - getChannelUrl - channel not found');
                 return res.status(500).end();
             }
-            var now = new Date();
-            var nowTime = now.getTime();
-            var minusTen = new Date(nowTime - (10 * 60000));
-            var validFrom = Math.floor(minusTen.getTime() / 1000);
-            var plusTen = new Date(nowTime + (10 * 60000));
-            var validTo = Math.floor(plusTen.getTime() / 1000);
-            var url = new URI(channel.videoUrl);
-            var path = url.pathname() + '?valid_from=' + validFrom + '&valid_to=' + validTo;
-            var hmac = crypto.createHmac('sha1', 'uFhpKCsBgF9KLlHT0E9rmQ');
-            hmac.setEncoding('hex');
-            hmac.write(path);
-            hmac.end();
-            var hash = hmac.read();
-            if (hash.length > 20) {
-                hash = hash.substr(0, 20);
+            if (channel.videoUrl.indexOf('level3') >= 0) {
+                channel.videoUrl = channel.videoUrl + getLevel3Token(channel);
+                return res.json(channel);
+            } else {
+                getAkamaiToken(channel, function (err, token) {
+                    if (err) {
+                        logger.logError('mediaController - getChannelUrl - error generating akamai token');
+                        logger.logError(err);
+                        return res.status(500).end();
+                    }
+                    channel.videoUrl = channel.videoUrl + token;
+                    return res.json(channel);
+                });
             }
-            channel.videoUrl = channel.videoUrl + '?valid_from=' + validFrom + '&valid_to=' + validTo + '&hash=5' + hash;
-            return res.json(channel);
         });
     },
 
@@ -63,7 +59,14 @@ module.exports = {
                 return res.json(data);
             });
         } else {
-            var guide = [{airings: [{startTime: '', endTime: '', program: {title: req.query.name, preferredImage: {uri: '/images/channels/nothumb.png'}}}]}];
+            var start = new Date();
+            start.setMinutes(0);
+            start.setSeconds(0);
+            var end = new Date();
+            end.setHours(start.getHours() + 1);
+            end.setMinutes(0);
+            end.setSeconds(0);
+            var guide = [{callSign: '', airings: [{duration: 0, startTime: date.isoDate(start), endTime: date.isoDate(end), program: {title: '', preferredImage: {uri: ''}}}]}];
             return res.json(guide);
         }
     },
@@ -222,4 +225,34 @@ function dateAdd(date, interval, units) {
     return newDate;
 }
 
+function getLevel3Token(channel) {
+    var now = new Date();
+    var nowTime = now.getTime();
+    var minusTen = new Date(nowTime - (10 * 60000));
+    var validFrom = Math.floor(minusTen.getTime() / 1000);
+    var plusTen = new Date(nowTime + (10 * 60000));
+    var validTo = Math.floor(plusTen.getTime() / 1000);
+    var url = new URI(channel.videoUrl);
+    var path = url.pathname() + '?valid_from=' + validFrom + '&valid_to=' + validTo;
+    var hmac = crypto.createHmac('sha1', 'uFhpKCsBgF9KLlHT0E9rmQ');
+    hmac.setEncoding('hex');
+    hmac.write(path);
+    hmac.end();
+    var hash = hmac.read();
+    if (hash.length > 20) {
+        hash = hash.substr(0, 20);
+    }
+    return '?valid_from=' + validFrom + '&valid_to=' + validTo + '&hash=5' + hash;
+}
 
+function getAkamaiToken(channel, callback) {
+    var url = new URI(channel.videoUrl);
+    var path = url.pathname() + '*';
+    var options = {
+        scriptPath: __dirname,
+        args: ['-w', config.akamaiTokenDuration, '-a', path, '-k', '33554645784d376b484a474b62365673']
+    };
+    PythonShell.run('akamai_token_v2.py', options, function (err, result) {
+        callback(err, '?' + result);
+    });
+}
