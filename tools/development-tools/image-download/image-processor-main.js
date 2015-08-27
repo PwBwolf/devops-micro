@@ -52,6 +52,8 @@ imageDownload();
 
 function imageDownload() {
     var imageUriUniq = [];
+    var imageUriUniqRemoved = [];
+    var imageUriTemp = [];
     var imageCount = 0;
     var now = new Date();
     now.setHours(0);
@@ -240,6 +242,9 @@ function imageDownload() {
                             logger.logInfo('imageProcessorMain - imageDownload - initial program images length: ' + imageUri.length);
                             
                             var imageUriUniqTemp = _.uniq(imageUri, 'uri');
+                            imageUriTemp = imageUriTemp.concat(imageUriUniqTemp);
+                            imageUriTemp = _.uniq(imageUriTemp, 'uri');
+                            logger.logInfo('imageProcessorMain - imageDownload - accumulated unique program images in gracenote length: ' + imageUriTemp.length);
                             var imageUriUniqCount = imageUriUniq.length;
                             for(var i = 0; i < imageUriUniqTemp.length; i++) {
                                 var isImageInTempUniq = true;
@@ -302,7 +307,7 @@ function imageDownload() {
         
         function(images, data, callback) {
             
-            imageUriUniq.splice(0, imageCount);
+            imageUriUniqRemoved = imageUriUniq.splice(0, imageCount);
             logger.logInfo('imageProcessorMain - imageDownload - program images to download: ' + imageUriUniq.length);
             
             if(imageUriUniq.length > 0) {
@@ -386,6 +391,90 @@ function imageDownload() {
                     );
                 }
             });
+        },
+        
+        // clean Image and ImageData db to remove unexisted program images
+        function(imagesUri, callback) {
+            
+            logger.logInfo('imageProcessorMain - imageDownload - total program images from gracenote: ' + imageUriTemp.length);
+            for(var m = 0; m < imageUriUniqRemoved.length; m++) {
+                imageUriUniq.push(imageUriUniqRemoved[m]);
+            }
+            logger.logInfo('imageProcessorMain - imageDownload - total old program images in db: ' + imageUriUniq.length);
+            var imagesTobeRemoved = [];
+            var countRemoved = 0;
+            for(var i = 0; i < imageUriUniq.length; i++) {
+                var isImageExistInTemp = false;
+                for(var j = 0; j < imageUriTemp.length; j++) {
+                    if(imageUriUniq[i].uri === imageUriTemp[j].uri) {
+                        isImageExistInTemp = true;
+                        break;
+                    }
+                }
+                if(!isImageExistInTemp) {
+                    imagesTobeRemoved.push(imageUriUniq[i]);
+                    countRemoved++;
+                }
+            }
+            logger.logInfo('imageProcessorMain - imageDownload - total old program images to be removed: ' + countRemoved);
+            callback(null, imagesTobeRemoved, countRemoved);
+        },
+        
+        function(imagesRemoved, count, callback) {
+            if(count === 0) {
+                logger.logInfo('imageProcessorMain - imageDownload - no program images need to be removed from db');
+                callback(null);
+                return;
+            } 
+            logger.logInfo('imageProcessorMain - imageDownload - total image to be removed from Image and ImageData: ' + imagesRemoved.length);
+            async.eachSeries(
+                imagesRemoved,
+                function(imageRemoved, cb) {
+                    Image.find({type: 'program', identifier: imageRemoved.id}, function(err, removed) {
+                        if(err) {
+                            logger.logError('imageProcessorMain - imageDownload - failed to find to be removed image in Images');
+                            logger.logError(err);
+                            cb(err);
+                            return;
+                        } else {
+                            logger.logInfo('imageProcessorMain - imageDownload - image to be removed found in Image: ' + removed.length);
+                            if(removed.length === 0) {
+                                logger.logInfo('imageProcessorMain - imageDownload - could not find the to be removed image: ' + imageRemoved.id);
+                                cb(err, removed);
+                            } else {
+                                ImageData.remove({_id: removed[0].dataId}, function(err) {
+                                   if(err) {
+                                       logger.logError('imageProcessorMain - imageDownload - failed to remove imagedata from ImageData collections');
+                                       logger.logError(err);
+                                       cb(err);
+                                   } else {
+                                       logger.logInfo('imageProcessorMain - imageDownload - remove imagedata from ImageData collection succeed');
+                                       Image.remove({type: 'program', identifier: imageRemoved.id}, function(err) {
+                                          if(err) {
+                                              logger.logError('imageProcessorMain - imageDownload - failed to remove image from Image collectiomn');
+                                              logger.logError(err);
+                                              cb(err);
+                                          } else {
+                                              logger.logInfo('imageProcessorMain - imageDownload - remove image from Image collection succeed');
+                                              cb(null);
+                                          }
+                                       });
+                                   }
+                                });
+                            }
+                        }
+                    });
+                },
+                function (err) {
+                    if(err) {
+                        logger.logError('imageProcessorMain - failed to add imagedata into image as reference');
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('imageProcessorMain - download image status succeed! ');
+                    }
+                    callback(err, imagesRemoved);
+                }
+            );  
         }
         ], 
         
