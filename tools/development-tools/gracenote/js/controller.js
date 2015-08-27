@@ -232,9 +232,9 @@
         console.log('channelLogoCtrl result: channel index '+$routeParams.stationid);
         $scope.channelId = $routeParams.stationid;
         
-        //var req = {stationIds: []};
-        var req = {stationIds: []};//$routeParams.stationid;
-        //var req = {stationIds: ['92197']};
+        var req = {stationIds: []};
+        //var req = {stationIds: []};//$routeParams.stationid;
+        //var req = {stationIds: ['92197', '44448']};
         $scope.images = [];
         
         channelGuideSvc.getChannelLogo(
@@ -243,14 +243,14 @@
                 var images = data.split('$');
                 
                 var dates = [];
-                for (var i = 0; i < images.length-1; i++ ) {
+                for (var i = 0; i < images.length; i++ ) {
                     if (i % 5 == 0) dates.push([]);
                     dates[dates.length-1].push(i);
                 }
                 
                 $scope.dates = dates;
                 
-                for(var i = 1; i < images.length; i ++) {
+                for(var i = 0; i < images.length; i ++) {
                     $scope.images.push(images[i]);
                     console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed with index: ' + i);
                 }
@@ -261,35 +261,71 @@
             }
         );
         
-        /*
-        var req = {stationIds: []};
-        channelGuideSvc.getChannelList(
-            req,
+        // test for program image
+        //var req = {stationIds: []};
+        //var reqProgramImage = {tmsIds: []};//$routeParams.stationid;
+        var reqProgramImage = {tmsIds: ['SH003701840000', 'SH009553500000', 'SH003513400000']}; // 'SH008986720000'
+        $scope.programImages = [];
+        
+        channelGuideSvc.getProgramImage(
+            reqProgramImage,
             function (data) {
-                var request = {stationId: null};
-                for (var i = 0; i < data.length; i++ ) {
-                    request.stationId = data[i].stationId;
-                    channelGuideSvc.getChannelLogo(
-                        request,
-                        function (image) {
-                            $scope.image = image;
-                            console.log('channelLogoCtrl calls channelGuideSvc.getChannelLogo succeed');
-                        },
-                        function (error) {
-                            console.log(error);
-                        }
-                    );
-                    setTimeout(function(){
-                        console.log('Display channel logo');
-                    }, 5000);
+                var images = data.split('$');
+                
+                var programDates = [];
+                for (var i = 0; i < images.length; i++ ) {
+                    if (i % 5 == 0) programDates.push([]);
+                    programDates[programDates.length-1].push(i);
                 }
+                
+                $scope.programDates = programDates;
+                
+                for(var i = 0; i < images.length; i ++) {
+                    $scope.programImages.push(images[i]);
+                    console.log('programImageCtrl calls channelGuideSvc.getProgramImage succeed with index: ' + i);
+                }
+                $scope.programImage = $scope.programImages[0];
             },
             function (error) {
                 console.log(error);
             }
         );
-    */
     }]);
+    
+    myApp.controller('programImageCtrl', ['$scope', '$routeParams', 'channelGuideSvc', function ($scope, $routeParams, channelGuideSvc) {
+        console.log('programImageCtrl result: tmsId '+$routeParams.tmsid);
+        $scope.tmsId = $routeParams.tmsid;
+        
+        //var req = {stationIds: []};
+        var req = {tmsIds: []};//$routeParams.stationid;
+        //var req = {tmsIds: ['SH012914400000', 'SH008986720000']}; // 'SH008986720000'
+        $scope.images = [];
+        
+        channelGuideSvc.getProgramImage(
+            req,
+            function (data) {
+                var images = data.split('$');
+                
+                var dates = [];
+                for (var i = 0; i < images.length; i++ ) {
+                    if (i % 5 == 0) dates.push([]);
+                    dates[dates.length-1].push(i);
+                }
+                
+                $scope.dates = dates;
+                
+                for(var i = 0; i < images.length; i ++) {
+                    $scope.images.push(images[i]);
+                    console.log('programImageCtrl calls channelGuideSvc.getProgramImage succeed with index: ' + i);
+                }
+                $scope.image = $scope.images[0];
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    }]);
+    
     myApp.controller('testCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.get('/').success(function(data) {
             $scope.test = 'this test page';

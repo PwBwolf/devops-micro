@@ -89,31 +89,6 @@ module.exports = {
     },
     
     getChannelLogo: function(req, res) {
-        //if(req.query.stationId === undefined) {
-        //    return res.status(500).end();
-        //}
-        /*
-        Channel.find({stationId: req.query.stationId}, {'preferredImage.uri': true}, function (err, channelsDb) {
-            if (err) {
-                logger.logError('mediaController - getChannelLogo - failed to retrieve uri');
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            
-            //ImageData.find({uri: channelsDb[0].preferredImage.uri}, function(err, images) {
-            ImageData.find({uri: "assets/p9154860_st_v5_aa.jpg"}, function(err, images) {
-                if (err) {
-                    logger.logError('mediaController - getChannelLogo - failed to retrieve logo');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                res.writeHead(200, {'Content-Type': 'image'});
-                res.end(images[0].data, 'binary');
-                //res.data = images[0].data;
-            });
-            
-        });
-        */
 
         Image.find(req.query.stationIds === undefined ? {active: true, type: 'channel'} : Array.isArray(req.query.stationIds) ? {identifier: {$in: req.query.stationIds}} : {identifier: req.query.stationIds})
         .populate('dataId').exec(function(err, images) {
@@ -127,9 +102,41 @@ module.exports = {
                    return res.status(500).end();
                } else {
                    res.writeHead(200, {'Content-Type': 'image'});
-                   var imageData;
+                   var imageData = '';
                    for(var i = 0; i < images.length; i++) {
-                       imageData += ('$' + images[i].dataId.data);
+                       if(i === 0) {
+                           imageData += images[i].dataId.data;
+                       } else {
+                           imageData += ('$' + images[i].dataId.data);
+                       }
+                   }
+                   res.end(imageData, 'binary');
+               }
+            }  
+        });
+    },
+    
+    getProgramImage: function(req, res) {
+
+        Image.find(req.query.tmsIds === undefined ? {type: 'program'} : Array.isArray(req.query.tmsIds) ? {identifier: {$in: req.query.tmsIds}} : {identifier: req.query.tmsIds})
+        .populate('dataId').exec(function(err, images) {
+            if(err) {
+               logger.logError('channelGuideController - getProgramImage - failed to query Image db');
+               logger.logError(err);
+               return res.status(500).end();
+            } else {
+               if(images.length === 0) {
+                   logger.logError('channelGuideController - getProgramImage - query Image db with 0 return');
+                   return res.status(500).end();
+               } else {
+                   res.writeHead(200, {'Content-Type': 'image'});
+                   var imageData='';
+                   for(var i = 0; i < images.length; i++) {
+                       if(i === 0) {
+                           imageData += images[i].dataId.data;
+                       } else {
+                           imageData += ('$' + images[i].dataId.data);
+                       }
                    }
                    res.end(imageData, 'binary');
                }

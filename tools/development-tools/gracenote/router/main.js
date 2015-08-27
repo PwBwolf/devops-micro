@@ -22,6 +22,8 @@ module.exports=function(app, root)
     
     app.get('/metadata/api/get-channel-logo', channelGuideCtrl.getChannelLogo);
     
+    app.get('/metadata/api/get-program-image', channelGuideCtrl.getProgramImage);
+    
     app.get('/about',function(req, res){
 
         logger.logInfo('About page');
