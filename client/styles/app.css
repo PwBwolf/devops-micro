@@ -1465,29 +1465,20 @@ body, html {
 .favorite-channel article {
     height: 200px;
     width: 100%;
-    background: grey url(../images/channel-background.jpg) 50% 50% no-repeat;
     background-size: cover;
     padding: 5px;
     cursor: pointer;
 }
 
-.favorite-channel article h4 {
-    color: black;
-    margin: 0 0 5px;
-    position: relative;
-    display: inline-block;
-    white-space: normal;
-    vertical-align: top;
+.favorite-channel article img {
+    width: 150px;
+    height: 150px;
+    margin-top: -20px;
+    margin-left: 10px;
 }
 
 .favorite-channel > div:nth-child(even) {
     float: right;
-}
-
-.favorite-channel > div img:last-child {
-    width: auto;
-    height: 100%;
-    cursor: pointer;
 }
 
 .suggested-channel img:first-child {
@@ -1495,7 +1486,7 @@ body, html {
     height: 100%;
 }
 
-.favorite-channel > div img:first-child, .suggested-channel img:last-child {
+.suggested-channel img:last-child {
     float: left;
     position: absolute;
     z-index: 5;
@@ -1506,15 +1497,7 @@ body, html {
     left: 0px;
 }
 
-.favorite-channel > div img:first-child {
-    top: 0px !important;
-}
-
 .suggested-channel img:last-child {
-    top: 145px !important;
-}
-
-.favorite-channel > div img:first-child, .suggested-channel img:last-child {
     float: left;
     position: absolute;
     z-index: 5;
@@ -1545,6 +1528,20 @@ body, html {
     font: oblique normal bold 1em Arial, sans-serif;
     position: absolute;
     z-index: 4;
+}
+
+#favoriteChannelHolderFront, #favoriteChannelHolderBack {
+    background: grey url(../images/channel-background.jpg) 50% 50% no-repeat;
+}
+
+#favoriteChannelHolderFront > img {
+    width: 181px;
+    height: 185px;
+}
+
+#favoriteChannelHolderBack > img {
+    width: 45px;
+    height: 45px;
 }
 
 .channel-label span:last-child {

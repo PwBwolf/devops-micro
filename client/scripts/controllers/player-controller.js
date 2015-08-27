@@ -4,7 +4,7 @@
     app.controller('playerCtrl', ['_', '$', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', function (_, $, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter) {
 
 
-        $scope.selectedPromoChannel = -1;
+        $scope.selectedPromo = -1;
         $scope.selectedGenres = [];
         $scope.selectedRegions = [];
         $scope.selectedAudiences = [];
@@ -24,8 +24,8 @@
                 $rootScope.$broadcast('ChannelsLoaded');
             });
 
-            mediaSvc.getPromoChannels(function (data) {
-                $scope.promoChannels = data;
+            mediaSvc.getPromos(function (data) {
+                $scope.promos = data;
             });
 
             mediaSvc.getChannelCategories(function (data) {
@@ -33,13 +33,13 @@
             });
         }
 
-        $scope.promoChannelSelected = function ($index) {
-            $scope.selectedPromoChannel = $index;
+        $scope.promoSelected = function ($index) {
+            $scope.selectedPromo = $index;
         };
 
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
-            $scope.brandImage = $scope.channels[index].image_url;
+            $scope.brandImage = $scope.channels[index].logo;
             $scope.isVisible = true;
             $($scope.channelList).removeClass('channel-panel');
             $($scope.channelList).addClass('channel-panel-max');
@@ -47,23 +47,20 @@
             getChannelGuide(index);
         };
 
-        $scope.filteredChannelClicked = function (channelId) {
-            var index = _.findIndex($rootScope.channels, {id: channelId});
-            $scope.selectedChannel = index;
-            $scope.brandImage = $rootScope.channels[index].image_url;
-            $scope.isVisible = true;
-            $($scope.channelList).removeClass('channel-panel');
-            $($scope.channelList).addClass('channel-panel-max');
-            $scope.showCloseButton();
-            getChannelGuide(index);
+        $scope.filteredChannelClicked = function (id) {
+            var index = _.findIndex($rootScope.channels, {_id: id});
+            $scope.channelClicked(index);
         };
 
-        $scope.watchNow = function (index, play) {
-            if (index !== null && index !== undefined && index > -1) {
+        $scope.watchNow = function (index, rowIndex) {
+            if(rowIndex === 0) {
                 $scope.playChannel(index);
-            } else if (play === 0) {
-                $scope.playChannel($scope.selectedChannel);
             }
+        };
+
+        $scope.watchNowById = function (id) {
+            var index = _.findIndex($rootScope.channels, {_id: id});
+            $scope.playChannel(index);
         };
 
         $scope.toggleChannelFilter = function () {
@@ -99,19 +96,15 @@
 
         function getFirstProgram(index) {
             $scope.programDetails = null;
-            if (!$scope.loadingChannelGuide && index > -1) {
-                $scope.loadingChannelGuide = true;
-                mediaSvc.getChannelGuide($scope.channels[index].live_external_id, 12).success(function (channelGuide) {
+            if (index > -1) {
+                mediaSvc.getChannelGuide($scope.channels[index].stationId, 12).success(function (channelGuide) {
                     $scope.programDetails = $scope.getProgramDetails(channelGuide[0].airings[0]);
-                    $scope.loadingChannelGuide = false;
-                }).error(function () {
-                    $scope.loadingChannelGuide = false;
                 });
             }
         }
 
         function getChannelGuide(index) {
-            mediaSvc.getChannelGuide($scope.channels[index].live_external_id, 12).success(function (channelGuide) {
+            mediaSvc.getChannelGuide($scope.channels[index].stationId, 12).success(function (channelGuide) {
                 $scope.showTimes = channelGuide[0].airings;
                 $scope.programDetails = $scope.getProgramDetails(channelGuide[0].airings[0]);
                 $scope.showListings = [];
@@ -122,11 +115,10 @@
         }
 
         $scope.playChannel = function (index, airing) {
-            mediaSvc.getChannel($scope.channels[index].id).success(function (channel) {
-                $scope.tvUrl = channel.live_pc_url;
+            mediaSvc.getChannelUrl($rootScope.channels[index]._id).success(function (channel) {
+                $scope.tvUrl = channel.videoUrl;
                 $scope.airing = airing;
-                $scope.channelLogo = $scope.channels[index].image_url;
-                $scope.channelNumber = $scope.channels[index].number;
+                $scope.channelLogo = $scope.channels[index].logo;
                 $scope.channelName = $scope.channels[index].name;
                 playStream();
             });
