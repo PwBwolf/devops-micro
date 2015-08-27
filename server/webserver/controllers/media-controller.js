@@ -11,6 +11,7 @@ var fs = require('fs'),
     Channel = mongoose.model('Channel'),
     CmsCategory = mongoose.model('CmsCategory'),
     CmsChannel = mongoose.model('CmsChannel'),
+    CmsAd = mongoose.model('CmsAd'),
     User = mongoose.model('User');
 
 module.exports = {
@@ -79,7 +80,7 @@ module.exports = {
             if (user.account.type === 'paid' || user.account.type === 'comp') {
                 query.$or.push({package: 'Premium'});
                 query.$or.push({package: 'Paid Basic'});
-            } else if (user.account.type === 'free' && diff <= 7) {
+            } else if (user.account.type === 'free' && diff <= 7 && !user.cancelDate && !user.complimentaryEndDate) {
                 query.$or.push({package: 'Premium'});
             }
             CmsChannel.find(query, function (err, channels) {
@@ -94,26 +95,13 @@ module.exports = {
     },
 
     getPromos: function (req, res) {
-        fs.readFile(__dirname + '/promos.json', 'utf8', function (err, data) {
+        CmsAd.find({}, function (err, promos) {
             if (err) {
-                logger.logError('mediaController - getPromos - error reading promos.json');
+                logger.logError('mediaController - getPromos - error fetching promos');
                 logger.logError(err);
                 return res.status(500).end();
-            } else {
-                var channels;
-                try {
-                    channels = JSON.parse(data);
-                } catch (ex) {
-                    logger.logError('mediaController - getPromos - error parsing promos.json file');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                if (!channels || channels.length === 0) {
-                    logger.logError('mediaController - getPromos - promos.json file is empty');
-                    return res.status(500).end();
-                }
-                return res.json(channels);
             }
+            return res.json(promos);
         });
     },
 

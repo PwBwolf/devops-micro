@@ -1358,8 +1358,9 @@ body, html {
 }
 
 .suggested-channel {
-    width: 15%;
+    width: 185px;
     height: 100%;
+    margin-right: 5px;
     -webkit-transition: width 1s ease-in-out;
     -moz-transition: width 1s ease-in-out;
     -o-transition: width 1s ease-in-out;
@@ -1371,7 +1372,7 @@ body, html {
 }
 
 .suggested-channel-open {
-    width: 40% !important;
+    width: 500px !important;
     height: 100%;
     -webkit-transition: width 1s ease-in-out;
     -moz-transition: width 1s ease-in-out;
@@ -1384,30 +1385,27 @@ body, html {
 }
 
 .suggested-channel img {
-    width: auto;
+    width: 185px;
     height: 100%;
 }
 
 .suggested-channel article {
     position: absolute;
-    width: 62%;
+    width: 310px;
     height: 100%;
     float: right;
-    right: 8px;
     display: inline;
     background: grey url(../images/channel-background.jpg) 50% 50% no-repeat;
     background-size: cover;
     padding: 2%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 .suggested-channel article h4 {
     color: black;
     margin: 0 0 5px;
     position: relative;
-    display: inline-block;
-    width: 150px;
     white-space: normal;
     vertical-align: top;
 }
@@ -1423,7 +1421,7 @@ body, html {
 
 .suggested-channel article p {
     color: dimgrey;
-    font-size: 95%;
+    font-size: 90%;
     white-space: nowrap;
 }
 
@@ -1474,7 +1472,8 @@ body, html {
     width: 150px;
     height: 150px;
     margin-top: -20px;
-    margin-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .favorite-channel > div:nth-child(even) {
@@ -1519,8 +1518,7 @@ body, html {
 }
 
 .channel-label {
-    width: auto;
-    height: 27%;
+    width: 100%;
     background: rgba(193, 108, 29, 0.9);
     top: 0px;
     padding: 4px 7px;

@@ -2,16 +2,46 @@
     "type": "CmsAds",
     "docs": [
         {
-            "name": "Genre"
+            "name": "Films on Reel",
+            "description": "Films on Reel is the go to channel for 1000′s of classic films in Drama, Western, Action, Horror and Comedy. It is the channel that brings back the nostalgic experience of watching yesteryears classics from the golden era like Three Stooges, High Chapral and Combat series.",
+            "imageFront": "/images/promos/promo-front-1.jpg",
+            "imageBack": "/images/promos/promo-back-1.jpg"
         },
         {
-            "name": "Region"
+            "name": "NTN24",
+            "description": "NTN24 provides news, analysis, opinion, sports and entertainment news programs in Spanish from Colombia.",
+            "imageFront": "/images/promos/promo-front-2.jpg",
+            "imageBack": "/images/promos/promo-back-2.jpg"
         },
         {
-            "name": "Language"
+            "name": "Sports Highlights",
+            "description": "Highlight reels from beIN SPORTS, AYM Sports, PX Sports and TYC Sports, LAS (Latin American Sports).",
+            "imageFront": "/images/promos/promo-front-3.jpg",
+            "imageBack": "/images/promos/promo-back-3.jpg"
         },
         {
-            "name": "Audience"
+            "name": "Iconos",
+            "description": "Intimate biographies of the world’s most iconic public figures.  An account of their lives, achievements and the price of fame.",
+            "imageFront": "/images/promos/promo-front-4.jpg",
+            "imageBack": "/images/promos/promo-back-4.jpg"
+        },
+        {
+            "name": "Telenovelas",
+            "description": "Gran Hotel, El Secreto de Puente Viejo, Betty La Fea, Café con Aroma de Mujer, La Vida de la Mafia, Marilyn, Hombres, Pobre Pablo and many more of your favorite Telenovelas!",
+            "imageFront": "/images/promos/promo-front-5.jpg",
+            "imageBack": "/images/promos/promo-back-5.jpg"
+        },
+        {
+            "name": "Tu cara me suena",
+            "description": "The show involves celebrities (actors, television personalities, comedians) portraying various iconic singers each week to win £20,000 for their chosen charity. The winner of the series receives the £100,000 grand prize for her/his charity.",
+            "imageFront": "/images/promos/promo-front-6.jpg",
+            "imageBack": "/images/promos/promo-back-6.jpg"
+        },
+        {
+            "name": "Men7",
+            "description": "The MEN7 Network is a lifestyle and entertainment network delivering compelling and dynamic high definition television programming for affluent and active men. Distributed across 7 continents on multiple platforms MEN7 delivers entertaining programming anywhere, anytime.",
+            "imageFront": "/images/promos/promo-front-7.jpg",
+            "imageBack": "/images/promos/promo-back-7.jpg"
         }
     ]
 }
