@@ -127,7 +127,7 @@
         function playStream() {
             jwplayer('yiptv-player').setup({
                 width: '100%',
-                height: 370,
+                height: 360,
                 playlist: [{
                     image: $scope.channelLogo,
                     sources: [
