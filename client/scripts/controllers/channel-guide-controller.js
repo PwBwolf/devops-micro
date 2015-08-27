@@ -76,12 +76,12 @@
                 hourDate.setSeconds(0);
                 var diff = Math.floor((hourDate.getTime() - new Date(programStartTime).getTime()) / (1000 * 60));
                 if (diff >= 0) {
-                    return 'width:' + ((time - diff) * 4) + 'px';
+                    return 'width:' + ((time - diff) * 5) + 'px';
                 } else {
-                    return 'margin-left:' + (diff * -4) + 'px;' + 'width:' + (time * 4) + 'px;border-left: 1px solid';
+                    return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (time * 5) + 'px;border-left: 1px solid';
                 }
             } else {
-                return 'width:' + (time * 4) + 'px';
+                return 'width:' + (time * 5) + 'px';
             }
         }
 
