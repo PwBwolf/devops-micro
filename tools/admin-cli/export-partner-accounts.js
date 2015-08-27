@@ -18,9 +18,9 @@ var startDate = process.argv[3];
 var endDate = process.argv[4];
 
 var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
-if(startDate) { 
-	query.createdAt = {$gte: (moment(startDate,'MM/DD/YYYY').toDate()) }; 
-	query.createdAt.$lt = endDate ?  (moment(startDate,'MM/DD/YYYY').toDate())  :  (moment().toDate()) ;
+if (startDate) {
+    query.createdAt = {$gte: (moment(startDate, 'MM/DD/YYYY').toDate())};
+    query.createdAt.$lt = endDate ? (moment(startDate, 'MM/DD/YYYY').toDate()) : (moment().toDate());
 }
 
 logger.logInfo('Usage: node export-partner-accounts-report (merchant (start date (end date) ) ) Date format in mm/dd/yyyy');
@@ -29,23 +29,22 @@ Account.find(query).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
         logger.logError('adminCLI - partnerUsersReport - error fetching partner accounts');
         logger.logError(err);
-        
+
         process.exit(1);
     } else if (!accounts || accounts.length === 0) {
         logger.logError('adminCLI - partnerUsersReport - no accounts found!');
         process.exit(0);
     } else {
-    	console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","User Cancel Date","Cancel On Date","Merchant"');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","User Cancel Date","Cancel On Date","Merchant"');
         for (var i = 0; i < accounts.length; i++) {
             console.log(
-                    formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' + 
-                    formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
-                    formatString(accounts[i].freeSideCustomerNumber) + ','  +
-                    formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ','  +
-                    formatString(accounts[i].merchant) 
-                    );
+                formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' +
+                formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
+                formatString(accounts[i].freeSideCustomerNumber) + ',' +
+                formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
+                formatString(accounts[i].merchant)
+            );
         }
-
         process.exit(0);
     }
 });
