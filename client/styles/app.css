@@ -1518,7 +1518,7 @@ body, html {
 }
 
 .channel-label {
-    width: 100%;
+    width: 185px;
     background: rgba(193, 108, 29, 0.9);
     top: 0px;
     padding: 4px 7px;

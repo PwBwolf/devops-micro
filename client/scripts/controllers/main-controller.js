@@ -7,7 +7,7 @@
         $scope.userRoles = userSvc.userRoles;
         $scope.accessLevels = userSvc.accessLevels;
         $scope.session = {};
-        $scope.app = {eventData: {en: 'Welcome to YipTV', es: 'Bienvenido a YipTV!'}};
+        $scope.app = {eventData: {en: 'Welcome to YipTV', es: 'Bienvenido a YipTV'}};
 
         activate();
 
