@@ -200,7 +200,7 @@
             PLAYER_TITLE: 'Title: ',
             PLAYER_MINUTES: 'minutes',
             PLAYER_RESULTS: 'Results:',
-            PLAYER_CHANNELS_FOUND: 'channels found!',
+            PLAYER_CHANNELS_FOUND: 'channel(s) found!',
             PLAYER_CATEGORIES: 'Categories',
             PLAYER_CLEAR_ALL: 'Clear All',
             PLAYER_GENRE: 'Genre',

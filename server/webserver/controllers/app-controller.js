@@ -22,7 +22,7 @@ module.exports = {
             appName: config.appName,
             environment: process.env.NODE_ENV,
             url: config.url,
-            aioPortalUrl: config.aioPortalUrl,
+            imageUrl: config.imageUrl,
             wordPressUrl: config.wordPressUrl,
             customerCareNumber: config.customerCareNumber,
             graceNoteImageUrl: config.graceNoteImageUrl

@@ -4,10 +4,10 @@
     app.factory('mediaSvc', ['$http', function ($http) {
 
         return {
-            getChannel: function (id) {
+            getChannelUrl: function (id) {
                 return $http({
                     method: 'GET',
-                    url: '/api/get-channel',
+                    url: '/api/get-channel-url',
                     params: {id: id}
                 });
             },
@@ -24,8 +24,8 @@
                 $http.get('/api/get-user-channels').success(success).error(error);
             },
 
-            getPromoChannels: function (success, error) {
-                $http.get('/api/get-promo-channels').success(success).error(error);
+            getPromos: function (success, error) {
+                $http.get('/api/get-promos').success(success).error(error);
             },
 
             getChannelCategories: function (success, error) {

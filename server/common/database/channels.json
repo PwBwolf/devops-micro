@@ -2,13 +2,140 @@
     "type": "CmsChannels",
     "docs": [
         {
-            "name": "Alabama"
+            "name": "Canal Sur",
+            "stationId": "12750",
+            "logo": "/images/channels/canal-sur.png",
+            "package": "Free",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8",
+            "favorite": true
         },
         {
-            "name": "Alaska"
+            "name": "Caribvision",
+            "stationId": "49411",
+            "logo": "/images/channels/caribvision.png",
+            "package": "Free",
+            "genre": "Entertainment",
+            "language": "English",
+            "audience": "All",
+            "region": "Caribbean",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8"
         },
         {
-            "name": "American Samoa"
+            "name": "Clubbing TV",
+            "stationId": "75044",
+            "logo": "/images/channels/clubbing-tv.png",
+            "package": "Free",
+            "genre": "Music",
+            "language": "English",
+            "audience": "General",
+            "region": "English",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8",
+            "favorite": true
+        },
+        {
+            "name": "One America News",
+            "stationId": "82542",
+            "logo": "/images/channels/one-america-news.png",
+            "package": "Free",
+            "genre": "News",
+            "language": "English",
+            "audience": "General",
+            "region": "English",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-oneamerica/_definst_/live.m3u8",
+            "favorite": true
+        },
+        {
+            "name": "RT News Spanish",
+            "stationId": "69367",
+            "logo": "/images/channels/rt-espanol.png",
+            "package": "Free",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_espanol/_definst_/live.m3u8",
+            "favorite": true
+        },
+        {
+            "name": "Smile of a Child",
+            "stationId": "49208",
+            "logo": "/images/channels/smile-of-a-child.png",
+            "package": "Free",
+            "genre": "Kids",
+            "language": "English",
+            "audience": "Children",
+            "region": "USA",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8"
+        },
+        {
+            "name": "beIN Sports",
+            "stationId": "76942",
+            "logo": "/images/channels/bein-sports.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8"
+        },
+        {
+            "name": "beIN Sports Ñ",
+            "stationId": "76943",
+            "logo": "/images/channels/bein-sports-espanol.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8"
+        },
+        {
+            "name": "Antena 3",
+            "stationId": "16800",
+            "logo": "/images/channels/antena-3.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spain",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8"
+        },
+        {
+            "name": "A 3 Series",
+            "stationId": "90917",
+            "logo": "/images/channels/a-3-series.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8"
+        },
+        {
+            "name": "AYM Sports",
+            "stationId": "34863",
+            "logo": "/images/channels/aym-sports.png",
+            "package": "Paid Basic",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8"
+        },
+        {
+            "name": "AZ Clic",
+            "stationId": "92197",
+            "logo": "/images/channels/az-clic.png",
+            "package": "Paid Basic",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8"
         }
     ]
 }

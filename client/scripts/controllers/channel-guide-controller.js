@@ -39,8 +39,8 @@
 
         function getChannelGuide() {
             async.eachSeries($rootScope.channels, function (value, callback) {
-                mediaSvc.getChannelGuide(value.live_external_id, 6).success(function (channelView) {
-                    var logo = value.image_url;
+                mediaSvc.getChannelGuide(value.stationId, 6).success(function (channelView) {
+                    var logo = value.logo;
                     var station = channelView[0].callSign;
                     var lineUp = channelView[0].airings;
                     var channelGuide = angular.element(document.createElement('div'));
