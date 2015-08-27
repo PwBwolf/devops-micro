@@ -22,8 +22,10 @@ var dbYip = mongoose.createConnection(config.db);
 var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
 
-var daysRetrieve = 14;
-var daysKeep = 5;
+var daysRetrieve = config.graceNoteDaysRetrieve;
+var daysKeep = config.graceNoteDaysKeep;
+//var daysRetrieve = 14;
+//var daysKeep = 5;
 
 if(daysRetrieve > 14 || daysRetrieve === undefined) {
     daysRetrieve = 14;

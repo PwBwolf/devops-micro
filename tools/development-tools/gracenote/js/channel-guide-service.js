@@ -75,6 +75,14 @@
                     url: '/metadata/api/get-channel-logo',
                     params: {stationIds: req.stationIds}
                 }).success(success).error(error);
+            },
+            
+            getProgramImage: function(req, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/metadata/api/get-program-image',
+                    params: {tmsIds: req.tmsIds}
+                }).success(success).error(error);
             }
         }
    }])
