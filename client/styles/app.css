@@ -1238,7 +1238,7 @@ body, html {
 }
 
 .player-top {
-    height: 66.66%;
+    height: 65%;
 }
 
 .main-player {
@@ -1264,7 +1264,7 @@ body, html {
 }
 
 .suggested-channels {
-    height: 33.33%;
+    height: 35%;
     width: 100%;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
@@ -1471,7 +1471,7 @@ body, html {
 .favorite-channel article img {
     width: 150px;
     height: 150px;
-    margin-top: -20px;
+    margin-top: -30px;
     margin-left: auto;
     margin-right: auto;
 }
