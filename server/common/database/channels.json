@@ -2,6 +2,17 @@
     "type": "CmsChannels",
     "docs": [
         {
+            "name": "Rambo",
+            "stationId": "",
+            "logo": "/images/channels/yes.png",
+            "package": "Free",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/Rambo_1@330844/master.m3u8"
+        },
+        {
             "name": "Canal Sur",
             "stationId": "12750",
             "logo": "/images/channels/canal-sur.png",
