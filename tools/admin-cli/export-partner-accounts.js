@@ -35,14 +35,14 @@ Account.find(query).populate('primaryUser').exec(function (err, accounts) {
         logger.logError('adminCLI - partnerUsersReport - no accounts found!');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","User Cancel Date","Cancel On Date","Merchant"');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Bill Date","User Cancel Date","Cancel On Date","Merchant"');
         for (var i = 0; i < accounts.length; i++) {
             if(accounts[i].primaryUser){
                 console.log(
                     formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' +
                     formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
-                    formatString(accounts[i].freeSideCustomerNumber) + ',' +
-                    formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
+                    formatString(accounts[i].freeSideCustomerNumber) + ',' + formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].billingDate) + ',' + 
+                    formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
                     formatString(accounts[i].merchant)
             );
             }
