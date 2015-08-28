@@ -12,11 +12,12 @@
                 });
             },
 
-            getChannelGuide: function (stationId, hours) {
+            getChannelGuide: function (stationId, hours, canceller) {
                 return $http({
                     method: 'GET',
                     url: '/api/get-channel-guide',
-                    params: {stationId: stationId, hours: hours}
+                    params: {stationId: stationId, hours: hours},
+                    timeout: canceller.promise
                 });
             },
 

@@ -13,6 +13,17 @@
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/Rambo_1@330844/master.m3u8"
         },
         {
+            "name": "Outdoor",
+            "stationId": "",
+            "logo": "/images/channels/zoom.png",
+            "package": "Free",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/223831/outdoorgrp/playlist.m3u8"
+        },
+        {
             "name": "Canal Sur",
             "stationId": "12750",
             "logo": "/images/channels/canal-sur.png",

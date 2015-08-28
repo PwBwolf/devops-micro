@@ -66,7 +66,7 @@ module.exports = {
             end.setHours(start.getHours() + 1);
             end.setMinutes(0);
             end.setSeconds(0);
-            var guide = [{callSign: '', airings: [{duration: 0, startTime: date.isoDate(start), endTime: date.isoDate(end), program: {title: '', preferredImage: {uri: ''}}}]}];
+            var guide = [{callSign: '', airings: []}];
             return res.json(guide);
         }
     },
@@ -247,7 +247,13 @@ function getLevel3Token(channel) {
 
 function getAkamaiToken(channel, callback) {
     var url = new URI(channel.videoUrl);
-    var path = url.pathname() + '*';
+    var path = url.pathname();
+    if (path.indexOf('/i/') === 0) {
+        path = '/i/*' + path.substr(path.indexOf('@') + 1, path.lastIndexOf('/') - path.indexOf('@')) + '*';
+    } else {
+        var split = path.split('/');
+        path = '/' + split[1] + '/' + split[2] + '/' + split[3] + '*';
+    }
     var options = {
         scriptPath: __dirname,
         args: ['-w', config.akamaiTokenDuration, '-a', path, '-k', '33554645784d376b484a474b62365673']
