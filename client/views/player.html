@@ -71,7 +71,7 @@
                     <div><span translate="PLAYER_RESULTS"></span> <span ng-bind="filteredChannels.length"></span> <span translate="PLAYER_CHANNELS_FOUND"></span></div>
                     <ul>
                         <li ng-repeat="channel in filteredChannels">
-                            <img ng-src="{{channel.logo}}" ng-click="filteredChannelClicked(channel._id)"/>
+                            <img title="{{channel.name}}" ng-src="{{channel.logo}}" ng-click="filteredChannelClicked(channel._id)"/>
                         </li>
                     </ul>
                 </div>

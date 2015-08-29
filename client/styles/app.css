@@ -821,15 +821,15 @@ ul.passwordStrength {
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
-    background-color: rgb(69, 69, 69);
+    background-color: rgba(200,200,200,0.80);
     padding: 15px 15px;
-    box-shadow: 3px 13px 7px #222 inset;
+    box-shadow: 3px 3px 3px #222 inset;
     border-radius: 3px;
 }
 
 .channel-result img {
-    height: 50px;
-    width: 50px;
+    height: 65px;
+    width: 65px;
 }
 
 .channel-filter-categories {
@@ -1044,9 +1044,9 @@ ul.passwordStrength {
     display: inline;
     vertical-align: middle;
     cursor: pointer;
-    background-color: rgb(69, 69, 69);
+    background-color: rgba(200,200,200,0.80);
     padding: 35px 0;
-    box-shadow: 3px 13px 7px #222 inset;
+    box-shadow: 3px 3px 3px #222 inset;
     border-radius: 3px;
 }
 
