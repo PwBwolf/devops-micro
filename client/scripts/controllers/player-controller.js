@@ -3,7 +3,7 @@
 
         app.controller('playerCtrl', ['_', '$', '$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter) {
 
-            var canceller;
+            var cancellerProgram, cancellerGuide;
             $scope.selectedPromo = -1;
             $scope.selectedGenres = [];
             $scope.selectedRegions = [];
@@ -40,6 +40,7 @@
             $scope.channelClicked = function (index) {
                 $scope.selectedChannel = index;
                 $scope.brandImage = $scope.channels[index].logo;
+                $scope.brandName = $scope.channels[index].name;
                 $scope.isVisible = true;
                 $($scope.channelList).removeClass('channel-panel');
                 $($scope.channelList).addClass('channel-panel-max');
@@ -95,24 +96,24 @@
             };
 
             function getFirstProgram(index) {
-                if (canceller) {
-                    canceller.resolve();
+                if (cancellerProgram) {
+                    cancellerProgram.resolve();
                 }
-                canceller = $q.defer();
+                cancellerProgram = $q.defer();
                 $scope.programDetails = null;
                 if (index > -1) {
-                    mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, canceller).success(function (channelGuide) {
+                    mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, cancellerProgram).success(function (channelGuide) {
                         $scope.programDetails = getProgramDetails(channelGuide[0].airings[0]);
                     });
                 }
             }
 
             function getChannelGuide(index) {
-                if (canceller) {
-                    canceller.resolve();
+                if (cancellerGuide) {
+                    cancellerGuide.resolve();
                 }
-                canceller = $q.defer();
-                mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, canceller).success(function (channelGuide) {
+                cancellerGuide = $q.defer();
+                mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, cancellerGuide).success(function (channelGuide) {
                     var showTimes = channelGuide[0].airings;
                     $scope.showListings = [];
                     if (showTimes.length > 0) {
@@ -176,7 +177,7 @@
                 } else {
                     return $scope.appConfig.graceNoteImageUrl + uri;
                 }
-            };
+            }
 
             $scope.favoriteChannelSelected = function ($index) {
                 $scope.selectedFavoriteChannel = $index;

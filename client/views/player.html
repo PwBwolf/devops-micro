@@ -54,7 +54,7 @@
             <div class="filter-open-btn" title="{{ 'PLAYER_CHANNEL_FILTER' | translate }}" ng-click="toggleChannelFilter()"></div>
             <ul>
                 <li ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
-                    <img ng-src="{{channel.logo}}"/>
+                    <img title="{{channel.name}}" ng-src="{{channel.logo}}"/>
 
                     <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
                         <channel-hover></channel-hover>
