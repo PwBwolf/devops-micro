@@ -10,7 +10,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Mexico",
-            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/Rambo_1@330844/master.m3u8"
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/Rambo_1@330844/master.m3u8",
+            "order": 0
         },
         {
             "name": "Outdoor",
@@ -21,7 +22,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Mexico",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/223831/outdoorgrp/playlist.m3u8"
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/223831/outdoorgrp/playlist.m3u8",
+            "order": 1
         },
         {
             "name": "Canal Sur",
@@ -33,7 +35,8 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8",
-            "favorite": true
+            "favorite": true,
+            "order": 3001
         },
         {
             "name": "Caribvision",
@@ -44,7 +47,8 @@
             "language": "English",
             "audience": "All",
             "region": "Caribbean",
-            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8",
+            "order": 3002
         },
         {
             "name": "Clubbing TV",
@@ -56,7 +60,34 @@
             "audience": "General",
             "region": "English",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8",
-            "favorite": true
+            "favorite": true,
+            "order": 3003
+        },
+        {
+            "name": "Enlace Juvenil",
+            "stationId": "49258",
+            "logo": "/images/channels/enlace-juvenil.png",
+            "package": "Free",
+            "genre": "Faith",
+            "language": "Spanish",
+            "audience": "Children",
+            "region": "Global",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-enlacej/_definst_/live.m3u8",
+            "favorite": true,
+            "order": 3004
+        },
+        {
+            "name": "HITN",
+            "stationId": "17142",
+            "logo": "/images/channels/hitn.png",
+            "package": "Free",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Spanish",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-hitn/_definst_/live.m3u8",
+            "favorite": true,
+            "order": 3005
         },
         {
             "name": "One America News",
@@ -68,7 +99,8 @@
             "audience": "General",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-oneamerica/_definst_/live.m3u8",
-            "favorite": true
+            "favorite": true,
+            "order": 3100
         },
         {
             "name": "RT News Spanish",
@@ -80,7 +112,8 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_espanol/_definst_/live.m3u8",
-            "favorite": true
+            "favorite": true,
+            "order": 3101
         },
         {
             "name": "Smile of a Child",
@@ -91,7 +124,20 @@
             "language": "English",
             "audience": "Children",
             "region": "USA",
-            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8",
+            "order": 3102
+        },
+        {
+            "name": "TBN Enlace",
+            "stationId": "20286",
+            "logo": "/images/channels/tbn-enlace.png",
+            "package": "Free",
+            "genre": "Faith",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spain",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
+            "order": 3103
         },
         {
             "name": "beIN Sports",
@@ -102,7 +148,8 @@
             "language": "Spanish",
             "audience": "All",
             "region": "Global",
-            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8"
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8",
+            "order": 1001
         },
         {
             "name": "beIN Sports Ñ",
@@ -113,7 +160,8 @@
             "language": "Spanish",
             "audience": "All",
             "region": "Global",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8"
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8",
+            "order": 1002
         },
         {
             "name": "Antena 3",
@@ -124,7 +172,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Spain",
-            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
+            "order": 1003
         },
         {
             "name": "A 3 Series",
@@ -135,7 +184,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Mexico",
-            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8",
+            "order": 2001
         },
         {
             "name": "AYM Sports",
@@ -146,7 +196,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Mexico",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8",
+            "order": 2002
         },
         {
             "name": "AZ Clic",
@@ -157,7 +208,8 @@
             "language": "Spanish",
             "audience": "General",
             "region": "Mexico",
-            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8"
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8",
+            "order": 2003
         }
     ]
 }

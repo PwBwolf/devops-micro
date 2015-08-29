@@ -13,7 +13,8 @@ var CmsChannel = new Schema({
     audience: String,
     region: String,
     videoUrl: String,
-    favorite: Boolean
+    favorite: Boolean,
+    order: Number
 }, {collection: 'CmsChannels'});
 
 mongoose.model('CmsChannel', CmsChannel);

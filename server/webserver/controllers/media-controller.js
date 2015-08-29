@@ -86,7 +86,7 @@ module.exports = {
             } else if (user.account.type === 'free' && diff <= 7 && !user.cancelDate && !user.complimentaryEndDate) {
                 query.$or.push({package: 'Premium'});
             }
-            CmsChannel.find(query, function (err, channels) {
+            CmsChannel.find(query).sort({order: 1}).exec(function (err, channels) {
                 if (err) {
                     logger.logError('mediaController - getUserChannels - error fetching user channels: ' + req.email);
                     logger.logError(err);
