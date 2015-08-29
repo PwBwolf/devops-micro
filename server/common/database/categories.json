@@ -27,6 +27,7 @@
                 "Venezuela",
                 "Honduras",
                 "Spain",
+                "Spanish",
                 "Argentina",
                 "Bolivia",
                 "English",
@@ -37,11 +38,19 @@
         },
         {
             "name": "Language",
-            "tags": ["English", "Spanish"]
+            "tags": [
+                "English",
+                "Spanish"
+            ]
         },
         {
             "name": "Audience",
-            "tags": ["All", "General", "Adult", "Children"]
+            "tags": [
+                "All",
+                "General",
+                "Adult",
+                "Children"
+            ]
         }
     ]
 }
