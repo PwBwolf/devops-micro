@@ -1794,7 +1794,7 @@ function createAccount(user, userObj, type, cb) {
     var now = (new Date()).toUTCString();
     var accountObj = new Account({
         type: type,
-        merchant: user.merchant ? user.merchant : 'YIPTV',
+        merchant: user.merchant ? user.merchant.toUpperCase() : 'YIPTV',
         primaryUser: userObj,
         users: [userObj],
         createdAt: now,
