@@ -35,6 +35,9 @@
 
             $scope.promoSelected = function ($index) {
                 $scope.selectedPromo = $index;
+                if ($index > 4) {
+                    $('#playerBottom').animate({scrollLeft: '+=500'}, 1000);
+                }
             };
 
             $scope.channelClicked = function (index) {
@@ -45,6 +48,7 @@
                 $($scope.channelList).removeClass('channel-panel');
                 $($scope.channelList).addClass('channel-panel-max');
                 $scope.showCloseButton();
+                bringToView('#channelMenuHolder');
                 getChannelGuide(index);
             };
 
@@ -53,15 +57,34 @@
                 $scope.channelClicked(index);
             };
 
+            function bringToView(selector) {
+                if ($(selector).position()) {
+                    if ($(selector).position().top < $(window).scrollTop()) {
+                        $('html,body').animate({scrollTop: $(selector).offset().top - 30}, 1500);
+                    } else if ($(selector).position().top + $(selector).height() > $(window).scrollTop() + (window.innerHeight || document.documentElement.clientHeight)) {
+                        $('html,body').animate({scrollTop: $(selector).position().top - (window.innerHeight || document.documentElement.clientHeight) + $(selector).height() + 15}, 1500);
+                    }
+                }
+            }
+
+            function scrollToTop() {
+                var site = $('html, body');
+                site.animate({
+                    scrollTop: $('#topBox').offset().top - 30
+                }, 1500);
+            }
+
             $scope.watchNow = function (index, rowIndex) {
                 if (rowIndex === 0) {
                     $scope.playChannel(index);
+                    scrollToTop();
                 }
             };
 
             $scope.watchNowById = function (id) {
                 var index = _.findIndex($rootScope.channels, {_id: id});
                 $scope.playChannel(index);
+                scrollToTop();
             };
 
             $scope.toggleChannelFilter = function () {
@@ -102,7 +125,7 @@
                 cancellerProgram = $q.defer();
                 $scope.programDetails = null;
                 if (index > -1) {
-                    mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, cancellerProgram).success(function (channelGuide) {
+                    mediaSvc.getChannelGuide($scope.channels[index].stationId, 1, cancellerProgram).success(function (channelGuide) {
                         $scope.programDetails = getProgramDetails(channelGuide[0].airings[0]);
                     });
                 }
@@ -113,9 +136,10 @@
                     cancellerGuide.resolve();
                 }
                 cancellerGuide = $q.defer();
+                $scope.showListings = [];
+                $scope.loadingProgramGuide = true;
                 mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, cancellerGuide).success(function (channelGuide) {
                     var showTimes = channelGuide[0].airings;
-                    $scope.showListings = [];
                     if (showTimes.length > 0) {
                         $scope.programDetails = getProgramDetails(showTimes[0]);
                         for (var i = 0; i < showTimes.length; i++) {
@@ -125,6 +149,7 @@
                         $scope.programDetails = getProgramDetails();
                         $scope.showListings[0] = getChannelDetails();
                     }
+                    $scope.loadingProgramGuide = false;
                 });
             }
 
