@@ -23,7 +23,7 @@
         </div>
 
         <div id="playerBottom" class="suggested-channels ease">
-            <div class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromo}" ng-mouseenter="promoSelected($index)" ng-mouseleave="promoSelected(-1)" ng-repeat="promo in promos track by $index">
+            <div id="{{$index}}Promo" class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromo}" ng-mouseenter="promoSelected($index)" ng-mouseleave="promoSelected(-1)" ng-repeat="promo in promos track by $index">
 
                 <div id="channelHolderFront" ng-class="($index === selectedPromo) ? 'back' : 'front'">
                     <img ng-src="{{promo.imageFront}}"/>
@@ -49,11 +49,15 @@
     <div id="channelMenuHolder" class="channel-panel">
         <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible">
             <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(selectedChannel, $index)" compile-html="listing"></div>
+            <div id="channelGuideLoading" class="progress" ng-show="loadingProgramGuide">
+                <div class="progress-bar progress-bar-slategrey progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                </div>
+            </div>
         </div>
         <div class="channel-list">
             <div class="filter-open-btn" title="{{ 'PLAYER_CHANNEL_FILTER' | translate }}" ng-click="toggleChannelFilter()"></div>
-            <ul>
-                <li ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
+            <ul id="channelList">
+                <li id="{{$index}}Channel" ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
                     <img title="{{channel.name}}" ng-src="{{channel.logo}}"/>
 
                     <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
