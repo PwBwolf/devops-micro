@@ -45,12 +45,12 @@
                 templateUrl: function (params) {
                     var partners = ['truconn'];
                     if (partners.indexOf(params.source) > -1) {
-                        return 'views/' + params.source + '-sign-up.html';
+                        return 'views/merchant-sign-up.html';
                     } else {
                         return 'views/not-found.html';
                     }
                 },
-                controller: 'genericSignUpCtrl',
+                controller: 'merchantSignUpCtrl',
                 access: access.anon
             })
             .when('/free-sign-up-success',
