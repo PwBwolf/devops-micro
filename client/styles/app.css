@@ -840,6 +840,7 @@ ul.passwordStrength {
     background: none;
     width: 90%;
     height: 50px;
+    display: inline-block;
 }
 
 .channel-filter-categories {

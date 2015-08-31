@@ -247,7 +247,7 @@
             "order": 1001
         },
         {
-            "name": "beIN Sports Ñ",
+            "name": "beIN Sports ñ",
             "stationId": "76943",
             "logo": "/images/channels/bein-sports-espanol.png",
             "package": "Premium",
@@ -499,7 +499,7 @@
             "order": 2005
         },
         {
-            "name": "Canal Tiempo",
+            "name": "El Tiempo",
             "stationId": "69650",
             "logo": "/images/channels/canal-el-tiempo.png",
             "package": "Paid Basic",
@@ -547,7 +547,7 @@
             "order": 2009
         },
         {
-            "name": "El Cantinazo",
+            "name": "Cantinazo TV",
             "stationId": "87028",
             "logo": "/images/channels/el-cantinazo.png",
             "package": "Paid Basic",
