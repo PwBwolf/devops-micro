@@ -78,7 +78,7 @@
         },
         {
             "name": "JUCE TV",
-            "stationId": "92199",
+            "stationId": "34169",
             "logo": "/images/channels/juce-tv.png",
             "package": "Free",
             "genre": "Music",
@@ -102,7 +102,7 @@
         },
         {
             "name": "Meio Norte",
-            "stationId": "",
+            "stationId": "93168",
             "logo": "/images/channels/meionorte.png",
             "package": "Free",
             "genre": "News",
@@ -113,8 +113,8 @@
             "order": 1509
         },
         {
-            "name": "Mi Música",
-            "stationId": "",
+            "name": "Mi Música HD",
+            "stationId": "76918",
             "logo": "/images/channels/mi-musica-hd.png",
             "package": "Free",
             "genre": "Music",
@@ -126,7 +126,7 @@
         },
         {
             "name": "Mi Música Tropical",
-            "stationId": "76918",
+            "stationId": "",
             "logo": "/images/channels/mi-musica-tropical.png",
             "package": "Free",
             "genre": "Music",
@@ -344,7 +344,7 @@
         },
         {
             "name": "Mis Películas",
-            "stationId": "",
+            "stationId": "82808",
             "logo": "/images/channels/mis-peliculas.png",
             "package": "Premium",
             "genre": "Entertainment",
@@ -392,7 +392,7 @@
         },
         {
             "name": "TV Quisqueya",
-            "stationId": "",
+            "stationId": "92370",
             "logo": "/images/channels/tv-quisqueya.png",
             "package": "Premium",
             "genre": "Entertainment",
@@ -434,7 +434,7 @@
             "genre": "Music",
             "language": "Spanish",
             "audience": "Adult",
-            "region": "Globak",
+            "region": "Global",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-mimusica/_definst_/live.m3u8",
             "order": 1017
         },
@@ -488,7 +488,7 @@
         },
         {
             "name": "Bolivia TV",
-            "stationId": "",
+            "stationId": "92459",
             "logo": "/images/channels/bolivia-tv.png",
             "package": "Paid Basic",
             "genre": "General",
@@ -620,7 +620,7 @@
         },
         {
             "name": "Latele Novela",
-            "stationId": "",
+            "stationId": "75991",
             "logo": "/images/channels/la-tele-novela.png",
             "package": "Paid Basic",
             "genre": "Entertainment",
@@ -656,7 +656,7 @@
         },
         {
             "name": "Promovision",
-            "stationId": "76069",
+            "stationId": "76079",
             "logo": "/images/channels/promovision.png",
             "package": "Paid Basic",
             "genre": "General",
