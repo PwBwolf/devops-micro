@@ -13,17 +13,32 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/setup/models')(modelsPath);
 var Account = mongoose.model('Account');
 
-var merchant = process.argv[2];
-var startDate = process.argv[3];
-var endDate = process.argv[4];
+var suppressinfo = process.argv[2];
+var merchant = suppressinfo == '-s' ? process.argv[3] : process.argv[2];
+var startDate = suppressinfo == '-s' ? process.argv[4]: process.argv[3];
+var endDate = suppressinfo == '-s' ? process.argv[5]: process.argv[4];
+
+if( !(suppressinfo == '-s') ) {
+    printUsage();
+}
+if(startDate ){
+    if(! (moment(startDate, 'MM/DD/YYYY',true).isValid())) {
+    logger.logError("Invalid Start Date. Please use MM/DD/YYYY format. ex:08/01/2015");
+    process.exit(1);
+    }
+}
+if(endDate ){
+    if(! (moment(endDate, 'MM/DD/YYYY',true).isValid())) {
+    logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015")
+    process.exit(1);
+    }
+}
 
 var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
 if (startDate) {
     query.createdAt = {$gte: (moment(startDate, 'MM/DD/YYYY').toDate())};
-    query.createdAt.$lt = endDate ? (moment(endDate, 'MM/DD/YYYY').toDate()) : (moment().toDate());
+    query.createdAt.$lt = endDate ? (moment(endDate, 'MM/DD/YYYY').add(1,'days').toDate()) : (moment().add(1,'days').toDate());
 }
-
-logger.logInfo('Usage: node export-partner-accounts.js (merchant (start date (end date) ) ) Date format in mm/dd/yyyy');
 
 Account.find(query).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
@@ -32,7 +47,7 @@ Account.find(query).populate('primaryUser').exec(function (err, accounts) {
 
         process.exit(1);
     } else if (!accounts || accounts.length === 0) {
-        logger.logError('adminCLI - partnerUsersReport - no accounts found!');
+        logger.logError('adminCLI - partnerUsersReport - no accounts found!. Try changing options');
         process.exit(0);
     } else {
         console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Bill Date","User Cancel Date","Cancel On Date","Merchant"');
@@ -65,4 +80,13 @@ function formatString(value) {
     } else {
         return '""';
     }
+}
+
+function printUsage() {
+    logger.logInfo('Usage: node export-partner-accounts.js (-s) (merchant (start date (end date) ) )');
+    logger.logInfo('use -s option to suppress usage info');
+    logger.logInfo('For merchant please use short name in uppercase.');
+    logger.logInfo('Date format in MM/DD/YYYY, ex: 08/01/2015. preceeding 0 reqd.');
+    logger.logInfo('Ex: node export-partner-accounts.js -s TRUCONN 08/01/2015 08/30/2015');
+    
 }
