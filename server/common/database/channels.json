@@ -12,7 +12,7 @@
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8",
             "favorite": true,
-            "order": 3001
+            "order": 1501
         },
         {
             "name": "Caribvision",
@@ -24,7 +24,7 @@
             "audience": "All",
             "region": "Caribbean",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8",
-            "order": 3002
+            "order": 1502
         },
         {
             "name": "Clubbing TV",
@@ -37,8 +37,21 @@
             "region": "English",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8",
             "favorite": true,
-            "order": 3003
+            "order": 1503
         },
+        {
+            "name": "Enlace",
+            "stationId": "20286",
+            "logo": "/images/channels/enlace.png",
+            "package": "Free",
+            "genre": "Faith",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spanish",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
+            "order": 1504
+        },
+
         {
             "name": "Enlace Juvenil",
             "stationId": "49258",
@@ -49,7 +62,7 @@
             "audience": "Children",
             "region": "Global",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-enlacej/_definst_/live.m3u8",
-            "order": 3004
+            "order": 1505
         },
         {
             "name": "HITN",
@@ -61,19 +74,19 @@
             "audience": "All",
             "region": "Spanish",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-hitn/_definst_/live.m3u8",
-            "order": 3005
+            "order": 1506
         },
         {
-            "name": "JCTV",
+            "name": "JUCE TV",
             "stationId": "92199",
-            "logo": "/images/channels/jctv.png",
+            "logo": "/images/channels/juce-tv.png",
             "package": "Free",
             "genre": "Music",
             "language": "English",
             "audience": "General",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-jctv/_definst_/live.m3u8",
-            "order": 3006
+            "order": 1507
         },
         {
             "name": "NTN24",
@@ -85,7 +98,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-            "order": 3007
+            "order": 1508
         },
         {
             "name": "Meio Norte",
@@ -97,7 +110,7 @@
             "audience": "General",
             "region": "Brazil",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-meionorte/_definst_/live.m3u8",
-            "order": 3008
+            "order": 1509
         },
         {
             "name": "Mi Música",
@@ -109,7 +122,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicahd_1@345976/master.m3u8",
-            "order": 3009
+            "order": 1510
         },
         {
             "name": "Mi Música Tropical",
@@ -121,7 +134,7 @@
             "audience": "General",
             "region": "Caribbean",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicaromantica_1@345973/master.m3u8",
-            "order": 3010
+            "order": 1511
         },
         {
             "name": "One America News",
@@ -134,7 +147,7 @@
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-oneamerica/_definst_/live.m3u8",
             "favorite": true,
-            "order": 3011
+            "order": 1512
         },
         {
             "name": "RT News",
@@ -146,8 +159,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_news/_definst_/live.m3u8",
-            "favorite": true,
-            "order": 3012
+            "order": 1513
         },
         {
             "name": "RT Español",
@@ -160,7 +172,7 @@
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_espanol/_definst_/live.m3u8",
             "favorite": true,
-            "order": 3013
+            "order": 1514
         },
         {
             "name": "The Church Channel",
@@ -172,8 +184,7 @@
             "audience": "All",
             "region": "USA",
             "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-church/_definst_/live.m3u8",
-            "favorite": true,
-            "order": 3014
+            "order": 1515
         },
         {
             "name": "Smile of a Child",
@@ -185,7 +196,7 @@
             "audience": "Children",
             "region": "USA",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8",
-            "order": 3015
+            "order": 1516
         },
         {
             "name": "TBN",
@@ -197,19 +208,7 @@
             "audience": "All",
             "region": "USA",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbn/_definst_/live.m3u8",
-            "order": 3016
-        },
-        {
-            "name": "TBN Enlace",
-            "stationId": "20286",
-            "logo": "/images/channels/tbn-enlace.png",
-            "package": "Free",
-            "genre": "Faith",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spanish",
-            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
-            "order": 3017
+            "order": 1517
         },
         {
             "name": "TeleSUR",
@@ -221,7 +220,7 @@
             "audience": "General",
             "region": "Venezuela",
             "videoUrl": "http://yiptv-telesur.hls.adaptive.level3.net/hls-live/yiptvlive-telesur/_definst_/live.m3u8",
-            "order": 3018
+            "order": 1518
         },
         {
             "name": "Trendy",
@@ -233,7 +232,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv-trendy.hls.adaptive.level3.net/hls-live/yiptvlive-trendy/_definst_/live.m3u8",
-            "order": 3019
+            "order": 1519
         },
         {
             "name": "beIN Sports",
