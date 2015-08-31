@@ -357,7 +357,7 @@
             SIGN_UP_SUCCESS_BULLET3: 'Comparte con tu familia en hasta 5 dispositivos',
             SIGN_UP_SUCCESS_BULLET4: 'Refiere a un amigo a la Membresía Premier, y ambos reciben ¡un mes de YipTV GRATIS!',
             SIGN_UP_SUCCESS_QUESTIONS: '¿Preguntas? Llama servicio al cliente:',
-            SIGN_UP_SUCCESS_LOGIN_HEADING: '!BIENVENIDO A TU MEMBRESÍA PREMIER!',
+            SIGN_UP_SUCCESS_LOGIN_HEADING: '¡BIENVENIDO A TU MEMBRESÍA PREMIER!',
             SIGN_UP_SUCCESS_LOGIN_SUB_HEADING: '¡Empecemos!',
             SIGN_UP_SUCCESS_LOGIN_LINE1: '¡Felicidades, ya eres <span class="bolder-text">Miembro Premier de YipTV!</span>',
             SIGN_UP_SUCCESS_LOGIN_LINE2_PART1: 'Puedes ver TV directamente en tu computadora o en tu navegador iOS, televisión inteligente, o cualquier dispositivo conectado al internet. Si tienes preguntas sobre como ver televisión en tu dispositivo, visita nuestra sección de',

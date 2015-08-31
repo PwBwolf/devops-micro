@@ -257,6 +257,10 @@ input[type="radio"]:checked + label:before {
     background-color: #BE6193;
 }
 
+.progress-bar-slategrey {
+    background-color: slategrey;
+}
+
 .justify-text {
     text-align: justify;
 }
@@ -821,15 +825,22 @@ ul.passwordStrength {
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
-    background-color: rgb(69, 69, 69);
+    background-color: rgba(200, 200, 200, 0.80);
     padding: 15px 15px;
-    box-shadow: 3px 13px 7px #222 inset;
+    box-shadow: 3px 3px 3px #222 inset;
     border-radius: 3px;
 }
 
 .channel-result img {
+    height: 65px;
+    width: 65px;
+}
+
+#channelGuideLoading {
+    background: none;
+    width: 90%;
     height: 50px;
-    width: 50px;
+    display: inline-block;
 }
 
 .channel-filter-categories {
@@ -1044,9 +1055,9 @@ ul.passwordStrength {
     display: inline;
     vertical-align: middle;
     cursor: pointer;
-    background-color: rgb(69, 69, 69);
+    background-color: rgba(200, 200, 200, 0.80);
     padding: 35px 0;
-    box-shadow: 3px 13px 7px #222 inset;
+    box-shadow: 3px 3px 3px #222 inset;
     border-radius: 3px;
 }
 
@@ -1626,7 +1637,7 @@ body, html {
     box-shadow: 1px -2px 5px #444;
     text-transform: uppercase;
     z-index: 1;
-    background: rgba(193, 108, 29,0.85) url(../images/filter.png) 100% no-repeat;
+    background: rgba(193, 108, 29, 0.85) url(../images/filter.png) 100% no-repeat;
     background-size: contain;
 }
 

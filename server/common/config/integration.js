@@ -26,7 +26,7 @@ module.exports = {
     cloudSpongeDomainKey: 'BNDQ7QY3HH38QG45E3P8',
     complimentarySignUpUrl: 'https://app.int.yiptv.net/sign-up/complimentary/',
     refundPeriodInDays: 3,
-    wordPressUrl: 'http://int.yiptv.net/blog/',
+    wordPressUrl: 'https://int.yiptv.net/blog/',
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
     freeSideFreePremiumUserPackageParts: [17, 18],

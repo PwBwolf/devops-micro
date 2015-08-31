@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('genericSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter) {
+    app.controller('merchantSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter) {
 
         $scope.mv = {disclaimer: true, merchant: $scope.source || 'YIPTV'};
         $scope.formSubmit = false;
@@ -22,7 +22,6 @@
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
                 $scope.saving = true;
-
                 userSvc.signUp(
                     $scope.mv,
                     function (data) {
