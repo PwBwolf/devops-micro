@@ -39,6 +39,8 @@ var _ = require('lodash'),
         {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList]},
         {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
         {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
+        {path: '/api/get-channel-logo', httpMethod: 'GET', middleware: [MediaCtrl.getChannelLogo]},
+        {path: '/api/get-program-image', httpMethod: 'GET', middleware: [MediaCtrl.getProgramImage]},
         {path: '/api/get-promos', httpMethod: 'GET', middleware: [MediaCtrl.getPromos], accessLevel: accessLevels.user},
         {path: '/api/get-channel-categories', httpMethod: 'GET', middleware: [MediaCtrl.getChannelCategories], accessLevel: accessLevels.user},
         {

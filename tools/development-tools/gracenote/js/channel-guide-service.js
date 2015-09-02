@@ -81,7 +81,8 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-program-image',
-                    params: {tmsIds: req.tmsIds}
+                    //params: {tmsIds: req.tmsIds}
+                    params: {uris: req.uris}
                 }).success(success).error(error);
             }
         }

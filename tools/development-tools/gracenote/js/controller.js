@@ -233,7 +233,7 @@
         $scope.channelId = $routeParams.stationid;
         
         var req = {stationIds: []};
-        //var req = {stationIds: []};//$routeParams.stationid;
+        //var req = {stationIds: ['44448']};//$routeParams.stationid;
         //var req = {stationIds: ['92197', '44448']};
         $scope.images = [];
         
@@ -262,9 +262,9 @@
         );
         
         // test for program image
-        //var req = {stationIds: []};
-        //var reqProgramImage = {tmsIds: []};//$routeParams.stationid;
-        var reqProgramImage = {tmsIds: ['SH003701840000', 'SH009553500000', 'SH003513400000']}; // 'SH008986720000'
+        var reqProgramImage = {uris: []};//$routeParams.stationid;
+        //var reqProgramImage = {tmsIds: ['SH003701840000', 'SH009553500000', 'SH003513400000']}; // 'SH008986720000'
+        //var reqProgramImage = {uris: ['assets/p472885_b_v5_ab.jpg', 'assets/p392712_b_v5_aa.jpg', 'assets/p10865466_b_v5_ab.jpg']}; // 'SH008986720000'
         $scope.programImages = [];
         
         channelGuideSvc.getProgramImage(
@@ -297,8 +297,10 @@
         $scope.tmsId = $routeParams.tmsid;
         
         //var req = {stationIds: []};
-        var req = {tmsIds: []};//$routeParams.stationid;
+        //var req = {tmsIds: []};//$routeParams.stationid;
         //var req = {tmsIds: ['SH012914400000', 'SH008986720000']}; // 'SH008986720000'
+        var reqProgramImage = {uris: ['assets/p472885_b_v5_ab.jpg', 'assets/p392712_b_v5_aa.jpg', 'assets/p10865466_b_v5_ab.jpg']}; // 'SH008986720000'
+
         $scope.images = [];
         
         channelGuideSvc.getProgramImage(

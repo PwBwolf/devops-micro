@@ -18,7 +18,9 @@ var ImageData = dbYip.model('ImageData');
 module.exports = {
 
     getChannelList: function (req, res) {
-        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
+//        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
+        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true})
+        .limit(200).exec(function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelList - failed to retrieve channel list');
                 logger.logError(err);
@@ -118,8 +120,9 @@ module.exports = {
     
     getProgramImage: function(req, res) {
 
-        Image.find(req.query.tmsIds === undefined ? {type: 'program'} : Array.isArray(req.query.tmsIds) ? {identifier: {$in: req.query.tmsIds}} : {identifier: req.query.tmsIds})
-        .populate('dataId').exec(function(err, images) {
+        //Image.find(req.query.tmsIds === undefined ? {type: 'program'} : Array.isArray(req.query.tmsIds) ? {identifier: {$in: req.query.tmsIds}} : {identifier: req.query.tmsIds})
+        Image.find(req.query.uris === undefined ? {type: 'program'} : Array.isArray(req.query.uris) ? {'preferredImage.uri': {$in: req.query.uris}} : {'preferredImage.uri': req.query.uris})
+        .populate('dataId').limit(req.query.uris === undefined ? 10 : Array.isArray(req.query.uris) ? req.query.uris.length : 1).exec(function(err, images) {
             if(err) {
                logger.logError('channelGuideController - getProgramImage - failed to query Image db');
                logger.logError(err);

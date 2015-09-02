@@ -13,19 +13,15 @@ var fs = require('../../../server/node_modules/fs-extended');
 var request = require('./node_modules/request');
 var _ = require('../../../server/node_modules/lodash');
 
-require('./models/image');
-require('./models/image-data');
+require('../../../server/common/models/image');
+require('../../../server/common/models/image-data');
 
-//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv'); // integration
-//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.11/yiptv'); // test
 var dbYip = mongoose.createConnection(config.db);
 var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
 
 var daysRetrieve = config.graceNoteDaysRetrieve;
 var daysKeep = config.graceNoteDaysKeep;
-//var daysRetrieve = 14;
-//var daysKeep = 5;
 
 if(daysRetrieve > 14 || daysRetrieve === undefined) {
     daysRetrieve = 14;
@@ -37,20 +33,16 @@ if(daysKeep < 0 || daysKeep === undefined) {
     daysKeep = 5;
 }
 
-/*
-//new CronJob(config.metaDataRetrievalRecurrence, function () {
+//new CronJob(config.imageRetrievalRecurrence, function () {
 new CronJob('0 14 20 * * *', function () {
-        //removeCollections();
         imageDownload();
     }, 
     function () {
-        logger.logInfo('imageProcessorMain - CronJob - gracenote retrieval has finished');
+        logger.logInfo('imageProcessorMain - CronJob - image retrieval has finished');
     },
     true,
     'America/New_York'
-);*/
-
-imageDownload();
+);
 
 function imageDownload() {
     var imageUriUniq = [];
@@ -374,19 +366,13 @@ function imageDownload() {
                                     }
                                 }
                             });
-                            
-                            //test populage
-                            //ImageData.find({uri: image.preferredImage.uri}).populate('dataId').exec(function(err, dataId) {
-                            //   logger.logInfo(dataId[0].name);
-                            //   cb(err);
-                            //});
                         },
                         function (err) {
                             if(err) {
                                 logger.logError('imageProcessorMain - failed to add imagedata into image as reference');
                                 logger.logError(err);
                             } else {
-                                logger.logInfo('imageProcessorMain - download image status succeed! ');
+                                logger.logInfo('imageProcessorMain - add imagedata into image as reference succeed! ');
                             }
                             callback(err, images);
                         }
@@ -399,9 +385,7 @@ function imageDownload() {
         function(imagesUri, callback) {
             
             logger.logInfo('imageProcessorMain - imageDownload - total program images from gracenote: ' + imageUriTemp.length);
-            for(var m = 0; m < imageUriUniqRemoved.length; m++) {
-                imageUriUniq.push(imageUriUniqRemoved[m]);
-            }
+            imageUriUniq = imageUriUniq.concat(imageUriUniqRemoved);
             logger.logInfo('imageProcessorMain - imageDownload - total old program images in db: ' + imageUriUniq.length);
             var imagesTobeRemoved = [];
             var countRemoved = 0;
@@ -432,7 +416,7 @@ function imageDownload() {
             async.eachSeries(
                 imagesRemoved,
                 function(imageRemoved, cb) {
-                    Image.find({type: 'program', identifier: imageRemoved.id}, function(err, removed) {
+                    Image.find({type: 'program', 'preferredImage.uri': imageRemoved.uri}, function(err, removed) {
                         if(err) {
                             logger.logError('imageProcessorMain - imageDownload - failed to find to be removed image in Images');
                             logger.logError(err);
@@ -441,7 +425,7 @@ function imageDownload() {
                         } else {
                             logger.logInfo('imageProcessorMain - imageDownload - image to be removed found in Image: ' + removed.length);
                             if(removed.length === 0) {
-                                logger.logInfo('imageProcessorMain - imageDownload - could not find the to be removed image: ' + imageRemoved.id);
+                                logger.logInfo('imageProcessorMain - imageDownload - could not find the to be removed image: ' + imageRemoved.uri);
                                 cb(err, removed);
                             } else {
                                 ImageData.remove({_id: removed[0].dataId}, function(err) {
@@ -451,7 +435,7 @@ function imageDownload() {
                                        cb(err);
                                    } else {
                                        logger.logInfo('imageProcessorMain - imageDownload - remove imagedata from ImageData collection succeed');
-                                       Image.remove({type: 'program', identifier: imageRemoved.id}, function(err) {
+                                       Image.remove({type: 'program', 'preferredImage.uri': imageRemoved.uri}, function(err) {
                                           if(err) {
                                               logger.logError('imageProcessorMain - imageDownload - failed to remove image from Image collectiomn');
                                               logger.logError(err);
@@ -469,10 +453,10 @@ function imageDownload() {
                 },
                 function (err) {
                     if(err) {
-                        logger.logError('imageProcessorMain - failed to add imagedata into image as reference');
+                        logger.logError('imageProcessorMain - failed to remove program images in db');
                         logger.logError(err);
                     } else {
-                        logger.logInfo('imageProcessorMain - download image status succeed! ');
+                        logger.logInfo('imageProcessorMain - program image removal succeed! ');
                     }
                     callback(err, imagesRemoved);
                 }
@@ -482,11 +466,11 @@ function imageDownload() {
         
         function(err) {
         if (err) {
-            logger.logError('imageProcessorMain - imageDownload - failed');
+            logger.logError('imageProcessorMain - image processor - failed');
             logger.logError(err);
             process.exit(1);
         } else {
-            logger.logInfo('imageProcessorMain - imageDownload succeed!');
+            logger.logInfo('imageProcessorMain - image processor succeed!');
             process.exit(0);
         }
         
@@ -532,24 +516,24 @@ function saveImageToDb(configUrl, uri, filename, cb) {
                         var ext =  filename.split('.').pop().toLowerCase();
                         switch(ext) {
                         case 'png': 
-                            contentType = 'image/png';
+                            contentType = 'image/png;charset=utf-8';
                             break;
                         case 'jpg': 
                         case 'jpeg':
-                            contentType = 'image/jpeg';
+                            contentType = 'image/jpeg;charset=utf-8';
                             break;
                         case 'bmp':
-                            contentType = 'image/bmp';
+                            contentType = 'image/bmp;charset=utf-8';
                             break;
                         case 'gif':
-                            contentType = 'image/gif';
+                            contentType = 'image/gif;charset=utf-8';
                             break;
                         case 'tif':
                         case 'tiff':
-                            contentType = 'image/tiff';
+                            contentType = 'image/tiff;charset=utf-8';
                             break;
                         default:
-                            contentType = 'image/' + ext;
+                            contentType = 'image/' + ext + ';charset=utf-8';
                         }
                     } 
                     img.contentType = contentType;
@@ -578,7 +562,8 @@ function saveImageToDb(configUrl, uri, filename, cb) {
 var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
        if (err) {
-           logger.logError('imageProcessorMain - download - failed to require head info with error: ' + err);
+           logger.logError('imageProcessorMain - download - failed to require head info');
+           logger.logError(err);
            callback(err, filename);
        } else {
            logger.logInfo('imageProcessorMain - download - content-type:' + res.headers['content-type']);
@@ -586,7 +571,8 @@ var download = function(uri, filename, callback) {
            var stream = request(uri);
            stream.pipe(
                fs.createWriteStream(filename).on('error', function(err) {
-                   logger.logError('imageProcessorMain - download - failed to createWriteStream with error: ' + err);
+                   logger.logError('imageProcessorMain - download - failed to createWriteStream');
+                   logger.logError(err);
                    stream.read();
                })
            )
@@ -597,12 +583,3 @@ var download = function(uri, filename, callback) {
     });
 };
   
-function removeCollections() {
-    Image.remove({}, function(err, removed) {
-        if(err) {
-            logger.logError('imageProcessorMain - removeCollections - failed to remove the collections!');
-        } else {
-            logger.logInfo('imageProcessorMain - removeCollections - collections removed: ' + removed);
-        }
-    });
-}

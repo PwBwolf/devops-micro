@@ -10,6 +10,7 @@ var crypto = require('crypto'),
     PythonShell = require('python-shell'),
     mongoose = require('../../node_modules/mongoose'),
     Channel = mongoose.model('Channel'),
+    Image = mongoose.model('Image'),
     CmsCategory = mongoose.model('CmsCategory'),
     CmsChannel = mongoose.model('CmsChannel'),
     CmsAd = mongoose.model('CmsAd'),
@@ -86,7 +87,7 @@ module.exports = {
             } else if (user.account.type === 'free' && diff <= 7 && !user.cancelDate && !user.complimentaryEndDate) {
                 query.$or.push({package: 'Premium'});
             }
-            CmsChannel.find(query).sort({order: 1}).exec(function (err, channels) {
+            CmsChannel.find(query, function (err, channels) {
                 if (err) {
                     logger.logError('mediaController - getUserChannels - error fetching user channels: ' + req.email);
                     logger.logError(err);
@@ -188,6 +189,62 @@ module.exports = {
                 }
                 res.json(channelsDb[0]);
             });
+    },
+    
+    getChannelLogo: function(req, res) {
+
+        Image.find(req.query.stationIds === undefined ? {active: true, type: 'channel'} : Array.isArray(req.query.stationIds) ? {identifier: {$in: req.query.stationIds}} : {identifier: req.query.stationIds})
+        .populate('dataId').exec(function(err, images) {
+            if(err) {
+               logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
+               logger.logError(err);
+               return res.status(500).end();
+            } else {
+               if(images.length === 0) {
+                   logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
+                   return res.status(500).end();
+               } else {
+                   res.writeHead(200, {'Content-Type': 'image'});
+                   var imageData = '';
+                   for(var i = 0; i < images.length; i++) {
+                       if(i === 0) {
+                           imageData += images[i].dataId.data;
+                       } else {
+                           imageData += ('$' + images[i].dataId.data);
+                       }
+                   }
+                   res.end(imageData, 'binary');
+               }
+            }  
+        });
+    },
+    
+    getProgramImage: function(req, res) {
+
+        Image.find(req.query.uris === undefined ? {type: 'program'} : Array.isArray(req.query.uris) ? {'preferredImage.uri': {$in: req.query.uris}} : {'preferredImage.uri': req.query.uris})
+        .populate('dataId').limit(req.query.uris === undefined ? 10 : Array.isArray(req.query.uris) ? req.query.uris.length : 1).exec(function(err, images) {
+            if(err) {
+               logger.logError('channelGuideController - getProgramImage - failed to query Image db');
+               logger.logError(err);
+               return res.status(500).end();
+            } else {
+               if(images.length === 0) {
+                   logger.logError('channelGuideController - getProgramImage - query Image db with 0 return');
+                   return res.status(500).end();
+               } else {
+                   res.writeHead(200, {'Content-Type': 'image'});
+                   var imageData='';
+                   for(var i = 0; i < images.length; i++) {
+                       if(i === 0) {
+                           imageData += images[i].dataId.data;
+                       } else {
+                           imageData += ('$' + images[i].dataId.data);
+                       }
+                   }
+                   res.end(imageData, 'binary');
+               }
+            }  
+        });
     }
 };
 
