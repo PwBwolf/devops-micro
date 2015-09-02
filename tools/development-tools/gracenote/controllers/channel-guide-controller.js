@@ -6,8 +6,8 @@ var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
 
 require('../../../../server/common/models/channel');
-require('../../image-download/models/image-data');
-require('../../image-download/models/image');
+require('../../../../server/common/models/image-data');
+require('../../../../server/common/models/image');
 
 var dbYip = mongoose.createConnection(config.db);
 
@@ -16,10 +16,25 @@ var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
 
 module.exports = {
-
     getChannelList: function (req, res) {
-//        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
-        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true})
+        
+        var projectionObj = {};
+        projectionObj['stationId'] = true;
+        projectionObj['callSign'] = true;
+        projectionObj['preferredImage.uri'] = true;
+        if(req.query.projections) {
+            if(Array.isArray(req.query.projections)) {
+                for (var i = 0; i < req.query.projections.length; i++) {
+                    projectionObj[req.query.projections[i]] = true;
+                }
+            } else {
+                projectionObj[req.query.projections] = true;
+            }
+        }
+        
+        //Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
+        //Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true})
+        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, projectionObj)
         .limit(200).exec(function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelList - failed to retrieve channel list');
@@ -36,21 +51,30 @@ module.exports = {
         logger.logInfo('mediaController - getChannelInfo - startTime:' + startTime);
         var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 14)) : date.isoDate(dateAdd(nowTime, 'hour', req.query.period));
         logger.logInfo('mediaController - getChannelInfo - endTime:' + endTime);
+        
+        var projectionObj = {};
+        projectionObj['stationId'] = true;
+        projectionObj['callSign'] = true;
+        projectionObj['airings.program.preferredImage.uri'] = true;
+        projectionObj['airings.endTime'] = true;
+        projectionObj['airings.startTime'] = true;
+        projectionObj['airings.program.tmsId'] = true;
+        projectionObj['airings.program.title'] = true;
+        projectionObj['airings.ratings.code'] = true;
+        if(req.query.projections) {
+            if(Array.isArray(req.query.projections)) {
+                for (var i = 0; i < req.query.projections.length; i++) {
+                    projectionObj[req.query.projections[i]] = true;
+                }
+            } else {
+                projectionObj[req.query.projections] = true;
+            }
+        }
+        
         Channel.aggregate([{$match: {stationId: req.query.stationId}},
                 {$unwind: '$airings'},
                 {$match: {'airings.endTime': {$gt: startTime, $lte: endTime}}},
-                {
-                    $project: {
-                        stationId: true,
-                        'airings.program.preferredImage.uri': true,
-                        'airings.endTime': true,
-                        'airings.startTime': true,
-                        'airings.program.tmsId': true,
-                        'airings.program.title': true,
-                        'airings.ratings.code': true,
-                        callSign: true
-                    }
-                }],
+                {$project: projectionObj}],
             function (err, channelsDb) {
                 if (err) {
                     logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from db');
@@ -62,23 +86,32 @@ module.exports = {
     },
 
     getProgramDetail: function (req, res) {
+        
+        var projectionObj = {};
+        projectionObj['stationId'] = true;
+        projectionObj['callSign'] = true;
+        projectionObj['airings.program.preferredImage.uri'] = true;
+        projectionObj['airings.program.tmsId'] = true;
+        projectionObj['airings.program.title'] = true;
+        projectionObj['airings.program.genres'] = true;
+        projectionObj['airings.program.longDescription'] = true;
+        projectionObj['airings.program.topCast'] = true;
+        projectionObj['airings.program.directors'] = true;
+        projectionObj['airings.program.entityType'] = true;
+        if(req.query.projections) {
+            if(Array.isArray(req.query.projections)) {
+                for (var i = 0; i < req.query.projections.length; i++) {
+                    projectionObj[req.query.projections[i]] = true;
+                }
+            } else {
+                projectionObj[req.query.projections] = true;
+            }
+        }
+        
         Channel.aggregate([{$match: {stationId: req.query.stationId}},
                 {$unwind: '$airings'},
                 {$match: {'airings.program.tmsId': req.query.tmsId}},
-                {
-                    $project: {
-                        stationId: true,
-                        'airings.program.preferredImage.uri': true,
-                        'airings.program.tmsId': true,
-                        'airings.program.title': true,
-                        'airings.program.genres': true,
-                        'airings.program.longDescription': true,
-                        'airings.program.topCast': true,
-                        'airings.program.directors': true,
-                        'airings.program.entityType': true,
-                        callSign: true
-                    }
-                },
+                {$project: projectionObj},
                 {$limit: 1}],
             function (err, channelsDb) {
                 if (err) {

@@ -47,7 +47,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-channel-list',
-                    params: {stationIds: req.stationIds}
+                    params: {stationIds: req.stationIds, projections: req.projections}
                 }).success(success).error(error);
                 
             },
@@ -56,7 +56,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-channel-info',
-                    params: {stationId: req.stationId, period: req.period}
+                    params: {stationId: req.stationId, period: req.period, projections: req.projections}
                 }).success(success).error(error);
                 
             },
@@ -65,7 +65,7 @@
                 $http({
                     method: 'GET',
                     url: '/metadata/api/get-program-detail',
-                    params: {tmsId: req.tmsId, stationId: req.stationId}
+                    params: {tmsId: req.tmsId, stationId: req.stationId, projections: req.projections}
                 }).success(success).error(error);
             },
             

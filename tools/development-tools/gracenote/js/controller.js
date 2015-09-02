@@ -59,7 +59,7 @@
     
     myApp.controller('channelListCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
        
-        var req = {stationIds: []};
+        var req = {stationIds: [], projections: ['status', 'channel']};
         //var req = {stationIds: ['44448', '55912']};
     /*    
         channelGuideSvc.getAppConfig()
@@ -127,7 +127,7 @@
         
         channelSvc.setChannel($routeParams.stationid);
         
-        var req = {stationId: '0', period: undefined};
+        var req = {stationId: '0', period: undefined, projections: []};
         req.stationId = $routeParams.stationid;
         req.period = undefined;
     /*    
@@ -196,7 +196,7 @@
         console.log('programCtrl result: channel index '+$routeParams.stationid);
         $scope.channelId = $routeParams.stationid;
         
-        var req = {tmsId: '0', stationId: '0'};
+        var req = {tmsId: '0', stationId: '0', projections: []};
         req.tmsId = $routeParams.programid;
         req.stationId = $routeParams.stationid;
         //req.startTime = $routeParams.starttime;
