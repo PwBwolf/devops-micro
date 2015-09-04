@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
     config = require('../../common/setup/config'),
     email = require('../../common/services/email'),
     subscription = require('../../common/services/subscription'),
+    validation = require('../../common/services/validation'),
     aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
@@ -19,6 +20,12 @@ var mongoose = require('mongoose'),
 
 module.exports = {
     signUp: function (req, res) {
+        var validationError = validation.validateSignUpInputs(req.body);
+        if (validationError) {
+            logger.logError('userController - signUp - user input error: ' + req.body.email);
+            logger.logError(validationError);
+            return res.status(500).end(validationError);
+        }
         if (req.body.merchant) {
             Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
                 if (err) {
@@ -50,7 +57,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err.message);
+                                return res.status(500).send(err);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -60,7 +67,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err.message);
+                                return res.status(500).send(err);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -70,7 +77,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err.message);
+                                return res.status(500).send(err);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -91,7 +98,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err.message);
+                                return res.status(500).send(err);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -101,7 +108,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err.message);
+                                return res.status(500).send(err);
                             } else {
                                 return res.status(200).send(status);
                             }

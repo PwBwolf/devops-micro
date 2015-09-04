@@ -30,7 +30,7 @@ User.find({}).populate('account').exec(function (err, users) {
                     formatString(users[i].account.type) + ',' + formatString(users[i].account.freeSideCustomerNumber) + ',' + formatString(users[i].account.aioAccountId) + ',' +
                     formatDate(users[i].createdAt) + ',' + formatDate(users[i].upgradeDate) + ',' + formatDate(users[i].cancelDate) + ',' + formatDate(users[i].cancelOn) + ',' + formatDate(users[i].validTill) + ',' +
                     formatString(users[i].account.complimentaryCode) + ',' + formatString(users[i].account.referredBy) + ',' + formatString(users[i].account.merchant) + ',' + formatString(users[i].oldInactiveUser) + ',' + formatDate(users[i].account.startDate)
-                    );
+                );
             }
         }
         process.exit(0);
