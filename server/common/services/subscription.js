@@ -558,6 +558,7 @@ module.exports = {
                                 billingDate: userObj.account.billingDate,
                                 firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 premiumEndDate: userObj.account.premiumEndDate,
+                                merchant: userObj.account.merchant,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
                                 complimentaryEndDate: userObj.complimentaryEndDate
@@ -570,6 +571,9 @@ module.exports = {
                             userObj.complimentaryEndDate = undefined;
                             if (!userObj.account.firstCardPaymentDate && newUser.address) {
                                 userObj.account.firstCardPaymentDate = (new Date()).toUTCString();
+                            }
+                            if (newUser.merchant && newUser.merchant !== 'YIPTV') {
+                                userObj.account.merchant = newUser.merchant.toUpperCase();
                             }
                             if (newUser.firstName) {
                                 currentUser = {
@@ -1984,6 +1988,7 @@ function revertAccountChangesForUpgrade(user, currentValues, cb) {
     user.account.premiumEndDate = currentValues.premiumEndDate;
     user.account.billingDate = currentValues.billingDate;
     user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
+    user.account.merchant = currentValues.merchant;
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
