@@ -40,6 +40,19 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
+            .when('/sign-up/:source',
+            {
+                templateUrl: function (params) {
+                    var partners = ['truconn'];
+                    if (partners.indexOf(params.source) > -1) {
+                        return 'views/merchant-sign-up.html';
+                    } else {
+                        return 'views/not-found.html';
+                    }
+                },
+                controller: 'merchantSignUpCtrl',
+                access: access.anon
+            })
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',

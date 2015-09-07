@@ -231,10 +231,5 @@
                 }
             }
         });
-
-        $rootScope.$on('$routeChangeSuccess', function (event, current) {
-            $rootScope.source = current.params.source || '';
-        });
-
     }]);
 }(angular.module('app')));
