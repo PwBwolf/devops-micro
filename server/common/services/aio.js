@@ -99,5 +99,28 @@ module.exports = {
             logger.logError(err);
             callback(err);
         });
+    },
+
+    getToken: function (username, callback) {
+        var client = new Client();
+        var args = {
+            parameters: {back_office: true, username: username},
+            headers: {'Authorization': 'apikey ' + config.aioApiKey},
+            requestConfig: {timeout: 3000},
+            responseConfig: {timeout: 3000}
+        };
+        client.get(config.aioApiUrl + '/api/auth/token/sso/', args, function (data) {
+            logger.logInfo('aio - getToken - response');
+            logger.logInfo(data);
+            if (data.success !== 'true') {
+                callback(data.detail);
+            } else {
+                callback(null, data);
+            }
+        }).on('error', function (err) {
+            logger.logError('aio - getToken - error in getting sso token');
+            logger.logError(err);
+            callback(err);
+        });
     }
 };
