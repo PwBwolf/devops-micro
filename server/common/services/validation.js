@@ -7,7 +7,8 @@ var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\")
 var addressRegex = /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
 var telephoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
 var zipCodeRegex = /^\d{5}$/;
-var cvvRegex = /^\d{3,4}$/;
+var cvv3Regex = /^\d{3}$/;
+var cvv4Regex = /^\d{4}$/;
 
 module.exports = {
 
@@ -85,10 +86,13 @@ module.exports = {
             if (!user.cardNumber || user.cardNumber.trim().length === 0) {
                 return 'CardNumberRequired';
             }
-            if (user.cardNumber.trim().length > 19) {
+            if (user.cardNumber.trim().length < 14) {
+                return 'CardNumberMinLengthNotMet';
+            }
+            if (user.cardNumber.trim().length > 16) {
                 return 'CardNumberMaxLengthExceeded';
             }
-            if (!isCreditCard(user.cardNumber)) {
+            if (!isCreditCard(user.cardNumber.trim())) {
                 return 'CardNumberInvalid';
             }
             if (!user.expiryDate || user.expiryDate.trim().length === 0) {
@@ -103,7 +107,7 @@ module.exports = {
             if (!user.cvv || user.cvv.trim().length === 0) {
                 return 'CvvRequired';
             }
-            if (!cvvRegex.test(user.cvv.trim())) {
+            if (!isCvv(user.cvv.trim(), user.cardNumber.trim())) {
                 return 'CvvInvalid';
             }
             if (!user.address || user.address.trim().length === 0) {
@@ -189,6 +193,14 @@ function isExpiryDate(dateString) {
         return month >= today.getMonth() + 1;
     }
     return true;
+}
+
+function isCvv(cvv, cardNumber) {
+    if(cardNumber.indexOf('34') === 0 || cardNumber.indexOf('37') === 0) {
+        return cvv4Regex.test(cvv);
+    }  else {
+        return cvv3Regex.test(cvv);
+    }
 }
 
 function isState(state) {
