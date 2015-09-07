@@ -41,17 +41,17 @@
 </div>
 <script>
     window.cloudsponge = undefined;
-    var key = {'localhost': 'LJZY53MYH2K7YQKX3TZD', 'app.int.yiptv.net': 'NXELPGQCSSHZP3K6RGKF', 'app.test.yiptv.net': '3BXMGGH22R87R3KEL2NR', 'staging.yiptv.net': '5FLQG2YJF2SGQ2JY4GCH', 'yiptv.com': 'GMQU3G2VW72CLFRVWS2N' };
+    var key = {'localhost': 'LJZY53MYH2K7YQKX3TZD', 'app.int.yiptv.net': 'NXELPGQCSSHZP3K6RGKF', 'app.test.yiptv.net': '3BXMGGH22R87R3KEL2NR', 'app.yiptv.com': 'GMQU3G2VW72CLFRVWS2N' };
     var domain = location.hostname;
-    var appendInTextarea = true;
+    var appendInTextArea = true;
     var emailSep = ', ';
 
     function populateTextArea(contacts) {
         var email;
         var emails = [];
-        var textarea = document.getElementById('emailList');
-        if (appendInTextarea && textarea.value.strip().length > 0) {
-            emails = textarea.value.split(emailSep);
+        var textArea = document.getElementById('emailList');
+        if (appendInTextArea && textArea.value.strip().length > 0) {
+            emails = textArea.value.split(emailSep);
         }
         for (var i = 0; i < contacts.length; i++) {
             email = contacts[i].selectedEmail();
@@ -59,7 +59,7 @@
                 emails.push(email);
             }
         }
-        textarea.value = emails.join(emailSep);
+        textArea.value = emails.join(emailSep);
         var input = $('#emailList');
         input.trigger('input');
         input.trigger('change');
