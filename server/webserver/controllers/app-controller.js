@@ -23,6 +23,7 @@ module.exports = {
             environment: process.env.NODE_ENV,
             url: config.url,
             imageUrl: config.imageUrl,
+            aioPortalUrl: config.aioPortalUrl,
             wordPressUrl: config.wordPressUrl,
             customerCareNumber: config.customerCareNumber,
             graceNoteImageUrl: config.graceNoteImageUrl

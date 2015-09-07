@@ -7,7 +7,7 @@ var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\")
 var addressRegex = /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
 var telephoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
 var zipCodeRegex = /^\d{5}$/;
-var cvvRegex = /^\d{3,4}$/
+var cvvRegex = /^\d{3,4}$/;
 
 module.exports = {
 

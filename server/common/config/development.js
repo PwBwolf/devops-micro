@@ -2,6 +2,7 @@
 
 module.exports = {
     environment: 'development',
+    clientPath: '/client_old',
     port: 3000,
     merchantPort: 4000,
     notificationPort: 5000,

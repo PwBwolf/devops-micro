@@ -57,7 +57,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new free user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -67,7 +67,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new paid user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -77,7 +77,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in new complimentary user creation: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send('registered');
                             }
@@ -98,7 +98,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error in upgrade subscription from free to paid: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -108,7 +108,7 @@ module.exports = {
                             if (err) {
                                 logger.logError('userController - signUp - error converting free to complimentary: ' + req.body.email.toLowerCase());
                                 logger.logError(err);
-                                return res.status(500).send(err);
+                                return res.status(500).send(err.message);
                             } else {
                                 return res.status(200).send(status);
                             }
@@ -701,8 +701,29 @@ module.exports = {
             }
             return res.status(200).end();
         });
+    },
+
+    getAioToken: function (req, res) {
+        var aioGuestList = config.aioGuestAccountList;
+        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
+        aio.getToken(user, function (err, data) {
+            if (err) {
+                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            return res.send(data);
+        });
     }
 };
+
+function getGuestCounter() {
+    getGuestCounter.count = ++getGuestCounter.count || 0;
+    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
+        getGuestCounter.count = 0;
+    }
+    return getGuestCounter.count;
+}
 
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;

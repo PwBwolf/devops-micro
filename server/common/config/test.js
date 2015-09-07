@@ -7,6 +7,7 @@ if (!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'test',
+    clientPath: '/client',
     port: 3000,
     merchantPort: 4000,
     notificationPort: 5000,

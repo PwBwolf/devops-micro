@@ -87,7 +87,7 @@ module.exports = {
             } else if (user.account.type === 'free' && diff <= 7 && !user.cancelDate && !user.complimentaryEndDate) {
                 query.$or.push({package: 'Premium'});
             }
-            CmsChannel.find(query, function (err, channels) {
+            CmsChannel.find(query).sort({order: 1}).exec(function (err, channels) {
                 if (err) {
                     logger.logError('mediaController - getUserChannels - error fetching user channels: ' + req.email);
                     logger.logError(err);
@@ -134,7 +134,7 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, projectionObj, function (err, channelsDb) {
             if (err) {
                 logger.logError('mediaController - getChannelList - failed to retrieve channel list');
@@ -151,7 +151,7 @@ module.exports = {
         logger.logInfo('mediaController - getChannelInfo - startTime:' + startTime);
         var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 14)) : date.isoDate(dateAdd(nowTime, 'hour', req.query.period));
         logger.logInfo('mediaController - getChannelInfo - endTime:' + endTime);
-        
+
         var projectionObj = {};
         projectionObj['stationId'] = true;
         projectionObj['callSign'] = true;
@@ -170,7 +170,7 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         Channel.aggregate([{$match: {stationId: req.query.stationId}},
                 {$unwind: '$airings'},
                 {$match: {'airings.endTime': {$gt: startTime, $lte: endTime}}},
@@ -206,7 +206,7 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         Channel.aggregate([{$match: {stationId: req.query.stationId}},
                 {$unwind: '$airings'},
                 {$match: {'airings.program.tmsId': req.query.tmsId}},
@@ -221,7 +221,7 @@ module.exports = {
                 res.json(channelsDb[0]);
             });
     },
-    
+
     getChannelLogo: function(req, res) {
 
         Image.find(req.query.stationIds === undefined ? {active: true, type: 'channel'} : Array.isArray(req.query.stationIds) ? {identifier: {$in: req.query.stationIds}} : {identifier: req.query.stationIds})
@@ -246,10 +246,10 @@ module.exports = {
                    }
                    res.end(imageData, 'binary');
                }
-            }  
+            }
         });
     },
-    
+
     getProgramImage: function(req, res) {
 
         Image.find(req.query.uris === undefined ? {type: 'program'} : Array.isArray(req.query.uris) ? {'preferredImage.uri': {$in: req.query.uris}} : {'preferredImage.uri': req.query.uris})
@@ -274,7 +274,7 @@ module.exports = {
                    }
                    res.end(imageData, 'binary');
                }
-            }  
+            }
         });
     }
 };

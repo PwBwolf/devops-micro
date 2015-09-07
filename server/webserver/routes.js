@@ -24,6 +24,7 @@ var _ = require('lodash'),
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
         {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
+        {path: '/api/get-aio-token', httpMethod: 'GET', middleware: [UserCtrl.getAioToken]},
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut], accessLevel: accessLevels.user},
         {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
         {path: '/api/update-user-info', httpMethod: 'POST', middleware: [UserCtrl.updateUserInfo], accessLevel: accessLevels.user},
@@ -46,7 +47,7 @@ var _ = require('lodash'),
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
-                res.sendFile(config.root + '/client/index.html');
+                res.sendFile(config.root + config.clientPath + '/index.html');
             }]
         }
     ];
