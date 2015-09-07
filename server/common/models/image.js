@@ -22,9 +22,10 @@ var Image = new Schema({
             content: String,
             lang: String
         },
-        personIds: [String]}, 
+        personIds: [String]
+    },
     active: Boolean,
     dataId: {type: Schema.Types.ObjectId, ref: 'ImageData'}
-    }, {collection: 'Images'});
+}, {collection: 'Images'});
 
 mongoose.model('Image', Image);
