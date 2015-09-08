@@ -552,7 +552,7 @@ function imageDownload() {
                                     cb(err);
                                 } else {
                                     if(data.length === 0) {
-                                        logger.logError('metadataProcessorMain - imageDownload - retrieve imageData from db return 0 with uri: ' + preferredImage.uri);
+                                        logger.logError('metadataProcessorMain - imageDownload - retrieve imageData from db return 0 with uri: ' + image.preferredImage.uri);
                                         cb(err);
                                     } else {
                                         image.dataId = data[0]._id;
