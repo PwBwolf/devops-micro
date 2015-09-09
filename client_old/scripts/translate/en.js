@@ -273,7 +273,7 @@
             RESET_PASSWORD_SUCCESS_HEADING: 'Password Changed',
             RESET_PASSWORD_SUCCESS_MESSAGE: 'Your password has been changed successfully.',
             SIGN_IN_HEADING: 'Welcome back to YipTV. Login below to watch your favorite shows.',
-            SIGN_IN_SUB_HEADING: 'Not registered yet? <a style="color:#A03269" class="underline-text" href="/sign-up/paid">Click here to sign up</a> and start watching now!',
+            SIGN_IN_SUB_HEADING: 'Not registered yet? <a style="color:#A03269" class="underline-text" href="/sign-up/free">Click here to sign up</a> and start watching now!',
             SIGN_IN_EMAIL: 'Email',
             SIGN_IN_EMAIL_REQUIRED: 'Enter your email address',
             SIGN_IN_EMAIL_INVALID: 'Enter a valid email address',
