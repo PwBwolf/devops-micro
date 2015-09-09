@@ -13,6 +13,9 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/setup/models')(modelsPath);
 var Account = mongoose.model('Account');
 
+if(process.argv.length > 5){
+    logger.logError("Too many parameters. Review usage below.")
+}
 if(process.argv[2] === '-h' || process.argv.length > 5){
     printUsage();
     process.exit(0);
