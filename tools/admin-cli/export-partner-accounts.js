@@ -13,33 +13,39 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/setup/models')(modelsPath);
 var Account = mongoose.model('Account');
 
-var suppressinfo = process.argv[2];
-var merchant = suppressinfo == '-s' ? process.argv[3] : process.argv[2];
-var startDate = suppressinfo == '-s' ? process.argv[4]: process.argv[3];
-var endDate = suppressinfo == '-s' ? process.argv[5]: process.argv[4];
-
-if( !(suppressinfo == '-s') ) {
+if(process.argv[2] === '-h' || process.argv.length > 5){
     printUsage();
+    process.exit(0);
+}
+
+var merchant = process.argv[2];
+var startDate = process.argv[3];
+var endDate = process.argv[4];
+
+if(merchant) {
+    merchant = merchant.toUpperCase();
+}else{
+    logger.logError("Merchant is required. Please enter the  merchnant short name. Try -h for help");
+    process.exit(1);
 }
 if(startDate ){
-    if(! (moment(startDate, 'MM/DD/YYYY',true).isValid())) {
-    logger.logError("Invalid Start Date. Please use MM/DD/YYYY format. ex:08/01/2015");
+    if( !moment(startDate, 'MM/DD/YYYY',true).isValid() ) {
+    logger.logError("Invalid Start Date. Please use MM/DD/YYYY format. ex:08/01/2015. Preceeding 0 required.");
     process.exit(1);
     }
 }
 if(endDate ){
-    if(! (moment(endDate, 'MM/DD/YYYY',true).isValid())) {
-    logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015")
+    if( !moment(endDate, 'MM/DD/YYYY',true).isValid() ) {
+    logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015. Preceeding 0 required.");
     process.exit(1);
     }
 }
 
 var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
 if (startDate) {
-    query.createdAt = {$gte: (moment(startDate, 'MM/DD/YYYY').toDate())};
-    query.createdAt.$lt = endDate ? (moment(endDate, 'MM/DD/YYYY').add(1,'days').toDate()) : (moment().add(1,'days').toDate());
+    query.createdAt = {$gte: moment.utc(startDate, 'MM/DD/YYYY').toDate()};
+    query.createdAt.$lt = endDate ? moment(endDate, 'MM/DD/YYYY').add(1,'days').toDate() : moment().add(1,'days').toDate();
 }
-
 Account.find(query).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
         logger.logError('adminCLI - partnerUsersReport - error fetching partner accounts');
@@ -47,17 +53,17 @@ Account.find(query).populate('primaryUser').exec(function (err, accounts) {
 
         process.exit(1);
     } else if (!accounts || accounts.length === 0) {
-        logger.logError('adminCLI - partnerUsersReport - no accounts found!. Try changing options');
+        logger.logError('adminCLI - partnerUsersReport - no accounts found!. Try changing options. Use -h for help');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Bill Date","User Cancel Date","Cancel On Date","Merchant"');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Bill Date","Account Type","User Cancel Date","Cancel On Date","Merchant"');
         for (var i = 0; i < accounts.length; i++) {
             if(accounts[i].primaryUser){
                 console.log(
                     formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' +
                     formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
                     formatString(accounts[i].freeSideCustomerNumber) + ',' + formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].billingDate) + ',' + 
-                    formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
+                    formatString(accounts[i].type) + ',' + formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
                     formatString(accounts[i].merchant)
             );
             }
@@ -83,10 +89,11 @@ function formatString(value) {
 }
 
 function printUsage() {
-    logger.logInfo('Usage: node export-partner-accounts.js (-s) (merchant (start date (end date) ) )');
-    logger.logInfo('use -s option to suppress usage info');
+    logger.logInfo('Usage:node export-partner-accounts.js merchant [start date [end date] ]');
+    logger.logInfo('start date, end date optional.');
+    logger.logInfo('use -h option for usage info only');
     logger.logInfo('For merchant please use short name in uppercase.');
     logger.logInfo('Date format in MM/DD/YYYY, ex: 08/01/2015. preceeding 0 reqd.');
-    logger.logInfo('Ex: node export-partner-accounts.js -s TRUCONN 08/01/2015 08/30/2015');
+    logger.logInfo('Ex: node export-partner-accounts.js TRUCONN 08/01/2015 08/30/2015');
     
 }
