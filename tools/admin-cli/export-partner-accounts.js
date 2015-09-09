@@ -28,24 +28,25 @@ if(merchant) {
     logger.logError("Merchant is required. Please enter the  merchnant short name. Try -h for help");
     process.exit(1);
 }
+
+var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
+
 if(startDate ){
     if( !moment(startDate, 'MM/DD/YYYY',true).isValid() ) {
     logger.logError("Invalid Start Date. Please use MM/DD/YYYY format. ex:08/01/2015. Preceeding 0 required.");
     process.exit(1);
     }
-}
-if(endDate ){
-    if( !moment(endDate, 'MM/DD/YYYY',true).isValid() ) {
-    logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015. Preceeding 0 required.");
-    process.exit(1);
+    query.createdAt = {$gte: moment.utc(startDate, 'MM/DD/YYYY').toDate()};
+
+    if(endDate ){
+        if( !moment(endDate, 'MM/DD/YYYY',true).isValid() ) {
+        logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015. Preceeding 0 required.");
+        process.exit(1);
+        }
+        query.createdAt.$lt = moment.utc(endDate, 'MM/DD/YYYY').add(1,'days').toDate();
     }
 }
 
-var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
-if (startDate) {
-    query.createdAt = {$gte: moment.utc(startDate, 'MM/DD/YYYY').toDate()};
-    query.createdAt.$lt = endDate ? moment(endDate, 'MM/DD/YYYY').add(1,'days').toDate() : moment().add(1,'days').toDate();
-}
 Account.find(query).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
         logger.logError('adminCLI - partnerUsersReport - error fetching partner accounts');
