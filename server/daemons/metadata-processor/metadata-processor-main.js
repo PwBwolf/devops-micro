@@ -269,6 +269,49 @@ function imageDownload() {
         function(callback) {
             Image.find({type: 'channel'}, function(err, images) {
                 if(err) {
+                    logger.logError('metadataProcessorMain - imageDownload - failed to retrieve channel images from db in initial');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    logger.logInfo('metadataProcessorMain - imageDownload - images type channel found in db in initial: ' + images.length);
+                    
+                    async.eachSeries(
+                        images,
+                        function(image, cb) {
+                            if(image.dataId) {
+                                cb(null);
+                            } else {
+                                Image.remove({_id: image._id}, function(err, entries) {
+                                    if(err) {
+                                        logger.logError('metadataProcessorMain - imageDownload - failed to remove channel image from Image collection in initial');
+                                        logger.logError(err);
+                                        cb(err);
+                                    } else {
+                                        logger.logInfo('metadataProcessorMain - imageDownload - remove channel image from Image collection succeed in initial with: ' + entries);
+                                        cb(null);
+                                    }
+                                });
+                            }
+                        },
+                        function (err) {
+                            if(err) {
+                                logger.logError('metadataProcessorMain - imageDownload - channel initial from db failed');
+                                logger.logError(err);
+                                callback(err);
+                                return;
+                            } else {
+                                logger.logInfo('metadataProcessorMain - imageDownload - channel initial from db succeed! ');
+                            }
+                            callback(null);
+                        }
+                    );
+                }
+            });
+        }, 
+        
+        function(callback) {
+            Image.find({type: 'channel'}, function(err, images) {
+                if(err) {
                     logger.logError('metadataProcessorMain - imageDownload - failed to retrieve channel images from db');
                     logger.logError(err);
                 } else {
@@ -276,8 +319,8 @@ function imageDownload() {
                     
                     for(var i = 0; i < images.length; i++) {
                         imageUriUniq.push({uri: images[i].preferredImage.uri, type: images[i].type, status: 'saved', id: images[i].identifier});
-                        imageUriUniq = _.uniq(imageUriUniq, 'uri');
                     }
+                    imageUriUniq = _.uniq(imageUriUniq, 'uri');
                     imageCount = imageUriUniq.length;
                     logger.logInfo('metadataProcessorMain - imageDownload - unique images type channel found in db: ' + imageUriUniq.length);
                 }
@@ -369,9 +412,24 @@ function imageDownload() {
                     imageUriUniq,
                     function (item, cb) {
                         if(isSaveImageToDb) {
-                            var fileNameIndex = item.uri.lastIndexOf("/") + 1;
-                            var filename = item.uri.slice(fileNameIndex);
-                            saveImageToDb(config.graceNoteImageUrl, item.uri, filename, cb);
+                            ImageData.find({uri: item.uri}, function(err, imageData) {
+                                if (err) {
+                                    logger.logError('metadataProcessorMain - imageDownload - failed to find item in ImageData with uri: ' + item.uri);
+                                    logger.logError(err);
+                                    cb(err);
+                                    return;
+                                } else {
+                                    logger.logInfo('metadataProcessorMain - imageDownload - find item in ImageData: ' + imageData.length);
+                                    if(imageData.length === 0) {
+                                        var fileNameIndex = item.uri.lastIndexOf("/") + 1;
+                                        var filename = item.uri.slice(fileNameIndex);
+                                        saveImageToDb(config.graceNoteImageUrl, item.uri, filename, cb);
+                                    } else {
+                                        logger.logInfo('metadataProcessorMain - imageDownload - image data has already existed in db');
+                                        cb(null);
+                                    }  
+                                }
+                            });   
                         } else {
                             var filename = item.uri;
                             filename = 'images/channels/'+filename.replace(/[^a-z0-9_.\-]/gi, "-").toLowerCase();
@@ -394,6 +452,49 @@ function imageDownload() {
             }
         },
 
+        function(data, callback) {
+            Image.find({type: 'program'}, function(err, images) {
+                if(err) {
+                    logger.logError('metadataProcessorMain - imageDownload - failed to retrieve program images from db in initial');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    logger.logInfo('metadataProcessorMain - imageDownload - images type program found in db in initial: ' + images.length);
+                    
+                    async.eachSeries(
+                        images,
+                        function(image, cb) {
+                            if(image.dataId) {
+                                cb(null);
+                            } else {
+                                Image.remove({_id: image._id}, function(err, entries) {
+                                    if(err) {
+                                        logger.logError('metadataProcessorMain - imageDownload - failed to remove program image from Image collection in initial');
+                                        logger.logError(err);
+                                        cb(err);
+                                    } else {
+                                        logger.logInfo('metadataProcessorMain - imageDownload - remove program image from Image collection succeed in initial with: ' + entries);
+                                        cb(null);
+                                    }
+                                });
+                            }
+                        },
+                        function (err) {
+                            if(err) {
+                                logger.logError('metadataProcessorMain - imageDownload - program  initial from db failed');
+                                logger.logError(err);
+                                callback(err);
+                                return;
+                            } else {
+                                logger.logInfo('metadataProcessorMain - imageDownload - program initial from db succeed! ');
+                            }
+                            callback(null, data);
+                        }
+                    );
+                }
+            });
+        },
+        
         function(data, callback) {
             imageUriUniq.splice(0, imageUriUniq.length);
             imageCount = 0;
@@ -508,9 +609,24 @@ function imageDownload() {
                     imageUriUniq,
                     function (item, cb) {
                         if(isSaveImageToDb) {
-                            var fileNameIndex = item.uri.lastIndexOf("/") + 1;
-                            var filename = item.uri.slice(fileNameIndex);
-                            saveImageToDb(config.graceNoteImageUrl, item.uri, filename, cb);
+                            ImageData.find({uri: item.uri}, function(err, imageData) {
+                                if (err) {
+                                    logger.logError('metadataProcessorMain - imageDownload - failed to find program item in ImageData with uri: ' + item.uri);
+                                    logger.logError(err);
+                                    cb(err);
+                                    return;
+                                } else {
+                                    logger.logInfo('metadataProcessorMain - imageDownload - find program item in ImageData: ' + imageData.length);
+                                    if(imageData.length === 0) {
+                                        var fileNameIndex = item.uri.lastIndexOf("/") + 1;
+                                        var filename = item.uri.slice(fileNameIndex);
+                                        saveImageToDb(config.graceNoteImageUrl, item.uri, filename, cb);
+                                    } else {
+                                        logger.logInfo('metadataProcessorMain - imageDownload - program image data has already existed in db');
+                                        cb(null);
+                                    }  
+                                }
+                            });
                         } else {
                             var filename = item.uri;
                             filename = 'images/programs/'+filename.replace(/[^a-z0-9_.\-]/gi, "-").toLowerCase();
@@ -552,7 +668,7 @@ function imageDownload() {
                                     cb(err);
                                 } else {
                                     if(data.length === 0) {
-                                        logger.logError('metadataProcessorMain - imageDownload - retrieve imageData from db return 0 with uri: ' + preferredImage.uri);
+                                        logger.logError('metadataProcessorMain - imageDownload - retrieve imageData from db return 0 with uri: ' + image.preferredImage.uri);
                                         cb(err);
                                     } else {
                                         image.dataId = data[0]._id;
