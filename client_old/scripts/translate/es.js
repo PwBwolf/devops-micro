@@ -273,7 +273,7 @@
             RESET_PASSWORD_SUCCESS_HEADING: 'Contrasena Cambiada',
             RESET_PASSWORD_SUCCESS_MESSAGE: 'Su contrasena ha sido cambiada con exito',
             SIGN_IN_HEADING: 'Bienvenido de nuevo a YipTV. Inicie sesión a bajo para ver sus programas favoritos.',
-            SIGN_IN_SUB_HEADING: '¿Todavía no se ha registrado? <a style="color:#A03269" class="underline-text" href="/sign-up/paid">¡Haz clic aquí para registrarte</a> y empieza a ver ahora!',
+            SIGN_IN_SUB_HEADING: '¿Todavía no se ha registrado? <a style="color:#A03269" class="underline-text" href="/sign-up/free">¡Haz clic aquí para registrarte</a> y empieza a ver ahora!',
             SIGN_IN_EMAIL: 'Dirección de correo electrónico',
             SIGN_IN_EMAIL_REQUIRED: 'Introduzca su direccion de correo electronico',
             SIGN_IN_EMAIL_INVALID: 'Introduzca una dirreccion de correo electronico valida',
