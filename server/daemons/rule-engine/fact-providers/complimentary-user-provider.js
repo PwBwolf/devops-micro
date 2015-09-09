@@ -13,7 +13,7 @@ module.exports.getComplimentaryUsers = function () {
         if (accounts) {
             var userList = [];
             for (var i = 0; i < accounts.length; i++) {
-                if (accounts[i].primaryUser.status === 'active' || accounts[i].primaryUser.status === 'registered') {
+                if (accounts[i].primaryUser && (accounts[i].primaryUser.status === 'active' || accounts[i].primaryUser.status === 'registered')) {
                     accounts[i].primaryUser._doc = _.assign(accounts[i].primaryUser._doc, {doctype: 'user'});
                     accounts[i].primaryUser._doc.type = 'comp';
                     userList.push(accounts[i].primaryUser._doc);
