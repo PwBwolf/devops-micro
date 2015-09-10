@@ -51,7 +51,6 @@
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
             "order": 1504
         },
-
         {
             "name": "Enlace Juvenil",
             "stationId": "49258",
@@ -499,7 +498,7 @@
             "order": 2005
         },
         {
-            "name": "El Tiempo",
+            "name": "Canal El Tiempo",
             "stationId": "69650",
             "logo": "/images/channels/canal-el-tiempo.png",
             "package": "Paid Basic",
