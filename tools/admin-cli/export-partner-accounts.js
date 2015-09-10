@@ -60,7 +60,7 @@ if (startDate) {
     }
 }
 
-Account.find(query).populate('primaryUser').exec(function (err, accounts) {
+Account.find(query, {}, {sort: {createdAt: 1}}).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
         logger.logError('adminCLI - exportPartnerAccounts - error fetching partner accounts');
         logger.logError(err);
