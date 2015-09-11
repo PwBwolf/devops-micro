@@ -12,7 +12,7 @@
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1501
+            "order": 1300
         },
         {
             "name": "Caribvision",
@@ -24,7 +24,7 @@
             "audience": "All",
             "region": "Caribbean",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8",
-            "order": 1502
+            "order": 1600
         },
         {
             "name": "Clubbing TV",
@@ -37,7 +37,7 @@
             "region": "English",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1503
+            "order": 1900
         },
         {
             "name": "Enlace",
@@ -49,7 +49,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
-            "order": 1504
+            "order": 2200
         },
         {
             "name": "Enlace Juvenil",
@@ -61,7 +61,7 @@
             "audience": "Children",
             "region": "Global",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-enlacej/_definst_/live.m3u8",
-            "order": 1505
+            "order": 2300
         },
         {
             "name": "HITN",
@@ -73,7 +73,7 @@
             "audience": "All",
             "region": "Spanish",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-hitn/_definst_/live.m3u8",
-            "order": 1506
+            "order": 2600
         },
         {
             "name": "JUCE TV",
@@ -85,7 +85,7 @@
             "audience": "General",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-jctv/_definst_/live.m3u8",
-            "order": 1507
+            "order": 3000
         },
         {
             "name": "NTN24",
@@ -97,7 +97,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-            "order": 1508
+            "order": 4100
         },
         {
             "name": "Meio Norte",
@@ -109,7 +109,7 @@
             "audience": "General",
             "region": "Brazil",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-meionorte/_definst_/live.m3u8",
-            "order": 1509
+            "order": 3400
         },
         {
             "name": "Mi Música HD",
@@ -121,7 +121,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicahd_1@345976/master.m3u8",
-            "order": 1510
+            "order": 3700
         },
         {
             "name": "Mi Música Tropical",
@@ -133,7 +133,7 @@
             "audience": "General",
             "region": "Caribbean",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicaromantica_1@345973/master.m3u8",
-            "order": 1511
+            "order": 3900
         },
         {
             "name": "One America News",
@@ -146,7 +146,7 @@
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-oneamerica/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1512
+            "order": 4200
         },
         {
             "name": "RT News",
@@ -158,7 +158,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_news/_definst_/live.m3u8",
-            "order": 1513
+            "order": 4600
         },
         {
             "name": "RT Español",
@@ -171,7 +171,7 @@
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_espanol/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1514
+            "order": 4700
         },
         {
             "name": "The Church Channel",
@@ -183,7 +183,7 @@
             "audience": "All",
             "region": "USA",
             "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-church/_definst_/live.m3u8",
-            "order": 1515
+            "order": 6100
         },
         {
             "name": "Smile of a Child",
@@ -195,7 +195,7 @@
             "audience": "Children",
             "region": "USA",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8",
-            "order": 1516
+            "order": 4800
         },
         {
             "name": "TBN",
@@ -207,7 +207,7 @@
             "audience": "All",
             "region": "USA",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbn/_definst_/live.m3u8",
-            "order": 1517
+            "order": 5100
         },
         {
             "name": "TeleSUR",
@@ -219,7 +219,7 @@
             "audience": "General",
             "region": "Venezuela",
             "videoUrl": "http://yiptv-telesur.hls.adaptive.level3.net/hls-live/yiptvlive-telesur/_definst_/live.m3u8",
-            "order": 1518
+            "order": 5800
         },
         {
             "name": "Trendy",
@@ -231,7 +231,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv-trendy.hls.adaptive.level3.net/hls-live/yiptvlive-trendy/_definst_/live.m3u8",
-            "order": 1519
+            "order": 6200
         },
         {
             "name": "beIN Sports",
@@ -243,7 +243,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8",
-            "order": 1001
+            "order": 100
         },
         {
             "name": "beIN Sports ñ",
@@ -255,7 +255,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8",
-            "order": 1002
+            "order": 200
         },
         {
             "name": "Antena 3",
@@ -267,7 +267,7 @@
             "audience": "General",
             "region": "Spain",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
-            "order": 1003
+            "order": 400
         },
         {
             "name": "Canal 52 MX",
@@ -279,7 +279,7 @@
             "audience": "All",
             "region": "Mexico",
             "videoUrl": "http://yiptv-canal52.hls.adaptive.level3.net/hls-live/yiptvlive-canal52/_definst_/live.m3u8",
-            "order": 1004
+            "order": 900
         },
         {
             "name": "Films on Reel",
@@ -291,7 +291,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224115/filmsreelsgrp/playlist.m3u8",
-            "order": 1005
+            "order": 2400
         },
         {
             "name": "Freckle TV",
@@ -303,7 +303,7 @@
             "audience": "Children",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224111/frecklegrp/playlist.m3u8",
-            "order": 1006
+            "order": 2500
         },
         {
             "name": "HRTV",
@@ -315,7 +315,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224112/hrtvgrp/playlist.m3u8",
-            "order": 1007
+            "order": 2800
         },
         {
             "name": "¡Hola! TV",
@@ -327,7 +327,7 @@
             "audience": "General",
             "region": "Spain",
             "videoUrl": "http://yiptv-holatv.hls.adaptive.level3.net/hls-live/yiptvlive-holatv/_definst_/live.m3u8",
-            "order": 1008
+            "order": 2700
         },
         {
             "name": "Men 7",
@@ -339,7 +339,7 @@
             "audience": "Adult",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224116/men7grp/playlist.m3u8",
-            "order": 1009
+            "order": 3500
         },
         {
             "name": "Mis Películas",
@@ -351,7 +351,7 @@
             "audience": "General",
             "region": "Spain",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/mispeliculas_1@341721/master.m3u8",
-            "order": 1010
+            "order": 4000
         },
         {
             "name": "Mi Gente TV",
@@ -363,7 +363,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
-            "order": 1011
+            "order": 3600
         },
         {
             "name": "Sportskool",
@@ -375,7 +375,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224113/sportskoolgrp/playlist.m3u8",
-            "order": 1012
+            "order": 4900
         },
         {
             "name": "Tele Romántica",
@@ -387,7 +387,7 @@
             "audience": "Adult",
             "region": "Global",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/teleromance_1@335180/master.m3u8",
-            "order": 1013
+            "order": 5700
         },
         {
             "name": "TV Quisqueya",
@@ -399,7 +399,7 @@
             "audience": "General",
             "region": "Dominican Republic",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_quisqueya/_definst_/live.m3u8",
-            "order": 1014
+            "order": 6500
         },
         {
             "name": "TyC Sports",
@@ -411,7 +411,7 @@
             "audience": "All",
             "region": "Argentina",
             "videoUrl": "http://yiptv-tycsports.hls.adaptive.level3.net/hls-live/yiptvlive-tycsports/_definst_/live.m3u8",
-            "order": 1015
+            "order": 6600
         },
         {
             "name": "PXTV Action LATAM",
@@ -423,7 +423,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-pxtv/_definst_/live.m3u8",
-            "order": 1016
+            "order": 4400
         },
         {
             "name": "Mi Música Romantica",
@@ -435,7 +435,7 @@
             "audience": "Adult",
             "region": "Global",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-mimusica/_definst_/live.m3u8",
-            "order": 1017
+            "order": 3800
         },
         {
             "name": "A3 Series",
@@ -447,7 +447,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8",
-            "order": 2001
+            "order": 300
         },
         {
             "name": "AYM Sports",
@@ -459,7 +459,7 @@
             "audience": "All",
             "region": "Mexico",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8",
-            "order": 2002
+            "order": 500
         },
         {
             "name": "AZ Clic",
@@ -471,7 +471,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8",
-            "order": 2003
+            "order": 600
         },
         {
             "name": "AZ Corazón",
@@ -483,7 +483,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-azcorazon.hls.adaptive.level3.net/hls-live/yiptvlive-azcorazon/_definst_/live.m3u8",
-            "order": 2004
+            "order": 700
         },
         {
             "name": "Bolivia TV",
@@ -495,7 +495,7 @@
             "audience": "All",
             "region": "Bolivia",
             "videoUrl": "http://yiptv-boliviatv.hls.adaptive.level3.net/hls-live/yiptvlive-boliviatv/_definst_/live.m3u8",
-            "order": 2005
+            "order": 800
         },
         {
             "name": "Canal El Tiempo",
@@ -507,7 +507,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv-canaltiempo.hls.adaptive.level3.net/hls-live/yiptvlive-canaltiempo/_definst_/live.m3u8",
-            "order": 2006
+            "order": 1200
         },
         {
             "name": "Canal América",
@@ -519,7 +519,7 @@
             "audience": "General",
             "region": "USA",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_america/_definst_/live.m3u8",
-            "order": 2007
+            "order": 1000
         },
         {
             "name": "Canal Antiestres",
@@ -531,7 +531,7 @@
             "audience": "All",
             "region": "Latin America",
             "videoUrl": "http://yiptv-canalantiestres.hls.adaptive.level3.net/hls-live/yiptvlive-canalantiestres/_definst_/live.m3u8",
-            "order": 2008
+            "order": 1100
         },
         {
             "name": "Canal Tro",
@@ -543,7 +543,7 @@
             "audience": "All",
             "region": "Colombia",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_tro/_definst_/live.m3u8",
-            "order": 2009
+            "order": 1400
         },
         {
             "name": "Cantinazo TV",
@@ -555,7 +555,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-elcantinazo.hls.adaptive.level3.net/hls-live/yiptvlive-elcantinazo/_definst_/live.m3u8",
-            "order": 2010
+            "order": 1500
         },
         {
             "name": "CB24",
@@ -567,7 +567,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv-cb24.hls.adaptive.level3.net/hls-live/yiptvlive-cb24/_definst_/live.m3u8",
-            "order": 2011
+            "order": 1700
         },
         {
             "name": "CBTV",
@@ -579,7 +579,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-cbtvmich/_definst_/live.m3u8",
-            "order": 2012
+            "order": 1800
         },
         {
             "name": "Cosmovisión",
@@ -591,7 +591,7 @@
             "audience": "All",
             "region": "Colombia",
             "videoUrl": "http://yiptv-cosmovision.hls.adaptive.level3.net/hls-live/yiptvlive-cosmovision/_definst_/live.m3u8",
-            "order": 2013
+            "order": 2000
         },
         {
             "name": "Destinos TV",
@@ -603,7 +603,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-destinos_tv/_definst_/live.m3u8",
-            "order": 2014
+            "order": 2100
         },
         {
             "name": "JBN",
@@ -615,7 +615,7 @@
             "audience": "All",
             "region": "Honduras",
             "videoUrl": "http://yiptv-jbn.hls.adaptive.level3.net/hls-live/yiptvlive-jbn/_definst_/live.m3u8",
-            "order": 2015
+            "order": 2900
         },
         {
             "name": "Latele Novela",
@@ -627,7 +627,7 @@
             "audience": "General",
             "region": "USA",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-telenovela/_definst_/live.m3u8",
-            "order": 2016
+            "order": 3100
         },
         {
             "name": "Latin American Sports",
@@ -639,7 +639,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-latinsports/_definst_/live.m3u8",
-            "order": 2017
+            "order": 3200
         },
         {
             "name": "Maya TV",
@@ -651,7 +651,7 @@
             "audience": "General",
             "region": "Honduras",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-maya_tv/_definst_/live.m3u8",
-            "order": 2018
+            "order": 3300
         },
         {
             "name": "Promovision",
@@ -663,7 +663,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-promovision/_definst_/live.m3u8",
-            "order": 2019
+            "order": 4300
         },
         {
             "name": "RCN Novelas",
@@ -675,7 +675,7 @@
             "audience": "General",
             "region": "USA",
             "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-rcntelenovela/_definst_/live.m3u8",
-            "order": 2020
+            "order": 4500
         },
         {
             "name": "Supereñe",
@@ -687,7 +687,7 @@
             "audience": "Children",
             "region": "USA",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/superene_8@334362/master.m3u8",
-            "order": 2021
+            "order": 5000
         },
         {
             "name": "Tele Antioquia",
@@ -699,7 +699,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_antioquia/_definst_/live.m3u8",
-            "order": 2022
+            "order": 5200
         },
         {
             "name": "Tele Medellin",
@@ -711,7 +711,7 @@
             "audience": "All",
             "region": "Colombia",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_medellin/_definst_/live.m3u8",
-            "order": 2023
+            "order": 5400
         },
         {
             "name": "Tele Pacífico",
@@ -723,7 +723,7 @@
             "audience": "All",
             "region": "Colombia",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_pacifico/_definst_/live.m3u8",
-            "order": 2024
+            "order": 5600
         },
         {
             "name": "Tele Vid",
@@ -735,7 +735,7 @@
             "audience": "All",
             "region": "Colombia",
             "videoUrl": "http://yiptv-televida.hls.adaptive.level3.net/hls-live/yiptvlive-televid/_definst_/live.m3u8",
-            "order": 2025
+            "order": 5900
         },
         {
             "name": "Teleformula",
@@ -747,7 +747,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv-teleformula.hls.adaptive.level3.net/hls-live/yiptvlive-teleformula/_definst_/live.m3u8",
-            "order": 2026
+            "order": 5300
         },
         {
             "name": "Telemicro Internacional",
@@ -759,7 +759,7 @@
             "audience": "All",
             "region": "Dominican Republic",
             "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-telemicroint/_definst_/live.m3u8",
-            "order": 2027
+            "order": 5500
         },
         {
             "name": "Tempo",
@@ -771,7 +771,7 @@
             "audience": "All",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tempo/_definst_/live.m3u8",
-            "order": 2028
+            "order": 6000
         },
         {
             "name": "TV Chile",
@@ -783,7 +783,7 @@
             "audience": "All",
             "region": "Chile",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-tvchile/_definst_/live.m3u8",
-            "order": 2029
+            "order": 6300
         },
         {
             "name": "TVC Latino",
@@ -795,7 +795,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tvc_latino/_definst_/live.m3u8",
-            "order": 2030
+            "order": 6400
         },
         {
             "name": "Video Rola",
@@ -807,7 +807,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-videorola.hls.adaptive.level3.net/hls-live/yiptvlive-videorola/_definst_/live.m3u8",
-            "order": 2031
+            "order": 6700
         },
         {
             "name": "Zoom",
@@ -819,7 +819,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-zoom/_definst_/live.m3u8",
-            "order": 2032
+            "order": 6800
         }
     ]
 }
