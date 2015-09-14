@@ -39,7 +39,7 @@ User.find({}).populate('account').exec(function (err, users) {
 
 function formatDate(date) {
     if (date) {
-        return '"' + moment(date).format('MM/DD/YYYY') + '"';
+        return '"' + moment.utc(date).format('MM/DD/YYYY') + '"';
     } else {
         return '""';
     }

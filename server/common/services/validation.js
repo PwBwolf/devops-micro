@@ -162,6 +162,9 @@ function isCreditCard(cardNumber) {
     if (/[^0-9-\s]+/.test(cardNumber)) {
         return false;
     }
+    if (parseInt(cardNumber) === 0) {
+        return false;
+    }
     var check = 0, number = 0, even = false;
     cardNumber = cardNumber.replace(/\D/g, '');
     for (var n = cardNumber.length - 1; n >= 0; n--) {
@@ -196,9 +199,9 @@ function isExpiryDate(dateString) {
 }
 
 function isCvv(cvv, cardNumber) {
-    if(cardNumber.indexOf('34') === 0 || cardNumber.indexOf('37') === 0) {
+    if (cardNumber.indexOf('34') === 0 || cardNumber.indexOf('37') === 0) {
         return cvv4Regex.test(cvv);
-    }  else {
+    } else {
         return cvv3Regex.test(cvv);
     }
 }

@@ -384,7 +384,6 @@
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_BULLET2: 'Click on the <span class="bolder-text">Upgrade to Premium Membership</span> button an re-submit your Credit card information',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART1: 'If you prefer, call Customer Care at:',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART2: 'and we will be happy to assist you.',
-            TRUCONN_SIGN_UP_SUB_HEADING: 'TruConnect\'s My YipTV Premium Membership',
             UPGRADE_SUBSCRIPTION_MESSAGE: 'You are upgrading to a paid account. Your credit card will be charged $14.99 every month. You can cancel your subscription any time by going to Account > Cancel Subscription.',
             UPGRADE_SUBSCRIPTION_BILLING_INFO: 'Enter your credit card details. If you need help call',
             UPGRADE_SUBSCRIPTION_CARD_NAME: 'Name on Credit Card',

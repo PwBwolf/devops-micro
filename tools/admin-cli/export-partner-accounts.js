@@ -13,53 +13,71 @@ var modelsPath = config.root + '/server/common/models',
 require('../../server/common/setup/models')(modelsPath);
 var Account = mongoose.model('Account');
 
-var suppressinfo = process.argv[2];
-var merchant = suppressinfo == '-s' ? process.argv[3] : process.argv[2];
-var startDate = suppressinfo == '-s' ? process.argv[4]: process.argv[3];
-var endDate = suppressinfo == '-s' ? process.argv[5]: process.argv[4];
-
-if( !(suppressinfo == '-s') ) {
+if (process.argv[2] === '-h') {
     printUsage();
-}
-if(startDate ){
-    if(! (moment(startDate, 'MM/DD/YYYY',true).isValid())) {
-    logger.logError("Invalid Start Date. Please use MM/DD/YYYY format. ex:08/01/2015");
-    process.exit(1);
-    }
-}
-if(endDate ){
-    if(! (moment(endDate, 'MM/DD/YYYY',true).isValid())) {
-    logger.logError("Invalid End Date. Please use MM/DD/YYYY format. ex:08/01/2015")
-    process.exit(1);
-    }
+    process.exit(0);
 }
 
-var query = merchant ? {merchant: merchant} : {merchant: {$exists: true}};
+if (process.argv.length > 5) {
+    logger.logError('adminCLI - exportPartnerAccounts - you have passed more number of parameters than the tool accepts.');
+    printUsage();
+    process.exit(1);
+}
+
+var merchant = process.argv[2];
+var startDate = process.argv[3];
+var endDate = process.argv[4];
+
+if (merchant) {
+    merchant = merchant.toUpperCase();
+} else {
+    logger.logError('adminCLI - exportPartnerAccounts - enter a merchant name.');
+    printUsage();
+    process.exit(1);
+}
+
+var query = {merchant: merchant};
+
 if (startDate) {
-    query.createdAt = {$gte: (moment(startDate, 'MM/DD/YYYY').toDate())};
-    query.createdAt.$lt = endDate ? (moment(endDate, 'MM/DD/YYYY').add(1,'days').toDate()) : (moment().add(1,'days').toDate());
+    if (!moment(startDate, 'MM/DD/YYYY', true).isValid()) {
+        logger.logError('adminCLI - exportPartnerAccounts - enter a valid start date in MM/DD/YYYY format');
+        printUsage();
+        process.exit(1);
+    }
+    query.createdAt = {$gte: moment.utc(startDate, 'MM/DD/YYYY').toDate().toUTCString()};
+    if (endDate) {
+        if (!moment(endDate, 'MM/DD/YYYY', true).isValid()) {
+            logger.logError('adminCLI - exportPartnerAccounts - enter a valid end date in MM/DD/YYYY format');
+            printUsage();
+            process.exit(1);
+        }
+        if (moment(startDate, 'MM/DD/YYYY', true).isAfter(moment(endDate, 'MM/DD/YYYY', true))) {
+            logger.logError('adminCLI - exportPartnerAccounts - end date should be greater than start date');
+            printUsage();
+            process.exit(1);
+        }
+        query.createdAt.$lt = moment.utc(endDate, 'MM/DD/YYYY').add(1, 'days').toDate().toUTCString();
+    }
 }
 
-Account.find(query).populate('primaryUser').exec(function (err, accounts) {
+Account.find(query, {}, {sort: {createdAt: 1}}).populate('primaryUser').exec(function (err, accounts) {
     if (err) {
-        logger.logError('adminCLI - partnerUsersReport - error fetching partner accounts');
+        logger.logError('adminCLI - exportPartnerAccounts - error fetching partner accounts');
         logger.logError(err);
-
         process.exit(1);
     } else if (!accounts || accounts.length === 0) {
-        logger.logError('adminCLI - partnerUsersReport - no accounts found!. Try changing options');
+        logger.logError('adminCLI - exportPartnerAccounts - no accounts found!');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Bill Date","User Cancel Date","Cancel On Date","Merchant"');
+        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Type","User Cancel Date","Cancel On Date","Merchant"');
         for (var i = 0; i < accounts.length; i++) {
-            if(accounts[i].primaryUser){
+            if (accounts[i].primaryUser) {
                 console.log(
                     formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' +
                     formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
-                    formatString(accounts[i].freeSideCustomerNumber) + ',' + formatDate(accounts[i].createdAt) + ',' + formatDate(accounts[i].billingDate) + ',' + 
-                    formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' +
-                    formatString(accounts[i].merchant)
-            );
+                    formatString(accounts[i].freeSideCustomerNumber) + ',' + formatDate(accounts[i].createdAt) + ',' + formatString(accounts[i].type) + ',' +
+                    formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' + formatString(accounts[i].merchant)
+                );
             }
         }
         process.exit(0);
@@ -68,7 +86,7 @@ Account.find(query).populate('primaryUser').exec(function (err, accounts) {
 
 function formatDate(date) {
     if (date) {
-        return '"' + moment(date).format('MM/DD/YYYY') + '"';
+        return '"' + moment.utc(date).format('MM/DD/YYYY') + '"';
     } else {
         return '""';
     }
@@ -83,10 +101,8 @@ function formatString(value) {
 }
 
 function printUsage() {
-    logger.logInfo('Usage: node export-partner-accounts.js (-s) (merchant (start date (end date) ) )');
-    logger.logInfo('use -s option to suppress usage info');
-    logger.logInfo('For merchant please use short name in uppercase.');
-    logger.logInfo('Date format in MM/DD/YYYY, ex: 08/01/2015. preceeding 0 reqd.');
-    logger.logInfo('Ex: node export-partner-accounts.js -s TRUCONN 08/01/2015 08/30/2015');
-    
+    logger.logInfo('Usage: node export-partner-accounts <merchant-name> <start-date> <end-date>');
+    logger.logInfo('       <start-date> and <end-date> are optional, date format is MM/DD/YYYY');
+    logger.logInfo('       Example usage: node export-partner-accounts TRUCONN 08/01/2015 08/30/2015');
+    logger.logInfo('       Use -h option to get this usage information');
 }

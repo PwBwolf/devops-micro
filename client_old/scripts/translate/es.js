@@ -400,7 +400,6 @@
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_BULLET2: 'Haz clic en el botón <span class="bolder-text">Actualiza a Membresía Premium</span> y vulve a ingresar tu información de tarjeta de crédito',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART1: 'Si prefiere, llame a Atención al Cliente al:',
             SIGN_UP_SUCCESS_PAYMENT_FAILURE_LOGIN_LINE2_PART2: 'y estaremos encantados en ayudarle.',
-            TRUCONN_SIGN_UP_SUB_HEADING: 'Mi YipTV suscripción Premium de TruConnect',
             UNDER_CONSTRUCTION_HEADING: 'Bajo construccion',
             UNDER_CONSTRUCTION_MESSAGE: 'La pagina que usted busca esta bajo construccion y estara disponible en breve',
             UPGRADE_SUBSCRIPTION_HEADING: 'Actualiza a Membresía Premium',
