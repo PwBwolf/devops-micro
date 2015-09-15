@@ -21,6 +21,12 @@ var dbYip = mongoose.createConnection(config.yipMetaDataDb);
 var Airing = dbYip.model('Airing');
 var Event = dbYip.model('Event');
 
+var daysKeep = config.graceNoteDaysKeep;
+
+if(daysKeep < 0 || daysKeep === undefined) {
+    daysKeep = 5;
+}
+
 /*
 //new CronJob(config.metaDataRetrievalRecurrence, function () {
 new CronJob('0 14 20 * * *', function () {
@@ -33,6 +39,14 @@ new CronJob('0 14 20 * * *', function () {
     true,
     'America/New_York'
 );*/
+
+var now = new Date(); 
+now.setHours(0);
+now.setMinutes(0);
+now.setSeconds(0);
+now.setDate(now.getDate() - daysKeep);
+var now_utc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()));
+
 var xlsxFiles = [], xmlFiles = [];
 
 if(process.argv.length === 3) {
@@ -147,9 +161,31 @@ function xlsxParser(xlsxFileName, xlsxCb) {
                     } else {
                         logger.logInfo('xmlXlsxParserMain - xlsxParser - succeeded to parse xlsx file from: ' + channelSource);
                     }
-                    callback(err);
+                    callback(err, airing);
                 }
             );
+        },
+        
+        function(airing, callback) {
+            var count = 0;
+            for(var i = 0; i < airing.airings.length; ++i) {
+                if(airing.airings[i].startTime > now_utc) {
+                    count = i;
+                    break;
+                }       
+            }
+            if(count > 0) {
+                logger.logInfo('xmlXlsxParserMain - xlsxParser - airings removed: ' + count);
+                airing.airings.splice(0, count);
+                airing.save(function(err) {
+                    logger.logInfo('xmlXlsxParserMain - xlsxParser - airings left: ' + airing.airings.length);
+                    callback(err);
+                });
+            } else {
+                logger.logInfo('xmlXlsxParserMain - xlsxParser - no airings need to be removed');
+                callback(null);
+            }
+                
         }],
         
         function(err) {
@@ -259,7 +295,7 @@ function saveSheet(airing, data, callback) {
     airing.save(function(err) {
         if(callback) {
             logger.logInfo('xmlXlsxParserMain - saveSheet - total airings after saveSheet: ' + airing.airings.length);
-            callback(err, airing);
+            callback(err);
         }
     });
 }
@@ -269,9 +305,6 @@ function xmlParser(xmlFileName, xmlCb) {
     var parser = new xml2js.Parser({explicitArray: false});
     var channelSource = getChannelSourceUpperCase(fileName);
     
-    var eventOld = [];
-    var eventNew = false;
-    
     async.waterfall([
         function(callback) {
             Event.find({source: channelSource}, function(err, events) {
@@ -279,9 +312,6 @@ function xmlParser(xmlFileName, xmlCb) {
                    logger.logError('xmlXlsxParserMain - xmlParser - failed to retrieve documents from: ' + channelSource + ' in db');
                    logger.logError(err);
                } else {
-                   for(var i = 0; i < events.length; ++i) {
-                       eventOld.push({id: events[i]._id});
-                   }
                    logger.logInfo('xmlXlsxParserMain - xmlParser - documents found from: ' + channelSource + ' in db: ' + events.length);
                }
                callback(err, events);
@@ -301,20 +331,41 @@ function xmlParser(xmlFileName, xmlCb) {
                     if(err) {
                         logger.logError('xmlXlsxParserMain - xmlParser - failed to parseString');
                         logger.logError(err);
-                        callback(err);
+                        callback(err, event);
                         return;
                     } else {
                         logger.logInfo('xmlXlsxParserMain - xmlParser - save event into db: ' + result.PLAYLIST.EVENTLIST.EVENT.length);
                         if(result.PLAYLIST.EVENTLIST.EVENT.length > 0) {
-                            eventNew = true;
-                            saveEvent(event, result.PLAYLIST.EVENTLIST.EVENT, result.PLAYLIST.MEDIALIST.MEDIA, event, callback);
+                            saveEvent(event, result.PLAYLIST.EVENTLIST.EVENT, result.PLAYLIST.MEDIALIST.MEDIA, callback);
                         } else {
                             logger.logInfo('xmlXlsxParserMain - xmlParser - no event to be saved in db');
-                            callback(null);
+                            callback(null, event);
                         }
                     }
                 });
             });
+        },
+        
+        function(event, callback) {
+            var count = 0;
+            for(var i = 0; i < event.airings.length; ++i) {
+                if(event.airings[i].startTime > now_utc) {
+                    count = i;
+                    break;
+                }       
+            }
+            if(count > 0) {
+                logger.logInfo('xmlXlsxParserMain - xmlParser - event airings removed: ' + count);
+                event.airings.splice(0, count);
+                event.save(function(err) {
+                    logger.logInfo('xmlXlsxParserMain - xmlParser - event airings left: ' + airing.airings.length);
+                    callback(err);
+                });
+            } else {
+                logger.logInfo('xmlXlsxParserMain - xmlParser - no event airings need to be removed');
+                callback(null);
+            }
+                
         }],
         
         function(err) {
@@ -330,7 +381,7 @@ function xmlParser(xmlFileName, xmlCb) {
     });
 }
 
-function saveEvent(event, data, dataMedia, xmlEvent, cb) {
+function saveEvent(event, data, dataMedia, cb) {
     if(event.airings.length > 0) {
         var startDateString = data[0]['OnAirDate'].toString();
         var startYear = '20' + startDateString.substring(0,2);
@@ -394,7 +445,7 @@ function saveEvent(event, data, dataMedia, xmlEvent, cb) {
             xmlAspectRatio = getAspectRatioFromMedia(dataMedia, data[i]['Title']);
         }
 
-        xmlEvent.airings.push({
+        event.airings.push({
             attributeType: xmlAttr['TYPE'],
             title: data[i]['Title'],
             startTime: new Date(Date.UTC(startYear, startMonth-1, startDay, startHour, startMin, startSec, startMilSec)),
@@ -416,10 +467,10 @@ function saveEvent(event, data, dataMedia, xmlEvent, cb) {
         });
     }
 
-    xmlEvent.save(function(err) {
+    event.save(function(err) {
         if(cb) {
             logger.logInfo('xmlXlsxParserMain - saveEvent - total airings after saveEvent: ' + event.airings.length);
-            cb(err);
+            cb(err, event);
         }
     });
 }
