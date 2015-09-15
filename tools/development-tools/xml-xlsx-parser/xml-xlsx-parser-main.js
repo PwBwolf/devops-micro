@@ -30,93 +30,89 @@ if(daysKeep < 0 || daysKeep === undefined) {
 /*
 //new CronJob(config.metaDataRetrievalRecurrence, function () {
 new CronJob('0 14 20 * * *', function () {
-        //removeCollections();
-        imageDownload();
+        xmlXlsxParser();
     }, 
     function () {
-        logger.logInfo('imageProcessorMain - CronJob - gracenote retrieval has finished');
+        logger.logInfo('xmlXlsxParserMain - CronJob - parsing xml/xlsx files has finished');
     },
     true,
     'America/New_York'
 );*/
 
-var now = new Date(); 
-now.setHours(0);
-now.setMinutes(0);
-now.setSeconds(0);
-now.setDate(now.getDate() - daysKeep);
-var now_utc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()));
+xmlXlsxParser();
 
-var xlsxFiles = [], xmlFiles = [];
+function xmlXlsxParser() {
+    var now = new Date(); 
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+    now.setDate(now.getDate() - daysKeep);
+    var startUtc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()));
 
-if(process.argv.length === 3) {
-    var files = fs.readdirSync(__dirname + process.argv[2]);
+    var xlsxFiles = [], xmlFiles = [];
+    var path = '/files';
+    var files = fs.readdirSync(__dirname + path);
     for(var i = 0; i < files.length; ++i) {
         var ext =  files[i].split('.').pop().toLowerCase();
         switch(ext) {
         case 'xlsx':
-            xlsxFiles.push(process.argv[2] + '/' + files[i]);
+            xlsxFiles.push(path + '/' + files[i]);
             break;
         case 'xml':
-            xmlFiles.push(process.argv[2] + '/' + files[i]);
+            xmlFiles.push(path + '/' + files[i]);
             break;
         }
     }
-} else {
-    
+
+    async.waterfall([
+        function(callback) {
+            async.eachSeries(
+                xlsxFiles,
+                function(xlsxFile, cb) {
+                    xlsxParser(xlsxFile, startUtc, cb);
+                },
+                function(err) {
+                    if(err) {
+                        logger.logError('xmlXlsxParserMain - async.waterfall - failed to parser xlsx file');
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('xmlXlsxParserMain - parsing xlsx files succeed');
+                    }
+                    callback(err);
+                }
+            );
+        }, 
+        
+        function(callback) {
+            async.eachSeries(
+                xmlFiles,
+                function(xmlFile, cb) {
+                    xmlParser(xmlFile, startUtc, cb);
+                },
+                function(err) {
+                    if(err) {
+                        logger.logError('xmlXlsxParserMain - async.waterfall - failed to parser xml files');
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('xmlXlsxParserMain - parsing xml files succeed');
+                    }
+                    callback(err);
+                }
+            );
+        }], 
+        
+        function(err) {
+            if (err) {
+                logger.logError('xmlXlsxParserMain - parsing xlsx/xml files failed');
+                logger.logError(err);
+            } else {
+                logger.logInfo('xmlXlsxParserMain - parsing xlsx/xml files succeed!');
+            }
+        }
+    );
 }
 
-async.waterfall([
-    function(callback) {
-        async.eachSeries(
-            xlsxFiles,
-            function(xlsxFile, cb) {
-                xlsxParser(xlsxFile, cb);
-            },
-            function(err) {
-                if(err) {
-                    logger.logError('xmlXlsxParserMain - async.waterfall - failed to parser xlsx file');
-                    logger.logError(err);
-                } else {
-                    logger.logInfo('xmlXlsxParserMain - parsing xlsx files succeed');
-                }
-                callback(err);
-            }
-        );
-    }, 
-    
-    function(callback) {
-        async.eachSeries(
-            xmlFiles,
-            function(xmlFile, cb) {
-                xmlParser(xmlFile, cb);
-            },
-            function(err) {
-                if(err) {
-                    logger.logError('xmlXlsxParserMain - async.waterfall - failed to parser xml files');
-                    logger.logError(err);
-                } else {
-                    logger.logInfo('xmlXlsxParserMain - parsing xml files succeed');
-                }
-                callback(err);
-            }
-        );
-    }], 
-    
-    function(err) {
-        if (err) {
-            logger.logError('xmlXlsxParserMain - parsing xlsx/xml files failed');
-            logger.logError(err);
-        } else {
-            logger.logInfo('xmlXlsxParserMain - parsing xlsx/xml files succeed!');
-        }
-    }
-);
-
-//xlsxParser(xlsxFile);
-//xmlParser(xmlFile);
-
-function xlsxParser(xlsxFileName, xlsxCb) {
+function xlsxParser(xlsxFileName, startUtc, xlsxCb) {
     var fileName = xlsxFileName ? xlsxFileName : '/xlsx/FightBox_September_2015_UTC.xlsx';
     var workbook = xlsx.readFile(__dirname + fileName);
     var channelSource = getChannelSourceUpperCase(fileName);
@@ -169,7 +165,7 @@ function xlsxParser(xlsxFileName, xlsxCb) {
         function(airing, callback) {
             var count = 0;
             for(var i = 0; i < airing.airings.length; ++i) {
-                if(airing.airings[i].startTime > now_utc) {
+                if(airing.airings[i].startTime > startUtc) {
                     count = i;
                     break;
                 }       
@@ -300,7 +296,7 @@ function saveSheet(airing, data, callback) {
     });
 }
 
-function xmlParser(xmlFileName, xmlCb) {
+function xmlParser(xmlFileName, startUtc, xmlCb) {
     var fileName = xmlFileName ? xmlFileName : '/xml/13082015223637_OnAir.xml';
     var parser = new xml2js.Parser({explicitArray: false});
     var channelSource = getChannelSourceUpperCase(fileName);
@@ -349,7 +345,7 @@ function xmlParser(xmlFileName, xmlCb) {
         function(event, callback) {
             var count = 0;
             for(var i = 0; i < event.airings.length; ++i) {
-                if(event.airings[i].startTime > now_utc) {
+                if(event.airings[i].startTime > startUtc) {
                     count = i;
                     break;
                 }       
