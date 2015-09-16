@@ -53,16 +53,19 @@ function xmlXlsxParser() {
 
     var xlsxFiles = [], xmlFiles = [];
     var path = '/files';
-    var files = fs.readdirSync(__dirname + path);
+    var fullPath = __dirname + path;
+    var files = fs.readdirSync(fullPath);
     for(var i = 0; i < files.length; ++i) {
-        var ext =  files[i].split('.').pop().toLowerCase();
-        switch(ext) {
-        case 'xlsx':
-            xlsxFiles.push(path + '/' + files[i]);
-            break;
-        case 'xml':
-            xmlFiles.push(path + '/' + files[i]);
-            break;
+        if(fs.statSync(fullPath + '/' + files[i]).isFile()) {
+            var ext =  files[i].split('.').pop().toLowerCase();
+            switch(ext) {
+            case 'xlsx':
+                xlsxFiles.push(fullPath + '/' + files[i]);
+                break;
+            case 'xml':
+                xmlFiles.push(fullPath + '/' + files[i]);
+                break;
+            }
         }
     }
 
@@ -115,8 +118,8 @@ function xmlXlsxParser() {
 }
 
 function xlsxParser(xlsxFileName, startUtc, xlsxCb) {
-    var fileName = xlsxFileName ? xlsxFileName : '/xlsx/FightBox_September_2015_UTC.xlsx';
-    var workbook = xlsx.readFile(__dirname + fileName);
+    var fileName = xlsxFileName ? xlsxFileName : __dirname + '/xlsx/FightBox_September_2015_UTC.xlsx';
+    var workbook = xlsx.readFile(fileName);
     var channelSource = getChannelSourceUpperCase(fileName);
     
     async.waterfall([
@@ -358,7 +361,7 @@ function findNewFields(keys) {
 }
 
 function xmlParser(xmlFileName, startUtc, xmlCb) {
-    var fileName = xmlFileName ? xmlFileName : '/xml/13082015223637_OnAir.xml';
+    var fileName = xmlFileName ? xmlFileName : __dirname + '/xml/13082015223637_OnAir.xml';
     var parser = new xml2js.Parser({explicitArray: false});
     var channelSource = getChannelSourceUpperCase(fileName);
     
@@ -383,7 +386,7 @@ function xmlParser(xmlFileName, startUtc, xmlCb) {
             } else {
                 event = new Event({source: channelSource, type: 'xml', fileName: fileName});
             }
-            fs.readFile(__dirname + fileName, function(err, data) {
+            fs.readFile(fileName, function(err, data) {
                 parser.parseString(data, function(err, result) {
                     if(err) {
                         logger.logError('xmlXlsxParserMain - xmlParser - failed to parseString');
