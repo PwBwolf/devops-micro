@@ -12,6 +12,7 @@ var xlsx = require('./node_modules/xlsx');
 var xml2js = require('./node_modules/xml2js');
 
 require('./models/airing');
+require('./models/epg');
 require('./models/event');
 
 var dbYip = mongoose.createConnection(config.yipMetaDataDb);
@@ -19,6 +20,7 @@ var dbYip = mongoose.createConnection(config.yipMetaDataDb);
 //var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.11/yipmetadata'); // test
 
 var Airing = dbYip.model('Airing');
+var Epg = dbYip.model('Epg');
 var Event = dbYip.model('Event');
 
 var daysKeep = config.graceNoteDaysKeep;
@@ -145,7 +147,7 @@ function xlsxParser(xlsxFileName, startUtc, xlsxCb) {
                     var roa = xlsx.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
                     logger.logInfo('xmlXlsxParserMain - xlsxParser - save sheet name: ' + sheetName + ' from ' + channelSource + ': length: ' + roa.length);
                     if(roa.length > 0) {
-                        saveSheet(airing, roa, cb);
+                        saveSheet(airing, roa, fileName, cb);
                     } else {
                         cb(null);
                     }
@@ -202,7 +204,7 @@ function getChannelSourceUpperCase(name) {
     return fileName.split('_').shift().toUpperCase();
 }
 
-function saveSheet(airing, data, callback) {
+function saveSheet(airing, data, name, callback) {
     if(airing.airings.length > 0) {
         var startDateString = data[0]['Start date'] ? data[0]['Start date'].toString() : data[0]['DATE'] ? data[0]['DATE'].toString() : data[0]['Date'].toString();
         var startYear = startDateString.substring(0,4);
@@ -235,6 +237,10 @@ function saveSheet(airing, data, callback) {
             airing.airings.splice(index, airing.airings.length - index);
         }
     }
+
+    var keys = Object.keys(data ? data[0] : data);
+    var newFields = findNewFields(keys);
+    
     for(var i = 0; i < data.length; ++i) {
         var startDateString = data[i]['Start date'] ? data[i]['Start date'].toString() : data[i]['DATE'] ? data[i]['DATE'].toString() : data[i]['Date'].toString();
         var startYear = startDateString.substring(0,4);
@@ -271,8 +277,7 @@ function saveSheet(airing, data, callback) {
                 endSec = 0;
             }
         }
-        
-        airing.airings.push({
+        var epg = new Epg({
             lp: data[i]['Lp.'] ? data[i]['Lp.'] : data[i]['LP.'], 
             title: data[i]['Title'] ? data[i]['Title'] : data[i]['TITLE'],
             synopsis: data[i]['Synopsis'] ? data[i]['Synopsis'] : data[i]['Synopsis EN'] ? data[i]['Synopsis EN'] : data[i]['SYNOPSIS'],
@@ -287,13 +292,69 @@ function saveSheet(airing, data, callback) {
             day: data[i]['DAY'],
             duration: data[i]['TIME']
         });
+        for(var j = 0; j < newFields.length; ++j) {
+            logger.logInfo('xmlXlsxParserMain - saveSheet - new field found in the xlsx file: ' + name + ' with the new field ' + newFields[j]);
+            var field = newFields[j].replace('.', '');
+            epg.set(field, data[i][newFields[j]]);
+        }
+        airing.airings.push(epg);
     }
+
     airing.save(function(err) {
         if(callback) {
             logger.logInfo('xmlXlsxParserMain - saveSheet - total airings after saveSheet: ' + airing.airings.length);
             callback(err);
         }
     });
+}
+
+function findNewFields(keys) {
+    var newFields = [];
+    for(var i = 0; i < keys.length; ++i) {
+        switch(keys[i]) {
+        case 'Start date':
+        case 'Date':
+        case 'DATE':
+            break;
+        case 'Start time':
+        case 'START TIME':
+            break;
+        case 'End date':
+            break;
+        case 'End time':
+            break;
+        case 'Lp.':
+        case 'LP.':
+            break;
+        case 'Title':
+        case 'TITLE':
+            break;
+        case 'Synopsis':
+        case 'SYNOPSIS':
+        case 'Synopsis EN':
+            break;
+        case 'Country':
+        case 'COUNTRY':
+            break;
+        case 'DIRECTOR':
+            break;
+        case 'CASTING':
+            break;
+        case 'GENRE':
+            break;
+        case 'AGE RATING':
+            break;
+        case 'YEAR':
+            break;
+        case 'DAY':
+            break;
+        case 'TIME':
+            break;
+        default: 
+            newFields.push(keys[i]);
+        }
+    }
+    return newFields;
 }
 
 function xmlParser(xmlFileName, startUtc, xmlCb) {
