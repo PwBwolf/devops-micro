@@ -1797,24 +1797,27 @@ function createUser(user, cc, cb) {
 function createAccount(user, userObj, type, cb) {
     var now = (new Date()).toUTCString();
     var accountObj = new Account({
-        type: type,
-        merchant: user.merchant ? user.merchant.toUpperCase() : 'YIPTV',
-        primaryUser: userObj,
-        users: [userObj],
-        createdAt: now,
-        startDate: now
-    });
+            type: type,
+            merchant: user.merchant ? user.merchant.toUpperCase() : 'YIPTV',
+            primaryUser: userObj,
+            users: [userObj],
+            createdAt: now,
+            startDate: now,
+            referredBy: user.referredBy
+        }
+    );
     if (type === 'free') {
         accountObj.premiumEndDate = moment(accountObj.startDate).add(7, 'days');
+        accountObj.packages = config.freePremiumUserPackages;
     }
     if (type === 'paid') {
         accountObj.firstCardPaymentDate = now;
         accountObj.billingDate = now;
+        accountObj.packages = config.paidUserPackages;
     }
     if (type === 'comp') {
         accountObj.complimentaryCode = user.code;
-    } else {
-        accountObj.referredBy = user.referredBy;
+        accountObj.packages = config.complimentaryUserPackages;
     }
     accountObj.save(function (err) {
         if (cb) {
