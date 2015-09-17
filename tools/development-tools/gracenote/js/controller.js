@@ -59,7 +59,7 @@
     
     myApp.controller('channelListCtrl', ['$scope', 'channelGuideSvc', function ($scope, channelGuideSvc) {
        
-        var req = {stationIds: [], projections: ['status', 'channel']};
+        var req = {stationIds: [], projections: ['status', 'channel'], source: ['gracenote', 'epg', 'xml']};
         //var req = {stationIds: ['44448', '55912']};
     /*    
         channelGuideSvc.getAppConfig()

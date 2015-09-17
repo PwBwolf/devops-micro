@@ -4,16 +4,22 @@ var config = require('../../../../server/common/setup/config');
 var mongoose = require('../../../../server/node_modules/mongoose');
 var date = require('../../../../server/common/services/date');
 var logger = require('../../../../server/common/setup/logger');
+var async = require('../../../../server/node_modules/async');
 
 require('../../../../server/common/models/channel');
 require('../../../../server/common/models/image-data');
 require('../../../../server/common/models/image');
+require('../../xml-xlsx-parser/models/airing');
+require('../../xml-xlsx-parser/models/event');
 
 var dbYip = mongoose.createConnection(config.db);
+var dbMetaData = mongoose.createConnection(config.yipMetaDataDb);
 
 var Channel = dbYip.model('Channel');
 var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
+var Airing = dbMetaData.model('Airing');
+var Event = dbMetaData.model('Event');
 
 module.exports = {
     getChannelList: function (req, res) {
@@ -32,24 +38,90 @@ module.exports = {
             }
         }
         
-        //Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true}, function (err, channelsDb) {
-        //Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, {stationId: true, 'preferredImage.uri': true, callSign: true})
-        Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, projectionObj)
-        .limit(200).exec(function (err, channelsDb) {
-            if (err) {
-                logger.logError('mediaController - getChannelList - failed to retrieve channel list');
-                logger.logError(err);
-                return res.status(500).end();
+        var models = getDbModels(req.query.source);
+        
+        async.concat(
+            models,
+            
+            function(item, cb) {
+                switch(item) {
+                case 'Channel':
+                    Channel.find(req.query.stationIds === undefined ? {status: 'active'} : Array.isArray(req.query.stationIds) ? {stationId: {$in: req.query.stationIds}} : {stationId: req.query.stationIds}, projectionObj)
+                    .exec(function (err, channelsDb) {
+                        if (err) {
+                            logger.logError('mediaController - getChannelList - failed to retrieve channel list from Channel collections');
+                            logger.logError(err);
+                            cb(err);
+                        } else {
+                            logger.logInfo('mediaController - getChannelList - channel list from Channel collections: ' + channelsDb.length);
+                            cb(null, channelsDb);
+                        }
+                    });
+                    break;
+                case 'Airing':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    Airing.find(req.query.stationIds === undefined ? {} : Array.isArray(req.query.stationIds) ? {source: {$in: req.query.stationIds}} : {source: req.query.stationIds}, projectionObj)
+                    .exec(function (err, airings) {
+                        if (err) {
+                            logger.logError('mediaController - getChannelList - failed to retrieve channel list from Airing collections');
+                            logger.logError(err);
+                            cb(err);
+                        } else {
+                            logger.logInfo('mediaController - getChannelList - channel list from Airing collections: ' + airings.length);
+                            var airingsArray = [];
+                            for(var i = 0; i < airings.length; ++i) {
+                                airingsArray.push({stationId: airings[i].source, callSign: airings[i].source});
+                            }
+                            cb(null, airingsArray);
+                        }
+                    });
+                    break;
+                case 'Event':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    Event.find(req.query.stationIds === undefined ? {} : Array.isArray(req.query.stationIds) ? {source: {$in: req.query.stationIds}} : {source: req.query.stationIds}, projectionObj)
+                    .exec(function (err, events) {
+                        if (err) {
+                            logger.logError('mediaController - getChannelList - failed to retrieve channel list from Event collections');
+                            logger.logError(err);
+                            cb(err);
+                        } else {
+                            logger.logInfo('mediaController - getChannelList - channel list from Event collections: ' + events.length);
+                            var eventsArray = [];
+                            for(var i = 0; i < events.length; ++i) {
+                                eventsArray.push({stationId: events[i].source, callSign: events[i].source});
+                            }
+                            cb(null, eventsArray);
+                        }
+                    });
+                    break;
+                }
+            },
+        
+            function(err, results) {
+                if(err) {
+                    logger.logError('mediaController - getChannelList - failed to retrieve channel list from collections: ' + models);
+                    logger.logError(err);
+                    return res.status(500).end();
+                } else {
+                    logger.logInfo('mediaController - getChannelList - final channel list from collections: ' + results.length);
+                    res.json(results);
+                }             
             }
-            res.json(channelsDb);
-        });
+        );
     },
 
     getChannelInfo: function (req, res) {
         var nowTime = new Date();
         var startTime = date.isoDate(nowTime);
+        var startTimeUTC = (new Date(Date.UTC(nowTime.getUTCFullYear(), nowTime.getUTCMonth(), nowTime.getUTCDate(), nowTime.getUTCHours(), nowTime.getUTCMinutes(), nowTime.getUTCSeconds())));
         logger.logInfo('mediaController - getChannelInfo - startTime:' + startTime);
-        var endTime = req.query.period === undefined ? date.isoDate(dateAdd(nowTime, 'day', 14)) : date.isoDate(dateAdd(nowTime, 'hour', req.query.period));
+        var tempTime = req.query.period === undefined ? dateAdd(nowTime, 'day', 24) : dateAdd(nowTime, 'hour', req.query.period);
+        var endTime = date.isoDate(tempTime);
+        var endTimeUTC = (new Date(Date.UTC(tempTime.getUTCFullYear(), tempTime.getUTCMonth(), tempTime.getUTCDate(), tempTime.getUTCHours(), tempTime.getUTCMinutes(), tempTime.getUTCSeconds())));
         logger.logInfo('mediaController - getChannelInfo - endTime:' + endTime);
         
         var projectionObj = {};
@@ -71,18 +143,138 @@ module.exports = {
             }
         }
         
-        Channel.aggregate([{$match: {stationId: req.query.stationId}},
-                {$unwind: '$airings'},
-                {$match: {'airings.endTime': {$gt: startTime, $lte: endTime}}},
-                {$project: projectionObj}],
-            function (err, channelsDb) {
-                if (err) {
-                    logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from db');
+        var models = ['Channel', 'Airing', 'Event'];
+        
+        async.concat(
+            models,
+            
+            function(item, cb) {
+                switch(item) {
+                case 'Channel':
+                    Channel.aggregate(
+                        [
+                           {$match: {stationId: req.query.stationId}},
+                           {$unwind: '$airings'},
+                           {$match: {'airings.endTime': {$gt: startTime, $lte: endTime}}},
+                           {$project: projectionObj}
+                        ],
+                        function (err, channelsDb) {
+                            if (err) {
+                                logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from Channel collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getChannelInfo - channel info from Channel collection: ' + channelsDb.length);
+                                cb(null, channelsDb);
+                            }
+                        }
+                    );
+                    break;
+                case 'Airing':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    projectionObj['airings.title'] = true;
+                    Airing.aggregate(
+                        [
+                           {$match: {source: req.query.stationId}},
+                           {$unwind: '$airings'},
+                           {$match: {'airings.startTime': {$gte: startTimeUTC, $lte: endTimeUTC}}},
+                           {$project: projectionObj}
+                        ],
+                        function (err, airings) {
+                            if (err) {
+                                logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from Airing collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getChannelInfo - channel info from Airing collection: ' + airings.length);
+                                
+                                if(airings.length > 0) {
+                                    var airingsArray = [];
+                                    for(var i = 0; i < airings.length; ++i) {
+                                        var airingInfo = {
+                                            stationId: airings[i].source, 
+                                            callSign: airings[i].source, 
+                                            airings: {
+                                                startTime: airings[i].airings.startTime,
+                                                endTime: airings[i].airings.endTime,
+                                                program: {
+                                                    title: airings[i].airings.title, 
+                                                    tmsId: airings[i].airings.title
+                                                }
+                                            }
+                                        };
+                                        airingsArray.push(airingInfo);
+                                    }
+                                    cb(null, airingsArray);
+                                } else {
+                                    cb(null, airings);
+                                }
+                            }
+                        }
+                    );
+                    break;
+                case 'Event':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    projectionObj['airings.title'] = true;
+                    projectionObj['airings.mediaId'] = true;
+                    Event.aggregate(
+                        [
+                           {$match: {source: req.query.stationId}},
+                           {$unwind: '$airings'},
+                           {$match: {'airings.startTime': {$gt: startTimeUTC, $lte: endTimeUTC}}},
+                           {$project: projectionObj}
+                        ],
+                        function (err, events) {
+                            if (err) {
+                                logger.logError('mediaController - getChannelInfo - failed to retrieve channel info from Event collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getChannelInfo - channel info from Event collection: ' + events.length);
+                                if(events.length > 0) {
+                                    var eventsArray = [];
+                                                                        
+                                    for(var i = 0; i < events.length; ++i) {
+                                        var eventInfo = {
+                                            stationId: events[i].source, 
+                                            callSign: events[i].source, 
+                                            airings: {
+                                                startTime: events[i].airings.startTime,
+                                                endTime: events[i].airings.endTime,
+                                                program: {
+                                                    title: events[i].airings.title, 
+                                                    tmsId: events[i].airings.mediaId
+                                                }
+                                            }
+                                        };
+                                        eventsArray.push(eventInfo);
+                                    }
+                                    cb(null, eventInfo);
+                                } else {
+                                    cb(null, events);
+                                }
+                            }
+                        }
+                    );
+                    break;
+                }
+            },
+        
+            function(err, results) {
+                if(err) {
+                    logger.logError('mediaController - getChannelInfo - failed to retrieve channel list from collections: ' + models);
                     logger.logError(err);
                     return res.status(500).end();
-                }
-                res.json(channelsDb);
-            });
+                } else {
+                    logger.logInfo('mediaController - getChannelInfo - final channel info from collection: ' + results.length);
+                    res.json(results);
+                }             
+            }
+        );
     },
 
     getProgramDetail: function (req, res) {
@@ -108,19 +300,151 @@ module.exports = {
             }
         }
         
-        Channel.aggregate([{$match: {stationId: req.query.stationId}},
-                {$unwind: '$airings'},
-                {$match: {'airings.program.tmsId': req.query.tmsId}},
-                {$project: projectionObj},
-                {$limit: 1}],
-            function (err, channelsDb) {
-                if (err) {
-                    logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from db');
+var models = ['Channel', 'Airing', 'Event'];
+        
+        async.concat(
+            models,
+            
+            function(item, cb) {
+                switch(item) {
+                case 'Channel':
+                    Channel.aggregate(
+                        [
+                            {$match: {stationId: req.query.stationId}},
+                            {$unwind: '$airings'},
+                            {$match: {'airings.program.tmsId': req.query.tmsId}},
+                            {$project: projectionObj},
+                            {$limit: 1}
+                        ],
+                        
+                        function (err, channelsDb) {
+                            if (err) {
+                                logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from Channel collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getProgramDetail - program detail from Channel collection: ' + channelsDb.length);
+                                cb(null, channelsDb);
+                            }
+                        }
+                    );
+                    break;
+                case 'Airing':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    projectionObj['airings.title'] = true;
+                    projectionObj['airings.synopsis'] = true;
+                    Airing.aggregate(
+                        [
+                            {$match: {source: req.query.stationId}},
+                            {$unwind: '$airings'},
+                            {$match: {'airings.title': req.query.tmsId}},
+                            {$project: projectionObj},
+                            {$limit: 1}
+                        ],
+                        
+                        function (err, airings) {
+                            if (err) {
+                                logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from Airing collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getProgramDetail - program detail from Airing collection: ' + airings.length);
+                                
+                                if(airings.length > 0) {
+                                    var airingsArray = [];
+                                    for(var i = 0; i < airings.length; ++i) {
+                                        var airingInfo = {
+                                            stationId: airings[i].source, 
+                                            callSign: airings[i].source, 
+                                            airings: {
+                                                startTime: airings[i].airings.startTime,
+                                                endTime: airings[i].airings.endTime,
+                                                program: {
+                                                    title: airings[i].airings.title, 
+                                                    tmsId: airings[i].airings.title,
+                                                    longDescription: airings[i].airings.synopsis
+                                                }
+                                            }
+                                        };
+                                        airingsArray.push(airingInfo);
+                                    }
+                                    cb(null, airingsArray);
+                                } else {
+                                    cb(null, airings);
+                                }
+                            }
+                        }
+                    );
+                    break;
+                case 'Event':
+                    projectionObj['source'] = true;
+                    projectionObj['fileName'] = true;
+                    projectionObj['type'] = true;
+                    projectionObj['airings.title'] = true;
+                    projectionObj['airings.mediaId'] = true;
+                    projectionObj['airings.eitLong'] = true;
+                    Event.aggregate(
+                        [
+                            {$match: {source: req.query.stationId}},
+                            {$unwind: '$airings'},
+                            {$match: {'airings.mediaId': req.query.tmsId}},
+                            {$project: projectionObj},
+                            {$limit: 1}
+                        ],
+                        function (err, events) {
+                            if (err) {
+                                logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from Event collection');
+                                logger.logError(err);
+                                cb(err);
+                            } else {
+                                logger.logInfo('mediaController - getProgramDetail - program detail from Event collection: ' + events.length);
+                                if(events.length > 0) {
+                                    var eventsArray = [];
+                                                                        
+                                    for(var i = 0; i < events.length; ++i) {
+                                        var eventInfo = {
+                                            stationId: events[i].source, 
+                                            callSign: events[i].source, 
+                                            airings: {
+                                                startTime: events[i].airings.startTime,
+                                                endTime: events[i].airings.endTime,
+                                                program: {
+                                                    title: events[i].airings.title, 
+                                                    tmsId: events[i].airings.mediaId,
+                                                    longDescription: events[i].airings.eitLong
+                                                }
+                                            }
+                                        };
+                                        eventsArray.push(eventInfo);
+                                    }
+                                    cb(null, eventInfo);
+                                } else {
+                                    cb(null, events);
+                                }
+                            }
+                        }
+                    );
+                    break;
+                }
+            },
+        
+            function(err, results) {
+                if(err) {
+                    logger.logError('mediaController - getChannelInfo - failed to retrieve channel list from collections: ' + models);
                     logger.logError(err);
                     return res.status(500).end();
-                }
-                res.json(channelsDb[0]);
-            });
+                } else {
+                    logger.logInfo('mediaController - getChannelInfo - final channel info from collection: ' + results.length);
+                    res.json(results.length > 0 ? results[0] : results);
+                }             
+            }
+        );
+        
+        
+        
+        
     },
     
     getChannelLogo: function(req, res) {
@@ -180,6 +504,20 @@ module.exports = {
         });
     }
 };
+
+function getDbModels(sources) {
+    var models = [];
+    if(sources && Array.isArray(sources)) {
+        for(var i = 0; i < sources.length; ++i) {
+            models.push(sources[i]);
+        }
+    } else if(sources) {
+        models.push(sources);
+    } else {
+        models = models.concat(['Channel', 'Airing', 'Event']);
+    }
+    return models;
+}
 
 function dateAdd(date, interval, units) {
     var newDate = new Date(date);

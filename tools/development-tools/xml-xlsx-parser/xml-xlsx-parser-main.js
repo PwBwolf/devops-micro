@@ -209,23 +209,45 @@ function getChannelSourceUpperCase(name) {
 
 function saveSheet(airing, data, name, callback) {
     if(airing.airings.length > 0) {
-        var startDateString = data[0]['Start date'] ? data[0]['Start date'].toString() : data[0]['DATE'] ? data[0]['DATE'].toString() : data[0]['Date'].toString();
-        var startYear = startDateString.substring(0,4);
-        var startMonth = startDateString.substring(4,6);
-        var startDay = startDateString.substring(6,8);
-        var startTimeString = data[0]['Start time'] ? data[0]['Start time'].toString() : data[0]['START TIME'].toString();
-        var startHour, startMin, startSec;
-        var pieces = startTimeString.split(':');
-        if(pieces.length === 3) {
-            startHour = parseInt(pieces[0], 10);
-            startMin = parseInt(pieces[1], 10);
-            startSec = parseInt(pieces[2], 10);
+        var startDateString = data[0]['Start date'] ? data[0]['Start date'] : data[0]['DATE'] ? data[0]['DATE'] : data[0]['Date'];
+        var startYear, startMonth, startDay;
+        if(startDateString === undefined) {
+            startDateString = '21000901';
         } else {
-            startHour = 0;
-            startMin = 0;
-            startSec = 0;
+            if(startDateString.indexOf('.') > -1) {
+                startDateString = startDateString.split('.');
+                startYear = startDateString[2];
+                startMonth = startDateString[1];
+                startDay = startDateString[0];
+            } else {
+                startYear = startDateString.substring(0,4);
+                startMonth = startDateString.substring(4,6);
+                startDay = startDateString.substring(6,8);
+            }
         }
 
+        var startTimeString = data[0]['Start time'] ? data[0]['Start time'] : data[0]['START TIME'];
+        if(startTimeString === undefined) {
+            startTimeString = '10:10:10';
+        }
+        var startHour, startMin, startSec;
+        var pieces = startTimeString.split(':');
+        if(pieces) {
+            if(pieces.length === 3) {
+                startHour = parseInt(pieces[0], 10);
+                startMin = parseInt(pieces[1], 10);
+                startSec = parseInt(pieces[2], 10);
+            } else if(pieces.length === 2) {
+                startHour = parseInt(pieces[0], 10);
+                startMin = parseInt(pieces[1], 10);
+                startSec = 0;
+            } else {
+                startHour = 0;
+                startMin = 0;
+                startSec = 0;
+            }
+        }
+        
         var sT = new Date(Date.UTC(startYear, startMonth-1, startDay, startHour, startMin, startSec));
         var isSTExist = false;
         var index = 0;
@@ -245,28 +267,44 @@ function saveSheet(airing, data, name, callback) {
     var newFields = findNewFields(keys);
     
     for(var i = 0; i < data.length; ++i) {
-        var startDateString = data[i]['Start date'] ? data[i]['Start date'].toString() : data[i]['DATE'] ? data[i]['DATE'].toString() : data[i]['Date'].toString();
-        var startYear = startDateString.substring(0,4);
-        var startMonth = startDateString.substring(4,6);
-        var startDay = startDateString.substring(6,8);
-        var startTimeString = data[i]['Start time'] ? data[i]['Start time'].toString() : data[i]['START TIME'].toString();
+        var startDateString = data[i]['Start date'] ? data[i]['Start date'] : data[i]['DATE'] ? data[i]['DATE'] : data[i]['Date'];
+        var startYear, startMonth, startDay;
+        if(startDateString) {
+            if(startDateString.indexOf('.') > -1) {
+                startDateString = startDateString.split('.');
+                startYear = startDateString[2];
+                startMonth = startDateString[1];
+                startDay = startDateString[0];
+            } else {
+                startYear = startDateString ? startDateString.substring(0,4) : undefined;
+                startMonth = startDateString ? startDateString.substring(4,6) : undefined;
+                startDay = startDateString ? startDateString.substring(6,8) : undefined;
+            }
+        }
+        var startTimeString = data[i]['Start time'] ? data[i]['Start time'] : data[i]['START TIME'];
         var startHour, startMin, startSec;
-        var pieces = startTimeString.split(':');
-        if(pieces.length === 3) {
-            startHour = parseInt(pieces[0], 10);
-            startMin = parseInt(pieces[1], 10);
-            startSec = parseInt(pieces[2], 10);
-        } else {
-            startHour = 0;
-            startMin = 0;
-            startSec = 0;
+        var pieces = startTimeString ? startTimeString.split(':') : undefined;
+        if(pieces) {
+            if(pieces.length === 3) {
+                startHour = parseInt(pieces[0], 10);
+                startMin = parseInt(pieces[1], 10);
+                startSec = parseInt(pieces[2], 10);
+            } else if(pieces.length === 2) {
+                startHour = parseInt(pieces[0], 10);
+                startMin = parseInt(pieces[1], 10);
+                startSec = 0;
+            } else {
+                startHour = 0;
+                startMin = 0;
+                startSec = 0;
+            }
         }
         
-        var endDateString = data[i]['End date'] ? data[i]['End date'].toString() : data[i]['End date'];
+        var endDateString = data[i]['End date'] ? data[i]['End date'] : data[i]['End date'];
         var endYear = endDateString ? endDateString.substring(0,4) : undefined;
         var endMonth = endDateString ? endDateString.substring(4,6) : undefined;
         var endDay = endDateString ? endDateString.substring(6,8) : undefined;
-        var endTimeString = data[i]['End time'] ? data[i]['End time'].toString() : data[i]['End time'];
+        var endTimeString = data[i]['End time'] ? data[i]['End time'] : data[i]['End time'];
         var endHour, endMin, endSec;
         pieces = endTimeString ? endTimeString.split(':') : undefined;
         if(pieces) {
@@ -274,6 +312,10 @@ function saveSheet(airing, data, name, callback) {
                 endHour = parseInt(pieces[0], 10);
                 endMin = parseInt(pieces[1], 10);
                 endSec = parseInt(pieces[2], 10);
+            } else if(pieces.length === 2) {
+                endHour = parseInt(pieces[0], 10);
+                endMin = parseInt(pieces[1], 10);
+                endSec = 0;
             } else {
                 endHour = 0;
                 endMin = 0;
@@ -284,7 +326,7 @@ function saveSheet(airing, data, name, callback) {
             lp: data[i]['Lp.'] ? data[i]['Lp.'] : data[i]['LP.'], 
             title: data[i]['Title'] ? data[i]['Title'] : data[i]['TITLE'],
             synopsis: data[i]['Synopsis'] ? data[i]['Synopsis'] : data[i]['Synopsis EN'] ? data[i]['Synopsis EN'] : data[i]['SYNOPSIS'],
-            startTime: new Date(Date.UTC(startYear, startMonth-1, startDay, startHour, startMin, startSec)),
+            startTime: startDateString ? new Date(Date.UTC(startYear, startMonth-1, startDay, startHour, startMin, startSec)) : undefined,
             endTime: endDateString ? new Date(Date.UTC(endYear, endMonth-1, endDay, endHour, endMin, endSec)) : undefined,
             country: data[i]['Country'] ? data[i]['Country'] : data[i]['COUNTRY'],
             director: data[i]['DIRECTOR'],
@@ -443,11 +485,11 @@ function xmlParser(xmlFileName, startUtc, xmlCb) {
 
 function saveEvent(event, data, dataMedia, cb) {
     if(event.airings.length > 0) {
-        var startDateString = data[0]['OnAirDate'].toString();
+        var startDateString = data[0]['OnAirDate'];
         var startYear = '20' + startDateString.substring(0,2);
         var startMonth = startDateString.substring(3,5);
         var startDay = startDateString.substring(6,8);
-        var startTimeString = data[0]['OnAirTime'].toString();
+        var startTimeString = data[0]['OnAirTime'];
         var startHour, startMin, startSec, startMilSec;
         var pieces = startTimeString.split(':');
         if(pieces.length === 4) {
@@ -477,11 +519,11 @@ function saveEvent(event, data, dataMedia, cb) {
         }
     }
     for(var i = 0; i < data.length; ++i) {
-        var startDateString = data[i]['OnAirDate'].toString();
+        var startDateString = data[i]['OnAirDate'];
         var startYear = '20' + startDateString.substring(0,2);
         var startMonth = startDateString.substring(3,5);
         var startDay = startDateString.substring(6,8);
-        var startTimeString = data[i]['OnAirTime'].toString();
+        var startTimeString = data[i]['OnAirTime'];
         var startHour, startMin, startSec, startMilSec;
         var pieces = startTimeString.split(':');
         if(pieces.length === 4) {
