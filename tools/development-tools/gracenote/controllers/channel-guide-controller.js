@@ -143,7 +143,7 @@ module.exports = {
             }
         }
         
-        var models = ['Channel', 'Airing', 'Event'];
+        var models = getDbModels(req.query.source);
         
         async.concat(
             models,
@@ -300,7 +300,7 @@ module.exports = {
             }
         }
         
-var models = ['Channel', 'Airing', 'Event'];
+        var models = getDbModels(req.query.source);
         
         async.concat(
             models,
@@ -441,10 +441,6 @@ var models = ['Channel', 'Airing', 'Event'];
                 }             
             }
         );
-        
-        
-        
-        
     },
     
     getChannelLogo: function(req, res) {
