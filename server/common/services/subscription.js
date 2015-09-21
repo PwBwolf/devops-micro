@@ -558,6 +558,7 @@ module.exports = {
                                 billingDate: userObj.account.billingDate,
                                 firstCardPaymentDate: userObj.account.firstCardPaymentDate,
                                 premiumEndDate: userObj.account.premiumEndDate,
+                                packages: userObj.account.packages,
                                 merchant: userObj.account.merchant,
                                 cancelDate: userObj.cancelDate,
                                 upgradeDate: userObj.upgradeDate,
@@ -566,6 +567,7 @@ module.exports = {
                             userObj.account.type = 'paid';
                             userObj.account.billingDate = (new Date()).toUTCString();
                             userObj.account.premiumEndDate = undefined;
+                            userObj.account.packages = config.paidUserPackages;
                             userObj.upgradeDate = (new Date()).toUTCString();
                             userObj.cancelDate = undefined;
                             userObj.complimentaryEndDate = undefined;
@@ -821,7 +823,8 @@ module.exports = {
                                         validTill: userObj.validTill,
                                         type: userObj.account.type,
                                         complimentaryCode: userObj.account.complimentaryCode,
-                                        premiumEndDate: userObj.account.premiumEndDate
+                                        premiumEndDate: userObj.account.premiumEndDate,
+                                        packages: userObj.account.packages
                                     };
                                     userObj.upgradeDate = (new Date()).toUTCString();
                                     userObj.validTill = moment(userObj.upgradeDate).add(cc.duration, 'days').utc();
@@ -830,6 +833,7 @@ module.exports = {
                                     userObj.account.type = 'comp';
                                     userObj.account.complimentaryCode = newUser.code;
                                     userObj.account.premiumEndDate = undefined;
+                                    userObj.account.packages = config.complimentaryUserPackages;
                                     if (newUser.firstName) {
                                         currentUser = {
                                             firstName: userObj.firstName,
@@ -1120,9 +1124,11 @@ module.exports = {
                         callback(err);
                     } else {
                         currentValues = {
-                            premiumEndDate: userObj.account.premiumEndDate
+                            premiumEndDate: userObj.account.premiumEndDate,
+                            packages: userObj.account.packages
                         };
                         userObj.account.premiumEndDate = undefined;
+                        userObj.account.packages = config.freeUserPackages;
                         userObj.account.save(function (err) {
                             if (err) {
                                 logger.logError('subscription - removePremiumPackage - error updating account: ' + userObj.email);
@@ -1251,12 +1257,14 @@ module.exports = {
                             complimentaryEndDate: userObj.complimentaryEndDate,
                             validTill: userObj.validTill,
                             complimentaryCode: userObj.account.complimentaryCode,
-                            type: userObj.account.type
+                            type: userObj.account.type,
+                            packages: userObj.account.packages
                         };
                         userObj.complimentaryEndDate = (new Date()).toUTCString();
                         userObj.validTill = undefined;
                         userObj.account.complimentaryCode = undefined;
                         userObj.account.type = 'free';
+                        userObj.account.packages = config.freeUserPackages;
                         userObj.save(function (err) {
                             if (err) {
                                 logger.logError('subscription - endComplimentarySubscription - error updating user: ' + userObj.email);
@@ -1387,10 +1395,12 @@ module.exports = {
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
                             type: userObj.account.type,
-                            billingDate: userObj.account.billingDate
+                            billingDate: userObj.account.billingDate,
+                            packages: userObj.account.packages
                         };
                         userObj.account.billingDate = undefined;
                         userObj.account.type = 'free';
+                        userObj.account.packages = config.freeUserPackages;
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
@@ -1487,15 +1497,23 @@ module.exports = {
     },
 
     dunning5Days: function (userEmail, cb) {
-        var errorType;
+        var errorType, currentValues;
         async.waterfall([
             // get user
             function (callback) {
-                User.findOne({email: userEmail}, function (err, userObj) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
                         logger.logError('subscription - dunning5Days - error fetching user: ' + userEmail);
+                        callback(err);
                     }
-                    callback(err, userObj);
+                    currentValues = {packages: userObj.account.packages};
+                    userObj.account.packages = config.paidUserDunningPackages;
+                    userObj.account.save(function (err) {
+                        if (err) {
+                            logger.logError('subscription - dunning5Days - error updating account: ' + userEmail);
+                        }
+                        callback(err, userObj);
+                    });
                 });
             },
             // update to free packages in aio
@@ -1532,9 +1550,13 @@ module.exports = {
             if (err) {
                 logger.logError(err);
                 switch (errorType) {
+                    case 'aio-package-update':
+                        revertAccountChangesForDunning5Days(userObj, currentValues);
+                        break;
                     case 'freeside-login':
                     case 'freeside-package-remove':
                         updateAioPackages(userObj.email, config.aioPaidUserPackages);
+                        revertAccountChangesForDunning5Days(userObj, currentValues);
                         break;
                 }
             }
@@ -1545,15 +1567,23 @@ module.exports = {
     },
 
     reverseDunning5Days: function (userEmail, cb) {
-        var errorType;
+        var errorType, currentValues;
         async.waterfall([
             // get user
             function (callback) {
-                User.findOne({email: userEmail}, function (err, userObj) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
                         logger.logError('subscription - reverseDunning5Days - error fetching user: ' + userEmail);
+                        callback(err);
                     }
-                    callback(err, userObj);
+                    currentValues = {packages: userObj.account.packages};
+                    userObj.account.packages = config.paidUserPackages;
+                    userObj.account.save(function (err) {
+                        if (err) {
+                            logger.logError('subscription - reverseDunning5Days - error updating account: ' + userEmail);
+                        }
+                        callback(err, userObj);
+                    });
                 });
             },
             // update to free packages in aio
@@ -1590,9 +1620,13 @@ module.exports = {
             if (err) {
                 logger.logError(err);
                 switch (errorType) {
+                    case 'aio-package-update':
+                        revertAccountChangesForReverseDunning5Days(userObj, currentValues);
+                        break;
                     case 'freeside-login':
                     case 'freeside-package-remove':
                         updateAioPackages(userObj.email, config.aioDunning5DayPackages);
+                        revertAccountChangesForReverseDunning5Days(userObj, currentValues);
                         break;
                 }
             }
@@ -1620,10 +1654,12 @@ module.exports = {
                             cancelDate: userObj.cancelDate,
                             cancelOn: userObj.cancelOn,
                             type: userObj.account.type,
-                            billingDate: userObj.account.billingDate
+                            billingDate: userObj.account.billingDate,
+                            packages: userObj.account.packages
                         };
                         userObj.account.billingDate = undefined;
                         userObj.account.type = 'free';
+                        userObj.account.packages = config.freeUserPackages;
                         userObj.cancelDate = (new Date()).toUTCString();
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
@@ -1797,24 +1833,27 @@ function createUser(user, cc, cb) {
 function createAccount(user, userObj, type, cb) {
     var now = (new Date()).toUTCString();
     var accountObj = new Account({
-        type: type,
-        merchant: user.merchant ? user.merchant.toUpperCase() : 'YIPTV',
-        primaryUser: userObj,
-        users: [userObj],
-        createdAt: now,
-        startDate: now
-    });
+            type: type,
+            merchant: user.merchant ? user.merchant.toUpperCase() : 'YIPTV',
+            primaryUser: userObj,
+            users: [userObj],
+            createdAt: now,
+            startDate: now,
+            referredBy: user.referredBy
+        }
+    );
     if (type === 'free') {
         accountObj.premiumEndDate = moment(accountObj.startDate).add(7, 'days');
+        accountObj.packages = config.freePremiumUserPackages;
     }
     if (type === 'paid') {
         accountObj.firstCardPaymentDate = now;
         accountObj.billingDate = now;
+        accountObj.packages = config.paidUserPackages;
     }
     if (type === 'comp') {
         accountObj.complimentaryCode = user.code;
-    } else {
-        accountObj.referredBy = user.referredBy;
+        accountObj.packages = config.complimentaryUserPackages;
     }
     accountObj.save(function (err) {
         if (cb) {
@@ -1848,42 +1887,12 @@ function removeDbUser(user, cb) {
     });
 }
 
-function sendVerificationEmail(user, cb) {
-    var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function deleteVisitor(email, cb) {
-    Visitor.findOne({email: email.toLowerCase()}, function (err, visitor) {
-        if (visitor) {
-            visitor.remove(function (err) {
-                if (err) {
-                    logger.logError('subscription - deleteVisitor - error removing visitor: ' + email);
-                    logger.logError(err);
-                }
-            });
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
 function revertAccountPaymentDetails(email, account, cb) {
     account.type = 'free';
     account.premiumEndDate = moment(account.startDate).add(7, 'days');
     account.firstCardPaymentDate = undefined;
     account.billingDate = undefined;
+    account.packages = config.freePremiumUserPackages;
     account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountPaymentDetails - error reverting payment details from account: ' + email);
@@ -1932,6 +1941,24 @@ function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
     });
 }
 
+function revertAccountChangesForUpgrade(user, currentValues, cb) {
+    user.account.type = currentValues.type;
+    user.account.premiumEndDate = currentValues.premiumEndDate;
+    user.account.billingDate = currentValues.billingDate;
+    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
+    user.account.merchant = currentValues.merchant;
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
 function revertUserChangesForComplimentary(user, currentValues, currentUser, cb) {
     user.cancelDate = currentValues.cancelDate;
     user.complimentaryEndDate = currentValues.complimentaryEndDate;
@@ -1955,12 +1982,43 @@ function revertUserChangesForComplimentary(user, currentValues, currentUser, cb)
     });
 }
 
+function revertAccountChangesForComplimentary(user, currentValues, cb) {
+    user.account.type = currentValues.type;
+    user.account.complimentaryCode = currentValues.complimentaryCode;
+    user.account.premiumEndDate = currentValues.premiumEndDate;
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForComplimentary - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
 function revertUserChangesForCancel(user, currentValues, cb) {
     user.cancelDate = currentValues.cancelDate;
     user.cancelOn = currentValues.cancelOn;
     user.save(function (err) {
         if (err) {
             logger.logError('subscription - revertUserChangesForCancel - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForCancel(user, currentValues, cb) {
+    user.account.billingDate = currentValues.billingDate;
+    user.account.type = currentValues.type;
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForCancel - error reverting account changes: ' + email);
             logger.logError(err);
         }
         if (cb) {
@@ -1983,55 +2041,10 @@ function revertUserChangesForComplimentaryEnded(user, currentValues, cb) {
     });
 }
 
-function revertAccountChangesForUpgrade(user, currentValues, cb) {
-    user.account.type = currentValues.type;
-    user.account.premiumEndDate = currentValues.premiumEndDate;
-    user.account.billingDate = currentValues.billingDate;
-    user.account.firstCardPaymentDate = currentValues.firstCardPaymentDate;
-    user.account.merchant = currentValues.merchant;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('subscription - revertAccountChangesForUpgrade - error reverting account changes: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function revertAccountChangesForComplimentary(user, currentValues, cb) {
-    user.account.type = currentValues.type;
-    user.account.complimentaryCode = currentValues.complimentaryCode;
-    user.account.premiumEndDate = currentValues.premiumEndDate;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('subscription - revertAccountChangesForComplimentary - error reverting account changes: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function revertAccountChangesForCancel(user, currentValues, cb) {
-    user.account.billingDate = currentValues.billingDate;
-    user.account.type = currentValues.type;
-    user.account.save(function (err) {
-        if (err) {
-            logger.logError('subscription - revertAccountChangesForCancel - error reverting account changes: ' + email);
-            logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
 function revertAccountChangesForComplimentaryEnded(user, currentValues, cb) {
     user.account.complimentaryCode = currentValues.complimentaryCode;
     user.account.type = currentValues.type;
+    user.account.packages = currentValues.packages;
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForComplimentaryEnded - error reverting account changes: ' + email);
@@ -2045,11 +2058,69 @@ function revertAccountChangesForComplimentaryEnded(user, currentValues, cb) {
 
 function revertAccountChangesForRemovePremiumPackage(user, currentValues, cb) {
     user.account.premiumEndDate = currentValues.premiumEndDate;
+    user.account.packages = currentValues.packages;
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForRemovePremiumPackage - error reverting account changes: ' + email);
             logger.logError(err);
         }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForDunning5Days(user, currentValues, cb) {
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForDunning5Days - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForReverseDunning5Days(user, currentValues, cb) {
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForReverseDunning5Days - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function deleteVisitor(email, cb) {
+    Visitor.findOne({email: email.toLowerCase()}, function (err, visitor) {
+        if (visitor) {
+            visitor.remove(function (err) {
+                if (err) {
+                    logger.logError('subscription - deleteVisitor - error removing visitor: ' + email);
+                    logger.logError(err);
+                }
+            });
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendVerificationEmail(user, cb) {
+    var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: user.email,
+        subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
+        html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
+    };
+    email.sendEmail(mailOptions, function (err) {
         if (cb) {
             cb(err);
         }
