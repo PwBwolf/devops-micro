@@ -1198,7 +1198,7 @@ body, html {
     vertical-align: baseline;
 }
 
-.channel-panel, .player-panel, .user-guide-panel {
+.channel-panel, .user-guide-panel {
     transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
@@ -1227,12 +1227,6 @@ body, html {
     vertical-align: top;
 }
 
-.player-panel {
-    background: lightgrey;
-    width: inherit;
-    height: 555px;
-}
-
 #playerTop, #playerBottom {
     width: 100%;
     margin-bottom: 5px;
@@ -1246,10 +1240,11 @@ body, html {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+    margin-top: 15px;
 }
 
 .player-top {
-    height: 65%;
+    height: 360px;
 }
 
 .main-player {
@@ -1275,7 +1270,7 @@ body, html {
 }
 
 .suggested-channels {
-    height: 35%;
+    height: 195px;
     width: 100%;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;

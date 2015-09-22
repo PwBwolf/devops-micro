@@ -16,16 +16,9 @@
     z-index: 101;
 }
 
-.player-panel {
-    height: 370px !important;
-}
 
 .player-maximized {
-    height: 370px !important;
-}
-
-#playerTop {
-    height: 100%;
+    height: 360px !important;
 }
 
 #playerBottom {

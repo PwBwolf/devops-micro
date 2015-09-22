@@ -1,44 +1,19 @@
 <div ng-controller="playerCtrl">
-    <div class="player-panel" class="clear-both">
-        <div id="playerTop" class="player-top">
+    <div id="playerTop" class="player-top">
 
-            <div class="main-player position-div">
-                <div id="yiptv-player"></div>
-            </div>
-            <div class="main-favorites position-div">
-                <div class="favorite-channel position-div" ng-repeat="channel in channels | filter:{favorite: true} | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNowById(channel._id);">
-                    <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
-                        <img class="img-responsive" ng-src="{{channel.logo}}"/>
-                    </div>
-                    <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
-                        <img class="img-responsive" ng-src="{{channel.logo}}"/>
-                        <article>
-                            <aside>
-                                <img class="img-responsive" ng-src="/images/play-button.png"/>
-                            </aside>
-                        </article>
-                    </div>
-                </div>
-            </div>
+        <div class="main-player position-div">
+            <div id="yiptv-player"></div>
         </div>
-
-        <div id="playerBottom" class="suggested-channels ease">
-            <div id="{{$index}}Promo" class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromo}" ng-mouseenter="promoSelected($index)" ng-mouseleave="promoSelected(-1)" ng-repeat="promo in promos track by $index">
-
-                <div id="channelHolderFront" ng-class="($index === selectedPromo) ? 'back' : 'front'">
-                    <img ng-src="{{promo.imageFront}}"/>
-
-                    <div class="channel-label">
-                        <span>{{promo.name}}</span>
-                    </div>
+        <div class="main-favorites position-div">
+            <div class="favorite-channel position-div" ng-repeat="channel in channels | filter:{favorite: true} | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNowById(channel._id);">
+                <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
+                    <img class="img-responsive" ng-src="{{channel.logo}}"/>
                 </div>
-                <div id="channelHolderBack" ng-class="($index === selectedPromo) ? 'front' : 'back'">
-                    <img ng-src="{{promo.imageBack}}"/>
+                <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
+                    <img class="img-responsive" ng-src="{{channel.logo}}"/>
                     <article>
                         <aside>
-                            <h4>{{promo.name}}</h4>
-
-                            <p>{{promo.description}}</p>
+                            <img class="img-responsive" ng-src="/images/play-button.png"/>
                         </aside>
                     </article>
                 </div>
@@ -67,6 +42,7 @@
             </ul>
         </div>
     </div>
+
     <div id="channelFilterHolder" ng-show="showChannelFilter">
         <div class="filter-close-btn label label-danger" ng-click="toggleChannelFilter()">X</div>
         <div class="row">
@@ -145,6 +121,29 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="playerBottom" class="suggested-channels ease">
+        <div id="{{$index}}Promo" class="suggested-channel position-div" ng-class="{'suggested-channel-open':$index === selectedPromo}" ng-mouseenter="promoSelected($index)" ng-mouseleave="promoSelected(-1)" ng-repeat="promo in promos track by $index">
+
+            <div id="channelHolderFront" ng-class="($index === selectedPromo) ? 'back' : 'front'">
+                <img ng-src="{{promo.imageFront}}"/>
+
+                <div class="channel-label">
+                    <span>{{promo.name}}</span>
+                </div>
+            </div>
+            <div id="channelHolderBack" ng-class="($index === selectedPromo) ? 'front' : 'back'">
+                <img ng-src="{{promo.imageBack}}"/>
+                <article>
+                    <aside>
+                        <h4>{{promo.name}}</h4>
+
+                        <p>{{promo.description}}</p>
+                    </aside>
+                </article>
             </div>
         </div>
     </div>
