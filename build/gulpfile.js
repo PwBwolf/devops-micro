@@ -218,17 +218,20 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/freeside-login-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-partner-accounts.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/remove-unused-collections.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/remove-payment-pending-field.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/update-user-fields.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/update-account-fields.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-trial-ended-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-comp-ended-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-canceled-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-payment-pending-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-free-active-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-comp-active-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
-    replaceAndCopy('../tools/migration-scripts/2015-07-24/migrate-paid-active-users.js', 'dist/tools/migration-scripts/2015-07-24', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/remove-unused-collections.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/remove-payment-pending-field.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/update-user-fields.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/update-account-fields.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-trial-ended-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-comp-ended-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-canceled-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-payment-pending-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-free-active-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-comp-active-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set1/migrate-paid-active-users.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set2/update-free-user-packages.js', 'dist/tools/migration-scripts/set2', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set2/update-comp-user-packages.js', 'dist/tools/migration-scripts/set2', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set2/update-paid-user-packages.js', 'dist/tools/migration-scripts/set2', 'development', argv.env);
 
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {
