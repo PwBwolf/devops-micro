@@ -2,6 +2,162 @@
     "type": "CmsChannels",
     "docs": [
         {
+            "name": "beIN Sports English",
+            "stationId": "76942",
+            "logo": "/images/channels/bein-sports.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8",
+            "order": 100
+        },
+        {
+            "name": "beIN Sports Español",
+            "stationId": "76943",
+            "logo": "/images/channels/bein-sports-espanol.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8",
+            "order": 200
+        },
+        {
+            "name": "360 Tune Box",
+            "stationId": "",
+            "logo": "/images/channels/360-tune-box.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "English",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/360tunebox_1@347839/master.m3u8",
+            "order": 300
+        },
+        {
+            "name": "A3 Series",
+            "stationId": "90917",
+            "logo": "/images/channels/a3-series.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8",
+            "order": 400
+        },
+        {
+            "name": "Antena 3",
+            "stationId": "16800",
+            "logo": "/images/channels/antena-3.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spain",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
+            "order": 500
+        },
+        {
+            "name": "AYM Sports",
+            "stationId": "34863",
+            "logo": "/images/channels/aym-sports.png",
+            "package": "Paid Basic",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8",
+            "order": 600
+        },
+        {
+            "name": "AZ Clic",
+            "stationId": "92197",
+            "logo": "/images/channels/az-clic.png",
+            "package": "Paid Basic",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8",
+            "order": 700
+        },
+        {
+            "name": "AZ Corazón",
+            "stationId": "61404",
+            "logo": "/images/channels/az-corazon.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv-azcorazon.hls.adaptive.level3.net/hls-live/yiptvlive-azcorazon/_definst_/live.m3u8",
+            "order": 800
+        },
+        {
+            "name": "Bolivia TV",
+            "stationId": "92459",
+            "logo": "/images/channels/bolivia-tv.png",
+            "package": "Paid Basic",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Bolivia",
+            "videoUrl": "http://yiptv-boliviatv.hls.adaptive.level3.net/hls-live/yiptvlive-boliviatv/_definst_/live.m3u8",
+            "order": 900
+        },
+        {
+            "name": "Canal 52 MX",
+            "stationId": "15213",
+            "logo": "/images/channels/canal-52-mx.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv-canal52.hls.adaptive.level3.net/hls-live/yiptvlive-canal52/_definst_/live.m3u8",
+            "order": 1000
+        },
+        {
+            "name": "Canal América",
+            "stationId": "",
+            "logo": "/images/channels/canal-america.png",
+            "package": "Paid Basic",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "USA",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_america/_definst_/live.m3u8",
+            "order": 1100
+        },
+        {
+            "name": "Canal Antiestres",
+            "stationId": "60271",
+            "logo": "/images/channels/canal-antiestres.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Latin America",
+            "videoUrl": "http://yiptv-canalantiestres.hls.adaptive.level3.net/hls-live/yiptvlive-canalantiestres/_definst_/live.m3u8",
+            "order": 1200
+        },
+        {
+            "name": "Canal El Tiempo",
+            "stationId": "69650",
+            "logo": "/images/channels/canal-el-tiempo.png",
+            "package": "Paid Basic",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-canaltiempo.hls.adaptive.level3.net/hls-live/yiptvlive-canaltiempo/_definst_/live.m3u8",
+            "order": 1300
+        },
+        {
             "name": "Canal Sur",
             "stationId": "12750",
             "logo": "/images/channels/canal-sur.png",
@@ -12,7 +168,31 @@
             "region": "Global",
             "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_sur/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1300
+            "order": 1400
+        },
+        {
+            "name": "Canal Tro",
+            "stationId": "55912",
+            "logo": "/images/channels/canal-tro.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_tro/_definst_/live.m3u8",
+            "order": 1500
+        },
+        {
+            "name": "Cantinazo TV",
+            "stationId": "87028",
+            "logo": "/images/channels/el-cantinazo.png",
+            "package": "Paid Basic",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv-elcantinazo.hls.adaptive.level3.net/hls-live/yiptvlive-elcantinazo/_definst_/live.m3u8",
+            "order": 1600
         },
         {
             "name": "Caribvision",
@@ -24,7 +204,31 @@
             "audience": "All",
             "region": "Caribbean",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-caribvision/_definst_/live.m3u8",
-            "order": 1600
+            "order": 1700
+        },
+        {
+            "name": "CB24",
+            "stationId": "84443",
+            "logo": "/images/channels/cb-24.png",
+            "package": "Paid Basic",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spanish",
+            "videoUrl": "http://yiptv-cb24.hls.adaptive.level3.net/hls-live/yiptvlive-cb24/_definst_/live.m3u8",
+            "order": 1800
+        },
+        {
+            "name": "CBTV",
+            "stationId": "45108",
+            "logo": "/images/channels/cb-tv.png",
+            "package": "Paid Basic",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-cbtvmich/_definst_/live.m3u8",
+            "order": 1900
         },
         {
             "name": "Clubbing TV",
@@ -37,7 +241,43 @@
             "region": "English",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-clubbing_tv/_definst_/live.m3u8",
             "favorite": true,
-            "order": 1900
+            "order": 2000
+        },
+        {
+            "name": "Cosmovisión",
+            "stationId": "65269",
+            "logo": "/images/channels/cosmovision.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-cosmovision.hls.adaptive.level3.net/hls-live/yiptvlive-cosmovision/_definst_/live.m3u8",
+            "order": 2100
+        },
+        {
+            "name": "Destinos TV",
+            "stationId": "65504",
+            "logo": "/images/channels/destinos-tv.png",
+            "package": "Paid Basic",
+            "genre": "Lifestyle",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-destinos_tv/_definst_/live.m3u8",
+            "order": 2200
+        },
+        {
+            "name": "DocuBox",
+            "stationId": "78765",
+            "logo": "/images/channels/docu-box.png",
+            "package": "Premium",
+            "genre": "Educational",
+            "language": "English",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/docubox_1@347840/master.m3u8",
+            "order": 2300
         },
         {
             "name": "Enlace",
@@ -49,7 +289,7 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbnenlace/_definst_/live.m3u8",
-            "order": 2200
+            "order": 2400
         },
         {
             "name": "Enlace Juvenil",
@@ -61,7 +301,151 @@
             "audience": "Children",
             "region": "Global",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-enlacej/_definst_/live.m3u8",
-            "order": 2300
+            "order": 2500
+        },
+        {
+            "name": "EuroNews English",
+            "stationId": "19039",
+            "logo": "/images/channels/euro-news-english.png",
+            "package": "Premium",
+            "genre": "News",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-euronews/_definst_/live.m3u8",
+            "order": 2600
+        },
+        {
+            "name": "EuroNews Portugese",
+            "stationId": "",
+            "logo": "/images/channels/euro-news-portugese.png",
+            "package": "Premium",
+            "genre": "News",
+            "language": "Portugese",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-europort/_definst_/live.m3u8",
+            "order": 2700
+        },
+        {
+            "name": "EuroNews Spanish",
+            "stationId": "",
+            "logo": "/images/channels/euro-news-spanish.png",
+            "package": "Premium",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv5-live.hls.adaptive.level3.net/hls-live/yiptv5live-eurospan/_definst_/live.m3u8",
+            "order": 2800
+        },
+        {
+            "name": "Fashion Box",
+            "stationId": "78762",
+            "logo": "/images/channels/fashion-box.png",
+            "package": "Premium",
+            "genre": "Lifestyle",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/fashionbox_1@347841/master.m3u8",
+            "order": 2900
+        },
+        {
+            "name": "Fast & Fun Box",
+            "stationId": "",
+            "logo": "/images/channels/fast-n-fun-box.png",
+            "package": "Premium",
+            "genre": "Lifestyle",
+            "language": "English",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/fastnfunbox_1@347842/master.m3u8",
+            "order": 3000
+        },
+        {
+            "name": "Fight Box",
+            "stationId": "78763",
+            "logo": "/images/channels/fight-box.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/fightbox_1@347848/master.m3u8",
+            "order": 3100
+        },
+        {
+            "name": "Film Box Art House",
+            "stationId": "83525",
+            "logo": "/images/channels/film-box-art-house.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "English",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/filmboxart_1@347843/master.m3u8",
+            "order": 3200
+        },
+        {
+            "name": "Film Box Russia",
+            "stationId": "",
+            "logo": "/images/channels/film-box-russia.png",
+            "package": "Free",
+            "genre": "Entertainment",
+            "language": "Russian",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/filmboxrus_1@347844/master.m3u8",
+            "order": 3300
+        },
+        {
+            "name": "Fix & Foxi",
+            "stationId": "",
+            "logo": "/images/channels/fix-n-foxi.png",
+            "package": "Premium",
+            "genre": "Kids",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/fixundfoxi_1@335155/master.m3u8",
+            "order": 3400
+        },
+        {
+            "name": "France 24",
+            "stationId": "",
+            "logo": "/images/channels/france-24.png",
+            "package": "Premium",
+            "genre": "News",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/france24_1@355214/master.m3u8",
+            "order": 3500
+        },
+        {
+            "name": "Films on Reel",
+            "stationId": "72510",
+            "logo": "/images/channels/films-on-reel.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224115/filmsreelsgrp/playlist.m3u8",
+            "order": 3600
+        },
+        {
+            "name": "Freckle TV",
+            "stationId": "81868",
+            "logo": "/images/channels/freckle-tv.png",
+            "package": "Premium",
+            "genre": "Kids",
+            "language": "English",
+            "audience": "Children",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224111/frecklegrp/playlist.m3u8",
+            "order": 3700
         },
         {
             "name": "HITN",
@@ -73,7 +457,43 @@
             "audience": "All",
             "region": "Spanish",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-hitn/_definst_/live.m3u8",
-            "order": 2600
+            "order": 3800
+        },
+        {
+            "name": "¡Hola! TV",
+            "stationId": "62161",
+            "logo": "/images/channels/hola-tv.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spain",
+            "videoUrl": "http://yiptv-holatv.hls.adaptive.level3.net/hls-live/yiptvlive-holatv/_definst_/live.m3u8",
+            "order": 3900
+        },
+        {
+            "name": "HRTV",
+            "stationId": "32258",
+            "logo": "/images/channels/hr-tv.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224112/hrtvgrp/playlist.m3u8",
+            "order": 4000
+        },
+        {
+            "name": "JBN",
+            "stationId": "59350",
+            "logo": "/images/channels/jbn.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Honduras",
+            "videoUrl": "http://yiptv-jbn.hls.adaptive.level3.net/hls-live/yiptvlive-jbn/_definst_/live.m3u8",
+            "order": 4100
         },
         {
             "name": "JUCE TV",
@@ -85,19 +505,79 @@
             "audience": "General",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-jctv/_definst_/live.m3u8",
-            "order": 3000
+            "order": 4200
         },
         {
-            "name": "NTN24",
+            "name": "Kino Polska International",
             "stationId": "",
-            "logo": "/images/channels/ntn-24.png",
-            "package": "Free",
+            "logo": "/images/channels/kino-polska-international.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "Polish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/kinopolskaint_1@347845/master.m3u8",
+            "order": 4300
+        },
+        {
+            "name": "Kino Polska Muzyka",
+            "stationId": "",
+            "logo": "/images/channels/kino-polska-muzyka.png",
+            "package": "Premium",
+            "genre": "Music",
+            "language": "Polish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/kinopolskamuzyka_1@347846/master.m3u8",
+            "order": 4400
+        },
+        {
+            "name": "Latele Novela",
+            "stationId": "75991",
+            "logo": "/images/channels/la-tele-novela.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "USA",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-telenovela/_definst_/live.m3u8",
+            "order": 4500
+        },
+        {
+            "name": "Latin American Sports",
+            "stationId": "67632",
+            "logo": "/images/channels/latin-american-sports.png",
+            "package": "Paid Basic",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-latinsports/_definst_/live.m3u8",
+            "order": 4600
+        },
+        {
+            "name": "Mad Screen Box",
+            "stationId": "",
+            "logo": "/images/channels/mad-screen-box.png",
+            "package": "Premium",
+            "genre": "Kids",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/madscreenbox_1@347847/master.m3u8",
+            "order": 4700
+        },
+        {
+            "name": "Maya TV",
+            "stationId": "76093",
+            "logo": "/images/channels/maya-tv.png",
+            "package": "Paid Basic",
             "genre": "News",
             "language": "Spanish",
             "audience": "General",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
-            "order": 4100
+            "region": "Honduras",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-maya_tv/_definst_/live.m3u8",
+            "order": 4800
         },
         {
             "name": "Meio Norte",
@@ -109,7 +589,31 @@
             "audience": "General",
             "region": "Brazil",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-meionorte/_definst_/live.m3u8",
-            "order": 3400
+            "order": 4900
+        },
+        {
+            "name": "Men 7",
+            "stationId": "72490",
+            "logo": "/images/channels/men-7.png",
+            "package": "Premium",
+            "genre": "Lifestyle",
+            "language": "English",
+            "audience": "Adult",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224116/men7grp/playlist.m3u8",
+            "order": 5000
+        },
+        {
+            "name": "Mi Gente TV",
+            "stationId": "79821",
+            "logo": "/images/channels/mi-gente.png",
+            "package": "Premium",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
+            "order": 5100
         },
         {
             "name": "Mi Música HD",
@@ -121,7 +625,19 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicahd_1@345976/master.m3u8",
-            "order": 3700
+            "order": 5200
+        },
+        {
+            "name": "Mi Música Romantica",
+            "stationId": "",
+            "logo": "/images/channels/mi-musica-romantica.png",
+            "package": "Premium",
+            "genre": "Music",
+            "language": "Spanish",
+            "audience": "Adult",
+            "region": "Global",
+            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-mimusica/_definst_/live.m3u8",
+            "order": 5300
         },
         {
             "name": "Mi Música Tropical",
@@ -133,7 +649,55 @@
             "audience": "General",
             "region": "Caribbean",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/musicaromantica_1@345973/master.m3u8",
-            "order": 3900
+            "order": 5400
+        },
+        {
+            "name": "Mis Películas",
+            "stationId": "82808",
+            "logo": "/images/channels/mis-peliculas.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spain",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/mispeliculas_1@341721/master.m3u8",
+            "order": 5500
+        },
+        {
+            "name": "Motors TV",
+            "stationId": "",
+            "logo": "/images/channels/motors-tv.png",
+            "package": "Premium",
+            "genre": "Lifestyle",
+            "language": "English",
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yiptv5-live.hls.adaptive.level3.net/hls-live/yiptv5live-motorstv/_definst_/live.m3u8",
+            "order": 5600
+        },
+        {
+            "name": "Newsmax TV",
+            "stationId": "87925",
+            "logo": "/images/channels/news-max.png",
+            "package": "Premium",
+            "genre": "News",
+            "language": "English",
+            "audience": "General",
+            "region": "USA",
+            "videoUrl": "http://yiptv5-live.hls.adaptive.level3.net/hls-live/yiptv5live-newsmax/_definst_/live.m3u8",
+            "order": 5700
+        },
+        {
+            "name": "NTN24",
+            "stationId": "",
+            "logo": "/images/channels/ntn-24.png",
+            "package": "Free",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-ntn24.hls.adaptive.level3.net/hls-live/yiptvlive-ntn24/_definst_/live.m3u8",
+            "order": 5800
         },
         {
             "name": "One America News",
@@ -146,7 +710,55 @@
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-oneamerica/_definst_/live.m3u8",
             "favorite": true,
-            "order": 4200
+            "order": 5900
+        },
+        {
+            "name": "Outdoor Sports",
+            "stationId": "",
+            "logo": "/images/channels/outdoor-sports.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/223831/outdoorgrp/playlist.m3u8",
+            "order": 6000
+        },
+        {
+            "name": "Promovision",
+            "stationId": "76079",
+            "logo": "/images/channels/promovision.png",
+            "package": "Paid Basic",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-promovision/_definst_/live.m3u8",
+            "order": 6100
+        },
+        {
+            "name": "PXTV Action LATAM",
+            "stationId": "72625",
+            "logo": "/images/channels/px-tv.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "English",
+            "audience": "General",
+            "region": "Mexico",
+            "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-pxtv/_definst_/live.m3u8",
+            "order": 6200
+        },
+        {
+            "name": "RCN Novelas",
+            "stationId": "65127",
+            "logo": "/images/channels/rcn-novelas.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "USA",
+            "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-rcntelenovela/_definst_/live.m3u8",
+            "order": 6300
         },
         {
             "name": "RT News",
@@ -158,7 +770,7 @@
             "audience": "General",
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_news/_definst_/live.m3u8",
-            "order": 4600
+            "order": 6400
         },
         {
             "name": "RT Español",
@@ -171,19 +783,19 @@
             "region": "Global",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-rt_espanol/_definst_/live.m3u8",
             "favorite": true,
-            "order": 4700
+            "order": 6500
         },
         {
-            "name": "The Church Channel",
-            "stationId": "29328",
-            "logo": "/images/channels/the-church-channel.png",
-            "package": "Free",
-            "genre": "Faith",
+            "name": "Show Business TV",
+            "stationId": "",
+            "logo": "/images/channels/show-business-tv.png",
+            "package": "Premium",
+            "genre": "Entertainment",
             "language": "English",
-            "audience": "All",
-            "region": "USA",
-            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-church/_definst_/live.m3u8",
-            "order": 6100
+            "audience": "General",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/showbusiness_1@344145/master.m3u8",
+            "order": 6600
         },
         {
             "name": "Smile of a Child",
@@ -195,175 +807,7 @@
             "audience": "Children",
             "region": "USA",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-smilechild/_definst_/live.m3u8",
-            "order": 4800
-        },
-        {
-            "name": "TBN",
-            "stationId": "14767",
-            "logo": "/images/channels/tbn.png",
-            "package": "Free",
-            "genre": "Faith",
-            "language": "English",
-            "audience": "All",
-            "region": "USA",
-            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbn/_definst_/live.m3u8",
-            "order": 5100
-        },
-        {
-            "name": "TeleSUR",
-            "stationId": "47620",
-            "logo": "/images/channels/tele-sur.png",
-            "package": "Free",
-            "genre": "News",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Venezuela",
-            "videoUrl": "http://yiptv-telesur.hls.adaptive.level3.net/hls-live/yiptvlive-telesur/_definst_/live.m3u8",
-            "order": 5800
-        },
-        {
-            "name": "Trendy",
-            "stationId": "82629",
-            "logo": "/images/channels/trendy.png",
-            "package": "Free",
-            "genre": "Lifestyle",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spanish",
-            "videoUrl": "http://yiptv-trendy.hls.adaptive.level3.net/hls-live/yiptvlive-trendy/_definst_/live.m3u8",
-            "order": 6200
-        },
-        {
-            "name": "beIN Sports",
-            "stationId": "76942",
-            "logo": "/images/channels/bein-sports.png",
-            "package": "Premium",
-            "genre": "Sports",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/yiptv4/beinengov/appleman.m3u8",
-            "order": 100
-        },
-        {
-            "name": "beIN Sports ñ",
-            "stationId": "76943",
-            "logo": "/images/channels/bein-sports-espanol.png",
-            "package": "Premium",
-            "genre": "Sports",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/yiptv2/beinespanov/appleman.m3u8",
-            "order": 200
-        },
-        {
-            "name": "Antena 3",
-            "stationId": "16800",
-            "logo": "/images/channels/antena-3.png",
-            "package": "Premium",
-            "genre": "General",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spain",
-            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-antenna3/_definst_/live.m3u8",
-            "order": 400
-        },
-        {
-            "name": "Canal 52 MX",
-            "stationId": "15213",
-            "logo": "/images/channels/canal-52-mx.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv-canal52.hls.adaptive.level3.net/hls-live/yiptvlive-canal52/_definst_/live.m3u8",
-            "order": 900
-        },
-        {
-            "name": "Films on Reel",
-            "stationId": "72510",
-            "logo": "/images/channels/films-on-reel.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "English",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224115/filmsreelsgrp/playlist.m3u8",
-            "order": 2400
-        },
-        {
-            "name": "Freckle TV",
-            "stationId": "81868",
-            "logo": "/images/channels/freckle-tv.png",
-            "package": "Premium",
-            "genre": "Kids",
-            "language": "English",
-            "audience": "Children",
-            "region": "Global",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224111/frecklegrp/playlist.m3u8",
-            "order": 2500
-        },
-        {
-            "name": "HRTV",
-            "stationId": "32258",
-            "logo": "/images/channels/hr-tv.png",
-            "package": "Premium",
-            "genre": "Sports",
-            "language": "English",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224112/hrtvgrp/playlist.m3u8",
-            "order": 2800
-        },
-        {
-            "name": "¡Hola! TV",
-            "stationId": "62161",
-            "logo": "/images/channels/hola-tv.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spain",
-            "videoUrl": "http://yiptv-holatv.hls.adaptive.level3.net/hls-live/yiptvlive-holatv/_definst_/live.m3u8",
-            "order": 2700
-        },
-        {
-            "name": "Men 7",
-            "stationId": "72490",
-            "logo": "/images/channels/men-7.png",
-            "package": "Premium",
-            "genre": "Lifestyle",
-            "language": "English",
-            "audience": "Adult",
-            "region": "Global",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224116/men7grp/playlist.m3u8",
-            "order": 3500
-        },
-        {
-            "name": "Mis Películas",
-            "stationId": "82808",
-            "logo": "/images/channels/mis-peliculas.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spain",
-            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/mispeliculas_1@341721/master.m3u8",
-            "order": 4000
-        },
-        {
-            "name": "Mi Gente TV",
-            "stationId": "79821",
-            "logo": "/images/channels/mi-gente.png",
-            "package": "Premium",
-            "genre": "Music",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Global",
-            "videoUrl": "http://yiptv-migente.hls.adaptive.level3.net/hls-live/yiptvlive-migente/_definst_/live.m3u8",
-            "order": 3600
+            "order": 6700
         },
         {
             "name": "Sportskool",
@@ -375,307 +819,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224113/sportskoolgrp/playlist.m3u8",
-            "order": 4900
-        },
-        {
-            "name": "Tele Romántica",
-            "stationId": "",
-            "logo": "/images/channels/tele-romantica.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "Adult",
-            "region": "Global",
-            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/teleromance_1@335180/master.m3u8",
-            "order": 5700
-        },
-        {
-            "name": "TV Quisqueya",
-            "stationId": "92370",
-            "logo": "/images/channels/tv-quisqueya.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Dominican Republic",
-            "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_quisqueya/_definst_/live.m3u8",
-            "order": 6500
-        },
-        {
-            "name": "TyC Sports",
-            "stationId": "16275",
-            "logo": "/images/channels/tyc-sports.png",
-            "package": "Premium",
-            "genre": "Sports",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Argentina",
-            "videoUrl": "http://yiptv-tycsports.hls.adaptive.level3.net/hls-live/yiptvlive-tycsports/_definst_/live.m3u8",
-            "order": 6600
-        },
-        {
-            "name": "PXTV Action LATAM",
-            "stationId": "72625",
-            "logo": "/images/channels/px-tv.png",
-            "package": "Premium",
-            "genre": "Sports",
-            "language": "English",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-pxtv/_definst_/live.m3u8",
-            "order": 4400
-        },
-        {
-            "name": "Mi Música Romantica",
-            "stationId": "",
-            "logo": "/images/channels/mi-musica-romantica.png",
-            "package": "Premium",
-            "genre": "Music",
-            "language": "Spanish",
-            "audience": "Adult",
-            "region": "Global",
-            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-mimusica/_definst_/live.m3u8",
-            "order": 3800
-        },
-        {
-            "name": "A3 Series",
-            "stationId": "90917",
-            "logo": "/images/channels/a3-series.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-a3series/_definst_/live.m3u8",
-            "order": 300
-        },
-        {
-            "name": "AYM Sports",
-            "stationId": "34863",
-            "logo": "/images/channels/aym-sports.png",
-            "package": "Paid Basic",
-            "genre": "Sports",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-aymsports/_definst_/live.m3u8",
-            "order": 500
-        },
-        {
-            "name": "AZ Clic",
-            "stationId": "92197",
-            "logo": "/images/channels/az-clic.png",
-            "package": "Paid Basic",
-            "genre": "Music",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-azclick/_definst_/live.m3u8",
-            "order": 600
-        },
-        {
-            "name": "AZ Corazón",
-            "stationId": "61404",
-            "logo": "/images/channels/az-corazon.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv-azcorazon.hls.adaptive.level3.net/hls-live/yiptvlive-azcorazon/_definst_/live.m3u8",
-            "order": 700
-        },
-        {
-            "name": "Bolivia TV",
-            "stationId": "92459",
-            "logo": "/images/channels/bolivia-tv.png",
-            "package": "Paid Basic",
-            "genre": "General",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Bolivia",
-            "videoUrl": "http://yiptv-boliviatv.hls.adaptive.level3.net/hls-live/yiptvlive-boliviatv/_definst_/live.m3u8",
-            "order": 800
-        },
-        {
-            "name": "Canal El Tiempo",
-            "stationId": "69650",
-            "logo": "/images/channels/canal-el-tiempo.png",
-            "package": "Paid Basic",
-            "genre": "News",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-canaltiempo.hls.adaptive.level3.net/hls-live/yiptvlive-canaltiempo/_definst_/live.m3u8",
-            "order": 1200
-        },
-        {
-            "name": "Canal América",
-            "stationId": "",
-            "logo": "/images/channels/canal-america.png",
-            "package": "Paid Basic",
-            "genre": "General",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "USA",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_america/_definst_/live.m3u8",
-            "order": 1000
-        },
-        {
-            "name": "Canal Antiestres",
-            "stationId": "60271",
-            "logo": "/images/channels/canal-antiestres.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Latin America",
-            "videoUrl": "http://yiptv-canalantiestres.hls.adaptive.level3.net/hls-live/yiptvlive-canalantiestres/_definst_/live.m3u8",
-            "order": 1100
-        },
-        {
-            "name": "Canal Tro",
-            "stationId": "55912",
-            "logo": "/images/channels/canal-tro.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-canal_tro/_definst_/live.m3u8",
-            "order": 1400
-        },
-        {
-            "name": "Cantinazo TV",
-            "stationId": "87028",
-            "logo": "/images/channels/el-cantinazo.png",
-            "package": "Paid Basic",
-            "genre": "Music",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv-elcantinazo.hls.adaptive.level3.net/hls-live/yiptvlive-elcantinazo/_definst_/live.m3u8",
-            "order": 1500
-        },
-        {
-            "name": "CB24",
-            "stationId": "84443",
-            "logo": "/images/channels/cb-24.png",
-            "package": "Paid Basic",
-            "genre": "News",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Spanish",
-            "videoUrl": "http://yiptv-cb24.hls.adaptive.level3.net/hls-live/yiptvlive-cb24/_definst_/live.m3u8",
-            "order": 1700
-        },
-        {
-            "name": "CBTV",
-            "stationId": "45108",
-            "logo": "/images/channels/cb-tv.png",
-            "package": "Paid Basic",
-            "genre": "General",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Global",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-cbtvmich/_definst_/live.m3u8",
-            "order": 1800
-        },
-        {
-            "name": "Cosmovisión",
-            "stationId": "65269",
-            "logo": "/images/channels/cosmovision.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-cosmovision.hls.adaptive.level3.net/hls-live/yiptvlive-cosmovision/_definst_/live.m3u8",
-            "order": 2000
-        },
-        {
-            "name": "Destinos TV",
-            "stationId": "65504",
-            "logo": "/images/channels/destinos-tv.png",
-            "package": "Paid Basic",
-            "genre": "Lifestyle",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Global",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-destinos_tv/_definst_/live.m3u8",
-            "order": 2100
-        },
-        {
-            "name": "JBN",
-            "stationId": "59350",
-            "logo": "/images/channels/jbn.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Honduras",
-            "videoUrl": "http://yiptv-jbn.hls.adaptive.level3.net/hls-live/yiptvlive-jbn/_definst_/live.m3u8",
-            "order": 2900
-        },
-        {
-            "name": "Latele Novela",
-            "stationId": "75991",
-            "logo": "/images/channels/la-tele-novela.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "USA",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-telenovela/_definst_/live.m3u8",
-            "order": 3100
-        },
-        {
-            "name": "Latin American Sports",
-            "stationId": "67632",
-            "logo": "/images/channels/latin-american-sports.png",
-            "package": "Paid Basic",
-            "genre": "Sports",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiptv2-live.hls.adaptive.level3.net/hls-live/yiptvlive-latinsports/_definst_/live.m3u8",
-            "order": 3200
-        },
-        {
-            "name": "Maya TV",
-            "stationId": "76093",
-            "logo": "/images/channels/maya-tv.png",
-            "package": "Paid Basic",
-            "genre": "News",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Honduras",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-maya_tv/_definst_/live.m3u8",
-            "order": 3300
-        },
-        {
-            "name": "Promovision",
-            "stationId": "76079",
-            "logo": "/images/channels/promovision.png",
-            "package": "Paid Basic",
-            "genre": "General",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "Mexico",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-promovision/_definst_/live.m3u8",
-            "order": 4300
-        },
-        {
-            "name": "RCN Novelas",
-            "stationId": "65127",
-            "logo": "/images/channels/rcn-novelas.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "General",
-            "region": "USA",
-            "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-rcntelenovela/_definst_/live.m3u8",
-            "order": 4500
+            "order": 6800
         },
         {
             "name": "Supereñe",
@@ -687,7 +831,19 @@
             "audience": "Children",
             "region": "USA",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/superene_8@334362/master.m3u8",
-            "order": 5000
+            "order": 6900
+        },
+        {
+            "name": "TBN",
+            "stationId": "14767",
+            "logo": "/images/channels/tbn.png",
+            "package": "Free",
+            "genre": "Faith",
+            "language": "English",
+            "audience": "All",
+            "region": "USA",
+            "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tbn/_definst_/live.m3u8",
+            "order": 7000
         },
         {
             "name": "Tele Antioquia",
@@ -699,43 +855,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_antioquia/_definst_/live.m3u8",
-            "order": 5200
-        },
-        {
-            "name": "Tele Medellin",
-            "stationId": "60278",
-            "logo": "/images/channels/tele-medellin.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_medellin/_definst_/live.m3u8",
-            "order": 5400
-        },
-        {
-            "name": "Tele Pacífico",
-            "stationId": "18099",
-            "logo": "/images/channels/tele-pacifico.png",
-            "package": "Paid Basic",
-            "genre": "Entertainment",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_pacifico/_definst_/live.m3u8",
-            "order": 5600
-        },
-        {
-            "name": "Tele Vid",
-            "stationId": "92228",
-            "logo": "/images/channels/tele-vid.png",
-            "package": "Paid Basic",
-            "genre": "Faith",
-            "language": "Spanish",
-            "audience": "All",
-            "region": "Colombia",
-            "videoUrl": "http://yiptv-televida.hls.adaptive.level3.net/hls-live/yiptvlive-televid/_definst_/live.m3u8",
-            "order": 5900
+            "order": 7100
         },
         {
             "name": "Teleformula",
@@ -747,7 +867,19 @@
             "audience": "General",
             "region": "Spanish",
             "videoUrl": "http://yiptv-teleformula.hls.adaptive.level3.net/hls-live/yiptvlive-teleformula/_definst_/live.m3u8",
-            "order": 5300
+            "order": 7200
+        },
+        {
+            "name": "Tele Medellin",
+            "stationId": "60278",
+            "logo": "/images/channels/tele-medellin.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_medellin/_definst_/live.m3u8",
+            "order": 7300
         },
         {
             "name": "Telemicro Internacional",
@@ -759,7 +891,55 @@
             "audience": "All",
             "region": "Dominican Republic",
             "videoUrl": "http://yiptv3-live.hls.adaptive.level3.net/hls-live/yiptvlive-telemicroint/_definst_/live.m3u8",
-            "order": 5500
+            "order": 7400
+        },
+        {
+            "name": "Tele Pacífico",
+            "stationId": "18099",
+            "logo": "/images/channels/tele-pacifico.png",
+            "package": "Paid Basic",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_pacifico/_definst_/live.m3u8",
+            "order": 7500
+        },
+        {
+            "name": "Tele Romántica",
+            "stationId": "",
+            "logo": "/images/channels/tele-romantica.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "Adult",
+            "region": "Global",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/teleromance_1@335180/master.m3u8",
+            "order": 7600
+        },
+        {
+            "name": "TeleSUR",
+            "stationId": "47620",
+            "logo": "/images/channels/tele-sur.png",
+            "package": "Free",
+            "genre": "News",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Venezuela",
+            "videoUrl": "http://yiptv-telesur.hls.adaptive.level3.net/hls-live/yiptvlive-telesur/_definst_/live.m3u8",
+            "order": 7700
+        },
+        {
+            "name": "Tele Vid",
+            "stationId": "92228",
+            "logo": "/images/channels/tele-vid.png",
+            "package": "Paid Basic",
+            "genre": "Faith",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Colombia",
+            "videoUrl": "http://yiptv-televida.hls.adaptive.level3.net/hls-live/yiptvlive-televid/_definst_/live.m3u8",
+            "order": 7800
         },
         {
             "name": "Tempo",
@@ -771,7 +951,31 @@
             "audience": "All",
             "region": "English",
             "videoUrl": "http://yiptv8-live.hls.adaptive.level3.net/hls-live/yiptvlive-tempo/_definst_/live.m3u8",
-            "order": 6000
+            "order": 7900
+        },
+        {
+            "name": "The Church Channel",
+            "stationId": "29328",
+            "logo": "/images/channels/the-church-channel.png",
+            "package": "Free",
+            "genre": "Faith",
+            "language": "English",
+            "audience": "All",
+            "region": "USA",
+            "videoUrl": "http://yiptv4-live.hls.adaptive.level3.net/hls-live/yiptvlive-church/_definst_/live.m3u8",
+            "order": 8000
+        },
+        {
+            "name": "Trendy",
+            "stationId": "82629",
+            "logo": "/images/channels/trendy.png",
+            "package": "Free",
+            "genre": "Lifestyle",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Spanish",
+            "videoUrl": "http://yiptv-trendy.hls.adaptive.level3.net/hls-live/yiptvlive-trendy/_definst_/live.m3u8",
+            "order": 8100
         },
         {
             "name": "TV Chile",
@@ -783,7 +987,7 @@
             "audience": "All",
             "region": "Chile",
             "videoUrl": "http://yiptv6-live.hls.adaptive.level3.net/hls-live/yiptvlive-tvchile/_definst_/live.m3u8",
-            "order": 6300
+            "order": 8200
         },
         {
             "name": "TVC Latino",
@@ -795,7 +999,43 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-live.hls.adaptive.level3.net/hls-live/yiptvlive-tvc_latino/_definst_/live.m3u8",
-            "order": 6400
+            "order": 8300
+        },
+        {
+            "name": "TV Quisqueya",
+            "stationId": "92370",
+            "logo": "/images/channels/tv-quisqueya.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "Spanish",
+            "audience": "General",
+            "region": "Dominican Republic",
+            "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-tele_quisqueya/_definst_/live.m3u8",
+            "order": 8400
+        },
+        {
+            "name": "TyC Sports",
+            "stationId": "16275",
+            "logo": "/images/channels/tyc-sports.png",
+            "package": "Premium",
+            "genre": "Sports",
+            "language": "Spanish",
+            "audience": "All",
+            "region": "Argentina",
+            "videoUrl": "http://yiptv-tycsports.hls.adaptive.level3.net/hls-live/yiptvlive-tycsports/_definst_/live.m3u8",
+            "order": 8500
+        },
+        {
+            "name": "Vibrant TV",
+            "stationId": "90953",
+            "logo": "/images/channels/vibrant-tv.png",
+            "package": "Premium",
+            "genre": "General",
+            "language": "Spanish",
+            "audience": "Adult",
+            "region": "USA",
+            "videoUrl": "http://yipcontent-lh.akamaihd.net/i/vibranttv_1@336480/master.m3u8",
+            "order": 8600
         },
         {
             "name": "Video Rola",
@@ -807,7 +1047,7 @@
             "audience": "General",
             "region": "Mexico",
             "videoUrl": "http://yiptv-videorola.hls.adaptive.level3.net/hls-live/yiptvlive-videorola/_definst_/live.m3u8",
-            "order": 6700
+            "order": 8700
         },
         {
             "name": "Zoom",
@@ -819,7 +1059,7 @@
             "audience": "General",
             "region": "Colombia",
             "videoUrl": "http://yiptv7-live.hls.adaptive.level3.net/hls-live/yiptvlive-zoom/_definst_/live.m3u8",
-            "order": 6800
+            "order": 8800
         }
     ]
 }
