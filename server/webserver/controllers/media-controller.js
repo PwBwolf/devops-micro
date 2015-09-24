@@ -79,13 +79,9 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            var query = {$or: [{package: 'Free'}]};
-            var diff = moment.utc().startOf('day').diff(moment(user.account.startDate).utc().startOf('day'), 'days');
-            if (user.account.type === 'paid' || user.account.type === 'comp') {
-                query.$or.push({package: 'Premium'});
-                query.$or.push({package: 'Paid Basic'});
-            } else if (user.account.type === 'free' && diff <= 7 && !user.cancelDate && !user.complimentaryEndDate) {
-                query.$or.push({package: 'Premium'});
+            var query = {$or: []};
+            for (var i = 0; i < user.account.packages.length; i++) {
+                query.$or.push({package: user.account.packages[i]});
             }
             CmsChannel.find(query).sort({order: 1}).exec(function (err, channels) {
                 if (err) {
@@ -125,8 +121,8 @@ module.exports = {
         projectionObj['stationId'] = true;
         projectionObj['callSign'] = true;
         projectionObj['preferredImage.uri'] = true;
-        if(req.query.projections) {
-            if(Array.isArray(req.query.projections)) {
+        if (req.query.projections) {
+            if (Array.isArray(req.query.projections)) {
                 for (var i = 0; i < req.query.projections.length; i++) {
                     projectionObj[req.query.projections[i]] = true;
                 }
@@ -161,8 +157,8 @@ module.exports = {
         projectionObj['airings.program.tmsId'] = true;
         projectionObj['airings.program.title'] = true;
         projectionObj['airings.ratings.code'] = true;
-        if(req.query.projections) {
-            if(Array.isArray(req.query.projections)) {
+        if (req.query.projections) {
+            if (Array.isArray(req.query.projections)) {
                 for (var i = 0; i < req.query.projections.length; i++) {
                     projectionObj[req.query.projections[i]] = true;
                 }
@@ -197,8 +193,8 @@ module.exports = {
         projectionObj['airings.program.topCast'] = true;
         projectionObj['airings.program.directors'] = true;
         projectionObj['airings.program.entityType'] = true;
-        if(req.query.projections) {
-            if(Array.isArray(req.query.projections)) {
+        if (req.query.projections) {
+            if (Array.isArray(req.query.projections)) {
                 for (var i = 0; i < req.query.projections.length; i++) {
                     projectionObj[req.query.projections[i]] = true;
                 }
@@ -222,60 +218,60 @@ module.exports = {
             });
     },
 
-    getChannelLogo: function(req, res) {
+    getChannelLogo: function (req, res) {
 
         Image.find(req.query.stationIds === undefined ? {active: true, type: 'channel'} : Array.isArray(req.query.stationIds) ? {identifier: {$in: req.query.stationIds}} : {identifier: req.query.stationIds})
-        .populate('dataId').exec(function(err, images) {
-            if(err) {
-               logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
-               logger.logError(err);
-               return res.status(500).end();
-            } else {
-               if(images.length === 0) {
-                   logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
-                   return res.status(500).end();
-               } else {
-                   res.writeHead(200, {'Content-Type': 'image'});
-                   var imageData = '';
-                   for(var i = 0; i < images.length; i++) {
-                       if(i === 0) {
-                           imageData += images[i].dataId.data;
-                       } else {
-                           imageData += ('$' + images[i].dataId.data);
-                       }
-                   }
-                   res.end(imageData, 'binary');
-               }
-            }
-        });
+            .populate('dataId').exec(function (err, images) {
+                if (err) {
+                    logger.logError('channelGuideController - getChannelLogo - failed to query Image db');
+                    logger.logError(err);
+                    return res.status(500).end();
+                } else {
+                    if (images.length === 0) {
+                        logger.logError('channelGuideController - getChannelLogo - query Image db with 0 return');
+                        return res.status(500).end();
+                    } else {
+                        res.writeHead(200, {'Content-Type': 'image'});
+                        var imageData = '';
+                        for (var i = 0; i < images.length; i++) {
+                            if (i === 0) {
+                                imageData += images[i].dataId.data;
+                            } else {
+                                imageData += ('$' + images[i].dataId.data);
+                            }
+                        }
+                        res.end(imageData, 'binary');
+                    }
+                }
+            });
     },
 
-    getProgramImage: function(req, res) {
+    getProgramImage: function (req, res) {
 
         Image.find(req.query.uris === undefined ? {type: 'program'} : Array.isArray(req.query.uris) ? {'preferredImage.uri': {$in: req.query.uris}} : {'preferredImage.uri': req.query.uris})
-        .populate('dataId').limit(req.query.uris === undefined ? 10 : Array.isArray(req.query.uris) ? req.query.uris.length : 1).exec(function(err, images) {
-            if(err) {
-               logger.logError('channelGuideController - getProgramImage - failed to query Image db');
-               logger.logError(err);
-               return res.status(500).end();
-            } else {
-               if(images.length === 0) {
-                   logger.logError('channelGuideController - getProgramImage - query Image db with 0 return');
-                   return res.status(500).end();
-               } else {
-                   res.writeHead(200, {'Content-Type': 'image'});
-                   var imageData='';
-                   for(var i = 0; i < images.length; i++) {
-                       if(i === 0) {
-                           imageData += images[i].dataId.data;
-                       } else {
-                           imageData += ('$' + images[i].dataId.data);
-                       }
-                   }
-                   res.end(imageData, 'binary');
-               }
-            }
-        });
+            .populate('dataId').limit(req.query.uris === undefined ? 10 : Array.isArray(req.query.uris) ? req.query.uris.length : 1).exec(function (err, images) {
+                if (err) {
+                    logger.logError('channelGuideController - getProgramImage - failed to query Image db');
+                    logger.logError(err);
+                    return res.status(500).end();
+                } else {
+                    if (images.length === 0) {
+                        logger.logError('channelGuideController - getProgramImage - query Image db with 0 return');
+                        return res.status(500).end();
+                    } else {
+                        res.writeHead(200, {'Content-Type': 'image'});
+                        var imageData = '';
+                        for (var i = 0; i < images.length; i++) {
+                            if (i === 0) {
+                                imageData += images[i].dataId.data;
+                            } else {
+                                imageData += ('$' + images[i].dataId.data);
+                            }
+                        }
+                        res.end(imageData, 'binary');
+                    }
+                }
+            });
     }
 };
 
