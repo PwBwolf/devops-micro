@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-merchant
+# service yip-api-server
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,8 +10,8 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-merchant
-SOURCE_DIR=/devops/yiptv/server/merchant
+NAME=yip-api-server
+SOURCE_DIR=/devops/yiptv/server/api-server
 SOURCE_FILE=app.js
 
 user=devops

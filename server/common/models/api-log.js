@@ -7,7 +7,7 @@ var ApiLog = new Schema({
     name: String,
     requestTime: Date,
     responseTime: Date,
-    merchantId: String,
+    clientId: String,
     apiKey: String,
     params: Object,
     body: Object

@@ -4,8 +4,7 @@ module.exports = {
     environment: 'development',
     clientPath: '/client_old',
     port: 3000,
-    merchantPort: 4000,
-    notificationPort: 5000,
+    apiServerPort: 4000,
     email: {
         host: '172.16.10.6',
         port: 25,
@@ -13,7 +12,6 @@ module.exports = {
         fromName: 'YipTV'
     },
     db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
-    merchantDb: 'mongodb://yipUser:y1ptd3v@localhost/merchant',
     url: 'http://localhost:3000/',
     imageUrl: 'http://localhost:3000/images/',
     secretToken: 'yip#tv@dev#712',

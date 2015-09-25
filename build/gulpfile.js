@@ -197,8 +197,7 @@ function replaceAndCopy(source, destination, text, replacementText) {
 
 function postDeploy(cb) {
     replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
-    replaceAndCopy('../server/merchant/app.js', 'dist/server/merchant', 'development', argv.env);
-    replaceAndCopy('../server/notification/app.js', 'dist/server/notification', 'development', argv.env);
+    replaceAndCopy('../server/api-server/app.js', 'dist/api-server/merchant', 'development', argv.env);
     replaceAndCopy('../server/common/database/fixtures.js', 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/notify-build.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/update-database.js', 'dist/tools/deployment-scripts', 'development', argv.env);
@@ -207,7 +206,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/create-notification-client.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/create-api-client.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);

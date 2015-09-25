@@ -9,22 +9,21 @@ var config = require('../../server/common/setup/config'),
     uuid = require('node-uuid');
 
 var modelsPath = config.root + '/server/common/models',
-    dbYip = mongoose.createConnection(config.db),
-    dbMerchant = mongoose.createConnection(config.merchantDb);
+    db = mongoose.createConnection(config.db);
 
 require('../../server/common/setup/models')(modelsPath);
-var MerchantYip = dbYip.model('Merchant'),
-    MerchantMG = dbMerchant.model('Merchant');
+var Merchant = db.model('Merchant');
+var ApiClient = db.model('ApiClient');
 
 var schema = {
     properties: {
         name: {
             description: 'Merchant short name',
             pattern: /^[A-Z]+$/,
-            message: 'Enter a valid short name in uppercase up to a maximum of 8 alphabets',
+            message: 'Enter a valid short name in uppercase up to a maximum of 16 alphabets',
             required: true,
             conform: function (value) {
-                return value && value.trim() && value.trim().length <= 8;
+                return value && value.trim() && value.trim().length <= 16;
             }
         },
         fullName: {
@@ -77,7 +76,7 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        MerchantYip.findOne({name: result.name.toUpperCase()}, function (err, mer) {
+        Merchant.findOne({name: result.name.toUpperCase()}, function (err, mer) {
             if (err) {
                 logger.logError('adminCLI - createMerchant - error in checking if name exists');
                 logger.logError(err);
@@ -87,27 +86,28 @@ prompt.get(schema, function (err, result) {
                     logger.logError('adminCLI - createMerchant - short name already exists');
                     process.exit(1);
                 } else {
-                    var merchant = new MerchantYip(result);
+                    var merchant = new Merchant(result);
                     merchant.createdAt = (new Date()).toUTCString();
                     merchant.apiKey = uuid.v4();
                     merchant.save(function (err) {
                         if (err) {
-                            logger.logError('adminCLI - createMerchant - error in creating merchant in yiptv db');
+                            logger.logError('adminCLI - createMerchant - error in creating merchant');
                             logger.logError(err);
                             process.exit(1);
                         }
-                        var mg = new MerchantMG(result);
-                        mg._id = merchant._id;
-                        mg.createdAt = merchant.createdAt;
-                        mg.apiKey = merchant.apiKey;
-                        mg.save(function (err) {
+                        var client = new ApiClient(result);
+                        client._id = merchant._id;
+                        client.createdAt = merchant.createdAt;
+                        client.apiKey = merchant.apiKey;
+                        client.apiType = 'MERCHANT';
+                        client.save(function (err) {
                             if (err) {
-                                logger.logError('adminCLI - createMerchant - error in creating merchant in merchant db');
+                                logger.logError('adminCLI - createMerchant - error in creating api client');
                                 logger.logError(err);
                                 process.exit(1);
                             } else {
                                 logger.logInfo('adminCLI - createMerchant - merchant created successfully!');
-                                logger.logInfo('adminCLI - createMerchant - merchantId: ' + merchant._id);
+                                logger.logInfo('adminCLI - createMerchant - clientId: ' + merchant._id);
                                 logger.logInfo('adminCLI - createMerchant - apiKey: ' + merchant.apiKey);
                                 process.exit(0);
                             }
