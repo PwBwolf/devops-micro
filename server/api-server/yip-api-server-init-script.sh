@@ -18,6 +18,8 @@ user=devops
 logfile=/var/log/$NAME.log
 forever=/usr/local/bin/forever
 
+export MONGO_PWD=y1ptd3v
+
 start() {
   echo "Starting $NAME node instance: "
   if [[ "$USER" == "$user" ]]
