@@ -176,8 +176,7 @@ gulp.task('server', function (cb) {
     gulp.src(['../server/common/**/*', '!../server/common/config/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
     gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
     gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
-    gulp.src('../server/merchant/**/*', {dot: true}).pipe(gulp.dest('dist/server/merchant'));
-    gulp.src('../server/notification/**/*', {dot: true}).pipe(gulp.dest('dist/server/notification'));
+    gulp.src('../server/api-server/**/*', {dot: true}).pipe(gulp.dest('dist/server/api-server'));
     cb();
 });
 
@@ -197,7 +196,7 @@ function replaceAndCopy(source, destination, text, replacementText) {
 
 function postDeploy(cb) {
     replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
-    replaceAndCopy('../server/api-server/app.js', 'dist/api-server/merchant', 'development', argv.env);
+    replaceAndCopy('../server/api-server/app.js', 'distserver/api-server', 'development', argv.env);
     replaceAndCopy('../server/common/database/fixtures.js', 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/notify-build.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/update-database.js', 'dist/tools/deployment-scripts', 'development', argv.env);
@@ -464,18 +463,11 @@ gulp.task('serve', ['connect', 'watch'], function () {
     }, 2000);
 });
 
-gulp.task('merchant', function () {
+gulp.task('api-serve', function () {
     fs.createDirSync('../logs');
     //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
-    nodemon({cwd: '../server/merchant', script: 'app.js', ext: 'js'});
-});
-
-gulp.task('notification', function () {
-    fs.createDirSync('../logs');
-    // Start the Node server to provide the API
-    var nodemon = require('gulp-nodemon');
-    nodemon({cwd: '../server/notification', script: 'app.js', ext: 'js'});
+    nodemon({cwd: '../server/api-server', script: 'app.js', ext: 'js'});
 });
 
 gulp.task('reload-html', function () {
