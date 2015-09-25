@@ -196,7 +196,7 @@ function replaceAndCopy(source, destination, text, replacementText) {
 
 function postDeploy(cb) {
     replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
-    replaceAndCopy('../server/api-server/app.js', 'distserver/api-server', 'development', argv.env);
+    replaceAndCopy('../server/api-server/app.js', 'dist/server/api-server', 'development', argv.env);
     replaceAndCopy('../server/common/database/fixtures.js', 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/notify-build.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/update-database.js', 'dist/tools/deployment-scripts', 'development', argv.env);
