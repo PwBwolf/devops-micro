@@ -9,7 +9,7 @@ module.exports = {
     environment: 'production',
     clientPath: '/client',
     port: 3000,
-    apiPort: 4000,
+    apiServerPort: 4000,
     email: {
         host: 'prod.yiptv.com',
         port: 25,

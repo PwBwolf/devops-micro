@@ -9,7 +9,7 @@ module.exports = {
     environment: 'integration',
     clientPath: '/client_old',
     port: 3000,
-    apiPort: 4000,
+    apiServerPort: 4000,
     email: {
         host: 'dev.yiptv.com',
         port: 25,

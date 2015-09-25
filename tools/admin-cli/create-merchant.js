@@ -107,7 +107,7 @@ prompt.get(schema, function (err, result) {
                                 process.exit(1);
                             } else {
                                 logger.logInfo('adminCLI - createMerchant - merchant created successfully!');
-                                logger.logInfo('adminCLI - createMerchant - clientId: ' + merchant._id);
+                                logger.logInfo('adminCLI - createMerchant - merchantId: ' + merchant._id);
                                 logger.logInfo('adminCLI - createMerchant - apiKey: ' + merchant.apiKey);
                                 process.exit(0);
                             }
