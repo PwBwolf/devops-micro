@@ -13,14 +13,23 @@ var modelsPath = config.root + '/server/common/models',
 
 require('../../server/common/setup/models')(modelsPath);
 
-var NotificationClient = dbYip.model('NotificationClient');
+var ApiClient = dbYip.model('ApiClient');
 
 var schema = {
     properties: {
         name: {
-            description: 'Notification Client Name',
+            description: 'Client short name',
+            pattern: /^[A-Z]+$/,
+            message: 'Enter a valid short name in uppercase up to a maximum of 16 alphabets',
+            required: true,
+            conform: function (value) {
+                return value && value.trim() && value.trim().length <= 16;
+            }
+        },
+        fullName: {
+            description: 'Client full name',
             pattern: /^[a-zA-Z0-9\s\-,.']+$/,
-            message: 'Enter a valid name',
+            message: 'Enter a valid full name',
             required: true,
             conform: function (value) {
                 return value && value.trim();
@@ -53,6 +62,19 @@ var schema = {
             conform: function (value) {
                 return value && value.trim();
             }
+        },
+        apiType: {
+            description: 'API type',
+            pattern: /^[A-Z]+$/,
+            message: 'Enter a valid API type in uppercase',
+            required: true,
+            conform: function (value) {
+                if (value === 'NOTIFICATION' || value === 'CLIENT') {
+                    return value && value.trim();
+                } else {
+                    return false;
+                }
+            }
         }
     }
 };
@@ -62,33 +84,33 @@ prompt.start();
 
 prompt.get(schema, function (err, result) {
     if (err) {
-        logger.logError('adminCLI - createNotificationClient - error in reading console inputs');
+        logger.logError('adminCLI - createApiClient - error in reading console inputs');
         logger.logError(err);
         process.exit(1);
     }
     if (result) {
-        NotificationClient.findOne({email: result.email.toLowerCase()}, function (err, client) {
+        ApiClient.findOne({email: result.email.toLowerCase()}, function (err, client) {
             if (err) {
-                logger.logError('adminCLI - createNotificationClient - error in checking if email exists');
+                logger.logError('adminCLI - createApiClient - error in checking if email exists');
                 logger.logError(err);
                 process.exit(1);
             } else {
                 if (client) {
-                    logger.logError('adminCLI - createNotificationClient - email address already registered');
+                    logger.logError('adminCLI - createApiClient - email address already registered');
                     process.exit(1);
                 } else {
-                    var notificationClient = new NotificationClient(result);
-                    notificationClient.createdAt = (new Date()).toUTCString();
-                    notificationClient.apiKey = uuid.v4();
-                    notificationClient.save(function (err) {
+                    var apiClient = new ApiClient(result);
+                    apiClient.createdAt = (new Date()).toUTCString();
+                    apiClient.apiKey = uuid.v4();
+                    apiClient.save(function (err) {
                         if (err) {
-                            logger.logError('adminCLI - createNotificationClient - error in creating notification client in db');
+                            logger.logError('adminCLI - createApiClient - error in creating api client in db');
                             logger.logError(err);
                             process.exit(1);
                         }
-                        logger.logInfo('adminCLI - createNotificationClient - notification client created successfully!');
-                        logger.logInfo('adminCLI - createNotificationClient - clientId: ' + notificationClient._id);
-                        logger.logInfo('adminCLI - createNotificationClient - apiKey: ' + notificationClient.apiKey);
+                        logger.logInfo('adminCLI - createApiClient - api client created successfully!');
+                        logger.logInfo('adminCLI - createApiClient - clientId: ' + apiClient._id);
+                        logger.logInfo('adminCLI - createApiClient - apiKey: ' + apiClient.apiKey);
                         process.exit(0);
                     });
                 }

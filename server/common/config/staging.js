@@ -9,8 +9,7 @@ module.exports = {
     environment: 'staging',
     clientPath: '/client',
     port: 3000,
-    merchantPort: 4000,
-    notificationPort: 5000,
+    apiPort: 4000,
     email: {
         host: 'dev.yiptv.com',
         port: 25,
@@ -18,7 +17,6 @@ module.exports = {
         fromName: 'YipTV'
     },
     db: 'mongodb://localhost/yiptv',
-    merchantDb: 'mongodb://localhost/merchant',
     url: 'https://app.staging.yiptv.net/',
     imageUrl: 'https://app.staging.yiptv.net/images/',
     secretToken: 'yip#tv@staging#346',

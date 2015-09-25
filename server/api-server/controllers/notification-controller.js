@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
     db = mongoose.createConnection(config.db),
-    NotificationClient = db.model('NotificationClient'),
-    NotificationLog = db.model('NotificationLog'),
+    ApiClient = db.model('ApiClient'),
+    ApiLog = db.model('ApiLog'),
     monq = require('monq'),
     queueDb = monq(config.db),
     queue = queueDb.queue('notification-api-requests');
@@ -13,10 +13,10 @@ var mongoose = require('mongoose'),
 module.exports = {
 
     executeDunning: function (req, res) {
-        var log = new NotificationLog();
+        var log = new ApiLog();
         log.name = 'execute-dunning';
         log.requestTime = (new Date()).toUTCString();
-        log.notificationClientId = req.query.clientId;
+        log.clientId = req.query.clientId;
         log.apiKey = req.query.apiKey;
         log.body = req.body;
         try {
@@ -56,10 +56,10 @@ module.exports = {
     },
 
     paymentReceived: function (req, res) {
-        var log = new NotificationLog();
+        var log = new ApiLog();
         log.name = 'payment-received';
         log.requestTime = (new Date()).toUTCString();
-        log.notificationClientId = req.query.clientId;
+        log.clientId = req.query.clientId;
         log.apiKey = req.query.apiKey;
         log.body = req.body;
         try {
@@ -104,13 +104,13 @@ function validateCredentials(clientId, apiKey, cb) {
         if (!(/^[0-9a-fA-F]{24}$/.test(clientId))) {
             cb(null, false);
         } else {
-            NotificationClient.findOne({_id: clientId}, function (err, client) {
+            ApiClient.findOne({_id: clientId}, function (err, client) {
                 if (err) {
-                    logger.logError('notificationController - validateCredentials - error fetching notification client: ' + clientId);
+                    logger.logError('notificationController - validateCredentials - error fetching api client: ' + clientId);
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client && client.apiKey === apiKey));
+                    cb(null, (client && client.apiKey === apiKey && client.apiType === 'NOTIFICATION'));
                 }
             });
         }

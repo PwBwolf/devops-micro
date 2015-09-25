@@ -7,11 +7,10 @@ var express = require('express'),
     mongoose = require('mongoose'),
     config = require('../common/setup/config'),
     logger = require('../common/setup/logger'),
-    port = process.env.MERCHANT_PORT || config.merchantPort,
+    port = process.env.API_SERVER_PORT || config.apiServerPort,
     app = module.exports = express(),
     modelsPath = config.root + '/server/common/models',
-    dbYip = mongoose.createConnection(config.db),
-    dbMerchant = mongoose.createConnection(config.merchantDb);
+    db = mongoose.createConnection(config.db);
 
 require('../common/setup/logger');
 require('../common/setup/models')(modelsPath);
@@ -19,5 +18,5 @@ require('./express')(app, logger);
 require('./routes')(app);
 
 http.createServer(app).listen(port, function () {
-    logger.logInfo('app - merchant gateway server listening on port ' + port);
+    logger.logInfo('apiServer - app - api server listening on port ' + port);
 });

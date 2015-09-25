@@ -5,13 +5,12 @@ var mongoose = require('mongoose'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
     billing = require('../../common/services/billing'),
-    dbYip = mongoose.createConnection(config.db),
-    dbMerchant = mongoose.createConnection(config.merchantDb),
-    User = dbYip.model('User'),
-    Merchant = dbMerchant.model('Merchant'),
-    ApiLog = dbMerchant.model('ApiLog'),
+    db = mongoose.createConnection(config.db),
+    User = db.model('User'),
+    ApiClient = db.model('ApiClient'),
+    ApiLog = db.model('ApiLog'),
     monq = require('monq'),
-    queueDb = monq(config.merchantDb),
+    queueDb = monq(config.db),
     queue = queueDb.queue('api-requests');
 
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
         var apiLog = new ApiLog();
         apiLog.name = 'verify-credentials';
         apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
+        apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
         try {
             validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
@@ -49,7 +48,7 @@ module.exports = {
         var apiLog = new ApiLog();
         apiLog.name = 'does-username-exist';
         apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
+        apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
         apiLog.params = {username: req.query.username};
         try {
@@ -121,7 +120,7 @@ module.exports = {
         var apiLog = new ApiLog();
         apiLog.name = 'make-payment';
         apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
+        apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
         apiLog.body = req.body;
         try {
@@ -164,7 +163,7 @@ module.exports = {
         var apiLog = new ApiLog();
         apiLog.name = 'make-refund';
         apiLog.requestTime = (new Date()).toUTCString();
-        apiLog.merchantId = req.query.merchantId;
+        apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
         apiLog.body = req.body;
         try {
@@ -209,13 +208,13 @@ function validateCredentials(merchantId, apiKey, cb) {
         if (!(/^[0-9a-fA-F]{24}$/.test(merchantId))) {
             cb(null, false);
         } else {
-            Merchant.findOne({_id: merchantId}, function (err, merchant) {
+            ApiClient.findOne({_id: merchantId}, function (err, client) {
                 if (err) {
-                    logger.logError('merchantController - validateCredentials - error fetching merchant: ' + merchantId);
+                    logger.logError('merchantController - validateCredentials - error fetching api client: ' + merchantId);
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (merchant && merchant.apiKey === apiKey));
+                    cb(null, (client && client.apiKey === apiKey && client.apiType === 'MERCHANT'));
                 }
             });
         }

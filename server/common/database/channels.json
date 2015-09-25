@@ -400,6 +400,18 @@
             "order": 3300
         },
         {
+            "name": "Films on Reel",
+            "stationId": "72510",
+            "logo": "/images/channels/films-on-reel.png",
+            "package": "Premium",
+            "genre": "Entertainment",
+            "language": "English",
+            "audience": "All",
+            "region": "Global",
+            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224115/filmsreelsgrp/playlist.m3u8",
+            "order": 3400
+        },
+        {
             "name": "Fix & Foxi",
             "stationId": "",
             "logo": "/images/channels/fix-n-foxi.png",
@@ -409,7 +421,7 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/fixundfoxi_1@335155/master.m3u8",
-            "order": 3400
+            "order": 3500
         },
         {
             "name": "France 24",
@@ -421,18 +433,6 @@
             "audience": "All",
             "region": "Global",
             "videoUrl": "http://yipcontent-lh.akamaihd.net/i/france24_1@355214/master.m3u8",
-            "order": 3500
-        },
-        {
-            "name": "Films on Reel",
-            "stationId": "72510",
-            "logo": "/images/channels/films-on-reel.png",
-            "package": "Premium",
-            "genre": "Entertainment",
-            "language": "English",
-            "audience": "All",
-            "region": "Global",
-            "videoUrl": "http://yiphls-i.akamaihd.net/hls/live/224115/filmsreelsgrp/playlist.m3u8",
             "order": 3600
         },
         {

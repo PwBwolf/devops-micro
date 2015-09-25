@@ -8,18 +8,18 @@ var monq = require('monq'),
     mongoose = require('mongoose'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
-    queueDb = monq(config.merchantDb),
+    queueDb = monq(config.db),
     modelsPath = config.root + '/server/common/models',
-    dbYip = mongoose.createConnection(config.db),
-    dbMerchant = mongoose.createConnection(config.merchantDb);
+    db = mongoose.createConnection(config.db);
+
 
 require('../../common/setup/models')(modelsPath);
 
-var User = dbYip.model('User'),
-    Payment = dbMerchant.model('Payment'),
-    Refund = dbMerchant.model('Refund'),
-    Account = dbYip.model('Account'),
-    Merchant = dbYip.model('Merchant'),
+var User = db.model('User'),
+    Payment = db.model('Payment'),
+    Refund = db.model('Refund'),
+    Account = db.model('Account'),
+    Merchant = db.model('Merchant'),
     subscription = require('../../common/services/subscription');
 
 var worker = queueDb.worker(['api-requests']);

@@ -11,7 +11,7 @@ module.exports = function (app, logger) {
     app.use(bodyParser.json({type: 'application/*+json'}));
     app.use(function (err, req, res, next) {
         if (err) {
-            logger.logError('express - error in request');
+            logger.logError('apiServer - express - error in request');
             logger.logError(err);
             res.status(200).send({error: 'input-error'});
         } else {
