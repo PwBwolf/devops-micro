@@ -89,14 +89,14 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        ApiClient.findOne({email: result.email.toLowerCase()}, function (err, client) {
+        ApiClient.findOne({name: result.name.toUpperCase()}, function (err, client) {
             if (err) {
-                logger.logError('adminCLI - createApiClient - error in checking if email exists');
+                logger.logError('adminCLI - createApiClient - error in checking if short name exists');
                 logger.logError(err);
                 process.exit(1);
             } else {
                 if (client) {
-                    logger.logError('adminCLI - createApiClient - email address already registered');
+                    logger.logError('adminCLI - createApiClient - short name already exists');
                     process.exit(1);
                 } else {
                     var apiClient = new ApiClient(result);

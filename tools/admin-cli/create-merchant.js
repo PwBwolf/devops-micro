@@ -78,40 +78,53 @@ prompt.get(schema, function (err, result) {
     if (result) {
         Merchant.findOne({name: result.name.toUpperCase()}, function (err, mer) {
             if (err) {
-                logger.logError('adminCLI - createMerchant - error in checking if name exists');
+                logger.logError('adminCLI - createMerchant - error in checking if short name exists in merchant collection');
                 logger.logError(err);
                 process.exit(1);
             } else {
                 if (mer) {
-                    logger.logError('adminCLI - createMerchant - short name already exists');
+                    logger.logError('adminCLI - createMerchant - short name already exists in merchant collection');
                     process.exit(1);
                 } else {
-                    var merchant = new Merchant(result);
-                    merchant.createdAt = (new Date()).toUTCString();
-                    merchant.apiKey = uuid.v4();
-                    merchant.save(function (err) {
+                    ApiClient.findOne({name: result.name.toUpperCase()}, function (err, client) {
                         if (err) {
-                            logger.logError('adminCLI - createMerchant - error in creating merchant');
+                            logger.logError('adminCLI - createApiClient - error in checking if short name exists in api client collection');
                             logger.logError(err);
                             process.exit(1);
-                        }
-                        var client = new ApiClient(result);
-                        client._id = merchant._id;
-                        client.createdAt = merchant.createdAt;
-                        client.apiKey = merchant.apiKey;
-                        client.apiType = 'MERCHANT';
-                        client.save(function (err) {
-                            if (err) {
-                                logger.logError('adminCLI - createMerchant - error in creating api client');
-                                logger.logError(err);
+                        } else {
+                            if (client) {
+                                logger.logError('adminCLI - createApiClient - short name already exists in api client collection');
                                 process.exit(1);
                             } else {
-                                logger.logInfo('adminCLI - createMerchant - merchant created successfully!');
-                                logger.logInfo('adminCLI - createMerchant - merchantId: ' + merchant._id);
-                                logger.logInfo('adminCLI - createMerchant - apiKey: ' + merchant.apiKey);
-                                process.exit(0);
+                                var merchant = new Merchant(result);
+                                merchant.createdAt = (new Date()).toUTCString();
+                                merchant.apiKey = uuid.v4();
+                                merchant.save(function (err) {
+                                    if (err) {
+                                        logger.logError('adminCLI - createMerchant - error in creating merchant');
+                                        logger.logError(err);
+                                        process.exit(1);
+                                    }
+                                    var client = new ApiClient(result);
+                                    client._id = merchant._id;
+                                    client.createdAt = merchant.createdAt;
+                                    client.apiKey = merchant.apiKey;
+                                    client.apiType = 'MERCHANT';
+                                    client.save(function (err) {
+                                        if (err) {
+                                            logger.logError('adminCLI - createMerchant - error in creating api client');
+                                            logger.logError(err);
+                                            process.exit(1);
+                                        } else {
+                                            logger.logInfo('adminCLI - createMerchant - merchant created successfully!');
+                                            logger.logInfo('adminCLI - createMerchant - merchantId: ' + merchant._id);
+                                            logger.logInfo('adminCLI - createMerchant - apiKey: ' + merchant.apiKey);
+                                            process.exit(0);
+                                        }
+                                    });
+                                });
                             }
-                        });
+                        }
                     });
                 }
             }
