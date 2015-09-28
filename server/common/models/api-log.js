@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var ApiLog = new Schema({
     name: String,
+    type: String,
     requestTime: Date,
     responseTime: Date,
     clientId: String,

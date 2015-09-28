@@ -20,7 +20,7 @@ var schema = {
         name: {
             description: 'Client short name',
             pattern: /^[A-Z]+$/,
-            message: 'Enter a valid short name in uppercase up to a maximum of 16 alphabets',
+            message: 'Enter a valid short name in uppercase up to 16 alphabets',
             required: true,
             conform: function (value) {
                 return value && value.trim() && value.trim().length <= 16;

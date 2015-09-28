@@ -17,6 +17,7 @@ module.exports = {
     verifyCredentials: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'verify-credentials';
+        apiLog.type = 'merchant';
         apiLog.requestTime = (new Date()).toUTCString();
         apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
@@ -47,6 +48,7 @@ module.exports = {
     doesUsernameExist: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'does-username-exist';
+        apiLog.type = 'merchant';
         apiLog.requestTime = (new Date()).toUTCString();
         apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
@@ -119,6 +121,7 @@ module.exports = {
     makePayment: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'make-payment';
+        apiLog.type = 'merchant';
         apiLog.requestTime = (new Date()).toUTCString();
         apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;
@@ -162,6 +165,7 @@ module.exports = {
     makeRefund: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'make-refund';
+        apiLog.type = 'merchant';
         apiLog.requestTime = (new Date()).toUTCString();
         apiLog.clientId = req.query.merchantId;
         apiLog.apiKey = req.query.apiKey;

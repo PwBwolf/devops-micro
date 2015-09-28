@@ -20,7 +20,7 @@ var schema = {
         name: {
             description: 'Merchant short name',
             pattern: /^[A-Z]+$/,
-            message: 'Enter a valid short name in uppercase up to a maximum of 16 alphabets',
+            message: 'Enter a valid short name in uppercase up to 16 alphabets',
             required: true,
             conform: function (value) {
                 return value && value.trim() && value.trim().length <= 16;
@@ -93,7 +93,7 @@ prompt.get(schema, function (err, result) {
                             process.exit(1);
                         } else {
                             if (client) {
-                                logger.logError('adminCLI - createApiClient - short name already exists in api client collection');
+                                logger.logError('adminCLI - createMerchant - short name already exists in api client collection');
                                 process.exit(1);
                             } else {
                                 var merchant = new Merchant(result);

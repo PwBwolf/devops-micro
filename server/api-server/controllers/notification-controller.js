@@ -12,9 +12,41 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+    verifyCredentials: function (req, res) {
+        var apiLog = new ApiLog();
+        apiLog.name = 'verify-credentials';
+        apiLog.type = 'notification';
+        apiLog.requestTime = (new Date()).toUTCString();
+        apiLog.clientId = req.query.clientId;
+        apiLog.apiKey = req.query.apiKey;
+        try {
+            validateCredentials(req.query.clientId, req.query.apiKey, function (err, result) {
+                if (err) {
+                    logger.logError('notificationController - verifyCredentials - error validating credentials');
+                    logger.logError(err);
+                    return res.status(200).send({error: 'server-error'});
+                }
+                return res.status(200).send({result: result});
+            });
+        } catch (ex) {
+            logger.logError('notificationController - verifyCredentials - exception');
+            logger.logError(ex);
+            return res.status(200).send({error: 'server-error'});
+        } finally {
+            apiLog.responseTime = (new Date()).toUTCString();
+            apiLog.save(function (err) {
+                if (err) {
+                    logger.logError('notificationController - verifyCredentials - error saving api log');
+                    logger.logError(err);
+                }
+            });
+        }
+    },
+
     executeDunning: function (req, res) {
         var log = new ApiLog();
         log.name = 'execute-dunning';
+        log.type = 'notification';
         log.requestTime = (new Date()).toUTCString();
         log.clientId = req.query.clientId;
         log.apiKey = req.query.apiKey;
@@ -58,6 +90,7 @@ module.exports = {
     paymentReceived: function (req, res) {
         var log = new ApiLog();
         log.name = 'payment-received';
+        log.type = 'notification';
         log.requestTime = (new Date()).toUTCString();
         log.clientId = req.query.clientId;
         log.apiKey = req.query.apiKey;
