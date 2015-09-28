@@ -38,7 +38,7 @@ var schema = {
         email: {
             description: 'Email',
             pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm,
-            message: 'Enter a valid and unique email address',
+            message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
                 return value && value.trim();
@@ -66,10 +66,10 @@ var schema = {
         apiType: {
             description: 'API type',
             pattern: /^[A-Z]+$/,
-            message: 'Enter a valid API type in uppercase',
+            message: 'Enter a valid API type (NOTIFICATION or FRONTEND) in uppercase',
             required: true,
             conform: function (value) {
-                if (value === 'NOTIFICATION' || value === 'CLIENT') {
+                if (value === 'NOTIFICATION' || value === 'FRONTEND') {
                     return value && value.trim();
                 } else {
                     return false;
