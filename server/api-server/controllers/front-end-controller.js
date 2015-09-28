@@ -52,7 +52,7 @@ function validateCredentials(clientId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client && client.apiKey === apiKey && client.apiType === 'FRONTEND'));
+                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'FRONTEND'));
                 }
             });
         }

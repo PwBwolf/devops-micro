@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     ApiLog = db.model('ApiLog'),
     monq = require('monq'),
     queueDb = monq(config.db),
-    queue = queueDb.queue('notification-api-requests');
+    queue = queueDb.queue('api-requests');
 
 module.exports = {
 
@@ -143,7 +143,7 @@ function validateCredentials(clientId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client && client.apiKey === apiKey && client.apiType === 'NOTIFICATION'));
+                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'NOTIFICATION'));
                 }
             });
         }

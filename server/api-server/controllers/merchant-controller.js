@@ -218,7 +218,7 @@ function validateCredentials(merchantId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client && client.apiKey === apiKey && client.apiType === 'MERCHANT'));
+                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT'));
                 }
             });
         }
