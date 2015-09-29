@@ -7,7 +7,7 @@ if (!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'production',
-    clientPath: '/client',
+    clientPath: '/client_old',
     port: 3000,
     apiServerPort: 4000,
     email: {
