@@ -44,6 +44,9 @@
         function loadLanguage() {
             var userLang = browserSvc.getUserLanguage();
             var language = $location.search().lang || webStorage.local.get('language') || userLang.split('-')[0] || 'en';
+            if (language !== 'en' || language !== 'es') {
+                language = 'en';
+            }
             changeLanguage(language);
         }
 
