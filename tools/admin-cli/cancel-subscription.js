@@ -45,7 +45,7 @@ Users.findOne({email: email.toLowerCase()}).populate('account').exec(function (e
         logger.logError('adminCLI - cancelSubscription - complimentary user: ' + email.toLowerCase());
         process.exit(1);
     } else {
-        subscription.endPaidSubscription(email.toLowerCase(), function (err) {
+        subscription.cancelSubscription(email.toLowerCase(), function (err) {
             if (err) {
                 logger.logError('adminCLI - cancelSubscription - error canceling subscription');
                 logger.logError(err);
