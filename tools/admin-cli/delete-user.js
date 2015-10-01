@@ -104,7 +104,7 @@ prompt.get(schema, function (err, result) {
             }
         });
     } else {
-        logger.logError('adminCLI - createMerchant - delete user canceled');
+        logger.logError('adminCLI - deleteUser - delete user canceled');
         process.exit(1);
     }
 });
