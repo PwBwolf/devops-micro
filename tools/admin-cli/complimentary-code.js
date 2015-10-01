@@ -134,6 +134,9 @@ if (command === 'new') {
                 logger.logInfo('adminCLI - complimentaryCode - here is the url: ' + config.complimentarySignUpUrl + cc.code);
                 process.exit(0);
             });
+        } else {
+            logger.logError('adminCLI - complimentaryCode - input empty');
+            process.exit(1);
         }
     });
 }

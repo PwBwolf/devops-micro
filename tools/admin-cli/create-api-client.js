@@ -116,5 +116,8 @@ prompt.get(schema, function (err, result) {
                 }
             }
         });
+    } else {
+        logger.logError('adminCLI - createApiClient - input empty');
+        process.exit(1);
     }
 });

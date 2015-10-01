@@ -129,5 +129,8 @@ prompt.get(schema, function (err, result) {
                 }
             }
         });
+    } else {
+        logger.logError('adminCLI - createMerchant - input empty');
+        process.exit(1);
     }
 });

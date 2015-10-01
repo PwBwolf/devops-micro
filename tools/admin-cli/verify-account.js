@@ -9,8 +9,6 @@ var sf = require('sf'),
     emailService = require('../../server/common/services/email'),
     mongoose = require('../../server/node_modules/mongoose');
 
-logger.cli();
-
 var email = process.argv[2];
 
 if (typeof email === 'undefined') {

@@ -6,8 +6,6 @@ var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
     mongoose = require('../../server/node_modules/mongoose');
 
-logger.cli();
-
 var email = process.argv[2];
 
 if (typeof email === 'undefined') {
@@ -47,7 +45,7 @@ Users.findOne({email: email.toLowerCase()}).populate('account').exec(function (e
         logger.logError('adminCLI - cancelSubscription - complimentary user: ' + email.toLowerCase());
         process.exit(1);
     } else {
-        subscription.cancelSubscription(email.toLowerCase(), function (err) {
+        subscription.endPaidSubscription(email.toLowerCase(), function (err) {
             if (err) {
                 logger.logError('adminCLI - cancelSubscription - error canceling subscription');
                 logger.logError(err);

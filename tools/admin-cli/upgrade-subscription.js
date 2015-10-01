@@ -180,6 +180,9 @@ prompt.get(schema, function (err, result) {
                 }, 10000);
             }
         });
+    } else {
+        logger.logError('adminCLI - upgradeSubscription - input empty');
+        process.exit(1);
     }
 });
 

@@ -5,10 +5,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
     billing = require('../../server/common/services/billing'),
-    aio = require('../../server/common/services/aio'),
     mongoose = require('../../server/node_modules/mongoose');
-
-logger.cli();
 
 var currentEmail = process.argv[2];
 var newEmail = process.argv[3];
