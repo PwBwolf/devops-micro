@@ -8,7 +8,7 @@
             link: function (scope, elm, attrs, ctrl) {
 
                 function validate(address) {
-                    var regex = /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
+                    var regex = /^[a-zA-Z0-9\u00C0-\u017F\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
                     var isAddress = regex.test(address);
                     ctrl.$setValidity('validAddress', isAddress);
                     return address;

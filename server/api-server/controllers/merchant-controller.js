@@ -63,7 +63,7 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+                var emailRegex = config.emailRegex;
                 if (!req.query.username || !emailRegex.test(req.query.username)) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
