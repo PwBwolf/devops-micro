@@ -1,10 +1,11 @@
 'use strict';
 
 var _ = require('lodash');
+var config = require('../setup/config');
 
-var nameRegex = /^[a-zA-Z0-9\s\-,.']+$/;
-var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-var addressRegex = /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
+var nameRegex = /^[a-zA-Z\u00C0-\u017F0-9\s\-,.']+$/;
+var emailRegex = config.emailRegex;
+var addressRegex = /^[a-zA-Z\u00C0-\u017F0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
 var telephoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
 var zipCodeRegex = /^\d{5}$/;
 var cvv3Regex = /^\d{3}$/;
@@ -163,6 +164,18 @@ function isCreditCard(cardNumber) {
         return false;
     }
     if (parseInt(cardNumber) === 0) {
+        return false;
+    }
+    if ((cardNumber.indexOf('34') === 0 || cardNumber.indexOf('37') === 0) && cardNumber.length !== 15) {
+        return false;
+    }
+    if ((cardNumber.indexOf('4') === 0 || cardNumber.indexOf('51') === 0 || cardNumber.indexOf('52') === 0 || cardNumber.indexOf('53') === 0 || cardNumber.indexOf('54') === 0 || cardNumber.indexOf('55') === 0) && cardNumber.length !== 16) {
+        return false;
+    }
+    if ((cardNumber.indexOf('35') === 0 || cardNumber.indexOf('6011') === 0 || cardNumber.indexOf('622') === 0 || cardNumber.indexOf('64') === 0 || cardNumber.indexOf('65') === 0) && cardNumber.length !== 16) {
+        return false;
+    }
+    if ((cardNumber.indexOf('30') === 0 || cardNumber.indexOf('36') === 0 || cardNumber.indexOf('38') === 0 || cardNumber.indexOf('39') === 0) && (cardNumber.length !== 16 && cardNumber.length !== 14)) {
         return false;
     }
     var check = 0, number = 0, even = false;

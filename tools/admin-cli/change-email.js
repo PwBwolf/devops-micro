@@ -17,10 +17,9 @@ if (typeof currentEmail === 'undefined') {
     logger.logError('adminCLI - changeEmail - new email address is missing!\n\r\tusage: node change-email <current-email> <new-email>');
     process.exit(1);
 } else {
-    var regex1 = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
-    var regex2 = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
-    var isCurrentEmailValid = regex1.test(currentEmail);
-    var isNewEmailValid = regex2.test(newEmail);
+    var regex = config.emailRegex;
+    var isCurrentEmailValid = regex.test(currentEmail);
+    var isNewEmailValid = regex.test(newEmail);
     if (!isCurrentEmailValid) {
         logger.logError('adminCLI - changeEmail - enter a valid current email address.');
         process.exit(1);

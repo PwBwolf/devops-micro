@@ -183,7 +183,7 @@ worker.start();
 logger.logInfo('merchantProcessorMain - merchant processor daemon has started');
 
 function makePaymentInputValidation(params, cb) {
-    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+    var emailRegex = config.emailRegex;
     if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
@@ -223,7 +223,7 @@ function savePayment(params, isSuccess, reason, cb) {
 }
 
 function makeRefundInputValidation(params, cb) {
-    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+    var emailRegex = config.emailRegex;
     if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {

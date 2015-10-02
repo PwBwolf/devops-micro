@@ -23,7 +23,7 @@ var schema = {
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
-                var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+                var regex = config.emailRegex;
                 regex.lastIndex = 0;
                 var isEmail = regex.test(value);
                 if (value && value.trim() && value.trim().length <= 50 && isEmail) {

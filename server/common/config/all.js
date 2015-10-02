@@ -16,6 +16,7 @@ module.exports = {
     graceNoteDaysRetrieve: 14,
     graceNoteDaysKeep: 5,
     akamaiTokenDuration: 60,
+    emailRegex: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\u00C0-\u017F\-0-9]+\.)+[a-zA-Z\u00C0-\u017F]{2,}))$/,
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],

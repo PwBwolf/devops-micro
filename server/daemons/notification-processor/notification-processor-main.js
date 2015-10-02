@@ -161,7 +161,7 @@ worker.start();
 logger.logInfo('notificationProcessorMain - notification processor daemon has started');
 
 function executeDunningInputValidation(params, cb) {
-    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+    var emailRegex = config.emailRegex;
     if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.days || typeof params.days !== 'number' || !_.contains([1, 3, 5, 7, 10], params.days)) {
@@ -174,7 +174,7 @@ function executeDunningInputValidation(params, cb) {
 }
 
 function paymentReceivedInputValidation(params, cb) {
-    var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+    var emailRegex = config.emailRegex;
     if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
