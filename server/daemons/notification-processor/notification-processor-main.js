@@ -19,7 +19,7 @@ var User = db.model('User');
 var Dunning = db.model('Dunning');
 var BillingPayment = db.model('BillingPayment');
 var subscription = require('../../common/services/subscription');
-var worker = queueDb.worker(['notification-api-requests']);
+var worker = queueDb.worker(['api-requests']);
 
 worker.register({
 
