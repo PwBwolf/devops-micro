@@ -19,6 +19,9 @@
             "name": "Region",
             "tags": [
                 "Global",
+                "International",
+                "Europe",
+                "North America",
                 "USA",
                 "Mexico",
                 "Colombia",
@@ -33,7 +36,11 @@
                 "English",
                 "Caribbean",
                 "Latin America",
-                "Chile"
+                "Chile",
+                "Russia",
+                "Germany",
+                "France",
+                "Poland"
             ]
         },
         {
@@ -43,7 +50,8 @@
                 "Spanish",
                 "Portugese",
                 "Russian",
-                "Polish"
+                "Polish",
+                "German"
             ]
         },
         {
@@ -51,8 +59,10 @@
             "tags": [
                 "All",
                 "General",
+                "Everyone",
                 "Adult",
-                "Children"
+                "Children",
+                "Kids"
             ]
         }
     ]

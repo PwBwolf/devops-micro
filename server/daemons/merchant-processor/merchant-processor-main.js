@@ -205,7 +205,7 @@ function savePayment(params, isSuccess, reason, cb) {
     payment.merchant = params.merchantId;
     payment.merchantPopId = params.merchantPopId;
     payment.merchantReferenceId = params.merchantReferenceId;
-    payment.username = params.username;
+    payment.username = params.username.toLowerCase();
     payment.status = isSuccess;
     payment.reason = reason;
     payment.processTime = processTime;
@@ -245,7 +245,7 @@ function saveRefund(params, isSuccess, reason, cb) {
     refund.merchant = params.merchantId;
     refund.merchantPopId = params.merchantPopId;
     refund.merchantReferenceId = params.merchantReferenceId;
-    refund.username = params.username;
+    refund.username = params.username.toLowerCase();
     refund.status = isSuccess;
     refund.reason = reason;
     refund.processTime = processTime;
