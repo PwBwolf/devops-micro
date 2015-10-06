@@ -15,7 +15,7 @@ if (typeof email === 'undefined') {
     logger.logError('adminCLI - verifyAccount - email is missing!\n\r\tusage: node verify-account <email>');
     process.exit(1);
 } else {
-    var regex = config.emailRegex;
+    var regex = config.regex.email;
     var isEmail = regex.test(email);
     if (!isEmail) {
         logger.logError('adminCLI - verifyAccount - enter a valid email address.');

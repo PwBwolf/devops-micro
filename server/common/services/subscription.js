@@ -1167,25 +1167,7 @@ module.exports = {
                     }
                     callback(err, userObj);
                 });
-            }/*,
-             // send email
-             function (userObj, callback) {
-             var mailOptions = {
-             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-             to: userObj.email,
-             subject: config.premiumRemovedEmailSubject[userObj.preferences.defaultLanguage],
-             html: sf(config.premiumRemovedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
-             };
-             email.sendEmail(mailOptions, function (err) {
-             if (err) {
-             logger.logError('subscription - endPremiumChannels - error sending premium package ended email to ' + mailOptions.to);
-             logger.logError(err);
-             } else {
-             logger.logInfo('subscription - endPremiumChannels - premium package ended email sent to ' + mailOptions.to);
-             }
-             callback(null, userObj);
-             });
-             }*/
+            }
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);

@@ -14,7 +14,7 @@ if (typeof email === 'undefined') {
     logger.logError('adminCLI - deleteUser - email is missing!\n\r\tusage: node delete-user <email>');
     process.exit(1);
 } else {
-    var regex = config.emailRegex;
+    var regex = config.regex.email;
     var isEmail = regex.test(email);
     if (!isEmail) {
         logger.logError('adminCLI - deleteUser - enter a valid email address.');

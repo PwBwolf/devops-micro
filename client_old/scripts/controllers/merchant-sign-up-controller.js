@@ -3,7 +3,7 @@
 
     app.controller('merchantSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter) {
 
-        $scope.mv = {disclaimer: true, merchant: $routeParams.source || 'YIPTV'};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true, merchant: $routeParams.source || 'YIPTV'};
         $scope.formSubmit = false;
 
         activate();
@@ -20,7 +20,7 @@
             if ($scope.form.$valid) {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,

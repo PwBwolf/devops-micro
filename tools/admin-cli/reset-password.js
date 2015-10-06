@@ -16,7 +16,7 @@ if (typeof email === 'undefined') {
     logger.logError('resetPassword - email is missing!\n\r\tusage: node reset-password <email> <password>');
     process.exit(1);
 } else {
-    var regex = config.emailRegex;
+    var regex = config.regex.email;
     var isEmail = regex.test(email);
     if (!isEmail) {
         logger.logError('adminCLI - resetPassword - enter a valid email address.');

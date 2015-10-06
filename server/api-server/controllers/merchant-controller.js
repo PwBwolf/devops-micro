@@ -63,7 +63,7 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                var emailRegex = config.emailRegex;
+                var emailRegex = config.regex.email;
                 if (!req.query.username || !emailRegex.test(req.query.username)) {
                     return res.status(200).send({error: 'invalid-username'});
                 }

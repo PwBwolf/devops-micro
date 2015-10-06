@@ -146,8 +146,9 @@
                         <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.required" translate="SIGN_UP_ZIP_CODE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.zipCode.$touched && form.zipCode.$error.pattern" translate="SIGN_UP_ZIP_CODE_INVALID"></div>
                     </div>
-                    <div class="full-form center-form">
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="SIGN_UP_DISCLAIMER_END"></span></label>
+                    <div class="full-form">
+                        <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="SIGN_UP_EMAIL_SMS_SUBSCRIPTION"></span></label>
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span> <a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="SIGN_UP_DISCLAIMER_END"></span></label>
 
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>

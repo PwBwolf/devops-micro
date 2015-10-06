@@ -37,7 +37,7 @@ var schema = {
         },
         email: {
             description: 'Email',
-            pattern: config.emailRegex,
+            pattern: config.regex.email,
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {

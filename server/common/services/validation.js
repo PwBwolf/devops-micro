@@ -3,11 +3,11 @@
 var _ = require('lodash');
 var config = require('../setup/config');
 
-var nameRegex = /^[a-zA-Z\u00C0-\u017F0-9\s\-,.']+$/;
-var emailRegex = config.emailRegex;
-var addressRegex = /^[a-zA-Z\u00C0-\u017F0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/;
-var telephoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-var zipCodeRegex = /^\d{5}$/;
+var nameRegex = config.regex.name;
+var emailRegex = config.regex.email;
+var addressRegex = config.regex.address;
+var telephoneRegex = config.regex.telephone;
+var zipCodeRegex = config.regex.zipCode;
 var cvv3Regex = /^\d{3}$/;
 var cvv4Regex = /^\d{4}$/;
 
@@ -71,6 +71,13 @@ module.exports = {
         if (user.preferences.defaultLanguage !== 'en' && user.preferences.defaultLanguage !== 'es') {
             return 'DefaultLanguageInvalid';
         }
+        if (typeof user.preferences.emailSubscription !== 'boolean') {
+            return 'EmailSubscriptionInvalid';
+        }
+        if (typeof user.preferences.smsSubscription !== 'boolean') {
+            return 'SmsSubscriptionInvalid';
+        }
+
         if (user.type === 'comp' && (!user.code || user.code.trim().length === 0)) {
             return 'ComplimentaryCodeRequired';
         }
@@ -148,6 +155,36 @@ module.exports = {
                 return 'ZipCodeInvalid';
             }
         }
+        return null;
+    },
+
+    validateGetEmailSmsSubscriptionStatusInputs: function (email) {
+        if (!email || email.trim().length === 0) {
+            return 'EmailRequired';
+        }
+        if (!emailRegex.test(email.trim())) {
+            return 'EmailInvalid';
+        }
+        return null;
+    },
+
+    validateSetEmailSmsSubscriptionStatusInputs: function (data) {
+        if (!data.email || data.email.trim().length === 0) {
+            return 'EmailRequired';
+        }
+        if (!emailRegex.test(data.email.trim())) {
+            return 'EmailInvalid';
+        }
+        if (typeof data.emailSubscription === 'undefined' && typeof data.smsSubscription === 'undefined') {
+            return 'InputInvalid';
+        }
+        if (typeof data.emailSubscription !== 'undefined' && typeof data.emailSubscription !== 'boolean') {
+            return 'EmailSubscriptionInvalid';
+        }
+        if (typeof data.smsSubscription !== 'undefined' && typeof data.smsSubscription !== 'boolean') {
+            return 'SmsSubscriptionInvalid';
+        }
+
         return null;
     }
 };

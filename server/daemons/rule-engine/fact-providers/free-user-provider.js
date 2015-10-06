@@ -14,8 +14,7 @@ module.exports.getFreeUsers = function () {
         if (accounts) {
             var userList = [];
             for (var i = 0; i < accounts.length; i++) {
-                if (accounts[i].primaryUser && _.contains(['active', 'registered'], accounts[i].primaryUser.status) &&
-                    moment.utc().startOf('day').diff(moment(accounts[i].startDate).utc().startOf('day'), 'days') <= 10) {
+                if (accounts[i].primaryUser && _.contains(['active', 'registered'], accounts[i].primaryUser.status) && moment.utc().startOf('day').diff(moment(accounts[i].startDate).utc().startOf('day'), 'days') <= 10) {
                     accounts[i].primaryUser._doc = _.assign(accounts[i].primaryUser._doc, {doctype: 'user'});
                     accounts[i].primaryUser._doc.type = 'free';
                     accounts[i].primaryUser._doc.startDate = accounts[i].startDate;
