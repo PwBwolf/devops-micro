@@ -23,7 +23,7 @@ var schema = {
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
-                var regex = config.emailRegex;
+                var regex = config.regex.email;
                 regex.lastIndex = 0;
                 var isEmail = regex.test(value);
                 if (value && value.trim() && value.trim().length <= 50 && isEmail) {

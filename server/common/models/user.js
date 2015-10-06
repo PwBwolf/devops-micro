@@ -31,7 +31,9 @@ var User = new Schema({
     resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
-        defaultLanguage: {type: String, required: true, lowercase: true}
+        defaultLanguage: {type: String, required: true, lowercase: true},
+        emailSubscription: {type: Boolean, required: true},
+        smsSubscription: {type: Boolean, required: true}
     }
 }, {collection: 'Users'});
 

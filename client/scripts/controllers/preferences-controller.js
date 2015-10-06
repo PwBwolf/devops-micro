@@ -7,7 +7,7 @@
 
         function activate() {
             userSvc.getPreferences(function (data) {
-                $scope.mv = {language: data.defaultLanguage};
+                $scope.mv = data;
             }, function () {
                 loggerSvc.logError($filter('translate')('PREFERENCES_FETCH_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
             });
@@ -18,7 +18,7 @@
                 $scope.saving = true;
                 userSvc.updatePreferences($scope.mv, function () {
                     $scope.saving = false;
-                    $rootScope.$broadcast('ChangeLanguage', $scope.mv.language);
+                    $rootScope.$broadcast('ChangeLanguage', $scope.mv.defaultLanguage);
                     $rootScope.$broadcast('CloseDropDown', ['preferencesDropDown', 'profileDropDown']);
                     loggerSvc.logSuccess($filter('translate')('PREFERENCES_SAVED'));
                 }, function () {
@@ -31,7 +31,7 @@
         };
 
         function setFormTouched() {
-            $scope.form.language.$touched = true;
+            $scope.form.defaultLanguage.$touched = true;
         }
     }]);
 }(angular.module('app')));

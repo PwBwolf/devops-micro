@@ -83,6 +83,7 @@
             COMP_SIGN_UP_FORM_INVALID: 'Había un problema con la información que has introducido en una o más secciones del el formulario de arriba. Por favor revise tu entradas y haz clic en "Registrarse" de nuevo.',
             COMP_SIGN_UP_HAVE_ACCOUNT: 'Ya tienes una cuenta?',
             COMP_SIGN_UP_SIGN_IN: 'Ingresar',
+            COMP_SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Por favor, envíenme actualizaciones a través de mensaje de texto y correo electrónico',
             COMP_SIGN_UP_DISCLAIMER: 'Acepto los',
             COMP_SIGN_UP_DISCLAIMER_END: 'de YipTV.',
             COMP_SIGN_UP_DISCLAIMER_REQUIRED: 'Para utilizar los servicios YipTV usted necesita aceptar nuestras condiciones de uso y politica de privacidad',
@@ -155,6 +156,7 @@
             FREE_SIGN_UP_FORM_INVALID: 'Había un problema con la información que has introducido en una o más secciones del el formulario de arriba. Por favor revise tu entradas y haz clic en "Comience Mi Membresía Gratis" de nuevo.',
             FREE_SIGN_UP_HAVE_ACCOUNT: 'Ya tienes una cuenta?',
             FREE_SIGN_UP_SIGN_IN: 'Ingresar',
+            FREE_SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Por favor, envíenme actualizaciones a través de mensaje de texto y correo electrónico',
             FREE_SIGN_UP_DISCLAIMER: 'Convengo a los',
             FREE_SIGN_UP_DISCLAIMER_END: 'de YipTV.',
             FREE_SIGN_UP_DISCLAIMER_REQUIRED: 'Para utilizar los servicios YipTV usted necesita aceptar nuestras condiciones de uso y politica de privacidad',
@@ -214,6 +216,8 @@
             PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR: 'Error al subir lista de canales promo',
             PREFERENCES_PREFERRED_LANGUAGE: 'Elige su idioma preferido',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Elige su idioma preferido',
+            PREFERENCES_SMS_SUBSCRIPTION: 'Envíeme actualizaciones a través de mensaje de texto',
+            PREFERENCES_EMAIL_SUBSCRIPTION: 'Envíeme actualizaciones por correo electrónico',
             PREFERENCES_SUBMIT_BUTTON: 'Presentar',
             PREFERENCES_FETCH_ERROR: 'No se pudo obtener sus preferencias. Por favor pongase en contacto con servicio al cliente',
             PREFERENCES_SAVE_ERROR: 'Error al guardar sus preferencias. Por favor pongase en contacto con servicio al cliente',
@@ -335,6 +339,7 @@
             SIGN_UP_TERMS_OF_USE: 'Términos de Uso',
             SIGN_UP_AND: 'y',
             SIGN_UP_SUBMIT_BUTTON: 'Inicia Mi Membresía Premier',
+            SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Por favor, envíenme actualizaciones a través de mensaje de texto y correo electrónico',
             SIGN_UP_DISCLAIMER: 'Convengo a los',
             SIGN_UP_DISCLAIMER_END: 'de YipTV',
             SIGN_UP_DISCLAIMER_REQUIRED: 'Para utilizar los servicios YipTV usted necesita aceptar nuestras condiciones de uso y politica de privacidad',
@@ -451,9 +456,9 @@
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Su cuenta se ha verificado satisfactoriamente. Haga clic en el botón Ingresar arriba para ingresar a YipTV.',
             VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar su cuenta o su cuenta ya ha sido verificada. Comuníquese con el servicio al cliente al',
-            WP_URL_FAQS: 'index.php/preguntas-frecuentes/',
-            WP_URL_PRIVACY_POLICY: 'index.php/privacy-policy-2/',
-            WP_URL_TOUS: 'index.php/terms-of-service-2/'
+            WP_URL_FAQS: 'index.php/es/preguntas-frecuentes/',
+            WP_URL_PRIVACY_POLICY: 'index.php/es/privacy-policy-2/',
+            WP_URL_TOUS: 'index.php/es/terms-of-service-2/'
         });
     }]);
 }(angular.module('app')));

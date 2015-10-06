@@ -40,7 +40,7 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            /*.when('/sign-up/:source',
+            .when('/sign-up/:source',
             {
                 templateUrl: function (params) {
                     var partners = ['truconn'];
@@ -52,7 +52,7 @@
                 },
                 controller: 'merchantSignUpCtrl',
                 access: access.anon
-            })*/
+            })
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',

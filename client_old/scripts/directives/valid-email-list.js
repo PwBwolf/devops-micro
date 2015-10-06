@@ -11,7 +11,7 @@
                     if (emailList) {
                         var emails = emailList.split(',');
                         for (var i = 0; i < emails.length; i++) {
-                            var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\u00C0-\u017F\-0-9]+\.)+[a-zA-Z\u00C0-\u017F]{2,}))$/;
+                            var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                             var isEmail = regex.test(emails[i].trim());
                             if (!isEmail) {
                                 ctrl.$setValidity('validEmailList', false);

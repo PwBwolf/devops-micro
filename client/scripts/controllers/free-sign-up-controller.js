@@ -3,14 +3,14 @@
 
     app.controller('freeSignUpCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
-        $scope.mv = {disclaimer: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         $scope.formSubmit = false;
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
                 $scope.mv.type = 'free';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,

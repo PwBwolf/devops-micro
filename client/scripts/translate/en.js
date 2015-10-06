@@ -83,6 +83,7 @@
             COMP_SIGN_UP_FORM_INVALID: 'There was a problem with the information you entered in one or more sections of the form above. Please review your entries and click “Sign Up” again.',
             COMP_SIGN_UP_HAVE_ACCOUNT: 'Already have an account?',
             COMP_SIGN_UP_SIGN_IN: 'Sign In',
+            COMP_SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Please send me updates via text message and email',
             COMP_SIGN_UP_DISCLAIMER: 'I agree to the YipTV',
             COMP_SIGN_UP_DISCLAIMER_END: '',
             COMP_SIGN_UP_DISCLAIMER_REQUIRED: 'In order to use YipTV services you need to accept our Terms of Use and Privacy Policy',
@@ -155,6 +156,7 @@
             FREE_SIGN_UP_FORM_INVALID: 'There was a problem with the information you entered in one or more sections of the form above. Please review your entries and click “Start My Free Membership” again.',
             FREE_SIGN_UP_HAVE_ACCOUNT: 'Already have an account?',
             FREE_SIGN_UP_SIGN_IN: 'Sign In',
+            FREE_SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Please send me updates via text message and email',
             FREE_SIGN_UP_DISCLAIMER: 'I agree to the YipTV',
             FREE_SIGN_UP_DISCLAIMER_END: '',
             FREE_SIGN_UP_DISCLAIMER_REQUIRED: 'In order to use YipTV services you need to accept our Terms of Use and Privacy Policy',
@@ -214,6 +216,8 @@
             PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR: 'Error loading promo channel list',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your preferred language',
+            PREFERENCES_SMS_SUBSCRIPTION: 'Send me updates via text message',
+            PREFERENCES_EMAIL_SUBSCRIPTION: 'Send me updates via email',
             PREFERENCES_SUBMIT_BUTTON: 'Submit',
             PREFERENCES_FETCH_ERROR: 'Unable to fetch your preferences. Please contact customer support at',
             PREFERENCES_SAVE_ERROR: 'Unable to save your preferences. Please contact customer support at',
@@ -335,6 +339,7 @@
             SIGN_UP_TERMS_OF_USE: 'Terms of Use',
             SIGN_UP_AND: 'and',
             SIGN_UP_SUBMIT_BUTTON: 'Start My Premium Membership',
+            SIGN_UP_EMAIL_SMS_SUBSCRIPTION: 'Please send me updates via text message and email',
             SIGN_UP_DISCLAIMER: 'I agree to the YipTV',
             SIGN_UP_DISCLAIMER_END: '',
             SIGN_UP_DISCLAIMER_REQUIRED: 'In order to use YipTV services you need to accept our Terms of Use and Privacy Policy',
@@ -451,9 +456,9 @@
             VERIFY_USER_HEADING_ERROR: 'Error',
             VERIFY_USER_MESSAGE_SUCCESS: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact customer support at',
-            WP_URL_FAQS: 'index.php/faqs/',
-            WP_URL_PRIVACY_POLICY: 'index.php/privacy-policy/',
-            WP_URL_TOUS: 'index.php/terms-of-service/'
+            WP_URL_FAQS: 'index.php/en/faqs/',
+            WP_URL_PRIVACY_POLICY: 'index.php/en/privacy-policy/',
+            WP_URL_TOUS: 'index.php/en/terms-of-service/'
         });
     }]);
 }(angular.module('app')));

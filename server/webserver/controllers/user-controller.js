@@ -637,8 +637,10 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            var defaultLanguage = user.preferences.defaultLanguage;
-            user.preferences.defaultLanguage = req.body.language;
+            var currentValues = {defaultLanguage: user.preferences.defaultLanguage, emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+            user.preferences.defaultLanguage = req.body.defaultLanguage;
+            user.preferences.emailSubscription = req.body.emailSubscription;
+            user.preferences.smsSubscription = req.body.smsSubscription;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
@@ -649,14 +651,14 @@ module.exports = {
                     if (err) {
                         logger.logError('userController - updatePreferences - error logging into freeside: ' + req.email.toLowerCase());
                         logger.logError(err);
-                        rollbackPreferences(user, defaultLanguage);
+                        rollbackPreferences(user, currentValues);
                         return res.status(500).end();
                     }
                     billing.updateLocale(sessionId, user.preferences.defaultLanguage + '_US', function (err) {
                         if (err) {
                             logger.logError('userController - updatePreferences - error updating locale in freeside: ' + req.email.toLowerCase());
                             logger.logError(err);
-                            rollbackPreferences(user, defaultLanguage);
+                            rollbackPreferences(user, currentValues);
                             return res.status(500).end();
                         }
                         return res.status(200).end();
@@ -665,8 +667,10 @@ module.exports = {
             });
         });
 
-        function rollbackPreferences(user, defaultLanguage, cb) {
-            user.preferences.defaultLanguage = defaultLanguage;
+        function rollbackPreferences(user, currentValues, cb) {
+            user.preferences.defaultLanguage = currentValues.defaultLanguage;
+            user.preferences.emailSubscription = currentValues.emailSubscription;
+            user.preferences.smsSubscription = currentValues.smsSubscription;
             user.save(function (err) {
                 if (err) {
                     if (err) {
@@ -713,6 +717,62 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.send(data);
+        });
+    },
+
+    getEmailSmsSubscriptionStatus: function (req, res) {
+        var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query);
+        if (validationError) {
+            logger.logError('userController - getEmailSmsSubscriptionStatus - user input error: ' + req.body.email);
+            logger.logError(validationError);
+            return res.status(500).end(validationError);
+        }
+        User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - getEmailSmsSubscriptionStatus - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (user) {
+                var preferences = {emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+                return res.send(preferences);
+            } else {
+                return res.status(404).send('UserNotFound');
+            }
+        });
+    },
+
+    setEmailSmsSubscriptionStatus: function (req, res) {
+        var validationError = validation.validateSetEmailSmsSubscriptionStatusInputs(req.body);
+        if (validationError) {
+            logger.logError('userController - setEmailSmsSubscriptionStatus - user input error: ' + req.body.email);
+            logger.logError(validationError);
+            return res.status(500).end(validationError);
+        }
+        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - setEmailSmsSubscriptionStatus - error fetching user: ' + req.body.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (user) {
+                if (typeof req.body.emailSubscription === 'boolean') {
+                    user.preferences.emailSubscription = req.body.emailSubscription;
+                }
+                if (typeof req.body.smsSubscription === 'boolean') {
+                    user.preferences.smsSubscription = req.body.smsSubscription;
+                }
+                user.save(function (err) {
+                    if (err) {
+                        logger.logError('userController - setEmailSmsSubscriptionStatus - error saving user preference: ' + req.body.email.toLowerCase());
+                        logger.logError(err);
+                        return res.status(500).end();
+                    }
+                    return res.status(200).end();
+                });
+            } else {
+                return res.status(404).send('UserNotFound');
+            }
         });
     }
 };

@@ -16,6 +16,13 @@ module.exports = {
         fromEmail: 'noreply@yiptv.com',
         fromName: 'YipTV'
     },
+    regex: {
+        email: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\u00C0-\u017F\-0-9]+\.)+[a-zA-Z\u00C0-\u017F]{2,}))$/,
+        name: /^[a-zA-Z\u00C0-\u017F0-9\s\-,.']+$/,
+        address: /^[a-zA-Z\u00C0-\u017F0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/,
+        telephone: /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/,
+        zipCode: /^\d{5}$/
+    },
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
     url: 'https://app.test.yiptv.net/',
     imageUrl: 'https://app.test.yiptv.net/images/',
@@ -36,6 +43,7 @@ module.exports = {
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
+    useAio: false,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://172.16.10.100',
     aioPortalUrl: 'http://209.18.77.106',

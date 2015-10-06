@@ -3,7 +3,7 @@
 
     app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
-        $scope.mv = {disclaimer: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         $scope.formSubmit = false;
 
         activate();
@@ -20,7 +20,7 @@
             if ($scope.form.$valid) {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en'};
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
