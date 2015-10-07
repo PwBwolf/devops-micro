@@ -187,6 +187,7 @@ module.exports = {
                     telephone: user.telephone,
                     type: account.type,
                     status: user.status,
+                    packages: account.packages,
                     cancelOn: user.cancelOn
                 });
             });
