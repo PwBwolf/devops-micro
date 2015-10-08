@@ -21,7 +21,7 @@ var connect = require('gulp-connect');
  * And then dump them inside .tmp
  */
 gulp.task('partials', function () {
-    return gulp.src('../client/**/*.html') //Read all our partials
+    return gulp.src('../client/web-app/**/*.html') //Read all our partials
         .pipe($.minifyHtml({
             empty: true,
             spare: true,
@@ -38,14 +38,14 @@ gulp.task('partials', function () {
  * Copy only routing.js to the dist folder
  */
 gulp.task('roles', function () {
-    return gulp.src('../client/scripts/config/routing.js')
+    return gulp.src('../client/web-app/scripts/config/routing.js')
         .pipe($.uglify())
-        .pipe(gulp.dest('dist/client/scripts/config'));
+        .pipe(gulp.dest('dist/client/web-app/scripts/config'));
 });
 
 gulp.task('jwplayer', function () {
-    return gulp.src(['../client/scripts/external/jwplayer.js', '../client/scripts/external/jwplayer.html5.js', '../client/scripts/external/jwplayer.flash.swf'])
-        .pipe(gulp.dest('dist/client/scripts/external'));
+    return gulp.src(['../client/web-app/scripts/external/jwplayer.js', '../client/web-app/scripts/external/jwplayer.html5.js', '../client/web-app/scripts/external/jwplayer.flash.swf'])
+        .pipe(gulp.dest('dist/client/web-app/scripts/external'));
 });
 
 /**
@@ -59,7 +59,7 @@ gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
     var cssFilter = $.filter('**/*.css'); //Filter out each CSS file
     var assets;
 
-    return gulp.src('../client/*.html') // Read index.html
+    return gulp.src('../client/web-app/*.html') // Read index.html
         .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
@@ -85,7 +85,7 @@ gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
             quotes: true
         }))
         .pipe(htmlFilter.restore()) // Restore non-html files back to the stream
-        .pipe(gulp.dest('dist/client'))
+        .pipe(gulp.dest('dist/client/web-app'))
         .pipe($.size());
 });
 
@@ -98,7 +98,7 @@ gulp.task('webapp-nominify', ['partials', 'roles', 'jwplayer'], function () {
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var assets;
 
-    return gulp.src('../client/*.html') //Read index.html
+    return gulp.src('../client/web-app/*.html') //Read index.html
         .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
@@ -113,7 +113,7 @@ gulp.task('webapp-nominify', ['partials', 'roles', 'jwplayer'], function () {
         .pipe(assets.restore()) //Restore all other files (we were only working on concatenated CSS/JS till now)
         .pipe($.useref()) //Finish replacing all CSS and JS links with our processed, concatenated, minified files
         .pipe($.revReplace())
-        .pipe(gulp.dest('dist/client'))
+        .pipe(gulp.dest('dist/client/web-app'))
         .pipe($.size());
 });
 
@@ -122,13 +122,13 @@ gulp.task('webapp-nominify', ['partials', 'roles', 'jwplayer'], function () {
  * Read each image, optimize it and save it in the destination folder.
  */
 gulp.task('images', function () {
-    return gulp.src('../client/images/**/*') //Get images from specified dir and all subdirs.
+    return gulp.src('../client/web-app/images/**/*') //Get images from specified dir and all subdirs.
         .pipe($.imagemin({
             optimizationLevel: 3,
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest('dist/client/images/'))
+        .pipe(gulp.dest('dist/client/web-app/images/'))
         .pipe($.size());
 });
 
@@ -136,14 +136,14 @@ gulp.task('images', function () {
  * Copy over fonts used by Bower modules.
  */
 gulp.task('fonts', function () {
-    gulp.src('../client/styles/fonts/*')
+    gulp.src('../client/web-app/styles/fonts/*')
         .pipe($.flatten())
-        .pipe(gulp.dest('dist/client/styles/fonts'));
+        .pipe(gulp.dest('dist/client/web-app/styles/fonts'));
 
-    return gulp.src($.mainBowerFiles({paths: '../client'}))
+    return gulp.src($.mainBowerFiles({paths: '../client/web-app'}))
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
         .pipe($.flatten())
-        .pipe(gulp.dest('dist/client/fonts'))
+        .pipe(gulp.dest('dist/client/web-app/fonts'))
         .pipe($.size());
 });
 
@@ -151,10 +151,10 @@ gulp.task('fonts', function () {
  * Copy non-html files in project root including .htaccess, robots.txt, etc.
  */
 gulp.task('extras', function (cb) {
-    gulp.src(['../client/*.*', '!../client/*.html'], {dot: true})
-        .pipe(gulp.dest('dist/client'));
-    gulp.src(['../client_old/**/*'], {dot: true})
-        .pipe(gulp.dest('dist/client_old'));
+    gulp.src(['../client/web-app/*.*', '!../client/web-app/*.html'], {dot: true})
+        .pipe(gulp.dest('dist/client/web-app'));
+    gulp.src(['../client/web-app-old/**/*'], {dot: true})
+        .pipe(gulp.dest('dist/client/web-app-old'));
     cb();
 });
 
@@ -168,14 +168,14 @@ gulp.task('tools', function () {
 
 /**
  * Copy the files and directories specific to the NodeJS server.
- * We will copy the common and webserver directories along with the package.json located in the parent server
+ * We will copy the common and web-app directories along with the package.json located in the parent server
  * directory.
  */
 gulp.task('server', function (cb) {
     gulp.src('../server/package.json', {dot: true}).pipe(gulp.dest('dist/server'));
     gulp.src(['../server/common/**/*', '!../server/common/config/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
     gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
-    gulp.src('../server/webserver/**/*', {dot: true}).pipe(gulp.dest('dist/server/webserver'));
+    gulp.src('../server/web-app/**/*', {dot: true}).pipe(gulp.dest('dist/server/web-app'));
     gulp.src('../server/api-server/**/*', {dot: true}).pipe(gulp.dest('dist/server/api-server'));
     cb();
 });
@@ -195,7 +195,7 @@ function replaceAndCopy(source, destination, text, replacementText) {
 }
 
 function postDeploy(cb) {
-    replaceAndCopy('../server/webserver/app.js', 'dist/server/webserver', 'development', argv.env);
+    replaceAndCopy('../server/web-app/app.js', 'dist/server/web-app', 'development', argv.env);
     replaceAndCopy('../server/api-server/app.js', 'dist/server/api-server', 'development', argv.env);
     replaceAndCopy('../server/common/database/fixtures.js', 'dist/server/common/database', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/notify-build.js', 'dist/tools/deployment-scripts', 'development', argv.env);
@@ -306,26 +306,26 @@ gulp.task('deploy', [argv.env === 'integration' ? 'dummy' : 'dummy', 'clean'], f
             checkoutFromTag().then(function () {
                 gulp.start('doDeploy');
                 gulp.src('./version.json')
-                    .pipe(gulp.dest('dist/client'));
+                    .pipe(gulp.dest('dist/client/web-app'));
             }, function (err) {
                 console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
                 console.log(err);
             });
         } else {
             if (argv.deployType) {
-                bumpVersion('version', 'dist/client');
+                bumpVersion('version', 'dist/client/web-app');
             } else {
                 gulp.src('./version.json')
-                    .pipe(gulp.dest('dist/client'));
+                    .pipe(gulp.dest('dist/client/web-app'));
             }
             gulp.start('doDeploy');
         }
     } else if (argv.env === 'integration') {
         if (argv.deployType) {
-            bumpVersion('version', 'dist/client');
+            bumpVersion('version', 'dist/client/web-app');
         } else {
             gulp.src('./version.json')
-                .pipe(gulp.dest('dist/client'));
+                .pipe(gulp.dest('dist/client/web-app'));
         }
         gulp.start('doDeploy');
     } else {
@@ -443,10 +443,10 @@ gulp.task('connect', function () {
     fs.createDirSync('../logs');
     //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
-    nodemon({cwd: '../server/webserver', script: 'app.js', ext: 'js'});
+    nodemon({cwd: '../server/web-app', script: 'app.js', ext: 'js'});
 
     connect.server({
-        root: '../../client',
+        root: '../../client/web-app',
         livereload: true,
         port: 9000,
         middleware: function () {
@@ -472,27 +472,27 @@ gulp.task('api-serve', function () {
 });
 
 gulp.task('reload-html', function () {
-    gulp.src('../../client/**/*.html')
+    gulp.src('../../client/web-app/**/*.html')
         .pipe(connect.reload());
 });
 gulp.task('reload-js', function () {
-    gulp.src('../../client/scripts/**/*.js')
+    gulp.src('../../client/web-app/scripts/**/*.js')
         .pipe(connect.reload());
 });
 gulp.task('reload-css', function () {
-    gulp.src('../../client/styles/**/*.css')
+    gulp.src('../../client/web-app/styles/**/*.css')
         .pipe(connect.reload());
 });
 gulp.task('reload-images', function () {
-    gulp.src('../../client/images/**/*')
+    gulp.src('../../client/web-app/images/**/*')
         .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
-    gulp.watch(['../../client/**/*.html'], ['reload-html']);
-    gulp.watch(['../../client/scripts/**/*.js'], ['reload-js']);
-    gulp.watch(['../../client/styles/**/*.css'], ['reload-css']);
-    gulp.watch(['../../client/images/**/*'], ['reload-images']);
+    gulp.watch(['../../client/web-app/**/*.html'], ['reload-html']);
+    gulp.watch(['../../client/web-app/scripts/**/*.js'], ['reload-js']);
+    gulp.watch(['../../client/web-app/styles/**/*.css'], ['reload-css']);
+    gulp.watch(['../../client/web-app/images/**/*'], ['reload-images']);
 });
 
 

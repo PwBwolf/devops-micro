@@ -2,7 +2,7 @@
 
 module.exports = {
     environment: 'development',
-    clientPath: '/client_old',
+    clientPath: '/client/web-app-old',
     port: 3000,
     apiServerPort: 4000,
     email: {

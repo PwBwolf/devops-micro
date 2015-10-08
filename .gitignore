@@ -2,6 +2,7 @@ build/node_modules
 build/dist
 build/.tmp
 client/web-app/bower_components
+client/crm-app/bower_components
 client/web-app-old/bower_components
 test/client/unit/node_modules
 logs/

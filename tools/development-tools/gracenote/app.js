@@ -17,10 +17,10 @@ var views = __dirname;
 require('./router/main')(app, views);
 
 app.use(express.static('controllers'));
-app.use(express.static('../../../client'));
+app.use(express.static('../../../client/web-app'));
 app.use(express.static('js'));
 app.use(express.static('views'));
 
-var server=app.listen(port,function () {
-    logger.logInfo('server is running on port '+port);
+var server = app.listen(port, function () {
+    logger.logInfo('server is running on port ' + port);
 });

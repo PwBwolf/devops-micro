@@ -6,7 +6,7 @@ Development:
 
 * Install nginx, mongodb, nodejs (> 0.10.33), npm
 * Install gulp, `sudo npm install -g gulp`
-* Install all required packages: `npm install`, then `cd ../server; npm install;`, then `cd ../client; bower install`
+* Install all required packages: `npm install`, then `cd ../server; npm install;`, then `cd ../web-app/client; bower install`
 * `cd build` and type `gulp watch` to start a livereload server, or `gulp serve` to start a non live-reload server.
 
 
