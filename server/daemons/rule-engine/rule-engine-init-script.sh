@@ -11,7 +11,7 @@
 . /etc/init.d/functions
 
 NAME=yip-rule-engine
-SOURCE_DIR=/devops/yiptv/server/daemons/rule-engine
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/rule-engine
 SOURCE_FILE=rule-engine-main.js
 
 user=devops

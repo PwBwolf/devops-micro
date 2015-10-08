@@ -11,7 +11,7 @@
 . /etc/init.d/functions
 
 NAME=yip-merchant-processor
-SOURCE_DIR=/devops/yiptv/server/daemons/merchant-processor
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/merchant-processor
 SOURCE_FILE=merchant-processor-main.js
 
 user=devops

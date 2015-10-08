@@ -11,7 +11,7 @@
 . /etc/init.d/functions
 
 NAME=yip-notification-processor
-SOURCE_DIR=/devops/yiptv/server/daemons/notification-processor
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/notification-processor
 SOURCE_FILE=notification-processor-main.js
 
 user=devops

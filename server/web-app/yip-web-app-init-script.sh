@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-server
+# service yip-web-app
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,8 +10,8 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-server
-SOURCE_DIR=/devops/yiptv/server/web-app
+NAME=yip-web-app
+SOURCE_DIR=/opt/prodops/yiptv/server/web-app
 SOURCE_FILE=app.js
 
 user=devops

@@ -11,7 +11,7 @@
 . /etc/init.d/functions
 
 NAME=yip-metadata-processor
-SOURCE_DIR=/devops/yiptv/server/daemons/metadata-processor
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/metadata-processor
 SOURCE_FILE=metadata-processor-main.js
 
 user=devops

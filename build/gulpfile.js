@@ -4,7 +4,6 @@
 /*                          DEPLOYMENT TASKS                           */
 /***********************************************************************/
 var gulp = require('gulp');
-var debug = require('gulp-debug');
 var $ = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'main-bower-files']
 });
@@ -61,7 +60,6 @@ gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
     var assets;
 
     return gulp.src('../client/web-app/*.html') // Read index.html
-        .pipe(debug({minimal: false}))
         .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
