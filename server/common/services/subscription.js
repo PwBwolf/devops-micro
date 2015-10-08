@@ -15,7 +15,7 @@ var async = require('async'),
     Account = dbYip.model('Account'),
     Visitor = dbYip.model('Visitor'),
     ComplimentaryCode = dbYip.model('ComplimentaryCode'),
-    userRoles = require('../../../client/scripts/config/routing').userRoles,
+    userRoles = require('../../../client/web-app/scripts/config/routing').userRoles,
     sf = require('sf');
 
 module.exports = {
