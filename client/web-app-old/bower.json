@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "web-app",
   "version": "0.0.1",
   "dependencies": {
     "angular": "1.3.6",

@@ -11,7 +11,7 @@
 . /etc/init.d/functions
 
 NAME=yip-server
-SOURCE_DIR=/devops/yiptv/server/webserver
+SOURCE_DIR=/devops/yiptv/server/web-app
 SOURCE_FILE=app.js
 
 user=devops
