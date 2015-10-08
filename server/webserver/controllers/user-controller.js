@@ -722,7 +722,7 @@ module.exports = {
     },
 
     getEmailSmsSubscriptionStatus: function (req, res) {
-        var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query);
+        var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query.email);
         if (validationError) {
             logger.logError('userController - getEmailSmsSubscriptionStatus - user input error: ' + req.body.email);
             logger.logError(validationError);

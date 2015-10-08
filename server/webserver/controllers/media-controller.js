@@ -6,7 +6,6 @@ var crypto = require('crypto'),
     date = require('../../common/services/date'),
     config = require('../../common/setup/config'),
     graceNote = require('../../common/services/grace-note'),
-    moment = require('moment'),
     PythonShell = require('python-shell'),
     mongoose = require('../../node_modules/mongoose'),
     Channel = mongoose.model('Channel'),
@@ -312,10 +311,10 @@ function dateAdd(date, interval, units) {
 function getLevel3Token(channel) {
     var now = new Date();
     var nowTime = now.getTime();
-    var minusTen = new Date(nowTime - (10 * 60000));
-    var validFrom = Math.floor(minusTen.getTime() / 1000);
-    var plusTen = new Date(nowTime + (10 * 60000));
-    var validTo = Math.floor(plusTen.getTime() / 1000);
+    var minus = new Date(nowTime - (config.cdnTokenDuration * 1000));
+    var validFrom = Math.floor(minus.getTime() / 1000);
+    var plus = new Date(nowTime + (config.cdnTokenDuration * 1000));
+    var validTo = Math.floor(plus.getTime() / 1000);
     var url = new URI(channel.videoUrl);
     var path = url.pathname() + '?valid_from=' + validFrom + '&valid_to=' + validTo;
     var hmac = crypto.createHmac('sha1', 'uFhpKCsBgF9KLlHT0E9rmQ');
@@ -340,7 +339,7 @@ function getAkamaiToken(channel, callback) {
     }
     var options = {
         scriptPath: __dirname,
-        args: ['-w', config.akamaiTokenDuration, '-a', path, '-k', '33554645784d376b484a474b62365673']
+        args: ['-w', config.cdnTokenDuration, '-a', path, '-k', '33554645784d376b484a474b62365673']
     };
     PythonShell.run('akamai_token_v2.py', options, function (err, result) {
         callback(err, '?' + result);

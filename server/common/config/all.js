@@ -15,7 +15,7 @@ module.exports = {
     graceNoteImageUrl: 'http://yipt.tmsimg.com/',
     graceNoteDaysRetrieve: 14,
     graceNoteDaysKeep: 5,
-    akamaiTokenDuration: 60,
+    cdnTokenDuration: 60,
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],
