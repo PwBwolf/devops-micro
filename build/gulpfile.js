@@ -4,6 +4,7 @@
 /*                          DEPLOYMENT TASKS                           */
 /***********************************************************************/
 var gulp = require('gulp');
+var debug = require('gulp-debug');
 var $ = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'main-bower-files']
 });
@@ -60,11 +61,12 @@ gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
     var assets;
 
     return gulp.src('../client/web-app/*.html') // Read index.html
+        .pipe(debug({minimal: false}))
         .pipe($.inject(gulp.src('.tmp/views/**/*.js'), { //Inject each processed partial output by the partials task
             read: false,
             starttag: '<!-- inject:partials -->',
             addRootSlash: false,
-            addPrefix: '../build' //Make the following tasks look for the file in the correct path (build/.tmp)
+            addPrefix: '../../build' //Make the following tasks look for the file in the correct path (build/.tmp)
         }))
         .pipe(assets = $.useref.assets()) //Concatenate all our CSS and JS files, take only the concatenated files
         .pipe($.rev()) // Rev the files by prefixing them with the file hash
