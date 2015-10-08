@@ -184,7 +184,26 @@ module.exports = {
         if (typeof data.smsSubscription !== 'undefined' && typeof data.smsSubscription !== 'boolean') {
             return 'SmsSubscriptionInvalid';
         }
+        return null;
+    },
 
+    validateVerifyEmailInputs: function (email) {
+        if (!email || email.trim().length === 0) {
+            return 'EmailRequired';
+        }
+        if (!emailRegex.test(email.trim())) {
+            return 'EmailInvalid';
+        }
+        return null;
+    },
+
+    validateVerifyPhoneNumberInputs: function (phoneNumber) {
+        if (!phoneNumber || phoneNumber.trim().length === 0) {
+            return 'PhoneNumberRequired';
+        }
+        if (!telephoneRegex.test(phoneNumber.trim())) {
+            return 'PhoneNumberInvalid';
+        }
         return null;
     }
 };

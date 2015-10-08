@@ -10,6 +10,7 @@ var _ = require('lodash'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     ComplimentaryCode = mongoose.model('ComplimentaryCode'),
+    validation = require('../../common/services/validation'),
     Hashids = require('hashids'),
     hashids = new Hashids(config.secretToken, 5),
     email = require('../../common/services/email'),
@@ -219,5 +220,25 @@ module.exports = {
             }
             return res.status(200).end();
         });
+    },
+
+    verifyEmail: function(req, res) {
+        var validationError = validation.validateVerifyEmailInputs(req.query.email);
+        if (validationError) {
+            logger.logError('appController - verifyEmail - user input error: ' + req.body.email);
+            logger.logError(validationError);
+            return res.status(500).end(validationError);
+        }
+        return res.status(200).send(true);
+    },
+
+    verifyPhoneNumber: function(req, res) {
+        var validationError = validation.validateVerifyPhoneNumberInputs(req.query.phoneNumber);
+        if (validationError) {
+            logger.logError('appController - verifyPhoneNumber - user input error: ' + req.body.phoneNumber);
+            logger.logError(validationError);
+            return res.status(500).end(validationError);
+        }
+        return res.status(200).send(true);
     }
 };
