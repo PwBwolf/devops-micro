@@ -88,8 +88,8 @@
                         }
                     }
                 }).result.then(function () {
-                        var mv = {language: newLanguage};
-                        userSvc.updatePreferences(mv, function () {
+                        var mv = {defaultLanguage: newLanguage};
+                        userSvc.updateLanguage(mv, function () {
                             loggerSvc.logSuccess($filter('translate')('MAIN_LANGUAGE_CHANGE_SAVE_SUCCESS'));
                         }, function () {
                             loggerSvc.logError($filter('translate')('MAIN_LANGUAGE_CHANGE_SAVE_ERROR') + ' ' + $scope.appConfig.customerCareNumber);

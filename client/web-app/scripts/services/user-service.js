@@ -155,6 +155,10 @@
 
             updatePreferences: function(data, success, error) {
                 $http.post('/api/update-preferences', data).success(success).error(error);
+            },
+
+            updateLanguage: function(data, success, error) {
+                $http.post('/api/update-language', data).success(success).error(error);
             }
          };
     }]);

@@ -76,7 +76,9 @@ function sendReacquireEmail(user) {
 
 module.exports.send2DayReminderEmail = function (user) {
     delete user.postProcessorKey;
-    sendReminderEmail(user, '5', '2');
+    if (user.preferences.emailSubscription) {
+        sendReminderEmail(user, '5', '2');
+    }
 };
 
 module.exports.send3DayReminderEmail = function (user) {

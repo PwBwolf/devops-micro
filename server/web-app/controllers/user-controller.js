@@ -686,6 +686,62 @@ module.exports = {
         }
     },
 
+    updateLanguage: function (req, res) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - updateLanguage - error fetching user: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            var currentValues = {defaultLanguage: user.preferences.defaultLanguage};
+            user.preferences.defaultLanguage = req.body.defaultLanguage;
+            user.save(function (err) {
+                if (err) {
+                    logger.logError('userController - updateLanguage - error fetching user: ' + req.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('userController - updateLanguage - error logging into freeside: ' + req.email.toLowerCase());
+                        logger.logError(err);
+                        rollbackLanguage(user, currentValues);
+                        return res.status(500).end();
+                    }
+                    billing.updateLocale(sessionId, user.preferences.defaultLanguage + '_US', function (err) {
+                        if (err) {
+                            logger.logError('userController - updateLanguage - error updating locale in freeside: ' + req.email.toLowerCase());
+                            logger.logError(err);
+                            rollbackLanguage(user, currentValues);
+                            return res.status(500).end();
+                        }
+                        return res.status(200).end();
+                    });
+                });
+            });
+        });
+
+        function rollbackLanguage(user, currentValues, cb) {
+            user.preferences.defaultLanguage = currentValues.defaultLanguage;
+            user.preferences.emailSubscription = currentValues.emailSubscription;
+            user.preferences.smsSubscription = currentValues.smsSubscription;
+            user.save(function (err) {
+                if (err) {
+                    if (err) {
+                        logger.logError('userController - updateLanguage - error rolling back update: ' + user.email);
+                        logger.logError(err);
+                    }
+                    if (cb) {
+                        cb(err);
+                    }
+                }
+            });
+        }
+    },
+
     upgradeSubscription: function (req, res) {
         subscription.upgradeSubscription(req.email, req.body, function (err) {
             if (err) {
