@@ -1,0 +1,132 @@
+(function (app) {
+    'use strict';
+
+    app.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+        var access = routing.accessLevels;
+
+        $routeProvider.when('/',
+            {
+                templateUrl: 'views/home.html',
+                controller: 'homeCtrl',
+                access: access.anon
+            })
+            .when('/sign-in',
+            {
+                templateUrl: 'views/sign-in.html',
+                controller: 'signInCtrl',
+                access: access.anon
+            })
+            .when('/verify-user',
+            {
+                templateUrl: 'views/verify-user.html',
+                controller: 'verifyUserCtrl',
+                access: access.anon
+            })
+            .when('/forgot-password',
+            {
+                templateUrl: 'views/forgot-password.html',
+                controller: 'forgotPasswordCtrl',
+                access: access.anon
+            })
+            .when('/forgot-password-success',
+            {
+                templateUrl: 'views/forgot-password-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/reset-password',
+            {
+                templateUrl: 'views/reset-password.html',
+                controller: 'resetPasswordCtrl',
+                access: access.anon
+            })
+            .when('/reset-password-success',
+            {
+                templateUrl: 'views/reset-password-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/resend-verification',
+            {
+                templateUrl: 'views/resend-verification.html',
+                controller: 'resendVerificationCtrl',
+                access: access.anon
+            })
+            .when('/resend-verification-success',
+            {
+                templateUrl: 'views/resend-verification-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/user-home',
+            {
+                templateUrl: 'views/user-home.html',
+                controller: 'userHomeCtrl',
+                access: access.user
+            })
+            .when('/not-found',
+            {
+                templateUrl: 'views/not-found.html',
+                controller: 'commonCtrl',
+                access: access.public
+            })
+            .otherwise(
+            {
+                redirectTo: '/not-found'
+            });
+
+        $locationProvider.html5Mode(true);
+
+        $httpProvider.interceptors.push(['$q', '$location', '$injector', function ($q, $location, $injector) {
+            return {
+                'responseError': function (response) {
+                    if (response.config.url.toLowerCase().indexOf('/api') < 0 && (response.status === 401 || response.status === 403)) {
+                        var userSvc = $injector.get('userSvc');
+                        userSvc.clearUser();
+                        $location.path('/sign-in');
+                        $location.url($location.path());
+                        return $q.reject(response);
+                    } else {
+                        return $q.reject(response);
+                    }
+                }
+            };
+        }]);
+    }]);
+
+    app.run(['_', '$rootScope', '$route', '$location', '$http', 'userSvc', 'tokenSvc', function (_, $rootScope, $route, $location, $http, userSvc, tokenSvc) {
+
+        $rootScope.$on('$routeChangeStart', function (event, next) {
+            if (!$rootScope.profileCallCompleted) {
+                var routeList = ['/verify-user', '/reset-password'];
+                if (_.contains(routeList, $location.path())) {
+                    tokenSvc.clearToken();
+                    $rootScope.profileCallCompleted = true;
+                } else {
+                    userSvc.getUserProfile(function () {
+                        $rootScope.profileCallCompleted = true;
+                        authRedirect();
+                    }, function () {
+                        $rootScope.profileCallCompleted = true;
+                        authRedirect();
+                    });
+                }
+            } else {
+                authRedirect();
+            }
+
+            function authRedirect() {
+                if (next.access && !userSvc.authorize(next.access)) {
+                    if (userSvc.isSignedIn()) {
+                        $location.path('/user-home');
+                        $location.url($location.path());
+                    } else {
+                        $rootScope.redirectTo = $location.url();
+                        $location.path('/sign-in');
+                        $location.url($location.path());
+                    }
+                }
+            }
+        });
+    }]);
+}(angular.module('app')));

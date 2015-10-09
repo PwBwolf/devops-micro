@@ -2,9 +2,11 @@
 
 module.exports = {
     environment: 'development',
-    clientPath: '/client/web-app-old',
-    port: 3000,
+    webAppClientPath: '/client/web-app-old',
+    crmClientPath: '/client/crm-app',
+    webAppPort: 3000,
     apiServerPort: 4000,
+    crmAppPort: 5000,
     email: {
         host: '172.16.10.6',
         port: 25,

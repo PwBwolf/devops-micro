@@ -1,0 +1,17 @@
+<div class="content-area">
+    <div class="content-box">
+        <div class="container message-box">
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color">{{heading | translate}}</h2></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p ng-hide="error" class="text-center">{{message | translate}}</p>
+
+                    <p ng-show="error" class="text-center">{{message | translate}} {{appConfig.customerCareNumber}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

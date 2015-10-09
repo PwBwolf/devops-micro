@@ -52,7 +52,7 @@ var _ = require('lodash'),
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
-                res.sendFile(config.root + config.clientPath + '/index.html');
+                res.sendFile(config.root + config.webAppClientPath + '/index.html');
             }]
         }
     ];

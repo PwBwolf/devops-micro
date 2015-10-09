@@ -7,7 +7,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     config = require('../common/setup/config'),
     logger = require('../common/setup/logger'),
-    port = process.env.PORT || config.port,
+    port = process.env.CRM_PORT || config.crmAppPort,
     app = module.exports = express(),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
@@ -17,5 +17,5 @@ require('./express')(app, logger);
 require('./routes')(app);
 
 http.createServer(app).listen(port, function () {
-    logger.logInfo('app - yiptv server listening on port ' + port);
+    logger.logInfo('crmApp - app - crm-app listening on port ' + port);
 });

@@ -440,7 +440,54 @@ gulp.task('daemon:deploy', function (cb) {
 /*****************************************************************/
 /*                        Development                            */
 /*****************************************************************/
-gulp.task('connect', function () {
+
+gulp.task('web-app', ['connect-web-app', 'watch-web-app'], function () {
+    setTimeout(function () {
+        require('opn')('http://localhost:9000');
+    }, 2000);
+});
+
+gulp.task('crm-app', ['connect-crm-app', 'watch-crm-app'], function () {
+    setTimeout(function () {
+        require('opn')('http://localhost:9100');
+    }, 2000);
+});
+
+gulp.task('api-server', function () {
+    fs.createDirSync('../logs');
+    //Start the Node server to provide the API
+    var nodemon = require('gulp-nodemon');
+    nodemon({cwd: '../server/api-server', script: 'app.js', ext: 'js'});
+});
+
+gulp.task('web-app-reload-html', function () {
+    gulp.src('../../client/web-app/**/*.html')
+        .pipe(connect.reload());
+});
+
+gulp.task('web-app-reload-js', function () {
+    gulp.src('../../client/web-app/scripts/**/*.js')
+        .pipe(connect.reload());
+});
+
+gulp.task('web-app-reload-css', function () {
+    gulp.src('../../client/web-app/styles/**/*.css')
+        .pipe(connect.reload());
+});
+
+gulp.task('web-app-reload-images', function () {
+    gulp.src('../../client/web-app/images/**/*')
+        .pipe(connect.reload());
+});
+
+gulp.task('watch-web-app', function () {
+    gulp.watch(['../../client/web-app/**/*.html'], ['web-app-reload-html']);
+    gulp.watch(['../../client/web-app/scripts/**/*.js'], ['web-app-reload-js']);
+    gulp.watch(['../../client/web-app/styles/**/*.css'], ['web-app-reload-css']);
+    gulp.watch(['../../client/web-app/images/**/*'], ['web-app-reload-images']);
+});
+
+gulp.task('connect-web-app', function () {
     fs.createDirSync('../logs');
     //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
@@ -459,43 +506,51 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('serve', ['connect', 'watch'], function () {
-    setTimeout(function () {
-        require('opn')('http://localhost:9000');
-    }, 2000);
+gulp.task('crm-app-reload-html', function () {
+    gulp.src('../../client/crm-app/**/*.html')
+        .pipe(connect.reload());
 });
 
-gulp.task('api-serve', function () {
+gulp.task('crm-app-reload-js', function () {
+    gulp.src('../../client/crm-app/scripts/**/*.js')
+        .pipe(connect.reload());
+});
+
+gulp.task('crm-app-reload-css', function () {
+    gulp.src('../../client/crm-app/styles/**/*.css')
+        .pipe(connect.reload());
+});
+
+gulp.task('crm-app-reload-images', function () {
+    gulp.src('../../client/crm-app/images/**/*')
+        .pipe(connect.reload());
+});
+
+gulp.task('watch-crm-app', function () {
+    gulp.watch(['../../client/crm-app/**/*.html'], ['crm-app-reload-html']);
+    gulp.watch(['../../client/crm-app/scripts/**/*.js'], ['crm-app-reload-js']);
+    gulp.watch(['../../client/crm-app/styles/**/*.css'], ['crm-app-reload-css']);
+    gulp.watch(['../../client/crm-app/images/**/*'], ['crm-app-reload-images']);
+});
+
+gulp.task('connect-crm-app', function () {
     fs.createDirSync('../logs');
     //Start the Node server to provide the API
     var nodemon = require('gulp-nodemon');
-    nodemon({cwd: '../server/api-server', script: 'app.js', ext: 'js'});
-});
+    nodemon({cwd: '../server/crm-app', script: 'app.js', ext: 'js'});
 
-gulp.task('reload-html', function () {
-    gulp.src('../../client/web-app/**/*.html')
-        .pipe(connect.reload());
+    connect.server({
+        root: '../../client/crm-app',
+        livereload: true,
+        port: 9100,
+        middleware: function () {
+            return [
+                require('connect-history-api-fallback'),
+                require('connect-modrewrite')(['^/api/(.*)$ http://localhost:5000/api/$1 [P]'])
+            ];
+        }
+    });
 });
-gulp.task('reload-js', function () {
-    gulp.src('../../client/web-app/scripts/**/*.js')
-        .pipe(connect.reload());
-});
-gulp.task('reload-css', function () {
-    gulp.src('../../client/web-app/styles/**/*.css')
-        .pipe(connect.reload());
-});
-gulp.task('reload-images', function () {
-    gulp.src('../../client/web-app/images/**/*')
-        .pipe(connect.reload());
-});
-
-gulp.task('watch', function () {
-    gulp.watch(['../../client/web-app/**/*.html'], ['reload-html']);
-    gulp.watch(['../../client/web-app/scripts/**/*.js'], ['reload-js']);
-    gulp.watch(['../../client/web-app/styles/**/*.css'], ['reload-css']);
-    gulp.watch(['../../client/web-app/images/**/*'], ['reload-images']);
-});
-
 
 /*****************************************************************/
 /*                            Testing                            */

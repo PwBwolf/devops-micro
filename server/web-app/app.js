@@ -7,7 +7,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     config = require('../common/setup/config'),
     logger = require('../common/setup/logger'),
-    port = process.env.PORT || config.port,
+    port = process.env.WEB_APP_PORT || config.webAppPort,
     app = module.exports = express(),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);

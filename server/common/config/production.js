@@ -7,9 +7,11 @@ if (!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'production',
-    clientPath: '/client/web-app-old',
-    port: 3000,
+    webAppClientPath: '/client/web-app-old',
+    crmClientPath: '/client/crm-app',
+    webAppPort: 3000,
     apiServerPort: 4000,
+    crmAppPort: 5000,
     email: {
         host: 'prod.yiptv.com',
         port: 25,

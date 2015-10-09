@@ -1,0 +1,98 @@
+<div access-level="accessLevels.user">
+    <header id="desktopUserHeader" class="hidden-xs">
+        <div id="headerBrand">
+            <span><a href="/"><img src="images/logo.png" alt=""/></a></span>
+
+            <div class="right-menu">
+                <div class="menu-button">
+                    <a href="#" ng-click="changeLanguage()" translate="USER_HOME_OTHER_LANGUAGE" class="ng-scope"></a></div>
+                <div class="menu-button">
+                    <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="USER_HOME_SIGN_OUT"></a>
+                </div>
+                <div class="event-data"><span><marquee ng-bind="app.eventData[language]"></marquee></span></div>
+
+            </div>
+            <div class="menu-header">
+                <div class="menu-sub-header position-div">
+                    <span class="menu-user-name" ng-bind="user.firstName"></span>
+
+                    <div class="header-time position-div" current-time></div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="navBar">
+            <div class="menu">
+                <div id="headerButtons" class="btn-group" data-toggle="buttons">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="profileDropDown" translate="USER_HOME_PROFILE"></button>
+                    <button class="btn btn-primary" ng-hide="user.type === 'comp'" data-toggle="collapse" data-target="#accountDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="accountDropDown" translate="USER_HOME_ACCOUNT"></button>
+                </div>
+                <div id="dropDowns">
+                    <div class="panel">
+                        <div class="collapse" id="profileDropDown">
+                            <div class="well clear-both" data-toggle="buttons">
+                                <button class="collapse-hide" ng-click="hideDropdown('profileDropDown')">&#10006;</button>
+                                <button id="preferencesButton" ng-click="showProfileDropdown('preferences')" class="btn btn-default" data-parent="#profileButtonDropDowns" data-toggle="collapse" data-target="#preferencesDropDown" aria-expanded="false" aria-controls="preferencesDropDown" translate="USER_HOME_PREFERENCES"></button>
+                                <button id="userInfoButton" ng-click="showProfileDropdown('user-info')" class="btn btn-default" data-parent="#profileButtonDropDowns" data-toggle="collapse" data-target="#userInfoDropDown" aria-expanded="false" aria-controls="userInfoDropDown" translate="USER_HOME_USER_INFO"></button>
+                                <button id="changePasswordButton" ng-click="showProfileDropdown('change-password')" class="btn btn-default" data-parent="#profileButtonDropDowns" data-toggle="collapse" data-target="#changePasswordDropDown" aria-expanded="false" aria-controls="changePasswordDropDown" translate="USER_HOME_CHANGE_PASSWORD"></button>
+                            </div>
+                            <div id="profileButtonDropDowns">
+                                <div class="panel">
+                                    <div class="collapse" id="preferencesDropDown">
+                                        <button class="collapse-hide" ng-click="hideDropdown('preferencesDropDown')">&#10006;</button>
+                                        <div class="well" id="preferencesContent" ng-include="profileDropdownContent"></div>
+                                    </div>
+                                    <div class="collapse" id="userInfoDropDown">
+                                        <button class="collapse-hide" ng-click="hideDropdown('userInfoDropDown')">&#10006;</button>
+                                        <div class="well" id="userInfoContent" ng-include="profileDropdownContent"></div>
+                                    </div>
+                                    <div class="collapse" id="changePasswordDropDown">
+                                        <button class="collapse-hide" ng-click="hideDropdown('changePasswordDropDown')">&#10006;</button>
+                                        <div class="well" id="changePasswordContent" ng-include src="profileDropdownContent"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse" id="accountDropDown">
+                            <div class="well" data-toggle="buttons">
+                                <button class="collapse-hide" ng-click="hideDropdown('accountDropDown')">&#10006;</button>
+                                <div ng-show="user.cancelOn" class="cancel-on"><span translate="USER_HOME_CANCEL_ON"></span> ({{user.cancelOn | date : 'M/d/yyyy'}}).</div>
+                                <button ng-show="user.type === 'free'" ng-click="showAccountDropdown('upgrade-subscription')" id="upgradeSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#upgradeSubscriptionDropDown" aria-expanded="false" aria-controls="upgradeSubscriptionDropDown" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button>
+                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="cancelSubscription()" ng-disabled="saving" id="cancelSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" aria-expanded="false" translate="USER_HOME_CANCEL_SUBSCRIPTION"></button>
+                                <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="showAccountDropdown('change-credit-card')" id="changeCreditCardButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#changeCreditCardDropDown" aria-expanded="false" aria-controls="changeCreditCardDropDown" translate="USER_HOME_CHANGE_CREDIT_CARD"></button>
+                            </div>
+                            <div id="accountButtonDropDowns">
+                                <div class="panel">
+                                    <div id="upgradeSubscriptionDropDown" class="collapse">
+                                        <button class="collapse-hide" ng-click="hideDropdown('upgradeSubscriptionDropDown')">&#10006;</button>
+                                        <div class="well" id="upgradeSubscriptionContent" ng-include="accountDropdownContent"></div>
+                                    </div>
+                                    <div id="changeCreditCardDropDown" class="collapse">
+                                        <button class="collapse-hide" ng-click="hideDropdown('changeCreditCardDropDown')">&#10006;</button>
+                                        <div class="well" id="changeCreditCardContent" ng-include="accountDropdownContent"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <header id="phoneUserHeader" class="visible-xs">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
+
+                    <div class="nav-btn">
+                        <button type="button" ng-click="signOut()" class="btn btn-default dropdown-toggle" access-level="accessLevels.user" translate="USER_HOME_SIGN_OUT"></button>
+                        <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="USER_HOME_OTHER_LANGUAGE"></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</div>
+<div id="player" class="clear-both" ng-include="'views/player.html'"></div>
+<div id="guide" class="clear-both" ng-include="'views/channel-guide.html'"></div>
