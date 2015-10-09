@@ -546,7 +546,7 @@ gulp.task('connect-crm-app', function () {
         middleware: function () {
             return [
                 require('connect-history-api-fallback'),
-                require('connect-modrewrite')(['^/api/(.*)$ http://localhost:5000/api/$1 [P]'])
+                require('connect-modrewrite')(['^/crm/api/(.*)$ http://localhost:5000/crm/api/$1 [P]'])
             ];
         }
     });

@@ -10,7 +10,8 @@ var config = require('../../server/common/setup/config'),
 
 var modelsPath = config.root + '/server/common/models',
     dbYip = mongoose.createConnection(config.db),
-    userRoles = require('../../client/crm-app/scripts/config/routing').userRoles;
+    userRoles = require('../../client/crm-app/scripts/config/routing').userRoles,
+    validation = require('../../server/common/services/validation');
 
 require('../../server/common/setup/models')(modelsPath);
 
@@ -42,7 +43,16 @@ var schema = {
             message: 'Enter a valid email address',
             required: true,
             conform: function (value) {
-                return value && value.trim() && value.trim().length <= 20;
+                return value && value.trim() && value.trim().length <= 50;
+            }
+        },
+        password: {
+            description: 'Password',
+            message: 'Enter a password with minimum 6 characters, maximum 20 characters with 1 uppercase and 1 number',
+            required: true,
+            conform: function (value) {
+                console.log(validation.isPasswordComplex(value));
+                return value && value.trim() && value.trim().length >= 6 && value.trim().length <= 20 && validation.isPasswordComplex(value);
             }
         },
         roleName: {
@@ -71,21 +81,21 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        CrmUser.findOne({name: result.email.toLowerCase()}, function (err, client) {
+        CrmUser.findOne({email: result.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('adminCLI - createCrmUser - error in checking if email already exists');
                 logger.logError(err);
                 process.exit(1);
             } else {
-                if (client) {
+                if (user) {
                     logger.logError('adminCLI - createCrmUser - email already exists');
                     process.exit(1);
                 } else {
                     var crmUser = new CrmUser(result);
                     crmUser.createdAt = (new Date()).toUTCString();
-                    crmUser.status = 'registered';
+                    crmUser.status = 'active';
                     crmUser.role = userRoles[result.roleName];
-                    crmUser.verificationCode = uuid.v4();
+                    crmUser.changePassword = true;
                     crmUser.save(function (err) {
                         if (err) {
                             logger.logError('adminCLI - createCrmUser - error in creating crm user');

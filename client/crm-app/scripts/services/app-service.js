@@ -5,35 +5,15 @@
 
         return {
             getAppConfig: function () {
-                return $http.get('/api/get-app-config');
+                return $http.get('/crm/api/get-app-config');
             },
 
             getCountries: function () {
-                return $http.get('/api/get-countries');
+                return $http.get('/crm/api/get-countries');
             },
 
             getStates: function () {
-                return $http.get('/api/get-states');
-            },
-
-            saveContactUs: function (data, success, error) {
-                $http.post('/api/contact-us', data).success(success).error(error);
-            },
-
-            saveVisitor: function (visitor, success, error) {
-                $http.post('/api/save-visitor', visitor).success(success).error(error);
-            },
-
-            sendRafEmails: function (data, success, error) {
-                $http.post('/api/send-raf-emails', data).success(success).error(error);
-            },
-
-            checkComplimentaryCode: function (code) {
-                return $http({
-                    url: '/api/check-complimentary-code',
-                    method: 'GET',
-                    params: {code: code}
-                });
+                return $http.get('/crm/api/get-states');
             }
         };
     }]);

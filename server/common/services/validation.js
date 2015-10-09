@@ -205,7 +205,9 @@ module.exports = {
             return 'PhoneNumberInvalid';
         }
         return null;
-    }
+    },
+
+    isPasswordComplex : isPasswordComplex
 };
 
 function isPasswordComplex(password) {

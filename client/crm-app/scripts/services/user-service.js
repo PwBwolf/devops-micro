@@ -28,7 +28,7 @@
         function getUserProfile(success, error) {
             var user;
             $http({
-                url: '/api/get-user-profile',
+                url: '/crm/api/get-user-profile',
                 method: 'GET'
             }).success(function (response) {
                 user = response;
@@ -64,24 +64,8 @@
                 return user.role.title !== userRoles.anon.title;
             },
 
-            isSignUpAllowed: function (email, type, success, error) {
-                $http({
-                    method: 'GET',
-                    url: '/api/is-sign-up-allowed',
-                    params: {email: email.toLowerCase().trim(), type: type}
-                }).success(success).error(error);
-            },
-
-            signUp: function (user, success, error) {
-                $http.post('/api/sign-up', user).success(success).error(error);
-            },
-
-            merchantSignUp: function (user, success, error) {
-                $http.post('/api/merchant-sign-up', user).success(success).error(error);
-            },
-
             signIn: function (user, success, error) {
-                $http.post('/api/sign-in', user).success(function (response) {
+                $http.post('/crm/api/sign-in', user).success(function (response) {
                     if (response.token) {
                         tokenSvc.setToken(user.rememberMe, response.token);
                         getUserProfile(success, error);
@@ -101,60 +85,8 @@
                 });
             },
 
-            verifyUser: function (code, success, error) {
-                $http.post('/api/verify-user', {code: code}).success(success).error(error);
-            },
-
-            setPasswordAndVerifyUser: function (data, success, error) {
-                $http.post('/api/set-password-verify-user', data).success(success).error(error);
-            },
-
-            forgotPassword: function (email, success, error) {
-                $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
-            },
-
-            resetPassword: function (data, success, error) {
-                $http.post('/api/reset-password', data).success(success).error(error);
-            },
-
             changePassword: function (data, success, error) {
                 $http.post('/api/change-password', data).success(success).error(error);
-            },
-
-            resendVerification: function (email, success, error) {
-                $http.post('/api/resend-verification', {email: email.toLowerCase()}).success(success).error(error);
-            },
-
-            checkResetCode: function (code, success, error) {
-                $http({
-                    url: '/api/check-reset-code',
-                    method: 'GET',
-                    params: {code: code}
-                }).success(success).error(error);
-            },
-
-            updateUserInfo: function (data, success, error) {
-                $http.post('/api/update-user-info', data).success(success).error(error);
-            },
-
-            upgradeSubscription: function (data, success, error) {
-                $http.post('/api/upgrade-subscription', data).success(success).error(error);
-            },
-
-            changeCreditCard: function (data, success, error) {
-                $http.post('/api/change-credit-card', data).success(success).error(error);
-            },
-
-            cancelSubscription: function(success, error) {
-                $http.post('/api/cancel-subscription').success(success).error(error);
-            },
-
-            getPreferences: function(success, error) {
-                $http.get('/api/get-preferences').success(success).error(error);
-            },
-
-            updatePreferences: function(data, success, error) {
-                $http.post('/api/update-preferences', data).success(success).error(error);
             },
 
             updateLanguage: function(data, success, error) {

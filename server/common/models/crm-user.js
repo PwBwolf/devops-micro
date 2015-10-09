@@ -20,8 +20,7 @@ var CrmUser = new Schema({
     status: {type: String, required: true},
     createdAt: {type: Date, required: true},
     lastLoginTime: Date,
-    verificationCode: {type: String, sparse: true},
-    resetPasswordCode: {type: String, sparse: true}
+    changePassword: Boolean
 }, {collection: 'CrmUsers'});
 
 CrmUser.virtual('password')

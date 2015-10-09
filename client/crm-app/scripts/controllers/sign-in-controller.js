@@ -21,12 +21,8 @@
                         $location.path('/user-home');
                         $scope.saving = false;
                     },
-                    function (response) {
-                        if (response === 'UnverifiedAccount') {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED_NOT_VERIFIED'));
-                        } else {
-                            loggerSvc.logError($filter('translate')('SIGN_IN_FAILED'));
-                        }
+                    function () {
+                        loggerSvc.logError($filter('translate')('SIGN_IN_FAILED'));
                         $scope.saving = false;
                     });
             } else {

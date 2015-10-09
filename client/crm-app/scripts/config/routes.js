@@ -16,52 +16,22 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/verify-user',
-            {
-                templateUrl: 'views/verify-user.html',
-                controller: 'verifyUserCtrl',
-                access: access.anon
-            })
-            .when('/forgot-password',
-            {
-                templateUrl: 'views/forgot-password.html',
-                controller: 'forgotPasswordCtrl',
-                access: access.anon
-            })
-            .when('/forgot-password-success',
-            {
-                templateUrl: 'views/forgot-password-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/reset-password',
-            {
-                templateUrl: 'views/reset-password.html',
-                controller: 'resetPasswordCtrl',
-                access: access.anon
-            })
-            .when('/reset-password-success',
-            {
-                templateUrl: 'views/reset-password-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/resend-verification',
-            {
-                templateUrl: 'views/resend-verification.html',
-                controller: 'resendVerificationCtrl',
-                access: access.anon
-            })
-            .when('/resend-verification-success',
-            {
-                templateUrl: 'views/resend-verification-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
             .when('/user-home',
             {
                 templateUrl: 'views/user-home.html',
                 controller: 'userHomeCtrl',
+                access: access.user
+            })
+            .when('/change-password',
+            {
+                templateUrl: 'views/change-password.html',
+                controller: 'changePasswordCtrl',
+                access: access.user
+            })
+            .when('/change-password-success',
+            {
+                templateUrl: 'views/change-password-success.html',
+                controller: 'commonCtrl',
                 access: access.user
             })
             .when('/not-found',
