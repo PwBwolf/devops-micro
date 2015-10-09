@@ -583,12 +583,14 @@ module.exports = {
                                     lastName: userObj.lastName,
                                     telephone: userObj.telephone,
                                     hashedPassword: userObj.hashedPassword,
-                                    salt: userObj.salt
+                                    salt: userObj.salt,
+                                    preferences: {defaultLanguage: userObj.preferences.defaultLanguage, emailSubscription: userObj.preferences.emailSubscription, smsSubscription: userObj.preferences.smsSubscription}
                                 };
                                 userObj.firstName = newUser.firstName;
                                 userObj.lastName = newUser.lastName;
                                 userObj.telephone = newUser.telephone;
                                 userObj.password = newUser.password;
+                                userObj.preferences = newUser.preferences;
                             }
                             userObj.save(function (err) {
                                 if (err) {
@@ -1911,6 +1913,7 @@ function revertUserChangesForUpgrade(user, currentValues, currentUser, cb) {
         user.telephone = currentUser.telephone;
         user.hashedPassword = currentUser.hashedPassword;
         user.salt = currentUser.salt;
+        user.preferences = currentUser.preferences;
     }
     user.save(function (err) {
         if (err) {

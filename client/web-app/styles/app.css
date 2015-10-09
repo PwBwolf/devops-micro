@@ -782,7 +782,7 @@ ul.passwordStrength {
 #preferencesDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 285px;
+    height: 325px;
 }
 
 #changePasswordDropDown > div {

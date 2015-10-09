@@ -112,7 +112,7 @@ header {
     text-align: right;
 }
 
-.contact-number {
+.login-user {
     width: 30%;
     height: 100%;
     margin-right: 5px;
@@ -228,34 +228,10 @@ footer {
     z-index: 998;
 }
 
-#socialMedia {
-    width: 20%;
-    text-align: center;
-    padding: 0;
-    position: relative;
-    top: -10px;
-}
-
 #copyright {
     width: 80%;
     text-align: center;
     padding: 0;
     position: relative;
-    top: -10px;
-}
-
-#socialMedia img {
-    width: auto;
-    height: 30px;
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-}
-
-#socialMedia img:hover {
-    cursor: pointer;
-    filter: none;
-    -webkit-filter: grayscale(0);
-    -moz-filter: grayscale(0);
+    top: 0;
 }

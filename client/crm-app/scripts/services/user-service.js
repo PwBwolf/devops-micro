@@ -76,7 +76,7 @@
             },
 
             signOut: function (success, error) {
-                $http.post('/api/sign-out', null).success(function () {
+                $http.post('/crm/api/sign-out', null).success(function () {
                     clearUser();
                     success();
                 }).error(function () {
@@ -86,11 +86,11 @@
             },
 
             changePassword: function (data, success, error) {
-                $http.post('/api/change-password', data).success(success).error(error);
+                $http.post('/crm/api/change-password', data).success(success).error(error);
             },
 
             updateLanguage: function(data, success, error) {
-                $http.post('/api/update-language', data).success(success).error(error);
+                $http.post('/crm/api/update-language', data).success(success).error(error);
             }
          };
     }]);

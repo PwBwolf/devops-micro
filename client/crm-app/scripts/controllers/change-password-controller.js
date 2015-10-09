@@ -11,9 +11,7 @@
                     function () {
                         loggerSvc.logSuccess($filter('translate')('CHANGE_PASSWORD_SUCCESS'));
                         $scope.saving = false;
-                        $rootScope.$broadcast('CloseDropDown', ['changePasswordDropDown', 'profileDropDown']);
-                        $scope.mv = {};
-                        setFormNotTouched();
+                        $location.path('/user-home');
                     },
                     function (response) {
                         if (response === 'Unauthorized') {
@@ -33,12 +31,5 @@
             $scope.form.newPassword.$touched = true;
             $scope.form.confirmPassword.$touched = true;
         }
-
-        function setFormNotTouched() {
-            $scope.form.currentPassword.$touched = false;
-            $scope.form.newPassword.$touched = false;
-            $scope.form.confirmPassword.$touched = false;
-        }
-
     }]);
 }(angular.module('app')));

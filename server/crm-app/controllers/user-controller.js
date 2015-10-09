@@ -20,6 +20,9 @@ module.exports = {
             if (!user) {
                 return res.status(401).send('SignInFailed');
             }
+            if (user.status !== 'active') {
+                return res.status(401).send('SignInFailed');
+            }
             if (!user.authenticate(req.body.password)) {
                 return res.status(401).send('SignInFailed');
             }
@@ -87,8 +90,8 @@ module.exports = {
                 var mailOptions = {
                     from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                     to: user.email,
-                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                    subject: config.crmPasswordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.crmPasswordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
                 };
                 email.sendEmail(mailOptions, function (err) {
                     if (err) {

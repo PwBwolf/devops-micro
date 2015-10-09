@@ -95,7 +95,7 @@ prompt.get(schema, function (err, result) {
                     crmUser.createdAt = (new Date()).toUTCString();
                     crmUser.status = 'active';
                     crmUser.role = userRoles[result.roleName];
-                    crmUser.changePassword = true;
+                    crmUser.preferences = {defaultLanguage: 'en'};
                     crmUser.save(function (err) {
                         if (err) {
                             logger.logError('adminCLI - createCrmUser - error in creating crm user');

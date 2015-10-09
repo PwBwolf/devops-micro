@@ -13,7 +13,7 @@ var email = process.argv[2],
     password = process.argv[3];
 
 if (typeof email === 'undefined') {
-    logger.logError('resetPassword - email is missing!\n\r\tusage: node reset-password <email> <password>');
+    logger.logError('adminCli - resetPassword - email is missing!\n\r\tusage: node reset-password <email> <password>');
     process.exit(1);
 } else {
     var regex = config.regex.email;
@@ -42,9 +42,9 @@ var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
 
 require('../../server/common/setup/models')(modelsPath);
-var Users = mongoose.model('User');
+var User = mongoose.model('User');
 
-Users.findOne({email: email.toLowerCase()}, function (err, user) {
+User.findOne({email: email.toLowerCase()}, function (err, user) {
     if (err) {
         logger.logError('adminCLI - resetPassword - error fetching user: ' + email.toLowerCase());
         logger.logError(err);

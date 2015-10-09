@@ -1,0 +1,32 @@
+<div class="content-area">
+    <div class="content-box">
+
+        <div class="container">
+            <div class="form-box">
+                <div>&nbsp;</div>
+                <div class="sign-in-header header-color center-form">
+                    <div translate="SIGN_IN_HEADING"></div>
+                </div>
+                <div class="sign-in-sub-header header-color center-form">
+                    &nbsp;
+                </div>
+
+                <form name="form" id="form" ng-submit="signIn()" novalidate>
+                    <span class="label-text" translate="SIGN_IN_EMAIL"></span><br>
+                    <input autofocus name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
+
+                    <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="SIGN_IN_EMAIL_REQUIRED"></div>
+                    <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="SIGN_IN_EMAIL_INVALID"></div>
+                    <br><br>
+                    <span class="label-text" translate="SIGN_IN_PASSWORD"></span><br>
+                    <input name="password" id="password" maxlength="20" autocomplete="off" type="password" class="text-box" ng-model="mv.password" required ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}"/>
+                    <span ng-show="form.password.$touched && form.password.$error.required" class="error-message" translate="SIGN_IN_PASSWORD_REQUIRED"></span>
+                    <br>
+                    <br><br>
+                    <button ng-disabled="saving" type="submit" translate="SIGN_IN_SUBMIT_BUTTON" class="submit-button">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,12 +10,6 @@
                 controller: 'homeCtrl',
                 access: access.anon
             })
-            .when('/sign-in',
-            {
-                templateUrl: 'views/sign-in.html',
-                controller: 'signInCtrl',
-                access: access.anon
-            })
             .when('/user-home',
             {
                 templateUrl: 'views/user-home.html',
@@ -53,7 +47,7 @@
                     if (response.config.url.toLowerCase().indexOf('/api') < 0 && (response.status === 401 || response.status === 403)) {
                         var userSvc = $injector.get('userSvc');
                         userSvc.clearUser();
-                        $location.path('/sign-in');
+                        $location.path('/');
                         $location.url($location.path());
                         return $q.reject(response);
                     } else {
@@ -92,7 +86,7 @@
                         $location.url($location.path());
                     } else {
                         $rootScope.redirectTo = $location.url();
-                        $location.path('/sign-in');
+                        $location.path('/');
                         $location.url($location.path());
                     }
                 }

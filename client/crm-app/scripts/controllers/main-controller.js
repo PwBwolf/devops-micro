@@ -14,7 +14,6 @@
         function activate() {
             getAppConfig();
             loadLanguage();
-            configSeo();
         }
 
         $rootScope.$on('ChangeLanguage', function (event, language) {
@@ -36,10 +35,6 @@
             });
         }
 
-        function configSeo() {
-            $scope.currentRoute = $location.path();
-        }
-
         function loadLanguage() {
             var userLanguage = browserSvc.getUserLanguage();
             var language = $location.search().lang || webStorage.local.get('language') || userLanguage.split('-')[0] || 'en';
@@ -55,8 +50,9 @@
             }
         });
 
-        $scope.goToWordPressUrl = function (url) {
-            $window.open($scope.appConfig.wordPressUrl + $filter('translate')(url), '_blank');
+        $scope.getDisplayUserName = function() {
+            var name = $scope.user.firstName + ' ' + $scope.user.lastName + ' [' + $scope.user.role.title.toUpperCase() + ']';
+            return name;
         };
 
         $scope.changeLanguage = function () {

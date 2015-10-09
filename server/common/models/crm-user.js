@@ -17,10 +17,12 @@ var CrmUser = new Schema({
         },
         required: true
     },
+    preferences: {
+        defaultLanguage: {type: String, required: true}
+    },
     status: {type: String, required: true},
     createdAt: {type: Date, required: true},
-    lastLoginTime: Date,
-    changePassword: Boolean
+    lastLoginTime: Date
 }, {collection: 'CrmUsers'});
 
 CrmUser.virtual('password')
