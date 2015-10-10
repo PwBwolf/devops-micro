@@ -42,7 +42,9 @@
             USER_HOME_HEADING: 'Welcome to YipTV CRM',
             USER_HOME_MANAGE_CRM_USERS: 'Manage CRM Users',
             USER_HOME_MANAGE_SUBSCRIBERS: 'Manage Subscribers',
-            USER_HOME_REPORTS: 'Reports'
+            USER_HOME_REPORTS: 'View Reports',
+            USER_HOME_CHANGE_MY_PASSWORD: 'Change My Password',
+            USER_HOME_MANAGE_CHANNELS: 'Manage Channels'
         });
     }]);
 }(angular.module('app')));

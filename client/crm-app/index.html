@@ -53,8 +53,7 @@
             <div access-level="accessLevels.user" class="menu-button">
                 <a href ng-click="signOut()" translate="INDEX_SIGN_OUT"></a>
             </div>
-            <div access-level="accessLevels.user" class="login-user">
-                <a href="/change-password" ng-bind="getDisplayUserName()"></a>
+            <div access-level="accessLevels.user" class="login-user" ng-bind="getDisplayUserName()">
             </div>
             <div style="float: right">
                 <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
@@ -80,8 +79,7 @@
                         <button access-level="accessLevels.user" type="button" ng-click="signOut()" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_OUT"></button>
                         <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
                     </div>
-                    <div access-level="accessLevels.user" class="login-user">
-                        <a href="/change-password" ng-bind="getDisplayUserName()"></a>
+                    <div access-level="accessLevels.user" class="login-user" ng-bind="getDisplayUserName()">
                     </div>
                 </div>
             </div>
@@ -156,7 +154,6 @@
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
-<script src="scripts/controllers/sign-in-controller.js"></script>
 <script src="scripts/controllers/user-home-controller.js"></script>
 <script src="scripts/controllers/common-controller.js"></script>
 <script src="scripts/controllers/change-password-controller.js"></script>

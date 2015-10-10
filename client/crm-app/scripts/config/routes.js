@@ -22,12 +22,6 @@
                 controller: 'changePasswordCtrl',
                 access: access.user
             })
-            .when('/change-password-success',
-            {
-                templateUrl: 'views/change-password-success.html',
-                controller: 'commonCtrl',
-                access: access.user
-            })
             .when('/not-found',
             {
                 templateUrl: 'views/not-found.html',

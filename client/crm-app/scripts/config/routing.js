@@ -3,7 +3,7 @@
 
     var config = {
         roles: ['anon', 'csr', 'devOps', 'superUser'],
-        accessLevels: {'public': '*', 'anon': ['anon'], 'user': ['csr', 'devOps', 'superUser'], 'csr': ['csr', 'superUser'], 'devOps': ['devOps', 'superUser'], 'superUser': ['superUser']}
+        accessLevels: {'public': '*', 'anon': ['anon'], 'user': ['csr', 'devOps', 'superUser'], 'csr': ['csr', 'superUser'], 'devOps': ['devOps', 'superUser'], csrDevOps: ['csr', 'devOps', 'superUser'], 'superUser': ['superUser']}
     };
 
     exports.userRoles = buildRoles(config.roles);

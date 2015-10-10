@@ -38,7 +38,13 @@
             SIGN_IN_PASSWORD: 'Contraseña',
             SIGN_IN_PASSWORD_REQUIRED: 'Introduzca su contrasena',
             SIGN_IN_SUBMIT_BUTTON: 'Iniciar sesion',
-            SIGN_IN_FAILED: 'Ingresa fracasada'
+            SIGN_IN_FAILED: 'Ingresa fracasada',
+            USER_HOME_HEADING: 'Bienvenido a YipTV CRM',
+            USER_HOME_MANAGE_CRM_USERS: 'Administrar usuarios de CRM',
+            USER_HOME_MANAGE_SUBSCRIBERS: 'Administrar Suscriptores',
+            USER_HOME_REPORTS: 'Ver Informes',
+            USER_HOME_CHANGE_MY_PASSWORD: 'Cambiar Mi Contraseña',
+            USER_HOME_MANAGE_CHANNELS: 'Administración de Canales'
         });
     }]);
 }(angular.module('app')));
