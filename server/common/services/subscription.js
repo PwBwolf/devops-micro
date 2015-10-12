@@ -584,7 +584,7 @@ module.exports = {
                                     telephone: userObj.telephone,
                                     hashedPassword: userObj.hashedPassword,
                                     salt: userObj.salt,
-                                    preferences: {defaultLanguage: userObj.preferences.defaultLanguage, emailSubscription: userObj.preferences.emailSubscription, smsSubscription: userObj.preferences.smsSubscription}
+                                    preferences: userObj.preferences
                                 };
                                 userObj.firstName = newUser.firstName;
                                 userObj.lastName = newUser.lastName;
@@ -646,7 +646,8 @@ module.exports = {
             },
             // update user information in freeside
             function (userObj, sessionId, callback) {
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : userObj.account.merchant, newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL', newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.telephone, newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '', newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '', newUser.cardName ? newUser.cardName : '', function (err) {
+                var locale = userObj.preferences.defaultLanguage + '_US';
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : userObj.account.merchant, newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL', newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.telephone, locale, newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '', newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '', newUser.cardName ? newUser.cardName : '', function (err) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -842,12 +843,14 @@ module.exports = {
                                             lastName: userObj.lastName,
                                             telephone: userObj.telephone,
                                             hashedPassword: userObj.hashedPassword,
-                                            salt: userObj.salt
+                                            salt: userObj.salt,
+                                            preferences: userObj.preferences
                                         };
                                         userObj.firstName = newUser.firstName;
                                         userObj.lastName = newUser.lastName;
                                         userObj.telephone = newUser.telephone;
                                         userObj.password = newUser.password;
+                                        userObj.preferences = newUser.preferences;
                                     }
                                     userObj.save(function (err) {
                                         if (err) {
@@ -903,7 +906,8 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
+                        var locale = userObj.preferences.defaultLanguage + '_US';
+                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, locale, 'BILL', '', '', '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
@@ -1764,7 +1768,8 @@ module.exports = {
             },
             // update billing details
             function (userObj, sessionId, callback) {
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, 'BILL', '', '', '', '', function (err) {
+                var locale = userObj.preferences.defaultLanguage + '_US';
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, locale, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1955,6 +1960,7 @@ function revertUserChangesForComplimentary(user, currentValues, currentUser, cb)
         user.telephone = currentUser.telephone;
         user.hashedPassword = currentUser.hashedPassword;
         user.salt = currentUser.salt;
+        user.preferences = currentUser.preferences;
     }
     user.save(function (err) {
         if (err) {

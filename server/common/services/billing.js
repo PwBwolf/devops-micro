@@ -79,7 +79,7 @@ module.exports = {
         );
     },
 
-    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, telephone, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, telephone, locale, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
@@ -94,6 +94,7 @@ module.exports = {
                 'country', country,
                 'daytime', telephone,
                 'invoicing_list', email,
+                'locale', locale,
                 'payby', payBy,
                 'payinfo', payInfo,
                 'month', payDate.substring(0, 2),
