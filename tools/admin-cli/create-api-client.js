@@ -66,10 +66,10 @@ var schema = {
         apiType: {
             description: 'API type',
             pattern: /^[A-Z]+$/,
-            message: 'Enter a valid API type (NOTIFICATION or FRONTEND) in uppercase',
+            message: 'Enter a valid API type (NOTIFICATION or CRM) in uppercase',
             required: true,
             conform: function (value) {
-                if (value === 'NOTIFICATION' || value === 'FRONTEND') {
+                if (value === 'NOTIFICATION' || value === 'CRM') {
                     return value && value.trim();
                 } else {
                     return false;

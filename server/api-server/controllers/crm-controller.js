@@ -12,7 +12,7 @@ module.exports = {
     verifyCredentials: function (req, res) {
         var apiLog = new ApiLog();
         apiLog.name = 'verify-credentials';
-        apiLog.type = 'front-end';
+        apiLog.type = 'crm';
         apiLog.requestTime = (new Date()).toUTCString();
         apiLog.clientId = req.query.clientId;
         apiLog.apiKey = req.query.apiKey;
@@ -52,7 +52,7 @@ function validateCredentials(clientId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'FRONTEND'));
+                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'CRM'));
                 }
             });
         }

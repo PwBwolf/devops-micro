@@ -3,7 +3,7 @@
 var _ = require('lodash'),
     MerchantCtrl = require('./controllers/merchant-controller'),
     NotificationCtrl = require('./controllers/notification-controller'),
-    FrontEndCtrl = require('./controllers/front-end-controller'),
+    CrmCtrl = require('./controllers/crm-controller'),
     routes = [
         {path: '/merchant/api/verify-credentials', httpMethod: 'GET', middleware: [MerchantCtrl.verifyCredentials]},
         {path: '/merchant/api/does-username-exist', httpMethod: 'GET', middleware: [MerchantCtrl.doesUsernameExist]},
@@ -12,7 +12,7 @@ var _ = require('lodash'),
         {path: '/notification/api/verify-credentials', httpMethod: 'GET', middleware: [NotificationCtrl.verifyCredentials]},
         {path: '/notification/api/execute-dunning', httpMethod: 'POST', middleware: [NotificationCtrl.executeDunning]},
         {path: '/notification/api/payment-received', httpMethod: 'POST', middleware: [NotificationCtrl.paymentReceived]},
-        {path: '/front-end/api/verify-credentials', httpMethod: 'GET', middleware: [FrontEndCtrl.verifyCredentials]}
+        {path: '/crm/api/verify-credentials', httpMethod: 'GET', middleware: [CrmCtrl.verifyCredentials]}
     ];
 
 module.exports = function (app) {

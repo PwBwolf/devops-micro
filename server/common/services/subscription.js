@@ -584,7 +584,7 @@ module.exports = {
                                     telephone: userObj.telephone,
                                     hashedPassword: userObj.hashedPassword,
                                     salt: userObj.salt,
-                                    preferences: userObj.preferences
+                                    preferences: {defaultLanguage: userObj.preferences.defaultLanguage, emailSubscription: userObj.preferences.emailSubscription, smsSubscription: userObj.preferences.smsSubscription}
                                 };
                                 userObj.firstName = newUser.firstName;
                                 userObj.lastName = newUser.lastName;
@@ -844,7 +844,7 @@ module.exports = {
                                             telephone: userObj.telephone,
                                             hashedPassword: userObj.hashedPassword,
                                             salt: userObj.salt,
-                                            preferences: userObj.preferences
+                                            preferences: {defaultLanguage: userObj.preferences.defaultLanguage, emailSubscription: userObj.preferences.emailSubscription, smsSubscription: userObj.preferences.smsSubscription}
                                         };
                                         userObj.firstName = newUser.firstName;
                                         userObj.lastName = newUser.lastName;
