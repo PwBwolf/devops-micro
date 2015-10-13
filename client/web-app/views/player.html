@@ -5,12 +5,12 @@
             <div id="yiptv-player"></div>
         </div>
         <div class="main-favorites position-div">
-            <div class="favorite-channel position-div" ng-repeat="channel in channels | filter:{favorite: true} | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNowById(channel._id);">
+            <div class="favorite-channel position-div" ng-repeat="channel in channels | filter:{subscriptionPlan: 'free'} | limitTo:4" ng-mouseenter="favoriteChannelSelected($index)" ng-mouseleave="favoriteChannelSelected(-1)" ng-click="watchNowById(channel.id);">
                 <div id="favoriteChannelHolderFront" ng-class="($index === selectedFavoriteChannel) ? 'back' : 'front'">
-                    <img class="img-responsive" ng-src="{{channel.logo}}"/>
+                    <img class="img-responsive" ng-src="{{channel.logoUri}}"/>
                 </div>
                 <div id="favoriteChannelHolderBack" ng-class="($index === selectedFavoriteChannel) ? 'front' : 'back'">
-                    <img class="img-responsive" ng-src="{{channel.logo}}"/>
+                    <img class="img-responsive" ng-src="{{channel.logoUri}}"/>
                     <article>
                         <aside>
                             <img class="img-responsive" ng-src="/images/play-button.png"/>
@@ -33,7 +33,7 @@
             <div class="filter-open-btn" title="{{ 'PLAYER_CHANNEL_FILTER' | translate }}" ng-click="toggleChannelFilter()"></div>
             <ul id="channelList">
                 <li id="{{$index}}Channel" ng-repeat="channel in channels" ng-mouseenter="channelHovered($index)" ng-mouseleave="channelHovered(-1)" ng-click="channelClicked($index);">
-                    <img title="{{channel.name}}" ng-src="{{channel.logo}}"/>
+                    <img title="{{channel.title}}" ng-src="{{channel.logoUri}}"/>
 
                     <div id="quickLook" class="quick-look-box" ng-show="$index === hoveredChannel">
                         <channel-hover></channel-hover>
@@ -51,7 +51,7 @@
                     <div><span translate="PLAYER_RESULTS"></span> <span ng-bind="filteredChannels.length"></span> <span translate="PLAYER_CHANNELS_FOUND"></span></div>
                     <ul>
                         <li ng-repeat="channel in filteredChannels">
-                            <img title="{{channel.name}}" ng-src="{{channel.logo}}" ng-click="filteredChannelClicked(channel._id)"/>
+                            <img title="{{channel.title}}" ng-src="{{channel.logoUri}}" ng-click="filteredChannelClicked(channel.id)"/>
                         </li>
                     </ul>
                 </div>
@@ -73,7 +73,7 @@
                         <div id="collapseGenre" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
                             <div class="panel-body">
                                 <div ng-repeat="tag in getTags('Genre')">
-                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag) > -1" ng-click="toggleGenreSelection(tag)" value="{{tag}}" type="checkbox"/>{{tag}}
+                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                         <div id="collapseRegion" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRegion">
                             <div class="panel-body">
                                 <div ng-repeat="tag in getTags('Region')">
-                                    <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag) > -1" ng-click="toggleRegionSelection(tag)" value="{{tag}}" type="checkbox"/>{{tag}}
+                                    <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                         <div id="collapseAudience" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingAudience">
                             <div class="panel-body">
                                 <div ng-repeat="tag in getTags('Audience')">
-                                    <input name="audienceList[]" ng-checked="selectedAudiences.indexOf(tag) > -1" ng-click="toggleAudienceSelection(tag)" value="{{tag}}" type="checkbox"/>{{tag}}
+                                    <input name="audienceList[]" ng-checked="selectedAudiences.indexOf(tag.id) > -1" ng-click="toggleAudienceSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
                                 </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                         <div id="collapseLanguage" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingLanguage">
                             <div class="panel-body">
                                 <div ng-repeat="tag in getTags('Language')">
-                                    <input name="languageList[]" ng-checked="selectedLanguages.indexOf(tag) > -1" ng-click="toggleLanguageSelection(tag)" value="{{tag}}" type="checkbox"/>{{tag}}
+                                    <input name="languageList[]" ng-checked="selectedLanguages.indexOf(tag.id) > -1" ng-click="toggleLanguageSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
                                 </div>
                             </div>
                         </div>

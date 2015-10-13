@@ -21,8 +21,12 @@
                 });
             },
 
-            getUserChannels: function (success, error) {
-                $http.get('/api/get-user-channels').success(success).error(error);
+            getUserChannels: function (type, success, error) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/get-user-channels',
+                    params: {type: type}
+                }).success(success).error(error);
             },
 
             getPromos: function (success, error) {

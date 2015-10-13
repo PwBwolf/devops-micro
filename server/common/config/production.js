@@ -45,6 +45,7 @@ module.exports = {
     freeSidePaidBasicPackagePart: 3,
     freeSidePremiumPackagePart: 9,
     freeSideComplimentaryPackagePart: 8,
+    cmsApiUrl: 'https://cms.yiptv.com',
     useAio: true,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://10.100.10.102',

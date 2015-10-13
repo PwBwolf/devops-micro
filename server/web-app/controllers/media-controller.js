@@ -1,9 +1,11 @@
 'use strict';
 
-var crypto = require('crypto'),
+var _ = require('lodash'),
+    crypto = require('crypto'),
     URI = require('URIjs'),
     logger = require('../../common/setup/logger'),
     date = require('../../common/services/date'),
+    cms = require('../../common/services/cms'),
     config = require('../../common/setup/config'),
     graceNote = require('../../common/services/grace-note'),
     PythonShell = require('python-shell'),
@@ -11,41 +13,26 @@ var crypto = require('crypto'),
     Channel = mongoose.model('Channel'),
     Image = mongoose.model('Image'),
     CmsCategory = mongoose.model('CmsCategory'),
-    CmsChannel = mongoose.model('CmsChannel'),
-    CmsAd = mongoose.model('CmsAd'),
-    User = mongoose.model('User');
+    CmsAd = mongoose.model('CmsAd');
 
 module.exports = {
     getChannelUrl: function (req, res) {
-        CmsChannel.findOne({_id: req.query.id}, function (err, channel) {
+        cms.getRoutes(req.query.id, function (err, data) {
             if (err) {
-                logger.logError('mediaController - getChannelUrl - error fetching channel');
+                logger.logError('mediaController - getChannelUrl - error fetching channel url');
                 logger.logError(err);
                 return res.status(500).end();
             }
-            if (!channel) {
-                logger.logError('mediaController - getChannelUrl - channel not found');
-                return res.status(500).end();
-            }
-            if (channel.videoUrl.indexOf('level3') >= 0) {
-                channel.videoUrl = channel.videoUrl + getLevel3Token(channel);
-                return res.json(channel);
+            if (data && data.routes && data.routes.length > 0) {
+                return res.json(data.routes[0]);
             } else {
-                getAkamaiToken(channel, function (err, token) {
-                    if (err) {
-                        logger.logError('mediaController - getChannelUrl - error generating akamai token');
-                        logger.logError(err);
-                        return res.status(500).end();
-                    }
-                    channel.videoUrl = channel.videoUrl + token;
-                    return res.json(channel);
-                });
+                return res.status(500).end();
             }
         });
     },
 
     getChannelGuide: function (req, res) {
-        if (req.query.stationId) {
+        if (req.query.stationId2) {
             var now = new Date();
             var startTime = date.isoDate(now);
             now.setHours(now.getHours() + Number(req.query.hours));
@@ -59,37 +46,24 @@ module.exports = {
                 return res.json(data);
             });
         } else {
-            var start = new Date();
-            start.setMinutes(0);
-            start.setSeconds(0);
-            var end = new Date();
-            end.setHours(start.getHours() + 1);
-            end.setMinutes(0);
-            end.setSeconds(0);
             var guide = [{callSign: '', airings: []}];
             return res.json(guide);
         }
     },
 
     getUserChannels: function (req, res) {
-        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
+        cms.getChannels(req.query.type, function (err, data) {
             if (err) {
-                logger.logError('mediaController - getUserChannels - error fetching user: ' + req.email);
+                logger.logError('mediaController - getUserChannels - error fetching channels');
                 logger.logError(err);
                 return res.status(500).end();
             }
-            var query = {$or: []};
-            for (var i = 0; i < user.account.packages.length; i++) {
-                query.$or.push({package: user.account.packages[i]});
-            }
-            CmsChannel.find(query).sort({order: 1}).exec(function (err, channels) {
-                if (err) {
-                    logger.logError('mediaController - getUserChannels - error fetching user channels: ' + req.email);
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
+            if (data && data.channels_list && data.channels_list.length > 0) {
+                var channels = _.filter(data.channels_list, {status: '1'});
                 return res.json(channels);
-            });
+            } else {
+                return res.status(500).end();
+            }
         });
     },
 
@@ -105,13 +79,17 @@ module.exports = {
     },
 
     getChannelCategories: function (req, res) {
-        CmsCategory.find({}, function (err, categories) {
+        cms.getTags(function (err, data) {
             if (err) {
                 logger.logError('mediaController - getChannelCategories - error fetching categories');
                 logger.logError(err);
                 return res.status(500).end();
             }
-            return res.json(categories);
+            if (data && data.categories && data.categories.length > 0) {
+                return res.json(data.categories);
+            } else {
+                return res.status(500).end();
+            }
         });
     },
 
