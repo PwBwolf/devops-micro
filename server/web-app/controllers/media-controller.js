@@ -12,7 +12,6 @@ var _ = require('lodash'),
     mongoose = require('../../node_modules/mongoose'),
     Channel = mongoose.model('Channel'),
     Image = mongoose.model('Image'),
-    CmsCategory = mongoose.model('CmsCategory'),
     CmsAd = mongoose.model('CmsAd');
 
 module.exports = {
