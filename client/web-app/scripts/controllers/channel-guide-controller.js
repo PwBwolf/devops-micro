@@ -44,10 +44,10 @@
                     canceller.resolve();
                 }
                 canceller = $q.defer();
-                mediaSvc.getChannelGuide(value.stationId, 6, canceller).success(function (channelView) {
-                    var logo = value.logo;
-                    var station = channelView[0].callSign;
-                    var lineUp = channelView[0].airings;
+                mediaSvc.getChannelGuide(value.id, 6, canceller).success(function (programs) {
+                    var logo = value.logoUri;
+                    var station = value.id;
+                    var lineUp = programs;
                     var channelGuide = angular.element(document.createElement('div'));
                     var channelLogo = angular.element(document.createElement('div'));
                     $(channelLogo).attr('id', 'channelGuideLogo').attr('title', value.name).attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
@@ -122,7 +122,7 @@
             } else if (uri.indexOf('/images/') === 0) {
                 return uri;
             } else {
-                return $scope.appConfig.graceNoteImageUrl + uri;
+                return uri;
             }
         }
     }]);

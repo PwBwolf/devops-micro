@@ -32,23 +32,19 @@ module.exports = {
     },
 
     getChannelGuide: function (req, res) {
-        if (req.query.stationId2) {
-            var now = new Date();
-            var startTime = date.isoDate(now);
-            now.setHours(now.getHours() + Number(req.query.hours));
-            var endTime = date.isoDate(now);
-            graceNote.getChannelGuide(req.query.stationId, startTime, endTime, function (err, data) {
-                if (err) {
-                    logger.logError('mediaController - getUserChannels - error fetch channel guide from gracenote');
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                return res.json(data);
-            });
-        } else {
-            var guide = [{callSign: '', airings: []}];
-            return res.json(guide);
-        }
+        return res.json([]);
+        cms.getLineup(req.query.id, 'today', function (err, data) {
+            if (err) {
+                logger.logError('mediaController - getChannelGuide - error fetching lineup');
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (data && data.programs) {
+                return res.json(data.programs);
+            } else {
+                return res.status(500).end();
+            }
+        });
     },
 
     getUserChannels: function (req, res) {

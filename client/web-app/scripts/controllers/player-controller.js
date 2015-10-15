@@ -148,8 +148,8 @@
             cancellerProgram = $q.defer();
             $scope.programDetails = null;
             if (index > -1) {
-                mediaSvc.getChannelGuide($scope.channels[index].stationId, 1, cancellerProgram).success(function (channelGuide) {
-                    $scope.programDetails = getProgramDetails(channelGuide[0].airings[0]);
+                mediaSvc.getChannelGuide($scope.channels[index].id, 1, cancellerProgram).success(function (programs) {
+                    $scope.programDetails = getProgramDetails(programs[0]);
                 });
             }
         }
@@ -161,8 +161,8 @@
             cancellerGuide = $q.defer();
             $scope.showListings = [];
             $scope.loadingProgramGuide = true;
-            mediaSvc.getChannelGuide($scope.channels[index].stationId, 12, cancellerGuide).success(function (channelGuide) {
-                var showTimes = channelGuide[0].airings;
+            mediaSvc.getChannelGuide($scope.channels[index].id, 12, cancellerGuide).success(function (programs) {
+                var showTimes = programs;
                 if (showTimes.length > 0) {
                     $scope.programDetails = getProgramDetails(showTimes[0]);
                     for (var i = 0; i < showTimes.length; i++) {
