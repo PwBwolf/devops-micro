@@ -10,6 +10,7 @@ var _ = require('lodash'),
     graceNote = require('../../common/services/grace-note'),
     PythonShell = require('python-shell'),
     mongoose = require('../../node_modules/mongoose'),
+    User = mongoose.model('User'),
     Channel = mongoose.model('Channel'),
     Image = mongoose.model('Image'),
     CmsAd = mongoose.model('CmsAd');
@@ -51,19 +52,27 @@ module.exports = {
     },
 
     getUserChannels: function (req, res) {
-        cms.getChannels(req.query.type, function (err, data) {
+        User.findOne({email: req.email}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError('mediaController - getUserChannels - error fetching channels');
+                logger.logError('mediaController - getUserChannels - error fetching user: ' + req.email);
                 logger.logError(err);
                 return res.status(500).end();
             }
-            if (data && data.channels_list && data.channels_list.length > 0) {
-                var channels = _.filter(data.channels_list, {status: '1'});
-                return res.json(channels);
-            } else {
-                return res.status(500).end();
-            }
+            cms.getChannels(user.account.type, function (err, data) {
+                if (err) {
+                    logger.logError('mediaController - getUserChannels - error fetching channels');
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                if (data && data.channels_list && data.channels_list.length > 0) {
+                    var channels = _.filter(data.channels_list, {status: '1'});
+                    return res.json(channels);
+                } else {
+                    return res.status(500).end();
+                }
+            });
         });
+
     },
 
     getPromos: function (req, res) {

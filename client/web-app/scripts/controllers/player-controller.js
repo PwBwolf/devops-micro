@@ -19,7 +19,7 @@
             $scope.isVisible = false;
             $scope.closeVisible = false;
 
-            mediaSvc.getUserChannels($scope.user.type, function (data) {
+            mediaSvc.getUserChannels(function (data) {
                 $rootScope.channels = data;
                 $rootScope.$broadcast('ChannelsLoaded');
             });
@@ -42,8 +42,8 @@
 
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
-            $scope.brandImage = $scope.channels[index].logo;
-            $scope.brandName = $scope.channels[index].name;
+            $scope.brandImage = $scope.channels[index].logoUri;
+            $scope.brandName = $scope.channels[index].title;
             $scope.isVisible = true;
             $($scope.channelList).removeClass('channel-panel');
             $($scope.channelList).addClass('channel-panel-max');

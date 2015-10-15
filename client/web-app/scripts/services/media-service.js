@@ -21,11 +21,10 @@
                 });
             },
 
-            getUserChannels: function (type, success, error) {
+            getUserChannels: function (success, error) {
                 return $http({
                     method: 'GET',
-                    url: '/api/get-user-channels',
-                    params: {type: type}
+                    url: '/api/get-user-channels'
                 }).success(success).error(error);
             },
 
