@@ -321,7 +321,7 @@ module.exports = {
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
-                        err = new Error('PaymentFailed');
+                        err = 'PaymentFailed';
                         break;
                     case 'freeside-package-insert':
                     case 'freeside-user-insert':
@@ -763,8 +763,7 @@ module.exports = {
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
-                        var errorCode = userObj.status === 'registered' ? 'PaymentFailed' : 'PaymentFailedActive';
-                        err = new Error(errorCode);
+                        err = userObj.status === 'registered' ? 'PaymentFailed' : 'PaymentFailedActive';
                         break;
                 }
             }
