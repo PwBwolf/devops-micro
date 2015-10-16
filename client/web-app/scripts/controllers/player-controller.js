@@ -234,20 +234,20 @@
         function getProgramDetails(airing) {
             var programDetails;
             if (airing) {
-                if (!airing.program.title) {
+                if (!airing.title) {
                     programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body">' + airing.program.title + '</span></p>';
+                    programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body">' + airing.title + '</span></p>';
                 }
-                if (!airing.duration && !airing.startTime) {
+                if (!airing.endTime && !airing.startTime) {
                     programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span>&nbsp;<span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, airing) + '</span>&nbsp;<span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + airing.duration + '</span>&nbsp;<span class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
+                    programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, airing) + '</span>&nbsp;<span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + getDuration(airing.startTime, airing.endTime) + '</span>&nbsp;<span class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
                 }
-                if (!airing.program.shortDescription) {
+                if (!airing.description) {
                     programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + airing.program.shortDescription + '</span></p>';
+                    programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + airing.description + '</span></p>';
                 }
             } else {
                 programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
@@ -260,21 +260,21 @@
         function getChannelDetails(show) {
             var channelDetails;
             if (show) {
-                if (!show.program.title) {
-                    channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
+                if (!show.title) {
+                    channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.image) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + show.program.title + '</span></p>';
+                    channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.image) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + show.title + '</span></p>';
                 }
-                channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + (show.program.title ? show.program.title : $filter('translate')('PLAYER_NOT_AVAILABLE')) + '</span></p>';
-                if (!show.duration && !show.startTime) {
+                channelDetails = '<div><img class="hidden-xs" src="' + getImage(show.image) + '" /><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body">' + (show.title ? show.title : $filter('translate')('PLAYER_NOT_AVAILABLE')) + '</span></p>';
+                if (!show.endTime && !show.startTime) {
                     channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span>&nbsp;<span class="program-details-header"translate="PLAYER_DURATION"></span><span class="program-details-body"translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, show) + '</span></p><p><span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + show.duration + '</span>&nbsp;<span  class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
+                    channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_TIME"></span><span class="program-details-body">' + getTime(1, show) + '</span></p><p><span class="program-details-header" translate="PLAYER_DURATION"></span><span class="program-details-body">' + getDuration(show.startTime, show.endTime) + '</span>&nbsp;<span  class="program-details-body" translate="PLAYER_MINUTES"></span></p>';
                 }
-                if (!show.program.shortDescription) {
+                if (!show.description) {
                     channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + show.program.shortDescription + '</span></p></div>';
+                    channelDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + show.description + '</span></p></div>';
                 }
             } else {
                 channelDetails = '<div><p style="text-align: left;"><span class="program-details-header" translate="PLAYER_TITLE"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
@@ -295,6 +295,10 @@
             $scope.selectedLanguages = [];
             filterChannels();
         };
+
+        function getDuration(startTime, endTime) {
+            return Math.floor((new Date(endTime) - new Date(startTime)) / 1000 / 60);
+        }
 
         function filterChannels() {
             $scope.filteredChannels = $rootScope.channels;

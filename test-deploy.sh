@@ -10,6 +10,10 @@ if [ "$1" != "" ]; then
     git add --all
     git commit -m "push to test"
     git push test master -f
+    cd ../..
+    git branch
+    git checkout master
+    git branch
 else
     echo "Build number is missing"
 fi

@@ -56,10 +56,10 @@
                     var channelLineUp;
                     if (lineUp.length > 0) {
                         angular.forEach(lineUp, function (data) {
-                            if (!data.program.preferredImage.uri) {
-                                channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                            if (!data.image) {
+                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.endTime, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             } else {
-                                channelLineUp = '<div title="' + data.program.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.duration, startDate, data.startTime) + '"><img src="' + getImage(data.program.preferredImage.uri) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.program.title + '</span></p>';
+                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.endTime, startDate, data.startTime) + '"><img src="' + getImage(data.image) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             }
                             startDate = null;
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
