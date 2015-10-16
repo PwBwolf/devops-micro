@@ -158,11 +158,8 @@ prompt.get(schema, function (err, result) {
             if (err) {
                 logger.logError('adminCLI - upgradeSubscription - error upgrading user');
                 logger.logError(err);
-                if (err.message) {
-                    logger.logError(err.message);
-                }
                 var timeout = 1000;
-                if (err.message === 'PaymentFailed' || err.message === 'PaymentFailedActive') {
+                if (err === 'PaymentFailed' || err === 'PaymentFailedActive') {
                     logger.logInfo('adminCLI - upgradeSubscription - reverting to free user');
                     logger.logInfo('please wait...');
                     timeout = 10000;

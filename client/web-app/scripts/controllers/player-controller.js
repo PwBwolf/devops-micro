@@ -180,8 +180,8 @@
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 $scope.tvUrl = channelUrl;
                 $scope.airing = airing;
-                $scope.channelLogo = $scope.channels[index].logo;
-                $scope.channelName = $scope.channels[index].name;
+                $scope.channelLogo = $scope.channels[index].logoUri;
+                $scope.channelName = $scope.channels[index].title;
                 playStream();
             });
         };

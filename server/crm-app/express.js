@@ -14,6 +14,15 @@ module.exports = function (app, logger) {
     app.set('views', config.root + config.crmClientPath);
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json({type: 'application/*+json'}));
+    app.use(function (err, req, res, next) {
+        if (err) {
+            logger.logError('crmApp - express - error in request');
+            logger.logError(err);
+            res.status(200).send({error: 'input-error'});
+        } else {
+            next();
+        }
+    });
     app.use(methodOverride());
     app.use(cookieParser());
     app.use(favicon(config.root + config.crmClientPath + '/images/favicon.ico'));

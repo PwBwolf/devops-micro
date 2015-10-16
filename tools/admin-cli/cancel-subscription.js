@@ -49,9 +49,6 @@ Users.findOne({email: email.toLowerCase()}).populate('account').exec(function (e
             if (err) {
                 logger.logError('adminCLI - cancelSubscription - error canceling subscription');
                 logger.logError(err);
-                if (err.message) {
-                    logger.logError(err.message);
-                }
                 setTimeout(function () {
                     process.exit(1);
                 }, 3000);
