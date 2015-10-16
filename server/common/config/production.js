@@ -7,7 +7,7 @@ if (!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'production',
-    webAppClientPath: '/client/web-app-old',
+    webAppClientPath: '/client/web-app',
     crmClientPath: '/client/crm-app',
     webAppPort: 3000,
     apiServerPort: 4000,
@@ -45,7 +45,7 @@ module.exports = {
     freeSidePaidBasicPackagePart: 3,
     freeSidePremiumPackagePart: 9,
     freeSideComplimentaryPackagePart: 8,
-    cmsApiUrl: 'https://cms.yiptv.com',
+    cmsApiUrl: 'http://10.100.10.109',
     useAio: true,
     aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
     aioApiUrl: 'http://10.100.10.102',
