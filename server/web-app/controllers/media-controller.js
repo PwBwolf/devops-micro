@@ -32,7 +32,6 @@ module.exports = {
     },
 
     getChannelGuide: function (req, res) {
-        return res.json([]);
         cms.getLineup(req.query.id, 'today', function (err, data) {
             if (err) {
                 logger.logError('mediaController - getChannelGuide - error fetching lineup');

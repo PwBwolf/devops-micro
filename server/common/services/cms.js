@@ -72,10 +72,10 @@ module.exports = {
         });
     },
 
-    getLineup: function (channelId, lineupDuration, callback) {
+    getLineup: function (channelId, period, callback) {
         var route = '/index.php?json_route=/lineup';
         var id = '&channel_id=' + channelId;
-        var duration = '&lineup_duration=' + lineupDuration;
+        var duration = '&lineup_period=' + period;
         var url = config.cmsApiUrl + route + id + duration;
         client.get(url).on('complete', function(result) {
             if (result instanceof Error) {
