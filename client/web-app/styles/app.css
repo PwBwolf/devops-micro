@@ -1076,6 +1076,7 @@ ul.passwordStrength {
 }
 
 .quick-look-box {
+    max-width: 400px;
     vertical-align: top;
     position: relative;
     display: inline-block;

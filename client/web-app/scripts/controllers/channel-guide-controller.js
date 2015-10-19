@@ -50,7 +50,7 @@
                     var lineUp = programs;
                     var channelGuide = angular.element(document.createElement('div'));
                     var channelLogo = angular.element(document.createElement('div'));
-                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', value.name).attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
+                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', value.title).attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
                     $(channelGuide).attr('channel', station).prepend(channelLogo);
                     var startDate = date;
                     var channelLineUp;

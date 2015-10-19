@@ -247,7 +247,7 @@
                 if (!airing.description) {
                     programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
                 } else {
-                    programDetails += '<p style="text-align: left"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + airing.description + '</span></p>';
+                    programDetails += '<p style="text-align: left;word-break: break-all;white-space: normal"><span class="program-details-header" translate="PLAYER_DESCRIPTION"></span><span class="program-details-body">' + airing.description + '</span></p>';
                 }
             } else {
                 programDetails = '<p style="text-align: left;"><span class="program-details-header" translate="PLAYER_ON_NOW"></span><span class="program-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>';
