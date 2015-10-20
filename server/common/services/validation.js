@@ -14,6 +14,9 @@ var cvv4Regex = /^\d{4}$/;
 module.exports = {
 
     validateSignUpInputs: function (user) {
+        if (!user.type || user.type.trim().length === 0) {
+            return 'TypeRequired';
+        }
         if (user.type !== 'free' && user.type !== 'paid' && user.type !== 'comp') {
             return 'TypeInvalid';
         }
@@ -77,7 +80,6 @@ module.exports = {
         if (typeof user.preferences.smsSubscription !== 'boolean') {
             return 'SmsSubscriptionInvalid';
         }
-
         if (user.type === 'comp' && (!user.code || user.code.trim().length === 0)) {
             return 'ComplimentaryCodeRequired';
         }
