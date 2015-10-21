@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-notification-processor
+# service yip-web-app
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,11 +10,11 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-notification-processor
-SOURCE_DIR=/opt/prodops/yiptv/server/daemons/notification-processor
-SOURCE_FILE=notification-processor-main.js
+NAME=yip-web-app
+SOURCE_DIR=/opt/prodops/yiptv/server/web-app
+SOURCE_FILE=app.js
 
-user=devops
+user=prodops
 logfile=/var/log/$NAME.log
 forever=/usr/local/bin/forever
 
@@ -32,7 +32,7 @@ start() {
 }
 
 stop() {
-  echo -n "Shutting down $NAME node instance: "
+  echo -n "Shutting down $NAME node instance : "
   if [[ "$USER" == "$user" ]]
   then
         $forever stop $NAME

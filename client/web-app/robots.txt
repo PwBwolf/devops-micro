@@ -1,6 +1,0 @@
-User-Agent: *
-Disallow: /resend-verification
-Disallow: /sign-in
-Disallow: /forgot-password
-
-Sitemap: https://www.yiptv.com/sitemap.xml

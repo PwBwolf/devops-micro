@@ -12,7 +12,7 @@ cd ../common/database
 node fixtures.js
 cd $cwd
 
-# now start the node server and redirect logs to /var/log/yip-web-app.log. (devops user must own this file)
+# now start the node server and redirect logs to /var/log/yip-web-app.log. (prodops user must own this file)
 /etc/init.d/yip-web-app start
 
 # send email notifying new build

@@ -8,6 +8,7 @@ var emailRegex = config.regex.email;
 var addressRegex = config.regex.address;
 var telephoneRegex = config.regex.telephone;
 var zipCodeRegex = config.regex.zipCode;
+var creditCardRegex = /^\d{14,16}$/
 var cvv3Regex = /^\d{3}$/;
 var cvv4Regex = /^\d{4}$/;
 
@@ -220,7 +221,7 @@ function isPasswordComplex(password) {
 }
 
 function isCreditCard(cardNumber) {
-    if (/[^0-9-\s]+/.test(cardNumber)) {
+    if (/[^0-9]+/.test(cardNumber)) {
         return false;
     }
     if (parseInt(cardNumber) === 0) {

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-rule-engine
+# service yip-api-server
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,11 +10,11 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-rule-engine
-SOURCE_DIR=/opt/prodops/yiptv/server/daemons/rule-engine
-SOURCE_FILE=rule-engine-main.js
+NAME=yip-api-server
+SOURCE_DIR=/opt/prodops/yiptv/server/api-server
+SOURCE_FILE=app.js
 
-user=devops
+user=prodops
 logfile=/var/log/$NAME.log
 forever=/usr/local/bin/forever
 
@@ -32,7 +32,7 @@ start() {
 }
 
 stop() {
-  echo -n "Shutting down $NAME node instance: "
+  echo -n "Shutting down $NAME node instance : "
   if [[ "$USER" == "$user" ]]
   then
         $forever stop $NAME
