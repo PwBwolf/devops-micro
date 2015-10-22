@@ -44,7 +44,7 @@ module.exports = {
         }
 
         function doSignUp(req, res) {
-            User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
+            User.findOne({email: req.body.email.trim().toLowerCase()}).populate('account').exec(function (err, user) {
                 if (err) {
                     logger.logError('userController - signUp - error fetching user: ' + req.body.email.toLowerCase());
                     logger.logError(err);
