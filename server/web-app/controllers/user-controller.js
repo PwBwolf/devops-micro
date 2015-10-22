@@ -425,7 +425,7 @@ module.exports = {
     },
 
     isSignUpAllowed: function (req, res) {
-        User.findOne({email: req.query.email.toLowerCase()}).populate('account').exec(function (err, user) {
+        User.findOne({email: req.query.email.trim().toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
