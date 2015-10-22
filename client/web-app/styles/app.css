@@ -633,6 +633,20 @@ ul.passwordStrength {
     text-transform: uppercase;
 }
 
+.status-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #412c89;
+    text-transform: uppercase;
+}
+
+.success-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #1CAF9A;
+    text-transform: uppercase;
+}
+
 .center-text {
     text-align: center;
 }

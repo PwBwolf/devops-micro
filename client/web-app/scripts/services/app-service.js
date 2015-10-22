@@ -34,6 +34,14 @@
                     method: 'GET',
                     params: {code: code}
                 });
+            },
+
+            verifyMobileNumber: function (mobileNumber, success, error) {
+                return $http({
+                    url: '/api/verify-mobile-number',
+                    method: 'GET',
+                    params: {mobileNumber: mobileNumber}
+                }).success(success).error(error);;
             }
         };
     }]);
