@@ -4,6 +4,7 @@ var _ = require('lodash'),
     mongoose = require('mongoose'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
+    twilio = require('../../common/services/twilio'),
     ContactUs = mongoose.model('ContactUs'),
     Referrer = mongoose.model('Referrer'),
     Visitor = mongoose.model('Visitor'),
@@ -227,18 +228,26 @@ module.exports = {
         if (validationError) {
             logger.logError('appController - verifyEmail - user input error: ' + req.body.email);
             logger.logError(validationError);
-            return res.status(500).end(validationError);
+            return res.status(500).send(validationError);
         }
         return res.status(200).send(true);
     },
 
-    verifyPhoneNumber: function(req, res) {
-        var validationError = validation.validateVerifyPhoneNumberInputs(req.query.phoneNumber);
+    verifyMobileNumber: function(req, res) {
+        var validationError = validation.validateVerifyMobileNumberInputs(req.query.phoneNumber);
         if (validationError) {
-            logger.logError('appController - verifyPhoneNumber - user input error: ' + req.body.phoneNumber);
+            logger.logError('appController - verifyMobileNumber - user input error: ' + req.body.phoneNumber);
             logger.logError(validationError);
-            return res.status(500).end(validationError);
+            return res.status(500).send(validationError);
         }
-        return res.status(200).send(true);
+        twilio.isMobile(req.query.phoneNumber, function(err, result) {
+            if(err) {
+                logger.logError('appController - verifyMobileNumber - user input error: ' + req.body.phoneNumber);
+                logger.logError(validationError);
+                return res.status(200).end(false);
+            }
+            return res.status(200).send(result);
+        });
+
     }
 };

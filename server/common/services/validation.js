@@ -199,7 +199,7 @@ module.exports = {
         return null;
     },
 
-    validateVerifyPhoneNumberInputs: function (phoneNumber) {
+    validateVerifyMobileNumberInputs: function (phoneNumber) {
         if (!phoneNumber || phoneNumber.trim().length === 0) {
             return 'PhoneNumberRequired';
         }
