@@ -8,7 +8,6 @@ var emailRegex = config.regex.email;
 var addressRegex = config.regex.address;
 var telephoneRegex = config.regex.telephone;
 var zipCodeRegex = config.regex.zipCode;
-var creditCardRegex = /^\d{14,16}$/
 var cvv3Regex = /^\d{3}$/;
 var cvv4Regex = /^\d{4}$/;
 
@@ -88,28 +87,28 @@ module.exports = {
             if (!user.cardName || user.cardName.trim().length === 0) {
                 return 'CardNameRequired';
             }
-            if (user.cardName.trim().length > 128) {
+            if (user.cardName.length > 128) {
                 return 'CardNameMaxLengthExceeded';
             }
-            if (!nameRegex.test(user.cardName.trim())) {
+            if (!nameRegex.test(user.cardName)) {
                 return 'CardNameInvalid';
             }
             if (!user.cardNumber || user.cardNumber.trim().length === 0) {
                 return 'CardNumberRequired';
             }
-            if (user.cardNumber.trim().length < 14) {
-                return 'CardNumberMinLengthNotMet';
+            if (user.cardNumber.length < 14) {
+                return 'CardNumberMinimumLengthNotMet';
             }
-            if (user.cardNumber.trim().length > 16) {
-                return 'CardNumberMaxLengthExceeded';
+            if (user.cardNumber.length > 16) {
+                return 'CardNumberMaximumLengthExceeded';
             }
-            if (!isCreditCard(user.cardNumber.trim())) {
+            if (!isCreditCard(user.cardNumber)) {
                 return 'CardNumberInvalid';
             }
             if (!user.expiryDate || user.expiryDate.trim().length === 0) {
                 return 'ExpiryDateRequired';
             }
-            if (user.expiryDate.trim().length > 7) {
+            if (user.expiryDate.length > 7) {
                 return 'ExpiryDateMaxLengthExceeded';
             }
             if (!isExpiryDate(user.expiryDate)) {
@@ -118,31 +117,31 @@ module.exports = {
             if (!user.cvv || user.cvv.trim().length === 0) {
                 return 'CvvRequired';
             }
-            if (!isCvv(user.cvv.trim(), user.cardNumber.trim())) {
+            if (!isCvv(user.cvv, user.cardNumber)) {
                 return 'CvvInvalid';
             }
             if (!user.address || user.address.trim().length === 0) {
                 return 'AddressRequired';
             }
-            if (user.address.trim().length > 80) {
+            if (user.address.length > 80) {
                 return 'AddressMaxLengthExceeded';
             }
-            if (!addressRegex.test(user.address.trim())) {
+            if (!addressRegex.test(user.address)) {
                 return 'AddressInvalid';
             }
             if (!user.city || user.city.trim().length === 0) {
                 return 'CityRequired';
             }
-            if (user.city.trim().length > 80) {
+            if (user.city.length > 80) {
                 return 'CityMaxLengthExceeded';
             }
-            if (!addressRegex.test(user.city.trim())) {
+            if (!addressRegex.test(user.city)) {
                 return 'CityInvalid';
             }
             if (!user.state || user.state.trim().length === 0) {
                 return 'StateRequired';
             }
-            if (user.state.trim().length > 2) {
+            if (user.state.length > 2) {
                 return 'StateMaxLengthExceeded';
             }
             if (!isState(user.state)) {
@@ -151,10 +150,10 @@ module.exports = {
             if (!user.zipCode || user.zipCode.trim().length === 0) {
                 return 'ZipCodeRequired';
             }
-            if (user.zipCode.trim().length > 5) {
+            if (user.zipCode.length > 5) {
                 return 'ZipCodeMaxLengthExceeded';
             }
-            if (!zipCodeRegex.test(user.zipCode.trim())) {
+            if (!zipCodeRegex.test(user.zipCode)) {
                 return 'ZipCodeInvalid';
             }
         }
