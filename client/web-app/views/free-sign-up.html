@@ -50,7 +50,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
+                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>

@@ -19,7 +19,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="USER_INFO_TELEPHONE"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
+                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="USER_INFO_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="USER_INFO_TELEPHONE_INVALID"></div>
@@ -28,7 +28,7 @@
                         <div class="status-message" ng-show="mobileNumberStatus === 'CHECKING'" translate="USER_INFO_TELEPHONE_CHECKING_IF_MOBILE"></div>
                     </div>
                     <div class="full-form">
-                        <button ng-disabled="saving" type="submit" class="submit-button" translate="USER_INFO_SUBMIT_BUTTON"></button>
+                        <button id="submitButton" ng-disabled="saving" type="submit" class="submit-button" translate="USER_INFO_SUBMIT_BUTTON"></button>
                     </div>
                 </form>
             </div>

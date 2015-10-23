@@ -51,7 +51,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="COMP_SIGN_UP_TELEPHONE"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
+                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="COMP_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="COMP_SIGN_UP_TELEPHONE_INVALID"></div>
@@ -87,7 +87,7 @@
                             <div class="progress-bar progress-bar-purple progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
-                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && form.$invalid" translate="COMP_SIGN_UP_FORM_INVALID"></div>
+                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || mobileNumberStatus !== 'MOBILE')" translate="COMP_SIGN_UP_FORM_INVALID"></div>
                     </div>
                     <div class="full-form center-form"><span translate="COMP_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="COMP_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="COMP_SIGN_UP_SIGN_IN"></a></div>

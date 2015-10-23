@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
+    app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         $scope.formSubmit = false;
@@ -18,44 +18,39 @@
         }
 
         $scope.signUp = function () {
-            if ($scope.form.$valid) {
-                if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
-                    $scope.checkIfMobileNumber();
-                    loggerSvc.logError($filter('translate')('SIGN_UP_VERIFYING_TELEPHONE_NUMBER'));
-                } else if ($scope.mobileNumberStatus === 'CHECKING') {
-                    loggerSvc.logError($filter('translate')('SIGN_UP_VERIFYING_TELEPHONE_NUMBER'));
-                } else if ($scope.mobileNumberStatus === 'NOT_MOBILE') {
-                    loggerSvc.logError($filter('translate')('SIGN_UP_TELEPHONE_INVALID'));
-                } else {
-                    $scope.mv.type = 'paid';
-                    $scope.mv.referredBy = $rootScope.referredBy;
-                    $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
-                    $scope.saving = true;
-                    userSvc.signUp(
-                        $scope.mv,
-                        function (data) {
-                            $rootScope.referredBy = undefined;
-                            $scope.saving = false;
-                            if (data === 'registered') {
-                                $location.path('/sign-up-success');
-                            } else {
-                                $location.path('/sign-up-success-login');
-                            }
-                        },
-                        function (error) {
-                            if (error === 'UserExists') {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
-                            } else if (error === 'PaymentFailed') {
-                                $location.path('/sign-up-success-payment-failure');
-                            } else if (error === 'PaymentFailedActive') {
-                                $location.path('/sign-up-success-payment-failure-login');
-                            } else {
-                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
-                            }
-                            $scope.saving = false;
+            if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
+                $scope.checkIfMobileNumber();
+                $('#password').focus();
+            }
+            if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
+                $scope.mv.type = 'paid';
+                $scope.mv.referredBy = $rootScope.referredBy;
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
+                $scope.saving = true;
+                userSvc.signUp(
+                    $scope.mv,
+                    function (data) {
+                        $rootScope.referredBy = undefined;
+                        $scope.saving = false;
+                        if (data === 'registered') {
+                            $location.path('/sign-up-success');
+                        } else {
+                            $location.path('/sign-up-success-login');
                         }
-                    );
-                }
+                    },
+                    function (error) {
+                        if (error === 'UserExists') {
+                            loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                        } else if (error === 'PaymentFailed') {
+                            $location.path('/sign-up-success-payment-failure');
+                        } else if (error === 'PaymentFailedActive') {
+                            $location.path('/sign-up-success-payment-failure-login');
+                        } else {
+                            loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                        }
+                        $scope.saving = false;
+                    }
+                );
             } else {
                 setFormTouched();
             }
