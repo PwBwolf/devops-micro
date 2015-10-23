@@ -9,17 +9,23 @@ var async = require('../../../../server/node_modules/async');
 require('../../../../server/common/models/channel');
 require('../../../../server/common/models/image-data');
 require('../../../../server/common/models/image');
-require('../../xml-xlsx-parser/models/airing');
-require('../../xml-xlsx-parser/models/event');
+require('../../../../server/common/models/airing');
+require('../../../../server/common/models/event');
+//require('../../xml-xlsx-parser/models/airing');
+//require('../../xml-xlsx-parser/models/event');
 
 var dbYip = mongoose.createConnection(config.db);
-var dbMetaData = mongoose.createConnection(config.yipMetaDataDb);
+//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
+//var dbMetaData = mongoose.createConnection(config.yipMetaDataDb);
 
 var Channel = dbYip.model('Channel');
 var Image = dbYip.model('Image');
 var ImageData = dbYip.model('ImageData');
-var Airing = dbMetaData.model('Airing');
-var Event = dbMetaData.model('Event');
+//var Airing = dbMetaData.model('Airing');
+//var Event = dbMetaData.model('Event');
+
+var Airing = dbYip.model('Airing');
+var Event = dbYip.model('Event');
 
 module.exports = {
     getChannelList: function (req, res) {
@@ -38,7 +44,7 @@ module.exports = {
             }
         }
         
-        var models = getDbModels(req.query.source);
+        var models = getDbModels(req.query.sources);
         
         async.concat(
             models,
@@ -143,7 +149,7 @@ module.exports = {
             }
         }
         
-        var models = getDbModels(req.query.source);
+        var models = getDbModels(req.query.sources);
         
         async.concat(
             models,
@@ -300,7 +306,7 @@ module.exports = {
             }
         }
         
-        var models = getDbModels(req.query.source);
+        var models = getDbModels(req.query.sources);
         
         async.concat(
             models,

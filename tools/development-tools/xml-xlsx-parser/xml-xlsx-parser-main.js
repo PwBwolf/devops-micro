@@ -15,8 +15,11 @@ require('./models/airing');
 require('./models/epg');
 require('./models/event');
 
-var dbYip = mongoose.createConnection(config.yipMetaDataDb);
+//var dbYip = mongoose.createConnection(config.yipMetaDataDb);
+//var dbYip = mongoose.createConnection(config.db);
+//var dbYip = mongoose.createConnection(config.yiptv);
 //var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yipmetadata'); // integration
+var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
 //var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.11/yipmetadata'); // test
 
 var Airing = dbYip.model('Airing');
