@@ -68,13 +68,67 @@ function getChannelGuide() {
                  if(err) {
                      logger.logError('metadataProcessorMain - getChannelGuide - failed to find in Channel db');
                      logger.logError(err);
+                     callback(err);
                  } else {
                      logger.logInfo('metadataProcessorMain - getChannelGuide documents found in db: ' + channels.length);
+                     var stationIdsUniq = [];
                      for(var i = 0; i < channels.length; i++) {
-                         stationIds.push({stationId: channels[i].stationId, dbId: channels[i]._id});
+                         stationIds.push({stationId: channels[i].stationId, dbId: channels[i]._id, count: 0});
+                     }
+                     if(stationIds.length > 0) {
+                         stationIdsUniq = _.uniq(stationIds, 'stationId');
+                     }
+                     
+                     if(stationIdsUniq.length !== stationIds.length) {
+                         var itemsTobeRemoved = [];
+                         var itemsIndex = [];
+                         for(var i = 0; i < stationIds.length; ++i) {
+                             for(var j = 0; j < stationIdsUniq.length; ++j) {
+                                 if(stationIds[i].stationId === stationIdsUniq[j].stationId) {
+                                     if(stationIdsUniq[j].count > 0) {
+                                         itemsTobeRemoved.push(stationIds[i].dbId);
+                                         itemsIndex.push(i);
+                                     } else {
+                                         stationIdsUniq[j].count = 1;
+                                     }
+                                     break;
+                                 }
+                             }
+                         }
+                         
+                         for(var i = 0; i < itemsIndex.length; ++i) {
+                             channels.splice(itemsIndex[i], 1);
+                         }
+                         
+                         async.eachSeries(
+                             itemsTobeRemoved,
+                             
+                             function (item, cb) {
+                                 Channel.remove({_id: item}, function (err, entries) {
+                                    if(err) {
+                                        logger.logError('metadataProcessorMain - getChannelGuide - failed to remove Channel doc in db');
+                                        logger.logError(err);
+                                        cb(err);
+                                    } else {
+                                        logger.logInfo('metadataProcessorMain - getChannelGuide - remove duplicated Channel doc in db succeed: ' + entries);
+                                        cb(null, entries);
+                                    }
+                                 });
+                             }, 
+                             
+                             function (err) {
+                                 if(err) {
+                                     logger.logError('metadataProcessorMain - getChannelGuide - failed to remove Channel doc in db in async');
+                                     logger.logErr(err);
+                                     callback(err);
+                                 } else {
+                                     logger.logInfo('metadataProcessorMain - getChannelGuide - remove Channel doc succeed in async');
+                                     callback(null, channels);
+                                 }
+                             }
+                         );
                      }
                  }
-                 callback(err, channels);
              });
          }, 
          
@@ -201,7 +255,7 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
             logger.logInfo('metadataProcessorMain - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
     
             channel.airings.splice(0, channel.airings.length);
-               
+            channel.status = 'active';
             for(var i = 0; i < data[0].airings.length; i++) {
                 channel.airings.push(data[0].airings[i]);
                 channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
