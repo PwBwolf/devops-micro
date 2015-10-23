@@ -28,6 +28,7 @@ var User = new Schema({
     validTill: {type: Date, required: false},
     lastLoginTime: Date,
     verificationCode: {type: String, sparse: true},
+    verificationPin: {type: Number, required: false},
     resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
