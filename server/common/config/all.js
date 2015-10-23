@@ -19,7 +19,7 @@ module.exports = {
     twilioApiUrl: '',
     twilioAccountSid: 'ACf91a6484a812decd98cbb5acaeddd4c9',
     twilioAuthToken: 'ad862df24b215998fac2ef6c5638d526',
-    twilioSmsSendPhoneNumber: '+18327794788',
+    twilioSmsSendMobileNumber: '+18327794788',
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],

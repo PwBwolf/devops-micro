@@ -199,12 +199,12 @@ module.exports = {
         return null;
     },
 
-    validateVerifyPhoneNumberInputs: function (phoneNumber) {
-        if (!phoneNumber || phoneNumber.trim().length === 0) {
-            return 'PhoneNumberRequired';
+    validateVerifyMobileNumberInputs: function (mobileNumber) {
+        if (!mobileNumber || mobileNumber.trim().length === 0) {
+            return 'MobileNumberRequired';
         }
-        if (!telephoneRegex.test(phoneNumber.trim())) {
-            return 'PhoneNumberInvalid';
+        if (!telephoneRegex.test(mobileNumber.trim())) {
+            return 'MobileNumberInvalid';
         }
         return null;
     },

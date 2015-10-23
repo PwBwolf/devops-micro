@@ -36,6 +36,7 @@ module.exports = {
     refundPeriodInDays: 3,
     wordPressUrl: 'https://www.yiptv.com/live-tv/',
     metaDataRetrievalRecurrence: '0 0 2 * * *',
+    twilioMobileType: ['mobile'],
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',
     freeSideFreePremiumUserPackageParts: [6, 9],
     freeSideFreeUserPackageParts: [6],
