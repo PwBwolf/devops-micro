@@ -51,10 +51,13 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="COMP_SIGN_UP_TELEPHONE"></span><br>
-                        <input autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
+                        <input ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="COMP_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="COMP_SIGN_UP_TELEPHONE_INVALID"></div>
+                        <div class="error-message" ng-show="mobileNumberStatus === 'NOT_MOBILE'" translate="COMP_SIGN_UP_TELEPHONE_INVALID"></div>
+                        <div class="success-message" ng-show="mobileNumberStatus === 'MOBILE'" translate="COMP_SIGN_UP_TELEPHONE_MOBILE"></div>
+                        <div class="status-message" ng-show="mobileNumberStatus === 'CHECKING'" translate="COMP_SIGN_UP_TELEPHONE_CHECKING_IF_MOBILE"></div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="COMP_SIGN_UP_PASSWORD"></span> <span class="label-text-info" translate="COMP_SIGN_UP_PASSWORD_INFO"></span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}">

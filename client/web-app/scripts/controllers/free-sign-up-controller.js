@@ -53,17 +53,23 @@
             $scope.formSubmit = true;
         }
 
+        function setMobileNumberStatus(status) {
+            if ($scope.mobileNumberStatus !== 'NOT_CHECKED') {
+                $scope.mobileNumberStatus = status;
+            }
+        }
+
         $scope.checkIfMobileNumber = function () {
             if ($scope.form.telephone.$valid) {
                 $scope.mobileNumberStatus = 'CHECKING';
                 appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
                     if (result) {
-                        $scope.mobileNumberStatus = 'MOBILE';
+                        setMobileNumberStatus('MOBILE');
                     } else {
-                        $scope.mobileNumberStatus = 'NOT_MOBILE';
+                        setMobileNumberStatus('NOT_MOBILE');
                     }
                 }, function () {
-                    $scope.mobileNumberStatus = 'NOT_MOBILE';
+                    setMobileNumberStatus('NOT_MOBILE');
                 });
             }
         };

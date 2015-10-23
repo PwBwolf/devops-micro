@@ -132,7 +132,7 @@
             FREE_SIGN_UP_BULLET1: '16 FREE Live International Channels',
             FREE_SIGN_UP_BULLET2: 'Plus - 9 Bonus Channels for 7 Days (including beIN SPORTS and HolaTV)',
             FREE_SIGN_UP_BULLET3: 'No Credit Cards, Contract or Cable plans required',
-            FREE_SIGN_UP_BULLET4: 'Keep your FREE Membership or upgrade and get 70+ channels - its up to you!',
+            FREE_SIGN_UP_BULLET4: 'Keep your FREE Membership or upgrade and get 85+ channels - its up to you!',
             FREE_SIGN_UP_FIRST_NAME: 'First Name',
             FREE_SIGN_UP_FIRST_NAME_REQUIRED: 'Enter your first name',
             FREE_SIGN_UP_LAST_NAME_REQUIRED: 'Enter your last name',

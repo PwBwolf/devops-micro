@@ -129,7 +129,7 @@
             FREE_SIGN_UP_BULLET1: '16 Canales GRATIS de TV Internacional en vivo ',
             FREE_SIGN_UP_BULLET2: 'Además – 9 Canales Premier gratis por 7 días, (incluyendo beIN DEPORTES y Hola TV)',
             FREE_SIGN_UP_BULLET3: 'No Requiere Tarjeta de Crédito, Contrato, o Paquete de Cable ',
-            FREE_SIGN_UP_BULLET4: 'Quédate con tu Membresía GRATIS indefinidamente, o cambia a la Membresía Premier y recibe 70+ canales, ¡tu decides!',
+            FREE_SIGN_UP_BULLET4: 'Quédate con tu Membresía GRATIS indefinidamente, o cambia a la Membresía Premier y recibe 85+ canales, ¡tu decides!',
             FREE_SIGN_UP_FIRST_NAME: 'Primer Nombre',
             FREE_SIGN_UP_FIRST_NAME_REQUIRED: 'Ingrese su nombre',
             FREE_SIGN_UP_LAST_NAME_REQUIRED: 'Ingrese su apellido',

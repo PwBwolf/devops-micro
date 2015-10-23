@@ -5,6 +5,7 @@
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         $scope.formSubmit = false;
+        $scope.mobileNumberStatus = 'NOT_CHECKED';
 
         activate();
 
@@ -18,34 +19,43 @@
 
         $scope.signUp = function () {
             if ($scope.form.$valid) {
-                $scope.mv.type = 'paid';
-                $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
-                $scope.saving = true;
-                userSvc.signUp(
-                    $scope.mv,
-                    function (data) {
-                        $rootScope.referredBy = undefined;
-                        $scope.saving = false;
-                        if (data === 'registered') {
-                            $location.path('/sign-up-success');
-                        } else {
-                            $location.path('/sign-up-success-login');
+                if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
+                    $scope.checkIfMobileNumber();
+                    loggerSvc.logError($filter('translate')('SIGN_UP_VERIFYING_TELEPHONE_NUMBER'));
+                } else if ($scope.mobileNumberStatus === 'CHECKING') {
+                    loggerSvc.logError($filter('translate')('SIGN_UP_VERIFYING_TELEPHONE_NUMBER'));
+                } else if ($scope.mobileNumberStatus === 'NOT_MOBILE') {
+                    loggerSvc.logError($filter('translate')('SIGN_UP_TELEPHONE_INVALID'));
+                } else {
+                    $scope.mv.type = 'paid';
+                    $scope.mv.referredBy = $rootScope.referredBy;
+                    $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
+                    $scope.saving = true;
+                    userSvc.signUp(
+                        $scope.mv,
+                        function (data) {
+                            $rootScope.referredBy = undefined;
+                            $scope.saving = false;
+                            if (data === 'registered') {
+                                $location.path('/sign-up-success');
+                            } else {
+                                $location.path('/sign-up-success-login');
+                            }
+                        },
+                        function (error) {
+                            if (error === 'UserExists') {
+                                loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
+                            } else if (error === 'PaymentFailed') {
+                                $location.path('/sign-up-success-payment-failure');
+                            } else if (error === 'PaymentFailedActive') {
+                                $location.path('/sign-up-success-payment-failure-login');
+                            } else {
+                                loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
+                            }
+                            $scope.saving = false;
                         }
-                    },
-                    function (error) {
-                        if (error === 'UserExists') {
-                            loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
-                        } else if (error === 'PaymentFailed') {
-                            $location.path('/sign-up-success-payment-failure');
-                        } else if (error === 'PaymentFailedActive') {
-                            $location.path('/sign-up-success-payment-failure-login');
-                        } else {
-                            loggerSvc.logError($filter('translate')('SIGN_UP_FAILED') + ' ' + $scope.appConfig.customerCareNumber);
-                        }
-                        $scope.saving = false;
-                    }
-                );
+                    );
+                }
             } else {
                 setFormTouched();
             }
@@ -68,6 +78,31 @@
             $scope.form.disclaimer.$dirty = true;
             $scope.formSubmit = true;
         }
+
+        function setMobileNumberStatus(status) {
+            if ($scope.mobileNumberStatus !== 'NOT_CHECKED') {
+                $scope.mobileNumberStatus = status;
+            }
+        }
+
+        $scope.checkIfMobileNumber = function () {
+            if ($scope.form.telephone.$valid) {
+                $scope.mobileNumberStatus = 'CHECKING';
+                appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
+                    if (result) {
+                        setMobileNumberStatus('MOBILE');
+                    } else {
+                        setMobileNumberStatus('NOT_MOBILE');
+                    }
+                }, function () {
+                    setMobileNumberStatus('NOT_MOBILE');
+                });
+            }
+        };
+
+        $scope.resetMobileNumberStatus = function () {
+            $scope.mobileNumberStatus = 'NOT_CHECKED';
+        };
 
     }]);
 }(angular.module('app')));
