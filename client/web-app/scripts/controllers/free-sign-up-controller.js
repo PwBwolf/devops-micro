@@ -22,7 +22,7 @@
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        $location.path('/free-sign-up-success');
+                        $location.path('/free-sign-up-success/' + $scope.mv.email);
                     },
                     function (error) {
                         if (error === 'UserExists') {
