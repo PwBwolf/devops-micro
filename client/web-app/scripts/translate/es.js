@@ -264,7 +264,7 @@
             RESEND_VERIFICATION_ERROR: 'Error al enviar el enlace de verificacion de la cuenta. Por favor pongase en contacto con servico al cliente',
             RESEND_VERIFICATION_SUCCESS_HEADING: 'Reenvío de Verificación de Correo Electrónico y Mensaje de Texto',
             RESEND_VERIFICATION_SUCCESS_MESSAGE: 'Correo electrónico y mensaje de texto para verificar su cuenta han sido enviado. Para introducir el PIN recibido por el texto del botón de mensajes clic a continuación',
-            RESEND_VERIFICATION_SUCCESS_HERE: 'Introducir PIN',
+            RESEND_VERIFICATION_SUCCESS_BUTTON: 'Introducir PIN',
             RESET_PASSWORD_HEADING: 'Reestablecer Contrasena',
             RESET_PASSWORD_NEW_PASSWORD: 'Nueva Contrasena',
             RESET_PASSWORD_CONFIRM_PASSWORD_REQUIRED: 'Confirme su Contrasena',
