@@ -38,7 +38,7 @@
             }).error(error);
         }
 
-        function clearUser () {
+        function clearUser() {
             changeUser(noUser());
             tokenSvc.clearToken();
         }
@@ -145,21 +145,33 @@
                 $http.post('/api/change-credit-card', data).success(success).error(error);
             },
 
-            cancelSubscription: function(success, error) {
+            cancelSubscription: function (success, error) {
                 $http.post('/api/cancel-subscription').success(success).error(error);
             },
 
-            getPreferences: function(success, error) {
+            getPreferences: function (success, error) {
                 $http.get('/api/get-preferences').success(success).error(error);
             },
 
-            updatePreferences: function(data, success, error) {
+            updatePreferences: function (data, success, error) {
                 $http.post('/api/update-preferences', data).success(success).error(error);
             },
 
-            updateLanguage: function(data, success, error) {
+            updateLanguage: function (data, success, error) {
                 $http.post('/api/update-language', data).success(success).error(error);
+            },
+
+            isEmailVerified: function (email, success, error) {
+                $http({
+                    url: '/api/is-email-verified',
+                    method: 'GET',
+                    params: {email: email}
+                }).success(success).error(error);
+            },
+
+            verifyMobilePin: function (data, success, error) {
+                $http.post('/api/verify-mobile-pin', data).success(success).error(error);
             }
-         };
+        };
     }]);
 }(angular.module('app')));

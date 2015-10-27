@@ -205,6 +205,8 @@
             MOBILE_VERIFICATION_BUTTON: 'Submit',
             MOBILE_VERIFICATION_VERIFYING: 'Verifying...',
             MOBILE_VERIFICATION_EMAIL_INVALID: 'Account does not exist or account already verified. Please contact customer support at',
+            MOBILE_VERIFICATION_PIN_MISMATCH: 'PIN entered is incorrect',
+            MOBILE_VERIFICATION_ERROR: 'Unable to verify account or account already verified. Please contact customer support at',
             MOBILE_VERIFICATION_SUCCESS_HEADING: 'Account Verified',
             MOBILE_VERIFICATION_SUCCESS_MESSAGE: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             NOT_FOUND_HEADING: 'Page Not Found',

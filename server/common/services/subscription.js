@@ -2163,7 +2163,7 @@ function deleteVisitor(email, cb) {
 }
 
 function sendVerificationSms(user, cb) {
-    var message = sf(config.verificationSmsMessage, user.verificationPin);
+    var message = sf(config.verificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
     twilio.sendSms(config.twilioSmsSendMobileNumber, user.telephone, message, function (err) {
         if (cb) {
             cb(err);

@@ -9,13 +9,13 @@
         verifyUser();
 
         function verifyUser() {
-            userSvc.checkEmailNotVerified(
+            userSvc.isEmailVerified(
                 $scope.verificationEmail,
                 function (result) {
                     if (result) {
-                        $scope.status = 1;
-                    } else {
                         $scope.status = 2;
+                    } else {
+                        $scope.status = 1;
                     }
                 },
                 function () {
@@ -26,17 +26,18 @@
         $scope.mobileVerification = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
-                userSvc.resendVerification(
-                    $scope.mv.email,
+                $scope.mv.email = $scope.verificationEmail;
+                userSvc.verifyMobilePin(
+                    $scope.mv,
                     function () {
-                        $location.path('/resend-verification-success/' + $scope.mv.email);
+                        $location.path('/mobile-verification-success');
                         $scope.saving = false;
                     },
                     function (response) {
-                        if (response === 'UserNotFound' || response === 'UserActivated') {
-                            loggerSvc.logError($filter('translate')('RESEND_VERIFICATION_USER_ERROR'));
+                        if (response === 'IncorrectPin') {
+                            loggerSvc.logError($filter('translate')('MOBILE_VERIFICATION_PIN_MISMATCH'));
                         } else {
-                            loggerSvc.logError($filter('translate')('RESEND_VERIFICATION_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
+                            loggerSvc.logError($filter('translate')('MOBILE_VERIFICATION_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                         }
                         $scope.saving = false;
                     });

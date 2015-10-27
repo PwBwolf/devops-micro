@@ -194,6 +194,80 @@ module.exports = {
         });
     },
 
+    isEmailVerified: function(req, res) {
+        User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - isEmailVerified - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            if (user.status === 'active') {
+                return res.status(200).send(true);
+            }
+            if (user.status !== 'registered') {
+                return res.status(409).send('UserError');
+            }
+            return res.status(200).send(false);
+        });
+    },
+
+    verifyMobilePin: function(req, res) {
+        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+            if (err) {
+                logger.logError('userController - verifyMobilePin - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!user) {
+                return res.status(404).send('UserNotFound');
+            }
+            if (user.status === 'active') {
+                return res.status(409).send('UserAlreadyVerified');
+            }
+            if (user.status !== 'registered') {
+                return res.status(409).send('UserError');
+            }
+            if(user.verificationPin.toString() !== req.body.pin) {
+                return res.status(401).send('IncorrectPin');
+            }
+            var status = user.status;
+            var verificationCode = user.verificationCode;
+            var verificationPin = user.verificationPin;
+            user.status = 'active';
+            user.verificationCode = undefined;
+            user.verificationPin = undefined;
+            user.save(function (err) {
+                if (err) {
+                    logger.logError('userController - verifyMobilePin - error saving user: ' + req.body.code);
+                    logger.logError(err);
+                    return res.status(500).end();
+                }
+                aio.updateUserStatus(user.email, true, function (err) {
+                    if (err) {
+                        logger.logError('userController - verifyMobilePin - error setting user active in aio: ' + user.email);
+                        logger.logError(err);
+                        user.status = status;
+                        user.verificationCode = verificationCode;
+                        user.verificationPin = verificationPin;
+                        user.save(function (err) {
+                            if (err) {
+                                logger.logError('userController - verifyMobilePin - error reverting user: ' + user.email);
+                                logger.logError(err);
+                            }
+                            return res.status(500).end();
+                        });
+                    } else {
+                        subscription.sendAccountVerifiedEmail(user);
+                        return res.status(200).end();
+                    }
+                });
+            });
+        });
+    },
+
     updateUserInfo: function (req, res) {
         var errorType, currentValues;
         async.waterfall([

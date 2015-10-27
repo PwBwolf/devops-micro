@@ -19,7 +19,7 @@ module.exports = {
     twilioAccountSid: 'ACf91a6484a812decd98cbb5acaeddd4c9',
     twilioAuthToken: 'ad862df24b215998fac2ef6c5638d526',
     twilioSmsSendMobileNumber: '+18327794788',
-    verificationSmsMessage: 'Your YipTV membership verification PIN is {0}',
+    verificationSmsMessage: {en: 'Your YipTV membership verification PIN is {0}', es: 'Su YipTV PIN de verificación de la membresía es {0}'},
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],

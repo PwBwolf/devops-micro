@@ -205,6 +205,8 @@
             MOBILE_VERIFICATION_BUTTON: 'Enviar',
             MOBILE_VERIFICATION_VERIFYING: 'Verificación...',
             MOBILE_VERIFICATION_EMAIL_INVALID: 'Cuenta no existe o la cuenta ya verificada . Por favor, póngase en contacto con atención al cliente en:',
+            MOBILE_VERIFICATION_PIN_MISMATCH: 'PIN introducido es incorrecto',
+            MOBILE_VERIFICATION_ERROR: 'No se puede verificar la cuenta o cuenta ya verificado. Por favor, póngase en contacto con atención al cliente en:',
             MOBILE_VERIFICATION_SUCCESS_HEADING: 'Cuenta verificada',
             MOBILE_VERIFICATION_SUCCESS_MESSAGE: 'Su cuenta se ha verificado satisfactoriamente. Haga clic en el botón Ingresar arriba para ingresar a YipTV.',
             NOT_FOUND_HEADING: 'Pagina no disponible',
