@@ -13,8 +13,14 @@
                     <div translate="FREE_SIGN_UP_SUCCESS_LINE1"></div>
                     <br/>
 
-                    <div><span class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_LINE2_PART1"></span> <a class="bolder-link" ng-href="/mobile-verification/{{verificationEmail}}" translate="FREE_SIGN_UP_SUCCESS_LINE2_PART2"></a> <span class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_LINE2_PART3"></span></div>
+                    <div class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_LINE2"></div>
                     <br/>
+
+                    <div class="center-text">
+                        <button goto="/mobile-verification/{{verificationEmail}}" translate="FREE_SIGN_UP_SUCCESS_BUTTON" class="btn btn-primary uppercase-text bolder-text"></button>
+                    </div>
+                    <br/>
+
 
                     <div><span translate="FREE_SIGN_UP_SUCCESS_LINE3_PART1"></span> <a href ng-click="goToWordPressUrl('WP_URL_FAQS')" translate="FREE_SIGN_UP_SUCCESS_FAQS"></a> <span translate="FREE_SIGN_UP_SUCCESS_LINE3_PART2"></span> <span ng-bind="appConfig.customerCareNumber"></span></div>
                     <br/>
@@ -45,8 +51,9 @@
                     </ul>
                     <br/>
                     <br/>
-                    <button goto="/sign-up/paid"><img class="text-center img-responsive col-xs-12" style="padding:0px" src="images/pages/{{language}}/upgrade-to-premium.png"/></button>
+                    <button goto="/sign-up/paid"><img class="text-center img-responsive col-xs-12" style="padding:0px" src="images/pages/{{language}}/upgrade-to-premium.jpg"/></button>
                     <br/>
+
                     <div class="bold-text text-center"><h3><span translate="FREE_SIGN_UP_SUCCESS_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                 </div>
             </div>

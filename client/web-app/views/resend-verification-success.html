@@ -7,8 +7,11 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p class="text-center" translate="RESEND_VERIFICATION_SUCCESS_MESSAGE"></p>
+                </div>
+                <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-6">
                     <p class="text-center">
-                    <span translate="RESEND_VERIFICATION_SUCCESS_MESSAGE"></span> <a class="bolder-link" ng-href="/mobile-verification/{{verificationEmail}}" translate="RESEND_VERIFICATION_SUCCESS_HERE"></a><span>.</span>
+                        <button goto="/mobile-verification/{{verificationEmail}}" translate="RESEND_VERIFICATION_SUCCESS_BUTTON" class="btn btn-primary uppercase-text bolder-text"></button>
                     </p>
                 </div>
             </div>
