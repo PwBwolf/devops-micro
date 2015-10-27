@@ -1,9 +1,29 @@
 (function (app) {
     'use strict';
 
-    app.controller('resendVerificationCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
+    app.controller('mobileVerificationCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', '$routeParams', function (userSvc, loggerSvc, $scope, $location, $filter, $routeParams) {
 
-        $scope.resendVerification = function () {
+        $scope.status = 0; // 0 - checking, 1 - success, 2 - error
+        $scope.verificationEmail = $routeParams.verificationEmail;
+
+        verifyUser();
+
+        function verifyUser() {
+            userSvc.checkEmailNotVerified(
+                $scope.verificationEmail,
+                function (result) {
+                    if (result) {
+                        $scope.status = 1;
+                    } else {
+                        $scope.status = 2;
+                    }
+                },
+                function () {
+                    $scope.status = 2;
+                });
+        }
+
+        $scope.mobileVerification = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.resendVerification(
@@ -26,8 +46,7 @@
         };
 
         function setFormTouched() {
-            $scope.form.email.$touched = true;
+            $scope.form.pin.$touched = true;
         }
     }]);
 }(angular.module('app')));
-

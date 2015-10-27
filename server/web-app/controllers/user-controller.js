@@ -277,8 +277,10 @@ module.exports = {
             }
             var status = user.status;
             var verificationCode = user.verificationCode;
+            var verificationPin = user.verificationPin;
             user.status = 'active';
             user.verificationCode = undefined;
+            user.verificationPin = undefined;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
@@ -291,6 +293,7 @@ module.exports = {
                         logger.logError(err);
                         user.status = status;
                         user.verificationCode = verificationCode;
+                        user.verificationPin = verificationPin;
                         user.save(function (err) {
                             if (err) {
                                 logger.logError('userController - verifyUser - error reverting user: ' + user.email);
@@ -467,25 +470,27 @@ module.exports = {
                 return res.status(409).send('UserError');
             }
             user.verificationCode = uuid.v4();
+            user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                var verificationUrl = config.url + 'verify-user?code=' + user.verificationCode;
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: user.email,
-                    subject: config.accountVerificationEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, verificationUrl)
-                };
-                email.sendEmail(mailOptions, function (err) {
+                subscription.sendVerificationSms(user, function (err) {
                     if (err) {
-                        logger.logError('userController - resendVerification - error sending resend verification email to: ' + mailOptions.to);
+                        logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
                         logger.logError(err);
                     } else {
-                        logger.logInfo('userController - resendVerification - resend verification email sent to ' + mailOptions.to);
+                        logger.logInfo('subscription - resendVerification - verification sent sent: ' + user.telephone);
+                    }
+                });
+                subscription.sendVerificationEmail(user, function (err) {
+                    if (err) {
+                        logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
                     }
                 });
                 res.status(200).end();

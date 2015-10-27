@@ -6,6 +6,7 @@ var async = require('async'),
     uuid = require('node-uuid'),
     aio = require('./aio'),
     billing = require('./billing'),
+    twilio = require('./twilio'),
     config = require('../setup/config'),
     email = require('./email'),
     logger = require('../setup/logger'),
@@ -128,6 +129,18 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     }
                 );
+            },
+            // send verification sms
+            function (userObj, accountObj, callback) {
+                sendVerificationSms(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newFreeUser - error sending verification sms: ' + userObj.telephone);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - newFreeUser - verification sent sent: ' + userObj.telephone);
+                    }
+                });
+                callback(null, userObj, accountObj);
             },
             // send verification email
             function (userObj, accountObj, callback) {
@@ -287,6 +300,18 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     }
                 );
+            },
+            // send verification sms
+            function (userObj, accountObj, callback) {
+                sendVerificationSms(userObj, function (err) {
+                    if (err) {
+                        logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.telephone);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - newPaidUser - verification sent sent: ' + userObj.telephone);
+                    }
+                });
+                callback(null, userObj, accountObj);
             },
             // send verification email
             function (userObj, accountObj, callback) {
@@ -475,6 +500,18 @@ module.exports = {
                             callback(err, userObj, accountObj);
                         }
                     );
+                },
+                // send verification sms
+                function (userObj, accountObj, callback) {
+                    sendVerificationSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - newComplimentaryUser - verification sent sent: ' + userObj.telephone);
+                        }
+                    });
+                    callback(null, userObj, accountObj);
                 },
                 // send verification email
                 function (userObj, accountObj, callback) {
@@ -682,6 +719,14 @@ module.exports = {
             // send verification email if registered
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
+                    sendVerificationSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - upgradeSubscription - error sending verification sms: ' + userObj.telephone);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - upgradeSubscription - verification sent sent: ' + userObj.telephone);
+                        }
+                    });
                     sendVerificationEmail(userObj, function (err) {
                         if (err) {
                             logger.logError('subscription - upgradeSubscription - error sending verification email: ' + userObj.email);
@@ -937,6 +982,14 @@ module.exports = {
                     // send verification email if registered
                     function (userObj, callback) {
                         if (userObj.status === 'registered') {
+                            sendVerificationSms(userObj, function (err) {
+                                if (err) {
+                                    logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.telephone);
+                                    logger.logError(err);
+                                } else {
+                                    logger.logInfo('subscription - convertToComplimentary - verification sent sent: ' + userObj.telephone);
+                                }
+                            });
                             sendVerificationEmail(userObj, function (err) {
                                 if (err) {
                                     logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);
@@ -1799,7 +1852,11 @@ module.exports = {
 
     sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail,
 
-    sendAccountVerifiedEmail: sendAccountVerifiedEmail
+    sendAccountVerifiedEmail: sendAccountVerifiedEmail,
+
+    sendVerificationSms: sendVerificationSms,
+
+    sendVerificationEmail: sendVerificationEmail
 };
 
 function createUser(user, cc, cb) {
@@ -1807,6 +1864,7 @@ function createUser(user, cc, cb) {
     userObj.role = userRoles.user;
     userObj.createdAt = (new Date()).toUTCString();
     userObj.verificationCode = uuid.v4();
+    userObj.verificationPin = Math.floor(Math.random() * 9000) + 1000;
     userObj.status = 'registered';
     if (cc) {
         userObj.validTill = moment(userObj.createdAt).add(cc.duration, 'days').utc();
@@ -2096,6 +2154,15 @@ function deleteVisitor(email, cb) {
                 }
             });
         }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendVerificationSms(user, cb) {
+    var message = sf(config.verificationSmsMessage, user.verificationPin);
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.telephone, message, function (err) {
         if (cb) {
             cb(err);
         }
