@@ -343,6 +343,7 @@ module.exports = {
                         revertAccountPaymentDetails(userObj.email, accountObj);
                         updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
                         updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
+                        sendVerificationSms(userObj);
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
@@ -804,6 +805,7 @@ module.exports = {
                         }
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
+                            sendVerificationSms(userObj);
                             sendVerificationEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
