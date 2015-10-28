@@ -76,7 +76,8 @@ module.exports = {
         var route = '/index.php?json_route=/lineup';
         var id = '&channel_id=' + channelId;
         var duration = '&lineup_period=' + period;
-        var url = config.cmsApiUrl + route + id + duration;
+        var dateFormat = '&date_format=iso';
+        var url = config.cmsApiUrl + route + id + duration + dateFormat;
         client.get(url).on('complete', function(result) {
             if (result instanceof Error) {
                 logger.logError('cms - getLineup - error');
