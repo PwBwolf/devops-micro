@@ -53,13 +53,13 @@
                 controller: 'merchantSignUpCtrl',
                 access: access.anon
             })
-            .when('/free-sign-up-success',
+            .when('/free-sign-up-success/:verificationEmail',
             {
                 templateUrl: 'views/free-sign-up-success.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success',
+            .when('/sign-up-success/:verificationEmail',
             {
                 templateUrl: 'views/sign-up-success.html',
                 controller: 'commonCtrl',
@@ -71,7 +71,7 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success-payment-failure',
+            .when('/sign-up-success-payment-failure/:verificationEmail',
             {
                 templateUrl: 'views/sign-up-success-payment-failure.html',
                 controller: 'commonCtrl',
@@ -125,9 +125,21 @@
                 controller: 'resendVerificationCtrl',
                 access: access.anon
             })
-            .when('/resend-verification-success',
+            .when('/resend-verification-success/:verificationEmail',
             {
                 templateUrl: 'views/resend-verification-success.html',
+                controller: 'commonCtrl',
+                access: access.anon
+            })
+            .when('/mobile-verification/:verificationEmail',
+            {
+                templateUrl: 'views/mobile-verification.html',
+                controller: 'mobileVerificationCtrl',
+                access: access.anon
+            })
+            .when('/mobile-verification-success',
+            {
+                templateUrl: 'views/mobile-verification-success.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })

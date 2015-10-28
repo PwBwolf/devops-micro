@@ -46,8 +46,10 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
     } else {
         var status = user.status;
         var verificationCode = user.verificationCode;
+        var verificationPin = user.verificationPin;
         user.status = 'active';
         user.verificationCode = undefined;
+        user.verificationPin = undefined;
         user.save(function (err) {
             if (err) {
                 logger.logError('adminCLI - verifyAccount - error saving user.');
@@ -60,6 +62,7 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                         logger.logError(err);
                         user.status = status;
                         user.verificationCode = verificationCode;
+                        user.verificationPin = verificationPin;
                         user.save(function (err) {
                             if (err) {
                                 logger.logError('adminCLI - verifyAccount - error reverting user');

@@ -946,10 +946,6 @@ ul.passwordStrength {
     margin-bottom: 0;
 }
 
-.btn-primary:hover, .btn-primary.active {
-    border: none;
-}
-
 .btn-primary.active {
     background-color: rgba(200, 200, 200, 0.9) !important;
 }

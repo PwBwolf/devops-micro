@@ -9,7 +9,7 @@
                 userSvc.resendVerification(
                     $scope.mv.email,
                     function () {
-                        $location.path('/resend-verification-success');
+                        $location.path('/resend-verification-success/' + $scope.mv.email);
                         $scope.saving = false;
                     },
                     function (response) {

@@ -13,7 +13,12 @@
                     <div translate="SIGN_UP_SUCCESS_LINE1"></div>
                     <br/>
 
-                    <div translate="SIGN_UP_SUCCESS_LINE2"></div>
+                    <div class="bolder-text" translate="SIGN_UP_SUCCESS_LINE2"></div>
+                    <br/>
+
+                    <div class="center-text">
+                        <button goto="/mobile-verification/{{verificationEmail}}" translate="SIGN_UP_SUCCESS_BUTTON" class="btn btn-primary uppercase-text bolder-text"></button>
+                    </div>
                     <br/>
 
                     <div><span translate="SIGN_UP_SUCCESS_LINE3_PART1"></span> <a href ng-click="goToWordPressUrl('WP_URL_FAQS')" translate="SIGN_UP_SUCCESS_FAQS"></a> <span translate="SIGN_UP_SUCCESS_LINE3_PART2"></span> <span ng-bind="appConfig.customerCareNumber"></span></div>

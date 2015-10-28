@@ -119,6 +119,16 @@ input[type="radio"]:checked + label:before {
     margin: 0 0 0 5px !important;
 }
 
+.bold-link {
+    font-family: gotham-bookgotham-book !important;
+    font-weight: bolder !important;
+}
+
+.bolder-link {
+    font-family: gotham-boldgotham-bold !important;
+    font-weight: bolder !important;
+}
+
 .language a:hover {
     margin: 0 0 1px 5px;
 }
@@ -954,10 +964,6 @@ ul.passwordStrength {
     text-align: center;
     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important;
     margin-bottom: 0;
-}
-
-.btn-primary:hover, .btn-primary.active {
-    border: none;
 }
 
 .btn-primary.active {
