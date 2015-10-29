@@ -132,14 +132,16 @@ module.exports = {
             },
             // send verification sms
             function (userObj, accountObj, callback) {
-                sendVerificationSms(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error sending verification sms: ' + userObj.telephone);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - newFreeUser - verification sent sent: ' + userObj.telephone);
-                    }
-                });
+                if(userObj.preferences.smsSubscription === true) {
+                    sendVerificationSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newFreeUser - error sending verification sms: ' + userObj.telephone);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - newFreeUser - verification sent sent: ' + userObj.telephone);
+                        }
+                    });
+                }
                 callback(null, userObj, accountObj);
             },
             // send verification email

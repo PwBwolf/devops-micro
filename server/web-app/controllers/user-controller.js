@@ -543,30 +543,38 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            user.verificationCode = uuid.v4();
-            user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
+            if(req.body.verifier === 'all' || req.body.verifier === 'email') {
+                user.verificationCode = uuid.v4();
+            }
+            if(req.body.verifier === 'all' || req.body.verifier === 'sms') {
+                user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
+            }
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                subscription.sendVerificationSms(user, function (err) {
-                    if (err) {
-                        logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - resendVerification - verification sent sent: ' + user.telephone);
-                    }
-                });
-                subscription.sendVerificationEmail(user, function (err) {
-                    if (err) {
-                        logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
-                    }
-                });
+                if(req.body.verifier === 'all' || req.body.verifier === 'sms') {
+                    subscription.sendVerificationSms(user, function (err) {
+                        if (err) {
+                            logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - resendVerification - verification sent sent: ' + user.telephone);
+                        }
+                    });
+                }
+                if(req.body.verifier === 'all' || req.body.verifier === 'email') {
+                    subscription.sendVerificationEmail(user, function (err) {
+                        if (err) {
+                            logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
+                        }
+                    });
+                }
                 res.status(200).end();
             });
         });
