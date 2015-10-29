@@ -243,7 +243,7 @@ module.exports = {
             twilio.isMobile(req.query.mobileNumber, function (err, result) {
                 if (err) {
                     logger.logError('appController - verifyMobileNumber - unable to check if phone number is mobile: ' + req.body.mobileNumber);
-                    logger.logError(validationError);
+                    logger.logError(err);
                     return res.status(200).send(false);
                 }
                 return res.status(200).send(result);

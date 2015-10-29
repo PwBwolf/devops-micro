@@ -57,9 +57,9 @@
                     if (lineUp.length > 0) {
                         angular.forEach(lineUp, function (data) {
                             if (!data.image) {
-                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.endTime, startDate, data.startTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
+                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             } else {
-                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(data.endTime, startDate, data.startTime) + '"><img src="' + getImage(data.image) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
+                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '"><img src="' + getImage(data.image) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             }
                             startDate = null;
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
@@ -80,19 +80,20 @@
             });
         }
 
-        function timeSpan(time, guideStartTime, programStartTime) {
+        function timeSpan(guideStartTime, programStartTime, programEndTime) {
+            var duration = (new Date(programEndTime) - new Date(programStartTime)) / (1000 * 60);
             if (guideStartTime && programStartTime) {
                 var hourDate = new Date(guideStartTime);
                 hourDate.setMinutes(0);
                 hourDate.setSeconds(0);
                 var diff = Math.floor((hourDate.getTime() - new Date(programStartTime).getTime()) / (1000 * 60));
                 if (diff >= 0) {
-                    return 'width:' + ((time - diff) * 5) + 'px';
+                    return 'width:' + ((duration - diff) * 5) + 'px';
                 } else {
-                    return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (time * 5) + 'px;border-left: 1px solid';
+                    return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (duration * 5) + 'px;border-left: 1px solid';
                 }
             } else {
-                return 'width:' + (time * 5) + 'px';
+                return 'width:' + (duration * 5) + 'px';
             }
         }
 
