@@ -3,7 +3,7 @@
 
     app.controller('merchantSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter, $) {
 
-        $scope.mv = {disclaimer: true, emailSmsSubscription: true, merchant: $routeParams.source || 'YIPTV'};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true, merchant: $routeParams.source || 'YIPTV', sendSmsVerification: true};
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 

@@ -17,7 +17,7 @@
             });
         }
 
-        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true, sendSmsVerification: true};
 
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {

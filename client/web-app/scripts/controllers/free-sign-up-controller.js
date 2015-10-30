@@ -3,7 +3,7 @@
 
     app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
 
-        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true, sendSmsVerification: true};
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 

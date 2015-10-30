@@ -3,6 +3,8 @@
 
     app.controller('resendVerificationCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
 
+        $scope.mv = {sendSmsVerification: true};
+
         $scope.resendVerification = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
