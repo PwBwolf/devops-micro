@@ -194,7 +194,7 @@ module.exports = {
         });
     },
 
-    isEmailVerified: function(req, res) {
+    isEmailVerified: function (req, res) {
         User.findOne({email: req.query.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('userController - isEmailVerified - error fetching user: ' + req.query.email.toLowerCase());
@@ -214,7 +214,7 @@ module.exports = {
         });
     },
 
-    verifyMobilePin: function(req, res) {
+    verifyMobilePin: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('userController - verifyMobilePin - error fetching user: ' + req.query.email.toLowerCase());
@@ -230,7 +230,7 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            if(user.verificationPin.toString() !== req.body.pin) {
+            if (user.verificationPin.toString() !== req.body.pin) {
                 return res.status(401).send('IncorrectPin');
             }
             var status = user.status;
@@ -543,19 +543,15 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            if(req.body.verifier === 'all' || req.body.verifier === 'email') {
-                user.verificationCode = uuid.v4();
-            }
-            if(req.body.verifier === 'all' || req.body.verifier === 'sms') {
-                user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
-            }
+            user.verificationCode = uuid.v4();
+            user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                if(req.body.verifier === 'all' || req.body.verifier === 'sms') {
+                if (req.body.sendSmsVerification) {
                     subscription.sendVerificationSms(user, function (err) {
                         if (err) {
                             logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
@@ -565,16 +561,14 @@ module.exports = {
                         }
                     });
                 }
-                if(req.body.verifier === 'all' || req.body.verifier === 'email') {
-                    subscription.sendVerificationEmail(user, function (err) {
-                        if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
-                        }
-                    });
-                }
+                subscription.sendVerificationEmail(user, function (err) {
+                    if (err) {
+                        logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
+                    }
+                });
                 res.status(200).end();
             });
         });

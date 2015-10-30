@@ -28,7 +28,6 @@
                         <div class="half-form">
                             <span class="label-text" translate="FREE_SIGN_UP_FIRST_NAME"></span>
                             <br><input valid-name autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
-
                             <div class="error-message" ng-show="form.firstName.$touched && form.firstName.$error.required" translate="FREE_SIGN_UP_FIRST_NAME_REQUIRED"></div>
                             <div class="error-message" ng-show="form.firstName.$touched && !form.firstName.$error.required && form.firstName.$error.validName" translate="FREE_SIGN_UP_FIRST_NAME_INVALID"></div>
                         </div>
@@ -51,6 +50,7 @@
                     <div class="full-form">
                         <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE"></span><br>
                         <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
+                        <br><input type="checkbox" class="check-box" name="sendSmsVerification" ng-model="mv.sendSmsVerification" id="sendSmsVerification"/><label for="sendSmsVerification"><span translate="FREE_SIGN_UP_SEND_SMS_VERIFICATION"></span></label>
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>
@@ -90,6 +90,7 @@
                     </div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN"></a></div>
+                    <div class="full-form center-form"><span translate="FREE_SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>

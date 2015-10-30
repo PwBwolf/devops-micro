@@ -44,7 +44,6 @@
                     <div class="full-form">
                         <span class="label-text" translate="COMP_SIGN_UP_EMAIL"></span><br>
                         <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="comp" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
-
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="COMP_SIGN_UP_EMAIL_REQUIRED"></div>
                         <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" translate="COMP_SIGN_UP_EMAIL_INVALID"></div>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.isSignUpAllowed" translate="COMP_SIGN_UP_EMAIL_EXISTS"></div>
@@ -52,6 +51,7 @@
                     <div class="full-form">
                         <span class="label-text" translate="COMP_SIGN_UP_TELEPHONE"></span><br>
                         <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
+                        <br><input type="checkbox" class="check-box" name="sendSmsVerification" ng-model="mv.sendSmsVerification" id="sendSmsVerification"/><label for="sendSmsVerification"><span translate="COMP_SIGN_UP_SEND_SMS_VERIFICATION"></span></label>
 
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="COMP_SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="COMP_SIGN_UP_TELEPHONE_INVALID"></div>
@@ -91,6 +91,7 @@
                     </div>
                     <div class="full-form center-form"><span translate="COMP_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="COMP_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="COMP_SIGN_UP_SIGN_IN"></a></div>
+                    <div class="full-form center-form"><span translate="COMP_SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>

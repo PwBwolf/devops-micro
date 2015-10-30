@@ -132,7 +132,7 @@ module.exports = {
             },
             // send verification sms
             function (userObj, accountObj, callback) {
-                if(userObj.preferences.smsSubscription === true) {
+                if (user.sendSmsVerification) {
                     sendVerificationSms(userObj, function (err) {
                         if (err) {
                             logger.logError('subscription - newFreeUser - error sending verification sms: ' + userObj.telephone);
@@ -305,14 +305,16 @@ module.exports = {
             },
             // send verification sms
             function (userObj, accountObj, callback) {
-                sendVerificationSms(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.telephone);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - newPaidUser - verification sent sent: ' + userObj.telephone);
-                    }
-                });
+                if (user.sendSmsVerification) {
+                    sendVerificationSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.telephone);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - newPaidUser - verification sent sent: ' + userObj.telephone);
+                        }
+                    });
+                }
                 callback(null, userObj, accountObj);
             },
             // send verification email
@@ -345,7 +347,9 @@ module.exports = {
                         revertAccountPaymentDetails(userObj.email, accountObj);
                         updateAioPackages(userObj.email, config.aioFreePremiumUserPackages);
                         updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
-                        sendVerificationSms(userObj);
+                        if (user.sendSmsVerification) {
+                            sendVerificationSms(userObj);
+                        }
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
                         deleteVisitor(userObj.email);
@@ -506,14 +510,16 @@ module.exports = {
                 },
                 // send verification sms
                 function (userObj, accountObj, callback) {
-                    sendVerificationSms(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - newComplimentaryUser - verification sent sent: ' + userObj.telephone);
-                        }
-                    });
+                    if (user.sendSmsVerification) {
+                        sendVerificationSms(userObj, function (err) {
+                            if (err) {
+                                logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
+                                logger.logError(err);
+                            } else {
+                                logger.logInfo('subscription - newComplimentaryUser - verification sent sent: ' + userObj.telephone);
+                            }
+                        });
+                    }
                     callback(null, userObj, accountObj);
                 },
                 // send verification email
@@ -722,14 +728,16 @@ module.exports = {
             // send verification email if registered
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
-                    sendVerificationSms(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - upgradeSubscription - error sending verification sms: ' + userObj.telephone);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - upgradeSubscription - verification sent sent: ' + userObj.telephone);
-                        }
-                    });
+                    if (newUser.sendSmsVerification) {
+                        sendVerificationSms(userObj, function (err) {
+                            if (err) {
+                                logger.logError('subscription - upgradeSubscription - error sending verification sms: ' + userObj.telephone);
+                                logger.logError(err);
+                            } else {
+                                logger.logInfo('subscription - upgradeSubscription - verification sent sent: ' + userObj.telephone);
+                            }
+                        });
+                    }
                     sendVerificationEmail(userObj, function (err) {
                         if (err) {
                             logger.logError('subscription - upgradeSubscription - error sending verification email: ' + userObj.email);
@@ -807,7 +815,9 @@ module.exports = {
                         }
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
-                            sendVerificationSms(userObj);
+                            if (newUser.sendSmsVerification) {
+                                sendVerificationSms(userObj);
+                            }
                             sendVerificationEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
@@ -986,14 +996,16 @@ module.exports = {
                     // send verification email if registered
                     function (userObj, callback) {
                         if (userObj.status === 'registered') {
-                            sendVerificationSms(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.telephone);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - verification sent sent: ' + userObj.telephone);
-                                }
-                            });
+                            if(newUser.sendSmsVerification) {
+                                sendVerificationSms(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.telephone);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - verification sent sent: ' + userObj.telephone);
+                                    }
+                                });
+                            }
                             sendVerificationEmail(userObj, function (err) {
                                 if (err) {
                                     logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);

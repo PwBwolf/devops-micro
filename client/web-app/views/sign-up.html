@@ -68,7 +68,7 @@
                     <div class="full-form">
                         <span class="label-text" translate="SIGN_UP_TELEPHONE"></span><br>
                         <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
-
+                        <br><input type="checkbox" class="check-box" name="sendSmsVerification" ng-model="mv.sendSmsVerification" id="sendSmsVerification"/><label for="sendSmsVerification"><span translate="SIGN_UP_SEND_SMS_VERIFICATION"></span></label>
                         <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="SIGN_UP_TELEPHONE_REQUIRED"></div>
                         <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="SIGN_UP_TELEPHONE_INVALID"></div>
                         <div class="error-message" ng-show="mobileNumberStatus === 'NOT_MOBILE'" translate="SIGN_UP_TELEPHONE_INVALID"></div>
@@ -167,6 +167,7 @@
                     <div class="full-form" style="padding-top:0px;">
                         <div class="bold-text text-center"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                     </div>
+                    <div class="full-form center-form"><span translate="SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>
