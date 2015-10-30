@@ -27,7 +27,7 @@ module.exports = {
     },
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
     url: 'https://app.int.yiptv.net/',
-    imageUrl: 'http://app.int.yiptv.net/images/',
+    imageUrl: 'https://app.int.yiptv.net/images/',
     secretToken: 'yip#tv@int#428',
     ruleEngineRecurrence: '0 0 0 * * *',
     contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
