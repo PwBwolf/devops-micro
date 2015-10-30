@@ -543,15 +543,19 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            user.verificationCode = uuid.v4();
-            user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
+            if (req.body.emailVerify) {
+                user.verificationCode = uuid.v4();
+            }
+            if (req.body.smsVerify) {
+                user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
+            }
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                if (req.body.sendSmsVerification) {
+                if (req.body.smsVerify) {
                     subscription.sendVerificationSms(user, function (err) {
                         if (err) {
                             logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
@@ -561,14 +565,16 @@ module.exports = {
                         }
                     });
                 }
-                subscription.sendVerificationEmail(user, function (err) {
-                    if (err) {
-                        logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
-                    }
-                });
+                if (req.body.emailVerify) {
+                    subscription.sendVerificationEmail(user, function (err) {
+                        if (err) {
+                            logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
+                        }
+                    });
+                }
                 res.status(200).end();
             });
         });
