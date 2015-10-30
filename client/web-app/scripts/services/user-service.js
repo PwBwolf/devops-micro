@@ -121,8 +121,8 @@
                 $http.post('/api/change-password', data).success(success).error(error);
             },
 
-            resendVerification: function (email, success, error) {
-                $http.post('/api/resend-verification', {email: email.toLowerCase()}).success(success).error(error);
+            resendVerification: function (data, success, error) {
+                $http.post('/api/resend-verification', data).success(success).error(error);
             },
 
             checkResetCode: function (code, success, error) {

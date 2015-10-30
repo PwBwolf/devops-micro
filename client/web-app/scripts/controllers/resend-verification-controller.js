@@ -9,7 +9,7 @@
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.resendVerification(
-                    $scope.mv.email,
+                    $scope.mv,
                     function () {
                         $location.path('/resend-verification-success/' + $scope.mv.email);
                         $scope.saving = false;
