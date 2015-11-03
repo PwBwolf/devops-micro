@@ -996,7 +996,7 @@ module.exports = {
                     // send verification email if registered
                     function (userObj, callback) {
                         if (userObj.status === 'registered') {
-                            if(newUser.sendSmsVerification) {
+                            if (newUser.sendSmsVerification) {
                                 sendVerificationSms(userObj, function (err) {
                                     if (err) {
                                         logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.telephone);
@@ -2264,12 +2264,11 @@ function sendCreditCardPaymentFailureEmail(user, cb) {
 }
 
 function sendAccountVerifiedEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
     var mailOptions = {
         from: config.email.fromName + ' <' + config.email.fromEmail + '>',
         to: user.email,
         subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, signInUrl)
+        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName)
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
