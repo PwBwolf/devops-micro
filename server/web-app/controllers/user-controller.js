@@ -529,6 +529,7 @@ module.exports = {
 
     resendVerification: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+            res.header('Access-Control-Allow-Origin', '*');
             if (err) {
                 logger.logError('userController - resendVerification - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
