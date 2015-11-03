@@ -138,7 +138,7 @@ module.exports = {
                             logger.logError('subscription - newFreeUser - error sending verification sms: ' + userObj.telephone);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - newFreeUser - verification sent sent: ' + userObj.telephone);
+                            logger.logInfo('subscription - newFreeUser - verification sms sent: ' + userObj.telephone);
                         }
                     });
                 }
@@ -311,7 +311,7 @@ module.exports = {
                             logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.telephone);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - newPaidUser - verification sent sent: ' + userObj.telephone);
+                            logger.logInfo('subscription - newPaidUser - verification sms sent: ' + userObj.telephone);
                         }
                     });
                 }
@@ -516,7 +516,7 @@ module.exports = {
                                 logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
                                 logger.logError(err);
                             } else {
-                                logger.logInfo('subscription - newComplimentaryUser - verification sent sent: ' + userObj.telephone);
+                                logger.logInfo('subscription - newComplimentaryUser - verification sms sent: ' + userObj.telephone);
                             }
                         });
                     }
@@ -734,7 +734,7 @@ module.exports = {
                                 logger.logError('subscription - upgradeSubscription - error sending verification sms: ' + userObj.telephone);
                                 logger.logError(err);
                             } else {
-                                logger.logInfo('subscription - upgradeSubscription - verification sent sent: ' + userObj.telephone);
+                                logger.logInfo('subscription - upgradeSubscription - verification sms sent: ' + userObj.telephone);
                             }
                         });
                     }
@@ -1002,7 +1002,7 @@ module.exports = {
                                         logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.telephone);
                                         logger.logError(err);
                                     } else {
-                                        logger.logInfo('subscription - convertToComplimentary - verification sent sent: ' + userObj.telephone);
+                                        logger.logInfo('subscription - convertToComplimentary - verification sms sent: ' + userObj.telephone);
                                     }
                                 });
                             }
