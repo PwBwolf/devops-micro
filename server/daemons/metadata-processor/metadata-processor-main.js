@@ -12,6 +12,7 @@ var logger = require('../../common/setup/logger');
 var fs = require('../../node_modules/fs-extended');
 var request = require('../../node_modules/request');
 var _ = require('../../node_modules/lodash');
+var email = require('../../common/services/email');
 
 require('../../common/models/channel');
 require('../../common/models/image');
@@ -127,6 +128,8 @@ function getChannelGuide() {
                                  }
                              }
                          );
+                     } else {
+                         callback(null, channels);
                      }
                  }
              });
@@ -239,11 +242,13 @@ function getChannelGuide() {
          if (err) {
              logger.logError('metadataProcessorMain - getChannelGuide failed');
              logger.logError(err);
+             sendMail('channel guide failed', err, null);
          } else {
              logger.logInfo('metadataProcessorMain - get channel guide succeed!');
+             sendMail('channel guide succeed', 'done', null);
          }
     });
-}
+};
 
 function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
     graceNote.getChannelGuide(dataGraceNote.stationId, startTime, endTime, function (err, data) {
@@ -271,7 +276,7 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
             });
         }
     });
-}
+};
 
 function saveChannel(channel, startTime, endTime, cb) {
     graceNote.getChannelGuide(channel.stationId, startTime, endTime, function (err, data) {
@@ -297,7 +302,7 @@ function saveChannel(channel, startTime, endTime, cb) {
             });
         }
     });
-}
+};
 
 function imageDownload() {
     var imageUriUniq = [];
@@ -835,12 +840,14 @@ function imageDownload() {
         if (err) {
             logger.logError('metadataProcessorMain - image processor - failed');
             logger.logError(err);
+            sendMail('image processor failed', err, null);
         } else {
             logger.logInfo('metadataProcessorMain - image processor succeed!');
+            sendMail('image processor succeed', 'done', null);
         }
         
     });
-}
+};
 
 function saveImage(channel, type, identifier, cb) {
 
@@ -855,7 +862,7 @@ function saveImage(channel, type, identifier, cb) {
             cb(err, newImage);
         }
     });
-}
+};
 
 function saveImageToDb(configUrl, uri, filename, cb) {
     request.head(configUrl + uri, function(err, res, body) {
@@ -922,7 +929,7 @@ function saveImageToDb(configUrl, uri, filename, cb) {
             });
         }
      });
-}
+};
   
 var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
@@ -946,4 +953,18 @@ var download = function(uri, filename, callback) {
            });
        }
     });
-}
+};
+
+function sendMail(subject, message, cb) {
+    var mailOptions = {
+        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+        to: 'yliu@yiptv.com',
+        subject: subject,
+        text: message
+    };
+    email.sendEmail(mailOptions, function (err) {
+        if (cb) {
+            cb(err);
+        }
+    });
+};
