@@ -22,7 +22,7 @@ module.exports = {
     },
     db: 'mongodb://yipUser:y1ptd3v@localhost/yiptv',
     url: 'http://localhost:3000/',
-    imageUrl: 'http://localhost:3000/images/',
+    imageUrl: 'https://app.int.yiptv.net/images/',
     secretToken: 'yip#tv@dev#712',
     ruleEngineRecurrence: '0 * * * * *',
     contactUsEmailList: 'achinth@yiptv.com',

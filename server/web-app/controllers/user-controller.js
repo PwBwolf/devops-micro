@@ -562,7 +562,7 @@ module.exports = {
                             logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - resendVerification - verification sent sent: ' + user.telephone);
+                            logger.logInfo('subscription - resendVerification - verification sms sent: ' + user.telephone);
                         }
                     });
                 }
