@@ -10,15 +10,10 @@
                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                     <h3 class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_SUB_HEADING"></h3>
 
-                    <div translate="FREE_SIGN_UP_SUCCESS_LINE1"></div>
+                    <div><span translate="FREE_SIGN_UP_SUCCESS_LINE1_PART1"></span> <span ng-show="showVerification === 'true'" translate="FREE_SIGN_UP_SUCCESS_LINE1_PART2"></span></div>
                     <br/>
 
-                    <div class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_LINE2"></div>
-                    <br/>
-
-                    <div class="center-text">
-                        <button goto="/mobile-verification/{{verificationEmail}}" translate="FREE_SIGN_UP_SUCCESS_BUTTON" class="btn btn-primary uppercase-text bolder-text"></button>
-                    </div>
+                    <div ng-show="showVerification === 'true'" class="bolder-text" translate="FREE_SIGN_UP_SUCCESS_LINE2"></div>
                     <br/>
 
 

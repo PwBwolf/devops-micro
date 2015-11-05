@@ -1,9 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('commonCtrl', ['$scope', '$routeParams', function ($scope, $routeParams) {
-
-        $scope.verificationEmail = $routeParams.verificationEmail;
+    app.controller('commonCtrl', [function () {
 
     }]);
 }(angular.module('app')));
