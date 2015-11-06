@@ -134,7 +134,7 @@
             .when('/resend-verification-success/:verificationEmail',
             {
                 templateUrl: 'views/resend-verification-success.html',
-                controller: 'commonCtrl',
+                controller: 'resendVerificationSuccessCtrl',
                 access: access.anon
             })
             .when('/mobile-verification/:verificationEmail',
