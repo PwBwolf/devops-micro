@@ -15,6 +15,7 @@
                     },
                     function (response) {
                         if (response === 'UserAlreadyVerified') {
+                            loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_USER_ALREADY_ACTIVE'));
                             $location.path('/' + $routeParams.redirectRoute + '/false');
                         } else if (response === 'IncorrectPin') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_PIN_MISMATCH') + ' ' + $routeParams.verificationTelephone);
