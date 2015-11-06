@@ -36,7 +36,11 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            $location.path('/sign-up-success/' + $scope.mv.email);
+                            if ($scope.mv.sendSmsVerification) {
+                                $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
+                            } else {
+                                $location.path('/sign-up-success/true');
+                            }
                         } else {
                             $location.path('/sign-up-success-login');
                         }
