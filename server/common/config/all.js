@@ -8,6 +8,12 @@ module.exports = {
     factProviders: {},
     postProcessors: {},
     appName: 'YipTV',
+    allowedOrigins: ['https://int.yiptv.net', 'https://test.yiptv.net','https://www.yiptv.com'],
+    allowedOriginsO: {
+        'https://int.yiptv.net': true,
+        'https://test.yiptv.net': true,
+        'https://www.yiptv.com': true
+    },    
     customerCareNumber: '855-919-4788',
     graceNoteLineupId: 'USA-FL70393-DEFAULT',
     graceNoteApiUrl: 'http://data.tmsapi.com/v1.1',
