@@ -8,19 +8,16 @@ var mongoose = require('../../../server/node_modules/mongoose');
 var async = require('../../../server/node_modules/async');
 var logger = require('../../../server/common/setup/logger');
 var fs = require('../../../server/node_modules/fs-extended');
-var xlsx = require('./node_modules/xlsx');
-var xml2js = require('./node_modules/xml2js');
+var xlsx = require('../../../server/node_modules/xlsx');
+var xml2js = require('../../../server/node_modules/xml2js');
 
 require('./models/airing');
 require('./models/epg');
 require('./models/event');
 
-//var dbYip = mongoose.createConnection(config.yipMetaDataDb);
-//var dbYip = mongoose.createConnection(config.db);
-//var dbYip = mongoose.createConnection(config.yiptv);
-//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yipmetadata'); // integration
-var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
-//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.11/yipmetadata'); // test
+var dbYip = mongoose.createConnection(config.db);
+//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
+//var dbYip = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.11/yiptv'); // test
 
 var Airing = dbYip.model('Airing');
 var Epg = dbYip.model('Epg');
