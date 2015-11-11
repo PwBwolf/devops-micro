@@ -14,6 +14,15 @@ module.exports = function (app, logger) {
     app.set('views', config.root + config.webAppClientPath);
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json({type: 'application/*+json'}));
+    app.use(function(req, res, next) {
+        var allowedOrigins = config.allowedOrigins;
+        var origin = req.get('origin');
+        if(allowedOrigins.indexOf(origin) > -1){
+            res.header("Access-Control-Allow-Origin", origin);
+
+        }
+        next();
+      });
     app.use(function (err, req, res, next) {
         if (err) {
             logger.logError('webApp - express - error in request');
