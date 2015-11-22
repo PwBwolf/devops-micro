@@ -236,13 +236,13 @@ module.exports = {
         if (config.checkPhoneNumberExists) {
             var validationError = validation.validateVerifyMobileNumberInputs(req.query.mobileNumber);
             if (validationError) {
-                logger.logError('appController - verifyMobileNumber - user input error: ' + req.body.mobileNumber);
+                logger.logError('appController - verifyMobileNumber - user input error: ' + req.query.mobileNumber);
                 logger.logError(validationError);
                 return res.status(500).send(validationError);
             }
             twilio.isMobile(req.query.mobileNumber, function (err, result) {
                 if (err) {
-                    logger.logError('appController - verifyMobileNumber - unable to check if phone number is mobile: ' + req.body.mobileNumber);
+                    logger.logError('appController - verifyMobileNumber - unable to check if phone number is mobile: ' + req.query.mobileNumber);
                     logger.logError(err);
                     return res.status(200).send(false);
                 }
