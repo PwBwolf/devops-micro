@@ -51,13 +51,14 @@ module.exports = {
     
     getChannelGuideAll: function (req, res) {
         cms.getLineup(req.query.id, req.query.hours, function (err, data) {
-            console.log('media ctrl in get channel guide');
             if (err) {
                 logger.logError('mediaController - getChannelGuideAll - error fetching lineup');
                 logger.logError(err);
                 return res.status(500).end();
             }
             if (data ) {
+                res.set('Cache-Control', 'public, max-age=300');
+                res.set('Expires', new Date(Date.now() + 300000).toUTCString());
                 return res.json(data);
             } else {
                 return res.status(500).end();
@@ -80,6 +81,8 @@ module.exports = {
                 }
                 if (data && data.channels_list && data.channels_list.length > 0) {
                     var channels = _.filter(data.channels_list, {status: '1'});
+                    res.set('Cache-Control', 'public, max-age=480');
+                    res.set('Expires', new Date(Date.now() + 480000).toUTCString());                    
                     return res.json(channels);
                 } else {
                     return res.status(500).end();
@@ -96,6 +99,8 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
+            res.set('Cache-Control', 'public, max-age=480');
+            res.set('Expires', new Date(Date.now() + 480000).toUTCString());  
             return res.json(data.ads);
         });
 
@@ -109,6 +114,8 @@ module.exports = {
                 return res.status(500).end();
             }
             if (data && data.categories && data.categories.length > 0) {
+                res.set('Cache-Control', 'public, max-age=480');
+                res.set('Expires', new Date(Date.now() + 480000).toUTCString());                  
                 return res.json(data.categories);
             } else {
                 return res.status(500).end();
