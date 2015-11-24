@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('channelGuideCtrl', ['$scope', '$rootScope', '$', '$q', '$timeout', 'mediaSvc', '$filter', 'loggerSvc', function ($scope, $rootScope, $, $q, $timeout, mediaSvc, $filter) {
+    app.controller('channelGuideCtrl', ['$scope', '$rootScope', '$', '$q', '$timeout', 'mediaSvc', '$filter', '$compile', function ($scope, $rootScope, $, $q, $timeout, mediaSvc, $filter, $compile) {
 
         var canceller;
         var date = new Date();
@@ -38,31 +38,57 @@
             $timeout(getChannelGuide, 100);
         });
 
+
+        
         function getChannelGuide() {
-            async.eachSeries($rootScope.channels, function (value, callback) {
+            var channelIndex = -1;
+            var startDate = date;
+           var channelIds = $rootScope.channels.map(function (item) { return item.id; });
+              channelIndex++;
                 if (canceller) {
                     canceller.resolve();
                 }
                 canceller = $q.defer();
-                mediaSvc.getChannelGuide(value.id, 6, canceller).success(function (programs) {
-                    var logo = value.logoUri;
-                    var station = value.id;
-                    var lineUp = programs;
+                mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
+                    
+                    angular.forEach(channelIds, function(channelId,chId) {
+ 
+                    var station = channelId;
+                    var chIndex = _.findIndex($rootScope.channels, {id: station});
+                    var logo =  $rootScope.channels[chIndex].logoUri;
+                    var channelTitle = $rootScope.channels[chIndex].title;
+                    var epgIndex =  _.findIndex(channelsEpg, {channel_id: station});
+                    var lineUp = [];
+                    if(epgIndex > 0)
+                       lineUp = channelsEpg[epgIndex].programs;
+                    
+                        
                     var channelGuide = angular.element(document.createElement('div'));
                     var channelLogo = angular.element(document.createElement('div'));
-                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', value.title).attr('class', 'guide-logo').attr('style', 'background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ');
+                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
+
                     $(channelGuide).attr('channel', station).prepend(channelLogo);
-                    var startDate = date;
                     var channelLineUp;
                     if (lineUp.length > 0) {
-                        angular.forEach(lineUp, function (data) {
+                        angular.forEach(lineUp, function (data, id) {
                             if (!data.image) {
-                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '"><img src="../images/tv-logo.png" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
+                                channelLineUp = '<div title="' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
                             } else {
-                                channelLineUp = '<div title="' + data.title + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '"><img src="' + getImage(data.image) + '" /><p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
+                                if(id === 0){
+                                    channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="cursor: pointer;' + timeSpan(startDate, data.startTime, data.endTime) + '" ng-click="watchNow('+ chIndex + ',0)" href="">';
+                                    channelLineUp += '<span style="float:right"> <img src="../images/play-button.png" /> </span>';
+                                }
+                                else{
+                                    channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
+                                }
+                                    
                             }
-                            startDate = null;
+
+
+                            channelLineUp += '<p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
+
+
                             $(channelGuide).append(channelLineUp);
                         });
                     } else {
@@ -72,12 +98,18 @@
                     }
                     $(channelGuide).attr('class', 'channel-description');
                     $(channelGuide).attr('id', 'channelGuideDescription');
+                    $compile(channelGuide)($scope);
                     angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
-                    callback();
+
+
+                 });
+                    
                 }).error(function () {
-                    callback();
+                    console.log('channel guide ctrl error bloc');
+
                 });
-            });
+                
+
         }
 
         function timeSpan(guideStartTime, programStartTime, programEndTime) {
@@ -90,7 +122,7 @@
                 if (diff >= 0) {
                     return 'width:' + ((duration - diff) * 5) + 'px';
                 } else {
-                    return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (duration * 5) + 'px;border-left: 1px solid';
+                   return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (duration * 5) + 'px;border-left: 1px solid';
                 }
             } else {
                 return 'width:' + (duration * 5) + 'px';

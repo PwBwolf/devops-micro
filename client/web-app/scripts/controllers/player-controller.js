@@ -21,6 +21,7 @@
 
             mediaSvc.getUserChannels(function (data) {
                 $rootScope.channels = data;
+//                $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
             });
 

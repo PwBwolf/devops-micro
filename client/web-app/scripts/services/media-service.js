@@ -21,6 +21,16 @@
                 });
             },
 
+            getChannelGuideAll: function (id, hours) {
+                console.log('mediaservice getchannelguide 222');
+                return $http({
+                    method: 'GET',
+                    url: '/api/get-channel-guide-all',
+                    params: {id: id, hours: hours}
+                    
+                });
+            },
+            
             getUserChannels: function (success, error) {
                 return $http({
                     method: 'GET',

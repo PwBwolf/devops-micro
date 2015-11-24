@@ -41,13 +41,29 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            if (data && data.programs) {
+            if (data && data.programs ) {
                 return res.json(data.programs);
             } else {
                 return res.status(500).end();
             }
         });
     },
+    
+    getChannelGuideAll: function (req, res) {
+        cms.getLineup(req.query.id, req.query.hours, function (err, data) {
+            console.log('media ctrl in get channel guide');
+            if (err) {
+                logger.logError('mediaController - getChannelGuideAll - error fetching lineup');
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (data ) {
+                return res.json(data);
+            } else {
+                return res.status(500).end();
+            }
+        });
+    },    
 
     getUserChannels: function (req, res) {
         User.findOne({email: req.email}).populate('account').exec(function (err, user) {
@@ -74,14 +90,15 @@ module.exports = {
     },
 
     getPromos: function (req, res) {
-        CmsAd.find({}, function (err, promos) {
+       cms.getAds(function (err, data) {
             if (err) {
                 logger.logError('mediaController - getPromos - error fetching promos');
                 logger.logError(err);
                 return res.status(500).end();
             }
-            return res.json(promos);
+            return res.json(data.ads);
         });
+
     },
 
     getChannelCategories: function (req, res) {
