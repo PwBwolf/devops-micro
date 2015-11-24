@@ -122,7 +122,7 @@
                 if (diff >= 0) {
                     return 'width:' + ((duration - diff) * 5) + 'px';
                 } else {
-                   return 'margin-left:' + (diff * -5) + 'px;' + 'width:' + (duration * 5) + 'px;border-left: 1px solid';
+                   return  'width:' + (duration * 5) + 'px;border-left: 1px solid';
                 }
             } else {
                 return 'width:' + (duration * 5) + 'px';
