@@ -41,17 +41,13 @@
 
         
         function getChannelGuide() {
-            var channelIndex = -1;
-            var startDate = date;
+
+           var startDate = date;
            var channelIds = $rootScope.channels.map(function (item) { return item.id; });
-              channelIndex++;
-                if (canceller) {
-                    canceller.resolve();
-                }
-                canceller = $q.defer();
-                mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
+
+           mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                     
-                    angular.forEach(channelIds, function(channelId,chId) {
+               angular.forEach(channelIds, function(channelId,chId) {
  
                     var station = channelId;
                     var chIndex = _.findIndex($rootScope.channels, {id: station});
@@ -59,9 +55,8 @@
                     var channelTitle = $rootScope.channels[chIndex].title;
                     var epgIndex =  _.findIndex(channelsEpg, {channel_id: station});
                     var lineUp = [];
-                    if(epgIndex > 0)
+                    if(epgIndex >= 0)
                        lineUp = channelsEpg[epgIndex].programs;
-                    
                         
                     var channelGuide = angular.element(document.createElement('div'));
                     var channelLogo = angular.element(document.createElement('div'));
@@ -101,13 +96,12 @@
                     $compile(channelGuide)($scope);
                     angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
 
-
                  });
                     
-                }).error(function () {
+            }).error(function () {
                     console.log('channel guide ctrl error bloc');
 
-                });
+            });
                 
 
         }
