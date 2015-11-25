@@ -83,7 +83,6 @@
                             channelLineUp += '<p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
 
-
                             $(channelGuide).append(channelLineUp);
                         });
                     } else {
