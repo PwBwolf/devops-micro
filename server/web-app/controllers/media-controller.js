@@ -27,7 +27,7 @@ module.exports = {
                 return res.status(500).end();
             }
             if (data && data.routes && data.routes.length > 0) {
-                return res.json(data.routes[0]);
+                return res.json(data);
             } else {
                 return res.status(500).end();
             }

@@ -179,7 +179,7 @@
 
         $scope.playChannel = function (index, airing) {
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-                $scope.tvUrl = channelUrl;
+                $scope.tvUrl = channelUrl.routes[0];
                 $scope.airing = airing;
                 $scope.channelLogo = $scope.channels[index].logoUri;
                 $scope.channelName = $scope.channels[index].title;
