@@ -66,7 +66,7 @@ worker.register({
                                         });
                                     } else {
                                         if (dbUser.account.type === 'free') {
-                                            subscription.upgradeSubscription(params.username.toLowerCase(), {}, function (err) {
+                                            subscription.upgradeSubscription(params.username.toLowerCase(), params.agentNum ? {agentNum: params.agentNum} : {}, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
                                                     logger.logError(err);
