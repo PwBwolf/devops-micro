@@ -79,7 +79,7 @@ module.exports = {
         );
     },
 
-    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, telephone, locale, payBy, payInfo, payDate, payCvv, payName, callback) {
+    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, telephone, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
@@ -101,7 +101,8 @@ module.exports = {
                 'year', payDate.substring(3),
                 'paycvv', payCvv,
                 'payname', payName,
-                'auto', 'Y'
+                'auto', 'Y',
+                'agentnum', agentNum ? agentNum : 1
             ], function (err, response) {
                 if (err) {
                     logger.logError('billing - updateCustomer - error in updating customer 1');

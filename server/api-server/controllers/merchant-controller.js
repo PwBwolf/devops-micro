@@ -137,6 +137,7 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 req.body.merchantId = req.query.merchantId;
+                req.body.agentNum = 2;
                 queue.enqueue('makePayment', req.body, function (err) {
                     if (err) {
                         logger.logError('merchantController - makePayment - error adding job to queue');
