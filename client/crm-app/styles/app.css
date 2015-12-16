@@ -1556,9 +1556,8 @@ body, html {
 
 .user-guide-panel {
     width: 100%;
-    height: 245px;
+    height: auto;
     overflow-x: scroll;
-    overflow-y: scroll;
     white-space: nowrap;
     padding-top: 10px;
     -webkit-transition: all 1s ease-in-out;
@@ -1566,6 +1565,19 @@ body, html {
     -o-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
 }
+
+#channelTimePanel{
+    width: 100%;
+    height: auto;
+    overflow-x: scroll;
+    white-space: nowrap;
+    padding-top: 10px;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
 
 .channel-guide-panel-minimized {
     background: lightgrey;
