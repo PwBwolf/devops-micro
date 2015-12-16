@@ -20,9 +20,10 @@
 
             function getTimeSlots() {
                 var currentSlot = new Date();
+                var timeSlots = [];
+
                 for (var l = 1; l < 8; l++) {
                     var count = 60 * l;
-                    var timeSlots = [];
                     timeSlots[l] = $filter('date')(new Date(currentSlot.getTime() + (count * 60 * 1000)), 'h:00 a');
                     var timeModuleItemOthers = angular.element(document.createElement('li'));
                     $(timeModuleItemOthers).attr('class', 'time-module-item').html(timeSlots[l]);
@@ -35,24 +36,26 @@
         }
 
         $rootScope.$on('ChannelsLoaded', function () {
-            $timeout(getChannelGuide, 100);
+            $rootScope.timer = $timeout(getChannelGuide, 100);
         });
 
-
+        $scope.$on('ChannelFilterEvent', function(event, args) {
+            updateChannelGuide($rootScope.filteredChannels);
+        });
         
         function getChannelGuide() {
-
-           var startDate = date;
-           var channelIds = $rootScope.channels.map(function (item) { return item.id; });
-
-           mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
-                    
-               angular.forEach(channelIds, function(channelId,chId) {
+            var startDate = date;
+            var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
+           
+            mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
+                $rootScope.channelsEpg = channelsEpg;
+               
+                angular.forEach(channelIds, function(channelId,chId) {
  
                     var station = channelId;
-                    var chIndex = _.findIndex($rootScope.channels, {id: station});
-                    var logo =  $rootScope.channels[chIndex].logoUri;
-                    var channelTitle = $rootScope.channels[chIndex].title;
+                    var chIndex = _.findIndex($rootScope.filteredChannels, {id: station});
+                    var logo =  $rootScope.filteredChannels[chIndex].logoUri;
+                    var channelTitle = $rootScope.filteredChannels[chIndex].title;
                     var epgIndex =  _.findIndex(channelsEpg, {channel_id: station});
                     var lineUp = [];
                     if(epgIndex >= 0)
@@ -60,7 +63,7 @@
                         
                     var channelGuide = angular.element(document.createElement('div'));
                     var channelLogo = angular.element(document.createElement('div'));
-                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
+                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; width:150px;background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
 
                     $(channelGuide).attr('channel', station).prepend(channelLogo);
                     var channelLineUp;
@@ -88,22 +91,42 @@
                     } else {
                         channelLineUp = '<div title="' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '" style="width:300px;border-right:none"><img src="../images/empty.png" /><p style="text-align: left;"><span class="channel-details-body">' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '</span></p>';
                         $(channelGuide).append(channelLineUp);
-
                     }
                     $(channelGuide).attr('class', 'channel-description');
                     $(channelGuide).attr('id', 'channelGuideDescription');
                     $compile(channelGuide)($scope);
                     angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
-
-                 });
+                });
                     
             }).error(function () {
-                    console.log('channel guide ctrl error bloc');
+                console.log('channel guide ctrl error bloc');
 
             });
-                
-
         }
+        
+        function updateChannelGuide(filteredChannels) {
+
+            var startDate = new Date();
+            var channelIds = filteredChannels.map(function (item) { return item.id; });
+            
+            var children = channelGuideHolder[0].children;
+            for(var i = 1; i < children.length; ++i) {
+                var channelId = children[i].getAttribute('channel');
+                var channelFound = false;
+                for(var j = 0; j < filteredChannels.length; ++j) {
+                    if(channelId == filteredChannels[j].id) {
+                        channelFound = true;
+                        break;
+                    }
+                }
+                
+                if(channelFound) {
+                    channelGuideHolder[0].children[i].style.display = 'block';
+                } else {
+                    channelGuideHolder[0].children[i].style.display = 'none';
+                }
+            }
+         }
 
         function timeSpan(guideStartTime, programStartTime, programEndTime) {
             var duration = (new Date(programEndTime) - new Date(programStartTime)) / (1000 * 60);
