@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <div id='channelTimePanel' class='position-div user-guide user-guide-panel scrollListener' style="height: auto" >
+    <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' style="height: auto" >
         <div></div>
     </div>
 
@@ -123,7 +123,7 @@
             </div>
         </div>
 
-        <div id="userGuide" class="user-guide-panel scrollListener" ng-controller='channelGuideCtrl' style="width: 95%; float:left;">
+        <div id="userGuide" class="user-guide-panel   scrollListener" ng-controller='channelGuideCtrl' style="width: 95%; float:left;">
             <div class='position-div user-guide '>
 
                 <div id='channelGuidePanel' class='user-guide-description'>
@@ -134,28 +134,5 @@
         </div>
 
     </div>
-
-
-
-    <script>
-
-        var tempScrollTop = $(window).scrollTop();
-
-
-
-        var scrollListener = $(".scrollListener");
-        scrollListener.scroll(function(){
-            scrollListener.scrollTop($(this).scrollTop());
-            return false;
-        });
-        scrollListener.scroll(function(){
-            scrollListener.scrollLeft($(this).scrollLeft());
-            return false;
-        });
-
-
-    </script>
-
-
 
 </div>
