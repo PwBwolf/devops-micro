@@ -1149,7 +1149,7 @@ ul.passwordStrength {
 }
 
 .channel-description > div:first-child {
-    width: 62px;
+    width: 150px;
     height: 60px;
     border-right: 4px groove;
     z-index: 8;
@@ -1585,7 +1585,7 @@ body, html {
     overflow-x: scroll;
     overflow-y: scroll;
     white-space: nowrap;
-    padding-top: 5px;
+    padding-top: 2px;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -1709,7 +1709,7 @@ body, html {
 }
 
 .time-module-item:first-child {
-    margin-left: 60px;
+    margin-left: 150px;
 /*     width:150px; */
 }
 
