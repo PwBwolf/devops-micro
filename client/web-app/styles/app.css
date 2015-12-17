@@ -1254,7 +1254,7 @@ body, html {
 
 #playerTop, #playerBottom {
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 #playerTop {
@@ -1688,9 +1688,10 @@ body, html {
 }
 
 .guide-header {
-    border-bottom: thick solid #D2D2D2;
+    border-bottom: thick solid #5A5A5A;
     box-shadow: 0 2px 4px #5A5A5A;
     z-index: 6;
+    width:2500px
 }
 
 .guide-header > ul {
