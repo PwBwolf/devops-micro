@@ -216,7 +216,7 @@ footer {
     width: 100%;
     max-width: 1280px;
     height: 32px;
-/*    position: fixed; */
+    position: fixed;
     bottom: 0px;
     background: rgba(253, 253, 253, .91);
     text-transform: uppercase;

@@ -16,7 +16,8 @@ var mongoose = require('mongoose'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
     Merchant = mongoose.model('Merchant'),
-    Account = mongoose.model('Account');
+    Account = mongoose.model('Account'),
+    FavoriteChannel = mongoose.model('FavoriteChannel');
 
 module.exports = {
     signUp: function (req, res) {
@@ -916,6 +917,103 @@ module.exports = {
                 });
             } else {
                 return res.status(404).send('UserNotFound');
+            }
+        });
+    },
+    
+    getFavoriteChannels: function (req, res) {
+        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+            if (err) {
+                logger.logError('userController - getFavoriteChannels - error finding user: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            
+            var favoriteChannels = [];
+            if(data && data.channels.length > 0) {
+                for(var i = 0; i < data.channels.length; ++i) {
+                    favoriteChannels.push({channel_id: data.channels[i].channel_id});
+                }
+            }
+            return res.send(favoriteChannels);
+        });
+    },
+    
+    addFavoriteChannel: function (req, res) {
+        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+            if (err) {
+                logger.logError('userController - addFavoriteChannel - error finding user: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!data) {
+                var favoriteChannel = new FavoriteChannel();
+                favoriteChannel.email = req.email.toLowerCase();
+                favoriteChannel.channels.push({channel_id: req.query.channelId, user_type: 0});
+                favoriteChannel.save(function (err) {
+                    if (err) {
+                        logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
+                        logger.logError(err);
+                        return res.status(500).send('failed to save to db to add the favorite channel!');
+                    } else {
+                        logger.logInfo('userController - addFavoriteChannel - succeed to add favorite channel for use: ' + req.email.toLowerCase());
+                        return res.status(200).end();
+                    }
+                });
+            } else {
+                var channelFound = false;
+                for(var i = 0; i < data.channels.length; ++i) {
+                    if(data.channels[i].channel_id === req.query.channelId && data.channels[i].user_type === 0) {
+                        channelFound = true;
+                        break;
+                    }
+                }
+                if(channelFound) {
+                    return res.status(200).send('favorite channel exists!');
+                } else {
+                    data.channels.push({channel_id: req.query.channelId, user_type: 0});
+                    data.save(function (err) {
+                        if (err) {
+                            logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
+                            logger.logError(err);
+                            return res.status(500).send('failed to save to db to add the favorite channel!');
+                        } else {
+                            logger.logInfo('userController - addFavoriteChannel - succeed to add favorite channel for use: ' + req.email.toLowerCase());
+                            return res.status(200).end();
+                        }
+                    });
+                }
+            }
+        });
+    },
+    
+    removeFavoriteChannel: function (req, res) {
+        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+            if (err) {
+                logger.logError('userController - removeFavoriteChannel - error finding user: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            }
+            if (!data) {
+                return res.status(404).send('UserNotFound');
+            } else {
+                var index = _.findIndex(data.channels, {channel_id: req.query.channelId, user_type: 0});
+                if(index >= 0) {
+                    data.channels.splice(index, 1);
+                    data.save(function(err) {
+                        if (err) {
+                            logger.logError('userController - removeFavoriteChannel - error remove favorite channel: ' + req.chanelId);
+                            logger.logError(err);
+                            return res.status(500).send('failed to save to db to remove the favorite channel!');
+                        } else {
+                            logger.logInfo('userController - removeFavoriteChannel - succeed to add favorite channel: ' + req.query.channelId);
+                            return res.status(200).end();
+                        }
+                    });
+                } else {
+                    logger.logInfo('userController - removeFavoriteChannel - favorite channel could not be found: ' + req.chanelId);
+                    return res.status(500).send('favorite channel could not be found!');
+                }
             }
         });
     }
