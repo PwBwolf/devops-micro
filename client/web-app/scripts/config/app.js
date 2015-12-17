@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app', [
-        'ngSanitize', 'ngRoute', 'ngAnimate',
+        'ngSanitize', 'ngRoute', 'ngAnimate', 'pageslide-directive',
         'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap'
     ]);
     angular.module('app').value('_', window._);

@@ -1,16 +1,39 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['_', '$', '$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter) {
+    app.controller('playerCtrl', ['_', '$', '$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', '$timeout', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter, $timeout) {
 
-        var cancellerProgram, cancellerGuide;
+        var cancellerProgram, cancellerGuide, currentChannelIndex, channelsHasTags;
         $scope.selectedPromo = -1;
         $scope.selectedGenres = [];
         $scope.selectedRegions = [];
         $scope.selectedAudiences = [];
         $scope.selectedLanguages = [];
-
+        $scope.favoriteChannels = [];
+        $scope.recentChannels = [];
+        $scope.favoriteIcon = '../../images/favorite_white.png';
+        currentChannelIndex = {index: undefined, channelId: undefined};
+        $scope.channelLogo = '../../images/logo.png';
+        $scope.programTitle = 'Title ...';
+        $scope.programDescription = 'Description ...';
+        $scope.showChannelFilter = false;
+        channelsHasTags = false;
+        
+        var favoriteChannels = document.getElementById('favoriteChannels');
+        var recentChannels = document.getElementById('recentChannels');
+        var allChannels = document.getElementById('allChannels');
+        
         activate();
+        
+        var currentSlot = new Date();
+        var timeSlots = [];
+
+        for (var l = 0; l < 8; l++) {
+            var count = 60 * l;
+            timeSlots.push({time: $filter('date')(new Date(currentSlot.getTime() + (count * 60 * 1000)), 'h:00 a')});
+        }
+        
+        $scope.times = timeSlots;
 
         function activate() {
             $scope.channelList = $window.document.getElementById('channelMenuHolder');
@@ -21,7 +44,7 @@
 
             mediaSvc.getUserChannels(function (data) {
                 $rootScope.channels = data;
-//                $rootScope.filteredChannels = $rootScope.channels;
+                $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
             });
 
@@ -31,7 +54,27 @@
 
             mediaSvc.getChannelCategories(function (data) {
                 $rootScope.channelCategories = data;
+                for(var i = 0; i < data.length; i++) {
+                    var genre = data[i].tags;
+                    for(var j = 0; j < genre.length; j++) {
+                        if(j%2 == 0) {
+                            $rootScope.channelCategories[i].tags[j].col = 0;
+                        } else {
+                            $rootScope.channelCategories[i].tags[j].col = 1;
+                        }
+                    }
+                }
             });
+            
+            mediaSvc.getFavoriteChannels(
+                function (data) {
+                    $scope.favoriteChannels = data;
+                    console.log('playerCtrl - favorite channels: ' + data.length);
+                },
+                function (error) {
+                    console.log(error);
+                }    
+            );
         }
 
         $scope.promoSelected = function ($index) {
@@ -43,8 +86,8 @@
 
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
-            $scope.brandImage = $scope.channels[index].logoUri;
-            $scope.brandName = $scope.channels[index].title;
+            $scope.brandImage = $rootScope.filteredChannels[index].logoUri;
+            $scope.brandName = $rootScope.filteredChannels[index].title;
             $scope.isVisible = true;
             $($scope.channelList).removeClass('channel-panel');
             $($scope.channelList).addClass('channel-panel-max');
@@ -88,15 +131,22 @@
             scrollToTop();
         };
 
-        $scope.toggleChannelFilter = function () {
+        function toggleChannelFilter() {
             if ($rootScope.channels && $rootScope.channels.length > 0 && $rootScope.channelCategories && $rootScope.channelCategories.length > 0) {
-                addTagsToChannels();
-                $scope.filteredChannels = $rootScope.channels;
-                $scope.clearAll();
                 $scope.showChannelFilter = !$scope.showChannelFilter;
+                if($scope.showChannelFilter) {
+                    if(!channelsHasTags) {
+                        addTagsToChannels();
+                        channelsHasTags = true;
+                    }
+                    //$rootScope.filteredChannels = $rootScope.channels;
+                    //$scope.clearAll();
+                }
             }
         };
 
+        $scope.$on('ToggleChannelFilterEvent', toggleChannelFilter);
+        
         function addTagsToChannels() {
             var genres = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Genre'}), 'tags'), 'id');
             var languages = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Language'}), 'tags'), 'id');
@@ -141,7 +191,124 @@
             $scope.hoveredChannel = index;
             getFirstProgram(index);
         };
+        
+        $scope.nextChannel = function () {
+            if(currentChannelIndex != undefined) {
+                var indexOfFilteredChannels = _.findIndex($rootScope.filteredChannels, {id: currentChannelIndex.channelId});
+                if(indexOfFilteredChannels >= 0) {
+                    if(indexOfFilteredChannels + 1 >= $rootScope.filteredChannels.length) {
+                        currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
+                        currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                    } else {
+                        currentChannelIndex.channelId = $rootScope.filteredChannels[indexOfFilteredChannels + 1].id;
+                        currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                    }
+                } else {
+                    currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
+                    currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                }
 
+                $scope.watchNow(currentChannelIndex.index, 0);
+            }
+        };
+        
+        $scope.previousChannel = function () {
+            if(currentChannelIndex != undefined) {
+                var indexOfFilteredChannels = _.findIndex($rootScope.filteredChannels, {id: currentChannelIndex.channelId});
+                if(indexOfFilteredChannels >= 0) {
+                    if(indexOfFilteredChannels - 1 < 0) {
+                        currentChannelIndex.channelId = $rootScope.filteredChannels[$rootScope.filteredChannels.length-1].id;
+                        currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                    } else {
+                        currentChannelIndex.channelId = $rootScope.filteredChannels[indexOfFilteredChannels - 1].id;
+                        currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                    }
+                } else {
+                    currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
+                    currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
+                }
+                $scope.watchNow(currentChannelIndex.index, 0);
+            }
+        };
+
+        $scope.toggleFavoriteChannel = function () {
+            if(currentChannelIndex != undefined) {
+                if(true) {
+                    var index = _.findIndex($scope.favoriteChannels, {channel_id: $rootScope.filteredChannels[currentChannelIndex.index].id});
+                    if( index >= 0 ) {
+                        $scope.favoriteChannels.splice(index, 1);
+                        $scope.favoriteIcon = '../../images/favorite_white.png';
+                        var req = {channelId: $rootScope.filteredChannels[currentChannelIndex.index].id};
+                        mediaSvc.removeFavoriteChannel(
+                            req,
+                            function (data) {
+                                console.log('playerCtrl - remove favorite channel succeed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                            }, 
+                            function (error) {
+                                console.log('playerCtrl - remove favorite channel failed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log(error);
+                            }
+                        );
+                    } else {
+                        $scope.favoriteChannels.push({channel_id: $rootScope.filteredChannels[currentChannelIndex.index].id});
+                        $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                        var req = {channelId: $rootScope.filteredChannels[currentChannelIndex.index].id};
+                        mediaSvc.addFavoriteChannel(
+                            req,
+                            function (data) {
+                                console.log('playerCtrl - add favorite channel succeed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                            }, 
+                            function (error) {
+                                console.log('playerCtrl - add favorite channel failed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log(error);
+                            }
+                        );
+                    }
+                }
+            }
+        };
+        
+        $scope.listFavoriteChannels = function () {
+            $rootScope.filteredChannels = _.filter($rootScope.channels, function (item) {
+                return _.some($scope.favoriteChannels, {channel_id: item.id});
+            });
+            $rootScope.$broadcast('ChannelFilterEvent');
+            
+            favoriteChannels.style.fontWeight = 'bold';
+            recentChannels.style.fontWeight = 'normal';
+            allChannels.style.fontWeight = 'normal';
+        };
+        
+        $scope.listRecentChannels = function () {
+            $rootScope.filteredChannels = _.filter($rootScope.channels, function (item) {
+                return _.some($scope.recentChannels, {channelId: item.id});
+            });
+            $rootScope.$broadcast('ChannelFilterEvent');
+            
+            favoriteChannels.style.fontWeight = 'normal';
+            recentChannels.style.fontWeight = 'bold';
+            allChannels.style.fontWeight = 'normal';
+        };
+        
+        $scope.listAllChannels = function () {
+            $rootScope.filteredChannels = $rootScope.channels;
+
+            $rootScope.$broadcast('ChannelFilterEvent');
+            
+            favoriteChannels.style.fontWeight = 'normal';
+            recentChannels.style.fontWeight = 'normal';
+            allChannels.style.fontWeight = 'bold';
+        };
+        
+        $scope.programDetail = function () {
+            
+            var modalInstance = $modal.open({
+                templateUrl: 'infoModal.html',
+                controller: 'infoModalCtrl'
+              });
+            
+        };
+        
         function getFirstProgram(index) {
             if (cancellerProgram) {
                 cancellerProgram.resolve();
@@ -149,7 +316,7 @@
             cancellerProgram = $q.defer();
             $scope.programDetails = null;
             if (index > -1) {
-                mediaSvc.getChannelGuide($scope.channels[index].id, 1, cancellerProgram).success(function (programs) {
+                mediaSvc.getChannelGuide($rootScope.filteredChannels[index].id, 1, cancellerProgram).success(function (programs) {
                     $scope.programDetails = getProgramDetails(programs[0]);
                 });
             }
@@ -162,7 +329,7 @@
             cancellerGuide = $q.defer();
             $scope.showListings = [];
             $scope.loadingProgramGuide = true;
-            mediaSvc.getChannelGuide($scope.channels[index].id, 12, cancellerGuide).success(function (programs) {
+            mediaSvc.getChannelGuide($rootScope.filteredChannels[index].id, 12, cancellerGuide).success(function (programs) {
                 var showTimes = programs;
                 if (showTimes.length > 0) {
                     $scope.programDetails = getProgramDetails(showTimes[0]);
@@ -181,12 +348,56 @@
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 $scope.tvUrl = channelUrl.routes[0];
                 $scope.airing = airing;
-                $scope.channelLogo = $scope.channels[index].logoUri;
-                $scope.channelName = $scope.channels[index].title;
+                $scope.channelLogo = $rootScope.channels[index].logoUri;
+                var programInfo = getProgramInfo(index);
+                $scope.programTitle = programInfo.title;
+                $scope.programDescription = programInfo.description;
+                currentChannelIndex.index = index;
+                currentChannelIndex.channelId = $rootScope.channels[index].id;
+                addRecentChannel(currentChannelIndex.channelId);
+                if(_.findIndex($scope.favoriteChannels, {channel_id: $rootScope.channels[index].id}) >= 0) {
+                    $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                } else {
+                    $scope.favoriteIcon = '../../images/favorite_white.png';
+                }
                 playStream();
             });
         };
 
+        function addRecentChannel(channelId) {
+            var index = _.findIndex($scope.recentChannels, {channelId: channelId});
+            if(index < 0) {
+                $scope.recentChannels.push({channelId: channelId});
+            }
+        }
+        
+        function getProgramInfo(index) {
+            var epgIndex = _.findIndex($rootScope.channelsEpg, {channel_id: $rootScope.channels[index].id});
+            var lineUp = [];
+            var info = {title: 'Title ...', description: 'Description ...', showTime: 'Show Time ...'};
+            var now = new Date();
+            if(epgIndex >= 0) {
+                lineUp = $rootScope.channelsEpg[epgIndex].programs;
+                var endTime;
+                if(lineUp.length > 0) {
+                   for(var i = 0; i < lineUp.length; ++i) {
+                       endTime = new Date(lineUp[i].endTime);
+                       if(now < endTime) {
+                           info.title = lineUp[i].title;
+                           info.description = lineUp[i].description;
+                           
+                           var startTime = new Date(lineUp[i].startTime);
+                           info.showTime = (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM');
+
+                           break;
+                       }
+                   }
+                } 
+            } 
+            $rootScope.program = info;
+            return info;
+        }
+        
         function playStream() {
             jwplayer('yiptv-player').setup({
                 width: '100%',
@@ -228,9 +439,9 @@
             }
         }
 
-        $scope.favoriteChannelSelected = function ($index) {
-            $scope.selectedFavoriteChannel = $index;
-        };
+//        $scope.favoriteChannelSelected = function ($index) {
+//            $scope.selectedFavoriteChannel = $index;
+//        };
 
         function getProgramDetails(airing) {
             var programDetails;
@@ -284,17 +495,19 @@
             }
             return channelDetails;
         }
-
+        
         $scope.getTags = function (category) {
             return _.result(_.find($rootScope.channelCategories, {name: category}), 'tags');
         };
-
+        
         $scope.clearAll = function () {
             $scope.selectedGenres = [];
             $scope.selectedRegions = [];
             $scope.selectedAudiences = [];
             $scope.selectedLanguages = [];
-            filterChannels();
+            
+            $rootScope.filteredChannels = $rootScope.channels;
+            $rootScope.$broadcast('ChannelFilterEvent');
         };
 
         function getDuration(startTime, endTime) {
@@ -302,27 +515,46 @@
         }
 
         function filterChannels() {
-            $scope.filteredChannels = $rootScope.channels;
+            //$scope.filteredChannels = $rootScope.channels;
+            //$timeout.cancel($rootScope.timer);
+            var filteredChannelsFromGenres = [];
             if ($scope.selectedGenres.length > 0) {
-                $scope.filteredChannels = _.filter($scope.filteredChannels, function (item) {
+                filteredChannelsFromGenres = _.filter($rootScope.channels, function (item) {
                     return _.contains($scope.selectedGenres, item.genre);
                 });
+            } else {
+                filteredChannelsFromGenres = $rootScope.channels;
             }
+            
+            var filteredChannelsFromRegions = [];
             if ($scope.selectedRegions.length > 0) {
-                $scope.filteredChannels = _.filter($scope.filteredChannels, function (item) {
+                filteredChannelsFromRegions = _.filter(filteredChannelsFromGenres, function (item) {
                     return _.contains($scope.selectedRegions, item.region);
                 });
+            } else {
+                filteredChannelsFromRegions = filteredChannelsFromGenres;
             }
+            
+            var filteredChannelsFromAudiences = [];
             if ($scope.selectedAudiences.length > 0) {
-                $scope.filteredChannels = _.filter($scope.filteredChannels, function (item) {
+                filteredChannelsFromAudiences = _.filter(filteredChannelsFromRegions, function (item) {
                     return _.contains($scope.selectedAudiences, item.audience);
                 });
+            } else {
+                filteredChannelsFromAudiences = filteredChannelsFromRegions;
             }
+            
+            var filteredChannelsFromLanguages = [];
             if ($scope.selectedLanguages.length > 0) {
-                $scope.filteredChannels = _.filter($scope.filteredChannels, function (item) {
+                filteredChannelsFromLanguages = _.filter(filteredChannelsFromAudiences, function (item) {
                     return _.contains($scope.selectedLanguages, item.language);
                 });
+            } else {
+                filteredChannelsFromLanguages = filteredChannelsFromAudiences;
             }
+            
+            $scope.filteredChannels = filteredChannelsFromLanguages;
+            $rootScope.filteredChannels = filteredChannelsFromLanguages;
         }
 
         $scope.toggleGenreSelection = function (tag) {
@@ -333,6 +565,7 @@
                 $scope.selectedGenres.push(tag);
             }
             filterChannels();
+            $rootScope.$broadcast('ChannelFilterEvent');
         };
 
         $scope.toggleRegionSelection = function (tag) {
@@ -343,6 +576,7 @@
                 $scope.selectedRegions.push(tag);
             }
             filterChannels();
+            $rootScope.$broadcast('ChannelFilterEvent');
         };
 
         $scope.toggleAudienceSelection = function (tag) {
@@ -353,6 +587,7 @@
                 $scope.selectedAudiences.push(tag);
             }
             filterChannels();
+            $rootScope.$broadcast('ChannelFilterEvent');
         };
 
         $scope.toggleLanguageSelection = function (tag) {
@@ -363,6 +598,52 @@
                 $scope.selectedLanguages.push(tag);
             }
             filterChannels();
+            $rootScope.$broadcast('ChannelFilterEvent');
         };
+
+        /**
+         * Regarding EPG scrolling
+         */
+        var tempScrollTop = $("#userGuide").scrollTop();
+        var tempScrollLeft = $("#userGuide").scrollLeft();
+
+        var scrollListener = $(".scrollListener");
+
+        scrollListener.scroll(function(){
+            scrollListener.scrollTop($("#userGuide").scrollTop());
+            scrollListener.scrollLeft($("#userGuide").scrollLeft());
+        });
+
+    }]);
+    
+    app.controller('filterPanelSlideCtrl',['$scope',function($scope){
+
+        $scope.checked = false; // This will be binded using the ps-open attribute
+
+        $scope.toggle = function(){
+            $scope.checked = !$scope.checked;
+            if($scope.checked) {
+                $scope.$emit('ToggleChannelFilterEvent');
+            }
+        }
+
+    }]);
+    
+    app.controller('programDetailSlideCtrl',['$scope', '$rootScope', function ($scope, $rootScope) {
+        $scope.checked = false; // This will be binded using the ps-open attribute
+        var programDetailSlider = document.getElementById('programDetailSlider');
+        $scope.program = {title: 'Title ...', description: 'Description ...', showTime: 'ShowTime ...'};
+        
+        $scope.toggleProgramDetail = function(){
+            var width = $(window).width();
+            
+            programDetailSlider.style.marginLeft = (width - 150) / 2 + 'px';
+            
+            $scope.checked = !$scope.checked;
+            if($scope.checked) {
+                $scope.program = $rootScope.program; 
+            }
+
+        }
     }]);
 }(angular.module('app')));

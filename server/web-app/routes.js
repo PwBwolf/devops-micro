@@ -52,6 +52,9 @@ var _ = require('lodash'),
         {path: '/api/get-program-image', httpMethod: 'GET', middleware: [MediaCtrl.getProgramImage]},
         {path: '/api/get-promos', httpMethod: 'GET', middleware: [MediaCtrl.getPromos], accessLevel: accessLevels.user},
         {path: '/api/get-channel-categories', httpMethod: 'GET', middleware: [MediaCtrl.getChannelCategories], accessLevel: accessLevels.user},
+        {path: '/api/get-favorite-channels', httpMethod: 'GET', middleware: [UserCtrl.getFavoriteChannels], accessLevel: accessLevels.user},
+        {path: '/api/add-favorite-channel', httpMethod: 'GET', middleware: [UserCtrl.addFavoriteChannel], accessLevel: accessLevels.user},
+        {path: '/api/remove-favorite-channel', httpMethod: 'GET', middleware: [UserCtrl.removeFavoriteChannel], accessLevel: accessLevels.user},
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
