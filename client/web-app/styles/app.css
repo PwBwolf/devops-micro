@@ -1111,7 +1111,7 @@ ul.passwordStrength {
 }
 
 #channelGuideDescription {
-    line-height: 0.900;
+    line-height: 1.2;
     border-bottom: 1px solid;
 }
 
@@ -1149,7 +1149,7 @@ ul.passwordStrength {
 }
 
 .channel-description > div:first-child {
-    width: 150px;
+    width: 154px;
     height: 60px;
     border-right: 4px groove;
     z-index: 8;
@@ -1709,7 +1709,7 @@ body, html {
 }
 
 .time-module-item:first-child {
-    margin-left: 150px;
+    margin-left: 153px;
 /*     width:150px; */
 }
 

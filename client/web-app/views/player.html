@@ -75,42 +75,42 @@
                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
 
                 <div pageslide ps-open="checked" style="z-index:1000;position:fixed;width:300px;height:100%;overflow:hidden;transition-duration:0.5s;transition-property:width,height;top:0px;bottom:0px;right:0px">
-			        <div id="channelFilterHolder" style="width:300px;height:100%;padding:20px" class="filter-close-btn label label-danger">
-			        <div class="row">
-			        <div>
-			            <a class="btn btn-danger btn-xs" ng-click="clearAll()" translate="PLAYER_CLEAR_ALL" style="float:left;margin-top:-10px;margin-left:10px;"></a>
+                    <div id="channelFilterHolder" style="width:300px;height:100%;padding:20px" class="filter-close-btn label label-danger">
+                    <div class="row">
+                    <div>
+                        <a class="btn btn-danger btn-xs" ng-click="clearAll()" translate="PLAYER_CLEAR_ALL" style="float:left;margin-top:-10px;margin-left:10px;"></a>
                         <a ng-click="toggle()" class="btn btn-danger btn-xs" style="float:right;margin-top:-10px;margin-right:10px;">Close</a>
-			        </div>
-			                <div class="channel-filters">
-			                    <div class="channel-filter-categories" style="margin-top:10px;margin-left:-20px;display:inline-block">
-			                        <span translate="PLAYER_CATEGORIES" style="display:inline-block"></span>
-			                    </div>
-			                    <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
-			                        <div class="panel panel-default" style="width:290px;">
-			                            <div class="panel-heading" role="tab" id="headingGenre">
-			                                <div class="panel-title"style="height:20px;display:table-cell;vertical-align: middle">
-			                                    <a translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseGenre" aria-expanded="true" aria-controls="collapseGenre"></a>
-			                                </div>
-			                            </div>
-			                        </div>
-			                        <div id="collapseGenre" style="width:290px;display:inline-block" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
-			                            <div class="panel-body"style="width:130px;margin-left:-10px;display:inline-block;float:left">
-			                                <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" style="text-align:left">
+                    </div>
+                            <div class="channel-filters">
+                                <div class="channel-filter-categories" style="margin-top:10px;margin-left:-20px;display:inline-block">
+                                    <span translate="PLAYER_CATEGORIES" style="display:inline-block"></span>
+                                </div>
+                                <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default" style="width:290px;">
+                                        <div class="panel-heading" role="tab" id="headingGenre">
+                                            <div class="panel-title"style="height:20px;display:table-cell;vertical-align: middle">
+                                                <a translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseGenre" aria-expanded="true" aria-controls="collapseGenre"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="collapseGenre" style="width:290px;display:inline-block" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
+                                        <div class="panel-body"style="width:130px;margin-left:-10px;display:inline-block;float:left">
+                                            <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" style="text-align:left">
 
-							                        <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                             </div>
-			                            </div>
-			                            <div class="panel-body"style="width:145px;display:inline-block;float:left">
+                                        </div>
+                                        <div class="panel-body"style="width:145px;display:inline-block;float:left">
                                             <div ng-repeat="tag in getTags('Genre') | filter: { col : 1 }" style="text-align:left">
 
                                                     <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                             </div>
                                         </div>
-			                        </div>
-			                        
-			                        <div class="panel panel-default" style="width:290px;">
+                                    </div>
+                                    
+                                    <div class="panel panel-default" style="width:290px;">
                                         <div class="panel-heading" role="tab" id="headingRegion">
                                             <div class="panel-title"style="height:20px;display:table-cell;vertical-align: middle">
                                                 <a translate="PLAYER_REGION" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion"></a>
@@ -181,14 +181,14 @@
                                             </div>
                                         </div>
                                     </div>
-			                    </div>
-			                </div>
-			            
-			        </div>
-			        </div>
-			    </div>
-			    
-			    
+                                </div>
+                            </div>
+                        
+                    </div>
+                    </div>
+                </div>
+                
+                
             </div>
 
         </div>
@@ -197,9 +197,9 @@
     </div>
 
 
-<!-- 	<div id="timeHeaderPanel" style="width:100%;height:28px"> -->
+<!--     <div id="timeHeaderPanel" style="width:100%;height:28px"> -->
 <!--     </div> -->
-<!-- 	<div id="header-time-container"style="width:100%;height:28px;margin-top:5px;float:left;background:rgb(51,51,51);display:inline;overflow-x:auto;overflow-y:hide"> -->
+<!--     <div id="header-time-container"style="width:100%;height:28px;margin-top:5px;float:left;background:rgb(51,51,51);display:inline;overflow-x:auto;overflow-y:hide"> -->
 <!--         <div id="header-time-panel"> -->
 <!--             <div></div> -->
 <!--         </div> -->
@@ -235,7 +235,7 @@
 
     </div>
     
-	
+    
 <!--     <div id="userGuide" class="user-guide-panel" style="background:rgb(210,210,210)" ng-controller='channelGuideCtrl'> -->
 <!--         <div class='position-div user-guide'> -->
 <!--             <div id='channelGuidePanel' class='user-guide-description'> -->
