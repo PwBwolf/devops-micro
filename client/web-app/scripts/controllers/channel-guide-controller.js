@@ -43,13 +43,13 @@
         }
 
         $rootScope.$on('ChannelsLoaded', function () {
-            $timeout(getChannelGuide, 100);
+            $timeout(getChannelGuide, 1);
         });
 
         $scope.$on('ChannelFilterEvent', function(event, args) {
             updateChannelGuide($rootScope.filteredChannels);
         });
-        
+          
         function getChannelGuide() {
             var startDate = date;
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
@@ -70,9 +70,7 @@
 
                     var channelGuide = angular.element(document.createElement('div'));
                     //var channelLogo = angular.element(document.createElement('div'));
-
                     //$(channelLogo).attr('channel', station).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
-
                     //$(channelGuide).attr('channel', station).prepend(channelLogo);
 
                     var channelLineUp;
@@ -88,40 +86,31 @@
                                 else{
                                     channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
                                 }
-
                             }
-
-
                             channelLineUp += '<p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
-
                             $(channelGuide).append(channelLineUp);
                         });
                     } else {
                         channelLineUp = '<div title="' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '" style="width:300px;border-right:none"><img src="../images/empty.png" /><p style="text-align: left;"><span class="channel-details-body">' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '</span></p>';
                         $(channelGuide).append(channelLineUp);
-
                     }
-
 
                     $(channelGuide).attr('class', 'channel-description');
                     $(channelGuide).attr('channel', station).attr('id', 'channelGuideDescription');
                     $compile(channelGuide)($scope);
                     //angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
 
-                   // Sam's code
-                   angular.element(channelTimeHolder).append(timeHeaderBar);
-                   angular.element(channelGuideHolder).append(channelGuide);
-                   //angular.element(channelLogoHolder).attr('channel', station).prepend(channelLogo);
-
+                    // Sam's code
+                    angular.element(channelTimeHolder).append(timeHeaderBar);
+                    angular.element(channelGuideHolder).append(channelGuide);
+                    //angular.element(channelLogoHolder).attr('channel', station).prepend(channelLogo);
                });
-
             }).error(function () {
                     console.log('channel guide ctrl error bloc');
-
             });
         }
-        
+       
         function updateChannelGuide(filteredChannels) {
 
             var startDate = new Date();
@@ -209,7 +198,7 @@
         //var channelTimeHolder = angular.element('#channelTimePanel');
         //var channelLogoHolder = angular.element('#channelLogos');
 
-        activate();
+        //activate();
 
         function activate() {
             var dt = $filter('date')(date, 'h:00 a');
@@ -236,85 +225,45 @@
         }
 
         $rootScope.$on('ChannelsLoaded', function () {
-            $timeout(getChannelGuide, 100);
+            $timeout(getChannelGuide, 1);
         });
 
         $scope.$on('ChannelFilterEvent', function(event, args) {
             updateChannelGuide($rootScope.filteredChannels);
         });
-
+        
         function getChannelGuide() {
 
             var startDate = date;
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
 
-            mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
+            angular.forEach(channelIds, function(channelId,chId) {
 
-                angular.forEach(channelIds, function(channelId,chId) {
+                var station = channelId;
+                var chIndex = _.findIndex($rootScope.filteredChannels, {id: station});
+                var logo =  $rootScope.filteredChannels[chIndex].logoUri;
+                var channelTitle = $rootScope.filteredChannels[chIndex].title;
 
-                    var station = channelId;
-                    var chIndex = _.findIndex($rootScope.filteredChannels, {id: station});
-                    var logo =  $rootScope.filteredChannels[chIndex].logoUri;
-                    var channelTitle = $rootScope.filteredChannels[chIndex].title;
-                    var epgIndex =  _.findIndex(channelsEpg, {channel_id: station});
-                    var lineUp = [];
-                    if(epgIndex >= 0)
-                        lineUp = channelsEpg[epgIndex].programs;
+                var channelGuide = angular.element(document.createElement('div'));
+                var channelLogo = angular.element(document.createElement('div'));
 
-                    var channelGuide = angular.element(document.createElement('div'));
-                    var channelLogo = angular.element(document.createElement('div'));
+                $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
 
-                    $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
+                $(channelGuide).attr('channel', station).prepend(channelLogo);
 
-                    $(channelGuide).attr('channel', station).prepend(channelLogo);
+                $(channelGuide).attr('class', 'channel-description');
+                $(channelGuide).attr('id', 'channelGuideDescription');
+                $compile(channelGuide)($scope);
+                //angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
 
-                    //var channelLineUp;
-                    //if (lineUp.length > 0) {
-                    //    angular.forEach(lineUp, function (data, id) {
-                    //        if (!data.image) {
-                    //            channelLineUp = '<div title="' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
-                    //        } else {
-                    //            if(id === 0){
-                    //                channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="cursor: pointer;' + timeSpan(startDate, data.startTime, data.endTime) + '" ng-click="watchNow('+ chIndex + ',0)" href="">';
-                    //                channelLineUp += '<span style="float:right"> <img src="../images/play-button.png" /> </span>';
-                    //            }
-                    //            else{
-                    //                channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
-                    //            }
-                    //
-                    //        }
-                    //
-                    //
-                    //        channelLineUp += '<p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
-                    //        channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
-                    //
-                    //        $(channelGuide).append(channelLineUp);
-                    //    });
-                    //} else {
-                    //    channelLineUp = '<div title="' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '" style="width:300px;border-right:none"><img src="../images/empty.png" /><p style="text-align: left;"><span class="channel-details-body">' + $filter('translate')('PLAYER_NOT_AVAILABLE') + '</span></p>';
-                    //    $(channelGuide).append(channelLineUp);
-                    //
-                    //}
-
-
-                    $(channelGuide).attr('class', 'channel-description');
-                    $(channelGuide).attr('id', 'channelGuideDescription');
-                    $compile(channelGuide)($scope);
-                    //angular.element(channelGuideHolder).prepend(timeHeaderBar).append(channelGuide);
-
-                    // Sam's code
-                    //angular.element(channelTimeHolder).append(timeHeaderBar);
-                    angular.element(channelGuideHolder).append(channelGuide);
-                    //angular.element(channelLogoHolder).attr('channel', station).prepend(channelLogo);
-
-                });
-
-            }).error(function () {
-                console.log('channel guide ctrl error bloc');
+                // Sam's code
+                //angular.element(channelTimeHolder).append(timeHeaderBar);
+                angular.element(channelGuideHolder).append(channelGuide);
+                //angular.element(channelLogoHolder).attr('channel', station).prepend(channelLogo);
 
             });
         }
-        
+       
         function updateChannelGuide(filteredChannels) {
 
             var startDate = new Date();
