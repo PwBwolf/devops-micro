@@ -196,6 +196,8 @@
         $scope.nextChannel = function () {
             if(currentChannelIndex != undefined) {
                 var indexOfFilteredChannels = _.findIndex($rootScope.filteredChannels, {id: currentChannelIndex.channelId});
+                var index = currentChannelIndex.index;
+                var tempIndex;
                 if(indexOfFilteredChannels >= 0) {
                     if(indexOfFilteredChannels + 1 >= $rootScope.filteredChannels.length) {
                         currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
@@ -208,14 +210,17 @@
                     currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
                     currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
                 }
-
-                $scope.watchNow(currentChannelIndex.index, 0);
+                tempIndex = currentChannelIndex.index;
+                currentChannelIndex.index = index;
+                $scope.watchNow(tempIndex, 0);
             }
         };
         
         $scope.previousChannel = function () {
             if(currentChannelIndex != undefined) {
                 var indexOfFilteredChannels = _.findIndex($rootScope.filteredChannels, {id: currentChannelIndex.channelId});
+                var index = currentChannelIndex.index;
+                var tempIndex;
                 if(indexOfFilteredChannels >= 0) {
                     if(indexOfFilteredChannels - 1 < 0) {
                         currentChannelIndex.channelId = $rootScope.filteredChannels[$rootScope.filteredChannels.length-1].id;
@@ -228,7 +233,9 @@
                     currentChannelIndex.channelId = $rootScope.filteredChannels[0].id;
                     currentChannelIndex.index = _.findIndex($rootScope.channels, {id: currentChannelIndex.channelId});
                 }
-                $scope.watchNow(currentChannelIndex.index, 0);
+                tempIndex = currentChannelIndex.index;
+                currentChannelIndex.index = index;
+                $scope.watchNow(tempIndex, 0);
             }
         };
 
