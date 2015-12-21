@@ -69,9 +69,12 @@
                        lineUp = channelsEpg[epgIndex].programs;
 
                     var channelGuide = angular.element(document.createElement('div'));
-                    //var channelLogo = angular.element(document.createElement('div'));
+                    var channelBlock = angular.element(document.createElement('div'));
+                    channelBlock[0].style.width = '154px';
+                    channelBlock[0].style.height = '60px';
                     //$(channelLogo).attr('channel', station).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
                     //$(channelGuide).attr('channel', station).prepend(channelLogo);
+                    $(channelGuide).prepend(channelBlock);
 
                     var channelLineUp;
                     if (lineUp.length > 0) {
@@ -148,7 +151,7 @@
                 if (diff >= 0) {
                     return 'width:' + ((duration - diff) * 5) + 'px';
                 } else {
-                   return  'width:' + (duration * 5) + 'px;border-left: 1px solid';
+                   return  'width:' + (duration * 5) + 'px;border-left: 1px solid #000033';
                 }
             } else {
                 return 'width:' + (duration * 5) + 'px';
@@ -232,6 +235,13 @@
             updateChannelGuide($rootScope.filteredChannels);
         });
         
+        $scope.$on('PlayChannel', function(event, args){
+            if(args.previousIndex != undefined) {
+                channelGuideHolder[0].children[args.previousIndex+1].getElementsByTagName("div")[0].style.backgroundColor="#000F29";
+            }
+            channelGuideHolder[0].children[args.currentIndex+1].getElementsByTagName("div")[0].style.backgroundColor="#337ab7";
+        });
+        
         function getChannelGuide() {
 
             var startDate = date;
@@ -247,7 +257,7 @@
                 var channelGuide = angular.element(document.createElement('div'));
                 var channelLogo = angular.element(document.createElement('div'));
 
-                $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: rgba(200,200,200,0.80) url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
+                $(channelLogo).attr('id', 'channelGuideLogo').attr('title', channelTitle).attr('style', 'cursor: pointer; background: #000F29 url(' + getImage(logo) + ') 50% no-repeat; background-size:contain ').attr('ng-click', 'watchNow('+ chIndex + ',0)').attr('href', '') ;
 
                 $(channelGuide).attr('channel', station).prepend(channelLogo);
 

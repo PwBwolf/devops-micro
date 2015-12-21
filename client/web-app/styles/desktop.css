@@ -76,13 +76,13 @@ body {
 
 .content-background {
     background: white;
-    color: rgba(254, 254, 254, .89);
+    color: transparent;
 }
 
 header {
     width: auto;
     height: 50px;
-    background: rgba(229, 229, 231, .91) !important;
+    background: transparent !important;
     z-index: 998;
     margin-bottom: 34px;
     padding: 0px !important;
@@ -91,7 +91,7 @@ header {
 #headerBrand {
     height: 50px;
     text-transform: uppercase;
-    border-bottom: solid 1px lightgrey;
+    border-bottom: solid 1px transparent;
     z-index: 50;
 }
 

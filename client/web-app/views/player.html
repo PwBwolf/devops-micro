@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div id="channelMenuHolder" style="background: rgb(213, 213, 213);height: 40px;width=100%;display:flex;">
+    <div id="channelMenuHolder" style="background: transparent;height: 40px;width=100%;display:flex;">
 <!--         <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible"> -->
 <!--             <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(selectedChannel, $index)" compile-html="listing"></div> -->
 <!--             <div id="channelGuideLoading" class="progress" ng-show="loadingProgramGuide"> -->
@@ -20,22 +20,22 @@
 <!--             </div> -->
 <!--         </div> -->
         
-        <div id="menuBar" style="height:40px;width:100%;text-align: center;background: rgb(255, 255, 255);">
-            <div style="width:4%;height:40px;float:left;padding-top:4px;display:table-cell|inline-block|flex;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190)">
+        <div id="menuBar" style="height:40px;width:100%;text-align: center;background: transparent;">
+            <div style="width:4%;height:40px;float:left;padding-top:4px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(90,90,90)">
                 <img src="../images/arrow-left.png" width="30px" hight="30px" ng-click="previousChannel()" style="cursor: pointer">
             </div>
-            <div id="currentChannel" style="width:10%;height:40px;text-align: center;float:left;display:table-cell|inline-block|flex;margin-left:1px;border:2px solid;border-color:rgb(190,190,190);background: rgb(210, 210, 210)">
+            <div id="currentChannel" style="width:10%;height:40px;text-align: center;float:left;display:table-cell|inline-block|flex;margin-left:1px;border:0px solid;border-color:rgb(90,90,90);background: transparent">
                 <img ng-src="{{channelLogo}}" height="35px" width="auto" >
             </div>
-            <div style="width:4%;height:40px;float:left;text-align: center;margin-left:1px;padding-top:4px;display:table-cell|inline-block|flex;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190)">
+            <div style="width:4%;height:40px;float:left;text-align: center;margin-left:1px;padding-top:4px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(90,90,90)">
                 <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
             </div>
             
-            <div id="programInfo"style="height:40px;width:45%;display:table-cell|inline-block|flex;margin-left:1px;background: rgb(210, 210, 210);float:left;border:2px solid;border-color:rgb(190,190,190)">
-                <div id="title" style="height:15px;text-align:left;padding-left:10px;font-size:14px;font-weight:bold">{{programTitle}}</div>
-                <div id="description" style="height:25px;width:100%;text-align:left;padding-left:10px;text-overflow:clip;line-height:25px;vertical-align: middle;font-size:10px">{{programDescription}}</div>
+            <div id="programInfo"style="height:40px;width:45%;display:table-cell|inline-block|flex;margin-left:1px;background: transparent;float:left;border:0px solid;border-color:rgb(190,190,190)">
+                <div id="title" style="height:15px;text-align:left;padding-left:10px;font-size:14px;font-weight:bold;color:white">{{programTitle}}</div>
+                <div id="description" style="height:25px;width:100%;text-align:left;overflow:hidden;padding-left:10px;text-overflow:clip;line-height:25px;color:white;vertical-align: middle;font-size:10px">{{programDescription}}</div>
             </div>
-            <div style="width:5%;height:40px;float:left;margin-left:1px;padding-top:9px;text-align: center;display:table-cell|inline-block;vertical-align: middle;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190)" ng-controller='programDetailSlideCtrl'>
+            <div style="width:5%;height:40px;float:left;margin-left:1px;padding-top:9px;text-align: center;display:table-cell|inline-block;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190)" ng-controller='programDetailSlideCtrl'>
                 <img src="../images/info.png" width="24px" height="24px" ng-click="toggleProgramDetail()" style="cursor: pointer">
 
 
@@ -63,18 +63,18 @@
                 </div>
 
             </div>
-            <div style="width:5%;height:40px;float:left;margin-left:1px;padding-top:9px;text-align: center;display:table-cell|inline-block;vertical-align: middle;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190)">
+            <div style="width:5%;height:40px;float:left;margin-left:1px;padding-top:9px;text-align: center;display:table-cell|inline-block;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190)">
                 <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()" style="cursor: pointer">
             </div>
     
-            <div id="favoriteChannels"style="height:40px;width:10%;line-height: 40px;float:left;text-align: center;margin-left:1px;display:table-cell|inline-block|flex;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190);cursor: pointer" ng-click="listFavoriteChannels()">Favorite</div>
-            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;margin-left:1px;display:table-cell|inline-block|flex;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">Recent</div>
-            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;margin-left:1px;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">All</div>
+            <div id="favoriteChannels"style="height:40px;width:10%;line-height: 40px;float:left;text-align: center;color:white;margin-left:1px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer" ng-click="listFavoriteChannels()">Favorite</div>
+            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;margin-left:1px;color:white;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">Recent</div>
+            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;margin-left:1px;color:white;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">All</div>
                        
-            <div style="width:5%;height:40px;float:left;display:table-cell|inline-block|flex;;margin-left:1px;background: rgb(210, 210, 210);border:2px solid;border-color:rgb(190,190,190);padding-right:14px" ng-controller='filterPanelSlideCtrl'>
+            <div style="width:5%;height:40px;float:left;display:table-cell|inline-block|flex;;margin-left:1px;background: transparent;border:0px solid;border-color:rgb(190,190,190);padding-right:14px" ng-controller='filterPanelSlideCtrl'>
                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
 
-                <div pageslide ps-open="checked" style="z-index:1000;position:fixed;width:300px;height:100%;overflow:hidden;transition-duration:0.5s;transition-property:width,height;top:0px;bottom:0px;right:0px">
+                <div pageslide ps-open="checked" ps-size="300px";style="z-index:1000;position:fixed;width:300px;height:100%;overflow:hidden;transition-duration:0.5s;transition-property:width,height;top:0px;bottom:0px;right:0px">
                     <div id="channelFilterHolder" style="width:300px;height:100%;padding:20px" class="filter-close-btn label label-danger">
                     <div class="row">
                     <div>
@@ -195,7 +195,7 @@
 
     </div>
 
-    <div id="filterPanelDropDown">        </div>
+<!--     <div id="filterPanelDropDown">        </div> -->
 <!--     <div id="timeHeaderPanel" style="width:100%;height:28px"> -->
 <!--     </div> -->
 <!--     <div id="header-time-container"style="width:100%;height:28px;margin-top:5px;float:left;background:rgb(51,51,51);display:inline;overflow-x:auto;overflow-y:hide"> -->
@@ -205,14 +205,14 @@
  
 <!--     </div> -->
 
-    <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' style="height: auto; overflow: hidden"  >
+    <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' style="height: auto; overflow: hidden;margin-top:2px"  >
         <div></div>
     </div>
     
     
     <div  >
 
-        <div id="logoColumn" class="user-guide-panel scrollListener" ng-controller='channelLogoController' style="width: 12%; height: 300px;float:left; overflow: hidden;margin-top:-6px">
+        <div id="logoColumn" class="user-guide-panel scrollListener" ng-controller='channelLogoController' style="background-color:transparent;z-index: 1000;position: absolute;width: 154px; height: 300px;float:left; overflow: hidden;margin-top:-6px">
             <div class='position-div user-guide '>
 
                 <div id='channelLogoPanel' class=''>
@@ -222,7 +222,7 @@
             </div>
         </div>
 
-        <div id="userGuide" class="user-guide-panel   scrollListener" ng-controller='channelGuideCtrl' style="width: 88%; height:300px;float:left;margin-top:-6px">
+        <div id="userGuide" class="user-guide-panel   scrollListener" ng-controller='channelGuideCtrl' style="background-color:transparent;width: 100%; height:328px;float:left;margin-top:-6px">
             <div class='position-div user-guide '>
 
                 <div id='channelGuidePanel' class='user-guide-description'>

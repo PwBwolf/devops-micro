@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.factory('mediaSvc', ['$http', function ($http) {
+    app.factory('mediaSvc', ['$http', '$q', function ($http, $q) {
 
         return {
             getChannelUrl: function (id) {
@@ -19,7 +19,7 @@
                     params: {id: id, hours: hours},
                     timeout: canceller.promise
                 });
-            },
+            },    
 
             getChannelGuideAll: function (id, hours) {
                 console.log('mediaservice getchannelguide 222');

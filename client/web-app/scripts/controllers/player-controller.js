@@ -3,7 +3,7 @@
 
     app.controller('playerCtrl', ['_', '$', '$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', '$timeout', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter, $timeout) {
 
-        var cancellerProgram, cancellerGuide, currentChannelIndex, channelsHasTags;
+        var cancellerProgram, cancellerGuide, currentChannelIndex, channelsHasTags, previousChannelIndex;
         $scope.selectedPromo = -1;
         $scope.selectedGenres = [];
         $scope.selectedRegions = [];
@@ -13,6 +13,7 @@
         $scope.recentChannels = [];
         $scope.favoriteIcon = '../../images/favorite_white.png';
         currentChannelIndex = {index: undefined, channelId: undefined};
+        previousChannelIndex = {index: undefined, channelId: undefined};
         $scope.channelLogo = '../../images/logo.png';
         $scope.programTitle = 'Title ...';
         $scope.programDescription = 'Description ...';
@@ -352,6 +353,7 @@
                 var programInfo = getProgramInfo(index);
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
+                previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 addRecentChannel(currentChannelIndex.channelId);
@@ -360,6 +362,7 @@
                 } else {
                     $scope.favoriteIcon = '../../images/favorite_white.png';
                 }
+                $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 playStream();
             });
         };
