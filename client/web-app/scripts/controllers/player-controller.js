@@ -151,7 +151,7 @@
         function addTagsToChannels() {
             var genres = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Genre'}), 'tags'), 'id');
             var languages = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Language'}), 'tags'), 'id');
-            var regions = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Region'}), 'tags'), 'id');
+            var regions = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Origin'}), 'tags'), 'id');
             var audiences = _.pluck(_.result(_.find($rootScope.channelCategories, {name: 'Audience'}), 'tags'), 'id');
             for (var i = 0; i < $rootScope.channels.length; i++) {
                 for (var j = 0; j < $rootScope.channels[i].tags_ids.length; j++) {

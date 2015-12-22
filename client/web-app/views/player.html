@@ -67,9 +67,15 @@
                 <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()" style="cursor: pointer">
             </div>
     
-            <div id="favoriteChannels"style="height:40px;width:10%;line-height: 40px;float:left;text-align: center;color:white;margin-left:1px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer" ng-click="listFavoriteChannels()">Favorite</div>
-            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;margin-left:1px;color:white;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">Recent</div>
-            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;margin-left:1px;color:white;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">All</div>
+            <div id="favoriteChannels"style="height:40px;width:10%;line-height: 40px;float:left;text-align: center;color:white;margin-left:1px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer" ng-click="listFavoriteChannels()">
+                <span translate="PLAYER_MENU_FAVORITE" style="display:inline-block"></span>
+            </div>
+            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;margin-left:1px;color:white;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">
+                <span translate="PLAYER_MENU_RECENT" style="display:inline-block"></span>
+            </div>
+            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;margin-left:1px;color:white;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">
+                <span translate="PLAYER_MENU_ALL" style="display:inline-block"></span>
+            </div>
                        
             <div style="width:5%;height:40px;float:left;display:table-cell|inline-block|flex;;margin-left:1px;background: transparent;border:0px solid;border-color:rgb(190,190,190);padding-right:14px" ng-controller='filterPanelSlideCtrl'>
                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
@@ -113,20 +119,20 @@
                                     <div class="panel panel-default" style="width:290px;">
                                         <div class="panel-heading" role="tab" id="headingRegion">
                                             <div class="panel-title"style="height:20px;display:table-cell;vertical-align: middle">
-                                                <a translate="PLAYER_REGION" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion"></a>
+                                                <a translate="PLAYER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion"></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="collapseRegion" style="width:290px;display:inline-block" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRegion">
                                         <div class="panel-body"style="width:130px;margin-left:-10px;display:inline-block;float:left">
-                                            <div ng-repeat="tag in getTags('Region') | filter: { col: 0 }" style="text-align:left">
+                                            <div ng-repeat="tag in getTags('Origin') | filter: { col: 0 }" style="text-align:left">
 
                                                     <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                             </div>
                                         </div>
                                         <div class="panel-body"style="width:145px;display:inline-block;float:left">
-                                            <div ng-repeat="tag in getTags('Region') | filter: { col : 1 }" style="text-align:left">
+                                            <div ng-repeat="tag in getTags('Origin') | filter: { col : 1 }" style="text-align:left">
 
                                                     <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
@@ -204,11 +210,12 @@
 <!--         </div> -->
  
 <!--     </div> -->
-
-    <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' style="height: auto; overflow: hidden;margin-top:2px"  >
-        <div></div>
+    <div>
+        <div id="clock" class="position-div " current-time style="z-index: 10;width:154px;height:28px;position:absolute;display:inline-block;color:white;background-color:#000f29;text-align:center;vertical-align:middle;margin-top:4px;padding:4px 0 4px 12px"> </div>
+        <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' style="z-index:5;width:100%;height: auto; display:inline-block;overflow: hidden;margin-top:2px"  >
+            <div></div>
+        </div>
     </div>
-    
     
     <div  >
 
