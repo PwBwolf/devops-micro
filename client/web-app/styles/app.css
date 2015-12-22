@@ -798,10 +798,16 @@ ul.passwordStrength {
     }
 }
 
-#profileDropDown, #accountDropDown {
-    width: 580px;
-    left: 170px;
+#profileDropDown {
+    width: 800px;
+    left: 0px;
     margin-top: -20px;
+}
+
+#accountDropDown {
+    width: 800px;
+    left: 0px;
+    margin-top: 0px;
 }
 
 .collapse-hide {
@@ -810,6 +816,7 @@ ul.passwordStrength {
     top: 0;
     padding: 5px;
     z-index: 1;
+    color: black;
 }
 
 #preferencesDropDown > div {
@@ -834,6 +841,7 @@ ul.passwordStrength {
     overflow: hidden;
     overflow-y: auto;
     height: 560px;
+    margin-left:0px;
 }
 
 #changeCreditCardDropDown > div {
@@ -844,7 +852,7 @@ ul.passwordStrength {
 
 #channelFilterHolder {
     margin-top: 10px;
-    background-color: #333;
+    background-color: rgba(55,55,55,0.9);
 }
 
 .channel-result {
@@ -921,7 +929,7 @@ ul.passwordStrength {
 }
 
 #headerButtons {
-    margin-left: 13.4%;
+    margin-left: 0%;
 }
 
 #dropDowns > .panel {
@@ -949,12 +957,12 @@ ul.passwordStrength {
 }
 
 #headerButtons .btn {
-    padding: 5px 40px !important;
+    padding: 5px 0px !important;
     display: inline-block;
     border: none;
     margin: 0 1px 0 0;
     border-radius: 0;
-    height: 33px;
+    height: 53px;
 }
 
 .well .btn:nth-child(even) {
@@ -969,9 +977,9 @@ ul.passwordStrength {
     background-color: rgba(200, 200, 200, 0.9) !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
-    padding: 15px !important;
+/*     padding: 15px !important; */
     text-align: center;
-    box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important;
+/*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
     margin-bottom: 0;
 }
 

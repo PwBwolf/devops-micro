@@ -283,8 +283,11 @@
             $rootScope.$broadcast('ChannelFilterEvent');
             
             favoriteChannels.style.fontWeight = 'bold';
+            favoriteChannels.style.color = '#337ab7';
             recentChannels.style.fontWeight = 'normal';
+            recentChannels.style.color = 'white';
             allChannels.style.fontWeight = 'normal';
+            allChannels.style.color = 'white';
         };
         
         $scope.listRecentChannels = function () {
@@ -294,8 +297,11 @@
             $rootScope.$broadcast('ChannelFilterEvent');
             
             favoriteChannels.style.fontWeight = 'normal';
+            favoriteChannels.style.color = 'white';
             recentChannels.style.fontWeight = 'bold';
+            recentChannels.style.color = '#337ab7';
             allChannels.style.fontWeight = 'normal';
+            allChannels.style.color = 'white';
         };
         
         $scope.listAllChannels = function () {
@@ -304,8 +310,11 @@
             $rootScope.$broadcast('ChannelFilterEvent');
             
             favoriteChannels.style.fontWeight = 'normal';
+            favoriteChannels.style.color = 'white';
             recentChannels.style.fontWeight = 'normal';
+            recentChannels.style.color = 'white';
             allChannels.style.fontWeight = 'bold';
+            allChannels.style.color = '#337ab7';
         };
         
         $scope.programDetail = function () {
