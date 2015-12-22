@@ -27,17 +27,27 @@
                     <div style="width:50px; height:50px;display:table-cell|inline-block;float:left;text-align: center;vertical-align: middle;margin-top:8px;">
                     <img src="images/user.png"  style="cursor: pointer" width="35px" height="35px" data-toggle="collapse" data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="profileDropDown" translate="USER_HOME_PROFILE"></img>
                     </div>
-                    <div style="width:50px; height:50px;display:table-cell|inline-block;float:left;text-align: center;vertical-align: middle;margin-top:8px;">
+                    <div ng-show="false" style="width:50px; height:50px;display:table-cell|inline-block;float:left;text-align: center;vertical-align: middle;margin-top:8px;">
                     <img src="images/mail.png" style="cursor: pointer" width="35px" height="35px" ng-hide="user.type === 'comp'" data-toggle="collapse" data-target="#accountDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="accountDropDown" translate="USER_HOME_ACCOUNT"></img>
                     </div>
                 
-                    <div style="width:50px; height:50px;display:inline-block;text-align: center; margin-left: 37%">
+                    <div style="width:50px; height:50px;display:inline-block;text-align: center; margin-left: 45%">
                     <img src="images/logo.png" width="auto" height="60px"/>
                     </div>
                     
-                    <div ng-show="user.type === 'free'" ng-click="showAccountDropdown('upgrade-subscription')"style="width:200px; height:50px;display:inline-block;text-align: center; font-size:14px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer"  data-toggle="collapse" data-target="#accountDropDown" data-parent="#dropDowns" aria-expanded="false" aria-controls="accountDropDown">
+                    <div ng-controller='upgradePremiumSlideCtrl' ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()"style="width:200px; height:50px;display:inline-block;text-align: center; font-size:14px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer">
                     UPGRADE TO PREMIUM
+                        <div id="upgradePremiumSlider" pageslide ps-open="checked" ps-size="600px" style="transition-duration:1s;z-index:10;position:fixed;margin-top:53px;height:500px;overflow:scroll;transition-duration:0.5s;">
+                            <div id="upgradePremiumlHolder" style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
+                                
+                                <div id="upgradePremium" class="clear-both" ng-include="'views/upgrade-subscription.html'"></div>
+    <!--                             <div> -->
+    <!--                                 <a ng-click="toggleUpgradePremium()" class="btn btn-danger btn-xs" style="margin-bottom:10px;margin-left:120px;">OK</a> -->
+    <!--                             </div> -->
+                            </div>
+                        </div>
                     </div>
+                    
                     
 <!--                     <div class="collapse" id="accountDropDown" style="width:300px; height:50px;display:inline-block;text-align: center; font-size:18px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer"> -->
 <!--                         <div class="well" data-toggle="buttons"> -->

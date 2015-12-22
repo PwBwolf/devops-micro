@@ -78,4 +78,19 @@
         });
 
     }]);
+    
+    app.controller('upgradePremiumSlideCtrl',['$scope',function($scope){
+
+        $scope.checked = false; // This will be binded using the ps-open attribute
+
+        $scope.toggleUpgradePremium = function(){
+            
+            $scope.checked = !$scope.checked;
+            if($scope.checked) {
+                //$scope.program = $rootScope.program; 
+            }
+
+        }
+
+    }]);
 }(angular.module('app')));
