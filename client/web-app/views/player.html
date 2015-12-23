@@ -70,14 +70,14 @@
             <div id="favoriteChannels"style="height:40px;width:10%;line-height: 40px;float:left;text-align: center;color:white;margin-left:1px;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer" ng-click="listFavoriteChannels()">
                 <span translate="PLAYER_MENU_FAVORITE" style="display:inline-block"></span>
             </div>
-            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;margin-left:1px;color:white;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">
+            <div id="recentChannels"style="height:40px;width:6%;line-height: 40px;float:left;color:white;display:table-cell|inline-block|flex;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor:pointer" ng-click="listRecentChannels()">
                 <span translate="PLAYER_MENU_RECENT" style="display:inline-block"></span>
             </div>
-            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;margin-left:1px;color:white;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">
+            <div id="allChannels"style="height:40px;width:5%;line-height: 40px;color:white;text-align: center;float:left;display:table-cell|inline-block|flex;padding-right:-3px;vertical-align: middle;background: transparent;border:0px solid;border-color:rgb(190,190,190);cursor: pointer;" ng-click="listAllChannels()">
                 <span translate="PLAYER_MENU_ALL" style="display:inline-block"></span>
             </div>
                        
-            <div style="width:5%;height:40px;float:left;display:table-cell|inline-block|flex;;margin-left:1px;background: transparent;border:0px solid;border-color:rgb(190,190,190);padding-right:14px" ng-controller='filterPanelSlideCtrl'>
+            <div style="width:5%;height:40px;float:right;display:table-cell|inline-block|flex;;margin-right:3px;background: transparent;padding-right:14px" ng-controller='filterPanelSlideCtrl'>
                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
 
                 <div pageslide ps-open="checked" ps-size="300px";style="z-index:1000;position:fixed;width:300px;height:100%;overflow:hidden;transition-duration:0.5s;transition-property:width,height;top:0px;bottom:0px;right:0px">

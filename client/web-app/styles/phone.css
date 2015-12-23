@@ -16,6 +16,14 @@
     z-index: 101;
 }
 
+#recentChannels {
+    display: none;
+}
+
+#favoriteChannels {
+    display: none;
+}
+
 
 .player-maximized {
     height: 360px !important;
@@ -26,7 +34,7 @@
 }
 
 .navbar-default {
-    background-color: rgba(238, 238, 238, 0.88) !important;
+    background-color: transparents;
     width: 100%;
 }
 
@@ -40,7 +48,7 @@
         width: auto;
         height: 60px;
         padding: 0px !important;
-        background: rgba(229, 229, 231, .91);
+        background: transparent;
         z-index: 998;
     }
 

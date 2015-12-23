@@ -3,7 +3,7 @@
     header {
         width: auto;
         height: 60px;
-        background: rgba(229, 229, 231, .91);
+        background: transparent;
         z-index: 998;
     }
 
@@ -140,9 +140,9 @@
     header {
         width: auto;
         height: 50px;
-        background: rgba(229, 229, 231, .91) !important;
+        background: transparent;
         z-index: 998;
-        margin-bottom: 34px;
+        margin-bottom: 3px;
         font-size: 90%;
         padding: 0px !important;
     }
@@ -170,6 +170,10 @@
         -o-transition: all 1s ease-in-out;
     }
 
+    #recentChannels {
+        display: none;
+    }
+    
     .contact-number {
         width: 35%;
         height: 100%;
@@ -217,7 +221,7 @@
         clear: both;
         display: block;
         position: absolute;
-        background: rgba(254, 254, 254, .95);
+        background: transparent;
         color: rgba(62, 25, 77, .94);
     }
 
