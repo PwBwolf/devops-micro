@@ -1271,8 +1271,8 @@ body, html {
 #yiptv-player, #yiptv-player_wrapper {
     position: relative;
     display: inline-block !important;
-    padding-right: 2px;
-    margin-right: -4px;
+    padding-right: 0px;
+    margin-right: 0px;
     vertical-align: top;
 }
 
@@ -1817,6 +1817,16 @@ body, html {
     body {
         height: auto;
         width: auto;
+    }
+    .premiumButtonHolder {
+        width: 375px
+    }
+}
+
+@media screen and (max-width: 1024px) {
+
+    .premiumButtonHolder {
+        width: 300px;
     }
 }
 

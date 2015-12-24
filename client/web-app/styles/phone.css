@@ -13,7 +13,7 @@
 
 #phoneUserHeader {
     position: relative;
-    z-index: 101;
+    z-index: -1;
 }
 
 #recentChannels {

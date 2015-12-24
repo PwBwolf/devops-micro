@@ -35,19 +35,18 @@
                     <img src="images/logo.png" width="auto" height="60px"/>
                     </div>
                     
-                    <div ng-controller='upgradePremiumSlideCtrl' ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()"style="width:200px; height:50px;display:inline-block;text-align: center; font-size:14px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer">
-                    UPGRADE TO PREMIUM
-                        <div id="upgradePremiumSlider" pageslide ps-open="checked" ps-size="600px" style="transition-duration:1s;z-index:10;position:fixed;margin-top:53px;height:500px;overflow:scroll;transition-duration:0.5s;">
-                            <div id="upgradePremiumlHolder" style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
-                                
-                                <div id="upgradePremium" class="clear-both" ng-include="'views/upgrade-subscription.html'"></div>
-    <!--                             <div> -->
-    <!--                                 <a ng-click="toggleUpgradePremium()" class="btn btn-danger btn-xs" style="margin-bottom:10px;margin-left:120px;">OK</a> -->
-    <!--                             </div> -->
+                    <div class="premiumButtonHolder" style="height:50px;float:right;display:table-cell;vertical-align: middle;background:transparent">
+                        <div ng-controller='upgradePremiumSlideCtrl' ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()"style="margin-top:7px;width:100%; height:40px;display:inline-block;font-size:16px;display:table-cell;line-height:40px;text-align: center;float:right;color:white;background:rgb(116,51,159);cursor:pointer">
+                        UPGRADE TO PREMIUM
+                            <div id="upgradePremiumSlider" pageslide ps-open="checked" ps-size="600px" style="transition-duration:1s;z-index:10;position:fixed;margin-top:53px;height:500px;overflow:scroll;transition-duration:0.5s;">
+                                <div id="upgradePremiumlHolder" style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
+                                    
+                                    <div id="upgradePremium" class="clear-both" ng-include="'views/upgrade-subscription.html'"></div>
+    
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
                     
 <!--                     <div class="collapse" id="accountDropDown" style="width:300px; height:50px;display:inline-block;text-align: center; font-size:18px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer"> -->
 <!--                         <div class="well" data-toggle="buttons"> -->
