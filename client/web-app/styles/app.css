@@ -1941,7 +1941,6 @@ body, html {
     padding-top:4px;
     display:table-cell;
     display:inline-block;
-    display:flex;
     background: transparent;
 }
 
@@ -1954,7 +1953,6 @@ body, html {
     padding-top:4px;
     display:table-cell;
     display:inline-block;
-    display:flex;
     background: transparent;
 }
 
@@ -1965,7 +1963,6 @@ body, html {
     float:left;
     display:table-cell;
     display: inline-block;
-    display:flex;
     margin-left:1px;
     background: transparent;
 }
@@ -1975,7 +1972,6 @@ body, html {
     width:45%;
     display:table-cell; 
     display:inline-block; 
-    display:flex;
     margin-left:1px;
     background: transparent;
     float:left;
@@ -2076,7 +2072,6 @@ body, html {
     margin-left:1px;
     padding-top:9px;
     text-align: center;
-    display:table-cell; 
     display:inline-block;
     vertical-align: middle;
     background: transparent;
@@ -2090,9 +2085,7 @@ body, html {
     text-align: center;
     color:white;
     margin-left:1px;
-    display:table-cell; 
     display:inline-block; 
-    display:flex;
     background: transparent;
     cursor: pointer;
 }
@@ -2103,9 +2096,7 @@ body, html {
     line-height: 40px;
     float:left;
     color:white;
-    display:table-cell; 
     display:inline-block; 
-    display:flex;
     background: transparent;
     cursor:pointer;
 }
@@ -2117,9 +2108,7 @@ body, html {
     color:white;
     text-align: center;
     float:left;
-    display:table-cell; 
     display:inline-block; 
-    display:flex;
     padding-right:-3px;
     vertical-align: middle;
     background: transparent;
@@ -2130,9 +2119,7 @@ body, html {
     width:5%;
     height:40px;
     float:right;
-    display:table-cell; 
     display:inline-block; 
-    display:flex;
     margin-right:3px;
     background: transparent;
     padding-right:14px;
@@ -2153,7 +2140,7 @@ body, html {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 */
-@media (min-width: 1024px) and (max-width: 1900px) {
+@media (min-width: 1024px) and (max-width: 2400px) {
     body {
         height: auto;
         width: auto;
