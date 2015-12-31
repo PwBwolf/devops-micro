@@ -2042,6 +2042,7 @@ body, html {
     text-align:left;
     color: rgb(255,255,255);
     margin-top:3px;
+    margin-left:3px;
     text-decoration: underline;
 }
 
@@ -2050,8 +2051,9 @@ body, html {
     font-size:10px;
     font-weight:normal;
     text-overflow:ellipsis;
-    width: 250px;
+    width: 260px;
     height: 200px;
+    margin-left: 2px;
     color: rgb(255,255,255);
 }
 
@@ -2155,12 +2157,28 @@ body, html {
     .premiumButtonHolder {
         width: 300px;
     }
+    
+    #recentChannels {
+        display: none;
+    }
+    
+    #allChannels {
+        width: 7%;
+    }
+    
+    #favorite {
+        width: 7%;
+    }
 }
 
 @media screen and (max-width: 707px) {
 
     .language {
         font-size: 13px;
+    }
+    
+    .premiumButtonHolder {
+        width: 250px
     }
 }
 
