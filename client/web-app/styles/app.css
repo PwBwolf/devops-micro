@@ -11,11 +11,11 @@ body {
     padding: 0px;
     font-family: 'gotham-bookgotham-book', Arial, sans-serif;
 /*     background: transparent; */
-    background-image: url("../images/background_new.jpg");
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-attachment: fixed;
-    background-size: cover;
+/*     background-image: url("../images/background_new.jpg"); */
+/*     background-repeat: no-repeat; */
+/*     background-position: left top; */
+/*     background-attachment: fixed; */
+/*     background-size: cover; */
 }
 
 ul, ol {
@@ -1368,7 +1368,7 @@ body, html {
     width: 72%;
     height: 100%;
     vertical-align: top !important;
-    background-image: url('../images/channel-banner.jpg');
+    background-image: url('../images/web-app-default-image.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -1380,10 +1380,10 @@ body, html {
 
 .main-favorites {
     background: transparent;
-    width: 28.5%;
+    width: 28%;
     height: 100%;
     vertical-align: top !important;
-    margin-left: -3px;
+/*     margin-left: -3px; */
 }
 
 .suggested-channels {
@@ -1843,7 +1843,7 @@ body, html {
 .notification {
     text-align: center;
     position: relative;
-    padding: 5px 16px;
+/*     padding: 5px 16px; */
     border-top: 6px solid transparent;
 /*        border-bottom: 20px solid whitesmoke ; */
 /*         -webkit-box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */

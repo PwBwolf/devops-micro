@@ -11,8 +11,8 @@
                 <div ng-show="user.type != 'free'" class="ad-not-free">
                 </div>
             </div>
-            <div class="notification" >    
-                    <img class="img-responsive" ng-src="{{promo.image_url}}" width="250px" height="250px"/>
+            <div ng-show="user.type === 'free'" class="notification" >    
+                    <img class="img-responsive" ng-src="{{promo.image_url}}" width="350px" height="250px"/>
                     <span> {{promo.description}}</span>
             </div>   
         </div>
