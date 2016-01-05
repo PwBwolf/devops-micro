@@ -94,7 +94,8 @@ function ensureAuthorized(req, res, next) {
     } else {
         var decodedToken = jwt.decode(token, config.secretToken);
         if (decodedToken.expiry <= Date.now()) {
-            res.send(401, 'TokenExpired');
+            //res.send(401, 'TokenExpired');
+            res.status(401).send('TokenExpired');
         } else {
             req.email = decodedToken.email;
             req.role = role = decodedToken.role;

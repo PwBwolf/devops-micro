@@ -1006,7 +1006,7 @@ module.exports = {
                             logger.logError(err);
                             return res.status(500).send('failed to save to db to remove the favorite channel!');
                         } else {
-                            logger.logInfo('userController - removeFavoriteChannel - succeed to add favorite channel: ' + req.query.channelId);
+                            logger.logInfo('userController - removeFavoriteChannel - succeed to remove favorite channel: ' + req.query.channelId);
                             return res.status(200).end();
                         }
                     });
