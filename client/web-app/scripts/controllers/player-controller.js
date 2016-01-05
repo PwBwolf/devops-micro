@@ -242,32 +242,32 @@
         $scope.toggleFavoriteChannel = function () {
             if(currentChannelIndex != undefined) {
                 if(true) {
-                    var index = _.findIndex($scope.favoriteChannels, {channel_id: $rootScope.filteredChannels[currentChannelIndex.index].id});
+                    var index = _.findIndex($scope.favoriteChannels, {channel_id: currentChannelIndex.channelId});
                     if( index >= 0 ) {
                         $scope.favoriteChannels.splice(index, 1);
                         $scope.favoriteIcon = '../../images/favorite_white.png';
-                        var req = {channelId: $rootScope.filteredChannels[currentChannelIndex.index].id};
+                        var req = {channelId: currentChannelIndex.channelId};
                         mediaSvc.removeFavoriteChannel(
                             req,
                             function (data) {
-                                console.log('playerCtrl - remove favorite channel succeed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log('playerCtrl - remove favorite channel succeed:' + currentChannelIndex.channelId);
                             }, 
                             function (error) {
-                                console.log('playerCtrl - remove favorite channel failed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log('playerCtrl - remove favorite channel failed:' + currentChannelIndex.channelId);
                                 console.log(error);
                             }
                         );
                     } else {
-                        $scope.favoriteChannels.push({channel_id: $rootScope.filteredChannels[currentChannelIndex.index].id});
+                        $scope.favoriteChannels.push({channel_id: currentChannelIndex.channelId});
                         $scope.favoriteIcon = '../../images/favorite_yellow.png';
-                        var req = {channelId: $rootScope.filteredChannels[currentChannelIndex.index].id};
+                        var req = {channelId: currentChannelIndex.channelId};
                         mediaSvc.addFavoriteChannel(
                             req,
                             function (data) {
-                                console.log('playerCtrl - add favorite channel succeed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
                             }, 
                             function (error) {
-                                console.log('playerCtrl - add favorite channel failed:' + $rootScope.filteredChannels[currentChannelIndex.index].id);
+                                console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
                                 console.log(error);
                             }
                         );
