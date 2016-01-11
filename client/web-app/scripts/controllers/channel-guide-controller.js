@@ -77,11 +77,12 @@
                     $(channelGuide).prepend(channelBlock);
 
                     var channelLineUp;
-                    if (lineUp.length > 0) {
+                    if (lineUp && lineUp.length > 0) {
                         angular.forEach(lineUp, function (data, id) {
-                            if (!data.image) {
-                                channelLineUp = '<div title="' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
-                            } else {
+                            //if (!data.image) {
+                            //    channelLineUp = '<div title="' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
+                            //} else 
+                            //{
                                 if(id === 0){
                                     channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="cursor: pointer;' + timeSpan(startDate, data.startTime, data.endTime) + '" ng-click="watchNow('+ chIndex + ',0)" href="">';
                                     channelLineUp += '<span style="float:right"> <img src="../images/play-button.png" /> </span>';
@@ -89,7 +90,7 @@
                                 else{
                                     channelLineUp = '<div title="' + data.title +'&#13;&#10;' + data.description + '&#013;' + getTime(1, data) + '" style="' + timeSpan(startDate, data.startTime, data.endTime) + '">';
                                 }
-                            }
+                            //}
                             channelLineUp += '<p style="text-align: left;"><span class="channel-details-body">' + data.title + '</span></p>';
                             channelLineUp += '<p style="text-align: left"></span><span class="channel-details-body">' + getTime(1, data) + '</span></p></div>';
                             $(channelGuide).append(channelLineUp);
