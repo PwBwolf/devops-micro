@@ -95,7 +95,12 @@ function ensureAuthorized(req, res, next) {
         var decodedToken = jwt.decode(token, config.secretToken);
         if (decodedToken.expiry <= Date.now()) {
             //res.send(401, 'TokenExpired');
-            res.status(401).send('TokenExpired');
+            //if(req.type && req.type === 'mobile') {
+                req.email = decodedToken.email;
+                req.role = role = decodedToken.role;
+            //} else {
+            //    res.status(401).send('TokenExpired');
+            //}
         } else {
             req.email = decodedToken.email;
             req.role = role = decodedToken.role;
