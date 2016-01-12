@@ -44,6 +44,22 @@
             $scope.closeVisible = false;
 
             mediaSvc.getUserChannels(function (data) {
+//                var bNE, bNS;
+//                var indexOfBNE = _.findIndex(data, {title: "BEIN Sports English"});
+//                if(indexOfBNE >= 0) {
+//                    bNE = data.splice(indexOfBNE, 1);
+//                }
+//                var indexOfBNS = _.findIndex(data, {title: "BEIN Sports Español"});
+//                if(indexOfBNS >= 0) {
+//                    bNS = data.splice(indexOfBNS, 1);
+//                }
+//                data = _.sortBy(data, "title");
+//                if(indexOfBNS >= 0) {
+//                    data.unshift(bNS[0]);
+//                }
+//                if(indexOfBNE >= 0) {
+//                    data.unshift(bNE[0]);
+//                }
                 $rootScope.channels = data;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
@@ -398,7 +414,7 @@
             if(epgIndex >= 0) {
                 lineUp = $rootScope.channelsEpg[epgIndex].programs;
                 var endTime;
-                if(lineUp.length > 0) {
+                if(lineUp && lineUp.length > 0) {
                    for(var i = 0; i < lineUp.length; ++i) {
                        endTime = new Date(lineUp[i].endTime);
                        if(now < endTime) {
