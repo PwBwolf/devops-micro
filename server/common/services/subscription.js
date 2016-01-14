@@ -91,7 +91,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -259,7 +259,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, password, userObj.telephone, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, password, userObj.telephone, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newPaidUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -469,7 +469,7 @@ module.exports = {
                 // create user in freeside
                 function (userObj, accountObj, callback) {
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, password, userObj.telephone, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';

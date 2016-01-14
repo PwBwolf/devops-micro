@@ -33,11 +33,11 @@ module.exports = {
         });
     },
 
-    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, locale, callback) {
+    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, locale, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.new_customer_minimal',
             [
-                'agentnum', 1,
+                'agentnum', agentNum ? agentNum : 1,
                 'refnum', 1,
                 'first', firstName,
                 'last', lastName,

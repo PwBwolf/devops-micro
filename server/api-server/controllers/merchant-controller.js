@@ -136,17 +136,37 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                req.body.merchantId = req.query.merchantId;
-                req.body.agentNum = 2;
-                queue.enqueue('makePayment', req.body, function (err) {
+                
+                var emailRegex = config.regex.email;
+                if (!req.body.username || !emailRegex.test(req.body.username)) {
+                    return res.status(200).send({error: 'invalid-username'});
+                }
+                User.findOne({email: req.body.username.toLowerCase()}).populate('account').exec(function (err, user) {
                     if (err) {
-                        logger.logError('merchantController - makePayment - error adding job to queue');
+                        logger.logError('merchantController - makePayment - error fetching user: ' + req.body.email);
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
-                    } else {
-                        return res.status(200).send({error: '', result: 'success'});
                     }
+                    if (user && user.account && user.account.type === 'free' && user.account.merchant ==='YIPTV') {
+                        var diff = moment.utc().startOf('day').diff(moment(user.account.createdAt).utc().startOf('day'), 'days');
+                        if(diff <= 3) {
+                            req.body.agentNum = 2;
+                        }
+                    }
+                    
+                    req.body.merchantId = req.query.merchantId;
+                    req.body.paymentType = result;
+                    queue.enqueue('makePayment', req.body, function (err) {
+                        if (err) {
+                            logger.logError('merchantController - makePayment - error adding job to queue');
+                            logger.logError(err);
+                            return res.status(200).send({error: 'server-error'});
+                        } else {
+                            return res.status(200).send({error: '', result: 'success'});
+                        }
+                    });
                 });
+                
             });
         } catch (ex) {
             logger.logError('merchantController - makePayment - exception');
@@ -219,7 +239,7 @@ function validateCredentials(merchantId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT'));
+                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT') ? client.name : false);
                 }
             });
         }

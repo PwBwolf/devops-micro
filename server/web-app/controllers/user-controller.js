@@ -37,6 +37,14 @@ module.exports = {
                     logger.logError('userController - signUp - merchant not found: ' + req.body.email.toLowerCase());
                     return res.status(500).send('InvalidMerchant');
                 } else {
+                    switch (merchant.name) {
+                    case 'IDT':
+                        req.body.agentNum = 2;
+                        break;
+                    case 'TRUCONN':
+                        req.body.agentNum = 3;
+                        break;
+                    }
                     return doSignUp(req, res);
                 }
             });
