@@ -255,53 +255,68 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
         if (err) {
             logger.logError('metadataProcessorMain - updateChannel - failed to getChannelGuide in gracenote');
             logger.logError(err);
+            cb(err);
         } else {
+            if(data[0].airings) {
+                logger.logInfo('metadataProcessorMain - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
         
-            logger.logInfo('metadataProcessorMain - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
-    
-            channel.airings.splice(0, channel.airings.length);
-            channel.status = 'active';
-            for(var i = 0; i < data[0].airings.length; i++) {
-                channel.airings.push(data[0].airings[i]);
-                channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
-                channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
-            }
-    
-            logger.logInfo('metadataProcessorMain - updateChannel - programs in total: ' + channel.airings.length);
-    
-            channel.save(function (err) {
-                if (cb) {
-                    cb(err, channel);
+                channel.airings.splice(0, channel.airings.length);
+                channel.status = 'active';
+                for(var i = 0; i < data[0].airings.length; i++) {
+                    channel.airings.push(data[0].airings[i]);
+                    channel.airings[channel.airings.length-1].startTime = date.isoDate(new Date(data[0].airings[i].startTime));
+                    channel.airings[channel.airings.length-1].endTime = date.isoDate(new Date(data[0].airings[i].endTime));
                 }
-            });
+        
+                logger.logInfo('metadataProcessorMain - updateChannel - programs in total: ' + channel.airings.length);
+        
+                channel.save(function (err) {
+                    if (cb) {
+                        cb(err, channel);
+                    }
+                });
+            } else {
+                logger.logInfo('metadataProcessorMain - updateChannel - no airings: ' + dataGraceNote.stationId);
+                cb(null);
+            }
         }
     });
 };
 
 function saveChannel(channel, startTime, endTime, cb) {
-    graceNote.getChannelGuide(channel.stationId, startTime, endTime, function (err, data) {
-        if (err) {
-            logger.logError('metadataProcessorMain - saveChannel - failed to getChannelGuide in gracenote');
-            logger.logError(err);
-        } else {
-            
-            var newChannel = new Channel(data[0]);
-            logger.logInfo('metadataProcessorMain - saveChannel - programs in total: ' + data[0].airings.length);
-            
-            for(var i = 0; i < newChannel.airings.length; i++) {
-                newChannel.airings[i].startTime = date.isoDate(new Date(newChannel.airings[i].startTime));
-                newChannel.airings[i].endTime = date.isoDate(new Date(newChannel.airings[i].endTime));
-            }
-            
-            newChannel.status = 'active';
-            
-            newChannel.save(function (err) {
-                if (cb) {
-                    cb(err, newChannel);
+    if(channel.stationId === undefined) {
+        logger.logInfo('metadataProcessorMain - saveChannel - no stationId: ' + channel.callSign);
+        cb(null, null);
+    } else {
+        graceNote.getChannelGuide(channel.stationId, startTime, endTime, function (err, data) {
+            if (err) {
+                logger.logError('metadataProcessorMain - saveChannel - failed to getChannelGuide in gracenote: ' + channel.stationId);
+                logger.logError(err);
+                cb(err);
+            } else {
+                if(data[0].airings) {
+                    var newChannel = new Channel(data[0]);
+                    logger.logInfo('metadataProcessorMain - saveChannel - programs in total: ' + data[0].airings.length);
+                    
+                    for(var i = 0; i < newChannel.airings.length; i++) {
+                        newChannel.airings[i].startTime = date.isoDate(new Date(newChannel.airings[i].startTime));
+                        newChannel.airings[i].endTime = date.isoDate(new Date(newChannel.airings[i].endTime));
+                    }
+                    
+                    newChannel.status = 'active';
+                    
+                    newChannel.save(function (err) {
+                        if (cb) {
+                            cb(err, newChannel);
+                        }
+                    });
+                } else {
+                    logger.logInfo('metadataProcessorMain - saveChannel - no airings: ' + channel.stationId);
+                    cb(null);
                 }
-            });
-        }
-    });
+            }
+        });
+    }
 };
 
 function imageDownload() {
@@ -577,74 +592,79 @@ function imageDownload() {
             async.eachSeries(
                 data, 
                 function (channelGraceNote, cb) {
-                    graceNote.getChannelGuide(channelGraceNote.stationId, startTime, endTime, function (err, dataPrograms) {
-                        if (err) {
-                            logger.logError('metadataProcessorMain - imageDownload - failed to getChannelGuide from gracenote');
-                            logger.logError(err);
-                            cb(err);
-                            return;
-                        } else {
-                            var airings = dataPrograms[0].airings;
-                            logger.logInfo('metadataProcessorMain - imageDownload - programs retrieved from gracenote in total: ' + airings.length);
-                            
-                            var imageUri = [];
-                            for(var i = 0; i < airings.length; i++) {
-                                imageUri.push({uri: airings[i].program.preferredImage.uri, type: 'program', status: 'new', id: airings[i].program.tmsId});
-                            }
-                            
-                            logger.logInfo('metadataProcessorMain - imageDownload - initial program images length: ' + imageUri.length);
-                            
-                            var imageUriUniqTemp = _.uniq(imageUri, 'uri');
-                            imageUriTemp = imageUriTemp.concat(imageUriUniqTemp);
-                            imageUriTemp = _.uniq(imageUriTemp, 'uri');
-                            logger.logInfo('metadataProcessorMain - imageDownload - accumulated unique program images in gracenote length: ' + imageUriTemp.length);
-                            var imageUriUniqCount = imageUriUniq.length;
-                            for(var i = 0; i < imageUriUniqTemp.length; i++) {
-                                var isImageInTempUniq = true;
-                                for(var j = 0; j < imageUriUniqCount; j++) {
-                                    if(imageUriUniqTemp[i].uri === imageUriUniq[j].uri) {
-                                        isImageInTempUniq = false;
-                                        break;
-                                    }
+                    if(channelGraceNote.stationId === undefined) {
+                        logger.logInfo('metadataProcessorMain - imageDownload - no stationId: ' + channelGraceNote.callSign);
+                        cb(null);
+                    } else {
+                        graceNote.getChannelGuide(channelGraceNote.stationId, startTime, endTime, function (err, dataPrograms) {
+                            if (err) {
+                                logger.logError('metadataProcessorMain - imageDownload - failed to getChannelGuide from gracenote: ' + channelGraceNote.stationId );
+                                logger.logError(err);
+                                cb(err);
+                                return;
+                            } else {
+                                var airings = dataPrograms[0].airings;
+                                logger.logInfo('metadataProcessorMain - imageDownload - programs retrieved from gracenote in total: ' + airings.length);
+                                
+                                var imageUri = [];
+                                for(var i = 0; i < airings.length; i++) {
+                                    imageUri.push({uri: airings[i].program.preferredImage.uri, type: 'program', status: 'new', id: airings[i].program.tmsId});
                                 }
-                                if(isImageInTempUniq) {
-                                    imageUriUniq.push(imageUriUniqTemp[i]);
-                                }
-                            }
-                            
-                            var imageNewCount = imageUriUniq.length - imageUriUniqCount;
-                            logger.logInfo('metadataProcessorMain - imageDownload - unique program images added: ' + imageNewCount);
-                            
-                            async.eachSeries(
-                                airings,
-                                function (airing, cb1) {
-                                    var imageUriCopy = true;
-                                    for(var i = imageUriUniq.length-1, m = 0 ; m < imageNewCount; i--, m++) {
-                                        if(imageUriUniq[i].uri === airing.program.preferredImage.uri && imageUriUniq[i].status === 'new') {
-                                            imageUriUniq[i].status = 'saved';
-                                            imageUriCopy = false;
-                                            saveImage(airing.program, 'program', airing.program.tmsId, cb1);
+                                
+                                logger.logInfo('metadataProcessorMain - imageDownload - initial program images length: ' + imageUri.length);
+                                
+                                var imageUriUniqTemp = _.uniq(imageUri, 'uri');
+                                imageUriTemp = imageUriTemp.concat(imageUriUniqTemp);
+                                imageUriTemp = _.uniq(imageUriTemp, 'uri');
+                                logger.logInfo('metadataProcessorMain - imageDownload - accumulated unique program images in gracenote length: ' + imageUriTemp.length);
+                                var imageUriUniqCount = imageUriUniq.length;
+                                for(var i = 0; i < imageUriUniqTemp.length; i++) {
+                                    var isImageInTempUniq = true;
+                                    for(var j = 0; j < imageUriUniqCount; j++) {
+                                        if(imageUriUniqTemp[i].uri === imageUriUniq[j].uri) {
+                                            isImageInTempUniq = false;
                                             break;
                                         }
                                     }
-                                    if(imageUriCopy) {
-                                        cb1(null);
+                                    if(isImageInTempUniq) {
+                                        imageUriUniq.push(imageUriUniqTemp[i]);
                                     }
-                                },
-                                function (err) {
-                                    if(err) {
-                                        logger.logError('metadataProcessorMain - saveImage - type program failed');
-                                        logger.logError(err);
-                                        cb(err);
-                                        return;
-                                    } else {
-                                        logger.logInfo('metadataProcessorMain - saveImage - type program succeed! ');
-                                    }
-                                    cb(err, images, data);
                                 }
-                            );
-                        }
-                    });
+                                
+                                var imageNewCount = imageUriUniq.length - imageUriUniqCount;
+                                logger.logInfo('metadataProcessorMain - imageDownload - unique program images added: ' + imageNewCount);
+                                
+                                async.eachSeries(
+                                    airings,
+                                    function (airing, cb1) {
+                                        var imageUriCopy = true;
+                                        for(var i = imageUriUniq.length-1, m = 0 ; m < imageNewCount; i--, m++) {
+                                            if(imageUriUniq[i].uri === airing.program.preferredImage.uri && imageUriUniq[i].status === 'new') {
+                                                imageUriUniq[i].status = 'saved';
+                                                imageUriCopy = false;
+                                                saveImage(airing.program, 'program', airing.program.tmsId, cb1);
+                                                break;
+                                            }
+                                        }
+                                        if(imageUriCopy) {
+                                            cb1(null);
+                                        }
+                                    },
+                                    function (err) {
+                                        if(err) {
+                                            logger.logError('metadataProcessorMain - saveImage - type program failed');
+                                            logger.logError(err);
+                                            cb(err);
+                                            return;
+                                        } else {
+                                            logger.logInfo('metadataProcessorMain - saveImage - type program succeed! ');
+                                        }
+                                        cb(err, images, data);
+                                    }
+                                );
+                            }
+                        });
+                    }
                 },
                 function (err) {
                     if(err) {
