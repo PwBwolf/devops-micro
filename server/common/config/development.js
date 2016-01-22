@@ -34,6 +34,8 @@ module.exports = {
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile', 'voip'],
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
+    freeSideBackOfficeApiUri: 'http://172.16.10.5:8008/',
+    freeSideSecret: 'yip-freeside-dev',
     freeSideFreePremiumUserPackageParts: [17, 18],
     freeSideFreeUserPackageParts: [17],
     freeSidePaidUserPackageParts: [17, 18, 16],

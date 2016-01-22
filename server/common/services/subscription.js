@@ -693,7 +693,7 @@ module.exports = {
             // update user information in freeside
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : userObj.account.merchant, 
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : (userObj.account.merchant ? userObj.account.merchant : 'YipTV'), 
                         newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL', 
                         newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.telephone, locale, 
                         newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '', 
@@ -1842,7 +1842,7 @@ module.exports = {
             // update billing details
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant, 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, locale, 'BILL', '', '', '', '', '', function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.telephone, locale, 'BILL', '', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
