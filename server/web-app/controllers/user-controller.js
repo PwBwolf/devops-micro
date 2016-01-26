@@ -59,6 +59,12 @@ module.exports = {
                         case 'MGCJK':
                             req.body.agentNum = 7;
                             break;
+                        case 'AMAZON':
+                            req.body.agentNum = 8;
+                            break;
+                        case 'UBS':
+                            req.body.agentNum = 9;
+                            break;
                     }
                     return doSignUp(req, res);
                 }
