@@ -593,7 +593,7 @@ function imageDownload() {
                 data, 
                 function (channelGraceNote, cb) {
                     if(channelGraceNote.stationId === undefined) {
-                        logger.logInfo('metadataProcessorMain - imageDownload - no stationId: ' + channelGraceNote.callSign);
+                        logger.logInfo('metadataProcessorMain - imageDownload - no stationId: ' + channelGraceNote.callSign ? channelGraceNote.callSign : 'no callsign');
                         cb(null);
                     } else {
                         graceNote.getChannelGuide(channelGraceNote.stationId, startTime, endTime, function (err, dataPrograms) {
@@ -603,65 +603,70 @@ function imageDownload() {
                                 cb(err);
                                 return;
                             } else {
-                                var airings = dataPrograms[0].airings;
-                                logger.logInfo('metadataProcessorMain - imageDownload - programs retrieved from gracenote in total: ' + airings.length);
-                                
-                                var imageUri = [];
-                                for(var i = 0; i < airings.length; i++) {
-                                    imageUri.push({uri: airings[i].program.preferredImage.uri, type: 'program', status: 'new', id: airings[i].program.tmsId});
-                                }
-                                
-                                logger.logInfo('metadataProcessorMain - imageDownload - initial program images length: ' + imageUri.length);
-                                
-                                var imageUriUniqTemp = _.uniq(imageUri, 'uri');
-                                imageUriTemp = imageUriTemp.concat(imageUriUniqTemp);
-                                imageUriTemp = _.uniq(imageUriTemp, 'uri');
-                                logger.logInfo('metadataProcessorMain - imageDownload - accumulated unique program images in gracenote length: ' + imageUriTemp.length);
-                                var imageUriUniqCount = imageUriUniq.length;
-                                for(var i = 0; i < imageUriUniqTemp.length; i++) {
-                                    var isImageInTempUniq = true;
-                                    for(var j = 0; j < imageUriUniqCount; j++) {
-                                        if(imageUriUniqTemp[i].uri === imageUriUniq[j].uri) {
-                                            isImageInTempUniq = false;
-                                            break;
-                                        }
+                                if(dataPrograms[0].airings === undefined) {
+                                    logger.logInfo('metadataProcessorMain - imageDownload - no airings from gracenote: ' + channelGraceNote.stationId);
+                                    cb(null);
+                                } else {
+                                    var airings = dataPrograms[0].airings;
+                                    logger.logInfo('metadataProcessorMain - imageDownload - programs retrieved from gracenote in total: ' + airings.length);
+                                    
+                                    var imageUri = [];
+                                    for(var i = 0; i < airings.length; i++) {
+                                        imageUri.push({uri: airings[i].program.preferredImage.uri, type: 'program', status: 'new', id: airings[i].program.tmsId});
                                     }
-                                    if(isImageInTempUniq) {
-                                        imageUriUniq.push(imageUriUniqTemp[i]);
-                                    }
-                                }
-                                
-                                var imageNewCount = imageUriUniq.length - imageUriUniqCount;
-                                logger.logInfo('metadataProcessorMain - imageDownload - unique program images added: ' + imageNewCount);
-                                
-                                async.eachSeries(
-                                    airings,
-                                    function (airing, cb1) {
-                                        var imageUriCopy = true;
-                                        for(var i = imageUriUniq.length-1, m = 0 ; m < imageNewCount; i--, m++) {
-                                            if(imageUriUniq[i].uri === airing.program.preferredImage.uri && imageUriUniq[i].status === 'new') {
-                                                imageUriUniq[i].status = 'saved';
-                                                imageUriCopy = false;
-                                                saveImage(airing.program, 'program', airing.program.tmsId, cb1);
+                                    
+                                    logger.logInfo('metadataProcessorMain - imageDownload - initial program images length: ' + imageUri.length);
+                                    
+                                    var imageUriUniqTemp = _.uniq(imageUri, 'uri');
+                                    imageUriTemp = imageUriTemp.concat(imageUriUniqTemp);
+                                    imageUriTemp = _.uniq(imageUriTemp, 'uri');
+                                    logger.logInfo('metadataProcessorMain - imageDownload - accumulated unique program images in gracenote length: ' + imageUriTemp.length);
+                                    var imageUriUniqCount = imageUriUniq.length;
+                                    for(var i = 0; i < imageUriUniqTemp.length; i++) {
+                                        var isImageInTempUniq = true;
+                                        for(var j = 0; j < imageUriUniqCount; j++) {
+                                            if(imageUriUniqTemp[i].uri === imageUriUniq[j].uri) {
+                                                isImageInTempUniq = false;
                                                 break;
                                             }
                                         }
-                                        if(imageUriCopy) {
-                                            cb1(null);
+                                        if(isImageInTempUniq) {
+                                            imageUriUniq.push(imageUriUniqTemp[i]);
                                         }
-                                    },
-                                    function (err) {
-                                        if(err) {
-                                            logger.logError('metadataProcessorMain - saveImage - type program failed');
-                                            logger.logError(err);
-                                            cb(err);
-                                            return;
-                                        } else {
-                                            logger.logInfo('metadataProcessorMain - saveImage - type program succeed! ');
-                                        }
-                                        cb(err, images, data);
                                     }
-                                );
+                                    
+                                    var imageNewCount = imageUriUniq.length - imageUriUniqCount;
+                                    logger.logInfo('metadataProcessorMain - imageDownload - unique program images added: ' + imageNewCount);
+                                    
+                                    async.eachSeries(
+                                        airings,
+                                        function (airing, cb1) {
+                                            var imageUriCopy = true;
+                                            for(var i = imageUriUniq.length-1, m = 0 ; m < imageNewCount; i--, m++) {
+                                                if(imageUriUniq[i].uri === airing.program.preferredImage.uri && imageUriUniq[i].status === 'new') {
+                                                    imageUriUniq[i].status = 'saved';
+                                                    imageUriCopy = false;
+                                                    saveImage(airing.program, 'program', airing.program.tmsId, cb1);
+                                                    break;
+                                                }
+                                            }
+                                            if(imageUriCopy) {
+                                                cb1(null);
+                                            }
+                                        },
+                                        function (err) {
+                                            if(err) {
+                                                logger.logError('metadataProcessorMain - saveImage - type program failed');
+                                                logger.logError(err);
+                                                cb(err);
+                                                return;
+                                            } else {
+                                                logger.logInfo('metadataProcessorMain - saveImage - type program succeed! ');
+                                            }
+                                            cb(err, images, data);
+                                        }
+                                    );
+                                }
                             }
                         });
                     }
