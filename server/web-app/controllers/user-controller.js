@@ -38,12 +38,27 @@ module.exports = {
                     return res.status(500).send('InvalidMerchant');
                 } else {
                     switch (merchant.name) {
-                    case 'IDT':
-                        req.body.agentNum = 2;
-                        break;
-                    case 'TRUCONN':
-                        req.body.agentNum = 3;
-                        break;
+                        case 'YIPTV':
+                            req.body.agentNum = 1;
+                            break;
+                        case 'IDT':
+                            req.body.agentNum = 2;
+                            break;
+                        case 'TRUCONN':
+                            req.body.agentNum = 3;
+                            break;
+                        case 'PERKSPOT':
+                            req.body.agentNum = 4;
+                            break;
+                        case 'NEXTJUMP':
+                            req.body.agentNum = 5;
+                            break;
+                        case 'CJ':
+                            req.body.agentNum = 6;
+                            break;
+                        case 'MGCJK':
+                            req.body.agentNum = 7;
+                            break;
                     }
                     return doSignUp(req, res);
                 }
@@ -928,7 +943,7 @@ module.exports = {
             }
         });
     },
-    
+
     getFavoriteChannels: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
             if (err) {
@@ -936,7 +951,7 @@ module.exports = {
                 logger.logError(err);
                 return res.status(500).end();
             }
-            
+
             var favoriteChannels = [];
             if(data && data.channels.length > 0) {
                 for(var i = 0; i < data.channels.length; ++i) {
@@ -946,7 +961,7 @@ module.exports = {
             return res.send(favoriteChannels);
         });
     },
-    
+
     addFavoriteChannel: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
             if (err) {
@@ -994,7 +1009,7 @@ module.exports = {
             }
         });
     },
-    
+
     removeFavoriteChannel: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
             if (err) {
