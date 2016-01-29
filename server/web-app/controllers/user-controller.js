@@ -38,9 +38,6 @@ module.exports = {
                     return res.status(500).send('InvalidMerchant');
                 } else {
                     switch (merchant.name) {
-                        case 'YIPTV':
-                            req.body.agentNum = 1;
-                            break;
                         case 'IDT':
                             req.body.agentNum = 2;
                             break;
@@ -58,6 +55,12 @@ module.exports = {
                             break;
                         case 'MGCJK':
                             req.body.agentNum = 7;
+                            break;
+                        case 'AMAZON':
+                            req.body.agentNum = 8;
+                            break;
+                        case 'UBS':
+                            req.body.agentNum = 9;
                             break;
                     }
                     return doSignUp(req, res);
