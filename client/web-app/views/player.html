@@ -11,11 +11,11 @@
                 <div ng-show="user.type != 'free'" class="ad-not-free">
                 </div>
             </div>
-            <div ng-show="user.type === 'free'" class="notification" >    
+            <div ng-show="user.type === 'free'" class="notification" >
 <!--                     <img class="img-responsive" ng-src="{{promo.image_url}}" width="350px" height="250px"/> -->
 <!--                     <span> {{promo.description}}</span> -->
                         <img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
 <!--                 </div> -->
 <!--             </div> -->
 <!--         </div> -->
-               
+
         <div id="menuBar" >
             <div class="pre-channel">
                 <img src="../images/arrow-left.png" width="30px" hight="30px" ng-click="previousChannel()" style="cursor: pointer">
@@ -38,7 +38,7 @@
             <div class="next-channel">
                 <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
             </div>
-            
+
             <div id="programInfo">
                 <div id="title" >{{programTitle}}</div>
                 <div id="description" >{{programDescription}}</div>
@@ -49,7 +49,7 @@
 
                 <div id="programDetailSlider" pageslide ps-open="checked" ps-side="top"  >
                     <div id="programDetailHolder" >
-                        
+
                         <div id="detailHolder">
                             <div id="detailTitle">
                                 <div class="detail-title">
@@ -62,7 +62,7 @@
                             <div id="detailDescription">
                             {{program.description}}
                             </div>
-                            
+
                         </div>
                         <div>
                             <a id="okButton"ng-click="toggleProgramDetail()" class="btn btn-danger btn-xs" >OK</a>
@@ -74,7 +74,7 @@
             <div id="favorite">
                 <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()" style="cursor: pointer">
             </div>
-    
+
             <div id="favoriteChannels" ng-click="listFavoriteChannels()">
                 <span translate="PLAYER_MENU_FAVORITE" ></span>
             </div>
@@ -84,7 +84,7 @@
             <div id="allChannels" ng-click="listAllChannels()">
                 <span translate="PLAYER_MENU_ALL"></span>
             </div>
-                       
+
             <div id="filter" ng-controller='filterPanelSlideCtrl'>
                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
 
@@ -123,7 +123,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="panel panel-default filter-categories">
                                         <div class="panel-heading" role="tab" id="headingRegion">
                                             <div class="panel-title filter-category-title">
@@ -147,7 +147,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="panel panel-default filter-categories">
                                         <div class="panel-heading" role="tab" id="headingAudience">
                                             <div class="panel-title filter-category-title">
@@ -171,7 +171,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="panel panel-default filter-categories">
                                         <div class="panel-heading" role="tab" id="headingLanguage">
                                             <div class="panel-title filter-category-title">
@@ -211,7 +211,7 @@
 <!--         <div id="header-time-panel"> -->
 <!--             <div></div> -->
 <!--         </div> -->
- 
+
 <!--     </div> -->
     <div>
         <div id="clock" class="position-div" current-time > </div>
@@ -219,7 +219,7 @@
             <div></div>
         </div>
     </div>
-    
+
     <div  >
 
         <div id="logoColumn" class="user-guide-panel scrollListener" ng-controller='channelLogoController' >
@@ -243,8 +243,8 @@
         </div>
 
     </div>
-    
-    
+
+
 <!--     <div id="userGuide" class="user-guide-panel" style="background:rgb(210,210,210)" ng-controller='channelGuideCtrl'> -->
 <!--         <div class='position-div user-guide'> -->
 <!--             <div id='channelGuidePanel' class='user-guide-description'> -->
@@ -253,5 +253,5 @@
 <!--         </div> -->
 <!--     </div> -->
 
-     
+
 </div>
