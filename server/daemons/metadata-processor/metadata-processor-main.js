@@ -682,7 +682,7 @@ function imageDownload() {
                 }
             );
         },
-        
+            
         function(images, data, callback) {
             
             imageUriUniqRemoved = imageUriUniq.splice(0, imageCount);
