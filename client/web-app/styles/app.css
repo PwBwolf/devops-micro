@@ -1304,7 +1304,7 @@ body, html {
 }
 
 .position-div {
-    /*display: inline-block;*/
+    display: inline-block;
     margin-right: -4px;
     vertical-align: baseline;
 }
@@ -1364,7 +1364,6 @@ body, html {
 }
 
 .main-player {
-    margin: 0 auto;
     width: 72%;
     height: 100%;
     vertical-align: top !important;
@@ -2268,4 +2267,21 @@ body, html {
     }
 
 
+}
+
+
+.free-tv {
+    height: 360px;
+}
+
+.paid-tv {
+    height: 360px;
+}
+
+.paid-tv .main-player {
+    margin: 0 auto;
+}
+
+.paid-tv .position-div{
+    display: inherit;
 }

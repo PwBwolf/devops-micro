@@ -1,22 +1,45 @@
 <div ng-controller="playerCtrl">
     <div id="playerTop" class="player-top">
-        <div class="main-player position-div">
-            <div id="yiptv-player"></div>
-        </div>
-        <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
-            <div access-level="accessLevels.user">
-                <div ng-show="user.type === 'free'" class="ad-free">
-                    <img src="../images/upgrade_360_90.png" width="345px" hight="86px" >
-                </div>
-                <div ng-show="user.type != 'free'" class="ad-not-free">
-                </div>
-            </div>
-            <div ng-show="user.type === 'free'" class="notification" >
-<!--                     <img class="img-responsive" ng-src="{{promo.image_url}}" width="350px" height="250px"/> -->
-<!--                     <span> {{promo.description}}</span> -->
-                        <img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>
+        <div class="paid-tv"  ng-if="user.type != 'free'">
+            <div class="main-player position-div">
+                <div id="yiptv-player"></div>
             </div>
         </div>
+
+        <div class="free-tv" ng-if="user.type ==='free'">
+            <div class="main-player position-div">
+                <div id="yiptv-player"></div>
+            </div>
+            <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
+                <div access-level="accessLevels.user">
+                    <div class="ad-free">
+                        <img src="../images/upgrade_360_90.png" width="345px" hight="86px" >
+                    </div>
+                </div>
+                <div class="notification" >
+                    <img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="main-player position-div">-->
+            <!--<div id="yiptv-player"></div>-->
+        <!--</div>-->
+        <!--<div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">-->
+            <!--<div access-level="accessLevels.user">-->
+                <!--<div ng-show="user.type === 'free'" class="ad-free">-->
+                    <!--<img src="../images/upgrade_360_90.png" width="345px" hight="86px" >-->
+                <!--</div>-->
+                <!--<div ng-show="user.type != 'free'" class="ad-not-free">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div ng-show="user.type === 'free'" class="notification" >-->
+<!--&lt;!&ndash;                     <img class="img-responsive" ng-src="{{promo.image_url}}" width="350px" height="250px"/> &ndash;&gt;-->
+<!--&lt;!&ndash;                     <span> {{promo.description}}</span> &ndash;&gt;-->
+                        <!--<img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 
     <div id="channelMenuHolder" >
