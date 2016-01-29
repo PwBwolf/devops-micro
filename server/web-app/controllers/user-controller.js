@@ -38,9 +38,6 @@ module.exports = {
                     return res.status(500).send('InvalidMerchant');
                 } else {
                     switch (merchant.name) {
-                        case 'YIPTV':
-                            req.body.agentNum = 1;
-                            break;
                         case 'IDT':
                             req.body.agentNum = 2;
                             break;
