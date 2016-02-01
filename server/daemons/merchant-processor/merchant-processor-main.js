@@ -12,7 +12,6 @@ var monq = require('monq'),
     queueDb = monq(config.db),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.createConnection(config.db);
-    //db = mongoose.createConnection('mongodb://yipUser:y1ptd3v@172.16.10.8/yiptv');
 
 
 require('../../common/setup/models')(modelsPath);
