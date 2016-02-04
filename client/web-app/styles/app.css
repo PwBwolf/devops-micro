@@ -2269,7 +2269,7 @@ body, html {
 
 }
 
-
+/* player controller page */
 .free-tv {
     height: 360px;
 }
@@ -2284,4 +2284,74 @@ body, html {
 
 .paid-tv .position-div{
     display: inherit;
+}
+
+#pip-player {
+    height: 350px;
+}
+
+#tv-section {
+    width: 100%;
+}
+
+.main-tv{
+    float: left;
+    width: 60%;
+
+}
+
+/*#screen1 {*/
+    /*width: 100%;*/
+    /*height: 360px;*/
+/*}*/
+
+#tv-section .pip-controls{
+    float: left;
+    width: 10%;
+    height: 100%;
+}
+
+#tv-section .pip-controls button{
+    position: relative;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#tv-section .pip-tv{
+    float: left;
+    width: 30%;
+
+}
+
+.animate-enter,
+.animate-leave {
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+}
+
+.animate-leave.animate-leave-active,
+.animate-enter {
+    -webkit-transform: rotateX(90deg) rotateZ(90deg);
+    -moz-transform: rotateX(90deg) rotateZ(90deg);
+    -ms-transform: rotateX(90deg) rotateZ(90deg);
+    -o-transform: rotateX(90deg) rotateZ(90deg);
+    transform: rotateX(90deg) rotateZ(90deg);
+    opacity: 0;
+    height: 0px;
+}
+
+.animate-enter.animate-enter-active,
+.animate-leave {
+    -webkit-transform: rotateX(0deg) rotateZ(0deg);
+    -moz-transform: rotateX(0deg) rotateZ(0deg);
+    -ms-transform: rotateX(0deg) rotateZ(0deg);
+    -o-transform: rotateX(0deg) rotateZ(0deg);
+    transform: rotateX(0deg) rotateZ(0deg);
+    opacity: 1;
+    height: 30px;
 }

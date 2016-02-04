@@ -1,8 +1,19 @@
-<div ng-controller="playerCtrl">
+    <div ng-controller="playerCtrl">
     <div id="playerTop" class="player-top">
         <div class="paid-tv"  ng-if="user.type != 'free'">
             <div class="main-player position-div">
-                <div id="yiptv-player"></div>
+                <div id="tv-section">
+                    <div class="main-tv">
+                        <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
+                    </div>
+                    <div class="pip-controls">
+                        <button class="pip-but btn btn-default" ng-model="picturepicture" ng-init="picturepicture=false"  ng-click="picturepicture= !picturepicture; playPip();" ng-bind="picturepicture? 'Close': 'Picture in Picture'"></button></br>
+                        <button class="pip-but btn btn-default" ng-if="picturepicture" ng-click="switchTv()">Switch</button></br>
+                    </div>
+                    <div class="pip-tv" ng-if="picturepicture" ng-animate="'animate'">
+                        <pip-screen info='pip'class="pipUrl" playurl="{{pipUrl}}" channel-logo="{{channelLogo}}" id="screen2"></pip-screen>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -10,6 +21,7 @@
             <div class="main-player position-div">
                 <div id="yiptv-player"></div>
             </div>
+
             <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
                 <div access-level="accessLevels.user">
                     <div class="ad-free">
@@ -23,23 +35,8 @@
         </div>
 
 
-        <!--<div class="main-player position-div">-->
-            <!--<div id="yiptv-player"></div>-->
-        <!--</div>-->
-        <!--<div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">-->
-            <!--<div access-level="accessLevels.user">-->
-                <!--<div ng-show="user.type === 'free'" class="ad-free">-->
-                    <!--<img src="../images/upgrade_360_90.png" width="345px" hight="86px" >-->
-                <!--</div>-->
-                <!--<div ng-show="user.type != 'free'" class="ad-not-free">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div ng-show="user.type === 'free'" class="notification" >-->
-<!--&lt;!&ndash;                     <img class="img-responsive" ng-src="{{promo.image_url}}" width="350px" height="250px"/> &ndash;&gt;-->
-<!--&lt;!&ndash;                     <span> {{promo.description}}</span> &ndash;&gt;-->
-                        <!--<img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>-->
-            <!--</div>-->
-        <!--</div>-->
+
+
     </div>
 
     <div id="channelMenuHolder" >
@@ -243,7 +240,7 @@
         </div>
     </div>
 
-    <div  >
+    <div>
 
         <div id="logoColumn" class="user-guide-panel scrollListener" ng-controller='channelLogoController' >
             <div class='position-div user-guide '>
@@ -265,7 +262,10 @@
             </div>
         </div>
 
+
     </div>
+
+
 
 
 <!--     <div id="userGuide" class="user-guide-panel" style="background:rgb(210,210,210)" ng-controller='channelGuideCtrl'> -->
@@ -277,4 +277,25 @@
 <!--     </div> -->
 
 
+
+    <!--<div>-->
+        <!--<div class="main-tv">-->
+            <!--<pip-screen class="tvUrl" playurl="{{tvUrl}}" channel-logo="{{channelLogo}}" id="pip-screen"></pip-screen>-->
+        <!--</div>-->
+        <!--<div class="pip-controls">-->
+            <!--<button class="btn btn-default" ng-show="picturePicture" ng-click="picturePicture = false">Close</button>-->
+            <!--<button class="btn btn-default" ng-show="picturePicture" ng-click="picturePicture = false">Switch</button>-->
+            <!--<button class="btn btn-default"  ng-hide="picturePicture" ng-click="picturePicture = true">Picture & Picture</button>-->
+        <!--</div>-->
+        <!--<div class="pip-tv animate-if" ng-show="editing">-->
+            <!--<pip-screen class="pipUrl" playurl="{{pipUrl}}" channel-logo="{{channelLogo}}" id="pip-screen"></pip-screen>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+
+
+
 </div>
+
+

@@ -12,6 +12,8 @@ var express = require('express'),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.createConnection(config.db);
 
+
+
 require('../common/setup/logger');
 require('../common/setup/models')(modelsPath);
 require('./express')(app, logger);
