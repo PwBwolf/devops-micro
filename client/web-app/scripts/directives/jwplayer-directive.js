@@ -1,9 +1,7 @@
-(function() {
-    angular
-        .module('app')
-        .directive('pipScreen', ppTv);
-
-    function ppTv() {
+(function (app) {
+    'use strict';
+    
+    app.directive('pipScreen', ['$', function ppTv($) {
         return {
             restrict: 'E',
             scope: {
@@ -28,8 +26,8 @@
 
             }
         };
-    }
-})()
+    }]);
+}(angular.module('app')));
 
 
 
