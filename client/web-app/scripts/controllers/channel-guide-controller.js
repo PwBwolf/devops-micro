@@ -264,6 +264,8 @@
 
                 $(channelGuide).attr('channel', station).prepend(channelLogo);
 
+
+                
                 $(channelGuide).attr('class', 'channel-description');
                 $(channelGuide).attr('id', 'channelGuideDescription');
                 $compile(channelGuide)($scope);
