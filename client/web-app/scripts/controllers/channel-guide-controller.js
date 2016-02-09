@@ -240,7 +240,7 @@
 
         $scope.$on('PlayChannel', function(event, args){
             if(args.previousIndex != undefined) {
-                channelGuideHolder[0].children[args.previousIndex+1].getElementsByTagName("div")[0].style.backgroundColor="#000F29";
+                channelGuideHolder[0].children[args.previousIndex+1].getElementsByTagName("div")[0].style.backgroundColor="#FFF";
             }
             channelGuideHolder[0].children[args.currentIndex+1].getElementsByTagName("div")[0].style.backgroundColor="#337ab7";
         });
@@ -265,7 +265,7 @@
                 $(channelGuide).attr('channel', station).prepend(channelLogo);
 
 
-                
+
                 $(channelGuide).attr('class', 'channel-description');
                 $(channelGuide).attr('id', 'channelGuideDescription');
                 $compile(channelGuide)($scope);
