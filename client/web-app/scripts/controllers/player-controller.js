@@ -83,13 +83,14 @@
             });
 
             mediaSvc.getPromos(function (data) {
-                $scope.promos = data;
+                $scope.promos = data.ads;
             });
 
             mediaSvc.getChannelCategories(function (data) {
-                $rootScope.channelCategories = data;
-                for(var i = 0; i < data.length; i++) {
-                    var genre = data[i].tags;
+                var dataCategories = data.categories;
+                $rootScope.channelCategories = data.categories;
+                for(var i = 0; i < dataCategories.length; i++) {
+                    var genre = dataCategories[i].tags;
                     for(var j = 0; j < genre.length; j++) {
                         if(j%2 == 0) {
                             $rootScope.channelCategories[i].tags[j].col = 0;

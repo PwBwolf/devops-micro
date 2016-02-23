@@ -101,7 +101,7 @@ module.exports = {
             }
             res.set('Cache-Control', 'public, max-age=480');
             res.set('Expires', new Date(Date.now() + 480000).toUTCString());
-            return res.json(data.ads);
+            return res.json(data);
         });
 
     },
@@ -116,7 +116,7 @@ module.exports = {
             if (data && data.categories && data.categories.length > 0) {
                 res.set('Cache-Control', 'public, max-age=480');
                 res.set('Expires', new Date(Date.now() + 480000).toUTCString());
-                return res.json(data.categories);
+                return res.json(data);
             } else {
                 return res.status(500).end();
             }
