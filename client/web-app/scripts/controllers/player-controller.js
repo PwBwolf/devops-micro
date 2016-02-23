@@ -77,7 +77,7 @@
 //                if(indexOfBNE >= 0) {
 //                    data.unshift(bNE[0]);
 //                }
-                $rootScope.channels = data;
+                $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
             });

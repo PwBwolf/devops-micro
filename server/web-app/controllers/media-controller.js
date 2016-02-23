@@ -48,7 +48,7 @@ module.exports = {
             }
         });
     },
-    
+
     getChannelGuideAll: function (req, res) {
         cms.getLineup(req.query.id, req.query.hours, function (err, data) {
             if (err) {
@@ -64,7 +64,7 @@ module.exports = {
                 return res.status(500).end();
             }
         });
-    },    
+    },
 
     getUserChannels: function (req, res) {
         User.findOne({email: req.email}).populate('account').exec(function (err, user) {
@@ -80,10 +80,10 @@ module.exports = {
                     return res.status(500).end();
                 }
                 if (data && data.channels_list && data.channels_list.length > 0) {
-                    var channels = _.filter(data.channels_list, {status: '1'});
+                    //var channels = _.filter(data.channels_list, {status: '1'});
                     res.set('Cache-Control', 'public, max-age=480');
-                    res.set('Expires', new Date(Date.now() + 480000).toUTCString());                    
-                    return res.json(channels);
+                    res.set('Expires', new Date(Date.now() + 480000).toUTCString());
+                    return res.json(data);
                 } else {
                     return res.status(500).end();
                 }
@@ -100,7 +100,7 @@ module.exports = {
                 return res.status(500).end();
             }
             res.set('Cache-Control', 'public, max-age=480');
-            res.set('Expires', new Date(Date.now() + 480000).toUTCString());  
+            res.set('Expires', new Date(Date.now() + 480000).toUTCString());
             return res.json(data.ads);
         });
 
@@ -115,7 +115,7 @@ module.exports = {
             }
             if (data && data.categories && data.categories.length > 0) {
                 res.set('Cache-Control', 'public, max-age=480');
-                res.set('Expires', new Date(Date.now() + 480000).toUTCString());                  
+                res.set('Expires', new Date(Date.now() + 480000).toUTCString());
                 return res.json(data.categories);
             } else {
                 return res.status(500).end();
@@ -124,7 +124,7 @@ module.exports = {
     },
 
     getChannelList: function (req, res) {
-        
+
         var projectionObj = {};
         projectionObj['stationId'] = true;
         projectionObj['callSign'] = true;
@@ -138,12 +138,12 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         var models = getDbModels(req.query.sources);
-        
+
         async.concat(
             models,
-            
+
             function(item, cb) {
                 switch(item) {
                 case 'Channel':
@@ -201,7 +201,7 @@ module.exports = {
                     break;
                 }
             },
-        
+
             function(err, results) {
                 if(err) {
                     logger.logError('mediaController - getChannelList - failed to retrieve channel list from collections: ' + models);
@@ -210,7 +210,7 @@ module.exports = {
                 } else {
                     logger.logInfo('mediaController - getChannelList - final channel list from collections: ' + results.length);
                     res.json(results);
-                }             
+                }
             }
         );
     },
@@ -224,7 +224,7 @@ module.exports = {
         var endTime = date.isoDate(tempTime);
         var endTimeUTC = (new Date(Date.UTC(tempTime.getUTCFullYear(), tempTime.getUTCMonth(), tempTime.getUTCDate(), tempTime.getUTCHours(), tempTime.getUTCMinutes(), tempTime.getUTCSeconds())));
         logger.logInfo('mediaController - getChannelInfo - endTime:' + endTime);
-        
+
         var projectionObj = {};
         projectionObj['stationId'] = true;
         projectionObj['callSign'] = true;
@@ -243,12 +243,12 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         var models = getDbModels(req.query.sources);
-        
+
         async.concat(
             models,
-            
+
             function(item, cb) {
                 switch(item) {
                 case 'Channel':
@@ -290,18 +290,18 @@ module.exports = {
                                 cb(err);
                             } else {
                                 logger.logInfo('mediaController - getChannelInfo - channel info from Airing collection: ' + airings.length);
-                                
+
                                 if(airings.length > 0) {
                                     var airingsArray = [];
                                     for(var i = 0; i < airings.length; ++i) {
                                         var airingInfo = {
-                                            stationId: airings[i].source, 
-                                            callSign: airings[i].source, 
+                                            stationId: airings[i].source,
+                                            callSign: airings[i].source,
                                             airings: {
                                                 startTime: airings[i].airings.startTime,
                                                 endTime: airings[i].airings.endTime,
                                                 program: {
-                                                    title: airings[i].airings.title, 
+                                                    title: airings[i].airings.title,
                                                     tmsId: airings[i].airings.title
                                                 }
                                             }
@@ -338,16 +338,16 @@ module.exports = {
                                 logger.logInfo('mediaController - getChannelInfo - channel info from Event collection: ' + events.length);
                                 if(events.length > 0) {
                                     var eventsArray = [];
-                                                                        
+
                                     for(var i = 0; i < events.length; ++i) {
                                         var eventInfo = {
-                                            stationId: events[i].source, 
-                                            callSign: events[i].source, 
+                                            stationId: events[i].source,
+                                            callSign: events[i].source,
                                             airings: {
                                                 startTime: events[i].airings.startTime,
                                                 endTime: events[i].airings.endTime,
                                                 program: {
-                                                    title: events[i].airings.title, 
+                                                    title: events[i].airings.title,
                                                     tmsId: events[i].airings.mediaId
                                                 }
                                             }
@@ -364,7 +364,7 @@ module.exports = {
                     break;
                 }
             },
-        
+
             function(err, results) {
                 if(err) {
                     logger.logError('mediaController - getChannelInfo - failed to retrieve channel list from collections: ' + models);
@@ -373,13 +373,13 @@ module.exports = {
                 } else {
                     logger.logInfo('mediaController - getChannelInfo - final channel info from collection: ' + results.length);
                     res.json(results);
-                }             
+                }
             }
         );
     },
 
     getProgramDetail: function (req, res) {
-        
+
         var projectionObj = {};
         projectionObj['stationId'] = true;
         projectionObj['callSign'] = true;
@@ -400,12 +400,12 @@ module.exports = {
                 projectionObj[req.query.projections] = true;
             }
         }
-        
+
         var models = getDbModels(req.query.sources);
-        
+
         async.concat(
             models,
-            
+
             function(item, cb) {
                 switch(item) {
                 case 'Channel':
@@ -417,7 +417,7 @@ module.exports = {
                             {$project: projectionObj},
                             {$limit: 1}
                         ],
-                        
+
                         function (err, channelsDb) {
                             if (err) {
                                 logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from Channel collection');
@@ -444,7 +444,7 @@ module.exports = {
                             {$project: projectionObj},
                             {$limit: 1}
                         ],
-                        
+
                         function (err, airings) {
                             if (err) {
                                 logger.logError('mediaController - getProgramDetail - failed to retrieve program detail from Airing collection');
@@ -452,18 +452,18 @@ module.exports = {
                                 cb(err);
                             } else {
                                 logger.logInfo('mediaController - getProgramDetail - program detail from Airing collection: ' + airings.length);
-                                
+
                                 if(airings.length > 0) {
                                     var airingsArray = [];
                                     for(var i = 0; i < airings.length; ++i) {
                                         var airingInfo = {
-                                            stationId: airings[i].source, 
-                                            callSign: airings[i].source, 
+                                            stationId: airings[i].source,
+                                            callSign: airings[i].source,
                                             airings: {
                                                 startTime: airings[i].airings.startTime,
                                                 endTime: airings[i].airings.endTime,
                                                 program: {
-                                                    title: airings[i].airings.title, 
+                                                    title: airings[i].airings.title,
                                                     tmsId: airings[i].airings.title,
                                                     longDescription: airings[i].airings.synopsis
                                                 }
@@ -503,16 +503,16 @@ module.exports = {
                                 logger.logInfo('mediaController - getProgramDetail - program detail from Event collection: ' + events.length);
                                 if(events.length > 0) {
                                     var eventsArray = [];
-                                                                        
+
                                     for(var i = 0; i < events.length; ++i) {
                                         var eventInfo = {
-                                            stationId: events[i].source, 
-                                            callSign: events[i].source, 
+                                            stationId: events[i].source,
+                                            callSign: events[i].source,
                                             airings: {
                                                 startTime: events[i].airings.startTime,
                                                 endTime: events[i].airings.endTime,
                                                 program: {
-                                                    title: events[i].airings.title, 
+                                                    title: events[i].airings.title,
                                                     tmsId: events[i].airings.mediaId,
                                                     longDescription: events[i].airings.eitLong
                                                 }
@@ -530,7 +530,7 @@ module.exports = {
                     break;
                 }
             },
-        
+
             function(err, results) {
                 if(err) {
                     logger.logError('mediaController - getChannelInfo - failed to retrieve channel list from collections: ' + models);
@@ -539,7 +539,7 @@ module.exports = {
                 } else {
                     logger.logInfo('mediaController - getChannelInfo - final channel info from collection: ' + results.length);
                     res.json(results.length > 0 ? results[0] : results);
-                }             
+                }
             }
         );
     },
