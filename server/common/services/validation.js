@@ -44,17 +44,8 @@ module.exports = {
         if (user.email.trim().length > 50) {
             return 'EmailMaxLengthExceeded';
         }
-        if (!emailRegex.test(user.email.trim())) {
+        if (!emailRegex.test(user.email.trim()) && !telephoneRegex.test(user.email.trim())) {
             return 'EmailInvalid';
-        }
-        if (!user.telephone || user.telephone.trim().length === 0) {
-            return 'TelephoneRequired';
-        }
-        if (user.telephone.trim().length > 12) {
-            return 'TelephoneMaxLengthExceeded';
-        }
-        if (!telephoneRegex.test(user.telephone.trim())) {
-            return 'TelephoneInvalid';
         }
         if (!user.password || user.password.trim().length === 0) {
             return 'PasswordRequired';
@@ -209,7 +200,9 @@ module.exports = {
         return null;
     },
 
-    isPasswordComplex : isPasswordComplex
+    isPasswordComplex : isPasswordComplex,
+
+    isUsPhoneNumber: isUsPhoneNumber
 };
 
 function isPasswordComplex(password) {
@@ -282,4 +275,8 @@ function isCvv(cvv, cardNumber) {
 function isState(state) {
     var states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
     return _.indexOf(states, state) >= 0;
+}
+
+function isUsPhoneNumber(number) {
+    return telephoneRegex.test(number);
 }

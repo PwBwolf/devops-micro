@@ -45,9 +45,7 @@
             $scope.form.firstName.$touched = true;
             $scope.form.lastName.$touched = true;
             $scope.form.email.$touched = true;
-            $scope.form.telephone.$touched = true;
             $scope.form.password.$touched = true;
-            $scope.form.confirmPassword.$touched = true;
             $scope.form.disclaimer.$dirty = true;
             $scope.formSubmit = true;
         }
@@ -59,9 +57,9 @@
         }
 
         $scope.checkIfMobileNumber = function () {
-            if ($scope.form.telephone.$valid) {
+            if ($scope.form.email.$valid && isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
-                appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
+                appSvc.verifyMobileNumber($scope.mv.email, function (result) {
                     if (result) {
                         setMobileNumberStatus('MOBILE');
                     } else {
@@ -76,6 +74,11 @@
         $scope.resetMobileNumberStatus = function () {
             $scope.mobileNumberStatus = 'NOT_CHECKED';
         };
+
+        function isUsPhoneNumber() {
+            var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            return phoneRegex.test($scope.mv.email);
+        }
 
     }]);
 }(angular.module('app')));

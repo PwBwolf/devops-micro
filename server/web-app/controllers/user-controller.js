@@ -27,6 +27,9 @@ module.exports = {
             logger.logError(validationError);
             return res.status(500).end(validationError);
         }
+        if (validation.isUsPhoneNumber(req.body.email)) {
+            req.body.email = '1' + req.body.email.replace(/[\. -]+/g, '');
+        }
         if (req.body.merchant) {
             Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
                 if (err) {
@@ -752,7 +755,11 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            var currentValues = {defaultLanguage: user.preferences.defaultLanguage, emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+            var currentValues = {
+                defaultLanguage: user.preferences.defaultLanguage,
+                emailSubscription: user.preferences.emailSubscription,
+                smsSubscription: user.preferences.smsSubscription
+            };
             user.preferences.defaultLanguage = req.body.defaultLanguage;
             user.preferences.emailSubscription = req.body.emailSubscription;
             user.preferences.smsSubscription = req.body.smsSubscription;
@@ -905,7 +912,10 @@ module.exports = {
                 return res.status(500).end();
             }
             if (user) {
-                var preferences = {emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+                var preferences = {
+                    emailSubscription: user.preferences.emailSubscription,
+                    smsSubscription: user.preferences.smsSubscription
+                };
                 return res.send(preferences);
             } else {
                 return res.status(404).send('UserNotFound');
@@ -956,9 +966,9 @@ module.exports = {
             }
 
             var favoriteChannels = [];
-            if(data && data.channels.length > 0) {
-                for(var i = 0; i < data.channels.length; ++i) {
-                    favoriteChannels.push({channel_id: data.channels[i].channel_id});
+            if (data && data.channels.length > 0) {
+                for (var i = 0; i < data.channels.length; ++i) {
+                    favoriteChannels.push({channelId: data.channels[i].channelId});
                 }
             }
             return res.send(favoriteChannels);
@@ -975,7 +985,7 @@ module.exports = {
             if (!data) {
                 var favoriteChannel = new FavoriteChannel();
                 favoriteChannel.email = req.email.toLowerCase();
-                favoriteChannel.channels.push({channel_id: req.query.channelId, user_type: 0});
+                favoriteChannel.channels.push({channelId: req.query.channelId, userType: 0});
                 favoriteChannel.save(function (err) {
                     if (err) {
                         logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
@@ -988,16 +998,16 @@ module.exports = {
                 });
             } else {
                 var channelFound = false;
-                for(var i = 0; i < data.channels.length; ++i) {
-                    if(data.channels[i].channel_id === req.query.channelId && data.channels[i].user_type === 0) {
+                for (var i = 0; i < data.channels.length; ++i) {
+                    if (data.channels[i].channelId === req.query.channelId && data.channels[i].userType === 0) {
                         channelFound = true;
                         break;
                     }
                 }
-                if(channelFound) {
+                if (channelFound) {
                     return res.status(200).send('favorite channel exists!');
                 } else {
-                    data.channels.push({channel_id: req.query.channelId, user_type: 0});
+                    data.channels.push({channelId: req.query.channelId, userType: 0});
                     data.save(function (err) {
                         if (err) {
                             logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
@@ -1023,10 +1033,10 @@ module.exports = {
             if (!data) {
                 return res.status(404).send('UserNotFound');
             } else {
-                var index = _.findIndex(data.channels, {channel_id: req.query.channelId, user_type: 0});
-                if(index >= 0) {
+                var index = _.findIndex(data.channels, {channelId: req.query.channelId, userType: 0});
+                if (index >= 0) {
                     data.channels.splice(index, 1);
-                    data.save(function(err) {
+                    data.save(function (err) {
                         if (err) {
                             logger.logError('userController - removeFavoriteChannel - error remove favorite channel: ' + req.chanelId);
                             logger.logError(err);
