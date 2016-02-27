@@ -2,6 +2,11 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var config = require('../../common/setup/config');
+var autoIncrement = require('mongoose-auto-increment');
+var connection = mongoose.createConnection(config.db);
+
+autoIncrement.initialize(connection);
 
 var Account = new Schema({
     primaryUser: {type: Schema.Types.ObjectId, ref: 'User'},
@@ -9,7 +14,7 @@ var Account = new Schema({
     createdAt: {type: Date, required: true},
     type: {type: String, required: true},
     referredBy: String,
-    aioAccountId: Number,
+    key: Number,
     freeSideCustomerNumber: Number,
     complimentaryCode: {type: String, sparse: true},
     merchant: String,
@@ -21,4 +26,5 @@ var Account = new Schema({
     packages: [String]
 }, {collection: 'Accounts'});
 
+Account.plugin(autoIncrement.plugin, {model: 'Account', field: 'key', startAt: 1000});
 mongoose.model('Account', Account);

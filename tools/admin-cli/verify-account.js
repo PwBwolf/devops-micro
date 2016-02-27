@@ -5,7 +5,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var sf = require('sf'),
     config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
-    aio = require('../../server/common/services/aio'),
     emailService = require('../../server/common/services/email'),
     mongoose = require('../../server/node_modules/mongoose');
 
@@ -56,31 +55,14 @@ Users.findOne({email: email.toLowerCase()}, function (err, user) {
                 logger.logError(err);
                 process.exit(1);
             } else {
-                aio.updateUserStatus(user.email, true, function (err) {
+                logger.logInfo('adminCLI - verifyAccount - account verified successfully');
+                sendAccountVerifiedEmail(user, function (err) {
                     if (err) {
-                        logger.logError('adminCLI - verifyAccount - error setting user active in aio');
-                        logger.logError(err);
-                        user.status = status;
-                        user.verificationCode = verificationCode;
-                        user.verificationPin = verificationPin;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('adminCLI - verifyAccount - error reverting user');
-                                logger.logError(err);
-                            }
-                            process.exit(1);
-                        });
+                        logger.logError('adminCLI - verifyAccount - error sending email');
+                        process.exit(1);
                     } else {
-                        logger.logInfo('adminCLI - verifyAccount - account verified successfully');
-                        sendAccountVerifiedEmail(user, function (err) {
-                            if (err) {
-                                logger.logError('adminCLI - verifyAccount - error sending email');
-                                process.exit(1);
-                            } else {
-                                logger.logInfo('adminCLI - verifyAccount - email sent to user');
-                                process.exit(0);
-                            }
-                        });
+                        logger.logInfo('adminCLI - verifyAccount - email sent to user');
+                        process.exit(0);
                     }
                 });
             }

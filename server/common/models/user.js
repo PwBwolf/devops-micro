@@ -8,7 +8,6 @@ var User = new Schema({
     firstName: {type: String, required: true, trim: true},
     lastName: {type: String, required: true, trim: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
-    telephone: {type: String, required: true, trim: true},
     hashedPassword: {type: String, required: false},
     salt: {type: String, required: false},
     role: {
@@ -27,14 +26,12 @@ var User = new Schema({
     cancelOn: {type: Date, required: false},
     validTill: {type: Date, required: false},
     lastLoginTime: Date,
-    verificationCode: {type: String, sparse: true},
-    verificationPin: {type: Number, required: false},
+    verificationPin: {type: Number, sparse: true},
     resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
-        emailSubscription: {type: Boolean, required: true},
-        smsSubscription: {type: Boolean, required: true}
+        emailSmsSubscription: {type: Boolean, required: true},
     }
 }, {collection: 'Users'});
 

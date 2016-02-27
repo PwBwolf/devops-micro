@@ -12,7 +12,6 @@ var mongoose = require('mongoose'),
     email = require('../../common/services/email'),
     subscription = require('../../common/services/subscription'),
     validation = require('../../common/services/validation'),
-    aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
     Merchant = mongoose.model('Merchant'),
@@ -26,6 +25,9 @@ module.exports = {
             logger.logError('userController - signUp - user input error: ' + req.body.email);
             logger.logError(validationError);
             return res.status(500).end(validationError);
+        }
+        if (validation.isUsPhoneNumber(req.body.email)) {
+            req.body.email = '1' + req.body.email.replace(/[\. -]+/g, '');
         }
         if (req.body.merchant) {
             Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
@@ -211,7 +213,6 @@ module.exports = {
                     role: req.role.title,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    telephone: user.telephone,
                     type: account.type,
                     status: user.status,
                     packages: account.packages,
@@ -241,10 +242,10 @@ module.exports = {
         });
     },
 
-    verifyMobilePin: function (req, res) {
+    verifyPin: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError('userController - verifyMobilePin - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError('userController - verifyPin - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -260,37 +261,16 @@ module.exports = {
             if (user.verificationPin.toString() !== req.body.pin) {
                 return res.status(401).send('IncorrectPin');
             }
-            var status = user.status;
-            var verificationCode = user.verificationCode;
-            var verificationPin = user.verificationPin;
             user.status = 'active';
-            user.verificationCode = undefined;
             user.verificationPin = undefined;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - verifyMobilePin - error saving user: ' + req.body.code);
+                    logger.logError('userController - verifyPin - error saving user: ' + req.body.code);
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updateUserStatus(user.email, true, function (err) {
-                    if (err) {
-                        logger.logError('userController - verifyMobilePin - error setting user active in aio: ' + user.email);
-                        logger.logError(err);
-                        user.status = status;
-                        user.verificationCode = verificationCode;
-                        user.verificationPin = verificationPin;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - verifyMobilePin - error reverting user: ' + user.email);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
-                    } else {
-                        subscription.sendAccountVerifiedEmail(user);
-                        return res.status(200).end();
-                    }
-                });
+                subscription.sendAccountVerifiedEmailSms(user);
+                return res.status(200).end();
             });
         });
     },
@@ -307,10 +287,9 @@ module.exports = {
                     } else if (!user) {
                         callback('UserNotFound');
                     } else {
-                        currentValues = {firstName: user.firstName, lastName: user.lastName, telephone: user.telephone};
+                        currentValues = {firstName: user.firstName, lastName: user.lastName};
                         user.firstName = req.body.firstName;
                         user.lastName = req.body.lastName;
-                        user.telephone = req.body.telephone;
                         user.save(function (err) {
                             if (err) {
                                 logger.logError('userController - updateUserInfo - error saving user: ' + req.email.toLowerCase());
@@ -332,7 +311,7 @@ module.exports = {
             },
             // change billing address
             function (user, sessionId, callback) {
-                billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, req.body.telephone, function (err) {
+                billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, function (err) {
                     if (err) {
                         logger.logError('userController - updateUserInfo - error updating billing system: ' + user.email);
                         errorType = 'freeside-user-update';
@@ -346,7 +325,6 @@ module.exports = {
                 if (errorType === 'freeside-user-update' || errorType === 'freeside-login') {
                     user.firstName = currentValues.firstName;
                     user.lastName = currentValues.lastName;
-                    user.telephone = currentValues.telephone;
                     user.save(function (err) {
                         if (err) {
                             logger.logError('userController - updateUserInfo - error reverting user: ' + req.email.toLowerCase());
@@ -357,57 +335,6 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.status(200).end();
-        });
-    },
-
-    verifyUser: function (req, res) {
-        User.findOne({verificationCode: req.body.code}, function (err, user) {
-            if (err) {
-                logger.logError('userController - verifyUser - error fetching user: ' + req.body.code);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.status === 'active') {
-                return res.status(409).send('UserVerified');
-            }
-            if (user.status !== 'registered') {
-                return res.status(409).send('UserError');
-            }
-            var status = user.status;
-            var verificationCode = user.verificationCode;
-            var verificationPin = user.verificationPin;
-            user.status = 'active';
-            user.verificationCode = undefined;
-            user.verificationPin = undefined;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                aio.updateUserStatus(user.email, true, function (err) {
-                    if (err) {
-                        logger.logError('userController - verifyUser - error setting user active in aio: ' + user.email);
-                        logger.logError(err);
-                        user.status = status;
-                        user.verificationCode = verificationCode;
-                        user.verificationPin = verificationPin;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - verifyUser - error reverting user: ' + user.email);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
-                    } else {
-                        subscription.sendAccountVerifiedEmail(user);
-                        return res.status(200).send();
-                    }
-                });
-            });
         });
     },
 
@@ -492,44 +419,31 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                };
+                email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('userController - resetPassword - error updating password in aio: ' + req.body.code);
+                        logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
                         logger.logError(err);
-                        user.resetPasswordCode = resetPasswordCode;
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - resetPassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
                     } else {
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                        };
-                        email.sendEmail(mailOptions, function (err) {
-                            if (err) {
-                                logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
-                            }
-                        });
-                        return res.status(200).end();
+                        logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
+                return res.status(200).end();
             });
         });
     },
 
     isSignUpAllowed: function (req, res) {
-        User.findOne({email: req.query.email.trim().toLowerCase()}).populate('account').exec(function (err, user) {
+        var value = req.query.email.trim().toLowerCase();
+        if (validation.isUsPhoneNumber(value)) {
+            value = '1' + value.replace(/[\. -]+/g, '');
+        }
+        User.findOne({email: value}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
@@ -582,26 +496,14 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                if (req.body.smsVerify) {
-                    subscription.sendVerificationSms(user, function (err) {
-                        if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - resendVerification - verification sms sent: ' + user.telephone);
-                        }
-                    });
-                }
-                if (req.body.emailVerify) {
-                    subscription.sendVerificationEmail(user, function (err) {
-                        if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
-                        }
-                    });
-                }
+                subscription.sendVerificationEmailSms(user, function (err) {
+                    if (err) {
+                        logger.logError('subscription - resendVerification - error sending verification sms/email: ' + user.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - resendVerification - verification sms/email sent: ' + user.email);
+                    }
+                });
                 res.status(200).end();
             });
         });
@@ -629,37 +531,21 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                };
+                email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('userController - changePassword - error updating password in aio: ' + req.body.code);
+                        logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
                         logger.logError(err);
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - changePassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
                     } else {
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                        };
-                        email.sendEmail(mailOptions, function (err) {
-                            if (err) {
-                                logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
-                            }
-                        });
-                        return res.status(200).end();
+                        logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
+                return res.status(200).end();
             });
         });
     },
@@ -752,7 +638,11 @@ module.exports = {
             if (!user) {
                 return res.status(404).send('UserNotFound');
             }
-            var currentValues = {defaultLanguage: user.preferences.defaultLanguage, emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+            var currentValues = {
+                defaultLanguage: user.preferences.defaultLanguage,
+                emailSubscription: user.preferences.emailSubscription,
+                smsSubscription: user.preferences.smsSubscription
+            };
             user.preferences.defaultLanguage = req.body.defaultLanguage;
             user.preferences.emailSubscription = req.body.emailSubscription;
             user.preferences.smsSubscription = req.body.smsSubscription;
@@ -878,19 +768,6 @@ module.exports = {
         });
     },
 
-    getAioToken: function (req, res) {
-        var aioGuestList = config.aioGuestAccountList;
-        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
-        aio.getToken(user, function (err, data) {
-            if (err) {
-                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.send(data);
-        });
-    },
-
     getEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query.email);
         if (validationError) {
@@ -905,7 +782,10 @@ module.exports = {
                 return res.status(500).end();
             }
             if (user) {
-                var preferences = {emailSubscription: user.preferences.emailSubscription, smsSubscription: user.preferences.smsSubscription};
+                var preferences = {
+                    emailSubscription: user.preferences.emailSubscription,
+                    smsSubscription: user.preferences.smsSubscription
+                };
                 return res.send(preferences);
             } else {
                 return res.status(404).send('UserNotFound');
@@ -956,9 +836,9 @@ module.exports = {
             }
 
             var favoriteChannels = [];
-            if(data && data.channels.length > 0) {
-                for(var i = 0; i < data.channels.length; ++i) {
-                    favoriteChannels.push({channel_id: data.channels[i].channel_id});
+            if (data && data.channels.length > 0) {
+                for (var i = 0; i < data.channels.length; ++i) {
+                    favoriteChannels.push({channelId: data.channels[i].channelId});
                 }
             }
             return res.send(favoriteChannels);
@@ -975,7 +855,7 @@ module.exports = {
             if (!data) {
                 var favoriteChannel = new FavoriteChannel();
                 favoriteChannel.email = req.email.toLowerCase();
-                favoriteChannel.channels.push({channel_id: req.query.channelId, user_type: 0});
+                favoriteChannel.channels.push({channelId: req.query.channelId, userType: 0});
                 favoriteChannel.save(function (err) {
                     if (err) {
                         logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
@@ -988,16 +868,16 @@ module.exports = {
                 });
             } else {
                 var channelFound = false;
-                for(var i = 0; i < data.channels.length; ++i) {
-                    if(data.channels[i].channel_id === req.query.channelId && data.channels[i].user_type === 0) {
+                for (var i = 0; i < data.channels.length; ++i) {
+                    if (data.channels[i].channelId === req.query.channelId && data.channels[i].userType === 0) {
                         channelFound = true;
                         break;
                     }
                 }
-                if(channelFound) {
+                if (channelFound) {
                     return res.status(200).send('favorite channel exists!');
                 } else {
-                    data.channels.push({channel_id: req.query.channelId, user_type: 0});
+                    data.channels.push({channelId: req.query.channelId, userType: 0});
                     data.save(function (err) {
                         if (err) {
                             logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
@@ -1023,10 +903,10 @@ module.exports = {
             if (!data) {
                 return res.status(404).send('UserNotFound');
             } else {
-                var index = _.findIndex(data.channels, {channel_id: req.query.channelId, user_type: 0});
-                if(index >= 0) {
+                var index = _.findIndex(data.channels, {channelId: req.query.channelId, userType: 0});
+                if (index >= 0) {
                     data.channels.splice(index, 1);
-                    data.save(function(err) {
+                    data.save(function (err) {
                         if (err) {
                             logger.logError('userController - removeFavoriteChannel - error remove favorite channel: ' + req.chanelId);
                             logger.logError(err);
@@ -1045,26 +925,9 @@ module.exports = {
     }
 };
 
-function getGuestCounter() {
-    getGuestCounter.count = ++getGuestCounter.count || 0;
-    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
-        getGuestCounter.count = 0;
-    }
-    return getGuestCounter.count;
-}
-
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;
     async.waterfall([
-        function (callback) {
-            aio.updateUserStatus(user.email, true, function (err) {
-                if (err) {
-                    logger.logError('userController - addFreeTvCampaign - error changing user to active: ' + user.email);
-                    logger.logError(err);
-                }
-                callback(null);
-            });
-        },
         function (callback) {
             user.oldInactiveUser = user.oldInactiveUser * -1;
             user.account.startDate = (new Date()).toUTCString();

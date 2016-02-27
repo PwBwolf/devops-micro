@@ -6,7 +6,6 @@ var sf = require('sf'),
     config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
     emailService = require('../../server/common/services/email'),
-    aio = require('../../server/common/services/aio'),
     mongoose = require('../../server/node_modules/mongoose');
 
 var email = process.argv[2],
@@ -68,38 +67,22 @@ User.findOne({email: email.toLowerCase()}, function (err, user) {
                 logger.logError(err);
                 process.exit(1);
             } else {
-                aio.updatePassword(user.email, password, function (err) {
+                logger.logInfo('adminCLI - resetPassword - password changed successfully: ' + email.toLowerCase());
+                logger.logInfo('adminCLI - resetPassword - sending password changed email to ' + email.toLowerCase());
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                };
+                emailService.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('adminCLI - resetPassword - error updating password in aio: ' + email.toLowerCase());
+                        logger.logError('adminCLI - resetPassword - error sending password changed email to: ' + mailOptions.to);
                         logger.logError(err);
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('adminCLI - resetPassword - error reverting password in db: ' + email.toLowerCase());
-                                logger.logError(err);
-                            }
-                            process.exit(1);
-                        });
+                        process.exit(1);
                     } else {
-                        logger.logInfo('adminCLI - resetPassword - password changed successfully: ' + email.toLowerCase());
-                        logger.logInfo('adminCLI - resetPassword - sending password changed email to ' + email.toLowerCase());
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                        };
-                        emailService.sendEmail(mailOptions, function (err) {
-                            if (err) {
-                                logger.logError('adminCLI - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err);
-                                process.exit(1);
-                            } else {
-                                logger.logInfo('adminCLI - resetPassword - password changed email sent to ' + mailOptions.to);
-                                process.exit(0);
-                            }
-                        });
+                        logger.logInfo('adminCLI - resetPassword - password changed email sent to ' + mailOptions.to);
+                        process.exit(0);
                     }
                 });
             }

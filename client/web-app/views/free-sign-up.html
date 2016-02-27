@@ -41,37 +41,22 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="FREE_SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="free" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
-
+                        <input autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="free" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
+                        <span class="label-text-info" translate="FREE_SIGN_UP_VERIFICATION"></span>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="FREE_SIGN_UP_EMAIL_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" translate="FREE_SIGN_UP_EMAIL_INVALID"></div>
+                        <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" translate="FREE_SIGN_UP_EMAIL_INVALID"></div>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.isSignUpAllowed" translate="FREE_SIGN_UP_EMAIL_EXISTS"></div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text" translate="FREE_SIGN_UP_TELEPHONE"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
-                        <br><input type="checkbox" class="check-box" name="sendSmsVerification" ng-model="mv.sendSmsVerification" id="sendSmsVerification"/><label for="sendSmsVerification"><span translate="FREE_SIGN_UP_SEND_SMS_VERIFICATION"></span></label>
-
-                        <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="FREE_SIGN_UP_TELEPHONE_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>
                         <div class="error-message" ng-show="mobileNumberStatus === 'NOT_MOBILE'" translate="FREE_SIGN_UP_TELEPHONE_INVALID"></div>
                         <div class="success-message" ng-show="mobileNumberStatus === 'MOBILE'" translate="FREE_SIGN_UP_TELEPHONE_MOBILE"></div>
                         <div class="status-message" ng-show="mobileNumberStatus === 'CHECKING'" translate="FREE_SIGN_UP_TELEPHONE_CHECKING_IF_MOBILE"></div>
                     </div>
                     <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD"></span> <span class="label-text-info" translate="FREE_SIGN_UP_PASSWORD_INFO"></span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}">
-
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                         <div>
                             <ul class="passwordStrength" password-strength="mv.password"></ul>
                         </div>
-                    </div>
-                    <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_CONFIRM_PASSWORD"></span><br>
-                        <input autocomplete="off" type="password" required maxlength="20" same-as="mv.password" name="confirmPassword" id="confirmPassword" ng-model="mv.confirmPassword" class="text-box" ng-class="{'text-box-error': form.confirmPassword.$touched && form.confirmPassword.$invalid}">
-
-                        <div class="error-message" ng-show="form.confirmPassword.$touched && form.confirmPassword.$error.required" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.confirmPassword.$touched && !form.confirmPassword.$error.required && form.confirmPassword.$error.sameAs" translate="FREE_SIGN_UP_CONFIRM_PASSWORD_NO_MATCH"></div>
                     </div>
                     <div class="full-form">
                         <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="FREE_SIGN_UP_EMAIL_SMS_SUBSCRIPTION"></span></label>
@@ -83,14 +68,14 @@
                         <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
                         <div>&nbsp;</div>
                         <div class="progress" ng-show="saving">
-                            <div class="progress-bar progress-bar-purple progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <div class="progress-bar progress-bar-green progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
                         <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || mobileNumberStatus !== 'MOBILE')" translate="FREE_SIGN_UP_FORM_INVALID"></div>
                     </div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN"></a></div>
-                    <div class="full-form center-form"><span translate="FREE_SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
+                    <div class="full-form center-form"><span class="label-text-info" translate="FREE_SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>

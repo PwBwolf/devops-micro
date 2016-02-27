@@ -169,8 +169,8 @@
                 }).success(success).error(error);
             },
 
-            verifyMobilePin: function (data, success, error) {
-                $http.post('/api/verify-mobile-pin', data).success(success).error(error);
+            verifyPin: function (data, success, error) {
+                $http.post('/api/verify-pin', data).success(success).error(error);
             }
         };
     }]);

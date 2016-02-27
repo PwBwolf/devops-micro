@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 var FavoriteChannel = new Schema({
     email: String,
     channels: [{
-        channel_id: String,
-        user_type: Number
+        channelId: String,
+        userType: Number
     }]
 }, {collection: 'FavoriteChannels'});
 

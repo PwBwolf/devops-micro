@@ -276,7 +276,7 @@
         $scope.toggleFavoriteChannel = function () {
             if(currentChannelIndex != undefined) {
                 if(true) {
-                    var index = _.findIndex($scope.favoriteChannels, {channel_id: currentChannelIndex.channelId});
+                    var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannelIndex.channelId});
                     if( index >= 0 ) {
                         $scope.favoriteChannels.splice(index, 1);
                         $scope.favoriteIcon = '../../images/favorite_white.png';
@@ -292,7 +292,7 @@
                             }
                         );
                     } else {
-                        $scope.favoriteChannels.push({channel_id: currentChannelIndex.channelId});
+                        $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
                         $scope.favoriteIcon = '../../images/favorite_yellow.png';
                         var req = {channelId: currentChannelIndex.channelId};
                         mediaSvc.addFavoriteChannel(
@@ -312,7 +312,7 @@
 
         $scope.listFavoriteChannels = function () {
             $rootScope.filteredChannels = _.filter($rootScope.channels, function (item) {
-                return _.some($scope.favoriteChannels, {channel_id: item.id});
+                return _.some($scope.favoriteChannels, {channelId: item.id});
             });
             $rootScope.$broadcast('ChannelFilterEvent');
 
@@ -409,7 +409,7 @@
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 addRecentChannel(currentChannelIndex.channelId);
-                if(_.findIndex($scope.favoriteChannels, {channel_id: $rootScope.channels[index].id}) >= 0) {
+                if(_.findIndex($scope.favoriteChannels, {channelId: $rootScope.channels[index].id}) >= 0) {
                     $scope.favoriteIcon = '../../images/favorite_yellow.png';
                 } else {
                     $scope.favoriteIcon = '../../images/favorite_white.png';
