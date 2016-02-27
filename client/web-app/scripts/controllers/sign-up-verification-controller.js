@@ -10,13 +10,13 @@
                 userSvc.verifyPin(
                     $scope.mv,
                     function () {
-                        $location.path('/' + $routeParams.redirectRoute + '/false');
+                        $location.path('/' + $routeParams.redirectRoute);
                         $scope.saving = false;
                     },
                     function (response) {
                         if (response === 'UserAlreadyVerified') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_USER_ALREADY_ACTIVE'));
-                            $location.path('/' + $routeParams.redirectRoute + '/false');
+                            $location.path('/' + $routeParams.redirectRoute);
                         } else if (response === 'IncorrectPin') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_PIN_MISMATCH'));
                         } else {
@@ -49,7 +49,7 @@
                 function (response) {
                     if (response === 'UserActivated') {
                         loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_USER_ALREADY_ACTIVE'));
-                        $location.path('/' + $routeParams.redirectRoute + '/false');
+                        $location.path('/' + $routeParams.redirectRoute);
                     } else {
                         loggerSvc.logError($filter('translate')('SIGN_UP_VERIFICATION_RESEND_ERROR') + ' ' + $scope.appConfig.customerCareNumber);
                     }

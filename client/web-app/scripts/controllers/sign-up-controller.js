@@ -25,7 +25,10 @@
             if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSmsSubscription: $scope.mv.emailSmsSubscription};
+                $scope.mv.preferences = {
+                    defaultLanguage: $scope.language || 'en',
+                    emailSmsSubscription: $scope.mv.emailSmsSubscription
+                };
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
@@ -33,11 +36,7 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            if ($scope.mv.sendSmsVerification) {
-                                $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
-                            } else {
-                                $location.path('/sign-up-success/true');
-                            }
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
                         } else {
                             $location.path('/sign-up-success-login');
                         }
@@ -46,11 +45,7 @@
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentFailed') {
-                            if ($scope.mv.sendSmsVerification) {
-                                $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success-payment-failure');
-                            } else {
-                                $location.path('/sign-up-success-payment-failure/true');
-                            }
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success-payment-failure');
                         } else if (error === 'PaymentFailedActive') {
                             $location.path('/sign-up-success-payment-failure-login');
                         } else {

@@ -28,7 +28,10 @@
                 $scope.mv.type = 'comp';
                 $scope.mv.code = $routeParams.compCode;
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSmsSubscription: $scope.mv.emailSmsSubscription};
+                $scope.mv.preferences = {
+                    defaultLanguage: $scope.language || 'en',
+                    emailSmsSubscription: $scope.mv.emailSmsSubscription
+                };
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
@@ -36,11 +39,7 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            if ($scope.mv.sendSmsVerification) {
-                                $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
-                            } else {
-                                $location.path('/sign-up-success/true');
-                            }
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
                         } else {
                             $location.path('/sign-up-success-login');
                         }

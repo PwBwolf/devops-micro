@@ -59,13 +59,13 @@
                 controller: 'signUpVerificationCtrl',
                 access: access.anon
             })
-            .when('/free-sign-up-success/:showVerification',
+            .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
                 controller: 'signUpSuccessCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success/:showVerification',
+            .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
                 controller: 'signUpSuccessCtrl',
@@ -77,7 +77,7 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/sign-up-success-payment-failure/:showVerification',
+            .when('/sign-up-success-payment-failure',
             {
                 templateUrl: 'views/sign-up-success-payment-failure.html',
                 controller: 'signUpSuccessCtrl',
