@@ -7,7 +7,7 @@ if (!process.env.MONGO_PWD) {
 
 module.exports = {
     environment: 'integration',
-    webAppClientPath: '/client/web-app-old',
+    webAppClientPath: '/client/web-app',
     crmClientPath: '/client/crm-app',
     webAppPort: 3000,
     apiServerPort: 4000,
