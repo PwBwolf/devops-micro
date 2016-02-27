@@ -12,7 +12,7 @@
                 $scope.checkIfMobileNumber();
                 $('#password').focus();
             }
-            if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
+            if ($scope.form.$valid && (!isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'free';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};

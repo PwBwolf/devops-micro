@@ -69,12 +69,12 @@ Account.find(query, {}, {sort: {createdAt: 1}}).populate('primaryUser').exec(fun
         logger.logError('adminCLI - exportPartnerAccounts - no accounts found!');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Telephone","Status","Freeside Customer Number","Account Create Date","Account Type","User Cancel Date","Cancel On Date","Merchant"');
+        console.log('"Email","First Name","Last Name","Status","Freeside Customer Number","Account Create Date","Account Type","User Cancel Date","Cancel On Date","Merchant"');
         for (var i = 0; i < accounts.length; i++) {
             if (accounts[i].primaryUser) {
                 console.log(
                     formatString(accounts[i].primaryUser.email) + ',' + formatString(accounts[i].primaryUser.firstName) + ',' +
-                    formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.telephone) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
+                    formatString(accounts[i].primaryUser.lastName) + ',' + formatString(accounts[i].primaryUser.status) + ',' +
                     formatString(accounts[i].freeSideCustomerNumber) + ',' + formatDate(accounts[i].createdAt) + ',' + formatString(accounts[i].type) + ',' +
                     formatDate(accounts[i].primaryUser.cancelDate) + ',' + formatDate(accounts[i].primaryUser.cancelOn) + ',' + formatString(accounts[i].merchant)
                 );

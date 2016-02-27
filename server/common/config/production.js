@@ -4,7 +4,7 @@ if (!process.env.MONGO_PWD) {
     console.log('MongoDB password not set! Please set the MONGO_PWD environment variable. Exiting...');
     process.exit(1);
 }
-  
+
 module.exports = {
     environment: 'production',
     webAppClientPath: '/client/web-app',
@@ -23,6 +23,7 @@ module.exports = {
         name: /^[a-zA-Z0-9\s\-,.']+$/,
         address: /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/,
         telephone: /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/,
+        usTelephoneInternationalFormat: /^\d{11}$/,
         zipCode: /^\d{5}$/
     },
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@10.100.10.4/yiptv',
@@ -49,16 +50,5 @@ module.exports = {
     freeSidePaidBasicPackagePart: 3,
     freeSidePremiumPackagePart: 9,
     freeSideComplimentaryPackagePart: 8,
-    cmsApiUrl: 'http://10.100.10.109',
-    useAio: false,
-    aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
-    aioApiUrl: 'http://10.100.10.102',
-    aioPortalUrl: 'http://content.yiptv.com',
-    aioUserPin: '1234',
-    aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 78}, {'packageid': 79}],
-    aioFreeUserPackages: [{'packageid': 1}, {'packageid': 78}],
-    aioPaidUserPackages: [{'packageid': 1}, {'packageid': 78}, {'packageid': 79}, {'packageid': 80}],
-    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 78}, {'packageid': 79}, {'packageid': 80}],
-    aioDunning5DayPackages: [{'packageid': 1}, {'packageid': 78}, {'packageid': 80}]
+    cmsApiUrl: 'http://10.100.10.109'
 };

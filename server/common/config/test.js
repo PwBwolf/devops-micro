@@ -23,6 +23,7 @@ module.exports = {
         name: /^[a-zA-Z0-9\s\-,.']+$/,
         address: /^[a-zA-Z0-9\s\-!@#$%&\(\)\+;:'",.\?/=\[\]<>]+$/,
         telephone: /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/,
+        usTelephoneInternationalFormat: /^\d{11}$/,
         zipCode: /^\d{5}$/
     },
     db: 'mongodb://yipUser:' + process.env.MONGO_PWD + '@localhost/yiptv',
@@ -49,16 +50,5 @@ module.exports = {
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
-    cmsApiUrl: 'http://172.16.10.108',
-    useAio: false,
-    aioGuestAccountList: ['yiptv-guest-1', 'yiptv-guest-2', 'yiptv-guest-3'],
-    aioApiUrl: 'http://172.16.10.100',
-    aioPortalUrl: 'http://209.18.77.106',
-    aioUserPin: '1234',
-    aioApiKey: '10bf5e4e05b1fe32f9c88e1355fd30e40549041e5',
-    aioFreePremiumUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}],
-    aioFreeUserPackages: [{'packageid': 1}, {'packageid': 76}],
-    aioPaidUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
-    aioComplimentaryUserPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 74}, {'packageid': 75}],
-    aioDunning5DayPackages: [{'packageid': 1}, {'packageid': 76}, {'packageid': 75}]
+    cmsApiUrl: 'http://172.16.10.108'
 };

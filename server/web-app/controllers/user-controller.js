@@ -12,7 +12,6 @@ var mongoose = require('mongoose'),
     email = require('../../common/services/email'),
     subscription = require('../../common/services/subscription'),
     validation = require('../../common/services/validation'),
-    aio = require('../../common/services/aio'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
     Merchant = mongoose.model('Merchant'),
@@ -214,7 +213,6 @@ module.exports = {
                     role: req.role.title,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    telephone: user.telephone,
                     type: account.type,
                     status: user.status,
                     packages: account.packages,
@@ -275,25 +273,8 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updateUserStatus(user.email, true, function (err) {
-                    if (err) {
-                        logger.logError('userController - verifyMobilePin - error setting user active in aio: ' + user.email);
-                        logger.logError(err);
-                        user.status = status;
-                        user.verificationCode = verificationCode;
-                        user.verificationPin = verificationPin;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - verifyMobilePin - error reverting user: ' + user.email);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
-                    } else {
-                        subscription.sendAccountVerifiedEmail(user);
-                        return res.status(200).end();
-                    }
-                });
+                subscription.sendAccountVerifiedEmail(user);
+                return res.status(200).end();
             });
         });
     },
@@ -310,10 +291,9 @@ module.exports = {
                     } else if (!user) {
                         callback('UserNotFound');
                     } else {
-                        currentValues = {firstName: user.firstName, lastName: user.lastName, telephone: user.telephone};
+                        currentValues = {firstName: user.firstName, lastName: user.lastName};
                         user.firstName = req.body.firstName;
                         user.lastName = req.body.lastName;
-                        user.telephone = req.body.telephone;
                         user.save(function (err) {
                             if (err) {
                                 logger.logError('userController - updateUserInfo - error saving user: ' + req.email.toLowerCase());
@@ -335,7 +315,7 @@ module.exports = {
             },
             // change billing address
             function (user, sessionId, callback) {
-                billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, req.body.telephone, function (err) {
+                billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, function (err) {
                     if (err) {
                         logger.logError('userController - updateUserInfo - error updating billing system: ' + user.email);
                         errorType = 'freeside-user-update';
@@ -349,7 +329,6 @@ module.exports = {
                 if (errorType === 'freeside-user-update' || errorType === 'freeside-login') {
                     user.firstName = currentValues.firstName;
                     user.lastName = currentValues.lastName;
-                    user.telephone = currentValues.telephone;
                     user.save(function (err) {
                         if (err) {
                             logger.logError('userController - updateUserInfo - error reverting user: ' + req.email.toLowerCase());
@@ -391,25 +370,8 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updateUserStatus(user.email, true, function (err) {
-                    if (err) {
-                        logger.logError('userController - verifyUser - error setting user active in aio: ' + user.email);
-                        logger.logError(err);
-                        user.status = status;
-                        user.verificationCode = verificationCode;
-                        user.verificationPin = verificationPin;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - verifyUser - error reverting user: ' + user.email);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
-                    } else {
-                        subscription.sendAccountVerifiedEmail(user);
-                        return res.status(200).send();
-                    }
-                });
+                subscription.sendAccountVerifiedEmail(user);
+                return res.status(200).send();
             });
         });
     },
@@ -495,44 +457,31 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                };
+                email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('userController - resetPassword - error updating password in aio: ' + req.body.code);
+                        logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
                         logger.logError(err);
-                        user.resetPasswordCode = resetPasswordCode;
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - resetPassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
                     } else {
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                        };
-                        email.sendEmail(mailOptions, function (err) {
-                            if (err) {
-                                logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
-                            }
-                        });
-                        return res.status(200).end();
+                        logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
+                return res.status(200).end();
             });
         });
     },
 
     isSignUpAllowed: function (req, res) {
-        User.findOne({email: req.query.email.trim().toLowerCase()}).populate('account').exec(function (err, user) {
+        var value = req.query.email.trim().toLowerCase();
+        if (validation.isUsPhoneNumber(value)) {
+            value = '1' + value.replace(/[\. -]+/g, '');
+        }
+        User.findOne({email: value}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
@@ -588,10 +537,10 @@ module.exports = {
                 if (req.body.smsVerify) {
                     subscription.sendVerificationSms(user, function (err) {
                         if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification sms: ' + user.telephone);
+                            logger.logError('subscription - resendVerification - error sending verification sms: ' + user.email);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - resendVerification - verification sms sent: ' + user.telephone);
+                            logger.logInfo('subscription - resendVerification - verification sms sent: ' + user.email);
                         }
                     });
                 }
@@ -632,37 +581,21 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                aio.updatePassword(user.email, req.body.newPassword, function (err) {
+                var mailOptions = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: user.email,
+                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                };
+                email.sendEmail(mailOptions, function (err) {
                     if (err) {
-                        logger.logError('userController - changePassword - error updating password in aio: ' + req.body.code);
+                        logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
                         logger.logError(err);
-                        user.hashedPassword = hashedPassword;
-                        user.salt = salt;
-                        user.save(function (err) {
-                            if (err) {
-                                logger.logError('userController - changePassword - error reverting password in db: ' + req.body.code);
-                                logger.logError(err);
-                            }
-                            return res.status(500).end();
-                        });
                     } else {
-                        var mailOptions = {
-                            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                            to: user.email,
-                            subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                            html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                        };
-                        email.sendEmail(mailOptions, function (err) {
-                            if (err) {
-                                logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
-                            }
-                        });
-                        return res.status(200).end();
+                        logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
                     }
                 });
+                return res.status(200).end();
             });
         });
     },
@@ -885,19 +818,6 @@ module.exports = {
         });
     },
 
-    getAioToken: function (req, res) {
-        var aioGuestList = config.aioGuestAccountList;
-        var user = req.email ? req.email.toLowerCase() : aioGuestList[getGuestCounter()];
-        aio.getToken(user, function (err, data) {
-            if (err) {
-                logger.logError('userController - getAioToken - error getting token from aio: ' + user);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            return res.send(data);
-        });
-    },
-
     getEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query.email);
         if (validationError) {
@@ -1055,26 +975,9 @@ module.exports = {
     }
 };
 
-function getGuestCounter() {
-    getGuestCounter.count = ++getGuestCounter.count || 0;
-    if (getGuestCounter.count >= config.aioGuestAccountList.length) {
-        getGuestCounter.count = 0;
-    }
-    return getGuestCounter.count;
-}
-
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;
     async.waterfall([
-        function (callback) {
-            aio.updateUserStatus(user.email, true, function (err) {
-                if (err) {
-                    logger.logError('userController - addFreeTvCampaign - error changing user to active: ' + user.email);
-                    logger.logError(err);
-                }
-                callback(null);
-            });
-        },
         function (callback) {
             user.oldInactiveUser = user.oldInactiveUser * -1;
             user.account.startDate = (new Date()).toUTCString();

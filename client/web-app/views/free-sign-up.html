@@ -52,7 +52,6 @@
                     </div>
                     <div class="full-form"><span class="label-text" translate="FREE_SIGN_UP_PASSWORD"></span> <span class="label-text-info" translate="FREE_SIGN_UP_PASSWORD_INFO"></span><br>
                         <input autocomplete="off" type="password" maxlength="20" required complex-password name="password" id="password" ng-model="mv.password" class="text-box" ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}">
-
                         <div class="error-message" ng-show="form.password.$touched && form.password.$error.required" translate="FREE_SIGN_UP_PASSWORD_REQUIRED"></div>
                         <div class="error-message" ng-show="form.password.$touched && !form.password.$error.required && form.password.$error.complexity" translate="FREE_SIGN_UP_PASSWORD_NOT_COMPLEX"></div>
                         <div>

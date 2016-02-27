@@ -7,6 +7,7 @@ var nameRegex = config.regex.name;
 var emailRegex = config.regex.email;
 var addressRegex = config.regex.address;
 var telephoneRegex = config.regex.telephone;
+var usTelephoneInternational = config.regex.usTelephoneInternationalFormat;
 var zipCodeRegex = config.regex.zipCode;
 var cvv3Regex = /^\d{3}$/;
 var cvv4Regex = /^\d{4}$/;
@@ -202,7 +203,9 @@ module.exports = {
 
     isPasswordComplex : isPasswordComplex,
 
-    isUsPhoneNumber: isUsPhoneNumber
+    isUsPhoneNumber: isUsPhoneNumber,
+
+    isUsPhoneNumberInternationalFormat: isUsPhoneNumberInternationalFormat
 };
 
 function isPasswordComplex(password) {
@@ -279,4 +282,8 @@ function isState(state) {
 
 function isUsPhoneNumber(number) {
     return telephoneRegex.test(number);
+}
+
+function isUsPhoneNumberInternationalFormat(number) {
+    return usTelephoneInternational.test(number);
 }

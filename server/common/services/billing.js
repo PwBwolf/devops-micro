@@ -4,6 +4,7 @@ var config = require('../setup/config'),
     _ = require('lodash'),
     async = require('async'),
     logger = require('../../common/setup/logger'),
+    validation = require('../../common/services/validation'),
     xmlrpc = require('xmlrpc');
 
 module.exports = {
@@ -33,8 +34,18 @@ module.exports = {
         });
     },
 
-    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, password, telephone, payBy, payInfo, payDate, payCvv, payName, locale, agentNum, callback) {
+    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, key, password, payBy, payInfo, payDate, payCvv, payName, locale, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        var dayTime, invoicingList, emailKey;
+        if (validation.isUsPhoneNumberInternationalFormat(email)) {
+            dayTime = email.substr(1);
+            invoicingList = key + '@' + config.freeSideKeyEmailDomain;
+            emailKey = key + '@' + config.freeSideKeyEmailDomain;
+        } else {
+            dayTime = '';
+            invoicingList = email;
+            emailKey = email;
+        }
         client.methodCall('FS.ClientAPI_XMLRPC.new_customer_minimal',
             [
                 'agentnum', agentNum ? agentNum : 1,
@@ -48,15 +59,15 @@ module.exports = {
                 'state', state,
                 'zip', zip,
                 'country', country,
-                'daytime', telephone,
-                'invoicing_list', email,
+                'daytime', dayTime,
+                'invoicing_list', invoicingList,
                 'postal_invoicing', 0,
                 'payby', payBy,
                 'payinfo', payInfo,
                 'paydate', payDate,
                 'paycvv', payCvv,
                 'payname', payName,
-                'username', email,
+                'username', emailKey,
                 '_password', password,
                 'locale', locale
             ], function (err, response) {
@@ -79,8 +90,16 @@ module.exports = {
         );
     },
 
-    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, telephone, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
+    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        var dayTime, invoicingList;
+        if (validation.validation.isUsPhoneNumberInternationalFormat(email)) {
+            dayTime = email.substr(1);
+            invoicingList = '';
+        } else {
+            dayTime = '';
+            invoicingList = email;
+        }
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
                 'session_id', sessionId,
@@ -92,8 +111,8 @@ module.exports = {
                 'state', state,
                 'zip', zip,
                 'country', country,
-                'daytime', telephone,
-                'invoicing_list', email,
+                'daytime', dayTime,
+                'invoicing_list', invoicingList,
                 'locale', locale,
                 'payby', payBy,
                 'payinfo', payInfo,
@@ -123,14 +142,13 @@ module.exports = {
         );
     },
 
-    updateInfo: function (sessionId, firstName, lastName, telephone, callback) {
+    updateInfo: function (sessionId, firstName, lastName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
             [
                 'session_id', sessionId,
                 'first', firstName,
-                'last', lastName,
-                'daytime', telephone
+                'last', lastName
             ], function (err, response) {
                 if (err) {
                     logger.logError('billing - updateInfo - error in updating customer 1');
