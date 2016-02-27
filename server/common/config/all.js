@@ -9,11 +9,6 @@ module.exports = {
     postProcessors: {},
     appName: 'YipTV',
     allowedOrigins: ['https://int.yiptv.net', 'https://test.yiptv.net','https://www.yiptv.com'],
-    allowedOriginsO: {
-        'https://int.yiptv.net': true,
-        'https://test.yiptv.net': true,
-        'https://www.yiptv.com': true
-    },
     customerCareNumber: '855-919-4788',
     graceNoteLineupId: 'USA-FL70393-DEFAULT',
     graceNoteApiUrl: 'http://data.tmsapi.com/v1.1',
@@ -27,6 +22,7 @@ module.exports = {
     twilioSmsSendMobileNumber: '+18327794788',
     freeSideKeyEmailDomain: 'yiptv.us',
     verificationSmsMessage: {en: 'Your YipTV membership verification PIN is {0}', es: 'Su YipTV PIN de verificación de la membresía es {0}'},
+    accountVerifiedSmsMessage: {en: 'Welcome to YipTV! Your account has been activated. Login and enjoy!', es: 'Bienvenido a YipTV ! Tu cuenta ha sido activada. Inicio de sesión y disfrutar!'},
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],

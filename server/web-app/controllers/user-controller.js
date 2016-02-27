@@ -243,7 +243,11 @@ module.exports = {
     },
 
     verifyPin: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+        var email = req.body.email.toLowerCase();
+        if(validation.isUsPhoneNumber(email)){
+            email = '1' + email.replace(/[\. -]+/g, '');
+        }
+        User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - verifyPin - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
@@ -265,7 +269,7 @@ module.exports = {
             user.verificationPin = undefined;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - verifyPin - error saving user: ' + req.body.code);
+                    logger.logError('userController - verifyPin - error saving user: ' + user.email);
                     logger.logError(err);
                     return res.status(500).end();
                 }

@@ -1589,7 +1589,7 @@ module.exports = {
 
     sendAccountVerifiedEmailSms: sendAccountVerifiedEmailSms,
 
-    sendVerificationEmailSms: sendVerificationEmailSms,
+    sendVerificationEmailSms: sendVerificationEmailSms
 };
 
 function createUser(user, cc, cb) {
@@ -1992,6 +1992,8 @@ function sendAccountVerifiedEmailSms(user, cb) {
             if (err) {
                 logger.logError('subscription - sendAccountVerifiedEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
+            } else {
+                logger.logInfo('subscription - sendAccountVerifiedEmailSms - sent sms successfully: ' + user.email);
             }
             if (cb) {
                 cb(err);
