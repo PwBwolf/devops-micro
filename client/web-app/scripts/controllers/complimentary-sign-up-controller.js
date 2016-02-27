@@ -17,7 +17,7 @@
             });
         }
 
-        $scope.mv = {disclaimer: true, emailSmsSubscription: true, sendSmsVerification: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
 
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
@@ -28,7 +28,7 @@
                 $scope.mv.type = 'comp';
                 $scope.mv.code = $routeParams.compCode;
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
+                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSmsSubscription: $scope.mv.emailSmsSubscription};
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,

@@ -95,12 +95,6 @@
                 controller: 'inviteCtrl',
                 access: access.anon
             })
-            .when('/verify-user',
-            {
-                templateUrl: 'views/verify-user.html',
-                controller: 'verifyUserCtrl',
-                access: access.anon
-            })
             .when('/forgot-password',
             {
                 templateUrl: 'views/forgot-password.html',

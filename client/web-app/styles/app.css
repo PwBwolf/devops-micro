@@ -277,6 +277,10 @@ input[type="radio"]:checked + label:before {
     background-color: #8356A2;
 }
 
+.progress-bar-green {
+    background-color: #7dd108;
+}
+
 .progress-bar-pink {
     background-color: #BE6193;
 }

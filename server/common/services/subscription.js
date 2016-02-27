@@ -1587,11 +1587,9 @@ module.exports = {
 
     sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail,
 
-    sendAccountVerifiedEmail: sendAccountVerifiedEmail,
+    sendAccountVerifiedEmailSms: sendAccountVerifiedEmailSms,
 
-    sendVerificationSms: sendVerificationSms,
-
-    sendVerificationEmail: sendVerificationEmail
+    sendVerificationEmailSms: sendVerificationEmailSms,
 };
 
 function createUser(user, cc, cb) {
@@ -1893,6 +1891,14 @@ function deleteVisitor(email, cb) {
     });
 }
 
+function sendVerificationEmailSms(user, cb) {
+    if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
+        sendVerificationSms(user, cb);
+    } else {
+        sendVerificationEmail(user, cb);
+    }
+}
+
 function sendVerificationSms(user, cb) {
     var message = sf(config.verificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
     twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
@@ -1979,24 +1985,37 @@ function sendCreditCardPaymentFailureEmail(user, cb) {
     });
 }
 
-function sendAccountVerifiedEmail(user, cb) {
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendAccountVerifiedEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendAccountVerifiedEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
+function sendAccountVerifiedEmailSms(user, cb) {
+    if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
+        var message = sf(config.accountVerifiedSmsMessage[user.preferences.defaultLanguage]);
+        twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+            if (err) {
+                logger.logError('subscription - sendAccountVerifiedEmailSms - error sending sms: ' + user.email);
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    } else {
+        var mailOptions = {
+            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+            to: user.email,
+            subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
+            html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName)
+        };
+        email.sendEmail(mailOptions, function (err) {
+            if (err) {
+                logger.logError('subscription - sendAccountVerifiedEmailSms - error sending email: ' + user.email);
+                logger.logError(err);
+            } else {
+                logger.logInfo('subscription - sendAccountVerifiedEmailSms - email sent successfully: ' + user.email);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    }
 }
 
 function sendCancellationEmail(user, cb) {

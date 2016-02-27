@@ -242,10 +242,10 @@ module.exports = {
         });
     },
 
-    verifyMobilePin: function (req, res) {
+    verifyPin: function (req, res) {
         User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError('userController - verifyMobilePin - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError('userController - verifyPin - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -261,19 +261,15 @@ module.exports = {
             if (user.verificationPin.toString() !== req.body.pin) {
                 return res.status(401).send('IncorrectPin');
             }
-            var status = user.status;
-            var verificationCode = user.verificationCode;
-            var verificationPin = user.verificationPin;
             user.status = 'active';
-            user.verificationCode = undefined;
             user.verificationPin = undefined;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - verifyMobilePin - error saving user: ' + req.body.code);
+                    logger.logError('userController - verifyPin - error saving user: ' + req.body.code);
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                subscription.sendAccountVerifiedEmail(user);
+                subscription.sendAccountVerifiedEmailSms(user);
                 return res.status(200).end();
             });
         });
@@ -339,40 +335,6 @@ module.exports = {
                 return res.status(500).end();
             }
             return res.status(200).end();
-        });
-    },
-
-    verifyUser: function (req, res) {
-        User.findOne({verificationCode: req.body.code}, function (err, user) {
-            if (err) {
-                logger.logError('userController - verifyUser - error fetching user: ' + req.body.code);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.status === 'active') {
-                return res.status(409).send('UserVerified');
-            }
-            if (user.status !== 'registered') {
-                return res.status(409).send('UserError');
-            }
-            var status = user.status;
-            var verificationCode = user.verificationCode;
-            var verificationPin = user.verificationPin;
-            user.status = 'active';
-            user.verificationCode = undefined;
-            user.verificationPin = undefined;
-            user.save(function (err) {
-                if (err) {
-                    logger.logError('userController - verifyUser - error saving user: ' + req.body.code);
-                    logger.logError(err);
-                    return res.status(500).end();
-                }
-                subscription.sendAccountVerifiedEmail(user);
-                return res.status(200).send();
-            });
         });
     },
 
@@ -534,26 +496,14 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                if (req.body.smsVerify) {
-                    subscription.sendVerificationSms(user, function (err) {
-                        if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification sms: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - resendVerification - verification sms sent: ' + user.email);
-                        }
-                    });
-                }
-                if (req.body.emailVerify) {
-                    subscription.sendVerificationEmail(user, function (err) {
-                        if (err) {
-                            logger.logError('subscription - resendVerification - error sending verification email: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - resendVerification - verification email sent: ' + user.email);
-                        }
-                    });
-                }
+                subscription.sendVerificationEmailSms(user, function (err) {
+                    if (err) {
+                        logger.logError('subscription - resendVerification - error sending verification sms/email: ' + user.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - resendVerification - verification sms/email sent: ' + user.email);
+                    }
+                });
                 res.status(200).end();
             });
         });

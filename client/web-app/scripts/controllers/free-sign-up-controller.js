@@ -3,7 +3,7 @@
 
     app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
 
-        $scope.mv = {disclaimer: true, emailSmsSubscription: true, sendSmsVerification: true};
+        $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 
@@ -15,18 +15,16 @@
             if ($scope.form.$valid && (!isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'free';
                 $scope.mv.referredBy = $rootScope.referredBy;
-                $scope.mv.preferences = {defaultLanguage: $scope.language || 'en', emailSubscription: $scope.mv.emailSmsSubscription, smsSubscription: $scope.mv.emailSmsSubscription};
+                $scope.mv.preferences = {
+                    defaultLanguage: $scope.language || 'en', emailSmsSubscription: $scope.mv.emailSmsSubscription
+                };
                 $scope.saving = true;
                 userSvc.signUp(
                     $scope.mv,
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        if ($scope.mv.sendSmsVerification) {
-                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/free-sign-up-success');
-                        } else {
-                            $location.path('/free-sign-up-success/true');
-                        }
+                        $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/free-sign-up-success');
                     },
                     function (error) {
                         if (error === 'UserExists') {

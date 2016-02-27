@@ -26,14 +26,12 @@ var User = new Schema({
     cancelOn: {type: Date, required: false},
     validTill: {type: Date, required: false},
     lastLoginTime: Date,
-    verificationCode: {type: String, sparse: true},
-    verificationPin: {type: Number, required: false},
+    verificationPin: {type: Number, sparse: true},
     resetPasswordCode: {type: String, sparse: true},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
-        emailSubscription: {type: Boolean, required: true},
-        smsSubscription: {type: Boolean, required: true}
+        emailSmsSubscription: {type: Boolean, required: true},
     }
 }, {collection: 'Users'});
 

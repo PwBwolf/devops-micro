@@ -66,11 +66,8 @@ module.exports = {
         if (user.preferences.defaultLanguage !== 'en' && user.preferences.defaultLanguage !== 'es') {
             return 'DefaultLanguageInvalid';
         }
-        if (typeof user.preferences.emailSubscription !== 'boolean') {
-            return 'EmailSubscriptionInvalid';
-        }
-        if (typeof user.preferences.smsSubscription !== 'boolean') {
-            return 'SmsSubscriptionInvalid';
+        if (typeof user.preferences.emailSmsSubscription !== 'boolean') {
+            return 'EmailSmsSubscriptionInvalid';
         }
         if (user.type === 'comp' && (!user.code || user.code.trim().length === 0)) {
             return 'ComplimentaryCodeRequired';
