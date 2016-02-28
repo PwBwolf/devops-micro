@@ -9,10 +9,9 @@
                 <form name="form" id="form" ng-submit="resendVerification()" novalidate>
                     <br>
                     <span class="label-text" translate="RESEND_VERIFICATION_EMAIL"></span><br>
-                    <input autofocus type="text" is-email class="text-box" maxlength="50" ng-model="mv.email" autocomplete="off" id="email" name="email" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}" required>
-                    <br><input type="checkbox" class="check-box" name="smsVerify" ng-model="mv.smsVerify" id="smsVerify"/><label for="smsVerify"><span translate="RESEND_VERIFICATION_SEND_SMS_VERIFICATION"></span></label>
+                    <input autofocus type="text" is-email-or-us-phone class="text-box" maxlength="50" ng-model="mv.email" autocomplete="off" id="email" name="email" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}" required>
                     <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="RESEND_VERIFICATION_EMAIL_REQUIRED"></div>
-                    <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="RESEND_VERIFICATION_EMAIL_INVALID"></div>
+                    <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" class="error-message" translate="RESEND_VERIFICATION_EMAIL_INVALID"></div>
                     <br>
 
                     <div class="full-form">

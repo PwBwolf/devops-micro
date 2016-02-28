@@ -125,21 +125,15 @@
                 controller: 'resendVerificationCtrl',
                 access: access.anon
             })
-            .when('/resend-verification-success/:verificationEmail',
+            .when('/pin-verification/:verificationEmail',
             {
-                templateUrl: 'views/resend-verification-success.html',
-                controller: 'resendVerificationSuccessCtrl',
+                templateUrl: 'views/pin-verification.html',
+                controller: 'pinVerificationCtrl',
                 access: access.anon
             })
-            .when('/mobile-verification/:verificationEmail',
+            .when('/pin-verification-success',
             {
-                templateUrl: 'views/mobile-verification.html',
-                controller: 'mobileVerificationCtrl',
-                access: access.anon
-            })
-            .when('/mobile-verification-success',
-            {
-                templateUrl: 'views/mobile-verification-success.html',
+                templateUrl: 'views/pin-verification-success.html',
                 controller: 'commonCtrl',
                 access: access.anon
             })
