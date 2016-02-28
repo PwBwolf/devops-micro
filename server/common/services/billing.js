@@ -9,10 +9,11 @@ var config = require('../setup/config'),
 
 module.exports = {
 
-    login: function (email, password, callback) {
+    login: function (email, key, password, callback) {
+        var username = validation.isUsPhoneNumberInternationalFormat(email) ? key + '@' + config.freeSideKeyEmailDomain : email;
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.login', [
-            'email', email,
+            'email', username,
             'password', password,
             'domain', 'yiptv.com'
         ], function (error, response) {

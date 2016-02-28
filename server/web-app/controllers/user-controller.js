@@ -26,7 +26,7 @@ module.exports = {
             logger.logError(validationError);
             return res.status(500).end(validationError);
         }
-        req.body.email = getEmail(req.body.email);
+        req.body.email = validation.getUsername(req.body.email);
         if (req.body.merchant) {
             Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
                 if (err) {
@@ -149,7 +149,7 @@ module.exports = {
     },
 
     signIn: function (req, res) {
-        var email = getEmail(req.body.email);
+        var email = validation.getUsername(req.body.email);
         User.findOne({email: email}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - signIn - error fetching user: ' + req.body.email.toLowerCase());
@@ -192,7 +192,7 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        var email = getEmail(req.email);
+        var email = validation.getUsername(req.email);
         User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - getUserProfile - error fetching user: ' + req.email.toLowerCase());
@@ -243,7 +243,7 @@ module.exports = {
     },
 
     verifyPin: function (req, res) {
-        var email = getEmail(req.body.email);
+        var email = validation.getUsername(req.body.email);
         User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - verifyPin - error fetching user: ' + req.query.email.toLowerCase());
@@ -281,7 +281,7 @@ module.exports = {
         async.waterfall([
             // update user
             function (callback) {
-                User.findOne({email: req.email.toLowerCase()}).exec(function (err, user) {
+                User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
                     if (err) {
                         logger.logError('userController - updateUserInfo - error fetching user: ' + req.email.toLowerCase());
                         callback(err);
@@ -302,7 +302,7 @@ module.exports = {
             },
             // login to freeside
             function (user, callback) {
-                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('userController - updateUserInfo - error logging into billing system: ' + user.email);
                         errorType = 'freeside-login';
@@ -310,7 +310,7 @@ module.exports = {
                     callback(err, user, sessionId);
                 });
             },
-            // change billing address
+            // change first and last name in freeside
             function (user, sessionId, callback) {
                 billing.updateInfo(sessionId, req.body.firstName, req.body.lastName, function (err) {
                     if (err) {
@@ -440,7 +440,7 @@ module.exports = {
     },
 
     isSignUpAllowed: function (req, res) {
-        var email = getEmail(req.query.email);
+        var email = validation.getUsername(req.query.email);
         User.findOne({email: email}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
@@ -467,7 +467,7 @@ module.exports = {
     },
 
     resendVerification: function (req, res) {
-        var email = getEmail(req.body.email);
+        var email = validation.getUsername(req.body.email);
         User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - resendVerification - error fetching user: ' + req.query.email.toLowerCase());
@@ -563,7 +563,7 @@ module.exports = {
             async.waterfall([
                 // login to freeside
                 function (callback) {
-                    billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                    billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                         if (err) {
                             logger.logError('userController - changeCreditCard - error logging into billing system: ' + user.email);
                         }
@@ -623,7 +623,7 @@ module.exports = {
     },
 
     updatePreferences: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
@@ -634,19 +634,17 @@ module.exports = {
             }
             var currentValues = {
                 defaultLanguage: user.preferences.defaultLanguage,
-                emailSubscription: user.preferences.emailSubscription,
-                smsSubscription: user.preferences.smsSubscription
+                emailSmsSubscription: user.preferences.emailSmsSubscription
             };
             user.preferences.defaultLanguage = req.body.defaultLanguage;
-            user.preferences.emailSubscription = req.body.emailSubscription;
-            user.preferences.smsSubscription = req.body.smsSubscription;
+            user.preferences.emailSmsSubscription = req.body.emailSmsSubscription;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - updatePreferences - error fetching user: ' + req.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('userController - updatePreferences - error logging into freeside: ' + req.email.toLowerCase());
                         logger.logError(err);
@@ -685,7 +683,7 @@ module.exports = {
     },
 
     updateLanguage: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+        User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - updateLanguage - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
@@ -702,7 +700,7 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('userController - updateLanguage - error logging into freeside: ' + req.email.toLowerCase());
                         logger.logError(err);
@@ -944,7 +942,7 @@ function addFreeTvCampaign(user, cb) {
             });
         },
         function (callback) {
-            billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+            billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                 if (err) {
                     logger.logError('userController - addFreeTvCampaign - error logging into freeside: ' + user.email);
                     logger.logError(err);
@@ -967,11 +965,4 @@ function addFreeTvCampaign(user, cb) {
             cb(err);
         }
     });
-}
-
-function getEmail(email) {
-    if (validation.isUsPhoneNumber(email.trim())) {
-        email = '1' + email.replace(/[\. -]+/g, '');
-    }
-    return email.trim().toLowerCase();
 }

@@ -198,11 +198,13 @@ module.exports = {
         return null;
     },
 
-    isPasswordComplex : isPasswordComplex,
+    isPasswordComplex: isPasswordComplex,
 
     isUsPhoneNumber: isUsPhoneNumber,
 
-    isUsPhoneNumberInternationalFormat: isUsPhoneNumberInternationalFormat
+    isUsPhoneNumberInternationalFormat: isUsPhoneNumberInternationalFormat,
+
+    getUsername: getUsername
 };
 
 function isPasswordComplex(password) {
@@ -283,4 +285,11 @@ function isUsPhoneNumber(number) {
 
 function isUsPhoneNumberInternationalFormat(number) {
     return usTelephoneInternational.test(number);
+}
+
+function getUsername(value) {
+    if (isUsPhoneNumber(value.trim())) {
+        value = '1' + value.replace(/[\. -]+/g, '');
+    }
+    return value.trim().toLowerCase();
 }

@@ -551,7 +551,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - upgradeSubscription - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -778,7 +778,7 @@ module.exports = {
                     },
                     // login to freeside
                     function (userObj, callback) {
-                        billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                        billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error logging into billing system: ' + userObj.email);
                                 errorType = 'freeside-login';
@@ -922,7 +922,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
                     }
@@ -1020,7 +1020,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - removePremiumPackage - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1068,7 +1068,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - removePaidBasicPackage - error logging into billing system: ' + userObj.email);
                     }
@@ -1132,7 +1132,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - endFreeTrial - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1255,7 +1255,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1336,7 +1336,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - dunning5Days - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1392,7 +1392,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - reverseDunning5Days - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1471,7 +1471,7 @@ module.exports = {
             },
             // login to freeside
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - dunning10Days - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
@@ -1545,7 +1545,7 @@ module.exports = {
             },
             // login
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.createdAt.getTime(), function (err, sessionId) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('subscription - processCashPayment - error logging into freeside: ' + userEmail);
                         errorType = 'freeside-login';

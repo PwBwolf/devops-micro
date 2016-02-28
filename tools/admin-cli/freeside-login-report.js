@@ -43,7 +43,7 @@ User.find({$or: [{status: 'registered'}, {status: 'active'}]}).populate('account
         async.eachSeries(
             users,
             function (user, callback) {
-                billing.login(user.email, user.createdAt.getTime(), function (err) {
+                billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err) {
                     if (err) {
                         console.logError('error logging into freeside for user ' + user.email);
                         console.logError(err);

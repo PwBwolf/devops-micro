@@ -78,7 +78,7 @@ module.exports = {
                         refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                     }
                     if (user && user.account.type === 'paid' && (user.status === 'registered' || user.status === 'active')) {
-                        billing.login(user.email, user.createdAt.getTime(), function (err, sessionId) {
+                        billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
                                 logger.logError('merchantController - doesUsernameExist - error logging in to billing system: ' + req.query.email);
                                 logger.logError(err);
@@ -136,7 +136,7 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-                
+
                 var emailRegex = config.regex.email;
                 if (!req.body.username || !emailRegex.test(req.body.username)) {
                     return res.status(200).send({error: 'invalid-username'});
@@ -153,7 +153,7 @@ module.exports = {
                             req.body.agentNum = 2;
                         }
                     }
-                    
+
                     req.body.merchantId = req.query.merchantId;
                     req.body.paymentType = result;
                     queue.enqueue('makePayment', req.body, function (err) {
@@ -166,7 +166,7 @@ module.exports = {
                         }
                     });
                 });
-                
+
             });
         } catch (ex) {
             logger.logError('merchantController - makePayment - exception');

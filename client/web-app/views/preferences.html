@@ -15,8 +15,7 @@
 
                     <div class="error-message" ng-show="form.defaultLanguage.$touched && form.defaultLanguage.$error.required" translate="PREFERENCES_PREFERRED_LANGUAGE_REQUIRED"></div>
                     <div class="full-form justify-text">
-                        <input type="checkbox" class="check-box" name="emailSubscription" ng-model="mv.emailSubscription" id="emailSubscription"/><label for="emailSubscription"><span translate="PREFERENCES_EMAIL_SUBSCRIPTION"></span></label>
-                        <input type="checkbox" class="check-box" name="smsSubscription" ng-model="mv.smsSubscription" id="smsSubscription"/><label for="smsSubscription"><span translate="PREFERENCES_SMS_SUBSCRIPTION"></span></label>
+                        <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="PREFERENCES_EMAIL_SMS_SUBSCRIPTION"></span></label>
                     <div class="full-form">
                         <button ng-disabled="saving" class="submit-button" type="submit" translate="PREFERENCES_SUBMIT_BUTTON"></button>
                     </div>

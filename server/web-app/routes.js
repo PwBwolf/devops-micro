@@ -6,6 +6,7 @@ var _ = require('lodash'),
     UserCtrl = require('./controllers/user-controller'),
     MediaCtrl = require('./controllers/media-controller'),
     config = require('../common/setup/config'),
+    validation = require('../common/services/validation'),
     userRoles = require('../../client/web-app/scripts/config/routing').userRoles,
     accessLevels = require('../../client/web-app/scripts/config/routing').accessLevels,
     routes = [
@@ -27,32 +28,125 @@ var _ = require('lodash'),
         {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
         {path: '/api/is-email-verified', httpMethod: 'GET', middleware: [UserCtrl.isEmailVerified]},
         {path: '/api/verify-pin', httpMethod: 'POST', middleware: [UserCtrl.verifyPin]},
-        {path: '/api/get-email-sms-subscription-status', httpMethod: 'GET', middleware: [UserCtrl.getEmailSmsSubscriptionStatus]},
-        {path: '/api/set-email-sms-subscription-status', httpMethod: 'POST', middleware: [UserCtrl.setEmailSmsSubscriptionStatus]},
+        {
+            path: '/api/get-email-sms-subscription-status',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.getEmailSmsSubscriptionStatus]
+        },
+        {
+            path: '/api/set-email-sms-subscription-status',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.setEmailSmsSubscriptionStatus]
+        },
         {path: '/api/sign-out', httpMethod: 'POST', middleware: [UserCtrl.signOut], accessLevel: accessLevels.user},
-        {path: '/api/get-user-profile', httpMethod: 'GET', middleware: [UserCtrl.getUserProfile], accessLevel: accessLevels.user},
-        {path: '/api/update-user-info', httpMethod: 'POST', middleware: [UserCtrl.updateUserInfo], accessLevel: accessLevels.user},
-        {path: '/api/get-preferences', httpMethod: 'GET', middleware: [UserCtrl.getPreferences], accessLevel: accessLevels.user},
-        {path: '/api/update-preferences', httpMethod: 'POST', middleware: [UserCtrl.updatePreferences], accessLevel: accessLevels.user},
-        {path: '/api/update-language', httpMethod: 'POST', middleware: [UserCtrl.updateLanguage], accessLevel: accessLevels.user},
-        {path: '/api/change-password', httpMethod: 'POST', middleware: [UserCtrl.changePassword], accessLevel: accessLevels.user},
-        {path: '/api/change-credit-card', httpMethod: 'POST', middleware: [UserCtrl.changeCreditCard], accessLevel: accessLevels.user},
-        {path: '/api/upgrade-subscription', httpMethod: 'POST', middleware: [UserCtrl.upgradeSubscription], accessLevel: accessLevels.user},
-        {path: '/api/cancel-subscription', httpMethod: 'POST', middleware: [UserCtrl.cancelSubscription], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-url', httpMethod: 'GET', middleware: [MediaCtrl.getChannelUrl], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-guide', httpMethod: 'GET', middleware: [MediaCtrl.getChannelGuide], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-guide-all', httpMethod: 'GET', middleware: [MediaCtrl.getChannelGuideAll], accessLevel: accessLevels.user},
-        {path: '/api/get-user-channels', httpMethod: 'GET', middleware: [MediaCtrl.getUserChannels], accessLevel: accessLevels.user},
+        {
+            path: '/api/get-user-profile',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.getUserProfile],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/update-user-info',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.updateUserInfo],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-preferences',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.getPreferences],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/update-preferences',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.updatePreferences],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/update-language',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.updateLanguage],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/change-password',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.changePassword],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/change-credit-card',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.changeCreditCard],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/upgrade-subscription',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.upgradeSubscription],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/cancel-subscription',
+            httpMethod: 'POST',
+            middleware: [UserCtrl.cancelSubscription],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-channel-url',
+            httpMethod: 'GET',
+            middleware: [MediaCtrl.getChannelUrl],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-channel-guide',
+            httpMethod: 'GET',
+            middleware: [MediaCtrl.getChannelGuide],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-channel-guide-all',
+            httpMethod: 'GET',
+            middleware: [MediaCtrl.getChannelGuideAll],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-user-channels',
+            httpMethod: 'GET',
+            middleware: [MediaCtrl.getUserChannels],
+            accessLevel: accessLevels.user
+        },
         {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList]},
         {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
         {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
         {path: '/api/get-channel-logo', httpMethod: 'GET', middleware: [MediaCtrl.getChannelLogo]},
         {path: '/api/get-program-image', httpMethod: 'GET', middleware: [MediaCtrl.getProgramImage]},
         {path: '/api/get-promos', httpMethod: 'GET', middleware: [MediaCtrl.getPromos], accessLevel: accessLevels.user},
-        {path: '/api/get-channel-categories', httpMethod: 'GET', middleware: [MediaCtrl.getChannelCategories], accessLevel: accessLevels.user},
-        {path: '/api/get-favorite-channels', httpMethod: 'GET', middleware: [UserCtrl.getFavoriteChannels], accessLevel: accessLevels.user},
-        {path: '/api/add-favorite-channel', httpMethod: 'GET', middleware: [UserCtrl.addFavoriteChannel], accessLevel: accessLevels.user},
-        {path: '/api/remove-favorite-channel', httpMethod: 'GET', middleware: [UserCtrl.removeFavoriteChannel], accessLevel: accessLevels.user},
+        {
+            path: '/api/get-channel-categories',
+            httpMethod: 'GET',
+            middleware: [MediaCtrl.getChannelCategories],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/get-favorite-channels',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.getFavoriteChannels],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/add-favorite-channel',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.addFavoriteChannel],
+            accessLevel: accessLevels.user
+        },
+        {
+            path: '/api/remove-favorite-channel',
+            httpMethod: 'GET',
+            middleware: [UserCtrl.removeFavoriteChannel],
+            accessLevel: accessLevels.user
+        },
         {
             path: '/*', httpMethod: 'GET',
             middleware: [function (req, res) {
@@ -91,18 +185,8 @@ function ensureAuthorized(req, res, next) {
         role = userRoles.anon;
     } else {
         var decodedToken = jwt.decode(token, config.secretToken);
-        if (decodedToken.expiry <= Date.now()) {
-            //res.send(401, 'TokenExpired');
-            //if(req.type && req.type === 'mobile') {
-                req.email = decodedToken.email;
-                req.role = role = decodedToken.role;
-            //} else {
-            //    res.status(401).send('TokenExpired');
-            //}
-        } else {
-            req.email = decodedToken.email;
-            req.role = role = decodedToken.role;
-        }
+        req.email = validation.getUsername(decodedToken.email);
+        req.role = role = decodedToken.role;
     }
     accessLevel = _.findWhere(routes, {path: req.route.path}).accessLevel || accessLevels.public;
     if (!(accessLevel.bitMask & role.bitMask)) {
