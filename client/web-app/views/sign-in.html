@@ -12,16 +12,16 @@
                 </div>
 
                 <div class="sign-in-sub-header header-color" ng-hide="redirectTo">
-                    <div><span translate="SIGN_IN_SUB_HEADING_PART1"></span> <a style="color:#A03269" class="underline-text" href ng-click="goToWordPressUrl('WP_URL_FREE_SIGN_UP', true)" translate="SIGN_IN_SUB_HEADING_PART2"></a> <span translate="SIGN_IN_SUB_HEADING_PART3"></span></div>
+                    <div><span translate="SIGN_IN_SUB_HEADING_PART1"></span> <a style="color:#A03269" class="underline-text" href="/sign-up/free" translate="SIGN_IN_SUB_HEADING_PART2"></a> <span translate="SIGN_IN_SUB_HEADING_PART3"></span></div>
                 </div>
                 <br><br>
 
                 <form name="form" id="form" ng-submit="signIn()" novalidate>
                     <span class="label-text" translate="SIGN_IN_EMAIL"></span><br>
-                    <input autofocus name="email" is-email id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
+                    <input autofocus name="email" is-email-or-us-phone id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
 
                     <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="SIGN_IN_EMAIL_REQUIRED"></div>
-                    <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="SIGN_IN_EMAIL_INVALID"></div>
+                    <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" class="error-message" translate="SIGN_IN_EMAIL_INVALID"></div>
                     <br><br>
                     <span class="label-text" translate="SIGN_IN_PASSWORD"></span><br>
                     <input name="password" id="password" maxlength="20" autocomplete="off" type="password" class="text-box" ng-model="mv.password" required ng-class="{'text-box-error': form.password.$touched && form.password.$invalid}"/>
@@ -36,7 +36,7 @@
                         <span class="content-text" translate="SIGN_IN_FORGOT_PASSWORD"></span>
                         <a href="/forgot-password" translate="SIGN_IN_RESET_PASSWORD"></a>
                         <span class="separator">|</span><span class="content-text" translate="SIGN_IN_NOT_REGISTERED"></span>
-                        <a href ng-click="goToWordPressUrl('WP_URL_FREE_SIGN_UP', true)" translate="SIGN_IN_SIGN_UP"></a><br><br>
+                        <a href="/sign-up/free" translate="SIGN_IN_SIGN_UP"></a><br><br>
                         <span class="content-text" translate="SIGN_IN_NO_VERIFICATION_EMAIL"></span>
                         <a href="/resend-verification" translate="SIGN_IN_RESEND_VERIFICATION"></a>
                     </div>

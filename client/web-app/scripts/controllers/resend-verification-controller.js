@@ -3,15 +3,13 @@
 
     app.controller('resendVerificationCtrl', ['userSvc', 'loggerSvc', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $scope, $location, $filter) {
 
-        $scope.mv = {smsVerify: true, emailVerify: true};
-
         $scope.resendVerification = function () {
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.resendVerification(
                     $scope.mv,
                     function () {
-                        $location.path('/resend-verification-success/' + $scope.mv.email);
+                        $location.path('/pin-verification/' + $scope.mv.email);
                         $scope.saving = false;
                     },
                     function (response) {

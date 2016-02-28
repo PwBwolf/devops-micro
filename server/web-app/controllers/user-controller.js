@@ -26,9 +26,7 @@ module.exports = {
             logger.logError(validationError);
             return res.status(500).end(validationError);
         }
-        if (validation.isUsPhoneNumber(req.body.email)) {
-            req.body.email = '1' + req.body.email.replace(/[\. -]+/g, '');
-        }
+        req.body.email = getEmail(req.body.email);
         if (req.body.merchant) {
             Merchant.findOne({name: req.body.merchant.toUpperCase()}, function (err, merchant) {
                 if (err) {
@@ -151,7 +149,8 @@ module.exports = {
     },
 
     signIn: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}).populate('account').exec(function (err, user) {
+        var email = getEmail(req.body.email);
+        User.findOne({email: email}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - signIn - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
@@ -193,7 +192,8 @@ module.exports = {
     },
 
     getUserProfile: function (req, res) {
-        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
+        var email = getEmail(req.email);
+        User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - getUserProfile - error fetching user: ' + req.email.toLowerCase());
                 logger.logError(err);
@@ -243,10 +243,7 @@ module.exports = {
     },
 
     verifyPin: function (req, res) {
-        var email = req.body.email.toLowerCase();
-        if(validation.isUsPhoneNumber(email)){
-            email = '1' + email.replace(/[\. -]+/g, '');
-        }
+        var email = getEmail(req.body.email);
         User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - verifyPin - error fetching user: ' + req.query.email.toLowerCase());
@@ -443,11 +440,8 @@ module.exports = {
     },
 
     isSignUpAllowed: function (req, res) {
-        var value = req.query.email.trim().toLowerCase();
-        if (validation.isUsPhoneNumber(value)) {
-            value = '1' + value.replace(/[\. -]+/g, '');
-        }
-        User.findOne({email: value}).populate('account').exec(function (err, user) {
+        var email = getEmail(req.query.email);
+        User.findOne({email: email}).populate('account').exec(function (err, user) {
             if (err) {
                 logger.logError('userController - isSignUpAllowed - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
@@ -473,7 +467,8 @@ module.exports = {
     },
 
     resendVerification: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+        var email = getEmail(req.body.email);
+        User.findOne({email: email}, function (err, user) {
             if (err) {
                 logger.logError('userController - resendVerification - error fetching user: ' + req.query.email.toLowerCase());
                 logger.logError(err);
@@ -488,12 +483,7 @@ module.exports = {
             if (user.status !== 'registered') {
                 return res.status(409).send('UserError');
             }
-            if (req.body.emailVerify) {
-                user.verificationCode = uuid.v4();
-            }
-            if (req.body.smsVerify) {
-                user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
-            }
+            user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
@@ -977,4 +967,11 @@ function addFreeTvCampaign(user, cb) {
             cb(err);
         }
     });
+}
+
+function getEmail(email) {
+    if (validation.isUsPhoneNumber(email.trim())) {
+        email = '1' + email.replace(/[\. -]+/g, '');
+    }
+    return email.trim().toLowerCase();
 }
