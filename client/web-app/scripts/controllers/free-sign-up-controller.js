@@ -24,7 +24,7 @@
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/free-sign-up-success');
+                        $location.path('/sign-up-verification/' + $scope.mv.email + '/free-sign-up-success');
                     },
                     function (error) {
                         if (error === 'UserExists') {

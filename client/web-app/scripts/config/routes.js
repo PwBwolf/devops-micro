@@ -53,7 +53,7 @@
                 controller: 'merchantSignUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up-verification/:verificationEmail/:verificationTelephone/:redirectRoute',
+            .when('/sign-up-verification/:verificationEmail/:redirectRoute',
             {
                 templateUrl: 'views/sign-up-verification.html',
                 controller: 'signUpVerificationCtrl',
