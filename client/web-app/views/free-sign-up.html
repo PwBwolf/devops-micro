@@ -60,7 +60,7 @@
                     </div>
                     <div class="full-form">
                         <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="FREE_SIGN_UP_EMAIL_SMS_SUBSCRIPTION"></span></label>
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="FREE_SIGN_UP_DISCLAIMER"></span> <a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="FREE_SIGN_UP_TERMS_OF_USE"></a> <span translate="FREE_SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="FREE_SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="FREE_SIGN_UP_DISCLAIMER_END"></span></label>
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="FREE_SIGN_UP_DISCLAIMER"></span> <a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="FREE_SIGN_UP_TERMS_OF_USE"></a> <span translate="FREE_SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="FREE_SIGN_UP_PRIVACY_POLICY" target="_blank"></a> <span translate="FREE_SIGN_UP_DISCLAIMER_END"></span></label>
 
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="FREE_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
@@ -71,7 +71,7 @@
                             <div class="progress-bar progress-bar-green progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
-                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || mobileNumberStatus !== 'MOBILE')" translate="FREE_SIGN_UP_FORM_INVALID"></div>
+                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || (mobileNumberStatus !== 'MOBILE' && isUsPhoneNumber()))" translate="FREE_SIGN_UP_FORM_INVALID"></div>
                     </div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_PROBLEM"></span><span ng-bind="appConfig.customerCareNumber"></span></div>
                     <div class="full-form center-form"><span translate="FREE_SIGN_UP_HAVE_ACCOUNT"></span><a href="/sign-in" translate="FREE_SIGN_UP_SIGN_IN"></a></div>

@@ -12,7 +12,7 @@
                 $scope.checkIfMobileNumber();
                 $('#password').focus();
             }
-            if ($scope.form.$valid && (!isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
+            if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'free';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {
@@ -55,7 +55,7 @@
         }
 
         $scope.checkIfMobileNumber = function () {
-            if ($scope.form.email.$valid && isUsPhoneNumber()) {
+            if ($scope.form.email.$valid && $scope.isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
                 appSvc.verifyMobileNumber($scope.mv.email, function (result) {
                     if (result) {
@@ -73,7 +73,7 @@
             $scope.mobileNumberStatus = 'NOT_CHECKED';
         };
 
-        function isUsPhoneNumber() {
+        $scope.isUsPhoneNumber = function () {
             var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
             return phoneRegex.test($scope.mv.email);
         }
