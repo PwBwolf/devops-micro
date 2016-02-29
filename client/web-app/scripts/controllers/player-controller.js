@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['_', '$', '$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', '$timeout', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter, $timeout) {
+    app.controller('playerCtrl', ['_', '$','$q', 'mediaSvc', '$scope', '$modal', '$rootScope', '$window', '$compile', '$filter', '$timeout', function (_, $, $q, mediaSvc, $scope, $modal, $rootScope, $window, $compile, $filter, $timeout) {
 
         var cancellerProgram, cancellerGuide, currentChannelIndex, channelsHasTags, previousChannelIndex;
 
@@ -80,6 +80,9 @@
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
+            },
+            function(data){
+                console.log(data)
             });
 
             mediaSvc.getPromos(function (data) {
