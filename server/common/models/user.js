@@ -31,7 +31,9 @@ var User = new Schema({
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
-        emailSmsSubscription: {type: Boolean, required: true},
+        emailSmsSubscription: {type: Boolean},
+        emailSubscription: {type: Boolean},
+        smsSubscription: {type: Boolean}
     }
 }, {collection: 'Users'});
 

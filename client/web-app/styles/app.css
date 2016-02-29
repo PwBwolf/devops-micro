@@ -843,7 +843,7 @@ ul.passwordStrength {
 #userInfoDropDown > div {
     overflow: hidden;
     overflow-y: auto;
-    height: 460px;
+    height: 380px;
 }
 
 #upgradeSubscriptionDropDown > div {

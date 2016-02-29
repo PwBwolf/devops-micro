@@ -7,18 +7,29 @@
 
                     <span class="label-text" translate="PREFERENCES_PREFERRED_LANGUAGE"></span><br>
 
-                    <select id="defaultLanguage" name="defaultLanguage" required ng-model="mv.defaultLanguage" class="text-box dropdown-list" ng-class="{'text-box-error': form.defaultLanguage.$touched && form.defaultLanguage.$invalid}">
+                    <select id="defaultLanguage" name="defaultLanguage" required ng-model="mv.defaultLanguage"
+                            class="text-box dropdown-list"
+                            ng-class="{'text-box-error': form.defaultLanguage.$touched && form.defaultLanguage.$invalid}">
                         <option value="en">English</option>
                         <option value="es">Español</option>
                     </select>
                     <br>
 
-                    <div class="error-message" ng-show="form.defaultLanguage.$touched && form.defaultLanguage.$error.required" translate="PREFERENCES_PREFERRED_LANGUAGE_REQUIRED"></div>
+                    <div class="error-message"
+                         ng-show="form.defaultLanguage.$touched && form.defaultLanguage.$error.required"
+                         translate="PREFERENCES_PREFERRED_LANGUAGE_REQUIRED"></div>
                     <div class="full-form justify-text">
-                        <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="PREFERENCES_EMAIL_SMS_SUBSCRIPTION"></span></label>
-                    <div class="full-form">
-                        <button ng-disabled="saving" class="submit-button" type="submit" translate="PREFERENCES_SUBMIT_BUTTON"></button>
-                    </div>
+                        <input type="checkbox" class="check-box" name="emailSmsSubscription"
+                               ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label
+                        for="emailSmsSubscription"><span translate="PREFERENCES_EMAIL_SMS_SUBSCRIPTION"></span></label>
+                        <div class="full-form">
+                            <button ng-disabled="saving" class="submit-button" type="submit"
+                                    translate="PREFERENCES_SUBMIT_BUTTON"></button>
+                        </div>
+                        <div class="full-form center-form"><span class="label-text-info"
+                                                                 translate="PREFERENCES_SMS_FINE_PRINT"></span>
+                        </div>
+
                 </form>
             </div>
         </div>

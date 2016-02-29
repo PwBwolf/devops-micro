@@ -1900,7 +1900,7 @@ function sendVerificationEmailSms(user, cb) {
 }
 
 function sendVerificationSms(user, cb) {
-    var message = sf(config.verificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
+    var message = sf(config.accountVerificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
     twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
         if (cb) {
             cb(err);

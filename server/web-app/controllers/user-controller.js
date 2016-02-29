@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     jwt = require('jwt-simple'),
     uuid = require('node-uuid'),
     async = require('async'),
+    twilio = require('../../common/services/twilio'),
     logger = require('../../common/setup/logger'),
     moment = require('moment'),
     config = require('../../common/setup/config'),
@@ -486,7 +487,7 @@ module.exports = {
             user.verificationPin = Math.floor(Math.random() * 9000) + 1000;
             user.save(function (err) {
                 if (err) {
-                    logger.logError('userController - resendVerification - error saving user: ' + req.query.email.toLowerCase());
+                    logger.logError('userController - resendVerification - error saving user: ' + user.email);
                     logger.logError(err);
                     return res.status(500).end();
                 }
@@ -525,20 +526,32 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: user.email,
-                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
-                    }
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
+                    var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
+                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                        if (err) {
+                            logger.logError('userController - changePassword - error sending sms: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - changePassword - sent sms successfully: ' + user.email);
+                        }
+                    });
+                } else {
+                    var mailOptions = {
+                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                        to: user.email,
+                        subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                        html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                    };
+                    email.sendEmail(mailOptions, function (err) {
+                        if (err) {
+                            logger.logError('userController - changePassword - error sending password changed email to: ' + mailOptions.to);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - changePassword - password changed email sent to ' + mailOptions.to);
+                        }
+                    });
+                }
                 return res.status(200).end();
             });
         });
