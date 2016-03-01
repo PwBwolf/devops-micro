@@ -26,8 +26,8 @@ var User = new Schema({
     cancelOn: {type: Date, required: false},
     validTill: {type: Date, required: false},
     lastLoginTime: Date,
-    verificationPin: {type: Number, sparse: true},
-    resetPasswordCode: {type: String, sparse: true},
+    verificationPin: {type: Number},
+    resetPasswordPin: {type: Number},
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},

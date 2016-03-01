@@ -25,7 +25,6 @@ var _ = require('lodash'),
         {path: '/api/forgot-password', httpMethod: 'POST', middleware: [UserCtrl.forgotPassword]},
         {path: '/api/resend-verification', httpMethod: 'POST', middleware: [UserCtrl.resendVerification]},
         {path: '/api/reset-password', httpMethod: 'POST', middleware: [UserCtrl.resetPassword]},
-        {path: '/api/check-reset-code', httpMethod: 'GET', middleware: [UserCtrl.checkResetCode]},
         {path: '/api/is-email-verified', httpMethod: 'GET', middleware: [UserCtrl.isEmailVerified]},
         {path: '/api/verify-pin', httpMethod: 'POST', middleware: [UserCtrl.verifyPin]},
         {

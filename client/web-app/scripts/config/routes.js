@@ -101,13 +101,7 @@
                 controller: 'forgotPasswordCtrl',
                 access: access.anon
             })
-            .when('/forgot-password-success',
-            {
-                templateUrl: 'views/forgot-password-success.html',
-                controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/reset-password',
+            .when('/reset-password/:resetEmail',
             {
                 templateUrl: 'views/reset-password.html',
                 controller: 'resetPasswordCtrl',

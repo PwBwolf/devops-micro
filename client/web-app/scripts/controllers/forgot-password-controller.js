@@ -9,7 +9,7 @@
                 userSvc.forgotPassword(
                     $scope.mv.email,
                     function () {
-                        $location.path('/forgot-password-success');
+                        $location.path('/reset-password/' + $scope.mv.email);
                         $scope.saving = false;
                     },
                     function () {

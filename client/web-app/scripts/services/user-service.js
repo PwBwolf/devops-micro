@@ -105,10 +105,6 @@
                 $http.post('/api/verify-user', {code: code}).success(success).error(error);
             },
 
-            setPasswordAndVerifyUser: function (data, success, error) {
-                $http.post('/api/set-password-verify-user', data).success(success).error(error);
-            },
-
             forgotPassword: function (email, success, error) {
                 $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
             },
@@ -123,14 +119,6 @@
 
             resendVerification: function (data, success, error) {
                 $http.post('/api/resend-verification', data).success(success).error(error);
-            },
-
-            checkResetCode: function (code, success, error) {
-                $http({
-                    url: '/api/check-reset-code',
-                    method: 'GET',
-                    params: {code: code}
-                }).success(success).error(error);
             },
 
             updateUserInfo: function (data, success, error) {

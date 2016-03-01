@@ -341,7 +341,8 @@ module.exports = {
     },
 
     forgotPassword: function (req, res) {
-        User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+        var username = validation.getUsername(req.body.email);
+        User.findOne({email: username}, function (err, user) {
             if (err) {
                 logger.logError('userController - forgotPassword - error fetching user: ' + req.body.email.toLowerCase());
                 logger.logError(err);
@@ -353,54 +354,49 @@ module.exports = {
             if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
-            user.resetPasswordCode = uuid.v4();
+            user.resetPasswordPin = Math.floor(Math.random() * 9000) + 1000;
             user.save(function (err) {
                 if (err) {
                     logger.logError('userController - forgotPassword - error saving user: ' + req.body.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                var resetUrl = config.url + 'reset-password?code=' + user.resetPasswordCode;
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: user.email,
-                    subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, resetUrl)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('userController - forgotPassword - error sending forgot password email to : ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('userController - forgotPassword - forgot password email sent to ' + mailOptions.to);
-                    }
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(username)) {
+                    var message = sf(config.forgotPasswordSmsMessage[user.preferences.defaultLanguage], user.resetPasswordPin);
+                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                        if (err) {
+                            logger.logError('userController - forgotPassword - error sending sms: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - forgotPassword - sent sms successfully: ' + user.email);
+                        }
+                    });
+                } else {
+                    var mailOptions = {
+                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                        to: user.email,
+                        subject: config.forgotPasswordEmailSubject[user.preferences.defaultLanguage],
+                        html: sf(config.forgotPasswordEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, user.resetPasswordPin)
+                    };
+                    email.sendEmail(mailOptions, function (err) {
+                        if (err) {
+                            logger.logError('userController - forgotPassword - error sending forgot password email to : ' + mailOptions.to);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - forgotPassword - forgot password email sent to ' + mailOptions.to);
+                        }
+                    });
+                }
                 return res.status(200).end();
             });
         });
     },
 
-    checkResetCode: function (req, res) {
-        User.findOne({resetPasswordCode: req.query.code}, function (err, user) {
-            if (err) {
-                logger.logError('userController - checkResetCode - error fetching user : ' + req.query.code);
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (_.contains(['registered', 'failed'], user.status)) {
-                return res.status(409).send('UserError');
-            }
-            return res.status(200).end();
-        });
-    },
-
     resetPassword: function (req, res) {
-        User.findOne({resetPasswordCode: req.body.code}, function (err, user) {
+        var username = validation.getUsername(req.body.email);
+        User.findOne({email: username}, function (err, user) {
             if (err) {
-                logger.logError('userController - resetPassword - error fetching user: ' + req.body.code);
+                logger.logError('userController - resetPassword - error fetching user: ' + req.body.email);
                 logger.logError(err);
                 return res.status(500).end();
             }
@@ -410,10 +406,10 @@ module.exports = {
             if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
-            var resetPasswordCode = user.resetPasswordCode;
-            var hashedPassword = user.hashedPassword;
-            var salt = user.salt;
-            user.resetPasswordCode = undefined;
+            if (user.resetPasswordPin.toString() !== req.body.resetPasswordPin) {
+                return res.status(401).send('IncorrectPin');
+            }
+            user.resetPasswordPin = undefined;
             user.password = req.body.newPassword;
             user.save(function (err) {
                 if (err) {
@@ -421,20 +417,32 @@ module.exports = {
                     logger.logError(err);
                     return res.status(500).end();
                 }
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: user.email,
-                    subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                    html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
-                    }
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(username)) {
+                    var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
+                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                        if (err) {
+                            logger.logError('userController - resetPassword - error sending sms: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - resetPassword - sent sms successfully: ' + user.email);
+                        }
+                    });
+                } else {
+                    var mailOptions = {
+                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                        to: user.email,
+                        subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                        html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                    };
+                    email.sendEmail(mailOptions, function (err) {
+                        if (err) {
+                            logger.logError('userController - resetPassword - error sending password changed email to: ' + mailOptions.to);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('userController - resetPassword - password changed email sent to ' + mailOptions.to);
+                        }
+                    });
+                }
                 return res.status(200).end();
             });
         });
