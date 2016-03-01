@@ -28,7 +28,7 @@ function removeUnusedFieldsFromUser(callback) {
             verificationCode: '',
             resetPasswordCode: ''
         }
-    }, {upsert: false, multi: true}, function (err, result) {
+    }, {upsert: false, multi: true}).exec(function (err, result) {
         if (err) {
             console.log('Error removing unused fields from User collection: ' + err);
         } else {
@@ -43,7 +43,7 @@ function removeUnusedFieldsFromAccount(callback) {
         $unset: {
             aioAccountId: ''
         }
-    }, {upsert: false, multi: true}, function (err, result) {
+    }, {upsert: false, multi: true}).exec(function (err, result) {
         if (err) {
             console.log('Error removing unused fields from Account collection: ' + err);
         } else {
