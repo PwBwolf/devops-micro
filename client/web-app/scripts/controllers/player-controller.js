@@ -16,8 +16,8 @@
         currentChannelIndex = {index: undefined, channelId: undefined};
         previousChannelIndex = {index: undefined, channelId: undefined};
         $scope.channelLogo = '../../images/logo.png';
-        $scope.programTitle = 'Title ...';
-        $scope.programDescription = 'Description ...';
+        $scope.programTitle = '';
+        $scope.programDescription = '';
         $scope.showChannelFilter = false;
         channelsHasTags = false;
 
@@ -397,6 +397,7 @@
 
         $scope.playChannel = function (index, airing) {
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
+                console.log($scope.tvUrl);
                 $scope.tvUrl = channelUrl.routes[0];
                 $scope.mainUrl = channelUrl.routes[0];
 
@@ -429,7 +430,7 @@
         function getProgramInfo(index) {
             var epgIndex = _.findIndex($rootScope.channelsEpg, {channel_id: $rootScope.channels[index].id});
             var lineUp = [];
-            var info = {title: 'Title ...', description: 'Description ...', showTime: 'Show Time ...'};
+            var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
             if(epgIndex >= 0) {
                 lineUp = $rootScope.channelsEpg[epgIndex].programs;
@@ -687,7 +688,7 @@
     app.controller('programDetailSlideCtrl',['$scope', '$rootScope', function ($scope, $rootScope) {
         $scope.checked = false; // This will be binded using the ps-open attribute
         var programDetailSlider = document.getElementById('programDetailSlider');
-        $scope.program = {title: 'Title ...', description: 'Description ...', showTime: 'ShowTime ...'};
+        $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
 
         $scope.toggleProgramDetail = function(){
             var width = $(window).width();
