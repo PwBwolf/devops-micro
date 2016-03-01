@@ -406,6 +406,9 @@ module.exports = {
             if (_.contains(['registered', 'failed'], user.status)) {
                 return res.status(409).send('UserError');
             }
+            if (!user.resetPasswordPin) {
+                return res.status(409).send('UserError');
+            }
             if (user.resetPasswordPin.toString() !== req.body.resetPasswordPin) {
                 return res.status(401).send('IncorrectPin');
             }
