@@ -763,6 +763,10 @@ ul.passwordStrength {
     text-align: justify;
 }
 
+@media screen and (max-width: 1024px) {
+
+}
+
 @media screen and (max-width: 1350px) {
 
     .user-home-wrap {
@@ -771,7 +775,9 @@ ul.passwordStrength {
 }
 
 @media screen and (max-width: 999px) {
-
+     .programDetail {
+         display: none;
+     }
     a.language {
         margin-left: 17px;
     }
@@ -1938,7 +1944,7 @@ body, html {
 }
 
 .pre-channel {
-    width:4%;
+    width:30px;
     height:40px;
     float:left;
     padding-top:4px;
@@ -1948,7 +1954,7 @@ body, html {
 }
 
 .next-channel {
-    width:4%;
+    width:30px;
     height:40px;
     float:left;
     text-align: center;
@@ -1960,7 +1966,7 @@ body, html {
 }
 
 #currentChannel {
-    width:10%;
+    width:175px;
     height:40px;
     text-align: center;
     float:left;
@@ -1972,7 +1978,8 @@ body, html {
 
 #programInfo {
     height:40px;
-    width:45%;
+    width:40%;
+    max-width: 500px;
     display:table-cell;
     display:inline-block;
     margin-left:1px;
@@ -2003,9 +2010,10 @@ body, html {
 }
 
 #programDetail {
+    float: left;
     width:5%;
     height:40px;
-    float:left;margin-left:1px;
+    margin-left:1px;
     padding-top:9px;
     text-align: center;
     display:table-cell;
@@ -2073,7 +2081,7 @@ body, html {
 #favorite {
     width:5%;
     height:40px;
-    float:left;
+    float: left;
     margin-left:1px;
     padding-top:9px;
     text-align: center;
@@ -2083,10 +2091,10 @@ body, html {
 }
 
 #favoriteChannels {
+    float: left;
     height:40px;
     width:10%;
     line-height: 40px;
-    float:left;
     text-align: center;
     color:white;
     margin-left:1px;
@@ -2096,10 +2104,10 @@ body, html {
 }
 
 #recentChannels {
+    float: left;
     height:40px;
     width:6%;
     line-height: 40px;
-    float:left;
     color:white;
     display:inline-block;
     background: transparent;
@@ -2108,11 +2116,10 @@ body, html {
 
 #allChannels {
     height:40px;
-    width:5%;
+    width:40px;
     line-height: 40px;
     color:white;
     text-align: center;
-    float:left;
     display:inline-block;
     padding-right:-3px;
     vertical-align: middle;
@@ -2121,9 +2128,8 @@ body, html {
 }
 
 #filter {
-    width:5%;
+    width:40px;
     height:40px;
-    float:right;
     display:inline-block;
     margin-right:3px;
     background: transparent;
@@ -2156,13 +2162,16 @@ body, html {
 }
 
 @media screen and (max-width: 1024px) {
+    .navbar-right {
+        width: 270px;
+    }
 
     .premiumButtonHolder {
         width: 300px;
     }
 
     #recentChannels {
-        display: none;
+        width: 7%;
     }
 
     #allChannels {
@@ -2173,6 +2182,7 @@ body, html {
         width: 7%;
     }
 }
+
 
 @media screen and (max-width: 707px) {
 
@@ -2273,6 +2283,60 @@ body, html {
 
 }
 
+@media (max-width: 1024px) {
+    .navbar-right {
+        width: 270px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .navbar-right {
+        width: 100% !important;
+    }
+    .navbar-header{
+        max-width: 100% !important;
+    }
+    #programInfo {
+        max-width: 300px;
+    }
+    #programDetail {
+        float: none;
+        display: block;
+    }
+
+    #favorite {
+        float: none;
+        display: block;
+
+    }
+    #favoriteChannels {
+        float: none;
+        display: block;
+    }
+    #recentChannels {
+        float: none;
+        display: block;
+    }
+    #allChannels {
+        float: none;
+        display: block;
+    }
+    #filter {
+        float: none;
+        display: block;
+    }
+    .collapse.navbar-collapse.in {
+        background: rgba(55,55,55,0.9);
+        z-index: 25;
+        width: 120px;
+        float: right;
+    }
+    .collapse.navbar-collapse.in li{
+        padding-left: 10px !important;
+    }
+
+}
 
 .free-tv {
     height: 360px;
@@ -2288,4 +2352,38 @@ body, html {
 
 .paid-tv .position-div{
     display: inherit;
+}
+
+#currentChannel img{
+    max-width: 140px;
+}
+
+
+.collapse.navbar-collapse.in {
+    /*width: 25%;*/
+    z-index: 25;
+}
+
+/*.filter-li {*/
+    /*float: right !important;*/
+/*}*/
+
+.nav.navbar-nav.navbar-right li{
+    padding-left: 3%;
+}
+
+.navbar-toggle {
+    margin-top: 2px;
+}
+
+.navbar-right {
+    width: 290px;
+}
+.navbar-header{
+    max-width: 50%;
+}
+
+.navbar-default .navbar-toggle {
+    border-width: 2px;
+
 }
