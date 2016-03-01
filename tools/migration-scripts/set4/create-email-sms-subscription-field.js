@@ -28,11 +28,11 @@ function createEmailSmsSubscriptionField(cb) {
                 users,
                 function (user, callback) {
                     counter++;
-                    if (user.preferences.emailSubscription) {
+                    if (user.preferences.emailSubscription === true || user.preferences.emailSubscription === false) {
                         user.preferences.emailSmsSubscription = user.preferences.emailSubscription;
                         user.preferences.emailSubscription = undefined;
                     }
-                    if (user.preferences.smsSubscription) {
+                    if (user.preferences.smsSubscription === true || user.preferences.smsSubscription === false) {
                         user.preferences.smsSubscription = undefined;
                     }
                     user.save(function (err) {
