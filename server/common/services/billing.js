@@ -94,7 +94,7 @@ module.exports = {
     updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         var dayTime, invoicingList;
-        if (validation.validation.isUsPhoneNumberInternationalFormat(email)) {
+        if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
             invoicingList = '';
         } else {

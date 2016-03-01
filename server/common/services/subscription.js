@@ -622,14 +622,25 @@ module.exports = {
                         });
                     }
                 } else {
-                    sendUpgradeEmail(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - upgradeSubscription - error sending upgrade email: ' + userObj.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - upgradeSubscription - upgrade email sent: ' + userObj.email);
-                        }
-                    });
+                    if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                        sendUpgradeSms(userObj, function(err){
+                            if (err) {
+                                logger.logError('subscription - upgradeSubscription - error sending upgrade sms: ' + userObj.email);
+                                logger.logError(err);
+                            } else {
+                                logger.logInfo('subscription - upgradeSubscription - upgrade sms sent: ' + userObj.email);
+                            }
+                        });
+                    } else {
+                        sendUpgradeEmail(userObj, function (err) {
+                            if (err) {
+                                logger.logError('subscription - upgradeSubscription - error sending upgrade email: ' + userObj.email);
+                                logger.logError(err);
+                            } else {
+                                logger.logInfo('subscription - upgradeSubscription - upgrade email sent: ' + userObj.email);
+                            }
+                        });
+                    }
                 }
                 callback(null, userObj, sessionId);
             },
@@ -1902,6 +1913,12 @@ function sendVerificationEmailSms(user, cb) {
 function sendVerificationSms(user, cb) {
     var message = sf(config.accountVerificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
     twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendVerificationSms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendVerificationSms - sms sent successfully: ' + user.email);
+        }
         if (cb) {
             cb(err);
         }
@@ -1916,6 +1933,27 @@ function sendVerificationEmail(user, cb) {
         html: sf(config.accountVerificationEmailBody[user.preferences.defaultLanguage], config.imageUrl, config.customerCareNumber, user.verificationPin)
     };
     email.sendEmail(mailOptions, function (err) {
+        if (err) {
+            logger.logError('subscription - sendVerificationEmail - error sending email: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendVerificationEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendUpgradeSms(user, cb) {
+    var message = config.upgradeSubscriptionSmsMessage[user.preferences.defaultLanguage];
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendUpgradeSms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendUpgradeSms - sms sent successfully: ' + user.email);
+        }
         if (cb) {
             cb(err);
         }
@@ -1953,10 +1991,10 @@ function sendConvertToComplimentaryEmail(user, cb) {
     };
     email.sendEmail(mailOptions, function (err) {
         if (err) {
-            logger.logError('subscription - sendUpgradeEmail - error sending email: ' + user.email);
+            logger.logError('subscription - sendConvertToComplimentaryEmail - error sending email: ' + user.email);
             logger.logError(err);
         } else {
-            logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+            logger.logInfo('subscription - sendConvertToComplimentaryEmail - email sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

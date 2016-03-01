@@ -570,66 +570,84 @@ module.exports = {
 
     changeCreditCard: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
-            if (err) {
-                logger.logError('userController - changeCreditCard - error fetching user: ' + req.email.toLowerCase());
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            if (!user) {
-                return res.status(404).send('UserNotFound');
-            }
-            if (user.account.type === 'free') {
-                return res.status(409).send('FreeUser');
-            }
-            if (user.account.type === 'comp') {
-                return res.status(409).send('CompUser');
-            }
-            async.waterfall([
-                // login to freeside
-                function (callback) {
-                    billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error logging into billing system: ' + user.email);
-                        }
-                        callback(err, sessionId);
-                    });
-                },
-                // update credit card
-                function (sessionId, callback) {
-                    billing.updateBilling(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + user.email);
-                        }
-                        callback(err, sessionId);
-                    });
-                },
-                // send email
-                function (sessionId, callback) {
-                    var mailOptions = {
-                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                        to: user.email,
-                        subject: config.changeCreditCardEmailSubject[user.preferences.defaultLanguage],
-                        html: sf(config.changeCreditCardEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                    };
-                    email.sendEmail(mailOptions, function (err) {
-                        if (err) {
-                            logger.logError('userController - changeCreditCard - error sending email: ' + user.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('userController - changeCreditCard - email sent successfully: ' + user.email);
-                        }
-                    });
-                    callback(null, sessionId);
-                }
-            ], function (err) {
                 if (err) {
+                    logger.logError('userController - changeCreditCard - error fetching user: ' + req.email.toLowerCase());
                     logger.logError(err);
                     return res.status(500).end();
-                } else {
-                    return res.status(200).end();
                 }
-            });
-        });
+                if (!user) {
+                    return res.status(404).send('UserNotFound');
+                }
+                if (user.account.type === 'free') {
+                    return res.status(409).send('FreeUser');
+                }
+                if (user.account.type === 'comp') {
+                    return res.status(409).send('CompUser');
+                }
+                async.waterfall([
+                        // login to freeside
+                        function (callback) {
+                            billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
+                                if (err) {
+                                    logger.logError('userController - changeCreditCard - error logging into billing system: ' + user.email);
+                                }
+                                callback(err, sessionId);
+                            });
+                        },
+                        // update credit card
+                        function (sessionId, callback) {
+                            billing.updateBilling(sessionId, req.body.address, req.body.city, req.body.state, req.body.zipCode, 'US', 'CARD', req.body.cardNumber, req.body.expiryDate, req.body.cvv, req.body.cardName, function (err) {
+                                if (err) {
+                                    logger.logError('userController - changeCreditCard - error updating credit card in billing system: ' + user.email);
+                                }
+                                callback(err, sessionId);
+                            });
+                        },
+                        // send email or sms
+                        function (sessionId, callback) {
+                            if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
+                                var message = config.changeCreditCardSmsMessage[user.preferences.defaultLanguage];
+                                twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - changeCreditCard - error sending sms: ' + user.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - changeCreditCard - sms sent successfully: ' + user.email);
+                                    }
+                                    if (cb) {
+                                        cb(err);
+                                    }
+                                });
+                            } else {
+                                var mailOptions = {
+                                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                                    to: user.email,
+                                    subject: config.changeCreditCardEmailSubject[user.preferences.defaultLanguage],
+                                    html: sf(config.changeCreditCardEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                                };
+                                email.sendEmail(mailOptions, function (err) {
+                                    if (err) {
+                                        logger.logError('userController - changeCreditCard - error sending email: ' + user.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('userController - changeCreditCard - email sent successfully: ' + user.email);
+                                    }
+                                });
+                            }
+                            callback(null, sessionId);
+                        }
+                    ],
+                    function (err) {
+                        if (err) {
+                            logger.logError(err);
+                            return res.status(500).end();
+                        } else {
+                            return res.status(200).end();
+                        }
+                    }
+                );
+            }
+        );
     },
 
     getPreferences: function (req, res) {
@@ -644,7 +662,8 @@ module.exports = {
             }
             return res.send(user.preferences);
         });
-    },
+    }
+    ,
 
     updatePreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
@@ -704,7 +723,8 @@ module.exports = {
                 }
             });
         }
-    },
+    }
+    ,
 
     updateLanguage: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
@@ -760,7 +780,8 @@ module.exports = {
                 }
             });
         }
-    },
+    }
+    ,
 
     upgradeSubscription: function (req, res) {
         subscription.upgradeSubscription(req.email, req.body, function (err) {
@@ -771,7 +792,8 @@ module.exports = {
             }
             return res.status(200).end();
         });
-    },
+    }
+    ,
 
     cancelSubscription: function (req, res) {
         subscription.cancelSubscription(req.email, function (err) {
@@ -782,7 +804,8 @@ module.exports = {
             }
             return res.status(200).end();
         });
-    },
+    }
+    ,
 
     getEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query.email);
@@ -807,7 +830,8 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
         });
-    },
+    }
+    ,
 
     setEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateSetEmailSmsSubscriptionStatusInputs(req.body);
@@ -841,7 +865,8 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
         });
-    },
+    }
+    ,
 
     getFavoriteChannels: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
@@ -859,7 +884,8 @@ module.exports = {
             }
             return res.send(favoriteChannels);
         });
-    },
+    }
+    ,
 
     addFavoriteChannel: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
@@ -907,7 +933,8 @@ module.exports = {
                 }
             }
         });
-    },
+    }
+    ,
 
     removeFavoriteChannel: function (req, res) {
         FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
@@ -939,7 +966,8 @@ module.exports = {
             }
         });
     }
-};
+}
+;
 
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;
