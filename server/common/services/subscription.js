@@ -623,7 +623,7 @@ module.exports = {
                     }
                 } else {
                     if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
-                        sendUpgradeSms(userObj, function(err){
+                        sendUpgradeSms(userObj, function (err) {
                             if (err) {
                                 logger.logError('subscription - upgradeSubscription - error sending upgrade sms: ' + userObj.email);
                                 logger.logError(err);
@@ -974,13 +974,21 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // send email
+            // send email or sms
             function (userObj, callback) {
-                sendCancellationEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - cancelSubscription - error sending cancellation email: ' + userObj.email);
-                    }
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                    sendCancellationSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - cancelSubscription - error sending cancellation sms: ' + userObj.email);
+                        }
+                    });
+                } else {
+                    sendCancellationEmail(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - cancelSubscription - error sending cancellation email: ' + userObj.email);
+                        }
+                    });
+                }
                 callback(null, userObj);
             }
         ], function (err, userObj) {
@@ -2056,6 +2064,22 @@ function sendAccountVerifiedEmailSms(user, cb) {
             }
         });
     }
+}
+
+function sendCancellationSms(user, cb) {
+    var cancelOn = moment(user.cancelOn).utc().format('M/D/YYYY');
+    var message = sf(config.cancelSubscriptionSmsMessage[user.preferences.defaultLanguage], cancelOn);
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendCancellationSms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendCancellationSms - sms sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
 }
 
 function sendCancellationEmail(user, cb) {
