@@ -20,6 +20,7 @@ var Account = new Schema({
     merchant: String,
     firstCardPaymentDate: Date,
     firstMerchantPaymentDate: Date,
+    aioAccountId: Number, // remove post release
     billingDate: Date,
     startDate: Date,
     premiumEndDate: Date,

@@ -8,6 +8,7 @@ var User = new Schema({
     firstName: {type: String, required: true, trim: true},
     lastName: {type: String, required: true, trim: true},
     email: {type: String, required: true, unique: true, lowercase: true, trim: true},
+    telephone: {type: String, required: false}, // remove post release
     hashedPassword: {type: String, required: false},
     salt: {type: String, required: false},
     role: {
@@ -28,12 +29,14 @@ var User = new Schema({
     lastLoginTime: Date,
     verificationPin: {type: Number},
     resetPasswordPin: {type: Number},
+    verificationCode: {type: String, sparse: true}, // remove post release
+    resetPasswordCode: {type: String, sparse: true}, // remove post release
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
         emailSmsSubscription: {type: Boolean},
-        emailSubscription: {type: Boolean},
-        smsSubscription: {type: Boolean}
+        emailSubscription: {type: Boolean}, // remove post release
+        smsSubscription: {type: Boolean} // remove post release
     }
 }, {collection: 'Users'});
 
