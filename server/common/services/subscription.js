@@ -253,11 +253,12 @@ module.exports = {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
                         updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
-                        if (user.sendSmsVerification) {
+                        if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                             sendVerificationSms(userObj);
+                        } else {
+                            sendVerificationEmail(userObj);
                         }
-                        sendVerificationEmail(userObj);
-                        sendCreditCardPaymentFailureEmail(userObj);
+                        sendCreditCardPaymentFailureEmailSms(userObj);
                         err = 'PaymentFailed';
                         break;
                     case 'freeside-package-insert':
@@ -532,7 +533,7 @@ module.exports = {
                 var locale = userObj.preferences.defaultLanguage + '_US';
                 billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : (userObj.account.merchant ? userObj.account.merchant : 'YipTV'),
                     newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL',
-                    newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, locale,
+                    newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.account.key, locale,
                     newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '',
                     newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '',
                     newUser.cardName ? newUser.cardName : '', newUser.agentNum ? newUser.agentNum : '', function (err) {
@@ -567,7 +568,7 @@ module.exports = {
                     }
                 );
             },
-            // send verification email if registered
+            // send verification email/sms if registered else upgrade email
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
                     if (validation.isUsPhoneNumber(userObj.email)) {
@@ -630,12 +631,13 @@ module.exports = {
                         revertUserChangesForUpgradeFailure(userObj, currentValues);
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
-                            if (newUser.sendSmsVerification) {
+                            if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj);
+                            } else {
+                                sendVerificationEmail(userObj);
                             }
-                            sendVerificationEmail(userObj);
                         }
-                        sendCreditCardPaymentFailureEmail(userObj);
+                        sendCreditCardPaymentFailureEmailSms(userObj);
                         err = userObj.status === 'registered' ? 'PaymentFailed' : 'PaymentFailedActive';
                         break;
                 }
@@ -757,7 +759,7 @@ module.exports = {
                     // update user in freeside
                     function (userObj, sessionId, callback) {
                         var locale = userObj.preferences.defaultLanguage + '_US';
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, locale, 'BILL', '', '', '', '', '', function (err) {
+                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
@@ -1522,7 +1524,7 @@ module.exports = {
             // update billing details
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, locale, 'BILL', '', '', '', '', '', function (err) {
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1551,7 +1553,7 @@ module.exports = {
         });
     },
 
-    sendCreditCardPaymentFailureEmail: sendCreditCardPaymentFailureEmail,
+    sendCreditCardPaymentFailureEmailSms: sendCreditCardPaymentFailureEmailSms,
 
     sendAccountVerifiedEmailSms: sendAccountVerifiedEmailSms,
 
@@ -1940,25 +1942,40 @@ function sendConvertToComplimentaryEmail(user, cb) {
     });
 }
 
-function sendCreditCardPaymentFailureEmail(user, cb) {
-    var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
-    var mailOptions = {
-        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-        to: user.email,
-        subject: config.creditCardPaymentFailureEmailSubject[user.preferences.defaultLanguage],
-        html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, signInUrl)
-    };
-    email.sendEmail(mailOptions, function (err) {
-        if (err) {
-            logger.logError('subscription - sendCreditCardPaymentFailureEmail - error sending email: ' + user.email);
-            logger.logError(err);
-        } else {
-            logger.logInfo('subscription - sendCreditCardPaymentFailureEmail - email sent successfully: ' + user.email);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
+function sendCreditCardPaymentFailureEmailSms(user, cb) {
+    if(validation.isUsPhoneNumberInternationalFormat(user.email)) {
+        var message = sf(config.creditCardPaymentFailureSmsMessage[user.preferences.defaultLanguage]);
+        twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+            if (err) {
+                logger.logError('subscription - sendAccountVerifiedEmailSms - error sending sms: ' + user.email);
+                logger.logError(err);
+            } else {
+                logger.logInfo('subscription - sendAccountVerifiedEmailSms - sent sms successfully: ' + user.email);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    } else {
+        var signInUrl = config.url + 'sign-in?email=' + encodeURIComponent(user.email);
+        var mailOptions = {
+            from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+            to: user.email,
+            subject: config.creditCardPaymentFailureEmailSubject[user.preferences.defaultLanguage],
+            html: sf(config.creditCardPaymentFailureEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber, signInUrl)
+        };
+        email.sendEmail(mailOptions, function (err) {
+            if (err) {
+                logger.logError('subscription - sendCreditCardPaymentFailureEmailSms - error sending email: ' + user.email);
+                logger.logError(err);
+            } else {
+                logger.logInfo('subscription - sendCreditCardPaymentFailureEmailSms - email sent successfully: ' + user.email);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    }
 }
 
 function sendAccountVerifiedEmailSms(user, cb) {

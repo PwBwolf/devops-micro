@@ -10,7 +10,7 @@ var config = require('../setup/config'),
 module.exports = {
 
     login: function (email, key, password, callback) {
-        var username = validation.isUsPhoneNumberInternationalFormat(email) ? getFreeSideKey(key) : email;
+        var username = validation.isUsPhoneNumberInternationalFormat(email) ? getFreeSideKey(email, key) : email;
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.login', [
             'email', username,
@@ -40,8 +40,8 @@ module.exports = {
         var dayTime, invoicingList, emailKey;
         if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
-            invoicingList = getFreeSideKey(key);
-            emailKey = getFreeSideKey(key);
+            invoicingList = getFreeSideKey(email, key);
+            emailKey = getFreeSideKey(email, key);
         } else {
             dayTime = '';
             invoicingList = email;
@@ -91,12 +91,12 @@ module.exports = {
         );
     },
 
-    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
+    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, key, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         var dayTime, invoicingList;
         if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
-            invoicingList = '';
+            invoicingList = getFreeSideKey(email, key);
         } else {
             dayTime = '';
             invoicingList = email;
@@ -455,6 +455,6 @@ function orderPackage(sessionId, packagePart, callback) {
     });
 }
 
-function getFreeSideKey(key) {
-    return Date.now() + '_' + key + '@' + config.freeSideKeyEmailDomain;
+function getFreeSideKey(email, key) {
+    return email + '_' + key + '@' + config.freeSideKeyEmailDomain;
 }

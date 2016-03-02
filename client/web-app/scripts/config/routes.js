@@ -89,12 +89,6 @@
                 controller: 'commonCtrl',
                 access: access.anon
             })
-            .when('/invite/:referralCode',
-            {
-                templateUrl: 'views/redirect.html',
-                controller: 'inviteCtrl',
-                access: access.anon
-            })
             .when('/forgot-password',
             {
                 templateUrl: 'views/forgot-password.html',
@@ -137,6 +131,13 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
+            /*
+             .when('/invite/:referralCode',
+             {
+             templateUrl: 'views/redirect.html',
+             controller: 'inviteCtrl',
+             access: access.anon
+             })
             .when('/refer-a-friend',
             {
                 templateUrl: 'views/refer-a-friend.html',
@@ -148,7 +149,7 @@
                 templateUrl: 'views/refer-a-friend-success.html',
                 controller: 'commonCtrl',
                 access: access.public
-            })
+            })*/
             .when('/contact-us',
             {
                 templateUrl: 'views/contact-us.html',
