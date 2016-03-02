@@ -227,7 +227,7 @@
             PLAYER_CHANNEL_LIST_LOAD_ERROR: 'Error loading channel list',
             PLAYER_CHANNEL_GUIDE_LOAD_ERROR: 'Error loading channel guide',
             PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR: 'Error loading promo channel list',
-            PLAYER_MENU_FAVORITE: 'Favorite',
+            PLAYER_MENU_FAVORITE: 'Favorites',
             PLAYER_MENU_RECENT: 'Recent',
             PLAYER_MENU_ALL: 'All',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',

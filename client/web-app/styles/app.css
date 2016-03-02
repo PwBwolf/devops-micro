@@ -1945,6 +1945,7 @@ body, html {
 }
 
 .pre-channel {
+    z-index: 36;
     width:30px;
     height:40px;
     float:left;
@@ -1955,6 +1956,7 @@ body, html {
 }
 
 .next-channel {
+    z-index: 36;
     width:30px;
     height:40px;
     float:left;
@@ -2302,6 +2304,7 @@ body, html {
         max-width: 300px;
     }
     #programDetail {
+        left: -6px;
         float: none;
         display: block;
     }
@@ -2324,6 +2327,7 @@ body, html {
         display: block;
     }
     #filter {
+        left: -6px;
         float: none;
         display: block;
     }
