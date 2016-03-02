@@ -227,7 +227,7 @@
             PLAYER_CHANNEL_LIST_LOAD_ERROR: 'Error al subir lista de canales',
             PLAYER_CHANNEL_GUIDE_LOAD_ERROR: 'Error al subir guía de canales',
             PLAYER_PROMO_CHANNEL_LIST_LOAD_ERROR: 'Error al subir lista de canales promo',
-            PLAYER_MENU_FAVORITE: 'Favorito',
+            PLAYER_MENU_FAVORITE: 'Favoritos',
             PLAYER_MENU_RECENT: 'Reciente',
             PLAYER_MENU_ALL: 'Todos',
             PREFERENCES_PREFERRED_LANGUAGE: 'Elige su idioma preferido',
