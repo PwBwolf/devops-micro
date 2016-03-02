@@ -20,7 +20,6 @@ module.exports = {
     twilioAccountSid: 'ACf91a6484a812decd98cbb5acaeddd4c9',
     twilioAuthToken: 'ad862df24b215998fac2ef6c5638d526',
     twilioSmsSendMobileNumber: '+18327794788',
-    freeSideKeyEmailDomain: 'yiptv.us',
     freePremiumUserPackages: ['Free', 'Premium'],
     freeUserPackages: ['Free'],
     paidUserPackages: ['Free', 'Premium', 'Paid Basic'],

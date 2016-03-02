@@ -39,6 +39,7 @@ module.exports = {
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile'],
+    freeSideKeyEmailDomain: 'yiptv.us',
     freeSideSelfServiceApiUrl: 'http://10.100.10.15:8080/',
     freeSideBackOfficeApiUri: 'http://10.100.10.15:8008/',
     freeSideSecret: 'yip-freeside-prod',
