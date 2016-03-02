@@ -59,7 +59,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="paid" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
+                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="paid" id="email" first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
 
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED"></div>
                         <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" translate="SIGN_UP_EMAIL_INVALID"></div>

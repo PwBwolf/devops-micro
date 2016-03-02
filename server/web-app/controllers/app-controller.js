@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
     twilio = require('../../common/services/twilio'),
     ContactUs = mongoose.model('ContactUs'),
     Referrer = mongoose.model('Referrer'),
-    Visitor = mongoose.model('Visitor'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     ComplimentaryCode = mongoose.model('ComplimentaryCode'),
@@ -51,49 +50,6 @@ module.exports = {
             }
             return res.json(states);
         });
-    },
-
-    saveVisitor: function (req, res) {
-        Visitor.findOne({email: req.body.email.toLowerCase()}, function (err, visitor) {
-            if (err) {
-                logger.logError('appController - saveVisitor - error fetching visitor: ' + req.body.email.toLowerCase());
-                logger.logError(err);
-            }
-            if (!visitor) {
-                var visitorObj = new Visitor({
-                    email: req.body.email,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    createdAt: (new Date()).toUTCString()
-                });
-                visitorObj.save(function (err) {
-                    if (err) {
-                        logger.logError('appController - saveVisitor - error saving visitor - 1: ' + req.body.email.toLowerCase());
-                        logger.logError(err);
-                    }
-                });
-            } else {
-                var changed = false;
-                if (req.body.firstName && req.body.firstName !== visitor.firstName) {
-                    visitor.firstName = req.body.firstName;
-                    changed = true;
-                }
-                if (req.body.lastName && req.body.lastName !== visitor.lastName) {
-                    visitor.lastName = req.body.lastName;
-                    changed = true;
-                }
-                if (changed) {
-                    visitor.updatedAt = (new Date()).toUTCString();
-                    visitor.save(function (err) {
-                        if (err) {
-                            logger.logError('appController - saveVisitor - error saving visitor - 2: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                        }
-                    });
-                }
-            }
-        });
-        return res.status(200).end();
     },
 
     saveContactUs: function (req, res) {

@@ -14,7 +14,6 @@ var async = require('async'),
     dbYip = mongoose.createConnection(config.db),
     User = dbYip.model('User'),
     Account = dbYip.model('Account'),
-    Visitor = dbYip.model('Visitor'),
     ComplimentaryCode = dbYip.model('ComplimentaryCode'),
     userRoles = require('../../../client/web-app/scripts/config/routing').userRoles,
     sf = require('sf');
@@ -117,16 +116,6 @@ module.exports = {
                         }
                     });
                 }
-                callback(null, userObj, accountObj);
-            },
-            // delete user from visitor
-            function (userObj, accountObj, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newFreeUser - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
                 callback(null, userObj, accountObj);
             }
         ], function (err, userObj, accountObj) {
@@ -256,16 +245,6 @@ module.exports = {
                     }
                 });
                 callback(null, userObj, accountObj);
-            },
-            // delete user from visitor
-            function (userObj, accountObj, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newPaidUser - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
-                callback(null, userObj, accountObj);
             }
         ], function (err, userObj, accountObj) {
             if (err) {
@@ -279,7 +258,6 @@ module.exports = {
                         }
                         sendVerificationEmail(userObj);
                         sendCreditCardPaymentFailureEmail(userObj);
-                        deleteVisitor(userObj.email);
                         err = 'PaymentFailed';
                         break;
                     case 'freeside-package-insert':
@@ -422,16 +400,6 @@ module.exports = {
                             logger.logError(err);
                         } else {
                             logger.logInfo('subscription - newComplimentaryUser - verification email sent: ' + userObj.email);
-                        }
-                    });
-                    callback(null, userObj, accountObj);
-                },
-                // delete user from visitor
-                function (userObj, accountObj, callback) {
-                    deleteVisitor(userObj.email, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newComplimentaryUser - error deleting visitor: ' + userObj.email);
-                            logger.logError(err);
                         }
                     });
                     callback(null, userObj, accountObj);
@@ -643,16 +611,6 @@ module.exports = {
                     }
                 }
                 callback(null, userObj, sessionId);
-            },
-            // delete user from visitor
-            function (userObj, sessionId, callback) {
-                deleteVisitor(userObj.email, function (err) {
-                    if (err) {
-                        logger.logError('subscription - upgradeSubscription - error deleting visitor: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
-                callback(null, userObj, sessionId);
             }
         ], function (err, userObj, sessionId) {
             if (err) {
@@ -678,7 +636,6 @@ module.exports = {
                             sendVerificationEmail(userObj);
                         }
                         sendCreditCardPaymentFailureEmail(userObj);
-                        deleteVisitor(userObj.email);
                         err = userObj.status === 'registered' ? 'PaymentFailed' : 'PaymentFailedActive';
                         break;
                 }
@@ -859,16 +816,6 @@ module.exports = {
                                 }
                             });
                         }
-                        callback(null, userObj);
-                    },
-                    // delete user from visitor
-                    function (userObj, callback) {
-                        deleteVisitor(userObj.email, function (err) {
-                            if (err) {
-                                logger.logError('subscription - convertToComplimentary - error deleting visitor: ' + userObj.email);
-                                logger.logError(err);
-                            }
-                        });
                         callback(null, userObj);
                     },
                     // increment complimentary code account count by one
@@ -1615,7 +1562,6 @@ function createUser(user, cc, cb) {
     var userObj = new User(user);
     userObj.role = userRoles.user;
     userObj.createdAt = (new Date()).toUTCString();
-    userObj.verificationCode = uuid.v4();
     userObj.verificationPin = Math.floor(Math.random() * 9000) + 1000;
     userObj.status = 'registered';
     if (cc) {
@@ -1887,22 +1833,6 @@ function revertAccountChangesForReverseDunning5Days(user, currentValues, cb) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForReverseDunning5Days - error reverting account changes: ' + email);
             logger.logError(err);
-        }
-        if (cb) {
-            cb(err);
-        }
-    });
-}
-
-function deleteVisitor(email, cb) {
-    Visitor.findOne({email: email.toLowerCase()}, function (err, visitor) {
-        if (visitor) {
-            visitor.remove(function (err) {
-                if (err) {
-                    logger.logError('subscription - deleteVisitor - error removing visitor: ' + email);
-                    logger.logError(err);
-                }
-            });
         }
         if (cb) {
             cb(err);

@@ -1,5 +1,7 @@
 'use strict';
 
+// delete model after release
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
