@@ -10,7 +10,7 @@ var config = require('../setup/config'),
 module.exports = {
 
     login: function (email, key, password, callback) {
-        var username = validation.isUsPhoneNumberInternationalFormat(email) ? key + '@' + config.freeSideKeyEmailDomain : email;
+        var username = validation.isUsPhoneNumberInternationalFormat(email) ? getFreeSideKey(key) : email;
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.login', [
             'email', username,
@@ -40,8 +40,8 @@ module.exports = {
         var dayTime, invoicingList, emailKey;
         if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
-            invoicingList = key + '@' + config.freeSideKeyEmailDomain;
-            emailKey = key + '@' + config.freeSideKeyEmailDomain;
+            invoicingList = getFreeSideKey(key);
+            emailKey = getFreeSideKey(key);
         } else {
             dayTime = '';
             invoicingList = email;
@@ -453,4 +453,8 @@ function orderPackage(sessionId, packagePart, callback) {
             }
         }
     });
+}
+
+function getFreeSideKey(key) {
+    return Date.now() + '_' + key + '@' + config.freeSideKeyEmailDomain;
 }
