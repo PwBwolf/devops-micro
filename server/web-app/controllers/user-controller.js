@@ -709,8 +709,7 @@ module.exports = {
 
         function rollbackPreferences(user, currentValues, cb) {
             user.preferences.defaultLanguage = currentValues.defaultLanguage;
-            user.preferences.emailSubscription = currentValues.emailSubscription;
-            user.preferences.smsSubscription = currentValues.smsSubscription;
+            user.preferences.emailSmsSubscription = currentValues.emailSmsSubscription;
             user.save(function (err) {
                 if (err) {
                     if (err) {
@@ -766,8 +765,7 @@ module.exports = {
 
         function rollbackLanguage(user, currentValues, cb) {
             user.preferences.defaultLanguage = currentValues.defaultLanguage;
-            user.preferences.emailSubscription = currentValues.emailSubscription;
-            user.preferences.smsSubscription = currentValues.smsSubscription;
+            user.preferences.emailSmsSubscription = currentValues.emailSmsSubscription;
             user.save(function (err) {
                 if (err) {
                     if (err) {
@@ -822,8 +820,7 @@ module.exports = {
             }
             if (user) {
                 var preferences = {
-                    emailSubscription: user.preferences.emailSubscription,
-                    smsSubscription: user.preferences.smsSubscription
+                    emailSmsSubscription: user.preferences.emailSmsSubscription
                 };
                 return res.send(preferences);
             } else {
@@ -847,11 +844,8 @@ module.exports = {
                 return res.status(500).end();
             }
             if (user) {
-                if (typeof req.body.emailSubscription === 'boolean') {
-                    user.preferences.emailSubscription = req.body.emailSubscription;
-                }
-                if (typeof req.body.smsSubscription === 'boolean') {
-                    user.preferences.smsSubscription = req.body.smsSubscription;
+                if (typeof req.body.emailSmsSubscription === 'boolean') {
+                    user.preferences.emailSmsSubscription = req.body.emailSmsSubscription;
                 }
                 user.save(function (err) {
                     if (err) {

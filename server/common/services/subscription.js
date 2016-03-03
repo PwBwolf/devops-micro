@@ -491,8 +491,7 @@ module.exports = {
                                     salt: userObj.salt,
                                     preferences: {
                                         defaultLanguage: userObj.preferences.defaultLanguage,
-                                        emailSubscription: userObj.preferences.emailSubscription,
-                                        smsSubscription: userObj.preferences.smsSubscription
+                                        emailSmsSubscription: userObj.preferences.emailSmsSubscription
                                     }
                                 };
                                 userObj.firstName = newUser.firstName;
@@ -719,8 +718,7 @@ module.exports = {
                                             salt: userObj.salt,
                                             preferences: {
                                                 defaultLanguage: userObj.preferences.defaultLanguage,
-                                                emailSubscription: userObj.preferences.emailSubscription,
-                                                smsSubscription: userObj.preferences.smsSubscription
+                                                emailSmsSubscription: userObj.preferences.emailSmsSubscription
                                             }
                                         };
                                         userObj.firstName = newUser.firstName;
@@ -1006,6 +1004,7 @@ module.exports = {
                     callback(err, userObj);
                 });
             }
+            // need to send email or sms after this
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
@@ -1138,23 +1137,35 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // send email
+            // send email or sms
             function (userObj, callback) {
-                var mailOptions = {
-                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                    to: userObj.email,
-                    subject: config.complimentaryAccountEndedEmailSubject[userObj.preferences.defaultLanguage],
-                    html: sf(config.complimentaryAccountEndedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
-                };
-                email.sendEmail(mailOptions, function (err) {
-                    if (err) {
-                        logger.logError('subscription - endComplimentarySubscription - error sending complimentary account ended email to ' + mailOptions.to);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - endComplimentarySubscription - complimentary account ended email sent to ' + mailOptions.to);
-                    }
-                    callback(null, userObj);
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                    var message = config.complimentaryAccountEndedSmsMessage[user.preferences.defaultLanguage];
+                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + user.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - endComplimentarySubscription - sms sent successfully: ' + user.email);
+                        }
+                    });
+                } else {
+                    var mailOptions = {
+                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                        to: userObj.email,
+                        subject: config.complimentaryAccountEndedEmailSubject[userObj.preferences.defaultLanguage],
+                        html: sf(config.complimentaryAccountEndedEmailBody[userObj.preferences.defaultLanguage], config.imageUrl, userObj.firstName, userObj.lastName, config.url + 'upgrade-subscription')
+                    };
+                    email.sendEmail(mailOptions, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endComplimentarySubscription - error sending complimentary account ended email to ' + mailOptions.to);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - endComplimentarySubscription - complimentary account ended email sent to ' + mailOptions.to);
+                        }
+                    });
+                }
+                callback(null, userObj);
             }
         ], function (err, userObj) {
             if (err) {
@@ -1185,7 +1196,7 @@ module.exports = {
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error fetching user: ' + userEmail);
+                        logger.logError('subscription - endPaidSubscription - error fetching user: ' + userEmail);
                         callback(err);
                     } else if (userObj.status === 'failed') {
                         callback('FailedUser');
@@ -1206,12 +1217,12 @@ module.exports = {
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
                             if (err) {
-                                logger.logError('subscription - cancelSubscription - error saving user with canceled status: ' + userObj.email);
+                                logger.logError('subscription - endPaidSubscription - error saving user with canceled status: ' + userObj.email);
                                 callback(err);
                             } else {
                                 userObj.account.save(function (err) {
                                     if (err) {
-                                        logger.logError('subscription - cancelSubscription - error updating account: ' + userObj.email);
+                                        logger.logError('subscription - endPaidSubscription - error updating account: ' + userObj.email);
                                         errorType = 'db-account-update';
                                     }
                                     callback(err, userObj);
@@ -1225,7 +1236,7 @@ module.exports = {
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error logging into billing system: ' + userObj.email);
+                        logger.logError('subscription - endPaidSubscription - error logging into billing system: ' + userObj.email);
                         errorType = 'freeside-login';
                     }
                     callback(err, userObj, sessionId);
@@ -1235,7 +1246,7 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
+                        logger.logError('subscription - endPaidSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
                     }
                     callback(err, userObj, sessionId);
@@ -1245,20 +1256,28 @@ module.exports = {
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
                     if (err) {
-                        logger.logError('subscription - cancelSubscription - error removing active package: ' + userObj.email);
+                        logger.logError('subscription - endPaidSubscription - error removing active package: ' + userObj.email);
                         errorType = 'freeside-package-remove';
                     }
                     callback(err, userObj);
                 });
             },
-            // send email
+            // send email or sms
             function (userObj, callback) {
-                sendPaidSubscriptionEndedEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - cancelSubscription - error sending canceled email: ' + userObj.email);
-                        logger.logError(err);
-                    }
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                    sendPaidSubscriptionEndedSms(userObj, function(err) {
+                       if(err) {
+                           logger.logError('subscription - endPaidSubscription - error sending canceled sms: ' + userObj.email);
+                       }
+                    });
+                } else {
+                    sendPaidSubscriptionEndedEmail(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endPaidSubscription - error sending canceled email: ' + userObj.email);
+                            logger.logError(err);
+                        }
+                    });
+                }
                 callback(null, userObj);
             }
         ], function (err, userObj) {
@@ -1943,7 +1962,7 @@ function sendConvertToComplimentaryEmail(user, cb) {
 }
 
 function sendCreditCardPaymentFailureEmailSms(user, cb) {
-    if(validation.isUsPhoneNumberInternationalFormat(user.email)) {
+    if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
         var message = sf(config.creditCardPaymentFailureSmsMessage[user.preferences.defaultLanguage]);
         twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
             if (err) {
@@ -2043,6 +2062,21 @@ function sendCancellationEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendCancellationEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendPaidSubscriptionEndedSms(user, cb) {
+    var message = config.subscriptionCanceledSmsMessage[user.preferences.defaultLanguage];
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendPaidSubscriptionEndedSms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendPaidSubscriptionEndedSms - sms sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);

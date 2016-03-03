@@ -166,14 +166,11 @@ module.exports = {
         if (!emailRegex.test(data.email.trim())) {
             return 'EmailInvalid';
         }
-        if (typeof data.emailSubscription === 'undefined' && typeof data.smsSubscription === 'undefined') {
-            return 'InputInvalid';
+        if (typeof data.emailSmsSubscription === 'undefined') {
+            return 'EmailSmsSubscriptionInvalid';
         }
-        if (typeof data.emailSubscription !== 'undefined' && typeof data.emailSubscription !== 'boolean') {
-            return 'EmailSubscriptionInvalid';
-        }
-        if (typeof data.smsSubscription !== 'undefined' && typeof data.smsSubscription !== 'boolean') {
-            return 'SmsSubscriptionInvalid';
+        if (typeof data.emailSmsSubscription !== 'undefined' && typeof data.emailSmsSubscription !== 'boolean') {
+            return 'EmailSmsSubscriptionInvalid';
         }
         return null;
     },
