@@ -77,6 +77,8 @@
 //                if(indexOfBNE >= 0) {
 //                    data.unshift(bNE[0]);
 //                }
+
+                // why assign the response to rootScope.channels and then immediately reassign to rootScope.filteredChannels
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
