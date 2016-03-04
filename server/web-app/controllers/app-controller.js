@@ -56,7 +56,6 @@ module.exports = {
         var contactUs = new ContactUs({
             name: req.body.name,
             email: req.body.email,
-            telephone: req.body.telephone,
             country: req.body.country,
             interest: req.body.interest,
             details: req.body.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;'),
@@ -72,13 +71,7 @@ module.exports = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.contactUsEmailList,
                 subject: config.contactUsEmailSubject,
-                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
-            };
-            var mailOptionsUser = {
-                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                to: contactUs.email,
-                subject: config.contactUsEmailSubject,
-                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
+                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.country, contactUs.interest, contactUs.details)
             };
             email.sendEmail(mailOptionsSupport, function (err) {
                 if (err) {
@@ -88,14 +81,32 @@ module.exports = {
                     logger.logInfo('appController - saveContactUs - contact us email sent to support: ' + mailOptionsSupport.to);
                 }
             });
-            email.sendEmail(mailOptionsUser, function (err) {
-                if (err) {
-                    logger.logError('appController - saveContactUs - error sending contact us email to user: ' + req.body.email);
-                    logger.logError(err);
-                } else {
-                    logger.logInfo('appController - saveContactUs - contact us email sent to user: ' + mailOptionsUser.to);
-                }
-            });
+            if (validation.isUsPhoneNumber(contactUs.email)) {
+                var message = config.contactUsSmsMessage;
+                twilio.sendSms(config.twilioSmsSendMobileNumber, contactUs.email, message, function (err) {
+                    if (err) {
+                        logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + contactUs.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - endComplimentarySubscription - sms sent successfully: ' + contactUs.email);
+                    }
+                });
+            } else {
+                var mailOptionsUser = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: contactUs.email,
+                    subject: config.contactUsEmailSubject,
+                    html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.country, contactUs.interest, contactUs.details)
+                };
+                email.sendEmail(mailOptionsUser, function (err) {
+                    if (err) {
+                        logger.logError('appController - saveContactUs - error sending contact us email to user: ' + req.body.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('appController - saveContactUs - contact us email sent to user: ' + mailOptionsUser.to);
+                    }
+                });
+            }
             return res.status(200).end();
         });
     },

@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    padding: 0px;
+    font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+}
+
 ul, ol {
     margin: 0;
     padding: 0px;

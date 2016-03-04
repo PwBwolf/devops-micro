@@ -8,7 +8,7 @@
 
         function init() {
             if($scope.user.email) {
-                $scope.mv = {email: $scope.user.email, name: $scope.user.firstName + ' ' + $scope.user.lastName, telephone: $scope.user.telephone};
+                $scope.mv = {email: $scope.user.email, name: $scope.user.firstName + ' ' + $scope.user.lastName};
             } else {
                 $scope.mv = {};
             }
@@ -22,6 +22,7 @@
             appSvc.getCountries().success(function (data) {
                 $scope.countries = data;
                 $scope.mv.country = 'United States';
+                $scope.mv.interest = 'Technical Support';
             }).error(function () {
                 loggerSvc.logError($filter('translate')('CONTACT_US_COUNTRY_LOAD_ERROR'));
             });
@@ -49,7 +50,6 @@
             $scope.form.name.$touched = true;
             $scope.form.interest.$touched = true;
             $scope.form.email.$touched = true;
-            $scope.form.telephone.$touched = true;
             $scope.form.details.$touched = true;
             $scope.form.country.$touched = true;
         }
