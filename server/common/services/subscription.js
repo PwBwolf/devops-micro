@@ -628,6 +628,13 @@ module.exports = {
                     case 'payment-declined':
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgradeFailure(userObj, currentValues);
+                        if(!userObj.account.premiumEndDate) {
+                            billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
+                                if (err) {
+                                    logger.logError('subscription - upgradeSubscription - error removing premium package: ' + userObj.email);
+                                }
+                            });
+                        }
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (userObj.status === 'registered') {
                             if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
