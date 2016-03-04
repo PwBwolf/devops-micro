@@ -118,24 +118,20 @@
                             </div>
                         </li>
 
-                        <li>
-                            <div id="favoriteChannels" ng-click="listFavoriteChannels()">
-                                <span translate="PLAYER_MENU_FAVORITE" ></span>
-                            </div>
+
+                        <li class="epg-controls" ng-click="listFavoriteChannels(); allCh=''; recCh='';favCh='my-class'">
+                            <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE" ></span>
                         </li>
 
 
-                        <li>
-                            <div id="recentChannels" ng-click="listRecentChannels()">
-                                <span translate="PLAYER_MENU_RECENT"></span>
-                            </div>
+                        <li class="epg-controls" ng-click="listRecentChannels(); favCh=''; allCh=''; recCh='my-class'">
+                            <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
                         </li>
 
-                        <li>
-                            <div id="allChannels" ng-click="listAllChannels()">
-                                <span translate="PLAYER_MENU_ALL"></span>
-                            </div>
+                        <li class="epg-controls" ng-click="listAllChannels();  favCh=''; recCh=''; allCh='my-class'">
+                            <span class="base-class" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
                         </li>
+
                         <li class="filter-li">
                             <div id="filter" ng-controller='filterPanelSlideCtrl'>
                                 <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">

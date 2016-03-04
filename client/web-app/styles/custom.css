@@ -1,0 +1,66 @@
+/* Variables */
+/* typography */
+/* views */
+.navbar-right {
+  width: 290px; }
+
+.navbar-default .navbar-toggle {
+  border-width: 2px; }
+
+#menuBar input[type="radio"] {
+  display: none; }
+
+#menuBar input[type="radio"] + #epg-controls {
+  color: white; }
+
+#menuBar input[type="radio"]:checked + #epg-controls {
+  text-decoration: underline;
+  font-weight: bolder; }
+
+#menuBar .epg-controls span {
+  top: 7px;
+  color: white; }
+
+.base-class {
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s; }
+
+.base-class.my-class {
+  text-decoration: underline;
+  font-size: 16px; }
+
+@media (max-width: 768px) {
+  .navbar-right {
+    width: 100% !important; }
+  .navbar-header {
+    max-width: 100% !important; }
+  #programInfo {
+    max-width: 300px; }
+  #programDetail {
+    left: -6px;
+    float: none;
+    display: block; }
+  #favorite {
+    float: none;
+    display: block; }
+  #favoriteChannels {
+    float: none;
+    display: block; }
+  #recentChannels {
+    float: none;
+    display: block; }
+  #allChannels {
+    float: none;
+    display: block; }
+  #filter {
+    left: -6px;
+    float: none;
+    display: block; }
+  .collapse.navbar-collapse.in {
+    background: rgba(55, 55, 55, 0.9);
+    z-index: 25;
+    width: 120px;
+    float: right; }
+    .collapse.navbar-collapse.in li {
+      padding-left: 10px !important; }
+    .collapse.navbar-collapse.in .epg-controls {
+      padding-bottom: 12px !important; } }
