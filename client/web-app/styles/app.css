@@ -1032,7 +1032,7 @@ ul.passwordStrength {
 }
 
 .well .btn:nth-child(even) {
-    margin: 0 2%;
+    margin: 0 1%;
 }
 
 .well:not(:last-child) {

@@ -225,10 +225,10 @@ module.exports = {
                 if (user.sendSmsVerification) {
                     sendVerificationSms(userObj, function (err) {
                         if (err) {
-                            logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.telephone);
+                            logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.email);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - newPaidUser - verification sms sent: ' + userObj.telephone);
+                            logger.logInfo('subscription - newPaidUser - verification sms sent: ' + userObj.email);
                         }
                     });
                 }
@@ -381,25 +381,14 @@ module.exports = {
                 },
                 // send verification sms or email
                 function (userObj, accountObj, callback) {
-                    if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
-                        sendVerificationSms(userObj, function (err) {
-                            if (err) {
-                                logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('subscription - newComplimentaryUser - verification sms sent: ' + userObj.telephone);
-                            }
-                        });
-                    } else {
-                        sendVerificationEmail(userObj, function (err) {
-                            if (err) {
-                                logger.logError('subscription - newComplimentaryUser - error sending verification email: ' + userObj.email);
-                                logger.logError(err);
-                            } else {
-                                logger.logInfo('subscription - newComplimentaryUser - verification email sent: ' + userObj.email);
-                            }
-                        });
-                    }
+                    sendVerificationEmailSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newComplimentaryUser - error sending verification email or sms: ' + userObj.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - newComplimentaryUser - verification email or sms sent: ' + userObj.email);
+                        }
+                    });
                     callback(null, userObj, accountObj);
                 },
                 // increment complimentary code account count by one
