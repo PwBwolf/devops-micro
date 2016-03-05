@@ -1973,10 +1973,10 @@ function sendCreditCardPaymentFailureEmailSms(user, cb) {
         var message = sf(config.creditCardPaymentFailureSmsMessage[user.preferences.defaultLanguage]);
         twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
             if (err) {
-                logger.logError('subscription - sendAccountVerifiedEmailSms - error sending sms: ' + user.email);
+                logger.logError('subscription - sendCreditCardPaymentFailureEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
             } else {
-                logger.logInfo('subscription - sendAccountVerifiedEmailSms - sent sms successfully: ' + user.email);
+                logger.logInfo('subscription - sendCreditCardPaymentFailureEmailSms - sent sms successfully: ' + user.email);
             }
             if (cb) {
                 cb(err);

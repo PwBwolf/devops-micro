@@ -22,7 +22,7 @@ User.find({}).populate('account').exec(function (err, users) {
         logger.logError('adminCLI - exportUsers - no users found!');
         process.exit(0);
     } else {
-        console.log('"Email","First Name","Last Name","Status","Type","FreeSide Customer Number","Is Payment Pending","Create Date","Upgrade Date","Cancel Date","Cancel On Date","Valid Till Date","Complimentary Code","Referred By","Merchant","Old Status","Start Date"');
+        console.log('"Email or Mobile","First Name","Last Name","Status","Type","FreeSide Customer Number","Create Date","Upgrade Date","Cancel Date","Cancel On Date","Valid Till Date","Complimentary Code","Referred By","Merchant","Old Status","Start Date"');
         for (var i = 0; i < users.length; i++) {
             if (users[i].account) {
                 console.log(
