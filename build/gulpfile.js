@@ -205,7 +205,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/deployment-scripts/cleanup.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/create-complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-api-client.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);

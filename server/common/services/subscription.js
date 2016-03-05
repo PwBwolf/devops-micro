@@ -379,9 +379,9 @@ module.exports = {
                         }
                     );
                 },
-                // send verification sms
+                // send verification sms or email
                 function (userObj, accountObj, callback) {
-                    if (user.sendSmsVerification) {
+                    if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                         sendVerificationSms(userObj, function (err) {
                             if (err) {
                                 logger.logError('subscription - newComplimentaryUser - error sending verification sms: ' + userObj.telephone);
@@ -390,19 +390,16 @@ module.exports = {
                                 logger.logInfo('subscription - newComplimentaryUser - verification sms sent: ' + userObj.telephone);
                             }
                         });
+                    } else {
+                        sendVerificationEmail(userObj, function (err) {
+                            if (err) {
+                                logger.logError('subscription - newComplimentaryUser - error sending verification email: ' + userObj.email);
+                                logger.logError(err);
+                            } else {
+                                logger.logInfo('subscription - newComplimentaryUser - verification email sent: ' + userObj.email);
+                            }
+                        });
                     }
-                    callback(null, userObj, accountObj);
-                },
-                // send verification email
-                function (userObj, accountObj, callback) {
-                    sendVerificationEmail(userObj, function (err) {
-                        if (err) {
-                            logger.logError('subscription - newComplimentaryUser - error sending verification email: ' + userObj.email);
-                            logger.logError(err);
-                        } else {
-                            logger.logInfo('subscription - newComplimentaryUser - verification email sent: ' + userObj.email);
-                        }
-                    });
                     callback(null, userObj, accountObj);
                 },
                 // increment complimentary code account count by one
@@ -628,7 +625,7 @@ module.exports = {
                     case 'payment-declined':
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgradeFailure(userObj, currentValues);
-                        if(!userObj.account.premiumEndDate) {
+                        if (!userObj.account.premiumEndDate) {
                             billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
                                 if (err) {
                                     logger.logError('subscription - upgradeSubscription - error removing premium package: ' + userObj.email);
@@ -1272,10 +1269,10 @@ module.exports = {
             // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
-                    sendPaidSubscriptionEndedSms(userObj, function(err) {
-                       if(err) {
-                           logger.logError('subscription - endPaidSubscription - error sending canceled sms: ' + userObj.email);
-                       }
+                    sendPaidSubscriptionEndedSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endPaidSubscription - error sending canceled sms: ' + userObj.email);
+                        }
                     });
                 } else {
                     sendPaidSubscriptionEndedEmail(userObj, function (err) {

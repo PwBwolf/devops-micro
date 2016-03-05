@@ -24,7 +24,7 @@
                 $scope.checkIfMobileNumber();
                 $('#password').focus();
             }
-            if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
+            if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'comp';
                 $scope.mv.code = $routeParams.compCode;
                 $scope.mv.referredBy = $rootScope.referredBy;
@@ -39,7 +39,7 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success');
                         } else {
                             $location.path('/sign-up-success-login');
                         }
@@ -61,9 +61,7 @@
             $scope.form.firstName.$touched = true;
             $scope.form.lastName.$touched = true;
             $scope.form.email.$touched = true;
-            $scope.form.telephone.$touched = true;
             $scope.form.password.$touched = true;
-            $scope.form.confirmPassword.$touched = true;
             $scope.form.disclaimer.$dirty = true;
             $scope.formSubmit = true;
         }
@@ -75,7 +73,7 @@
         }
 
         $scope.checkIfMobileNumber = function () {
-            if ($scope.form.telephone.$valid) {
+            if ($scope.form.email.$valid && $scope.isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
                 appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
                     if (result) {
@@ -92,6 +90,11 @@
         $scope.resetMobileNumberStatus = function () {
             $scope.mobileNumberStatus = 'NOT_CHECKED';
         };
+
+        $scope.isUsPhoneNumber = function () {
+            var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            return phoneRegex.test($scope.mv.email);
+        }
 
     }]);
 }(angular.module('app')));
