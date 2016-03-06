@@ -40,28 +40,28 @@ module.exports = {
                 } else {
                     switch (merchant.name) {
                         case 'IDT':
-                            req.body.agentNum = 2;
+                            req.body.agentNumber = 2;
                             break;
                         case 'TRUCONN':
-                            req.body.agentNum = 3;
+                            req.body.agentNumber = 3;
                             break;
                         case 'PERKSPOT':
-                            req.body.agentNum = 4;
+                            req.body.agentNumber = 4;
                             break;
                         case 'NEXTJUMP':
-                            req.body.agentNum = 5;
+                            req.body.agentNumber = 5;
                             break;
                         case 'CJ':
-                            req.body.agentNum = 6;
+                            req.body.agentNumber = 6;
                             break;
                         case 'MGCJK':
-                            req.body.agentNum = 7;
+                            req.body.agentNumber = 7;
                             break;
                         case 'AMAZON':
-                            req.body.agentNum = 8;
+                            req.body.agentNumber = 8;
                             break;
                         case 'UBS':
-                            req.body.agentNum = 9;
+                            req.body.agentNumber = 9;
                             break;
                     }
                     return doSignUp(req, res);

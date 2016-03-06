@@ -56,7 +56,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -176,7 +176,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, accountObj.key, password, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, accountObj.key, password, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newPaidUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -340,7 +340,7 @@ module.exports = {
                 // create user in freeside
                 function (userObj, accountObj, callback) {
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNum ? user.agentNum : '', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';
@@ -521,7 +521,7 @@ module.exports = {
                     newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.account.key, locale,
                     newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '',
                     newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '',
-                    newUser.cardName ? newUser.cardName : '', newUser.agentNum ? newUser.agentNum : '', function (err) {
+                    newUser.cardName ? newUser.cardName : '', function (err) {
                         if (err) {
                             logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                             errorType = 'freeside-user-update';
@@ -750,7 +750,7 @@ module.exports = {
                     // update user in freeside
                     function (userObj, sessionId, callback) {
                         var locale = userObj.preferences.defaultLanguage + '_US';
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', '', function (err) {
+                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
@@ -1536,13 +1536,14 @@ module.exports = {
             // update billing details
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', '', function (err) {
-                    if (err) {
-                        logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
-                        errorType = 'freeside-user-update';
-                    }
-                    callback(err, userObj, sessionId);
-                });
+                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV',
+                    'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', function (err) {
+                        if (err) {
+                            logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
+                            errorType = 'freeside-user-update';
+                        }
+                        callback(err, userObj, sessionId);
+                    });
             }
         ], function (err, userObj) {
             if (err) {
