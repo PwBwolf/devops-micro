@@ -556,7 +556,7 @@ module.exports = {
             // send verification email/sms if registered else upgrade email
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
-                    if (validation.isUsPhoneNumber(userObj.email)) {
+                    if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                         sendVerificationSms(userObj, function (err) {
                             if (err) {
                                 logger.logError('subscription - upgradeSubscription - error sending verification sms: ' + userObj.email);

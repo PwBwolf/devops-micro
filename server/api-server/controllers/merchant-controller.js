@@ -213,7 +213,7 @@ module.exports = {
                 }
                 var emailRegex = config.regex.email;
                 var phoneRegex = config.regex.telephone;
-                if (!req.query.username || (!emailRegex.test(req.query.username) && !phoneRegex.test(req.query.username))) {
+                if (!req.body.username || (!emailRegex.test(req.body.username) && !phoneRegex.test(req.body.username))) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
                 req.body.merchantId = req.query.merchantId;

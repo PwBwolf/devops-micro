@@ -184,7 +184,7 @@ worker.register({
                             } else if (dbUser && dbUser.account && !dbUser.account.firstCardPaymentDate && dbUser.account.firstMerchantPaymentDate) {
                                 var refundLastDate = moment(dbUser.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                                 if (refundLastDate.isAfter(moment.utc())) {
-                                    subscription.endPaidSubscription(params.username.toLowerCase(), function (err) {
+                                    subscription.endPaidSubscription(username, function (err) {
                                         if (err) {
                                             logger.logError('merchantProcessorMain - makeRefund - error in canceling subscription: ' + params.username);
                                             logger.logError(err);
@@ -224,7 +224,8 @@ logger.logInfo('merchantProcessorMain - merchant processor daemon has started');
 
 function makePaymentInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
@@ -264,7 +265,8 @@ function savePayment(params, isSuccess, reason, cb) {
 
 function makeRefundInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
