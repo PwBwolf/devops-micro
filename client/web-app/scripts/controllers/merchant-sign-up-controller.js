@@ -36,7 +36,7 @@
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
                         if (data === 'registered') {
-                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success');
                         } else {
                             $location.path('/sign-up-success-login');
                         }
@@ -46,7 +46,7 @@
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentFailed') {
                             if ($scope.mv.sendSmsVerification) {
-                                $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success-payment-failure');
+                                $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success-payment-failure');
                             } else {
                                 $location.path('/sign-up-success-payment-failure/true');
                             }
@@ -67,7 +67,6 @@
             $scope.form.firstName.$touched = true;
             $scope.form.lastName.$touched = true;
             $scope.form.email.$touched = true;
-            $scope.form.telephone.$touched = true;
             $scope.form.password.$touched = true;
             $scope.form.cardName.$touched = true;
             $scope.form.cardNumber.$touched = true;
@@ -88,9 +87,9 @@
         }
 
         $scope.checkIfMobileNumber = function () {
-            if ($scope.form.telephone.$valid) {
+            if ($scope.form.email.$valid && $scope.isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
-                appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
+                appSvc.verifyMobileNumber($scope.mv.email, function (result) {
                     if (result) {
                         setMobileNumberStatus('MOBILE');
                     } else {

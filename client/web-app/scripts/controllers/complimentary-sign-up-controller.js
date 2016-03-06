@@ -75,7 +75,7 @@
         $scope.checkIfMobileNumber = function () {
             if ($scope.form.email.$valid && $scope.isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
-                appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
+                appSvc.verifyMobileNumber($scope.mv.email, function (result) {
                     if (result) {
                         setMobileNumberStatus('MOBILE');
                     } else {
