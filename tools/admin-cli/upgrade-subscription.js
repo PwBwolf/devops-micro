@@ -43,7 +43,7 @@ var schema = {
                             logger.logError('adminCLI - upgradeSubscription - failed user: ' + username);
                             process.exit(1);
                         } else if (userObj.account.type === 'paid') {
-                            logger.logError('adminCLI - upgradeSubscription - paid user: ' + username);
+                            logger.logError('adminCLI - upgradeSubscription - premium user: ' + username);
                             process.exit(1);
                         } else if (userObj.account.type === 'comp') {
                             logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + username);
