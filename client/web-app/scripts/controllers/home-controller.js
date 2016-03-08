@@ -18,7 +18,7 @@
             var domain = location.hostname;
             var language = webStorage.local.get('language') ? webStorage.local.get('language') : 'en';
             if (key[language][domain]) {
-                $window.location.href = key[language][domain];
+                //$window.location.href = key[language][domain];
             }
         }
     }]);
