@@ -405,7 +405,8 @@ module.exports = {
         });
     },
 
-    takePayment: function (customerNumber, amount, payBy, callback) {
+    makePayment: function (customerNumber, amount, payBy, callback) {
+        return callback(null);
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.insert_payment', [
             'secret', config.freeSideSecretKey,
@@ -415,20 +416,54 @@ module.exports = {
             '_date', Math.round(new Date().getTime() / 1000)
         ], function (err, response) {
             if (err) {
-                logger.logError('billing - takePayment - error in insertint payment 1');
+                logger.logError('billing - makePayment - error in insertint payment 1');
                 logger.logError(err);
                 if (callback) {
                     callback(err);
                 }
             } else {
                 if (response.error) {
-                    logger.logError('billing - takePayment - error in inserting payment 2');
+                    logger.logError('billing - makePayment - error in inserting payment 2');
                     logger.logError(response.error);
                     if (callback) {
                         callback(response.error);
                     }
                 } else {
-                    logger.logInfo('billing - takePayment - response');
+                    logger.logInfo('billing - makePayment - response');
+                    logger.logInfo(response);
+                    if (callback) {
+                        callback(null);
+                    }
+                }
+            }
+        });
+    },
+
+    makeRefund: function (customerNumber, amount, payBy, callback) {
+        return callback(null);
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.insert_refund', [
+            'secret', config.freeSideSecretKey,
+            'custnum', customerNumber,
+            'payby', payBy,
+            'paid', amount,
+            '_date', Math.round(new Date().getTime() / 1000)
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - makePayment - error in insertint payment 1');
+                logger.logError(err);
+                if (callback) {
+                    callback(err);
+                }
+            } else {
+                if (response.error) {
+                    logger.logError('billing - makePayment - error in inserting payment 2');
+                    logger.logError(response.error);
+                    if (callback) {
+                        callback(response.error);
+                    }
+                } else {
+                    logger.logInfo('billing - makePayment - response');
                     logger.logInfo(response);
                     if (callback) {
                         callback(null);

@@ -367,7 +367,6 @@
             SIGN_UP_SUCCESS_BULLET1: '100+ FREE Live International Channels',
             SIGN_UP_SUCCESS_BULLET2: 'More and more channels being added for Premium Members',
             SIGN_UP_SUCCESS_BULLET3: 'Share with family on up to 5 devices',
-            SIGN_UP_SUCCESS_BULLET4: 'Refer a friend to Premium Membership and you each get a FREE month of YipTV!',
             SIGN_UP_SUCCESS_QUESTIONS: 'Questions? Call Customer Care at',
             SIGN_UP_SUCCESS_LOGIN_HEADING: 'Welcome to Premium Membership!',
             SIGN_UP_SUCCESS_LOGIN_SUB_HEADING: 'Let\'s get started!',

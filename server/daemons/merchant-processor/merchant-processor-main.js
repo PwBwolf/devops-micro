@@ -82,24 +82,30 @@ worker.register({
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    savePayment(params, 'success', '', function () {
-                                                        billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
-                                                            if (err) {
-                                                                logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
-                                                                logger.logError(err);
+                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                            savePayment(params, 'failure', 'server-error', function () {
                                                                 callback(err);
-                                                            } else {
-                                                                billing.takePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
-                                                                    if (err) {
-                                                                        logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
-                                                                        logger.logError(err);
+                                                            });
+                                                        } else {
+                                                            billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                                if (err) {
+                                                                    logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
+                                                                    logger.logError(err);
+                                                                    rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                                    savePayment(params, 'failure', 'server-error', function () {
                                                                         callback(err);
-                                                                    } else {
+                                                                    });
+                                                                } else {
+                                                                    savePayment(params, 'success', '', function () {
                                                                         callback(null, 'success');
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
                                                     });
                                                 }
                                             });
@@ -113,24 +119,30 @@ worker.register({
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    savePayment(params, 'success', '', function () {
-                                                        billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
-                                                            if (err) {
-                                                                logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
-                                                                logger.logError(err);
+                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                            savePayment(params, 'failure', 'server-error', function () {
                                                                 callback(err);
-                                                            } else {
-                                                                billing.takePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
-                                                                    if (err) {
-                                                                        logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
-                                                                        logger.logError(err);
+                                                            });
+                                                        } else {
+                                                            billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                                if (err) {
+                                                                    logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
+                                                                    logger.logError(err);
+                                                                    rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                                    savePayment(params, 'failure', 'server-error', function () {
                                                                         callback(err);
-                                                                    } else {
+                                                                    });
+                                                                } else {
+                                                                    savePayment(params, 'success', '', function () {
                                                                         callback(null, 'success');
-                                                                    }
-                                                                })
-                                                            }
-                                                        });
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
                                                     });
                                                 }
                                             });
@@ -192,9 +204,30 @@ worker.register({
                                                 callback(err);
                                             });
                                         } else {
-                                            saveRefund(params, 'success', '', function () {
-                                                callback(null, 'success');
+                                            billing.updateAgent(dbUser.account.freeSideCustomerNumber, 1, function (err) {
+                                                if(err) {
+                                                    logger.logError('merchantProcessorMain - makeRefund - error updating agent back to 1 ' + dbUser.account.freeSideCustomerNumber);
+                                                    logger.logError(err);
+                                                    saveRefund(params, 'failure', 'server-error', function () {
+                                                        callback(err);
+                                                    });
+                                                } else {
+                                                    billing.makeRefund(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makeRefund - error refunding payment ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            saveRefund(params, 'failure', 'server-error', function () {
+                                                                callback(err);
+                                                            });
+                                                        } else {
+                                                            saveRefund(params, 'success', '', function () {
+                                                                callback(null, 'success');
+                                                            });
+                                                        }
+                                                    });
+                                                }
                                             });
+
                                         }
                                     });
                                 } else {
