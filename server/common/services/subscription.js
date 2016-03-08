@@ -1130,13 +1130,13 @@ module.exports = {
             // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
-                    var message = config.complimentaryAccountEndedSmsMessage[user.preferences.defaultLanguage];
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                    var message = config.complimentaryAccountEndedSmsMessage[userObj.preferences.defaultLanguage];
+                    twilio.sendSms(config.twilioSmsSendMobileNumber, userObj.email, message, function (err) {
                         if (err) {
-                            logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + user.email);
+                            logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + userObj.email);
                             logger.logError(err);
                         } else {
-                            logger.logInfo('subscription - endComplimentarySubscription - sms sent successfully: ' + user.email);
+                            logger.logInfo('subscription - endComplimentarySubscription - sms sent successfully: ' + userObj.email);
                         }
                     });
                 } else {
