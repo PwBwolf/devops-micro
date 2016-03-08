@@ -7,7 +7,7 @@ var _ = require('lodash'),
     routes = [
         {path: '/merchant/api/verify-credentials', httpMethod: 'GET', middleware: [MerchantCtrl.verifyCredentials]},
         {path: '/merchant/api/does-username-exist', httpMethod: 'GET', middleware: [MerchantCtrl.doesUsernameExist]},
-        {path: '/merchant/api/make-refund', httpMethod: 'POST', middleware: [MerchantCtrl.makeRefund]},
+        /*{path: '/merchant/api/make-refund', httpMethod: 'POST', middleware: [MerchantCtrl.makeRefund]},*/
         {path: '/merchant/api/make-payment', httpMethod: 'POST', middleware: [MerchantCtrl.makePayment]},
         {path: '/notification/api/verify-credentials', httpMethod: 'GET', middleware: [NotificationCtrl.verifyCredentials]},
         {path: '/notification/api/execute-dunning', httpMethod: 'POST', middleware: [NotificationCtrl.executeDunning]},

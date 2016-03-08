@@ -12,7 +12,7 @@
         $scope.selectedLanguages = [];
         $scope.favoriteChannels = [];
         $scope.recentChannels = [];
-        $scope.favoriteIcon = '../../images/favorite_white.png';
+        $scope.favoriteIcon = '../../images/favorite-white.png';
         currentChannelIndex = {index: undefined, channelId: undefined};
         previousChannelIndex = {index: undefined, channelId: undefined};
         $scope.channelLogo = '../../images/logo.png';
@@ -279,7 +279,7 @@
                     var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannelIndex.channelId});
                     if( index >= 0 ) {
                         $scope.favoriteChannels.splice(index, 1);
-                        $scope.favoriteIcon = '../../images/favorite_white.png';
+                        $scope.favoriteIcon = '../../images/favorite-white.png';
                         var req = {channelId: currentChannelIndex.channelId};
                         mediaSvc.removeFavoriteChannel(
                             req,
@@ -293,7 +293,7 @@
                         );
                     } else {
                         $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
-                        $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                        $scope.favoriteIcon = '../../images/favorite-yellow.png';
                         var req = {channelId: currentChannelIndex.channelId};
                         mediaSvc.addFavoriteChannel(
                             req,
@@ -411,9 +411,9 @@
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 addRecentChannel(currentChannelIndex.channelId);
                 if(_.findIndex($scope.favoriteChannels, {channelId: $rootScope.channels[index].id}) >= 0) {
-                    $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                    $scope.favoriteIcon = '../../images/favorite-yellow.png';
                 } else {
-                    $scope.favoriteIcon = '../../images/favorite_white.png';
+                    $scope.favoriteIcon = '../../images/favorite-white.png';
                 }
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 playStream();
