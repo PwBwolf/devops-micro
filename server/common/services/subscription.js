@@ -242,7 +242,7 @@ module.exports = {
                     });
                 }
                 callback(null, userObj, accountObj);
-            },
+            }
         ], function (err, userObj, accountObj) {
             if (err) {
                 logger.logError(err);
@@ -549,6 +549,21 @@ module.exports = {
                         callback(err, userObj, sessionId);
                     }
                 );
+            },
+            // change agent
+            function (userObj, sessionId, callback) {
+                if (newUser.agentNumber && newUser.agentNumber > 1) {
+                    billing.updateAgent(userObj.account.freeSideCustomerNumber, newUser.agentNumber, function (err) {
+                        if (err) {
+                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
+                            logger.logError(err);
+                        }
+                        callback(err, userObj, sessionId);
+                    });
+                } else {
+                    callback(null, userObj, sessionId);
+                }
+
             },
             // send verification email/sms if registered else upgrade email
             function (userObj, sessionId, callback) {
