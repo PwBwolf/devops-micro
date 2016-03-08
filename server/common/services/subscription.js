@@ -220,9 +220,9 @@ module.exports = {
                     }
                 );
             },
-            // send verification sms
+            // send verification sms or email
             function (userObj, accountObj, callback) {
-                if (user.sendSmsVerification) {
+                if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendVerificationSms(userObj, function (err) {
                         if (err) {
                             logger.logError('subscription - newPaidUser - error sending verification sms: ' + userObj.email);
@@ -231,21 +231,18 @@ module.exports = {
                             logger.logInfo('subscription - newPaidUser - verification sms sent: ' + userObj.email);
                         }
                     });
+                } else {
+                    sendVerificationEmail(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - newPaidUser - error sending verification email: ' + userObj.email);
+                            logger.logError(err);
+                        } else {
+                            logger.logInfo('subscription - newPaidUser - verification email sent: ' + userObj.email);
+                        }
+                    });
                 }
                 callback(null, userObj, accountObj);
             },
-            // send verification email
-            function (userObj, accountObj, callback) {
-                sendVerificationEmail(userObj, function (err) {
-                    if (err) {
-                        logger.logError('subscription - newPaidUser - error sending verification email: ' + userObj.email);
-                        logger.logError(err);
-                    } else {
-                        logger.logInfo('subscription - newPaidUser - verification email sent: ' + userObj.email);
-                    }
-                });
-                callback(null, userObj, accountObj);
-            }
         ], function (err, userObj, accountObj) {
             if (err) {
                 logger.logError(err);

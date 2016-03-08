@@ -20,9 +20,8 @@
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
                 $scope.checkIfMobileNumber();
-                $('#password').focus();
             }
-            if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
+            if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {
@@ -100,6 +99,11 @@
         $scope.resetMobileNumberStatus = function () {
             $scope.mobileNumberStatus = 'NOT_CHECKED';
         };
+
+        $scope.isUsPhoneNumber = function () {
+            var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            return phoneRegex.test($scope.mv.email);
+        }
 
     }]);
 }(angular.module('app')));

@@ -31,7 +31,7 @@ module.exports = {
     imageUrl: 'https://app.int.yiptv.net/images/',
     secretToken: 'yip#tv@int#428',
     ruleEngineRecurrence: '0 0 0 * * *',
-    contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
+    contactUsEmailList: 'devteam@yiptv.com',
     cloudSpongeDomainKey: 'BNDQ7QY3HH38QG45E3P8',
     complimentarySignUpUrl: 'https://app.int.yiptv.net/sign-up/complimentary/',
     refundPeriodInDays: 3,

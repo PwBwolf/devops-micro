@@ -15,13 +15,13 @@
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://www.yiptv.com/sign-up/paid</loc>
+        <loc>https://www.yiptv.com/sign-up/premium</loc>
         <lastmod>2015-06-19T19:12:48+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://www.yiptv.com/sign-up/paid?lang=es</loc>
+        <loc>https://www.yiptv.com/sign-up/premium?lang=es</loc>
         <lastmod>2015-06-19T19:12:48+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>

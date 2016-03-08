@@ -10,7 +10,6 @@
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
                 $scope.checkIfMobileNumber();
-                $('#password').focus();
             }
             if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'free';

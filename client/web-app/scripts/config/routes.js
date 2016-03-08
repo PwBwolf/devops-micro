@@ -16,7 +16,7 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up/paid',
+            .when('/sign-up/premium',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
@@ -62,13 +62,13 @@
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
-                controller: 'signUpSuccessCtrl',
+                controller: 'commonCtrl',
                 access: access.anon
             })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
-                controller: 'signUpSuccessCtrl',
+                controller: 'commonCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-login',
@@ -80,7 +80,7 @@
             .when('/sign-up-success-payment-failure',
             {
                 templateUrl: 'views/sign-up-success-payment-failure.html',
-                controller: 'signUpSuccessCtrl',
+                controller: 'commonCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-payment-failure-login',
