@@ -23,7 +23,7 @@
             INDEX_OK_BUTTON: 'OK',
             INDEX_YES_BUTTON: 'Yes',
             INDEX_NO_BUTTON: 'No',
-            INDEX_COPYRIGHT: 'Copyright ® 2012-2015 YipTV. User of the YipTV service and this web site constitutes acceptance of our terms of use and privacy policy.',
+            INDEX_COPYRIGHT: 'Copyright ® 2012-2016 YipTV. User of the YipTV service and this web site constitutes acceptance of our terms of use and privacy policy.',
             MAIN_ERROR_APP_CONFIG: 'Error fetching application configuration',
             MAIN_SIGN_OUT_CONFIRMATION: 'Are you sure you want to sign out of YipTV?',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Do you want to change your preferred language to ',

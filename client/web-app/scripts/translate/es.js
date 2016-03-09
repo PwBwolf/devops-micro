@@ -178,7 +178,7 @@
             INDEX_NO_BUTTON: 'No',
             INDEX_CONTACT_NUMBER: 'Llámanos gratis: <a href=\'tel:+18559194788\'>855-919-4788</a>',
             INDEX_SOCIAL_MEDIA: '<a target="_blank" href="https://www.facebook.com/yiptvespanol"><img src="images/facebook.png" alt=""/></a><a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>',
-            INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2015 YIPTV. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
+            INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2016 YIPTV. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
             MAIN_ERROR_APP_CONFIG: 'Error frente configuracion de la aplicacion',
             MAIN_SIGN_OUT_CONFIRMATION: 'Seguro que deseas salir de YipTV?',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Desea cambiar su idioma preferido a',
