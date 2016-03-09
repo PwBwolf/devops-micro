@@ -221,7 +221,7 @@
             PLAYER_MENU_ALL: 'All',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your preferred language',
-            PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Send me updates (via text message<sup>*</sup> if mobile number used as username else by email)',
+            PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Please send updates to the phone number<sup>*</sup> or email I signed up with',
             PREFERENCES_SUBMIT_BUTTON: 'Submit',
             PREFERENCES_FETCH_ERROR: 'Unable to fetch your preferences. Please contact customer support at',
             PREFERENCES_SAVE_ERROR: 'Unable to save your preferences. Please contact customer support at',

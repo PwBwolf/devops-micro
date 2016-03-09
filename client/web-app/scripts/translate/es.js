@@ -221,7 +221,7 @@
             PLAYER_MENU_ALL: 'Todos',
             PREFERENCES_PREFERRED_LANGUAGE: 'Elige su idioma preferido',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Elige su idioma preferido',
-            PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Quiero recibir actualizaciones (vía mensaje de texto<sup>*</sup> si el número de móvil utiliza como nombre de usuario demás por correo electrónico)',
+            PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Por favor, enviar actualizaciones al número de teléfono<sup>*</sup> o por correo electrónico firmado con el',
             PREFERENCES_SUBMIT_BUTTON: 'Presentar',
             PREFERENCES_FETCH_ERROR: 'No se pudo obtener sus preferencias. Por favor pongase en contacto con servicio al cliente',
             PREFERENCES_SAVE_ERROR: 'Error al guardar sus preferencias. Por favor pongase en contacto con servicio al cliente',
