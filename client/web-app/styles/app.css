@@ -1729,7 +1729,6 @@ body, html {
     width: auto;
     height: auto;
     position: absolute;
-    cursor: pointer;
     left: 0px;
     bottom: 0px;
     display: block !important;
@@ -1981,7 +1980,10 @@ body, html {
 
 
 #title {
-    height:15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height:17px;
     text-align:left;
     padding-left:10px;
     font-size:14px;
@@ -1990,6 +1992,8 @@ body, html {
 }
 
 #description {
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
     height:25px;
     text-align:left;
     overflow:hidden;

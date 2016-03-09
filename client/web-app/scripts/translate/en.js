@@ -217,6 +217,7 @@
             PLAYER_CHANNELS_FOUND: 'channel(s) found!',
             PLAYER_CATEGORIES: 'Categories',
             PLAYER_CLEAR_ALL: 'Clear All',
+            PLAYER_CLOSE: 'Close',
             PLAYER_GENRE: 'Genre',
             PLAYER_REGION: 'Region',
             PLAYER_ORIGIN: 'Origin',

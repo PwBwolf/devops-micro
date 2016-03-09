@@ -16,6 +16,26 @@
     display:none;
 }
 
+.entire-title {
+    border: 1px solid black;
+    width: 300px;
+    z-index: 35;
+    color: white;
+    background-color: $black;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+.entire-description {
+    color: white;
+    background-color: $black;
+    border: 1px solid black;
+    width: 350px;
+    z-index: 35;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
 #menuBar input[type="radio"] + #epg-controls {
     color: white;
 }
@@ -80,7 +100,7 @@
         max-width: 100% !important;
     }
     #programInfo {
-        max-width: 300px;
+        max-width: 150px;
     }
     #programDetail {
         left: -6px;
@@ -123,13 +143,51 @@
         }
     }
 
+    .entire-title{
+        width: 300px;
+        margin-left: -100px;
+        margin-top: 10px;
+    }
+    .entire-description {
+        width: 300px;
+        margin-left: -100px;
+        margin-top: 10px;
+    }
+
+
 }
+
+@media (max-width: 479px) {
+    #menuBar {
+        #programInfo {
+            width: 80px;
+            .entire-title {
+                width: 200px;
+                margin-left: -100px;
+            }
+            .entire-description {
+                width: 200px;
+                margin-left: -100px;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 410px) {
+    #menuBar {
+        #programInfo {
+            display: none !important;
+        }
+    }
+}
+
 #menuBar {
     .navbar-header{
         max-width: 60%;
     }
     #programInfo {
-        max-width: 300px;
+        z-index: 10;
         display:table-cell;
         display:inline-block;
         margin-left:1px;
@@ -164,4 +222,10 @@
 
 .panel {
     margin-top: 2px;
+}
+
+#categories {
+    input {
+        cursor: pointer
+    }
 }

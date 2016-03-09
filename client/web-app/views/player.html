@@ -53,9 +53,11 @@
                         <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
                     </div>
 
-                    <div id="programInfo">
-                        <div id="title" >{{programTitle}}</div>
-                        <div id="description" >{{programDescription | limitTo: 50}}</div>
+                    <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
+                        <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
+                        <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
+                        <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
+                        <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
                     </div>
                 </div>
 
@@ -98,7 +100,7 @@
                         </li>
                         <li ng-hide="tvUrl === undefined">
                             <div id="favorite">
-                                <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()" style="cursor: pointer">
+                                <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()">
                             </div>
                         </li>
 
@@ -118,14 +120,14 @@
 
                         <li class="filter-li">
                             <div id="filter" ng-controller='filterPanelSlideCtrl'>
-                                <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
+                                <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()">
 
                                 <div pageslide ps-open="checked" ps-size="360px">
                                     <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                         <div class="row">
                                             <div>
                                                 <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearAll()" translate="PLAYER_CLEAR_ALL" ></a>
-                                                <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" >Close</a>
+                                                <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
                                             </div>
                                             <div class="channel-filters">
                                                 <div class="channel-filter-categories" >
@@ -287,6 +289,12 @@
                 </div>
 
             </div>
+        </div>
+        <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
+            <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
+            <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
+            <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
+            <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
         </div>
 
     </div>
