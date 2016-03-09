@@ -51,5 +51,5 @@ module.exports = {
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
-    cmsApiUrl: 'http://172.16.10.108'
+    cmsApiUrl: 'http://172.16.10.109'
 };
