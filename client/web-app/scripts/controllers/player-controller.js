@@ -316,12 +316,6 @@
             });
             $rootScope.$broadcast('ChannelFilterEvent');
 
-            //favoriteChannels.style.fontWeight = 'bold';
-            //favoriteChannels.style.color = '#337ab7';
-            //recentChannels.style.fontWeight = 'normal';
-            //recentChannels.style.color = 'white';
-            //allChannels.style.fontWeight = 'normal';
-            //allChannels.style.color = 'white';
         };
 
         $scope.listRecentChannels = function () {
@@ -330,12 +324,6 @@
             });
             $rootScope.$broadcast('ChannelFilterEvent');
 
-            //favoriteChannels.style.fontWeight = 'normal';
-            //favoriteChannels.style.color = 'white';
-            //recentChannels.style.fontWeight = 'bold';
-            //recentChannels.style.color = '#337ab7';
-            //allChannels.style.fontWeight = 'normal';
-            //allChannels.style.color = 'white';
         };
 
         $scope.listAllChannels = function () {
@@ -343,12 +331,6 @@
 
             $rootScope.$broadcast('ChannelFilterEvent');
 
-            //favoriteChannels.style.fontWeight = 'normal';
-            //favoriteChannels.style.color = 'white';
-            //recentChannels.style.fontWeight = 'normal';
-            //recentChannels.style.color = 'white';
-            //allChannels.style.fontWeight = 'bold';
-            //allChannels.style.color = '#337ab7';
         };
 
         $scope.programDetail = function () {
@@ -397,13 +379,13 @@
 
         $scope.playChannel = function (index, airing) {
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-                console.log($scope.tvUrl);
                 $scope.tvUrl = channelUrl.routes[0];
                 $scope.mainUrl = channelUrl.routes[0];
-
+                $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.airing = airing;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
+                console.log(programInfo)
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
                 previousChannelIndex.index = currentChannelIndex.index;
@@ -692,14 +674,12 @@
 
         $scope.toggleProgramDetail = function(){
             var width = $(window).width();
-
-            programDetailSlider.style.marginLeft = (width - 150) / 2 + 'px';
-
             $scope.checked = !$scope.checked;
             if($scope.checked) {
                 $scope.program = $rootScope.program;
             }
 
         }
+
     }]);
 }(angular.module('app')));

@@ -1,6 +1,10 @@
 /* Variables */
 /* typography */
 /* views */
+.animate-hide {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s; }
+
 .navbar-right {
   width: 290px; }
 
@@ -18,15 +22,37 @@
   font-weight: bolder; }
 
 #menuBar .epg-controls span {
-  top: 7px;
+  cursor: pointer;
+  top: 10px;
   color: white; }
+
+@media (max-width: 320px) {
+  #currentChannel {
+    width: 155px; } }
 
 .base-class {
   transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s; }
 
+.base-classU {
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+  text-decoration: underline; }
+
+.base-classU.high-u {
+  font-size: 16px; }
+
+.base-classU.no-u {
+  text-decoration: none; }
+
 .base-class.my-class {
   text-decoration: underline;
   font-size: 16px; }
+
+.epg-nav.info {
+  height: 50px; }
+
+.newdescription {
+  height: 100px;
+  width: 100%; }
 
 @media (max-width: 768px) {
   .navbar-right {
@@ -64,3 +90,33 @@
       padding-left: 10px !important; }
     .collapse.navbar-collapse.in .epg-controls {
       padding-bottom: 12px !important; } }
+
+#menuBar .navbar-header {
+  max-width: 60%; }
+
+#menuBar #programInfo {
+  max-width: 300px;
+  display: table-cell;
+  display: inline-block;
+  margin-left: 1px;
+  background: transparent;
+  float: left; }
+
+#programDetailHolder {
+  float: right;
+  margin-right: 40px; }
+
+@media (max-width: 1024px) {
+  #programInfo {
+    width: 200px; }
+  #programDetailHolder {
+    margin-right: 10px; } }
+
+.category-header {
+  height: 22px;
+  padding-top: 6px;
+  font-size: 12px;
+  text-align: left; }
+
+.panel {
+  margin-top: 2px; }

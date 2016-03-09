@@ -1,4 +1,7 @@
-
+.animate-hide {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
 .navbar-right {
     width: 290px;
 }
@@ -23,18 +26,50 @@
 }
 
 #menuBar .epg-controls span {
-    top: 7px;
+    cursor: pointer;
+    top: 10px;
     color: white;
 }
+@media (max-width: 320px) {
+    #currentChannel {
+        width: 155px;
+    }
 
+}
 .base-class {
+     transition: $transitionTime1;
+ }
+
+.base-classU {
     transition: $transitionTime1;
+    text-decoration: underline;
+}
+
+.base-classU.high-u {
+    font-size: 16px;
+}
+
+.base-classU.no-u {
+    text-decoration: none;
 }
 
 .base-class.my-class {
     text-decoration: underline;
     font-size: 16px;
 
+}
+
+.epg-nav {
+
+}
+
+.epg-nav.info {
+    height: 50px;
+}
+
+.newdescription {
+    height: 100px;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -88,4 +123,45 @@
         }
     }
 
+}
+#menuBar {
+    .navbar-header{
+        max-width: 60%;
+    }
+    #programInfo {
+        max-width: 300px;
+        display:table-cell;
+        display:inline-block;
+        margin-left:1px;
+        background: transparent;
+        float:left;
+    }
+}
+
+
+
+#programDetailHolder {
+    float: right;
+    margin-right: 40px;
+}
+
+@media (max-width: 1024px) {
+    #programInfo {
+        width: 200px;
+    }
+    #programDetailHolder {
+        margin-right: 10px;
+    }
+}
+
+//filter customization
+.category-header {
+    height: 22px;
+    padding-top: 6px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.panel {
+    margin-top: 2px;
 }
