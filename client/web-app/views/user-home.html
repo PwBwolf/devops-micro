@@ -1,26 +1,5 @@
 <div access-level="accessLevels.user">
     <header id="desktopUserHeader" class="hidden-xs">
-<!--         <div id="headerBrand"> -->
-<!--             <span><a href="/"><img src="images/logo.png" alt=""/></a></span> -->
-
-<!--             <div class="right-menu"> -->
-<!--                 <div class="menu-button"> -->
-<!--                     <a href="#" ng-click="changeLanguage()" translate="USER_HOME_OTHER_LANGUAGE" class="ng-scope"></a></div> -->
-<!--                 <div class="menu-button"> -->
-<!--                     <a href="#" ng-click="signOut()" access-level="accessLevels.user" translate="USER_HOME_SIGN_OUT"></a> -->
-<!--                 </div> -->
-<!--                 <div class="event-data"><span><marquee ng-bind="app.eventData[language]"></marquee></span></div> -->
-
-<!--             </div> -->
-<!--             <div class="menu-header"> -->
-<!--                 <div class="menu-sub-header position-div"> -->
-<!--                     <span class="menu-user-name" ng-bind="user.firstName"></span> -->
-
-<!--                     <div class="header-time position-div" current-time></div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-
         <nav id="navBar">
             <div class="menu">
                 <div id="headerButtons" class="btn-group" data-toggle="buttons">
@@ -47,27 +26,6 @@
                             </div>
                         </div>
                     </div>
-                    
-<!--                     <div class="collapse" id="accountDropDown" style="width:300px; height:50px;display:inline-block;text-align: center; font-size:18px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer"> -->
-<!--                         <div class="well" data-toggle="buttons"> -->
-<!--                             <div style="width:300px; height:50px;display:inline-block;text-align: center; font-size:18px;display:table-cell;line-height:50px;text-align: center;float:right;color:white;background:#6833ff;cursor:pointer" ng-show="user.type === 'free'" ng-click="showAccountDropdown('upgrade-subscription')" id="upgradeSubscriptionButton"  data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#upgradeSubscriptionDropDown" aria-expanded="false" aria-controls="upgradeSubscriptionDropDown" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></div> -->
-<!--                         </div> -->
-<!--                         <div id="accountButtonDropDowns"> -->
-<!--                             <div class="panel"> -->
-<!--                                 <div id="upgradeSubscriptionDropDown" class="collapse"> -->
-<!--                                     <button class="collapse-hide" ng-click="hideDropdown('upgradeSubscriptionDropDown')">&#10006;</button> -->
-<!--                                     <div class="well" id="upgradeSubscriptionContent" ng-include="accountDropdownContent"></div> -->
-<!--                                 </div> -->
-<!--                                 <div id="changeCreditCardDropDown" class="collapse"> -->
-<!--                                     <button class="collapse-hide" ng-click="hideDropdown('changeCreditCardDropDown')">&#10006;</button> -->
-<!--                                     <div class="well" id="changeCreditCardContent" ng-include="accountDropdownContent"></div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                     </div> -->
-                    
-                    
-                    
                 </div>
                 <div id="dropDowns">
                     <div class="panel" style="background:transparent">
@@ -117,27 +75,6 @@
                                 </div>
                             </div>
                         </div>
-<!--                         <div class="collapse" id="accountDropDown"> -->
-<!--                             <div class="well" data-toggle="buttons"> -->
-<!--                                 <button class="collapse-hide" ng-click="hideDropdown('accountDropDown')">&#10006;</button> -->
-<!--                                 <div ng-show="user.cancelOn" class="cancel-on"><span translate="USER_HOME_CANCEL_ON"></span> ({{user.cancelOn | date : 'M/d/yyyy'}}).</div> -->
-<!--                                 <button ng-show="user.type === 'free'" ng-click="showAccountDropdown('upgrade-subscription')" id="upgradeSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#upgradeSubscriptionDropDown" aria-expanded="false" aria-controls="upgradeSubscriptionDropDown" translate="USER_HOME_UPGRADE_SUBSCRIPTION"></button> -->
-<!--                                 <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="cancelSubscription()" ng-disabled="saving" id="cancelSubscriptionButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" aria-expanded="false" translate="USER_HOME_CANCEL_SUBSCRIPTION"></button> -->
-<!--                                 <button ng-show="user.type === 'paid' && !user.cancelOn" ng-click="showAccountDropdown('change-credit-card')" id="changeCreditCardButton" class="btn btn-default" data-parent="#accountButtonDropDowns" data-toggle="collapse" data-target="#changeCreditCardDropDown" aria-expanded="false" aria-controls="changeCreditCardDropDown" translate="USER_HOME_CHANGE_CREDIT_CARD"></button> -->
-<!--                             </div> -->
-<!--                             <div id="accountButtonDropDowns"> -->
-<!--                                 <div class="panel"> -->
-<!--                                     <div id="upgradeSubscriptionDropDown" class="collapse"> -->
-<!--                                         <button class="collapse-hide" ng-click="hideDropdown('upgradeSubscriptionDropDown')">&#10006;</button> -->
-<!--                                         <div class="well" id="upgradeSubscriptionContent" ng-include="accountDropdownContent"></div> -->
-<!--                                     </div> -->
-<!--                                     <div id="changeCreditCardDropDown" class="collapse"> -->
-<!--                                         <button class="collapse-hide" ng-click="hideDropdown('changeCreditCardDropDown')">&#10006;</button> -->
-<!--                                         <div class="well" id="changeCreditCardContent" ng-include="accountDropdownContent"></div> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </div> -->
                     </div>
                 </div>
             </div>
