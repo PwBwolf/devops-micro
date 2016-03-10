@@ -237,6 +237,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/migration-scripts/set4/create-email-sms-subscription-field.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set4/remove-unused-fields.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set4/remove-visitor-collection.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set4/delete-failed-users.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {
         commitAndTag(version).then(function () {
