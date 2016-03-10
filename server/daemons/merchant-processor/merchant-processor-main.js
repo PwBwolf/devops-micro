@@ -3,7 +3,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var monq = require('monq'),
-    xmlrpc = require('xmlrpc'),
     moment = require('moment'),
     math = require('mathjs'),
     mongoose = require('mongoose'),
@@ -262,7 +261,7 @@ function makePaymentInputValidation(params, cb) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
-    } else if (params.amount < 14.99) {
+    } else if (math.mod(params.amount, 14.99) !== 0) {
         cb('invalid-amount');
     } else if (!params.submitTime || !moment(params.submitTime).isValid()) {
         cb('invalid-submit-time');
