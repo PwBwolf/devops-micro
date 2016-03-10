@@ -124,7 +124,8 @@ module.exports = {
                 switch (errorType) {
                     case 'freeside-package-insert':
                     case 'freeside-user-insert':
-                        setDbUserFailed(userObj);
+                        removeDbAccount(accountObj);
+                        removeDbUser(userObj);
                         break;
                     case 'db-user-update':
                         removeDbAccount(accountObj);
@@ -260,7 +261,8 @@ module.exports = {
                         break;
                     case 'freeside-package-insert':
                     case 'freeside-user-insert':
-                        setDbUserFailed(userObj);
+                        removeDbAccount(accountObj);
+                        removeDbUser(userObj);
                         break;
                     case 'db-user-update':
                         removeDbAccount(accountObj);
@@ -405,7 +407,8 @@ module.exports = {
                     switch (errorType) {
                         case 'freeside-package-insert':
                         case 'freeside-user-insert':
-                            setDbUserFailed(userObj);
+                            removeDbAccount(accountObj);
+                            removeDbUser(userObj);
                             break;
                         case 'db-user-update':
                             removeDbAccount(accountObj);
@@ -1629,15 +1632,6 @@ function createAccount(user, userObj, type, cb) {
     accountObj.save(function (err) {
         if (cb) {
             cb(err, accountObj);
-        }
-    });
-}
-
-function setDbUserFailed(user, cb) {
-    user.status = 'failed';
-    user.save(function (err) {
-        if (cb) {
-            cb(err);
         }
     });
 }
