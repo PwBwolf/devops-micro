@@ -406,7 +406,6 @@ module.exports = {
     },
 
     makePayment: function (customerNumber, amount, payBy, callback) {
-        return callback(null);
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.insert_payment', [
             'secret', config.freeSideSecretKey,
@@ -440,7 +439,6 @@ module.exports = {
     },
 
     makeRefund: function (customerNumber, amount, payBy, callback) {
-        return callback(null);
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.insert_refund', [
             'secret', config.freeSideSecretKey,
