@@ -38,21 +38,6 @@
         $scope.times = timeSlots;
 
 
-        //CODE FOR PICTURE AND PICTURE DO NOT DELETE
-        //$scope.playPip = function () {
-        //    $scope.pipUrl = $scope.mainUrl;
-        //};
-        //
-        //$scope.switchTv = function() {
-        //    var pip = $scope.pipUrl,
-        //        tv =  $scope.mainUrl,
-        //        tmp;
-        //    tmp = pip;
-        //    $scope.pipUrl = tv;
-        //    $scope.mainUrl = tmp;
-        //};
-        //CODE FOR PICTURE AND PICTURE DO NOT DELETE
-
         function activate() {
             $scope.channelList = $window.document.getElementById('channelMenuHolder');
             $scope.player = $window.document.getElementById('player');
@@ -61,22 +46,6 @@
             $scope.closeVisible = false;
 
             mediaSvc.getUserChannels(function (data) {
-//                var bNE, bNS;
-//                var indexOfBNE = _.findIndex(data, {title: "BEIN Sports English"});
-//                if(indexOfBNE >= 0) {
-//                    bNE = data.splice(indexOfBNE, 1);
-//                }
-//                var indexOfBNS = _.findIndex(data, {title: "BEIN Sports Español"});
-//                if(indexOfBNS >= 0) {
-//                    bNS = data.splice(indexOfBNS, 1);
-//                }
-//                data = _.sortBy(data, "title");
-//                if(indexOfBNS >= 0) {
-//                    data.unshift(bNS[0]);
-//                }
-//                if(indexOfBNE >= 0) {
-//                    data.unshift(bNE[0]);
-//                }
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
@@ -104,7 +73,6 @@
             mediaSvc.getFavoriteChannels(
                 function (data) {
                     $scope.favoriteChannels = data;
-                    console.log('playerCtrl - favorite channels: ' + data.length);
                 },
                 function (error) {
                     console.log(error);
@@ -284,11 +252,8 @@
                         mediaSvc.removeFavoriteChannel(
                             req,
                             function (data) {
-                                console.log('playerCtrl - remove favorite channel succeed:' + currentChannelIndex.channelId);
                             },
                             function (error) {
-                                console.log('playerCtrl - remove favorite channel failed:' + currentChannelIndex.channelId);
-                                console.log(error);
                             }
                         );
                     } else {
@@ -298,11 +263,8 @@
                         mediaSvc.addFavoriteChannel(
                             req,
                             function (data) {
-                                console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
                             },
                             function (error) {
-                                console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
-                                console.log(error);
                             }
                         );
                     }
@@ -397,10 +359,8 @@
 
         $scope.playChannel = function (index, airing) {
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-                console.log($scope.tvUrl);
                 $scope.tvUrl = channelUrl.routes[0];
                 $scope.mainUrl = channelUrl.routes[0];
-
                 $scope.airing = airing;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);

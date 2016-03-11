@@ -16,13 +16,13 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up/premium',
+            .when('/sign-up/premium/:merchant?',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up/free',
+            .when('/sign-up/free/:merchant?',
             {
                 templateUrl: 'views/free-sign-up.html',
                 controller: 'freeSignUpCtrl',
@@ -40,21 +40,6 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            /*
-            .when('/sign-up/:source',
-            {
-                templateUrl: function (params) {
-                    var partners = ['truconn'];
-                    if (partners.indexOf(params.source) > -1) {
-                        return 'views/merchant-sign-up.html';
-                    } else {
-                        return 'views/not-found.html';
-                    }
-                },
-                controller: 'merchantSignUpCtrl',
-                access: access.anon
-            })
-            */
             .when('/sign-up-verification/:verificationEmail/:redirectRoute',
             {
                 templateUrl: 'views/sign-up-verification.html',

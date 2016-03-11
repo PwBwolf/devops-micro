@@ -1,9 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
+    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams) {
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
+        if($routeParams.merchant) {
+            var merchants = ['truconn', 'cj'];
+            $scope.logo  = {truconn: true, cj: false};
+            if(merchants.indexOf($routeParams.merchant.toLowerCase()) > -1) {
+                $scope.mv.merchant = $routeParams.merchant.toLowerCase();
+            } else {
+                $location.path('/not-found');
+            }
+        }
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 
