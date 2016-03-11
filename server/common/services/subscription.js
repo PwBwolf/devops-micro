@@ -2016,7 +2016,7 @@ function sendAccountVerifiedEmailSms(user, cb) {
             from: config.email.fromName + ' <' + config.email.fromEmail + '>',
             to: user.email,
             subject: config.accountVerifiedEmailSubject[user.preferences.defaultLanguage],
-            html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName)
+            html: sf(config.accountVerifiedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, config.url, config.wordPressUrl)
         };
         email.sendEmail(mailOptions, function (err) {
             if (err) {
