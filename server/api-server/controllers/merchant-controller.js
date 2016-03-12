@@ -255,8 +255,8 @@ function validateCredentials(merchantId, apiKey, cb) {
                     cb(err);
                 } else {
                     var result = client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT';
-                    var client = result ? client.name : '';
-                    cb(null, result, client);
+                    var output = result ? client.name : '';
+                    cb(null, result, output);
                 }
             });
         }

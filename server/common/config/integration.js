@@ -45,10 +45,10 @@ module.exports = {
     freeSideSecretKey: 'yip-freeside-dev',
     freeSideFreePremiumUserPackageParts: [17, 18],
     freeSideFreeUserPackageParts: [17],
-    freeSidePaidUserPackageParts: [17, 18, 16],
+    freeSidePaidUserPackageParts: [17, 18, 19],
     freeSideComplimentaryUserPackageParts: [15],
     freeSideFreePackagePart: 17,
-    freeSidePaidBasicPackagePart: 16,
+    freeSidePaidBasicPackagePart: 19,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
     cmsApiUrl: 'http://172.16.10.108'
