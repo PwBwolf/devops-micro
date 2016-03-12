@@ -34,7 +34,7 @@ worker.register({
                         callback(new Error(err));
                     });
                 } else {
-                    var username = validation.getUsername(params.username);
+                    var username = validation.getDbUsernameFromFreeSideUsername(params.username);
                     User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('notificationProcessorMain - executeDunning - error fetching user: ' + username);
@@ -114,7 +114,7 @@ worker.register({
                     });
                 } else {
                     params.currency = 'USD';
-                    var username = validation.getUsername(params.username);
+                    var username = validation.getDbUsernameFromFreeSideUsername(params.username);
                     User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('notificationProcessorMain - paymentReceived - error fetching user: ' + username);
@@ -200,7 +200,7 @@ function paymentReceivedInputValidation(params, cb) {
 function saveDunning(params, status, reason, cb) {
     var processTime = (new Date()).toUTCString();
     var log = new Dunning();
-    log.username = params.username.toLowerCase();
+    log.username = validation.getDbUsernameFromFreeSideUsername(params.username);
     log.days = (!params.days || typeof params.days !== 'number') ? 0 : params.days;
     log.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
     log.status = status;
@@ -221,7 +221,7 @@ function saveDunning(params, status, reason, cb) {
 function saveBillingPayment(params, status, reason, cb) {
     var processTime = (new Date()).toUTCString();
     var log = new BillingPayment();
-    log.username = params.username.toLowerCase();
+    log.username = validation.getDbUsernameFromFreeSideUsername(params.username);
     log.amount = (!params.amount || typeof params.amount !== 'number') ? 0 : params.amount;
     log.currency = params.currency;
     log.paymentTime = (!params.paymentTime || !moment(params.paymentTime).isValid()) ? '0' : params.paymentTime;

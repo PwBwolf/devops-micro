@@ -76,10 +76,7 @@ module.exports = {
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
-                    var refundLastDate, billingDate;
-                    if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate && user.account.type === 'paid') {
-                        refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
-                    }
+                    var billingDate;
                     if (user && user.account.type === 'paid' && (user.status === 'registered' || user.status === 'active')) {
                         billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
@@ -99,7 +96,6 @@ module.exports = {
                                         return res.status(200).send({
                                             error: '',
                                             result: user !== null,
-                                            refundLastDate: refundLastDate,
                                             billingDate: billingDate
                                         });
                                     }
@@ -110,7 +106,6 @@ module.exports = {
                         return res.status(200).send({
                             error: '',
                             result: user !== null,
-                            refundLastDate: refundLastDate,
                             billingDate: billingDate
                         });
                     }

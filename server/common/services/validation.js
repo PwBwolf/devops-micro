@@ -201,7 +201,9 @@ module.exports = {
 
     isUsPhoneNumberInternationalFormat: isUsPhoneNumberInternationalFormat,
 
-    getUsername: getUsername
+    getUsername: getUsername,
+
+    getDbUsernameFromFreeSideUsername: getDbUsernameFromFreeSideUsername
 };
 
 function isPasswordComplex(password) {
@@ -289,4 +291,16 @@ function getUsername(value) {
         value = '1' + value.replace(/[\. -]+/g, '');
     }
     return value.trim().toLowerCase();
+}
+
+function getDbUsernameFromFreeSideUsername(username) {
+    if (endsWith(username, 'yiptv.ws') || endsWith(username, 'yiptv.us')) {
+        return username.split('_')[0];
+    } else {
+        return username.toLowerCase();
+    }
+}
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
