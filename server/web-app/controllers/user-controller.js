@@ -478,6 +478,25 @@ module.exports = {
         });
     },
 
+    getCustomerNumberAndType: function (req, res) {
+        var email = validation.getUsername(req.query.email);
+        User.findOne({email: email}).populate('account').exec(function (err, user) {
+            if (err) {
+                logger.logError('userController - getCustomerNumber - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError(err);
+                return res.send(false);
+            }
+            if (user && user.account && user.account.type === 'free') {
+                return res.send(user._id + '_free_' + user.createdAt.getTime() + '_0');
+            } else if (user && user.account && user.account.type === 'paid') {
+                var upgradeDate = user.upgradeDate ? user.upgradeDate.getTime() : '0'
+                return res.send(user._id + '_paid_' + user.createdAt.getTime() + '_' + upgradeDate);
+            } else {
+                return res.send('error');
+            }
+        });
+    },
+
     resendVerification: function (req, res) {
         var email = validation.getUsername(req.body.email);
         User.findOne({email: email}, function (err, user) {
