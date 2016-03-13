@@ -49,25 +49,25 @@
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
-                controller: 'commonCtrl',
+                controller: 'freeSignUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success',
             {
                 templateUrl: 'views/sign-up-success.html',
-                controller: 'commonCtrl',
+                controller: 'signUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-login',
             {
                 templateUrl: 'views/sign-up-success-login.html',
-                controller: 'commonCtrl',
+                controller: 'signUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-payment-failure',
             {
                 templateUrl: 'views/sign-up-success-payment-failure.html',
-                controller: 'commonCtrl',
+                controller: 'freeSignUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-payment-failure-login',

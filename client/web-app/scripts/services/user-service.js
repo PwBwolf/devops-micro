@@ -105,6 +105,14 @@
                 $http.post('/api/verify-user', {code: code}).success(success).error(error);
             },
 
+            getCustomerNumberAndType: function (email, success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/api/get-customer-number-and-type',
+                    params: {email: email.toLowerCase().trim()}
+                }).success(success).error(error);
+            },
+
             forgotPassword: function (email, success, error) {
                 $http.post('/api/forgot-password', {email: email.toLowerCase()}).success(success).error(error);
             },

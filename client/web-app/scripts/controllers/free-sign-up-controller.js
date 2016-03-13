@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams) {
+    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', 'webStorage', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams, webStorage) {
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         if($routeParams.merchant) {
@@ -32,6 +32,8 @@
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
+                        webStorage.session.add('signUpUsername', $scope.mv.email);
+                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
                         $location.path('/sign-up-verification/' + $scope.mv.email + '/free-sign-up-success');
                     },
                     function (error) {
