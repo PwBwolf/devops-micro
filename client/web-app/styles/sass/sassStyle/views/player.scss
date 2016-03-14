@@ -16,26 +16,6 @@
     display:none;
 }
 
-.entire-title {
-    border: 1px solid black;
-    width: 300px;
-    z-index: 35;
-    color: white;
-    background-color: $black;
-    border-radius: 4px;
-    border: 1px solid black;
-}
-
-.entire-description {
-    color: white;
-    background-color: $black;
-    border: 1px solid black;
-    width: 350px;
-    z-index: 35;
-    border-radius: 4px;
-    border: 1px solid black;
-}
-
 #menuBar input[type="radio"] + #epg-controls {
     color: white;
 }
@@ -45,17 +25,51 @@
     font-weight: bolder;
 }
 
-#menuBar .epg-controls span {
-    cursor: pointer;
-    top: 10px;
-    color: white;
-}
-@media (max-width: 320px) {
-    #currentChannel {
-        width: 155px;
+#menuBar {
+    .navbar-header{
+        max-width: 60%;
     }
-
+    #programInfo {
+        z-index: 10;
+        display:table-cell;
+        display:inline-block;
+        margin-left:1px;
+        background: transparent;
+        float:left;
+    }
+    .epg-controls span {
+        cursor: pointer;
+        top: 10px;
+        color: white;
+    }
+    #currentChannel {
+        img {
+            height: 40px;
+        }
+        background-color: rgba(255,255,255,0.85);
+        width: 70px;
+    }
+    .entire-description {
+        margin-left: 10px;
+        background-color: $grey;
+        border: 1px solid black;
+        width: 350px;
+        z-index: 35;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
+    .entire-title {
+        margin-left: 10px;
+        border: 1px solid black;
+        width: 300px;
+        z-index: 35;
+        background-color: $grey;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
 }
+
+
 .base-class {
      transition: $transitionTime1;
  }
@@ -145,12 +159,10 @@
 
     .entire-title{
         width: 300px;
-        margin-left: -100px;
         margin-top: 10px;
     }
     .entire-description {
         width: 300px;
-        margin-left: -100px;
         margin-top: 10px;
     }
 
@@ -163,11 +175,11 @@
             width: 80px;
             .entire-title {
                 width: 200px;
-                margin-left: -100px;
+
             }
             .entire-description {
                 width: 200px;
-                margin-left: -100px;
+
             }
         }
     }
@@ -182,18 +194,16 @@
     }
 }
 
+@media (max-width: 320px) {
+    #currentChannel {
+        width: 155px;
+    }
+
+}
+
 #menuBar {
-    .navbar-header{
-        max-width: 60%;
-    }
-    #programInfo {
-        z-index: 10;
-        display:table-cell;
-        display:inline-block;
-        margin-left:1px;
-        background: transparent;
-        float:left;
-    }
+
+
 }
 
 

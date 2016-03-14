@@ -1,5 +1,6 @@
 <div ng-controller="playerCtrl">
     <div id="playerTop" class="player-top">
+
         <div class="paid-tv"  ng-if="user.type != 'free'">
             <div class="main-player position-div">
                 <div id="yiptv-player"></div>
@@ -13,7 +14,7 @@
             <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
                 <div access-level="accessLevels.user">
                     <div class="ad-free">
-                        <img src="../images/upgrade_360_90.png" width="345px" hight="86px" >
+                        <img src="../images/upgrade_360_90.png" width="345px">
                     </div>
                 </div>
                 <div class="notification" >
@@ -44,10 +45,11 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="pre-channel">
-                        <img src="../images/arrow-left.png" width="30px" hight="30px" ng-click="previousChannel()" style="cursor: pointer">
+                        <img src="../images/arrow-left.png" width="30px" ng-click="previousChannel()" style="cursor: pointer">
                     </div>
+
                     <div id="currentChannel" >
-                        <img ng-src="{{channelLogo}}" height="35px" width="auto" >
+                        <img ng-src="{{channelLogo}}">
                     </div>
                     <div class="next-channel">
                         <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
@@ -55,8 +57,8 @@
 
                     <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
                         <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
-                        <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
                         <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
+                        <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
                         <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
                     </div>
                 </div>
@@ -289,12 +291,6 @@
                 </div>
 
             </div>
-        </div>
-        <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
-            <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
-            <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
-            <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
-            <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
         </div>
 
     </div>
