@@ -112,13 +112,16 @@
             );
         }
 
-        $scope.promoSelected = function ($index) {
-            $scope.selectedPromo = $index;
-            if ($index > 4) {
-                $('#playerBottom').animate({scrollLeft: '+=500'}, 1000);
-            }
-        };
 
+        //Need to be animated with ng-class animation
+        //$scope.promoSelected = function ($index) {
+        //    $scope.selectedPromo = $index;
+        //    if ($index > 4) {
+        //        $('#playerBottom').animate({scrollLeft: '+=500'}, 1000);
+        //    }
+        //};
+
+        //never being used in player.html
         $scope.channelClicked = function (index) {
             $scope.selectedChannel = index;
             $scope.brandImage = $rootScope.filteredChannels[index].logoUri;
