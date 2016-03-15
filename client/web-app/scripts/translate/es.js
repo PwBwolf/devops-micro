@@ -206,6 +206,7 @@
             PLAYER_CHANNELS_FOUND: 'canal(es) encontrados!',
             PLAYER_CATEGORIES: 'Categorías',
             PLAYER_CLEAR_ALL: 'Borrar Todo',
+            PLAYER_CLOSE: 'Cerrar',
             PLAYER_GENRE: 'Género',
             PLAYER_REGION: 'Región',
             PLAYER_ORIGIN: 'Origen',
