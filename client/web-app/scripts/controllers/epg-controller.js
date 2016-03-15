@@ -5,6 +5,22 @@
         $scope.logos = []
         $scope.programming = []
 
+        /**
+         * $scope.favoriteChannels = []
+         * $scope.recentChannels = []
+         * $scope.allChannels = []
+         *
+         * mediaSvc gets the users favorite channels
+         * set them to $scope.favoriteChannels
+         *
+         * same as for all mediaSvc to get all channels from cms and set
+         * them to allChannels
+         *
+         * $scope.recentChannels will look at cookies and set them.
+         *
+         */
+
+
         getTimeSlots()
 
         $rootScope.$on('ChannelsLoaded', function () {

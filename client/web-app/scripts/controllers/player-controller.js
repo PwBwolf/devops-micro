@@ -56,7 +56,7 @@
                 function (data) {
                     $scope.favoriteChannels = data;
                     console.log('playerCtrl - favorite channels: ' + data.length);
-                    
+
                 },
                 function (error) {
                     console.log(error);
