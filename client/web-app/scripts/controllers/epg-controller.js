@@ -15,23 +15,26 @@
 
             $rootScope.$on('ChannelsLoaded', function () {
                 getLogos()
-                getProgramming()
+                getProgramming(function(err){
+                    mediaSvc.getFavoriteChannels(
+                        function (data) {
+                            $scope.favoriteChannels = data;
+                            console.log('playerCtrl - favorite channels: ' + data.length);
+                            console.log('logging favorite channels', $scope.favoriteChannels)
+                            $scope.favoriteChannels = mapFavorites()
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
+                })
             });
 
             $scope.$on('ChannelFilterEvent', function(event, args) {
                 updateChannelGuide($rootScope.filteredChannels);
             });
 
-            mediaSvc.getFavoriteChannels(
-                function (data) {
-                    $scope.favoriteChannels = data;
-                    console.log('playerCtrl - favorite channels: ' + data.length);
-                    console.log('logging favorite channels', $scope.favoriteChannels)
-                },
-                function (error) {
-                    console.log(error);
-                }
-            );
+            
         }
 
         function getTimeSlots() {
@@ -66,17 +69,17 @@
                 }
 
                 if(counter <= 5){
-                    console.log('printing logo information', logoInformation)
+                    // console.log('printing logo information', logoInformation)
                     counter++
                 }
 
                 $scope.logos.push(logoInformation)
 
             });
-            console.log('logos ', $scope.logos.length)
+            // console.log('logos ', $scope.logos.length)
         }
 
-        function getProgramming() {
+        function getProgramming(cb) {
             var startDate = new Date();
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
             // console.log('element form $rootScope.filteredChannels', $rootScope.filteredChannels[0])
@@ -132,10 +135,14 @@
 
                     $scope.programming.push(programInfo)
                 });
-            }).error(function () {
+                $scope.allChannels = $scope.programming
+                return cb(null)
+                //console.log('all channels in getProgramming', $scope.allChannels)
+            })
+            .error(function () {
                 console.log('channel guide ctrl error bloc');
+                return cb('channel guide ctrl error bloc')
             });
-            $scope.allChannels = $scope.programming
         }
 
         // format the objects in $scope.favoriteChannels to match what we have in $scope.programming above
@@ -190,10 +197,9 @@
         // this can be fixed by changing the channel arrays to objects for O(1)
         // lookup time.
         $scope.displayFavorites = function() {
-            for(var i = 0; i < $scope.favoriteChannels.length; i++){
-                $scope.favoriteChannels[i] = $scope.allChannels.indexOf({channelId: $scope.favoriteChannels[i].channelId})
+            // for(var i = 0; i < $scope.favoriteChannels.length; i++){
+                //$scope.favoriteChannels[i] = $scope.allChannels.indexOf({channelId: $scope.favoriteChannels[i].channelId})
                 //$scope.favoriteChannels[i] = $scope.allChannels.indexOf({$scope.favoriteChannels[i].})
-            }
             //console.log(thisIsNewChannelIndex);
             console.log('EPG set the favorite channels')
             console.log('favorites', $scope.favoriteChannels)
@@ -297,6 +303,19 @@
                 var showLength = (endTime - startTime) / 1000 / 60
                 return showLength
             }
+        }
+
+        function mapFavorites(){
+            var arr = []
+            var channelIndex = -1
+            console.log('all channels', $scope.allChannels)
+            console.log('favorite Channels', $scope.favoriteChannels)
+            for(var i = 0; i < $scope.favoriteChannels.length; i++){
+                channelIndex = $scope.allChannels.map(function(e){return e.station}).indexOf($scope.favoriteChannels[i].channelId)
+                console.log('favorite channel object', $scope.allChannels[channelIndex])
+                arr.push($scope.allChannels[channelIndex])
+            }
+            return arr
         }
 
 
