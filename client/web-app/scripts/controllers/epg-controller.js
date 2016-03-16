@@ -33,7 +33,7 @@
                 }
             );
         }
-        
+
         function getTimeSlots() {
             var hoursOffset = 0
             var currentSlot = new Date();
@@ -51,7 +51,7 @@
         function getLogos() {
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
 
-            var counter = 0 
+            var counter = 0
             angular.forEach(channelIds, function(channelId) {
                 var station = channelId;
                 var chIndex = _.findIndex($rootScope.filteredChannels, {id: station});
@@ -69,9 +69,11 @@
                     console.log('printing logo information', logoInformation)
                     counter++
                 }
-                
+
                 $scope.logos.push(logoInformation)
+
             });
+            console.log('logos ', $scope.logos.length)
         }
 
         function getProgramming() {
@@ -152,18 +154,18 @@
          *
          * set programming to favoriteChannels when the favorite button is
          * clicked
-         * 
+         *
          * set programming to recentChannels when the recent button is clicked
-         * 
+         *
          * Logic to handle recent channels:
          * - drop a cookie with the recent channel name when a channel is clicked
-         * - get all the cookies, make a recent channel array, set programming to 
+         * - get all the cookies, make a recent channel array, set programming to
              recentChannels
          * Put previous channel and next channel function in here. make sure they
          * only work on currently visible channels
-         * 
+         *
          * put toggleFavoriteChannel functionality in the EPG
-         * 
+         *
          * "station" property in logo objects in $scope.logos corresponds to "id" in
          * filtered channel objects which becomes $scope.channelIds. this is an array
          * of only channel ids. matches up with "station" property on $scope.programming objects.
@@ -189,6 +191,7 @@
             console.log('EPG set the favorite channels')
             console.log('favorites', $scope.favoriteChannels)
             $scope.programming = $scope.favoriteChannels;
+            console.log($scope.programming)
         };
 
         // working
@@ -201,53 +204,72 @@
         // check if it's already a favorite channel. remove if it is.
         // make it a favorite channel if it's not.
         $scope.toggleFavoriteChannel = function(currentChannel){
+
             console.log('current channel in toggleFavoriteChannel', currentChannel)
-            // make sure channel is playing
-            if(currentChannel){
-                // check $scope.favoriteChannels to see if it's in there
-                if()
+            console.log(currentChannel.channelId);
+
+            var checkIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
+            console.log('chechIndex is number in favorites ', checkIndex);
+
+            if(checkIndex === -1 ){ // check $scope.favoriteChannels to see if it's in there
+                console.log('channel not found in favorites')
+                var req = {channelId: currentChannel.channelId};
+
+                mediaSvc.addFavoriteChannel(
+                    req,
+                    function (data) {
+                        console.log('playerCtrl - add favorite channel succeed:' + currentChannel.channelId);
+                        $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
+                        $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                    },
+                    function (error) {
+                        console.log('playerCtrl - add favorite channel failed:' + currentChannel.channelId);
+                        console.log(error);
+                    }
+                );
+            }
+            else {
+                console.log('item is in favorites')
             }
 
             // remove favorite channelconsole.log('this channel is playing ' + currentChannelIndex);
-            var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannelIndex.channelId});
-            //var index = $scope.favoriteChannels.indexOf(currentChannelIndex.channelId);
-            console.log('index = ' + index);
-            console.log(currentChannelIndex.channelId);
-            console.log($scope.favoriteChannels.indexOf({channelId: currentChannelIndex.channelId}));
-            if( index >= 0 ) {
-                console.log('removing from favoritesChannels $scope');
-                $scope.favoriteChannels.splice(index, 1);
-                console.log($scope.favoriteChannels);
-                $scope.favoriteIcon = '../../images/favorite_white.png';
-                var req = {channelId: currentChannelIndex.channelId};
-                mediaSvc.removeFavoriteChannel(
-                    req,
-                    function (data) {
-                        console.log('playerCtrl - remove favorite channel succeed:' + currentChannelIndex.channelId);
-                    },
-                    function (error) {
-                        console.log('playerCtrl - remove favorite channel failed:' + currentChannelIndex.channelId);
-                        console.log(error);
-                    }
+            var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannel.channelId});
+            console.log(index);
 
-                );
-
-            // add favorite channel to the favorite channel array and add it to the user's profile in the db
-            $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
-            $scope.favoriteIcon = '../../images/favorite_yellow.png';
-            var req = {channelId: currentChannelIndex.channelId};
-            mediaSvc.addFavoriteChannel(
-                req,
-                function (data) {
-                    console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
-                },
-                function (error) {
-                    console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
-                    console.log(error);
-                }
-            );
-            console.log($scope.favoriteChannels);
-        }
+        },
+            //if( index >= 0 ) {
+            //    console.log('removing from favoritesChannels $scope');
+            //    $scope.favoriteChannels.splice(index, 1);
+            //    console.log($scope.favoriteChannels);
+            //    $scope.favoriteIcon = '../../images/favorite_white.png';
+            //    var req = {channelId: currentChannelIndex.channelId};
+            //    mediaSvc.removeFavoriteChannel(
+            //        req,
+            //        function (data) {
+            //            console.log('playerCtrl - remove favorite channel succeed:' + currentChannelIndex.channelId);
+            //        },
+            //        function (error) {
+            //            console.log('playerCtrl - remove favorite channel failed:' + currentChannelIndex.channelId);
+            //            console.log(error);
+            //        }
+            //
+            //    );
+            //
+            //// add favorite channel to the favorite channel array and add it to the user's profile in the db
+            //$scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
+            //$scope.favoriteIcon = '../../images/favorite_yellow.png';
+            //var req = {channelId: currentChannelIndex.channelId};
+            //mediaSvc.addFavoriteChannel(
+            //    req,
+            //    function (data) {
+            //        console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
+            //    },
+            //    function (error) {
+            //        console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
+            //        console.log(error);
+            //    }
+            //);
+            //console.log($scope.favoriteChannels);
 
         $scope.currentChannelIndex = function(index){
             console.log('logging index for peter with $index', index)
