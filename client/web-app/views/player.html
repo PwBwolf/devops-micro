@@ -3,7 +3,9 @@
 
         <div class="paid-tv"  ng-if="user.type != 'free'">
             <div class="main-player position-div">
-                <pip-screen info='tv' ng-show="watching" class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
+                <div ng-show="watching">
+                    <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
+                </div>
                 <!--<div id="yiptv-player"></div>-->
             </div>
         </div>
@@ -297,7 +299,7 @@
                         <div></div>
                         <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
                             <div style="width: 154px; height: 60px;"></div>
-                            <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, 0, this); gotoTop();" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                            <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this); gotoTop();" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
                             </div>

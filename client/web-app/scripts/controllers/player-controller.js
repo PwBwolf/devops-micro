@@ -5,16 +5,15 @@
         .module('app')
         .controller('playerCtrl', playerCtrl);
 
-    playerCtrl.$inject = ['$scope','mediaSvc', '$window', '$rootScope', '$location', '$anchorScroll']
+    playerCtrl.$inject = ['$scope','mediaSvc', '$window', '$rootScope', '$location', '$anchorScroll', '$cookies']
 
-    function playerCtrl ($scope, mediaSvc, $window, $rootScope, $location, $anchorScroll) {
+    function playerCtrl ($scope, mediaSvc, $window, $rootScope, $location, $anchorScroll, $cookies) {
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedGenres = [];
         $scope.selectedRegions = [];
         $scope.selectedAudiences = [];
         $scope.selectedLanguages = [];
-        $scope.favoriteChannels = [];
         $scope.recentChannels = [];
         $scope.favoriteIcon = '../../images/favorite_white.png';
         $scope.channelLogo = '../../images/logo.png';
@@ -22,6 +21,7 @@
         $scope.programDescription = '';
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
+        $scope.mainUrl === undefined;
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
         activate();
@@ -52,20 +52,11 @@
                     }
                 }
             });
-
-            mediaSvc.getFavoriteChannels(
-                function (data) {
-                    $scope.favoriteChannels = data;
-                    console.log('playerCtrl - favorite channels: ' + data.length);
-
-                },
-                function (error) {
-                    console.log(error);
-                }
-            );
         }
 
-        $scope.watchNow = function (index, rowIndex) {
+        $scope.watchNow = function (index, favoriteChannels) {
+            var favorites = favoriteChannels;
+
             if($scope.watching === false) {
                 $scope.watching = true;
             }
@@ -87,7 +78,7 @@
                 previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
-                setFavoriteIcon($rootScope.channels[index].id); //check if channel is a favorite
+                setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
                 addRecentChannel(currentChannelIndex.channelId); //needs to be fixed to save to local storage.
                 /**** DELETE AFTER TESTING
                 //if(_.findIndex($scope.favoriteChannels, {channelId: $rootScope.channels[index].id}) >= 0) {
@@ -109,12 +100,17 @@
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
         /sets the favorite image to a yellow or white star
         */
-        function setFavoriteIcon (channel) {
-            if($scope.favoriteChannels.indexOf({channelId: channel}) >= 0) {
-                $scope.favoriteIcon = '../../images/favorite_yellow.png';
+        function setFavoriteIcon (channel, favorites) {
+            var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel)
+            console.log(isfavorite);
+            console.log('check if this current channel ', channel);
+            console.log(' in in this favores list ', favorites);
+            if(isfavorite === -1) {
+                console.log('setting star to white. this is NOT a favorite.')
+                $scope.favoriteIcon = '../../images/favorite_white.png';
                 return
             } else {
-                $scope.favoriteIcon = '../../images/favorite_white.png';
+                $scope.favoriteIcon = '../../images/favorite_yellow.png';
                 return
             }
 
@@ -151,18 +147,6 @@
         } //getProgramInfo
 
 
-        $scope.previousChannel = function () {
-
-        };
-
-        $scope.nextChannel = function () {
-
-        };
-
-        $scope.toggleFavoriteChannel = function() {
-
-        };
-
         $scope.gotoTop = function() {
             // set the location.hash to the id of
             // the element you wish to scroll to.
@@ -176,12 +160,38 @@
 
         //////////////////// Functions  ////////////////////
         function addRecentChannel(channelId) {
-            $window.localStorage.getItem('testObject');
-            $window.localStorage.setItem('recentChannels', {channelId: channelId});
-            //var index = _.findIndex($scope.recentChannels, {channelId: channelId});
-            //if(index < 0) {
-            //    $scope.recentChannels.push({channelId: channelId});
-            //}
+            console.log('channelI in addRecentChannel', channelId)
+            if($cookies.recent === undefined) {
+                console.log('no recents')
+                var updatedRecents = {channelId:channelId}
+                $cookies.recent = JSON.stringify(updatedRecents) 
+                console.log('stringified cookie', JSON.stringify(updatedRecents))
+                var recentCookies = $cookies.recent
+                console.log(recentCookies)
+
+            }
+            else {
+                console.log('recent channels found');
+                var recentCookies = $cookies.recent
+                console.log('recent cookies', recentCookies)
+
+                recentCookies = JSON.parse(recentCookies)
+                console.log('recent cookies after parsing', recentCookies)
+
+                recentCookies[channelId] = channelId
+                console.log('recent cookies after adding value', recentCookies)
+
+                var updatedRecents = JSON.stringify(recentCookies)
+                $cookies.recent = updatedRecents
+
+            }
+            // var recentCookies = JSON.parse($cookies.recent)
+            // console.log(recentCookies)
+            // recentCookies[channelId] = channelId
+            // var updatedRecents = JSON.stringify(recentCookies)
+            // $cookies.recent = updatedRecents
+        
+
         }
 
         ////////////////////

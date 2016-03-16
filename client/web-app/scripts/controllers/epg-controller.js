@@ -190,17 +190,12 @@
 
         $scope.displayRecent = function() {
             console.log('showing recents')
+            var recentPrograms = $cookies.peter
             $scope.programming = $scope.recentChannels;
         };
 
-        // technically, this is an O(n^2) algorithm in the worst case right now.
-        // this can be fixed by changing the channel arrays to objects for O(1)
-        // lookup time.
+        // working
         $scope.displayFavorites = function() {
-            // for(var i = 0; i < $scope.favoriteChannels.length; i++){
-                //$scope.favoriteChannels[i] = $scope.allChannels.indexOf({channelId: $scope.favoriteChannels[i].channelId})
-                //$scope.favoriteChannels[i] = $scope.allChannels.indexOf({$scope.favoriteChannels[i].})
-            //console.log(thisIsNewChannelIndex);
             console.log('EPG set the favorite channels')
             console.log('favorites', $scope.favoriteChannels)
             $scope.programming = $scope.favoriteChannels;
@@ -221,11 +216,11 @@
             console.log('current channel in toggleFavoriteChannel', currentChannel)
             console.log(currentChannel.channelId);
 
-            var checkIndex = $scope.favoriteChannels.map(function(e) { return e.channelId; }).indexOf(currentChannel.channelId);
-            // var checkIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
-            console.log('checkIndex is number in favorites ', checkIndex);
+            var channelIndex = $scope.favoriteChannels.map(function(e) { return e.station; }).indexOf(currentChannel.channelId);
+            // var channelIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
+            console.log('channelIndex is number in favorites ', channelIndex);
 
-            if(checkIndex === -1 ){ // check $scope.favoriteChannels to see if it's in there
+            if(channelIndex === -1 ){ // check $scope.favoriteChannels to see if it's in there
                 console.log('channel not found in favorites')
                 var req = {channelId: currentChannel.channelId};
 
@@ -233,7 +228,10 @@
                     req,
                     function (data) {
                         console.log('playerCtrl - add favorite channel succeed:' + currentChannel.channelId);
-                        $scope.favoriteChannels.push({channelId: currentChannel.channelId});
+                        var newFavoriteId = {channelId: currentChannel.channelId}
+                        var newFavoriteIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(newFavoriteId.channelId)
+                        var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex]
+                        $scope.favoriteChannels.push(newFavoriteChannelObj)
                         $scope.favoriteIcon = '../../images/favorite_yellow.png';
                     },
                     function (error) {
@@ -244,13 +242,29 @@
             }
             else {
                 console.log('item is in favorites')
+                console.log('removing from favoritesChannels $scope');
+               $scope.favoriteChannels.splice(channelIndex, 1);
+               console.log($scope.favoriteChannels);
+               $scope.favoriteIcon = '../../images/favorite_white.png';
+               var req = {channelId: currentChannel.channelId};
+               mediaSvc.removeFavoriteChannel(
+                   req,
+                   function (data) {
+                       console.log('playerCtrl - remove favorite channel succeed:' + currentChannel.channelId);
+                   },
+                   function (error) {
+                       console.log('playerCtrl - remove favorite channel failed:' + currentChannel.channelId);
+                       console.log(error);
+                   }
+            
+               );
             }
 
-            // remove favorite channelconsole.log('this channel is playing ' + currentChannelIndex);
+            // remove favorite channel console.log('this channel is playing ' + currentChannel);
             var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannel.channelId});
             console.log(index);
 
-        },
+        }
             //if( index >= 0 ) {
             //    console.log('removing from favoritesChannels $scope');
             //    $scope.favoriteChannels.splice(index, 1);
@@ -269,21 +283,7 @@
             //
             //    );
             //
-            //// add favorite channel to the favorite channel array and add it to the user's profile in the db
-            //$scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
-            //$scope.favoriteIcon = '../../images/favorite_yellow.png';
-            //var req = {channelId: currentChannelIndex.channelId};
-            //mediaSvc.addFavoriteChannel(
-            //    req,
-            //    function (data) {
-            //        console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
-            //    },
-            //    function (error) {
-            //        console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
-            //        console.log(error);
-            //    }
-            //);
-            //console.log($scope.favoriteChannels);
+
 
         $scope.currentChannelIndex = function(index){
             console.log('logging index for peter with $index', index)
@@ -305,6 +305,9 @@
             }
         }
 
+        // technically, this is an O(n^2) algorithm in the worst case right now.
+        // this can be fixed by changing the channel arrays to objects for O(1)
+        // lookup time.
         function mapFavorites(){
             var arr = []
             var channelIndex = -1
