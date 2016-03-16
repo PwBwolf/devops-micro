@@ -5,9 +5,9 @@
         .module('app')
         .controller('playerCtrl', playerCtrl);
 
-    playerCtrl.$inject = ['$scope','mediaSvc', '$window', '$rootScope', '$location', '$anchorScroll', 'channelsService']
+    playerCtrl.$inject = ['$scope','mediaSvc', '$window', '$rootScope', '$location', '$anchorScroll']
 
-    function playerCtrl ($scope, mediaSvc, $window, $rootScope, $location, $anchorScroll, channelsService) {
+    function playerCtrl ($scope, mediaSvc, $window, $rootScope, $location, $anchorScroll) {
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedGenres = [];
@@ -21,6 +21,7 @@
         $scope.programTitle = '';
         $scope.programDescription = '';
         $scope.showChannelFilter = false;
+        $scope.currentChannel = {};
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
         activate();
@@ -74,9 +75,7 @@
             //    scrollToTop();
             //}
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-                /** DELETE AFTER TESTING
-                $scope.tvUrl = channelUrl.routes[0];
-                 */
+
                 console.log('running mediaSvc getChannelUrl')
                 $scope.mainUrl = channelUrl.routes[0];
                 console.log($scope.mainUrl);
@@ -97,6 +96,8 @@
                 //    $scope.favoriteIcon = '../../images/favorite_white.png';
                 //}*/
 
+                $scope.currentChannel.index = currentChannelIndex.index
+                $scope.currentChannel.channelId = $rootScope.channels[index].id
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
 
                 /**** DELETE AFTER TESTING

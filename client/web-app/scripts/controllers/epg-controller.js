@@ -1,37 +1,39 @@
 (function (app){
     'use strict'
     console.log('hello')
-    app.controller('epgCtrl', ['$scope', '$rootScope', '$timeout', 'mediaSvc', '$filter', 'channelsService', function ($scope, $rootScope, $timeout, mediaSvc, $filter, channelsService) {
+    app.controller('epgCtrl', ['$scope', '$rootScope', '$timeout', 'mediaSvc', '$filter', '$cookies', function ($scope, $rootScope, $timeout, mediaSvc, $filter, $cookies) {
         $scope.logos = []
         $scope.programming = []
+        $scope.favoriteChannels = []
+        $scope.recentChannels = []
+        $scope.allChannels = []
 
-        /**
-         * $scope.favoriteChannels = []
-         * $scope.recentChannels = []
-         * $scope.allChannels = []
-         *
-         * mediaSvc gets the users favorite channels
-         * set them to $scope.favoriteChannels
-         *
-         * same as for all mediaSvc to get all channels from cms and set
-         * them to allChannels
-         *
-         * $scope.recentChannels will look at cookies and set them.
-         *
-         */
+        activate()
 
+        function activate(){
+            getTimeSlots()
 
-        getTimeSlots()
+            $rootScope.$on('ChannelsLoaded', function () {
+                getLogos()
+                getProgramming()
+            });
 
-        $rootScope.$on('ChannelsLoaded', function () {
-            getLogos()
-            getProgramming()
-        });
+            $scope.$on('ChannelFilterEvent', function(event, args) {
+                updateChannelGuide($rootScope.filteredChannels);
+            });
 
-        $scope.$on('ChannelFilterEvent', function(event, args) {
-            updateChannelGuide($rootScope.filteredChannels);
-        });
-
+            mediaSvc.getFavoriteChannels(
+                function (data) {
+                    $scope.favoriteChannels = data;
+                    console.log('playerCtrl - favorite channels: ' + data.length);
+                    console.log('logging favorite channels', $scope.favoriteChannels)
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        }
+        
         function getTimeSlots() {
             var hoursOffset = 0
             var currentSlot = new Date();
@@ -49,6 +51,7 @@
         function getLogos() {
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
 
+            var counter = 0 
             angular.forEach(channelIds, function(channelId) {
                 var station = channelId;
                 var chIndex = _.findIndex($rootScope.filteredChannels, {id: station});
@@ -62,6 +65,11 @@
                     channelTitle: $rootScope.filteredChannels[chIndex].title,
                 }
 
+                if(counter <= 5){
+                    console.log('printing logo information', logoInformation)
+                    counter++
+                }
+                
                 $scope.logos.push(logoInformation)
             });
         }
@@ -69,7 +77,12 @@
         function getProgramming() {
             var startDate = new Date();
             var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
+            // console.log('element form $rootScope.filteredChannels', $rootScope.filteredChannels[0])
+            // console.log('element form $rootScope.filteredChannels', $rootScope.filteredChannels[1])
+            // console.log('element form $rootScope.filteredChannels', $rootScope.filteredChannels[2])
+            // console.log('element form $rootScope.filteredChannels', $rootScope.filteredChannels[3])
             $scope.channelIds = channelIds
+            console.log('printing channelIds in epg-controller - getProgramming()', $scope.channelIds)
 
             mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                 $rootScope.channelsEpg = channelsEpg;
@@ -120,6 +133,79 @@
             }).error(function () {
                 console.log('channel guide ctrl error bloc');
             });
+            $scope.allChannels = $scope.programming
+        }
+
+        // format the objects in $scope.favoriteChannels to match what we have in $scope.programming above
+        function favoriteChannels(){
+            console.log('logging favorite channels', $scope.favoriteChannels)
+        }
+         /**
+         * $scope.favoriteChannels = []
+         * $scope.recentChannels = []
+         * $scope.allChannels = []
+         *
+         * mediaSvc gets the users favorite channels
+         * set them to $scope.favoriteChannels
+         *
+         * set programming to allChannels by default
+         *
+         * set programming to favoriteChannels when the favorite button is
+         * clicked
+         * 
+         * set programming to recentChannels when the recent button is clicked
+         * 
+         * Logic to handle recent channels:
+         * - drop a cookie with the recent channel name when a channel is clicked
+         * - get all the cookies, make a recent channel array, set programming to 
+             recentChannels
+         * Put previous channel and next channel function in here. make sure they
+         * only work on currently visible channels
+         * 
+         * put toggleFavoriteChannel functionality in the EPG
+         * 
+         * "station" property in logo objects in $scope.logos corresponds to "id" in
+         * filtered channel objects which becomes $scope.channelIds. this is an array
+         * of only channel ids. matches up with "station" property on $scope.programming objects.
+
+
+         */
+
+        $scope.previousChannel = function () {
+            console.log('Get the previos channel in the current progrmas array')
+        };
+
+        $scope.nextChannel = function () {
+            console.log('Get the next channel in the current programs array')
+        };
+
+        $scope.displayRecent = function() {
+            console.log('showing recents')
+            $scope.programming = $scope.recentChannels;
+        };
+
+        $scope.displayFavorites = function(thisIsNewChannelIndex) {
+            console.log(thisIsNewChannelIndex);
+            console.log('EPG set the favorite channels')
+            console.log('favorites', $scope.favoriteChannels)
+            $scope.programming = $scope.favoriteChannels;
+        };
+
+        // working
+        $scope.displayAll = function () {
+            console.log('showing all channels')
+            $scope.programming = $scope.allChannels;
+        }
+
+        // make a sure a channel is playing. taken care of by ng-hide
+        // check if it's already a favorite channel. remove if it is.
+        // make it a favorite channel if it's not.
+        $scope.toggleFavoriteChannel = function(currentChannel){
+            console.log('current channel in toggleFavoriteChannel', currentChannel)
+        }
+
+        $scope.currentChannelIndex = function(index){
+            console.log('logging index for peter with $index', index)
         }
 
         function showLength(startTime, endTime){
