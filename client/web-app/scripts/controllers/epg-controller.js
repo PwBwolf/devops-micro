@@ -186,12 +186,19 @@
             $scope.programming = $scope.recentChannels;
         };
 
-        $scope.displayFavorites = function(thisIsNewChannelIndex) {
-            console.log(thisIsNewChannelIndex);
+        // technically, this is an O(n^2) algorithm in the worst case right now.
+        // this can be fixed by changing the channel arrays to objects for O(1)
+        // lookup time.
+        $scope.displayFavorites = function() {
+            for(var i = 0; i < $scope.favoriteChannels.length; i++){
+                $scope.favoriteChannels[i] = $scope.allChannels.indexOf({channelId: $scope.favoriteChannels[i].channelId})
+                //$scope.favoriteChannels[i] = $scope.allChannels.indexOf({$scope.favoriteChannels[i].})
+            }
+            //console.log(thisIsNewChannelIndex);
             console.log('EPG set the favorite channels')
             console.log('favorites', $scope.favoriteChannels)
             $scope.programming = $scope.favoriteChannels;
-            console.log($scope.programming)
+            console.log('new $scope.programming with favoriteChannels', $scope.programming)
         };
 
         // working
@@ -208,8 +215,9 @@
             console.log('current channel in toggleFavoriteChannel', currentChannel)
             console.log(currentChannel.channelId);
 
-            var checkIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
-            console.log('chechIndex is number in favorites ', checkIndex);
+            var checkIndex = $scope.favoriteChannels.map(function(e) { return e.channelId; }).indexOf(currentChannel.channelId);
+            // var checkIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
+            console.log('checkIndex is number in favorites ', checkIndex);
 
             if(checkIndex === -1 ){ // check $scope.favoriteChannels to see if it's in there
                 console.log('channel not found in favorites')
@@ -219,7 +227,7 @@
                     req,
                     function (data) {
                         console.log('playerCtrl - add favorite channel succeed:' + currentChannel.channelId);
-                        $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
+                        $scope.favoriteChannels.push({channelId: currentChannel.channelId});
                         $scope.favoriteIcon = '../../images/favorite_yellow.png';
                     },
                     function (error) {
