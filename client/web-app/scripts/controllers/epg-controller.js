@@ -202,6 +202,51 @@
         // make it a favorite channel if it's not.
         $scope.toggleFavoriteChannel = function(currentChannel){
             console.log('current channel in toggleFavoriteChannel', currentChannel)
+            // make sure channel is playing
+            if(currentChannel){
+                // check $scope.favoriteChannels to see if it's in there
+                if()
+            }
+
+            // remove favorite channelconsole.log('this channel is playing ' + currentChannelIndex);
+            var index = _.findIndex($scope.favoriteChannels, {channelId: currentChannelIndex.channelId});
+            //var index = $scope.favoriteChannels.indexOf(currentChannelIndex.channelId);
+            console.log('index = ' + index);
+            console.log(currentChannelIndex.channelId);
+            console.log($scope.favoriteChannels.indexOf({channelId: currentChannelIndex.channelId}));
+            if( index >= 0 ) {
+                console.log('removing from favoritesChannels $scope');
+                $scope.favoriteChannels.splice(index, 1);
+                console.log($scope.favoriteChannels);
+                $scope.favoriteIcon = '../../images/favorite_white.png';
+                var req = {channelId: currentChannelIndex.channelId};
+                mediaSvc.removeFavoriteChannel(
+                    req,
+                    function (data) {
+                        console.log('playerCtrl - remove favorite channel succeed:' + currentChannelIndex.channelId);
+                    },
+                    function (error) {
+                        console.log('playerCtrl - remove favorite channel failed:' + currentChannelIndex.channelId);
+                        console.log(error);
+                    }
+
+                );
+
+            // add favorite channel to the favorite channel array and add it to the user's profile in the db
+            $scope.favoriteChannels.push({channelId: currentChannelIndex.channelId});
+            $scope.favoriteIcon = '../../images/favorite_yellow.png';
+            var req = {channelId: currentChannelIndex.channelId};
+            mediaSvc.addFavoriteChannel(
+                req,
+                function (data) {
+                    console.log('playerCtrl - add favorite channel succeed:' + currentChannelIndex.channelId);
+                },
+                function (error) {
+                    console.log('playerCtrl - add favorite channel failed:' + currentChannelIndex.channelId);
+                    console.log(error);
+                }
+            );
+            console.log($scope.favoriteChannels);
         }
 
         $scope.currentChannelIndex = function(index){
