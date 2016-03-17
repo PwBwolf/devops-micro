@@ -18,10 +18,13 @@
                 getProgramming(function(err){
                     mediaSvc.getFavoriteChannels(
                         function (data) {
-                            $scope.favoriteChannels = data;
+                            console.log('data received from getFavoriteChannels ',data)
+                            //$scope.favoriteChannels = data;
+                            $scope.favoriteChannels = formatFavorites(data);
                             console.log('playerCtrl - favorite channels: ' + data.length);
                             console.log('logging favorite channels', $scope.favoriteChannels)
-                            $scope.favoriteChannels = mapFavorites()
+
+                            $scope.favoriteChannels = mapChannels($scope.favoriteChannels)
                         },
                         function (error) {
                             console.log(error);
@@ -34,7 +37,7 @@
                 updateChannelGuide($rootScope.filteredChannels);
             });
 
-            
+
         }
 
         function getTimeSlots() {
@@ -190,7 +193,11 @@
 
         $scope.displayRecent = function() {
             console.log('showing recents')
-            var recentPrograms = $cookies.peter
+            var recentPrograms = $cookies.recent;
+            var recentCookies = JSON.parse(recentPrograms);
+
+            $scope.recentChannels = mapChannels(recentCookies);
+            console.log($scope.recentChannels)
             $scope.programming = $scope.recentChannels;
         };
 
@@ -256,7 +263,7 @@
                        console.log('playerCtrl - remove favorite channel failed:' + currentChannel.channelId);
                        console.log(error);
                    }
-            
+
                );
             }
 
@@ -308,19 +315,40 @@
         // technically, this is an O(n^2) algorithm in the worst case right now.
         // this can be fixed by changing the channel arrays to objects for O(1)
         // lookup time.
-        function mapFavorites(){
+
+
+        function mapChannels(channelIds) {
             var arr = []
-            var channelIndex = -1
-            console.log('all channels', $scope.allChannels)
-            console.log('favorite Channels', $scope.favoriteChannels)
-            for(var i = 0; i < $scope.favoriteChannels.length; i++){
-                channelIndex = $scope.allChannels.map(function(e){return e.station}).indexOf($scope.favoriteChannels[i].channelId)
+            var channelIndex = -1;
+            if(!Array.isArray(channelIds)) {
+                channelIds = objToArr(channelIds)
+            }
+            for(var i = 0; i < channelIds.length; i++){
+                channelIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(channelIds[i])
                 console.log('favorite channel object', $scope.allChannels[channelIndex])
                 arr.push($scope.allChannels[channelIndex])
             }
             return arr
         }
 
+        function objToArr (obj) {
+            var arr = []
+            for (var key in obj) {
+                if(obj.hasOwnProperty(key)) {
+                    arr.push(obj[key])
+                    console.log(obj.key)
+                }
+            }
+            return arr
+        }
+
+        function formatFavorites(favorites){
+            var arr = []
+            for(var i = 0; i < favorites.length; i++){
+                arr.push(favorites[i].channelId)
+            }
+            return arr
+        }
 
     }])
 }(angular.module('app')));

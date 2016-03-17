@@ -60,13 +60,7 @@
             if($scope.watching === false) {
                 $scope.watching = true;
             }
-            console.log(index + ' wathcNow')
-            //if (rowIndex === 0) {
-            //    $scope.playChannel(index);
-            //    scrollToTop();
-            //}
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-
                 console.log('running mediaSvc getChannelUrl')
                 $scope.mainUrl = channelUrl.routes[0];
                 console.log($scope.mainUrl);
@@ -80,20 +74,9 @@
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
                 addRecentChannel(currentChannelIndex.channelId); //needs to be fixed to save to local storage.
-                /**** DELETE AFTER TESTING
-                //if(_.findIndex($scope.favoriteChannels, {channelId: $rootScope.channels[index].id}) >= 0) {
-                //    $scope.favoriteIcon = '../../images/favorite_yellow.png';
-                //} else {
-                //    $scope.favoriteIcon = '../../images/favorite_white.png';
-                //}*/
-
                 $scope.currentChannel.index = currentChannelIndex.index
                 $scope.currentChannel.channelId = $rootScope.channels[index].id
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
-
-                /**** DELETE AFTER TESTING
-                //playStream();
-                */
             }); //mediaSvc
         };
 
@@ -102,9 +85,9 @@
         */
         function setFavoriteIcon (channel, favorites) {
             var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel)
-            console.log(isfavorite);
-            console.log('check if this current channel ', channel);
-            console.log(' in in this favores list ', favorites);
+            //console.log(isfavorite);
+            //console.log('check if this current channel ', channel);
+            //console.log(' in in this favores list ', favorites);
             if(isfavorite === -1) {
                 console.log('setting star to white. this is NOT a favorite.')
                 $scope.favoriteIcon = '../../images/favorite_white.png';
@@ -162,27 +145,41 @@
         function addRecentChannel(channelId) {
             console.log('channelI in addRecentChannel', channelId)
             if($cookies.recent === undefined) {
+                var updatedRecents= {};
                 console.log('no recents')
-                var updatedRecents = {channelId:channelId}
-                $cookies.recent = JSON.stringify(updatedRecents) 
+                updatedRecents[channelId] = channelId
+                $cookies.recent = JSON.stringify(updatedRecents)
                 console.log('stringified cookie', JSON.stringify(updatedRecents))
                 var recentCookies = $cookies.recent
                 console.log(recentCookies)
 
             }
             else {
+                var matchFound = false
                 console.log('recent channels found');
                 var recentCookies = $cookies.recent
                 console.log('recent cookies', recentCookies)
 
                 recentCookies = JSON.parse(recentCookies)
                 console.log('recent cookies after parsing', recentCookies)
+                for (var i in recentCookies) {
+                    if(recentCookies.hasOwnProperty(i)) {
+                        console.log(i);
+                        if (channelId ===  i) {
+                            matchFound = true
+                        }
 
-                recentCookies[channelId] = channelId
-                console.log('recent cookies after adding value', recentCookies)
-
-                var updatedRecents = JSON.stringify(recentCookies)
-                $cookies.recent = updatedRecents
+                    }
+                }
+                if (!matchFound) {
+                    recentCookies[channelId] = channelId
+                    var updatedRecents = JSON.stringify(recentCookies)
+                    $cookies.recent = updatedRecents
+                    console.log('recent cookies after adding value', recentCookies)
+                }
+                else {
+                    console.log('cookie already exists')
+                }
 
             }
             // var recentCookies = JSON.parse($cookies.recent)
@@ -190,7 +187,7 @@
             // recentCookies[channelId] = channelId
             // var updatedRecents = JSON.stringify(recentCookies)
             // $cookies.recent = updatedRecents
-        
+
 
         }
 
