@@ -189,8 +189,10 @@
         };
 
         $scope.displayRecent = function() {
+            var recents = $cookies.recent;
             console.log('showing recents')
             var recentPrograms = $cookies.peter
+             var recentPrograms = $cookies.
             $scope.programming = $scope.recentChannels;
         };
 
