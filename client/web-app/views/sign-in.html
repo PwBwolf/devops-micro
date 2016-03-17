@@ -18,7 +18,7 @@
 
                 <form name="form" id="form" ng-submit="signIn()" novalidate>
                     <span class="label-text" translate="SIGN_IN_EMAIL"></span><br>
-                    <input autofocus name="email" is-email-or-us-phone id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
+                    <input name="email" is-email-or-us-phone id="email" maxlength="50" autocomplete="off" type="text" class="text-box" ng-model="mv.email" required ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}"/>
 
                     <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="SIGN_IN_EMAIL_REQUIRED"></div>
                     <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" class="error-message" translate="SIGN_IN_EMAIL_INVALID"></div>

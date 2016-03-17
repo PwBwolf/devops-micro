@@ -20,7 +20,7 @@ console.log = function (data) {
 
 var User = mongoose.model('User');
 var Account = mongoose.model('Account');
-var ContactUs = mongoose.model('Account');
+var ContactUs = mongoose.model('ContactUs');
 
 function removeUnusedFieldsFromUser(callback) {
     User.update({}, {
@@ -77,6 +77,11 @@ async.waterfall([
     },
     function (callback) {
         removeUnusedFieldsFromAccount(function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeUnusedFieldsFromContactUs(function () {
             callback();
         });
     }

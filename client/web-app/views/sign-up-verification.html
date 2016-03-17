@@ -9,7 +9,7 @@
                 <form name="form" id="form" ng-submit="signUpVerification()" novalidate>
                     <br>
                     <span class="label-text" translate="SIGN_UP_VERIFICATION_PIN"></span><br>
-                    <input autofocus type="text" class="text-box" maxlength="4" ng-pattern="/^[0-9]{4}$/" ng-model="mv.pin" autocomplete="off" id="pin" name="pin" ng-class="{'text-box-error': form.pin.$touched && form.pin.$invalid}" required>
+                    <input type="text" class="text-box" maxlength="4" ng-pattern="/^[0-9]{4}$/" ng-model="mv.pin" autocomplete="off" id="pin" name="pin" ng-class="{'text-box-error': form.pin.$touched && form.pin.$invalid}" required>
 
                     <div ng-show="form.pin.$touched && form.pin.$error.required" class="error-message" translate="SIGN_UP_VERIFICATION_PIN_REQUIRED"></div>
                     <div ng-show="form.pin.$touched && form.pin.$error.pattern" class="error-message" translate="SIGN_UP_VERIFICATION_PIN_INVALID"></div>

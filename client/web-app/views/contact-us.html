@@ -9,7 +9,7 @@
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="form-container">
                         <span class="label-text" translate="CONTACT_US_NAME"></span>
-                        <input autocomplete="off" maxlength="41" type="text" autofocus class="text-box" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'text-box-error': form.name.$touched && form.name.$invalid}">
+                        <input autocomplete="off" maxlength="41" type="text" class="text-box" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'text-box-error': form.name.$touched && form.name.$invalid}">
 
                         <div ng-show="form.name.$touched && form.name.$error.required" class="error-message" translate="CONTACT_US_NAME_REQUIRED"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_EMAIL"></span>

@@ -28,7 +28,7 @@
                     <div class="form-container">
                         <div class="half-form">
                             <span class="label-text" translate="COMP_SIGN_UP_FIRST_NAME"></span>
-                            <br><input valid-name autofocus focus-watch="status" focus-value="1" autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
+                            <br><input valid-name autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
 
                             <div class="error-message" ng-show="form.firstName.$touched && form.firstName.$error.required" translate="COMP_SIGN_UP_FIRST_NAME_REQUIRED"></div>
                             <div class="error-message" ng-show="form.firstName.$touched && !form.firstName.$error.required && form.firstName.$error.validName" translate="COMP_SIGN_UP_FIRST_NAME_INVALID"></div>
