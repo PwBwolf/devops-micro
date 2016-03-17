@@ -8,6 +8,7 @@
 	epgSrvc.$inject = ['$filter', '$rootScope', 'mediaSvc']
 
 	function epgSrvc ($filter, $rootScope, mediaSvc){
+		
 		var service = {
 			// service properties and function refs go in here
 			getTimeSlots: getTimeSlots,
@@ -19,7 +20,7 @@
 
 		return service
 
-		// functions that do workgo here
+		// functions that do work go here
 		function getTimeSlots() {
             var hoursOffset = 0
             var currentSlot = new Date();
