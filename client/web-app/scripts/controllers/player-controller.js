@@ -180,18 +180,9 @@
                 else {
                     console.log('cookie already exists')
                 }
-
             }
-            // var recentCookies = JSON.parse($cookies.recent)
-            // console.log(recentCookies)
-            // recentCookies[channelId] = channelId
-            // var updatedRecents = JSON.stringify(recentCookies)
-            // $cookies.recent = updatedRecents
-
-
         }
 
-        ////////////////////
 
     }
 })()
