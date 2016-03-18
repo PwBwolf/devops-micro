@@ -283,22 +283,15 @@
             </div>
         </div>
         <div>
-            <div id="logoColumn" class="user-guide-panel">
-                <div class="position-div user-guide">
-                    <div id="channelLogoPanel">
-                        <div></div>
-                        <div id="channelGuideDescription" ng-repeat="logo in logos" class="channel-description">
-                            <div id="channelGuideLogo" title="{{logo.channelTitle}}" style="cursor: pointer; background: #FFF url({{logo.logo}}) 50% no-repeat; background-size:contain "></div>
-                        </div>
-                    </div>
-                </div>
+            <div ng-if='noRecentChannels' style="width: 100%; text-align: center; color: white;">
+                <h3>No Recent Channels From Last Seven Days</h3>
             </div>
             <div id="userGuide" class="user-guide-panel">
                 <div class="position-div user-guide">
                     <div id="channelGuidePanel" class="user-guide-description">
                         <div></div>
                         <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
-                            <div style="width: 154px; height: 60px;"></div>
+                            <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain "></div>
                             <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this); gotoTop();" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>

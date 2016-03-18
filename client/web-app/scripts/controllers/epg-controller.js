@@ -39,6 +39,7 @@
         // for previous and next channels. These may not need to be oon $scope at all.
         $scope.prevIndex = 0
         $scope.nextIndex = 0
+        $scope.noRecentChannels = true
 
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
@@ -133,9 +134,24 @@
         $scope.displayRecent = function() {
             // console.log('showing recents')
             var recentPrograms = $cookies.recent;
-            var recentCookies = JSON.parse(recentPrograms);
+            if(recentPrograms){
+                var recentCookies = JSON.parse(recentPrograms);   
+                $scope.noRecentChannels = false             
+            }
+            else{
+                $scope.noRecentChannels = true
+                return
+            }
             $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
             console.log($scope.recentChannels)
+            $scope.recentChannels.sort(function(a, b){
+                if(a.chIndex > b.chIndex){
+                    return 1
+                }
+                if(a.chIndex < b.chIndex){
+                    return -1
+                }
+            })
             $scope.programming = $scope.recentChannels;
         };
 
@@ -143,6 +159,14 @@
         $scope.displayFavorites = function() {
             // console.log('EPG set the favorite channels')
             // console.log('favorites', $scope.favoriteChannels)
+            $scope.favoriteChannels.sort(function(a, b){
+                if(a.chIndex > b.chIndex){
+                    return 1
+                }
+                if(a.chIndex < b.chIndex){
+                    return -1
+                }
+            })
             $scope.programming = $scope.favoriteChannels;
             // console.log('new $scope.programming with favoriteChannels', $scope.programming)
         };
@@ -230,7 +254,6 @@
             if(indexOfClickedChannel === ($scope.programming.length-1)){
                 $scope.nextIndex = 0
             }
-
             else{
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex
             }
