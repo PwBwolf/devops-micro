@@ -12,7 +12,6 @@
 		var service = {
 			// service properties and function refs go in here
 			getTimeSlots: getTimeSlots,
-			getLogos: getLogos,
 			getProgramming: getProgramming,
 			formatFavorites: formatFavorites,
 			mapChannels: mapChannels
@@ -33,32 +32,6 @@
                 timeSlots[i] = $filter('date')((startSlot + (hoursOffset)), 'h:mm a');
             }
             return timeSlots
-        }
-
-        function getLogos() {
-        	var logos = []
-            var channelIds = $rootScope.filteredChannels.map(function (item) { return item.id; });
-
-            angular.forEach(channelIds, function(channelId) {
-                var station = channelId;
-                // delete after testing
-                //var oldchIndex = _.findIndex($rootScope.filteredChannels, {id: station});
-                var chIndex = $rootScope.filteredChannels.map(function(e){return e.id}).indexOf(channelId)
-                // delete after testing
-                // console.log('checking how indexOf works against _.findIndex', oldchIndex, chIndex)
-                var logo =  $rootScope.filteredChannels[chIndex].logoUri;
-                var channelTitle = $rootScope.filteredChannels[chIndex].title;
-
-                var logoInformation = {
-                    station: channelId,
-                    chIndex: chIndex,
-                    logo:  logo,
-                    channelTitle: channelTitle,
-                }
-
-                logos.push(logoInformation)
-            });
-            return logos
         }
 
         function getProgramming(cb) {

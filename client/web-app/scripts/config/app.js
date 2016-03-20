@@ -4,7 +4,7 @@
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate', 'pageslide-directive',
         'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap',
-        'ngCookies'
+        'ngCookies', 'infinite-scroll', 'ks.ngScrollRepeat'
     ]);
     angular.module('app').value('_', window._);
     angular.module('app').value('toastr', window.toastr);

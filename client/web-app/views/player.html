@@ -30,37 +30,9 @@
         </div> <!-- free-tv -->
     </div>
 
-
-    <!--<div class="newdescription" ng-init="programDetail = false" ng-show="programDetail">-->
-        <!--<div id="programDetail" ng-controller='programDetailSlideCtrl'>-->
-
-            <!--{{program.title}}-->
-            <!--{{program.showTime}}-->
-            <!--{{program.description}}-->
-            <!---->
-        <!--</div> &lt;!&ndash;programDetail&ndash;&gt;-->
-    <!--</div> &lt;!&ndash;newdescription&ndash;&gt;-->
-
-<!--     <div id="filterPanelDropDown">        </div> -->
-<!--     <div id="timeHeaderPanel" style="width:100%;height:28px"> -->
-<!--     </div> -->
-<!--     <div id="header-time-container"style="width:100%;height:28px;margin-top:5px;float:left;background:rgb(51,51,51);display:inline;overflow-x:auto;overflow-y:hide"> -->
-<!--         <div id="header-time-panel"> -->
-<!--             <div></div> -->
-<!--         </div> -->
-
-<!--     </div> -->
     <div>
 
         <div id="channelMenuHolder" class="container-fluid">
-            <!--         <div id="channelPreviewPanel" class="channel-preview" ng-show="isVisible"> -->
-            <!--             <div ng-repeat="listing in showListings track by $index" ng-click="watchNow(selectedChannel, $index)" compile-html="listing"></div> -->
-            <!--             <div id="channelGuideLoading" class="progress" ng-show="loadingProgramGuide"> -->
-            <!--                 <div class="progress-bar progress-bar-slategrey progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"> -->
-            <!--                 </div> -->
-            <!--             </div> -->
-            <!--         </div> -->
-
             <div id="menuBar">
                 <nav class="navbar navbar-default" role="navigation">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -289,18 +261,21 @@
             <div id="userGuide" class="user-guide-panel">
                 <div class="position-div user-guide">
                     <div id="channelGuidePanel" class="user-guide-description">
-                        <div></div>
-                        <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
-                            <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain "></div>
-                            <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this); gotoTop();" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                        <!-- infinite-scroll="loadMore()" infinite-scroll-distance='0' -->
+                        <div>
+                        	<div></div>
+                        	<div id="channelGuideDescription" ng-scroll-repeat="programs in programming" page-size="10" tolerance="300" class="channel-description">
+                            <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
+                            <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
                             </div>
-                            <div ng-repeat="show in programs.lineUp" ng-if="$index &gt; 0" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                            <div ng-repeat="show in programs.lineUp" ng-if="$index > 0" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
                             </div>
-                        </div>
+                        	</div>
+                    		</div>
                     </div>
                 </div>
             </div>

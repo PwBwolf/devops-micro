@@ -6,12 +6,13 @@
         .module('app')
         .controller('epgCtrl', epgCtrl)
 
+    angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000)
+
     epgCtrl.$inject=['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll']
 
     function epgCtrl($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll){
         console.log('hello from inside epg function indfjaslfkjasdlk')
         // epg related variables
-        $scope.logos = []
         $scope.programming = []
         $scope.favoriteChannels = []
         $scope.recentChannels = []
@@ -36,10 +37,15 @@
         $scope.currentChannel = {};
         $scope.mainUrl === undefined;
 
-        // for previous and next channels. These may not need to be oon $scope at all.
+        // for previous and next channels. These may not need to be on $scope at all.
         $scope.prevIndex = 0
         $scope.nextIndex = 0
-        $scope.noRecentChannels = true
+        $scope.noRecentChannels = false
+
+        var displayingAll = true
+        var displayingFavorites = false
+        var displayingRecents = false
+        var channelPaging = 1
 
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
@@ -50,7 +56,6 @@
             $scope.timeSlots = epgSrvc.getTimeSlots()
 
             $rootScope.$on('ChannelsLoaded', function () {
-                $scope.logos = epgSrvc.getLogos()
                 epgSrvc.getProgramming(function(err, programming){
                     if(err){
                         console.error(err)
@@ -59,7 +64,8 @@
                     }
                     $scope.allChannels = programming
                     console.log('full object from allChannels', $scope.allChannels[0])
-                    $scope.programming = programming
+                    //$scope.programming = programming.slice(0, 11)
+                    $scope.programming = $scope.allChannels
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             console.log('data received from getFavoriteChannels ',data)
@@ -133,6 +139,10 @@
 
         $scope.displayRecent = function() {
             // console.log('showing recents')
+            displayingRecents = true
+            displayingFavorites = false
+            displayingAll = false
+
             var recentPrograms = $cookies.recent;
             if(recentPrograms){
                 var recentCookies = JSON.parse(recentPrograms);   
@@ -140,6 +150,7 @@
             }
             else{
                 $scope.noRecentChannels = true
+                $scope.programming = $scope.recentChannels;
                 return
             }
             $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
@@ -152,13 +163,18 @@
                     return -1
                 }
             })
-            $scope.programming = $scope.recentChannels;
+            $scope.programming = $scope.recentChannels//.slice(0, 11);
         };
 
         // working
         $scope.displayFavorites = function() {
             // console.log('EPG set the favorite channels')
             // console.log('favorites', $scope.favoriteChannels)
+            displayingFavorites = true
+            displayingAll = false
+            displayingRecents = false
+
+            $scope.noRecentChannels = false  
             $scope.favoriteChannels.sort(function(a, b){
                 if(a.chIndex > b.chIndex){
                     return 1
@@ -167,14 +183,19 @@
                     return -1
                 }
             })
-            $scope.programming = $scope.favoriteChannels;
+            $scope.programming = $scope.favoriteChannels////.slice(0, 11);
             // console.log('new $scope.programming with favoriteChannels', $scope.programming)
         };
 
         // working
         $scope.displayAll = function () {
+            displayingAll = true
+            displayingFavorites = false
+            displayingRecents = false
+
+            $scope.noRecentChannels = false
             console.log('showing all channels')
-            $scope.programming = $scope.allChannels;
+            $scope.programming = $scope.allChannels//.slice(0, 11);
         }
 
         // make a sure a channel is playing. taken care of by ng-hide
@@ -227,6 +248,10 @@
             }
         }
 
+        $scope.$on('bottom-reached-before', function() {
+        // do whatever you want
+        console.log('add new channels while scrolling')
+        });
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
@@ -280,8 +305,48 @@
                 $scope.currentChannel.index = currentChannelIndex.index
                 $scope.currentChannel.channelId = $rootScope.channels[index].id
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
+                // set the location.hash to the id of
+            // the element you wish to scroll to.
+            $location.hash('topBox');
+            // call $anchorScroll()
+            $anchorScroll();
             }); //mediaSvc
         };
+
+        $scope.loadMore = function(){
+            console.log('in loadMore')
+            if(displayingAll){
+                $scope.programming = appendChannels($scope.programming, $scope.allChannels, channelPaging)
+            }
+            else if(displayingRecents){
+                $scope.programming = appendChannels($scope.programming, $scope.recentChannels, channelPaging)
+            }
+            else if(displayingFavorites){
+                $scope.programming = appendChannels($scope.programming, $scope.favoriteChannels, channelPaging)
+            }
+        }
+
+        // displaying is the current value of $scope.programming
+        // appending is the array the new channels are coming from 
+        // (favorites, recents, all) startIndex is the position in the
+        // appending array that isn't already in $scope.programming
+        function appendChannels(displaying, appending, startPage){
+            console.log('in append channels', displaying, appending, startPage)
+            var diff = appending.length - displaying.length
+            var startIndex = startPage * 10
+            channelPaging++
+            var remaining = 0
+            if(diff >= 10){
+                remaining = 10
+            }
+            else{
+                remaining = diff
+            }
+            for(var i = 0; i < remaining; i++){
+                displaying.push(appending[startIndex + i])
+            }
+            return displaying
+        }
 
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
         /sets the favorite image to a yellow or white star
@@ -331,18 +396,6 @@
             $rootScope.program = info;
             return info;
         } //getProgramInfo
-
-
-        $scope.gotoTop = function() {
-            // set the location.hash to the id of
-            // the element you wish to scroll to.
-            $location.hash('topBox');
-            // call $anchorScroll()
-            $anchorScroll();
-        };
-
-
-
 
         //////////////////// Functions  ////////////////////
         function addRecentChannel(channelId) {
