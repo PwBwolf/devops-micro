@@ -6,8 +6,6 @@
         .module('app')
         .controller('epgCtrl', epgCtrl)
 
-    angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000)
-
     epgCtrl.$inject=['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll']
 
     function epgCtrl($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll){
@@ -36,6 +34,8 @@
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
         $scope.mainUrl === undefined;
+
+        $scope.tags = []
 
         // for previous and next channels. These may not need to be on $scope at all.
         $scope.prevIndex = 0
@@ -103,6 +103,8 @@
             mediaSvc.getChannelCategories(function (data) {
                 var dataCategories = data.categories;
                 $rootScope.channelCategories = data.categories;
+                console.log('logging response from mediaSvc.getChannelCategories', data)
+            
                 for(var i = 0; i < dataCategories.length; i++) {
                     var genre = dataCategories[i].tags;
                     for(var j = 0; j < genre.length; j++) {
@@ -113,6 +115,7 @@
                         }
                     }
                 }
+                $scope.tags = $rootScope.channelCategories
             });
 
 
