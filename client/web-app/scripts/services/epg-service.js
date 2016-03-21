@@ -63,6 +63,8 @@
                     // delete after testing
                     // console.log('checking how indexOf works for epgIndex in getProgramming()', oldepgIndex, epgIndex)
                     var lineUp = [];
+                    var tags = $rootScope.filteredChannels[chIndex].tags_ids
+                    // console.log('checking out what the object on rootscope looks like', $rootScope.filteredChannels[0])
 
                     if(epgIndex >= 0){
                         lineUp = channelsEpg[epgIndex].programs;
@@ -81,7 +83,8 @@
                         logo: logo,
                         channelTitle: channelTitle,
                         epgIndex: epgIndex,
-                        lineUp: lineUp
+                        lineUp: lineUp,
+                        tags: tags
                     }
 
                     for(var i = 0; i < programInfo.lineUp.length; i++){
@@ -159,6 +162,15 @@
                 }
             }
             return arr
+        }
+
+        function arrToObj(arr){
+            var obj = {}
+            for(var i = 0; i < arr.length; i++){
+                var currentValue = arr[i]
+                obj[currentValue] = arr[i]
+            }
+            return arrToObj
         }
 
 

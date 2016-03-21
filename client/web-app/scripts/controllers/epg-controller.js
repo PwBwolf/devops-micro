@@ -22,10 +22,7 @@
         $scope.mainUrl === undefined;
         $scope.watching = false;
         $scope.selectedPromo = -1;
-        $scope.selectedGenres = [];
-        $scope.selectedRegions = [];
-        $scope.selectedAudiences = [];
-        $scope.selectedLanguages = [];
+        $scope.selectedFilters = [];
         $scope.recentChannels = [];
         $scope.favoriteIcon = '../../images/favorite_white.png';
         $scope.channelLogo = '../../images/logo.png';
@@ -41,6 +38,8 @@
         $scope.prevIndex = 0
         $scope.nextIndex = 0
         $scope.noRecentChannels = false
+
+        $scope.checked = false; // This will be binded using the ps-open attribute
 
         var displayingAll = true
         var displayingFavorites = false
@@ -316,41 +315,6 @@
             }); //mediaSvc
         };
 
-        $scope.loadMore = function(){
-            console.log('in loadMore')
-            if(displayingAll){
-                $scope.programming = appendChannels($scope.programming, $scope.allChannels, channelPaging)
-            }
-            else if(displayingRecents){
-                $scope.programming = appendChannels($scope.programming, $scope.recentChannels, channelPaging)
-            }
-            else if(displayingFavorites){
-                $scope.programming = appendChannels($scope.programming, $scope.favoriteChannels, channelPaging)
-            }
-        }
-
-        // displaying is the current value of $scope.programming
-        // appending is the array the new channels are coming from 
-        // (favorites, recents, all) startIndex is the position in the
-        // appending array that isn't already in $scope.programming
-        function appendChannels(displaying, appending, startPage){
-            console.log('in append channels', displaying, appending, startPage)
-            var diff = appending.length - displaying.length
-            var startIndex = startPage * 10
-            channelPaging++
-            var remaining = 0
-            if(diff >= 10){
-                remaining = 10
-            }
-            else{
-                remaining = diff
-            }
-            for(var i = 0; i < remaining; i++){
-                displaying.push(appending[startIndex + i])
-            }
-            return displaying
-        }
-
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
         /sets the favorite image to a yellow or white star
         */
@@ -440,6 +404,69 @@
                     console.log('cookie already exists')
                 }
             }
+        }
+
+        $scope.toggle = function(){
+            console.log('toggling filter')
+            $scope.checked = !$scope.checked;
+            if($scope.checked) {
+                $scope.$emit('ToggleChannelFilterEvent');
+            }
+        }
+
+        // $scope.selectedGenres = [];
+
+        // Each of these functions checks to see if the selected filter is already in the array
+        // and add it if it's not already there
+        $scope.toggleFilter = function(id){
+            var filterExists = $scope.selectedFilters.indexOf(id)
+            if(filterExists === -1){
+                console.log('toggled on', id)
+                $scope.selectedFilters.push(id)
+                $scope.programming = filterChannels($scope.selectedFilters)
+            }
+            else{
+                var index = $scope.selectedFilters.indexOf(id)
+                $scope.selectedFilters.splice(index, 1)
+                console.log('toggled off', id)
+                $scope.programming = filterChannels($scope.selectedFilters)
+            }
+            console.log('selected filters', $scope.selectedFilters)
+        }
+
+        // loop through all channels
+        // loop through all tags on a given channel
+        // if tag matches a filter, add it to arr
+        // break so the channel cannot be added twice
+        // even if it has multiple matching tags
+        function filterChannels(filters){
+            var arr = []
+            var filterObj = {}
+
+            // build filters object
+            for(var i = 0; i < filters.length; i++){
+                var currentFilter = filters[i]
+                filterObj[currentFilter] = currentFilter
+            }
+           
+            for(i = 0; i < $scope.allChannels.length; i++){
+                var matches = 0
+                for(var j = 0; j < $scope.allChannels[i].tags.length; j++){
+                    console.log('current channel tags', $scope.allChannels[i].tags)
+                    var tag = $scope.allChannels[i].tags[j]
+                    console.log('looking for tag', tag, filterObj[tag])
+                    console.log('filter object', filterObj, 'length ', Object.keys(filterObj).length)
+                    if(filterObj.hasOwnProperty(tag)){
+                        matches++
+                    }
+                    if((j === $scope.allChannels[i].tags.length-1) && (matches === Object.keys(filterObj).length){
+                        var currentChannel = $scope.allChannels[i]
+                        arr.push(currentChannel)
+                        console.log('added channel')
+                    }
+                }
+            }
+            return arr
         }
 
         
