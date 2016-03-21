@@ -85,7 +85,8 @@
                             </li>
 
                             <li class="filter-li">
-                                <div id="filter" ng-controller='filterPanelSlideCtrl'>
+                                <!-- <div id="filter" ng-controller='filterPanelSlideCtrl'> -->
+                                <div id="filter">
                                     <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()">
 
                                     <div pageslide ps-open="checked" ps-size="360px">
@@ -112,14 +113,14 @@
                                                                 <!-- <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" class="filter-repeat">
  -->
                                                                 <div ng-repeat="tag in tags[0].tags | filter: { col : 0 }" class="filter-repeat">
-                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
                                                             <div class="panel-body panel-body-right">
                                                                 <div ng-repeat="tag in tags[0].tags | filter: { col : 1 }" class="filter-repeat">
 
-                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
@@ -136,14 +137,14 @@
                                                             <div class="panel-body panel-body-left">
                                                                 <div ng-repeat="tag in tags[1].tags | filter: { col: 0 }" class="filter-repeat">
 
-                                                                    <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
                                                             <div class="panel-body panel-body-right">
                                                                 <div ng-repeat="tag in tags[1].tags | filter: { col : 1 }" class="filter-repeat">
 
-                                                                    <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
@@ -160,14 +161,14 @@
                                                             <div class="panel-body panel-body-left">
                                                                 <div ng-repeat="tag in tags[2].tags | filter: { col: 0 }" class="filter-repeat">
 
-                                                                    <input name="AudienceList[]" ng-checked="selectedAudiences.indexOf(tag.id) > -1" ng-click="toggleAudienceSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
                                                             <div class="panel-body panel-body-right">
                                                                 <div ng-repeat="tag in tags[2].tags | filter: { col : 1 }" class="filter-repeat">
 
-                                                                    <input name="AudienceList[]" ng-checked="selectedAudiences.indexOf(tag.id) > -1" ng-click="toggleAudienceSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
@@ -184,14 +185,14 @@
                                                             <div class="panel-body panel-body-left">
                                                                 <div ng-repeat="tag in tags[3].tags | filter: { col: 0 }" class="filter-repeat">
 
-                                                                    <input name="LanguageList[]" ng-checked="selectedLanguages.indexOf(tag.id) > -1" ng-click="toggleLanguageSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
                                                             <div class="panel-body panel-body-right">
                                                                 <div ng-repeat="tag in tags[3].tags | filter: { col : 1 }" class="filter-repeat">
 
-                                                                    <input name="LanguageList[]" ng-checked="selectedLanguages.indexOf(tag.id) > -1" ng-click="toggleLanguageSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
+                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
 
                                                                 </div>
                                                             </div>
