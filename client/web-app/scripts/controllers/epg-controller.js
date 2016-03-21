@@ -452,17 +452,17 @@
             for(i = 0; i < $scope.allChannels.length; i++){
                 var matches = 0
                 for(var j = 0; j < $scope.allChannels[i].tags.length; j++){
-                    console.log('current channel tags', $scope.allChannels[i].tags)
+                    // console.log('current channel tags', $scope.allChannels[i].tags)
                     var tag = $scope.allChannels[i].tags[j]
-                    console.log('looking for tag', tag, filterObj[tag])
-                    console.log('filter object', filterObj, 'length ', Object.keys(filterObj).length)
+                    // console.log('looking for tag', tag, filterObj[tag])
+                    // console.log('filter object', filterObj, 'length ', Object.keys(filterObj).length)
                     if(filterObj.hasOwnProperty(tag)){
                         matches++
                     }
-                    if((j === $scope.allChannels[i].tags.length-1) && (matches === Object.keys(filterObj).length){
+                    if((j === $scope.allChannels[i].tags.length-1) && (matches === Object.keys(filterObj).length)){
                         var currentChannel = $scope.allChannels[i]
                         arr.push(currentChannel)
-                        console.log('added channel')
+                        // console.log('added channel')
                     }
                 }
             }
