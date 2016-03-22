@@ -29,7 +29,7 @@
     </div>
 
     <div>
-    <div ng-include="'views/filter.html'"></div>
+        <div ng-include="'views/filter.html'"></div>
 
         <div id="clock" current-time="" class="position-div"></div>
         <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
@@ -50,17 +50,17 @@
                         <div>
                             <div></div>
                             <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
-                            <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
-                            <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
-                                <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
-                                <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
+                                <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
+                                <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
+                                </div>
+                                <div ng-repeat="show in programs.lineUp" ng-if="$index > 0" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
+                                </div>
                             </div>
-                            <div ng-repeat="show in programs.lineUp" ng-if="$index > 0" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
-                                <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
-                                <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
-                            </div>
-                            </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
