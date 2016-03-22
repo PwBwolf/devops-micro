@@ -1,21 +1,13 @@
 (function (app){
-    'use strict'
-    console.log('hello')
+    'use strict';
 
-    angular
-        .module('app')
-        .controller('epgCtrl', epgCtrl)
-
-    epgCtrl.$inject=['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll', '_']
-
-    function epgCtrl($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll, _){
-        console.log('hello from inside epg function indfjaslfkjasdlk')
+    app.controller('epgCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll', function ($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll){
         // epg related variables
-        $scope.programming = []
-        $scope.favoriteChannels = []
-        $scope.recentChannels = []
-        $scope.allChannels = []
-        $scope.timeSlots = []
+        $scope.programming = [];
+        $scope.favoriteChannels = [];
+        $scope.recentChannels = [];
+        $scope.allChannels = [];
+        $scope.timeSlots = [];
 
         // playing channel related variables
         $scope.currentChannel = {};
@@ -32,45 +24,39 @@
         $scope.currentChannel = {};
         $scope.mainUrl === undefined;
 
-        $scope.tags = []
+        $scope.tags = [];
 
         // for previous and next channels. These may not need to be on $scope at all.
-        $scope.prevIndex = 0
-        $scope.nextIndex = 0
-        $scope.noRecentChannels = false
+        $scope.prevIndex = 0;
+        $scope.nextIndex = 0;
+        $scope.noRecentChannels = false;
 
         $scope.checked = false; // This will be binded using the ps-open attribute
 
-        var displayingAll = true
-        var displayingFavorites = false
-        var displayingRecents = false
-        var channelPaging = 1
+        var displayingAll = true;
+        var displayingFavorites = false;
+        var displayingRecents = false;
+        var channelPaging = 1;
 
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
 
-        activate()
+        activate();
 
         function activate(){
-            $scope.timeSlots = epgSrvc.getTimeSlots()
+            $scope.timeSlots = epgSrvc.getTimeSlots();
 
             $rootScope.$on('ChannelsLoaded', function () {
                 epgSrvc.getProgramming(function(err, programming){
-                    if(err){
-                        console.error(err)
-                        console.error('could not get channel information. aborting.')
-                        return
-                    }
-                    $scope.allChannels = programming
-                    //$scope.programming = programming.slice(0, 11)
-                    $scope.programming = $scope.allChannels
+                    $scope.allChannels = programming;
+                    $scope.programming = $scope.allChannels;
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             $scope.favoriteChannels = epgSrvc.formatFavorites(data);
-                            $scope.favoriteChannels = epgSrvc.mapChannels($scope.favoriteChannels, $scope.allChannels)
+                            $scope.favoriteChannels = epgSrvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
                         },
                         function (error) {
-                            console.log(error);
+                            // handle this error with toastr later?
                         }
                     );
                 })
@@ -105,83 +91,78 @@
                         }
                     }
                 }
-                $scope.tags = $rootScope.channelCategories
+                $scope.tags = $rootScope.channelCategories;
             });
-
-
         }
 
         /**
-         * Put previous channel and next channel function in here. make sure they
-         * only work on currently visible channels
-
          * "station" property in logo objects in $scope.logos corresponds to "id" in
          * filtered channel objects which becomes $scope.channelIds. this is an array
          * of only channel ids. matches up with "station" property on $scope.programming objects.
          */
 
         $scope.previousChannel = function () {
-            $scope.watchNow($scope.prevIndex, $scope.favoriteChannels)
+            $scope.watchNow($scope.prevIndex, $scope.favoriteChannels);
         };
 
         $scope.nextChannel = function () {
-            $scope.watchNow($scope.nextIndex, $scope.favoriteChannels)
+            $scope.watchNow($scope.nextIndex, $scope.favoriteChannels);
         };
 
         $scope.displayRecent = function() {
-            displayingRecents = true
-            displayingFavorites = false
-            displayingAll = false
+            displayingRecents = true;
+            displayingFavorites = false;
+            displayingAll = false;
 
             var recentPrograms = $cookies.recent;
             if(recentPrograms){
                 var recentCookies = JSON.parse(recentPrograms);
-                $scope.noRecentChannels = false
+                $scope.noRecentChannels = false;
             }
             else{
-                $scope.noRecentChannels = true
+                $scope.noRecentChannels = true;
                 $scope.programming = $scope.recentChannels;
-                return
+                return;
             }
             $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
             $scope.recentChannels.sort(function(a, b){
                 if(a.chIndex > b.chIndex){
-                    return 1
+                    return 1;
                 }
                 if(a.chIndex < b.chIndex){
-                    return -1
+                    return -1;
                 }
             })
-            $scope.programming = $scope.recentChannels//.slice(0, 11);
+            $scope.programming = $scope.recentChannels;
         };
 
         // working
         $scope.displayFavorites = function() {
-            displayingFavorites = true
-            displayingAll = false
-            displayingRecents = false
+            displayingFavorites = true;
+            displayingAll = false;
+            displayingRecents = false;
 
-            $scope.noRecentChannels = false
+            $scope.noRecentChannels = false;
             $scope.favoriteChannels.sort(function(a, b){
                 if(a.chIndex > b.chIndex){
-                    return 1
+                    return 1;
                 }
                 if(a.chIndex < b.chIndex){
-                    return -1
+                    return -1;
                 }
             })
-            $scope.programming = $scope.favoriteChannels////.slice(0, 11);
+            $scope.programming = $scope.favoriteChannels;
         };
 
         // working
         $scope.displayAll = function () {
-            displayingAll = true
-            displayingFavorites = false
-            displayingRecents = false
+            displayingAll = true;
+            displayingFavorites = false;
+            displayingRecents = false;
 
-            $scope.noRecentChannels = false
-            $scope.programming = $scope.allChannels//.slice(0, 11);
-        }
+            $scope.noRecentChannels = false;
+            $scope.programming = $scope.allChannels;
+        };
 
         // make a sure a channel is playing. taken care of by ng-hide
         // check if it's already a favorite channel. remove if it is.
@@ -196,41 +177,33 @@
                 mediaSvc.addFavoriteChannel(
                     req,
                     function (data) {
-                        var newFavoriteId = {channelId: currentChannel.channelId}
-                        var newFavoriteIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(newFavoriteId.channelId)
-                        var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex]
-                        $scope.favoriteChannels.push(newFavoriteChannelObj)
+                        var newFavoriteId = {channelId: currentChannel.channelId};
+                        var newFavoriteIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(newFavoriteId.channelId);
+                        var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
+                        $scope.favoriteChannels.push(newFavoriteChannelObj);
                         $scope.favoriteIcon = '../../images/favorite-yellow.png';
                     },
                     function (error) {
-                        console.log('playerCtrl - add favorite channel failed:' + currentChannel.channelId);
-                        console.log(error);
+                        // solve with toastr later?
                     }
                 );
             }
             else {
                 $scope.favoriteChannels.splice(channelIndex, 1);
-                console.log($scope.favoriteChannels);
                 $scope.favoriteIcon = '../../images/favorite-white.png';
                 var req = {channelId: currentChannel.channelId};
                 mediaSvc.removeFavoriteChannel(
                     req,
                     function (data) {
-                        console.log('playerCtrl - remove favorite channel succeed:' + currentChannel.channelId);
+                        // solve with toastr later?
                     },
                     function (error) {
-                        console.log('playerCtrl - remove favorite channel failed:' + currentChannel.channelId);
-                        console.log(error);
+                        // solve with toastr later?
                     }
 
                 );
             }
-        }
-
-        $scope.$on('bottom-reached-before', function() {
-            // do whatever you want
-            console.log('add new channels while scrolling')
-        });
+        };
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
@@ -238,48 +211,41 @@
             if($scope.watching === false) {
                 $scope.watching = true;
             }
-            console.log('index in watchNOw', index, $rootScope.channels[index])
             // find the index of the channel where index === chIndex
-            var indexOfClickedChannel = $scope.programming.map(function(e){return e.chIndex}).indexOf(index)
-            console.log('indexOfClickedChannel', indexOfClickedChannel)
-
+            var indexOfClickedChannel = $scope.programming.map(function(e){return e.chIndex}).indexOf(index);
             // set $socpe.prevIndex
             if(indexOfClickedChannel > 0){
-                $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex
+                $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
             }
             else if(indexOfClickedChannel === 0){
-                $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex
+                $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex;
             }
             else{
-                $scope.prevIndex = $scope.programming[0].chIndex
+                $scope.prevIndex = $scope.programming[0].chIndex;
             }
 
             // set $scope.nextIndex
             if(indexOfClickedChannel === ($scope.programming.length-1)){
-                $scope.nextIndex = 0
+                $scope.nextIndex = 0;
             }
             else{
-                $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex
+                $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-                console.log('running mediaSvc getChannelUrl')
                 $scope.mainUrl = channelUrl.routes[0];
-                console.log($scope.mainUrl);
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
-                console.log('programInfo', programInfo)
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
-                console.log('programTitle, programDescription', $scope.programTitle, $scope.programDescription)
                 previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
                 addRecentChannel(currentChannelIndex.channelId); //needs to be fixed to save to local storage.
-                $scope.currentChannel.index = currentChannelIndex.index
-                $scope.currentChannel.channelId = $rootScope.channels[index].id
+                $scope.currentChannel.index = currentChannelIndex.index;
+                $scope.currentChannel.channelId = $rootScope.channels[index].id;
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 // set the location.hash to the id of
                 // the element you wish to scroll to.
@@ -293,24 +259,19 @@
          /sets the favorite image to a yellow or white star
          */
         function setFavoriteIcon (channel, favorites) {
-            var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel)
+            var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel);
             if(isfavorite === -1) {
-                console.log('setting star to white. this is NOT a favorite.')
                 $scope.favoriteIcon = '../../images/favorite-white.png';
-                return
+                return;
             } else {
                 $scope.favoriteIcon = '../../images/favorite-yellow.png';
-                return
+                return;
             }
 
         } //setFavoriteIcon
 
         function getProgramInfo(index) {
-            //var epgIndex = $rootScope.channelsEpg.indexOf({channel_id: $rootScope.channels[index].id})
-            var epgIndex = $rootScope.channelsEpg.map(function(e){return e.channel_id}).indexOf($rootScope.channels[index].id)
-            //* DELETE AFTER TESTING
-            // var epgIndex = _.findIndex($rootScope.channelsEpg, {channel_id: $rootScope.channels[index].id});
-            // console.log('epgIndex from getProgramInfo', epgIndex)
+            var epgIndex = $rootScope.channelsEpg.map(function(e){return e.channel_id}).indexOf($rootScope.channels[index].id);
             var lineUp = [];
             var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
@@ -324,11 +285,6 @@
                             info.title = lineUp[i].title;
                             info.description = lineUp[i].description;
                             info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
-                            console.log('show time', lineUp[i])
-
-                            // var startTime = new Date(lineUp[i].startTime);
-                            //info.showTime = (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM');
-
                             break;
                         }
                     }
@@ -338,37 +294,29 @@
             return info;
         } //getProgramInfo
 
-        //////////////////// Functions  ////////////////////
         function addRecentChannel(channelId) {
             if($cookies.recent === undefined) {
                 var updatedRecents= {};
-                console.log('no recents')
-                updatedRecents[channelId] = channelId
-                $cookies.recent = JSON.stringify(updatedRecents)
-                var recentCookies = $cookies.recent
+                updatedRecents[channelId] = channelId;
+                $cookies.recent = JSON.stringify(updatedRecents);
+                var recentCookies = $cookies.recent;
             }
             else {
-                var matchFound = false
-                var recentCookies = $cookies.recent
-                recentCookies = JSON.parse(recentCookies)
-                console.log('recent cookies after parsing', recentCookies)
+                var matchFound = false;
+                var recentCookies = $cookies.recent;
+                recentCookies = JSON.parse(recentCookies);
                 for (var i in recentCookies) {
                     if(recentCookies.hasOwnProperty(i)) {
-                        console.log(i);
                         if (channelId ===  i) {
-                            matchFound = true
+                            matchFound = true;
                         }
 
                     }
                 }
                 if (!matchFound) {
-                    recentCookies[channelId] = channelId
-                    var updatedRecents = JSON.stringify(recentCookies)
-                    $cookies.recent = updatedRecents
-                    console.log('recent cookies after adding value', recentCookies)
-                }
-                else {
-                    console.log('cookie already exists')
+                    recentCookies[channelId] = channelId;
+                    var updatedRecents = JSON.stringify(recentCookies);
+                    $cookies.recent = updatedRecents;
                 }
             }
         }
@@ -378,64 +326,61 @@
             if($scope.checked) {
                 $scope.$emit('ToggleChannelFilterEvent');
             }
-        }
-
-        // $scope.selectedGenres = [];
+        };
 
         // Each of these functions checks to see if the selected filter is already in the array
         // and add it if it's not already there
         $scope.toggleFilter = function(id){
-            var filterExists = $scope.selectedFilters.indexOf(id)
+            var filterExists = $scope.selectedFilters.indexOf(id);
             if(filterExists === -1){
-                $scope.selectedFilters.push(id)
-                $scope.programming = filterChannels($scope.selectedFilters)
+                $scope.selectedFilters.push(id);
+                $scope.programming = filterChannels($scope.selectedFilters);
             }
             else{
-                var index = $scope.selectedFilters.indexOf(id)
-                $scope.selectedFilters.splice(index, 1)
-                $scope.programming = filterChannels($scope.selectedFilters)
+                var index = $scope.selectedFilters.indexOf(id);
+                $scope.selectedFilters.splice(index, 1);
+                $scope.programming = filterChannels($scope.selectedFilters);
             }
-        }
+        };
 
         $scope.clearFilters = function(){
-            $scope.selectedFilters = []
-            $scope.programming = $scope.allChannels
+            $scope.selectedFilters = [];
+            $scope.programming = $scope.allChannels;
             for(var i = 0; i < $scope.tags.length; i++){
                 for(var j = 0; j < $scope.tags[i].tags.length; j++){
-                    $scope.tags[i].tags[j].Selected = false
+                    $scope.tags[i].tags[j].Selected = false;
                 }
             }
-        }
+        };
 
         // loop through all channels
         // loop through all tags on a given channel
         // add channels that have all the tags in the filter obj
         function filterChannels(filters){
-            var arr = []
-            var filterObj = {}
+            var arr = [];
+            var filterObj = {};
 
             // build filters object
             for(var i = 0; i < filters.length; i++){
-                var currentFilter = filters[i]
-                filterObj[currentFilter] = currentFilter
+                var currentFilter = filters[i];
+                filterObj[currentFilter] = currentFilter;
             }
 
             for(i = 0; i < $scope.allChannels.length; i++){
-                var matches = 0
+                var matches = 0;
                 for(var j = 0; j < $scope.allChannels[i].tags.length; j++){
-                    var tag = $scope.allChannels[i].tags[j]
+                    var tag = $scope.allChannels[i].tags[j];
                     if(filterObj.hasOwnProperty(tag)){
-                        matches++
+                        matches++;
                     }
                     if((j === $scope.allChannels[i].tags.length-1) && (matches === Object.keys(filterObj).length)){
-                        var currentChannel = $scope.allChannels[i]
-                        arr.push(currentChannel)
+                        var currentChannel = $scope.allChannels[i];
+                        arr.push(currentChannel);
                     }
                 }
             }
-            return arr
+            return arr;
         }
 
-
-    }
-})();
+    }])
+}(angular.module('app')));
