@@ -1,18 +1,14 @@
-(function() {
-    'use strict'
-    angular
-        .module('app')
-        .directive('pipScreen', ppTv);
+(function (app) {
+    'use strict';
 
-    function ppTv() {
-        console.log('new jwplayer running');
+    app.directive('pipScreen', [function () {
         return {
             restrict: 'E',
             scope: {
                 whichTv: '=info'
             },
             link: function (scope, element, attributes) {
-                attributes.$observe('playurl', function(value) {
+                attributes.$observe('playurl', function (value) {
                     jwplayer(attributes.id).setup({
                         width: '100%',
                         height: 360,
@@ -29,11 +25,8 @@
 
             }
         };
-    }
-})()
-
-
-
+    }]);
+}(angular.module('app')));
 
 
 // This is the code to have the picture and picture on the html

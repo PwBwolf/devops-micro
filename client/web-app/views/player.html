@@ -1,6 +1,5 @@
-<div ng-controller="epgCtrl">
+<div ng-controller="playerCtrl">
     <div id="playerTop" class="player-top">
-
         <div class="paid-tv"  ng-if="user.type != 'free'">
             <div class="main-player position-div">
                 <div ng-show="watching">
@@ -8,29 +7,19 @@
                 </div>
             </div>
         </div>
-
         <div class="free-tv" ng-if="user.type ==='free'">
             <div  class="main-player position-div">
                 <div ng-show="watching">
                     <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
                 </div>
             </div>
-            <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
-                <div access-level="accessLevels.user">
-                    <div class="ad-free">
-                        <img src="../images/upgrade_360_90.png" width="345px">
-                    </div>
-                </div>
-                <div class="notification" >
-                    <img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>
-                </div>
+            <div class="main-favorites position-div">
+                <div><div class="ad-free"><img class="img-responsive" ng-src="../images/pages/{{language}}/upsell-premium.png" src="../images/pages/en/upsell-premium.png"></div></div>
             </div>
-        </div> <!-- free-tv -->
+        </div>
     </div>
-
     <div>
         <div ng-include="'views/filter.html'"></div>
-
         <div id="clock" current-time="" class="position-div"></div>
         <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
             <div></div>
@@ -66,5 +55,4 @@
             </div>
         </div>
     </div>
-
 </div>

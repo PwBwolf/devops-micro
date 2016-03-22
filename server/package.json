@@ -1,6 +1,6 @@
 {
-  "name": "yiptv-ferver",
-  "description": "yiptv Server",
+  "name": "yiptv-server",
+  "description": "YipTV Server",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
