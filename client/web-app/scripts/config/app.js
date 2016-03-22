@@ -4,7 +4,7 @@
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate', 'pageslide-directive',
         'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap',
-        'ngCookies', 'ks.ngScrollRepeat'
+        'ngCookies', 'ks.ngScrollRepeat',
         'angulartics', 'angulartics.google.analytics'
     ]);
     angular.module('app').value('_', window._);

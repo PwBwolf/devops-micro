@@ -6,9 +6,9 @@
         .module('app')
         .controller('epgCtrl', epgCtrl)
 
-    epgCtrl.$inject=['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll']
+    epgCtrl.$inject=['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll', '_']
 
-    function epgCtrl($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll){
+    function epgCtrl($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll, _){
         console.log('hello from inside epg function indfjaslfkjasdlk')
         // epg related variables
         $scope.programming = []
@@ -24,7 +24,7 @@
         $scope.selectedPromo = -1;
         $scope.selectedFilters = [];
         $scope.recentChannels = [];
-        $scope.favoriteIcon = '../../images/favorite_white.png';
+        $scope.favoriteIcon = '../../images/favorite-white.png';
         $scope.channelLogo = '../../images/logo.png';
         $scope.programTitle = '';
         $scope.programDescription = '';
@@ -200,7 +200,7 @@
                         var newFavoriteIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(newFavoriteId.channelId)
                         var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex]
                         $scope.favoriteChannels.push(newFavoriteChannelObj)
-                        $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                        $scope.favoriteIcon = '../../images/favorite-yellow.png';
                     },
                     function (error) {
                         console.log('playerCtrl - add favorite channel failed:' + currentChannel.channelId);
@@ -211,7 +211,7 @@
             else {
                $scope.favoriteChannels.splice(channelIndex, 1);
                console.log($scope.favoriteChannels);
-               $scope.favoriteIcon = '../../images/favorite_white.png';
+               $scope.favoriteIcon = '../../images/favorite-white.png';
                var req = {channelId: currentChannel.channelId};
                mediaSvc.removeFavoriteChannel(
                    req,
@@ -269,8 +269,10 @@
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
+                console.log('programInfo', programInfo)
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
+                console.log('programTitle, programDescription', $scope.programTitle, $scope.programDescription)
                 previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
@@ -294,20 +296,21 @@
             var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel)
             if(isfavorite === -1) {
                 console.log('setting star to white. this is NOT a favorite.')
-                $scope.favoriteIcon = '../../images/favorite_white.png';
+                $scope.favoriteIcon = '../../images/favorite-white.png';
                 return
             } else {
-                $scope.favoriteIcon = '../../images/favorite_yellow.png';
+                $scope.favoriteIcon = '../../images/favorite-yellow.png';
                 return
             }
 
         } //setFavoriteIcon
 
         function getProgramInfo(index) {
-            var epgIndex = $rootScope.channelsEpg.indexOf({channel_id: $rootScope.channels[index].id})
-            /** DELETE AFTER TESTING
-            var epgIndex = _.findIndex($rootScope.channelsEpg, {channel_id: $rootScope.channels[index].id});
-            */
+            //var epgIndex = $rootScope.channelsEpg.indexOf({channel_id: $rootScope.channels[index].id})
+            var epgIndex = $rootScope.channelsEpg.map(function(e){return e.channel_id}).indexOf($rootScope.channels[index].id)
+            //* DELETE AFTER TESTING
+            // var epgIndex = _.findIndex($rootScope.channelsEpg, {channel_id: $rootScope.channels[index].id});
+            // console.log('epgIndex from getProgramInfo', epgIndex)
             var lineUp = [];
             var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
@@ -320,9 +323,11 @@
                         if(now < endTime) {
                             info.title = lineUp[i].title;
                             info.description = lineUp[i].description;
+                            info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
+                            console.log('show time', lineUp[i])
 
-                            var startTime = new Date(lineUp[i].startTime);
-                            info.showTime = (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM');
+                            // var startTime = new Date(lineUp[i].startTime);
+                            //info.showTime = (startTime.getHours() % 12 ? startTime.getHours() % 12 : 12) + ':' + pad(startTime.getMinutes()) + ' ' + (startTime.getHours() >= 12 ? 'PM' : 'AM' ) + ' - ' + (endTime.getHours() % 12 ? endTime.getHours() % 12 : 12) + ':' + pad(endTime.getMinutes()) + ' ' + (endTime.getHours() >= 12 ? 'PM' : 'AM');
 
                             break;
                         }
@@ -389,6 +394,16 @@
                 var index = $scope.selectedFilters.indexOf(id)
                 $scope.selectedFilters.splice(index, 1)
                 $scope.programming = filterChannels($scope.selectedFilters)
+            }
+        }
+
+        $scope.clearFilters = function(){
+            $scope.selectedFilters = []
+            $scope.programming = $scope.allChannels
+            for(var i = 0; i < $scope.tags.length; i++){
+                for(var j = 0; j < $scope.tags[i].tags.length; j++){
+                    $scope.tags[i].tags[j].Selected = false
+                }
             }
         }
 
