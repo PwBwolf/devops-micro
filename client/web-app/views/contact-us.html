@@ -9,19 +9,14 @@
                 <form name="form" id="form" ng-submit="saveContactUs()" novalidate>
                     <div class="form-container">
                         <span class="label-text" translate="CONTACT_US_NAME"></span>
-                        <input autocomplete="off" maxlength="41" type="text" autofocus class="text-box" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'text-box-error': form.name.$touched && form.name.$invalid}">
+                        <input autocomplete="off" maxlength="41" type="text" class="text-box" ng-model="mv.name" id="name" name="name" value="" required ng-class="{'text-box-error': form.name.$touched && form.name.$invalid}">
 
                         <div ng-show="form.name.$touched && form.name.$error.required" class="error-message" translate="CONTACT_US_NAME_REQUIRED"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_EMAIL"></span>
-                        <input autocomplete="off" type="text" is-email required maxlength="50" class="text-box" name="email" id="email" ng-model="mv.email" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
+                        <input autocomplete="off" type="text" is-email-or-us-phone required maxlength="50" class="text-box" name="email" id="email" ng-model="mv.email" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
 
                         <div ng-show="form.email.$touched && form.email.$error.required" class="error-message" translate="CONTACT_US_EMAIL_REQUIRED"></div>
-                        <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" class="error-message" translate="CONTACT_US_EMAIL_INVALID"></div>
-                        <br><br><span class="label-text" translate="CONTACT_US_TELEPHONE"></span>
-                        <br><input autocomplete="off" type="text" is-us-phone-number maxlength="12" required class="text-box" name="telephone" id="telephone" ng-model="mv.telephone" ng-class="{'text-box-error': form.telephone.$touched && form.telephone.$invalid}">
-
-                        <div ng-show="form.telephone.$touched && form.telephone.$error.required" class="error-message" translate="CONTACT_US_TELEPHONE_REQUIRED"></div>
-                        <div ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" class="error-message" translate="CONTACT_US_TELEPHONE_INVALID"></div>
+                        <div ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" class="error-message" translate="CONTACT_US_EMAIL_INVALID"></div>
                         <br><br><span class="label-text" translate="CONTACT_US_COUNTRY"></span>
                         <br>
                         <select required class="text-box dropdown-list" id="country" name="country" ng-model="mv.country" ng-options="country.name as country.name for country in countries" ng-class="{'text-box-error': form.country.$touched && form.country.$invalid}">
@@ -50,6 +45,7 @@
                         <button ng-disabled="saving" type="submit" translate="CONTACT_US_SUBMIT_BUTTON" class="submit-button">
                         </button>
                     </div>
+                    <div class="full-form center-form"><span class="label-text-info" translate="CONTACT_US_SMS_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>

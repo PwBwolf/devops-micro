@@ -6,7 +6,6 @@
                 <div ng-show="watching">
                     <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
                 </div>
-                <!--<div id="yiptv-player"></div>-->
             </div>
         </div>
 
@@ -15,7 +14,6 @@
                 <div ng-show="watching">
                     <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
                 </div>
-                <!--<div id="yiptv-player"></div>-->
             </div>
             <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
                 <div access-level="accessLevels.user">
@@ -50,8 +48,8 @@
                 <div class="position-div user-guide">
                     <div id="channelGuidePanel" class="user-guide-description">
                         <div>
-                        	<div></div>
-                        	<div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
+                            <div></div>
+                            <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
                             <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
                             <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
@@ -61,8 +59,8 @@
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
                                 <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
                             </div>
-                        	</div>
-                    		</div>
+                            </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -70,6 +68,3 @@
     </div>
 
 </div>
-
-
-

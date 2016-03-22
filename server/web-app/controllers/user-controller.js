@@ -40,28 +40,28 @@ module.exports = {
                 } else {
                     switch (merchant.name) {
                         case 'IDT':
-                            req.body.agentNum = 2;
+                            req.body.agentNumber = 2;
                             break;
                         case 'TRUCONN':
-                            req.body.agentNum = 3;
+                            req.body.agentNumber = 3;
                             break;
                         case 'PERKSPOT':
-                            req.body.agentNum = 4;
+                            req.body.agentNumber = 4;
                             break;
                         case 'NEXTJUMP':
-                            req.body.agentNum = 5;
+                            req.body.agentNumber = 5;
                             break;
                         case 'CJ':
-                            req.body.agentNum = 6;
+                            req.body.agentNumber = 6;
                             break;
                         case 'MGCJK':
-                            req.body.agentNum = 7;
+                            req.body.agentNumber = 7;
                             break;
                         case 'AMAZON':
-                            req.body.agentNum = 8;
+                            req.body.agentNumber = 8;
                             break;
                         case 'UBS':
-                            req.body.agentNum = 9;
+                            req.body.agentNumber = 9;
                             break;
                     }
                     return doSignUp(req, res);
@@ -478,6 +478,25 @@ module.exports = {
         });
     },
 
+    getCustomerNumberAndType: function (req, res) {
+        var email = validation.getUsername(req.query.email);
+        User.findOne({email: email}).populate('account').exec(function (err, user) {
+            if (err) {
+                logger.logError('userController - getCustomerNumber - error fetching user: ' + req.query.email.toLowerCase());
+                logger.logError(err);
+                return res.send(false);
+            }
+            if (user && user.account && user.account.type === 'free') {
+                return res.send(user._id + '_free_' + user.createdAt.getTime() + '_0');
+            } else if (user && user.account && user.account.type === 'paid') {
+                var upgradeDate = user.upgradeDate ? user.upgradeDate.getTime() : '0'
+                return res.send(user._id + '_paid_' + user.createdAt.getTime() + '_' + upgradeDate);
+            } else {
+                return res.send('error');
+            }
+        });
+    },
+
     resendVerification: function (req, res) {
         var email = validation.getUsername(req.body.email);
         User.findOne({email: email}, function (err, user) {
@@ -709,8 +728,7 @@ module.exports = {
 
         function rollbackPreferences(user, currentValues, cb) {
             user.preferences.defaultLanguage = currentValues.defaultLanguage;
-            user.preferences.emailSubscription = currentValues.emailSubscription;
-            user.preferences.smsSubscription = currentValues.smsSubscription;
+            user.preferences.emailSmsSubscription = currentValues.emailSmsSubscription;
             user.save(function (err) {
                 if (err) {
                     if (err) {
@@ -766,8 +784,7 @@ module.exports = {
 
         function rollbackLanguage(user, currentValues, cb) {
             user.preferences.defaultLanguage = currentValues.defaultLanguage;
-            user.preferences.emailSubscription = currentValues.emailSubscription;
-            user.preferences.smsSubscription = currentValues.smsSubscription;
+            user.preferences.emailSmsSubscription = currentValues.emailSmsSubscription;
             user.save(function (err) {
                 if (err) {
                     if (err) {
@@ -822,8 +839,7 @@ module.exports = {
             }
             if (user) {
                 var preferences = {
-                    emailSubscription: user.preferences.emailSubscription,
-                    smsSubscription: user.preferences.smsSubscription
+                    emailSmsSubscription: user.preferences.emailSmsSubscription
                 };
                 return res.send(preferences);
             } else {
@@ -847,11 +863,8 @@ module.exports = {
                 return res.status(500).end();
             }
             if (user) {
-                if (typeof req.body.emailSubscription === 'boolean') {
-                    user.preferences.emailSubscription = req.body.emailSubscription;
-                }
-                if (typeof req.body.smsSubscription === 'boolean') {
-                    user.preferences.smsSubscription = req.body.smsSubscription;
+                if (typeof req.body.emailSmsSubscription === 'boolean') {
+                    user.preferences.emailSmsSubscription = req.body.emailSmsSubscription;
                 }
                 user.save(function (err) {
                     if (err) {

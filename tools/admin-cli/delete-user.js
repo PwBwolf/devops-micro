@@ -4,6 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
+    validation = require('../../server/common/services/validation'),
     mongoose = require('../../server/node_modules/mongoose'),
     prompt = require('prompt');
 
@@ -11,13 +12,15 @@ logger.cli();
 var email = process.argv[2];
 
 if (typeof email === 'undefined') {
-    logger.logError('adminCLI - deleteUser - email is missing!\n\r\tusage: node delete-user <email>');
+    logger.logError('adminCLI - deleteUser - email or mobile number is missing!\n\r\tusage: node delete-user <email/mobile>');
     process.exit(1);
 } else {
-    var regex = config.regex.email;
-    var isEmail = regex.test(email);
-    if (!isEmail) {
-        logger.logError('adminCLI - deleteUser - enter a valid email address.');
+    var emailRegex = config.regex.email;
+    var phoneRegex = config.regex.telephone;
+    var isEmail = emailRegex.test(email);
+    var isPhone = phoneRegex.test(email);
+    if (!isEmail && !isPhone) {
+        logger.logError('adminCLI - deleteUser - enter a valid email address or mobile number.');
         process.exit(1);
     }
 }
@@ -53,7 +56,8 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result && result.confirmation === 'YES') {
-        User.findOne({email: email.toLowerCase()}, function (err, user) {
+        var username = validation.getUsername(email);
+        User.findOne({email: username}, function (err, user) {
             if (err) {
                 logger.logError('adminCLI - deleteUser - error fetching user');
                 logger.logError(err);

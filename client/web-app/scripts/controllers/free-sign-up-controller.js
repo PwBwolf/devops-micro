@@ -1,16 +1,24 @@
 (function (app) {
     'use strict';
 
-    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
+    app.controller('freeSignUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', 'webStorage', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams, webStorage) {
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
+        if($routeParams.merchant) {
+            var merchants = ['truconn', 'cj'];
+            $scope.logo  = {truconn: true, cj: false};
+            if(merchants.indexOf($routeParams.merchant.toLowerCase()) > -1) {
+                $scope.mv.merchant = $routeParams.merchant.toLowerCase();
+            } else {
+                $location.path('/not-found');
+            }
+        }
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
                 $scope.checkIfMobileNumber();
-                $('#password').focus();
             }
             if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'free';
@@ -24,6 +32,8 @@
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
+                        webStorage.session.add('signUpUsername', $scope.mv.email);
+                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
                         $location.path('/sign-up-verification/' + $scope.mv.email + '/free-sign-up-success');
                     },
                     function (error) {

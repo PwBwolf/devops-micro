@@ -3,6 +3,9 @@
         <div class="container">
             <div class="form-box">
                 <div>&nbsp;</div>
+                <div ng-show="logo[mv.merchant]" class="row">
+                    <img src="/images/merchants/{{mv.merchant}}.png" class="img-responsive"/>
+                </div>
                 <div class="row">
                     <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="SIGN_UP_SUB_HEADING"></h2></div>
                 </div>
@@ -44,7 +47,7 @@
                         </div>
                         <div class="half-form">
                             <span class="label-text" translate="SIGN_UP_FIRST_NAME"></span>
-                            <br><input autofocus valid-name autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
+                            <br><input valid-name autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
 
                             <div class="error-message" ng-show="form.firstName.$touched && form.firstName.$error.required" translate="SIGN_UP_FIRST_NAME_REQUIRED"></div>
                             <div class="error-message" ng-show="form.firstName.$touched && !form.firstName.$error.required && form.firstName.$error.validName" translate="SIGN_UP_FIRST_NAME_INVALID"></div>
@@ -59,18 +62,11 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email is-sign-up-allowed="paid" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
-
+                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="paid" id="email" first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && (form.email.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
+                        <span class="label-text-info" translate="SIGN_UP_VERIFICATION"></span>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="SIGN_UP_EMAIL_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmail" translate="SIGN_UP_EMAIL_INVALID"></div>
+                        <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" translate="SIGN_UP_EMAIL_INVALID"></div>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.isSignUpAllowed" translate="SIGN_UP_EMAIL_EXISTS"></div>
-                    </div>
-                    <div class="full-form">
-                        <span class="label-text" translate="SIGN_UP_TELEPHONE"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="12" required is-us-phone-number id="telephone" name="telephone" ng-model="mv.telephone" class="text-box" ng-class="{'text-box-error': form.telephone.$touched && (form.telephone.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
-                        <br><input type="checkbox" class="check-box" name="sendSmsVerification" ng-model="mv.sendSmsVerification" id="sendSmsVerification"/><label for="sendSmsVerification"><span translate="SIGN_UP_SEND_SMS_VERIFICATION"></span></label>
-                        <div class="error-message" ng-show="form.telephone.$touched && form.telephone.$error.required" translate="SIGN_UP_TELEPHONE_REQUIRED"></div>
-                        <div class="error-message" ng-show="form.telephone.$touched && !form.telephone.$error.required && form.telephone.$error.isUsPhoneNumber" translate="SIGN_UP_TELEPHONE_INVALID"></div>
                         <div class="error-message" ng-show="mobileNumberStatus === 'NOT_MOBILE'" translate="SIGN_UP_TELEPHONE_INVALID"></div>
                         <div class="success-message" ng-show="mobileNumberStatus === 'MOBILE'" translate="SIGN_UP_TELEPHONE_MOBILE"></div>
                         <div class="status-message" ng-show="mobileNumberStatus === 'CHECKING'" translate="SIGN_UP_TELEPHONE_CHECKING_IF_MOBILE"></div>
@@ -151,23 +147,23 @@
                     </div>
                     <div class="full-form">
                         <input type="checkbox" class="check-box" name="emailSmsSubscription" ng-model="mv.emailSmsSubscription" id="emailSmsSubscription"/><label for="emailSmsSubscription"><span translate="SIGN_UP_EMAIL_SMS_SUBSCRIPTION"></span></label>
-                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span> <a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a><span translate="SIGN_UP_DISCLAIMER_END"></span></label>
+                        <input type="checkbox" class="check-box" required name="disclaimer" ng-model="mv.disclaimer" id="disclaimer"/><label for="disclaimer"><span translate="SIGN_UP_DISCLAIMER"></span> <a href ng-click="goToWordPressUrl('WP_URL_TOUS')" target="_blank" translate="SIGN_UP_TERMS_OF_USE"></a> <span translate="SIGN_UP_AND"></span> <a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="SIGN_UP_PRIVACY_POLICY" target="_blank"></a> <span translate="SIGN_UP_DISCLAIMER_END"></span></label>
 
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
                     <div class="full-form">
-                        <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
+                        <button ng-disabled="saving" type="submit" class="submit-button" translate="SIGN_UP_SUBMIT_BUTTON"></button>
                         <div>&nbsp;</div>
                         <div class="progress" ng-show="saving">
-                            <div class="progress-bar progress-bar-purple progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <div class="progress-bar progress-bar-pink progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
-                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || mobileNumberStatus !== 'MOBILE')" translate="SIGN_UP_FORM_INVALID"></div>
+                        <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || (mobileNumberStatus !== 'MOBILE' && isUsPhoneNumber()))" translate="SIGN_UP_FORM_INVALID"></div>
                     </div>
                     <div class="full-form" style="padding-top:0px;">
                         <div class="bold-text text-center"><h3><span translate="SIGN_UP_QUESTIONS"></span> <span ng-bind="appConfig.customerCareNumber"></span></h3></div>
                     </div>
-                    <div class="full-form center-form"><span translate="SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
+                    <div class="full-form center-form"><span class="label-text-info" translate="SIGN_UP_SEND_SMS_VERIFICATION_FINE_PRINT"></span></div>
                 </form>
             </div>
         </div>

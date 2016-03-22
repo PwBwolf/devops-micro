@@ -16,13 +16,13 @@
                 controller: 'signInCtrl',
                 access: access.anon
             })
-            .when('/sign-up/paid',
+            .when('/sign-up/premium/:merchant?',
             {
                 templateUrl: 'views/sign-up.html',
                 controller: 'signUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up/free',
+            .when('/sign-up/free/:merchant?',
             {
                 templateUrl: 'views/free-sign-up.html',
                 controller: 'freeSignUpCtrl',
@@ -40,19 +40,6 @@
                 controller: 'freeSignUpCtrl',
                 access: access.anon
             })
-            .when('/sign-up/:source',
-            {
-                templateUrl: function (params) {
-                    var partners = ['truconn'];
-                    if (partners.indexOf(params.source) > -1) {
-                        return 'views/merchant-sign-up.html';
-                    } else {
-                        return 'views/not-found.html';
-                    }
-                },
-                controller: 'merchantSignUpCtrl',
-                access: access.anon
-            })
             .when('/sign-up-verification/:verificationEmail/:redirectRoute',
             {
                 templateUrl: 'views/sign-up-verification.html',
@@ -62,7 +49,7 @@
             .when('/free-sign-up-success',
             {
                 templateUrl: 'views/free-sign-up-success.html',
-                controller: 'signUpSuccessCtrl',
+                controller: 'freeSignUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success',
@@ -74,25 +61,19 @@
             .when('/sign-up-success-login',
             {
                 templateUrl: 'views/sign-up-success-login.html',
-                controller: 'commonCtrl',
+                controller: 'signUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-payment-failure',
             {
                 templateUrl: 'views/sign-up-success-payment-failure.html',
-                controller: 'signUpSuccessCtrl',
+                controller: 'freeSignUpSuccessCtrl',
                 access: access.anon
             })
             .when('/sign-up-success-payment-failure-login',
             {
                 templateUrl: 'views/sign-up-success-payment-failure-login.html',
                 controller: 'commonCtrl',
-                access: access.anon
-            })
-            .when('/invite/:referralCode',
-            {
-                templateUrl: 'views/redirect.html',
-                controller: 'inviteCtrl',
                 access: access.anon
             })
             .when('/forgot-password',
@@ -137,6 +118,13 @@
                 controller: 'userHomeCtrl',
                 access: access.user
             })
+            /*
+             .when('/invite/:referralCode',
+             {
+             templateUrl: 'views/redirect.html',
+             controller: 'inviteCtrl',
+             access: access.anon
+             })
             .when('/refer-a-friend',
             {
                 templateUrl: 'views/refer-a-friend.html',
@@ -148,7 +136,7 @@
                 templateUrl: 'views/refer-a-friend-success.html',
                 controller: 'commonCtrl',
                 access: access.public
-            })
+            })*/
             .when('/contact-us',
             {
                 templateUrl: 'views/contact-us.html',

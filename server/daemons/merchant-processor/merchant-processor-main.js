@@ -3,7 +3,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var monq = require('monq'),
-    xmlrpc = require('xmlrpc'),
     moment = require('moment'),
     math = require('mathjs'),
     mongoose = require('mongoose'),
@@ -13,7 +12,6 @@ var monq = require('monq'),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.createConnection(config.db);
 
-
 require('../../common/setup/models')(modelsPath);
 
 var User = db.model('User'),
@@ -22,7 +20,8 @@ var User = db.model('User'),
     Account = db.model('Account'),
     Merchant = db.model('Merchant'),
     subscription = require('../../common/services/subscription'),
-    billingBackOffice = require('../../api-server/services/billing-backoffice');
+    validation = require('../../common/services/validation'),
+    billing = require('../../common/services/billing');
 
 var worker = queueDb.worker(['api-requests']);
 worker.register({
@@ -38,7 +37,8 @@ worker.register({
                     });
                 } else {
                     params.currency = 'USD';
-                    User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
+                    var username = validation.getUsername(params.username);
+                    User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('merchantProcessorMain - makePayment - error fetching user: ' + params.username);
                             logger.logError(err);
@@ -67,8 +67,12 @@ worker.register({
                                             callback(err);
                                         });
                                     } else {
+                                        var payBy = '';
+                                        if (params.merchantName === 'IDT') {
+                                            payBy = 'IDTP';
+                                        }
                                         if (dbUser.account.type === 'free') {
-                                            subscription.upgradeSubscription(params.username.toLowerCase(), params.agentNum ? {agentNum: params.agentNum} : {}, function (err) {
+                                            subscription.upgradeSubscription(username, {}, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
                                                     logger.logError(err);
@@ -77,46 +81,35 @@ worker.register({
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    savePayment(params, 'success', '', function () {
-                                                        //callback(null, 'success');
-                                                        logger.logInfo('line run before conditional')
-                                                        if( ( ( ( new Date() - Date.parse(dbUser.account.createdAt) ) / 86400000 ) < 4 ) && dbUser.account.merchant.toLowerCase() === "yiptv") {
-                                                            logger.logInfo('line hit in conditional')
-                                                            billingBackOffice.updateFreeSideAgent(dbUser.account.freeSideCustomerNumber, function (err) {
-                                                                if (err) {
-                                                                    logger.logError('merchantProcessorMain - updateFreeSideAgent - error updating freeside back-office user ' + dbUser.account.freeSideCustomerNumber)
-                                                                    logger.logError(err);
-                                                                    callback(err);
-                                                                } else {
-                                                                    billingBackOffice.takePaymentFreeSideAgent(dbUser.account.freeSideCustomerNumber, params.amount, function (err) {
-                                                                        if (err) {
-                                                                            logger.logError('merchantProcessorMain - takePaymentFreeSideAgent - error updating freeside back-office user ' + dbUser.account.freeSideCustomerNumber)
-                                                                            logger.logError(err);
-                                                                            callback(err);
-                                                                        } else {
-                                                                            callback(null, 'success');
-                                                                        }
-                                                                        
-                                                                    })
-                                                                }
+                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                            savePayment(params, 'failure', 'server-error', function () {
+                                                                callback(err);
                                                             });
                                                         } else {
-                                                            billingBackOffice.takePaymentFreeSideAgent(dbUser.account.freeSideCustomerNumber, params.amount, function (err) {
+                                                            billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
                                                                 if (err) {
-                                                                    logger.logError('merchantProcessorMain - takePaymentFreeSideAgent - error updating freeside back-office user ' + dbUser.account.freeSideCustomerNumber)
+                                                                    logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
                                                                     logger.logError(err);
-                                                                    callback(err);
+                                                                    rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                                    savePayment(params, 'failure', 'server-error', function () {
+                                                                        callback(err);
+                                                                    });
                                                                 } else {
-                                                                    callback(null, 'success');
+                                                                    savePayment(params, 'success', '', function () {
+                                                                        callback(null, 'success');
+                                                                    });
                                                                 }
-                                                            })
+                                                            });
                                                         }
-
                                                     });
                                                 }
                                             });
                                         } else {
-                                            subscription.processCashPayment(params.username.toLowerCase(), function (err) {
+                                            subscription.processCashPayment(username, function (err) {
                                                 if (err) {
                                                     logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                     logger.logError(err);
@@ -125,18 +118,30 @@ worker.register({
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    savePayment(params, 'success', '', function () {
-                                                        
-                                                        billingBackOffice.takePaymentFreeSideAgent(dbUser.account.freeSideCustomerNumber, params.amount, function (err) {
-                                                            if (err) {
-                                                                logger.logError('merchantProcessorMain - takePaymentFreeSideAgent - error updating freeside back-office user ' + dbUser.account.freeSideCustomerNumber)
-                                                                logger.logError(err);
+                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                            savePayment(params, 'failure', 'server-error', function () {
                                                                 callback(err);
-                                                            } else {
-                                                                callback(null, 'success');
-                                                            }
-                                                        })
-                                                        //callback(null, 'success');
+                                                            });
+                                                        } else {
+                                                            billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                                if (err) {
+                                                                    logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
+                                                                    logger.logError(err);
+                                                                    rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
+                                                                    savePayment(params, 'failure', 'server-error', function () {
+                                                                        callback(err);
+                                                                    });
+                                                                } else {
+                                                                    savePayment(params, 'success', '', function () {
+                                                                        callback(null, 'success');
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
                                                     });
                                                 }
                                             });
@@ -166,7 +171,8 @@ worker.register({
                     });
                 } else {
                     params.currency = 'USD';
-                    User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
+                    var username = validation.getUsername(params.username);
+                    User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
                             logger.logError('merchantProcessorMain - makeRefund - error fetching user: ' + params.username);
                             logger.logError(err);
@@ -189,7 +195,7 @@ worker.register({
                             } else if (dbUser && dbUser.account && !dbUser.account.firstCardPaymentDate && dbUser.account.firstMerchantPaymentDate) {
                                 var refundLastDate = moment(dbUser.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
                                 if (refundLastDate.isAfter(moment.utc())) {
-                                    subscription.endPaidSubscription(params.username.toLowerCase(), function (err) {
+                                    subscription.endPaidSubscription(username, function (err) {
                                         if (err) {
                                             logger.logError('merchantProcessorMain - makeRefund - error in canceling subscription: ' + params.username);
                                             logger.logError(err);
@@ -197,9 +203,30 @@ worker.register({
                                                 callback(err);
                                             });
                                         } else {
-                                            saveRefund(params, 'success', '', function () {
-                                                callback(null, 'success');
+                                            billing.updateAgent(dbUser.account.freeSideCustomerNumber, 1, function (err) {
+                                                if(err) {
+                                                    logger.logError('merchantProcessorMain - makeRefund - error updating agent back to 1 ' + dbUser.account.freeSideCustomerNumber);
+                                                    logger.logError(err);
+                                                    saveRefund(params, 'failure', 'server-error', function () {
+                                                        callback(err);
+                                                    });
+                                                } else {
+                                                    billing.makeRefund(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                        if (err) {
+                                                            logger.logError('merchantProcessorMain - makeRefund - error refunding payment ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError(err);
+                                                            saveRefund(params, 'failure', 'server-error', function () {
+                                                                callback(err);
+                                                            });
+                                                        } else {
+                                                            saveRefund(params, 'success', '', function () {
+                                                                callback(null, 'success');
+                                                            });
+                                                        }
+                                                    });
+                                                }
                                             });
+
                                         }
                                     });
                                 } else {
@@ -229,11 +256,12 @@ logger.logInfo('merchantProcessorMain - merchant processor daemon has started');
 
 function makePaymentInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
-    } else if (params.amount < 14.99) {
+    } else if (math.mod(params.amount, 14.99) !== 0) {
         cb('invalid-amount');
     } else if (!params.submitTime || !moment(params.submitTime).isValid()) {
         cb('invalid-submit-time');
@@ -250,7 +278,7 @@ function savePayment(params, isSuccess, reason, cb) {
     payment.merchant = params.merchantId;
     payment.merchantPopId = params.merchantPopId;
     payment.merchantReferenceId = params.merchantReferenceId;
-    payment.username = params.username.toLowerCase();
+    payment.username = validation.getUsername(params.username);
     payment.status = isSuccess;
     payment.reason = reason;
     payment.processTime = processTime;
@@ -269,7 +297,8 @@ function savePayment(params, isSuccess, reason, cb) {
 
 function makeRefundInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
@@ -290,7 +319,7 @@ function saveRefund(params, isSuccess, reason, cb) {
     refund.merchant = params.merchantId;
     refund.merchantPopId = params.merchantPopId;
     refund.merchantReferenceId = params.merchantReferenceId;
-    refund.username = params.username.toLowerCase();
+    refund.username = validation.getUsername(params.username);
     refund.status = isSuccess;
     refund.reason = reason;
     refund.processTime = processTime;
@@ -309,8 +338,6 @@ function saveRefund(params, isSuccess, reason, cb) {
 
 function updateAccountForPayment(email, accountId, merchantId, cb) {
     var firstMerchantPaymentDate;
-    //cb(null);
-    //return;
     Payment.find({username: email, status: 'success'}, function (err, payments) {
         if (err) {
             logger.logError('merchantProcessorMain - updateAccountForPayment - error fetching payment history');

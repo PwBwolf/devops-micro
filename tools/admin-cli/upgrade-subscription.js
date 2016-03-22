@@ -4,6 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
+    validation = require('../../server/common/services/validation'),
     mongoose = require('../../server/node_modules/mongoose'),
     prompt = require('prompt'),
     fs = require('fs'),
@@ -19,29 +20,33 @@ var User = db.model('User');
 var schema = {
     properties: {
         email: {
-            description: 'User Email',
-            message: 'Enter a valid email address',
+            description: 'User Email or Mobile Number',
+            message: 'Enter a valid email address or mobile number',
             required: true,
             conform: function (value) {
-                var regex = config.regex.email;
-                regex.lastIndex = 0;
-                var isEmail = regex.test(value);
-                if (value && value.trim() && value.trim().length <= 50 && isEmail) {
-                    User.findOne({email: value.toLowerCase()}).populate('account').exec(function (err, userObj) {
+                var emailRegex = config.regex.email;
+                var phoneRegex = config.regex.telephone;
+                emailRegex.lastIndex = 0;
+                phoneRegex.lastIndex = 0;
+                var isEmail = emailRegex.test(value);
+                var isPhone = phoneRegex.test(value);
+                if (value && value.trim() && value.trim().length <= 50 && (isEmail || isPhone)) {
+                    var username = validation.getUsername(value);
+                    User.findOne({email: username}).populate('account').exec(function (err, userObj) {
                         if (err) {
-                            logger.logError('adminCLI - upgradeSubscription - error fetching user: ' + value.toLowerCase());
+                            logger.logError('adminCLI - upgradeSubscription - error fetching user: ' + username);
                             process.exit(1);
                         } else if (!userObj) {
-                            logger.logError('adminCLI - upgradeSubscription - user not found: ' + value.toLowerCase());
+                            logger.logError('adminCLI - upgradeSubscription - user not found: ' +username);
                             process.exit(1);
                         } else if (userObj.status === 'failed') {
-                            logger.logError('adminCLI - upgradeSubscription - failed user: ' + value.toLowerCase());
+                            logger.logError('adminCLI - upgradeSubscription - failed user: ' + username);
                             process.exit(1);
                         } else if (userObj.account.type === 'paid') {
-                            logger.logError('adminCLI - upgradeSubscription - paid user: ' + value.toLowerCase());
+                            logger.logError('adminCLI - upgradeSubscription - premium user: ' + username);
                             process.exit(1);
                         } else if (userObj.account.type === 'comp') {
-                            logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + value.toLowerCase());
+                            logger.logError('adminCLI - upgradeSubscription - complimentary user: ' + username);
                             process.exit(1);
                         }
                     });
@@ -154,7 +159,8 @@ prompt.get(schema, function (err, result) {
         process.exit(1);
     }
     if (result) {
-        subscription.upgradeSubscription(result.email.toLowerCase(), result, function (err) {
+        var username = validation.getUsername(result.email);
+        subscription.upgradeSubscription(username, result, function (err) {
             if (err) {
                 logger.logError('adminCLI - upgradeSubscription - error upgrading user');
                 logger.logError(err);

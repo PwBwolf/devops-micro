@@ -31,7 +31,7 @@ module.exports = {
     imageUrl: 'https://app.test.yiptv.net/images/',
     secretToken: 'yip#tv@test#275',
     ruleEngineRecurrence: '0 0 0 * * *',
-    contactUsEmailList: 'achinth@yiptv.com, bashkaran@yiptv.com',
+    contactUsEmailList: 'devteam@yiptv.com',
     cloudSpongeDomainKey: 'KT5XZEDX6A32PFZCKZ3Y',
     complimentarySignUpUrl: 'https://app.test.yiptv.net/sign-up/complimentary/',
     refundPeriodInDays: 3,
@@ -41,8 +41,8 @@ module.exports = {
     twilioMobileType: ['mobile', 'voip'],
     freeSideKeyEmailDomain: 'yiptv.ws',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
-    freeSideBackOfficeApiUri: 'http://172.16.10.5:8008/',
-    freeSideSecret: 'yip-freeside-dev',
+    freeSideBackOfficeApiUrl: 'http://172.16.10.5:8008/',
+    freeSideSecretKey: 'yip-freeside-dev',
     freeSideFreePremiumUserPackageParts: [17, 18],
     freeSideFreeUserPackageParts: [17],
     freeSidePaidUserPackageParts: [17, 18, 16],
@@ -51,5 +51,5 @@ module.exports = {
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
-    cmsApiUrl: 'http://172.16.10.108'
+    cmsApiUrl: 'http://172.16.10.109'
 };

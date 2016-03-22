@@ -166,14 +166,11 @@ module.exports = {
         if (!emailRegex.test(data.email.trim())) {
             return 'EmailInvalid';
         }
-        if (typeof data.emailSubscription === 'undefined' && typeof data.smsSubscription === 'undefined') {
-            return 'InputInvalid';
+        if (typeof data.emailSmsSubscription === 'undefined') {
+            return 'EmailSmsSubscriptionInvalid';
         }
-        if (typeof data.emailSubscription !== 'undefined' && typeof data.emailSubscription !== 'boolean') {
-            return 'EmailSubscriptionInvalid';
-        }
-        if (typeof data.smsSubscription !== 'undefined' && typeof data.smsSubscription !== 'boolean') {
-            return 'SmsSubscriptionInvalid';
+        if (typeof data.emailSmsSubscription !== 'undefined' && typeof data.emailSmsSubscription !== 'boolean') {
+            return 'EmailSmsSubscriptionInvalid';
         }
         return null;
     },
@@ -204,7 +201,9 @@ module.exports = {
 
     isUsPhoneNumberInternationalFormat: isUsPhoneNumberInternationalFormat,
 
-    getUsername: getUsername
+    getUsername: getUsername,
+
+    getDbUsernameFromFreeSideUsername: getDbUsernameFromFreeSideUsername
 };
 
 function isPasswordComplex(password) {
@@ -292,4 +291,16 @@ function getUsername(value) {
         value = '1' + value.replace(/[\. -]+/g, '');
     }
     return value.trim().toLowerCase();
+}
+
+function getDbUsernameFromFreeSideUsername(username) {
+    if (endsWith(username, 'yiptv.ws') || endsWith(username, 'yiptv.us')) {
+        return username.split('_')[0];
+    } else {
+        return username.toLowerCase();
+    }
+}
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }

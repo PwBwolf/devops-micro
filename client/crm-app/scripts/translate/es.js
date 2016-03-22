@@ -23,7 +23,7 @@
             INDEX_OK_BUTTON: 'Okay',
             INDEX_YES_BUTTON: 'Sí',
             INDEX_NO_BUTTON: 'No',
-            INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2015 YIPTV. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
+            INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2016 YIPTV. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
             MAIN_ERROR_APP_CONFIG: 'Error frente configuracion de la aplicacion',
             MAIN_SIGN_OUT_CONFIRMATION: 'Seguro que deseas salir de YipTV?',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Desea cambiar su idioma preferido a',

@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
     twilio = require('../../common/services/twilio'),
     ContactUs = mongoose.model('ContactUs'),
     Referrer = mongoose.model('Referrer'),
-    Visitor = mongoose.model('Visitor'),
     Country = mongoose.model('Country'),
     State = mongoose.model('State'),
     ComplimentaryCode = mongoose.model('ComplimentaryCode'),
@@ -53,54 +52,10 @@ module.exports = {
         });
     },
 
-    saveVisitor: function (req, res) {
-        Visitor.findOne({email: req.body.email.toLowerCase()}, function (err, visitor) {
-            if (err) {
-                logger.logError('appController - saveVisitor - error fetching visitor: ' + req.body.email.toLowerCase());
-                logger.logError(err);
-            }
-            if (!visitor) {
-                var visitorObj = new Visitor({
-                    email: req.body.email,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    createdAt: (new Date()).toUTCString()
-                });
-                visitorObj.save(function (err) {
-                    if (err) {
-                        logger.logError('appController - saveVisitor - error saving visitor - 1: ' + req.body.email.toLowerCase());
-                        logger.logError(err);
-                    }
-                });
-            } else {
-                var changed = false;
-                if (req.body.firstName && req.body.firstName !== visitor.firstName) {
-                    visitor.firstName = req.body.firstName;
-                    changed = true;
-                }
-                if (req.body.lastName && req.body.lastName !== visitor.lastName) {
-                    visitor.lastName = req.body.lastName;
-                    changed = true;
-                }
-                if (changed) {
-                    visitor.updatedAt = (new Date()).toUTCString();
-                    visitor.save(function (err) {
-                        if (err) {
-                            logger.logError('appController - saveVisitor - error saving visitor - 2: ' + req.body.email.toLowerCase());
-                            logger.logError(err);
-                        }
-                    });
-                }
-            }
-        });
-        return res.status(200).end();
-    },
-
     saveContactUs: function (req, res) {
         var contactUs = new ContactUs({
             name: req.body.name,
             email: req.body.email,
-            telephone: req.body.telephone,
             country: req.body.country,
             interest: req.body.interest,
             details: req.body.details.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/\s/g, '&nbsp;'),
@@ -116,13 +71,7 @@ module.exports = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.contactUsEmailList,
                 subject: config.contactUsEmailSubject,
-                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
-            };
-            var mailOptionsUser = {
-                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                to: contactUs.email,
-                subject: config.contactUsEmailSubject,
-                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.telephone, contactUs.country, contactUs.interest, contactUs.details)
+                html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.country, contactUs.interest, contactUs.details)
             };
             email.sendEmail(mailOptionsSupport, function (err) {
                 if (err) {
@@ -132,14 +81,32 @@ module.exports = {
                     logger.logInfo('appController - saveContactUs - contact us email sent to support: ' + mailOptionsSupport.to);
                 }
             });
-            email.sendEmail(mailOptionsUser, function (err) {
-                if (err) {
-                    logger.logError('appController - saveContactUs - error sending contact us email to user: ' + req.body.email);
-                    logger.logError(err);
-                } else {
-                    logger.logInfo('appController - saveContactUs - contact us email sent to user: ' + mailOptionsUser.to);
-                }
-            });
+            if (validation.isUsPhoneNumber(contactUs.email)) {
+                var message = config.contactUsSmsMessage;
+                twilio.sendSms(config.twilioSmsSendMobileNumber, contactUs.email, message, function (err) {
+                    if (err) {
+                        logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + contactUs.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('subscription - endComplimentarySubscription - sms sent successfully: ' + contactUs.email);
+                    }
+                });
+            } else {
+                var mailOptionsUser = {
+                    from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                    to: contactUs.email,
+                    subject: config.contactUsEmailSubject,
+                    html: sf(config.contactUsEmailBody, config.imageUrl, contactUs.name, contactUs.email, contactUs.country, contactUs.interest, contactUs.details)
+                };
+                email.sendEmail(mailOptionsUser, function (err) {
+                    if (err) {
+                        logger.logError('appController - saveContactUs - error sending contact us email to user: ' + req.body.email);
+                        logger.logError(err);
+                    } else {
+                        logger.logInfo('appController - saveContactUs - contact us email sent to user: ' + mailOptionsUser.to);
+                    }
+                });
+            }
             return res.status(200).end();
         });
     },

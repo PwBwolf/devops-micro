@@ -16,7 +16,7 @@
                     <br><br>
                     <span class="label-text" translate="RAF_ENTER_FRIENDS_EMAIL"></span>
                     <br>
-                    <textarea autofocus valid-email-list id="emailList" name="emailList" class="text-box text-area" ng-model="mv.emailList" value="" required ng-class="{'text-box-error': form.emailList.$touched && form.emailList.$invalid}"></textarea>
+                    <textarea valid-email-list id="emailList" name="emailList" class="text-box text-area" ng-model="mv.emailList" value="" required ng-class="{'text-box-error': form.emailList.$touched && form.emailList.$invalid}"></textarea>
                     <br>
 
                     <div ng-show="form.emailList.$touched && form.emailList.$error.required" class="error-message" translate="RAF_EMAIL_LIST_REQUIRED"></div>

@@ -1,9 +1,18 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
+    app.controller('signUpCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$routeParams', 'webStorage', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $routeParams, webStorage) {
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
+        if($routeParams.merchant) {
+            var merchants = ['truconn', 'cj'];
+            $scope.logo  = {truconn: true, cj: false};
+            if(merchants.indexOf($routeParams.merchant.toLowerCase()) > -1) {
+                $scope.mv.merchant = $routeParams.merchant.toLowerCase();
+            } else {
+                $location.path('/not-found');
+            }
+        }
         $scope.formSubmit = false;
         $scope.mobileNumberStatus = 'NOT_CHECKED';
 
@@ -20,9 +29,8 @@
         $scope.signUp = function () {
             if ($scope.mobileNumberStatus === 'NOT_CHECKED') {
                 $scope.checkIfMobileNumber();
-                $('#password').focus();
             }
-            if ($scope.form.$valid && $scope.mobileNumberStatus === 'MOBILE') {
+            if ($scope.form.$valid && (!$scope.isUsPhoneNumber() || $scope.mobileNumberStatus === 'MOBILE')) {
                 $scope.mv.type = 'paid';
                 $scope.mv.referredBy = $rootScope.referredBy;
                 $scope.mv.preferences = {
@@ -35,8 +43,10 @@
                     function (data) {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
+                        webStorage.session.add('signUpUsername', $scope.mv.email);
+                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
                         if (data === 'registered') {
-                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success');
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success');
                         } else {
                             $location.path('/sign-up-success-login');
                         }
@@ -45,7 +55,7 @@
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentFailed') {
-                            $location.path('/sign-up-verification/' + $scope.mv.email + '/' + $scope.mv.telephone + '/sign-up-success-payment-failure');
+                            $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success-payment-failure');
                         } else if (error === 'PaymentFailedActive') {
                             $location.path('/sign-up-success-payment-failure-login');
                         } else {
@@ -63,7 +73,6 @@
             $scope.form.firstName.$touched = true;
             $scope.form.lastName.$touched = true;
             $scope.form.email.$touched = true;
-            $scope.form.telephone.$touched = true;
             $scope.form.password.$touched = true;
             $scope.form.cardName.$touched = true;
             $scope.form.cardNumber.$touched = true;
@@ -84,9 +93,9 @@
         }
 
         $scope.checkIfMobileNumber = function () {
-            if ($scope.form.telephone.$valid) {
+            if ($scope.form.email.$valid && $scope.isUsPhoneNumber()) {
                 $scope.mobileNumberStatus = 'CHECKING';
-                appSvc.verifyMobileNumber($scope.mv.telephone, function (result) {
+                appSvc.verifyMobileNumber($scope.mv.email, function (result) {
                     if (result) {
                         setMobileNumberStatus('MOBILE');
                     } else {
@@ -101,6 +110,11 @@
         $scope.resetMobileNumberStatus = function () {
             $scope.mobileNumberStatus = 'NOT_CHECKED';
         };
+
+        $scope.isUsPhoneNumber = function () {
+            var phoneRegex = /^[2-9]{1}[0-9]{2}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            return phoneRegex.test($scope.mv.email);
+        }
 
     }]);
 }(angular.module('app')));

@@ -10,7 +10,7 @@ var config = require('../setup/config'),
 module.exports = {
 
     login: function (email, key, password, callback) {
-        var username = validation.isUsPhoneNumberInternationalFormat(email) ? getFreeSideKey(key) : email;
+        var username = validation.isUsPhoneNumberInternationalFormat(email) ? getFreeSideKey(email, key) : email;
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         client.methodCall('FS.ClientAPI_XMLRPC.login', [
             'email', username,
@@ -35,13 +35,13 @@ module.exports = {
         });
     },
 
-    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, key, password, payBy, payInfo, payDate, payCvv, payName, locale, agentNum, callback) {
+    newCustomer: function (firstName, lastName, address, city, state, zip, country, email, key, password, payBy, payInfo, payDate, payCvv, payName, locale, agentNumber, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         var dayTime, invoicingList, emailKey;
         if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
-            invoicingList = getFreeSideKey(key);
-            emailKey = getFreeSideKey(key);
+            invoicingList = getFreeSideKey(email, key);
+            emailKey = getFreeSideKey(email, key);
         } else {
             dayTime = '';
             invoicingList = email;
@@ -49,7 +49,7 @@ module.exports = {
         }
         client.methodCall('FS.ClientAPI_XMLRPC.new_customer_minimal',
             [
-                'agentnum', agentNum ? agentNum : 1,
+                'agentnum', agentNumber ? agentNumber : 1,
                 'refnum', 1,
                 'first', firstName,
                 'last', lastName,
@@ -91,12 +91,12 @@ module.exports = {
         );
     },
 
-    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, locale, payBy, payInfo, payDate, payCvv, payName, agentNum, callback) {
+    updateCustomer: function (sessionId, firstName, lastName, address, city, state, zip, country, email, key, locale, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
         var dayTime, invoicingList;
         if (validation.isUsPhoneNumberInternationalFormat(email)) {
             dayTime = email.substr(1);
-            invoicingList = '';
+            invoicingList = getFreeSideKey(email, key);
         } else {
             dayTime = '';
             invoicingList = email;
@@ -121,8 +121,7 @@ module.exports = {
                 'year', payDate.substring(3),
                 'paycvv', payCvv,
                 'payname', payName,
-                'auto', 'Y',
-                'agentnum', agentNum ? agentNum : 1
+                'auto', 'Y'
             ], function (err, response) {
                 if (err) {
                     logger.logError('billing - updateCustomer - error in updating customer 1');
@@ -172,40 +171,44 @@ module.exports = {
 
     updateBilling: function (sessionId, address, city, state, zip, country, payBy, payInfo, payDate, payCvv, payName, callback) {
         var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
-        client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
-            [
-                'session_id', sessionId,
-                'address1', address,
-                'city', city,
-                'county', '',
-                'state', state,
-                'zip', zip,
-                'country', country,
-                'payby', payBy,
-                'payinfo', payInfo,
-                'paycvv', payCvv,
-                'month', payDate.substring(0, 2),
-                'year', payDate.substring(3),
-                'auto', 'Y',
-                'payname', payName
-            ], function (err, response) {
-                if (err) {
-                    logger.logError('billing - updateBilling - error in updating billing 1');
-                    logger.logError(err);
-                    callback(err);
-                } else {
-                    if (response.error) {
-                        logger.logError('billing - updateBilling - error in updating billing 2');
-                        logger.logError(response.error);
-                        callback(response.error);
+        try {
+            client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
+                [
+                    'session_id', sessionId,
+                    'address1', address,
+                    'city', city,
+                    'county', '',
+                    'state', state,
+                    'zip', zip,
+                    'country', country,
+                    'payby', payBy,
+                    'payinfo', payInfo,
+                    'paycvv', payCvv,
+                    'month', payDate.substring(0, 2),
+                    'year', payDate.substring(3),
+                    'auto', 'Y',
+                    'payname', payName
+                ], function (err, response) {
+                    if (err) {
+                        logger.logError('billing - updateBilling - error in updating billing 1');
+                        logger.logError(err);
+                        callback(err);
                     } else {
-                        logger.logInfo('billing - updateBilling - response');
-                        logger.logInfo(response);
-                        callback(null);
+                        if (response.error) {
+                            logger.logError('billing - updateBilling - error in updating billing 2');
+                            logger.logError(response.error);
+                            callback(response.error);
+                        } else {
+                            logger.logInfo('billing - updateBilling - response');
+                            logger.logInfo(response);
+                            callback(null);
+                        }
                     }
                 }
-            }
-        );
+            );
+        } catch (ex) {
+            logger.logError(ex);
+        }
     },
 
     updateAddress: function (sessionId, address, city, state, zip, country, callback) {
@@ -371,6 +374,103 @@ module.exports = {
         });
     },
 
+    updateAgent: function (customerNumber, agentNumber, callback) {
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.update_customer', [
+            'secret', config.freeSideSecretKey,
+            'custnum', customerNumber,
+            'agentnum', agentNumber ? agentNumber : 1
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - updateAgent - error in updating agent number 1');
+                logger.logError(err);
+                if (callback) {
+                    callback(err);
+                }
+            } else {
+                if (response.error) {
+                    logger.logError('billing - updateAgent - error in updating agent number 2');
+                    logger.logError(response.error);
+                    if (callback) {
+                        callback(response.error);
+                    }
+                } else {
+                    logger.logInfo('billing - updateAgent - response');
+                    logger.logInfo(response);
+                    if (callback) {
+                        callback(null);
+                    }
+                }
+            }
+        });
+    },
+
+    makePayment: function (customerNumber, amount, payBy, callback) {
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.insert_payment', [
+            'secret', config.freeSideSecretKey,
+            'custnum', customerNumber,
+            'payby', payBy,
+            'paid', amount,
+            '_date', Math.round(new Date().getTime() / 1000)
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - makePayment - error in insertint payment 1');
+                logger.logError(err);
+                if (callback) {
+                    callback(err);
+                }
+            } else {
+                if (response.error) {
+                    logger.logError('billing - makePayment - error in inserting payment 2');
+                    logger.logError(response.error);
+                    if (callback) {
+                        callback(response.error);
+                    }
+                } else {
+                    logger.logInfo('billing - makePayment - response');
+                    logger.logInfo(response);
+                    if (callback) {
+                        callback(null);
+                    }
+                }
+            }
+        });
+    },
+
+    makeRefund: function (customerNumber, amount, payBy, callback) {
+        var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
+        client.methodCall('FS.API.insert_refund', [
+            'secret', config.freeSideSecretKey,
+            'custnum', customerNumber,
+            'payby', payBy,
+            'paid', amount,
+            '_date', Math.round(new Date().getTime() / 1000)
+        ], function (err, response) {
+            if (err) {
+                logger.logError('billing - makePayment - error in insertint payment 1');
+                logger.logError(err);
+                if (callback) {
+                    callback(err);
+                }
+            } else {
+                if (response.error) {
+                    logger.logError('billing - makePayment - error in inserting payment 2');
+                    logger.logError(response.error);
+                    if (callback) {
+                        callback(response.error);
+                    }
+                } else {
+                    logger.logInfo('billing - makePayment - response');
+                    logger.logInfo(response);
+                    if (callback) {
+                        callback(null);
+                    }
+                }
+            }
+        });
+    },
+
     cancelPackage: cancelPackage,
 
     getPackages: getPackages
@@ -455,6 +555,6 @@ function orderPackage(sessionId, packagePart, callback) {
     });
 }
 
-function getFreeSideKey(key) {
-    return Date.now() + '_' + key + '@' + config.freeSideKeyEmailDomain;
+function getFreeSideKey(email, key) {
+    return email + '_' + key + '@' + config.freeSideKeyEmailDomain;
 }

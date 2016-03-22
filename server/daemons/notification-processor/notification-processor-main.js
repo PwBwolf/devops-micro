@@ -9,6 +9,7 @@ var monq = require('monq'),
     math = require('mathjs'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
+    validation = require('../../common/services/validation'),
     queueDb = monq(config.db),
     modelsPath = config.root + '/server/common/models',
     db = mongoose.createConnection(config.db);
@@ -33,9 +34,10 @@ worker.register({
                         callback(new Error(err));
                     });
                 } else {
-                    User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
+                    var username = validation.getDbUsernameFromFreeSideUsername(params.username);
+                    User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
-                            logger.logError('notificationProcessorMain - executeDunning - error fetching user: ' + params.username);
+                            logger.logError('notificationProcessorMain - executeDunning - error fetching user: ' + username);
                             logger.logError(new Error(err));
                             saveDunning(params, 'failure', 'server-error', function () {
                                 callback(new Error(err));
@@ -55,9 +57,9 @@ worker.register({
                         } else {
                             switch (params.days) {
                                 case 5:
-                                    subscription.dunning5Days(params.username.toLowerCase(), function (err) {
+                                    subscription.dunning5Days(username, function (err) {
                                         if (err) {
-                                            logger.logError('notificationProcessorMain - executeDunning - error executing dunning 5 days: ' + params.username);
+                                            logger.logError('notificationProcessorMain - executeDunning - error executing dunning 5 days: ' + username);
                                             logger.logError(err);
                                             saveDunning(params, 'failure', 'server-error', function () {
                                                 callback(err);
@@ -70,9 +72,9 @@ worker.register({
                                     });
                                     break;
                                 case 10:
-                                    subscription.dunning10Days(params.username.toLowerCase(), function (err) {
+                                    subscription.dunning10Days(username, function (err) {
                                         if (err) {
-                                            logger.logError('notificationProcessorMain - executeDunning - error executing dunning 10 days: ' + params.username);
+                                            logger.logError('notificationProcessorMain - executeDunning - error executing dunning 10 days: ' + username);
                                             logger.logError(err);
                                             saveDunning(params, 'failure', 'server-error', function () {
                                                 callback(err);
@@ -112,9 +114,10 @@ worker.register({
                     });
                 } else {
                     params.currency = 'USD';
-                    User.findOne({email: params.username.toLowerCase()}).populate('account').exec(function (err, dbUser) {
+                    var username = validation.getDbUsernameFromFreeSideUsername(params.username);
+                    User.findOne({email: username}).populate('account').exec(function (err, dbUser) {
                         if (err) {
-                            logger.logError('notificationProcessorMain - paymentReceived - error fetching user: ' + params.username);
+                            logger.logError('notificationProcessorMain - paymentReceived - error fetching user: ' + username);
                             logger.logError(new Error(err));
                             saveBillingPayment(params, 'failure', 'server-error', function () {
                                 callback(new Error(err));
@@ -132,9 +135,9 @@ worker.register({
                                 callback(new Error('account-error'));
                             });
                         } else if (dbUser.account.type === 'paid') {
-                            subscription.reverseDunning5Days(params.username.toLowerCase(), function (err) {
+                            subscription.reverseDunning5Days(username, function (err) {
                                 if (err) {
-                                    logger.logError('notificationProcessorMain - paymentReceived - error executing reverse dunning 5 days: ' + params.username);
+                                    logger.logError('notificationProcessorMain - paymentReceived - error executing reverse dunning 5 days: ' + username);
                                     logger.logError(err);
                                     saveBillingPayment(params, 'failure', 'server-error', function () {
                                         callback(err);
@@ -162,7 +165,8 @@ logger.logInfo('notificationProcessorMain - notification processor daemon has st
 
 function executeDunningInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.days || typeof params.days !== 'number' || !_.contains([1, 3, 5, 7, 10], params.days)) {
         cb('invalid-days');
@@ -175,7 +179,8 @@ function executeDunningInputValidation(params, cb) {
 
 function paymentReceivedInputValidation(params, cb) {
     var emailRegex = config.regex.email;
-    if (!params.username || !emailRegex.test(params.username) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
+    var phoneRegex = config.regex.telephone;
+    if (!params.username || (!emailRegex.test(params.username) && !phoneRegex.test(params.username)) || params.username.trim().length > 50 || params.username.trim().length <= 0) {
         cb('invalid-username');
     } else if (!params.amount || typeof params.amount !== 'number') {
         cb('invalid-amount');
@@ -195,7 +200,7 @@ function paymentReceivedInputValidation(params, cb) {
 function saveDunning(params, status, reason, cb) {
     var processTime = (new Date()).toUTCString();
     var log = new Dunning();
-    log.username = params.username.toLowerCase();
+    log.username = validation.getDbUsernameFromFreeSideUsername(params.username);
     log.days = (!params.days || typeof params.days !== 'number') ? 0 : params.days;
     log.submitTime = (!params.submitTime || !moment(params.submitTime).isValid()) ? '0' : params.submitTime;
     log.status = status;
@@ -216,7 +221,7 @@ function saveDunning(params, status, reason, cb) {
 function saveBillingPayment(params, status, reason, cb) {
     var processTime = (new Date()).toUTCString();
     var log = new BillingPayment();
-    log.username = params.username.toLowerCase();
+    log.username = validation.getDbUsernameFromFreeSideUsername(params.username);
     log.amount = (!params.amount || typeof params.amount !== 'number') ? 0 : params.amount;
     log.currency = params.currency;
     log.paymentTime = (!params.paymentTime || !moment(params.paymentTime).isValid()) ? '0' : params.paymentTime;

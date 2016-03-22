@@ -1,15 +1,15 @@
 (function (app) {
     'use strict';
 
-    app.controller('signUpSuccessCtrl', ['$sce', '$scope', 'userSvc', 'webStorage', function ($sce, $scope, userSvc, webStorage) {
+    app.controller('freeSignUpSuccessCtrl', ['$sce', '$scope', 'userSvc', 'webStorage', function ($sce, $scope, userSvc, webStorage) {
         var username = webStorage.session.get('signUpUsername');
         var merchant = webStorage.session.get('signUpMerchant');
         webStorage.session.remove('signUpMerchant');
         webStorage.session.remove('signUpUsername');
-        var containerTagId = 13401;
+        var containerTagId = 12730;
         var cid = 1536367;
-        var amount = 14.99;
-        var type = 384431;
+        var amount = 0;
+        var type = 383212;
         var currency = 'USD';
         if (!merchant || merchant === 'cj') {
             if (username) {

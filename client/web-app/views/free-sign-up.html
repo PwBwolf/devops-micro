@@ -3,13 +3,16 @@
         <div class="container">
             <div class="form-box">
                 <div>&nbsp;</div>
+                <div ng-show="logo[mv.merchant]" class="row">
+                    <img src="/images/merchants/{{mv.merchant}}.png" class="img-responsive"/>
+                </div>
                 <div class="row">
                     <div class="col-md-12 text-center uppercase-text bolder-text"><h2 class="header-color" translate="FREE_SIGN_UP_HEADING"></h2></div>
                 </div>
                 <div class="form-container">
                     <div class="free-sign-up">
                         <div class="row">
-                            <div class="col-md-12"><h2 class=" bold-text header-color" translate="FREE_SIGN_UP_MESSAGE"></h2></div>
+                            <div class="col-md-12"><h2 class="header-color" translate="FREE_SIGN_UP_MESSAGE"></h2></div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -27,7 +30,7 @@
                     <div class="form-container">
                         <div class="half-form">
                             <span class="label-text" translate="FREE_SIGN_UP_FIRST_NAME"></span>
-                            <br><input valid-name autofocus autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
+                            <br><input valid-name autocomplete="off" id="firstName" maxlength="20" name="firstName" ng-model="mv.firstName" type="text" class="text-box" required ng-class="{'text-box-error': form.firstName.$touched && form.firstName.$invalid}">
                             <div class="error-message" ng-show="form.firstName.$touched && form.firstName.$error.required" translate="FREE_SIGN_UP_FIRST_NAME_REQUIRED"></div>
                             <div class="error-message" ng-show="form.firstName.$touched && !form.firstName.$error.required && form.firstName.$error.validName" translate="FREE_SIGN_UP_FIRST_NAME_INVALID"></div>
                         </div>
@@ -41,7 +44,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="FREE_SIGN_UP_EMAIL"></span><br>
-                        <input autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="free" id="email" save-visitor first-name="mv.firstName" last-name="mv.lastName" name="email" ng-model="mv.email" class="text-box" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" ng-class="{'text-box-error': form.email.$touched && form.email.$invalid}">
+                        <input autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="free" id="email" name="email" ng-model="mv.email" class="text-box" ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" ng-class="{'text-box-error': form.email.$touched && (form.email.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
                         <span class="label-text-info" translate="FREE_SIGN_UP_VERIFICATION"></span>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="FREE_SIGN_UP_EMAIL_REQUIRED"></div>
                         <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" translate="FREE_SIGN_UP_EMAIL_INVALID"></div>
@@ -65,10 +68,10 @@
                         <div class="error-message" ng-show="form.disclaimer.$dirty && form.disclaimer.$error.required" translate="FREE_SIGN_UP_DISCLAIMER_REQUIRED"></div>
                     </div>
                     <div class="full-form">
-                        <button ng-disabled="saving" type="submit" class="submit-button sign-up-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
+                        <button ng-disabled="saving" type="submit" class="submit-button" translate="FREE_SIGN_UP_SUBMIT_BUTTON"></button>
                         <div>&nbsp;</div>
                         <div class="progress" ng-show="saving">
-                            <div class="progress-bar progress-bar-green progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <div class="progress-bar progress-bar-pink progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
                         <div class="error-message text-center" style="width:98%" ng-show="formSubmit && (form.$invalid || (mobileNumberStatus !== 'MOBILE' && isUsPhoneNumber()))" translate="FREE_SIGN_UP_FORM_INVALID"></div>

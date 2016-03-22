@@ -15,7 +15,7 @@ var command = process.argv[2],
     code = process.argv[3];
 
 if (!command || (command !== 'new' && command !== 'disable')) {
-    logger.logError('adminCLI - complimentaryCode - incorrect command!\n\rusage:\n\r\tnode complimentary-code new\n\r\t\twill create a new complimentary code.\n\r\tnode complimentary-code disable <code>\n\r\t\twill disable an existing complimentary code.');
+    logger.logError('adminCLI - createComplimentaryCode - incorrect command!\n\rusage:\n\r\tnode create-complimentary-code new\n\r\t\twill create a new complimentary code.\n\r\tnode complimentary-code disable <code>\n\r\t\twill disable an existing complimentary code.');
     process.exit(1);
 }
 
@@ -115,7 +115,7 @@ if (command === 'new') {
 
     prompt.get(schema, function (err, result) {
         if (err) {
-            logger.logError('adminCLI - complimentaryCode - error in reading console inputs');
+            logger.logError('adminCLI - createComplimentaryCode - error in reading console inputs');
             logger.logError(err);
             process.exit(1);
         }
@@ -126,16 +126,16 @@ if (command === 'new') {
             cc.accountCount = 0;
             cc.save(function (err) {
                 if (err) {
-                    logger.logError('adminCLI - complimentaryCode - error in creating complimentary code');
+                    logger.logError('adminCLI - createComplimentaryCode - error in creating complimentary code');
                     logger.logError(err);
                     process.exit(1);
                 }
-                logger.logInfo('adminCLI - complimentaryCode - complimentary code created successfully!');
-                logger.logInfo('adminCLI - complimentaryCode - here is the url: ' + config.complimentarySignUpUrl + cc.code);
+                logger.logInfo('adminCLI - createComplimentaryCode - complimentary code created successfully!');
+                logger.logInfo('adminCLI - createComplimentaryCode - here is the url: ' + config.complimentarySignUpUrl + cc.code);
                 process.exit(0);
             });
         } else {
-            logger.logError('adminCLI - complimentaryCode - input empty');
+            logger.logError('adminCLI - createComplimentaryCode - input empty');
             process.exit(1);
         }
     });
@@ -143,28 +143,28 @@ if (command === 'new') {
 
 if (command === 'disable') {
     if (!code) {
-        logger.logError('adminCLI - complimentaryCode - complimentary code missing!\n\rusage:\n\r\tnode complimentary-code disable <code>');
+        logger.logError('adminCLI - createComplimentaryCode - complimentary code missing!\n\rusage:\n\r\tnode complimentary-code disable <code>');
         process.exit(1);
     }
     ComplimentaryCode.findOne({code: code}, function (err, cc) {
         if (err) {
-            logger.logError('adminCLI - complimentaryCode - error fetching complimentary code: ' + code);
+            logger.logError('adminCLI - createComplimentaryCode - error fetching complimentary code: ' + code);
             logger.logError(err);
             process.exit(1);
         }
         if (!cc) {
-            logger.logError('adminCLI - complimentaryCode - complimentary code not found!');
+            logger.logError('adminCLI - createComplimentaryCode - complimentary code not found!');
             process.exit(1);
         }
         cc.disabled = true;
         cc.updatedAt = (new Date()).toUTCString();
         cc.save(function (err) {
             if (err) {
-                logger.logError('adminCLI - complimentaryCode - error disabling complimentary code: ' + code);
+                logger.logError('adminCLI - createComplimentaryCode - error disabling complimentary code: ' + code);
                 logger.logError(err);
                 process.exit(1);
             }
-            logger.logInfo('adminCLI - complimentaryCode - complimentary code disabled: ' + code);
+            logger.logInfo('adminCLI - createComplimentaryCode - complimentary code disabled: ' + code);
             process.exit(0);
         });
     });

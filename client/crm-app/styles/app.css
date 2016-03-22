@@ -249,10 +249,6 @@ input[type="radio"]:checked + label:before {
     border-radius: 4px;
 }
 
-.progress-bar-purple {
-    background-color: #8356A2;
-}
-
 .progress-bar-pink {
     background-color: #BE6193;
 }
@@ -425,10 +421,6 @@ input[type="radio"]:checked + label:before {
     margin-bottom: 10px;
     font-weight: 100;
     line-height: 1.1;
-}
-
-.sign-up-button {
-    background: #56287B;
 }
 
 .sign-up-order {

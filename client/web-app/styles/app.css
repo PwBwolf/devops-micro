@@ -1,21 +1,7 @@
-/* html {  */
-/*   background: url("../images/background_new.jpg") no-repeat center center fixed;  */
-/*   -webkit-background-size: cover; */
-/*   -moz-background-size: cover; */
-/*   -o-background-size: cover; */
-/*   background-size: cover; */
-/* } */
-
 body {
     margin: 0;
     padding: 0px;
     font-family: 'gotham-bookgotham-book', Arial, sans-serif;
-/*     background: transparent; */
-/*     background-image: url("../images/background_new.jpg"); */
-/*     background-repeat: no-repeat; */
-/*     background-position: left top; */
-/*     background-attachment: fixed; */
-/*     background-size: cover; */
 }
 
 ul, ol {
@@ -278,10 +264,6 @@ input[type="radio"]:checked + label:before {
     background-color: #8356A2;
 }
 
-.progress-bar-green {
-    background-color: #7dd108;
-}
-
 .progress-bar-pink {
     background-color: #BE6193;
 }
@@ -409,6 +391,11 @@ input[type="radio"]:checked + label:before {
     margin: 0px;
 }
 
+.menu-btn, .menu-btn:hover, .menu-btn:focus {
+    background-color: #A03269;
+    border-color: #A03269;
+}
+
 .free-sign-up {
     padding: 10px 30px 30px 30px;
 }
@@ -454,10 +441,6 @@ input[type="radio"]:checked + label:before {
     margin-bottom: 10px;
     font-weight: 100;
     line-height: 1.1;
-}
-
-.sign-up-button {
-    background: #7dd108;
 }
 
 .sign-up-order {
@@ -1049,7 +1032,7 @@ ul.passwordStrength {
 }
 
 .well .btn:nth-child(even) {
-    margin: 0 2%;
+    margin: 0 1%;
 }
 
 .well:not(:last-child) {
@@ -1937,7 +1920,6 @@ body, html {
 #userGuide {
     background-color:transparent;
     width: 100%;
-    height:328px;
     float:left;
     margin-top:-6px;
 }

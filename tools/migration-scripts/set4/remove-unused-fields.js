@@ -20,6 +20,7 @@ console.log = function (data) {
 
 var User = mongoose.model('User');
 var Account = mongoose.model('Account');
+var ContactUs = mongoose.model('ContactUs');
 
 function removeUnusedFieldsFromUser(callback) {
     User.update({}, {
@@ -32,7 +33,7 @@ function removeUnusedFieldsFromUser(callback) {
         if (err) {
             console.log('Error removing unused fields from User collection: ' + err);
         } else {
-            console.log('Number of documents from which unused fields were removed: ' + result);
+            console.log('Number of documents from which unused fields were removed from Users collection: ' + result);
         }
         callback();
     });
@@ -47,7 +48,22 @@ function removeUnusedFieldsFromAccount(callback) {
         if (err) {
             console.log('Error removing unused fields from Account collection: ' + err);
         } else {
-            console.log('Number of documents from which unused fields were removed: ' + result);
+            console.log('Number of documents from which unused fields were removed from Accounts collection: ' + result);
+        }
+        callback();
+    });
+}
+
+function removeUnusedFieldsFromContactUs(callback) {
+    ContactUs.update({}, {
+        $unset: {
+            telephone: ''
+        }
+    }, {upsert: false, multi: true}).exec(function (err, result) {
+        if (err) {
+            console.log('Error removing unused fields from ContactUs collection: ' + err);
+        } else {
+            console.log('Number of documents from which unused fields were removed from ContactUs collection: ' + result);
         }
         callback();
     });
@@ -61,6 +77,11 @@ async.waterfall([
     },
     function (callback) {
         removeUnusedFieldsFromAccount(function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeUnusedFieldsFromContactUs(function () {
             callback();
         });
     }

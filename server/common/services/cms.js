@@ -5,9 +5,9 @@ var config = require('../setup/config'),
     client = require('restler');
 
 module.exports = {
-    getChannels: function (userType, callback) {
+    getChannels: function (packages, callback) {
         var route = '/index.php?json_route=/channels';
-        var type = '&user_type=' + userType;
+        var type = '&package=' + packages;
         var url = config.cmsApiUrl + route + type;
         console.log(url);
         client.get(url).on('complete', function(result) {

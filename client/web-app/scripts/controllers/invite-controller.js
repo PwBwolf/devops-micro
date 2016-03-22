@@ -7,7 +7,7 @@
         redirect();
 
         function redirect() {
-            $location.path('/sign-up/paid');
+            $location.path('/sign-up/premium');
         }
 
     }]);

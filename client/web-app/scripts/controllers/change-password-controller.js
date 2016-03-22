@@ -31,13 +31,11 @@
         function setFormTouched() {
             $scope.form.currentPassword.$touched = true;
             $scope.form.newPassword.$touched = true;
-            $scope.form.confirmPassword.$touched = true;
         }
 
         function setFormNotTouched() {
             $scope.form.currentPassword.$touched = false;
             $scope.form.newPassword.$touched = false;
-            $scope.form.confirmPassword.$touched = false;
         }
 
     }]);

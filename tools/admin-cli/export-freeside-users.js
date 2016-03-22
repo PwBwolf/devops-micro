@@ -4,6 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('../../server/common/setup/config'),
     logger = require('../../server/common/setup/logger'),
+    validation = require('../../server/common/services/validation'),
     mongoose = require('../../server/node_modules/mongoose');
 
 var modelsPath = config.root + '/server/common/models',
@@ -23,7 +24,8 @@ Account.find({}).populate('primaryUser').exec(function (err, accounts) {
     } else {
         for (var i = 0; i < accounts.length; i++) {
             if (accounts[i].primaryUser && accounts[i].freeSideCustomerNumber) {
-                console.log(accounts[i].freeSideCustomerNumber + ',' + accounts[i].primaryUser.email + ',' + accounts[i].primaryUser.createdAt.getTime());
+                var username = validation.isUsPhoneNumberInternationalFormat(accounts[i].primaryUser.email) ? accounts[i].primaryUser.email + '_' + accounts[i].key + '@' + config.freeSideKeyEmailDomain : accounts[i].primaryUser.email;
+                console.log(accounts[i].freeSideCustomerNumber + ',' + username + ',' + accounts[i].primaryUser.createdAt.getTime());
             }
         }
         process.exit(0);

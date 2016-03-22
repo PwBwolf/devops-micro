@@ -7,6 +7,9 @@ var config = require('../../server/common/setup/config'),
     billing = require('../../server/common/services/billing'),
     mongoose = require('../../server/node_modules/mongoose');
 
+logger.logError('adminCLI - changeEmail - this tool is not working as expected and should not be used.');
+process.exit(1);
+
 var currentEmail = process.argv[2];
 var newEmail = process.argv[3];
 

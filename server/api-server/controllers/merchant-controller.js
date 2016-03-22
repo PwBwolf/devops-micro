@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     logger = require('../../common/setup/logger'),
     config = require('../../common/setup/config'),
     billing = require('../../common/services/billing'),
+    validation = require('../../common/services/validation'),
     db = mongoose.createConnection(config.db),
     User = db.model('User'),
     ApiClient = db.model('ApiClient'),
@@ -64,19 +65,18 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 var emailRegex = config.regex.email;
-                if (!req.query.username || !emailRegex.test(req.query.username)) {
+                var phoneRegex = config.regex.telephone;
+                if (!req.query.username || (!emailRegex.test(req.query.username) && !phoneRegex.test(req.query.username))) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
-                User.findOne({email: req.query.username.toLowerCase()}).populate('account').exec(function (err, user) {
+                var username = validation.getUsername(req.query.username);
+                User.findOne({email: username}).populate('account').exec(function (err, user) {
                     if (err) {
                         logger.logError('merchantController - doesUsernameExist - error fetching user: ' + req.query.email);
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
-                    var refundLastDate, billingDate;
-                    if (user && user.account && !user.account.firstCardPaymentDate && user.account.firstMerchantPaymentDate && user.account.type === 'paid') {
-                        refundLastDate = moment(user.account.firstMerchantPaymentDate).add(config.refundPeriodInDays, 'days').utc();
-                    }
+                    var billingDate;
                     if (user && user.account.type === 'paid' && (user.status === 'registered' || user.status === 'active')) {
                         billing.login(user.email, user.account.key, user.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
@@ -93,13 +93,21 @@ module.exports = {
                                         if (billDate) {
                                             billingDate = billDate;
                                         }
-                                        return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
+                                        return res.status(200).send({
+                                            error: '',
+                                            result: user !== null,
+                                            billingDate: billingDate
+                                        });
                                     }
                                 });
                             }
                         });
                     } else {
-                        return res.status(200).send({error: '', result: user !== null, refundLastDate: refundLastDate, billingDate: billingDate});
+                        return res.status(200).send({
+                            error: '',
+                            result: user !== null,
+                            billingDate: billingDate
+                        });
                     }
                 });
             });
@@ -127,7 +135,7 @@ module.exports = {
         apiLog.apiKey = req.query.apiKey;
         apiLog.body = req.body;
         try {
-            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result) {
+            validateCredentials(req.query.merchantId, req.query.apiKey, function (err, result, clientName) {
                 if (err) {
                     logger.logError('merchantController - makePayment - error validating credentials');
                     logger.logError(err);
@@ -136,26 +144,23 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
-
                 var emailRegex = config.regex.email;
-                if (!req.body.username || !emailRegex.test(req.body.username)) {
+                var phoneRegex = config.regex.telephone;
+                if (!req.body.username || (!emailRegex.test(req.body.username) && !phoneRegex.test(req.body.username))) {
                     return res.status(200).send({error: 'invalid-username'});
                 }
-                User.findOne({email: req.body.username.toLowerCase()}).populate('account').exec(function (err, user) {
+                var username = validation.getUsername(req.body.username);
+                User.findOne({email: username}).populate('account').exec(function (err, user) {
                     if (err) {
                         logger.logError('merchantController - makePayment - error fetching user: ' + req.body.email);
                         logger.logError(err);
                         return res.status(200).send({error: 'server-error'});
                     }
-                    if (user && user.account && user.account.type === 'free' && user.account.merchant ==='YIPTV') {
-                        var diff = moment.utc().startOf('day').diff(moment(user.account.createdAt).utc().startOf('day'), 'days');
-                        if(diff <= 3) {
-                            req.body.agentNum = 2;
-                        }
+                    if (clientName === 'IDT') {
+                        req.body.agentNumber = 2;
                     }
-
                     req.body.merchantId = req.query.merchantId;
-                    req.body.paymentType = result;
+                    req.body.merchantName = clientName;
                     queue.enqueue('makePayment', req.body, function (err) {
                         if (err) {
                             logger.logError('merchantController - makePayment - error adding job to queue');
@@ -201,6 +206,11 @@ module.exports = {
                 if (!result) {
                     return res.status(200).send({error: 'unauthorized'});
                 }
+                var emailRegex = config.regex.email;
+                var phoneRegex = config.regex.telephone;
+                if (!req.body.username || (!emailRegex.test(req.body.username) && !phoneRegex.test(req.body.username))) {
+                    return res.status(200).send({error: 'invalid-username'});
+                }
                 req.body.merchantId = req.query.merchantId;
                 queue.enqueue('makeRefund', req.body, function (err) {
                     if (err) {
@@ -239,11 +249,13 @@ function validateCredentials(merchantId, apiKey, cb) {
                     logger.logError(err);
                     cb(err);
                 } else {
-                    cb(null, (client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT') ? client.name : false);
+                    var result = client !== null && client.apiKey === apiKey && client.apiType === 'MERCHANT';
+                    var output = result ? client.name : '';
+                    cb(null, result, output);
                 }
             });
         }
     } else {
-        cb(null, false);
+        cb(null, false, '');
     }
 }
