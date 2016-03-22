@@ -62,19 +62,12 @@
                         return
                     }
                     $scope.allChannels = programming
-                    console.log('full object from allChannels', $scope.allChannels[0])
                     //$scope.programming = programming.slice(0, 11)
                     $scope.programming = $scope.allChannels
                     mediaSvc.getFavoriteChannels(
                         function (data) {
-                            console.log('data received from getFavoriteChannels ',data)
-                            //$scope.favoriteChannels = data;
                             $scope.favoriteChannels = epgSrvc.formatFavorites(data);
-                            // console.log('playerCtrl - favorite channels: ' + data.length);
-                            // console.log('logging favorite channels', $scope.favoriteChannels)
-
                             $scope.favoriteChannels = epgSrvc.mapChannels($scope.favoriteChannels, $scope.allChannels)
-                            console.log('favorites array', $scope.favoriteChannels)
                         },
                         function (error) {
                             console.log(error);
@@ -89,7 +82,6 @@
 
             // copied and pasted from the player controller
             mediaSvc.getUserChannels(function (data) {
-                console.log(data)
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
@@ -102,7 +94,6 @@
             mediaSvc.getChannelCategories(function (data) {
                 var dataCategories = data.categories;
                 $rootScope.channelCategories = data.categories;
-                console.log('logging response from mediaSvc.getChannelCategories', data)
             
                 for(var i = 0; i < dataCategories.length; i++) {
                     var genre = dataCategories[i].tags;
@@ -130,17 +121,14 @@
          */
 
         $scope.previousChannel = function () {
-            console.log('Get the previos channel in the current programs array')
             $scope.watchNow($scope.prevIndex, $scope.favoriteChannels)
         };
 
         $scope.nextChannel = function () {
-            console.log('Get the next channel in the current programs array')
             $scope.watchNow($scope.nextIndex, $scope.favoriteChannels)
         };
 
         $scope.displayRecent = function() {
-            // console.log('showing recents')
             displayingRecents = true
             displayingFavorites = false
             displayingAll = false
@@ -156,7 +144,6 @@
                 return
             }
             $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
-            console.log($scope.recentChannels)
             $scope.recentChannels.sort(function(a, b){
                 if(a.chIndex > b.chIndex){
                     return 1
@@ -170,8 +157,6 @@
 
         // working
         $scope.displayFavorites = function() {
-            // console.log('EPG set the favorite channels')
-            // console.log('favorites', $scope.favoriteChannels)
             displayingFavorites = true
             displayingAll = false
             displayingRecents = false
@@ -186,7 +171,6 @@
                 }
             })
             $scope.programming = $scope.favoriteChannels////.slice(0, 11);
-            // console.log('new $scope.programming with favoriteChannels', $scope.programming)
         };
 
         // working
@@ -196,7 +180,6 @@
             displayingRecents = false
 
             $scope.noRecentChannels = false
-            console.log('showing all channels')
             $scope.programming = $scope.allChannels//.slice(0, 11);
         }
 
@@ -206,17 +189,13 @@
         $scope.toggleFavoriteChannel = function(currentChannel){
 
             var channelIndex = $scope.favoriteChannels.map(function(e) { return e.station; }).indexOf(currentChannel.channelId);
-            // var channelIndex =$scope.favoriteChannels.indexOf({channelId: currentChannel.channelId})
-            // console.log('channelIndex is number in favorites ', channelIndex);
 
             if(channelIndex === -1 ){ // check $scope.favoriteChannels to see if it's in there
-                // console.log('channel not found in favorites')
                 var req = {channelId: currentChannel.channelId};
 
                 mediaSvc.addFavoriteChannel(
                     req,
                     function (data) {
-                        console.log('playerCtrl - add favorite channel succeed:' + currentChannel.channelId);
                         var newFavoriteId = {channelId: currentChannel.channelId}
                         var newFavoriteIndex = $scope.allChannels.map(function(e){return e.station}).indexOf(newFavoriteId.channelId)
                         var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex]
@@ -230,8 +209,6 @@
                 );
             }
             else {
-                console.log('item is in favorites')
-                console.log('removing from favoritesChannels $scope');
                $scope.favoriteChannels.splice(channelIndex, 1);
                console.log($scope.favoriteChannels);
                $scope.favoriteIcon = '../../images/favorite_white.png';
@@ -284,12 +261,7 @@
             else{
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex
             }
-            // tak the current index and get the previous and next index if they exist in the array
-            // else set them to 0 so it's the first element of the array
-            // then get the id of each of the prev, curr and next channels
-            // set the prev and next vars to the ids of those channels. check if channels with those  ids
-            // exists in $scope.programming when calling $scopeprev and next.
-            //
+
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 console.log('running mediaSvc getChannelUrl')
                 $scope.mainUrl = channelUrl.routes[0];
@@ -308,10 +280,10 @@
                 $scope.currentChannel.channelId = $rootScope.channels[index].id
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 // set the location.hash to the id of
-            // the element you wish to scroll to.
-            $location.hash('topBox');
-            // call $anchorScroll()
-            $anchorScroll();
+                // the element you wish to scroll to.
+                $location.hash('topBox');
+                // call $anchorScroll()
+                $anchorScroll();
             }); //mediaSvc
         };
 
@@ -320,9 +292,6 @@
         */
         function setFavoriteIcon (channel, favorites) {
             var isfavorite = favorites.map(function(e){return e.station}).indexOf(channel)
-            //console.log(isfavorite);
-            //console.log('check if this current channel ', channel);
-            //console.log(' in in this favores list ', favorites);
             if(isfavorite === -1) {
                 console.log('setting star to white. this is NOT a favorite.')
                 $scope.favoriteIcon = '../../images/favorite_white.png';
@@ -366,23 +335,16 @@
 
         //////////////////// Functions  ////////////////////
         function addRecentChannel(channelId) {
-            console.log('channelI in addRecentChannel', channelId)
             if($cookies.recent === undefined) {
                 var updatedRecents= {};
                 console.log('no recents')
                 updatedRecents[channelId] = channelId
                 $cookies.recent = JSON.stringify(updatedRecents)
-                console.log('stringified cookie', JSON.stringify(updatedRecents))
                 var recentCookies = $cookies.recent
-                console.log(recentCookies)
-
             }
             else {
                 var matchFound = false
-                console.log('recent channels found');
                 var recentCookies = $cookies.recent
-                console.log('recent cookies', recentCookies)
-
                 recentCookies = JSON.parse(recentCookies)
                 console.log('recent cookies after parsing', recentCookies)
                 for (var i in recentCookies) {
@@ -407,7 +369,6 @@
         }
 
         $scope.toggle = function(){
-            console.log('toggling filter')
             $scope.checked = !$scope.checked;
             if($scope.checked) {
                 $scope.$emit('ToggleChannelFilterEvent');
@@ -421,24 +382,19 @@
         $scope.toggleFilter = function(id){
             var filterExists = $scope.selectedFilters.indexOf(id)
             if(filterExists === -1){
-                console.log('toggled on', id)
                 $scope.selectedFilters.push(id)
                 $scope.programming = filterChannels($scope.selectedFilters)
             }
             else{
                 var index = $scope.selectedFilters.indexOf(id)
                 $scope.selectedFilters.splice(index, 1)
-                console.log('toggled off', id)
                 $scope.programming = filterChannels($scope.selectedFilters)
             }
-            console.log('selected filters', $scope.selectedFilters)
         }
 
         // loop through all channels
         // loop through all tags on a given channel
-        // if tag matches a filter, add it to arr
-        // break so the channel cannot be added twice
-        // even if it has multiple matching tags
+        // add channels that have all the tags in the filter obj
         function filterChannels(filters){
             var arr = []
             var filterObj = {}
@@ -452,17 +408,13 @@
             for(i = 0; i < $scope.allChannels.length; i++){
                 var matches = 0
                 for(var j = 0; j < $scope.allChannels[i].tags.length; j++){
-                    // console.log('current channel tags', $scope.allChannels[i].tags)
                     var tag = $scope.allChannels[i].tags[j]
-                    // console.log('looking for tag', tag, filterObj[tag])
-                    // console.log('filter object', filterObj, 'length ', Object.keys(filterObj).length)
                     if(filterObj.hasOwnProperty(tag)){
                         matches++
                     }
                     if((j === $scope.allChannels[i].tags.length-1) && (matches === Object.keys(filterObj).length)){
                         var currentChannel = $scope.allChannels[i]
                         arr.push(currentChannel)
-                        // console.log('added channel')
                     }
                 }
             }
