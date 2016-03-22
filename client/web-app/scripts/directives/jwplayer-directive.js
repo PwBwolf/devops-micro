@@ -5,6 +5,7 @@
         .directive('pipScreen', ppTv);
 
     function ppTv() {
+        console.log('new jwplayer running');
         return {
             restrict: 'E',
             scope: {

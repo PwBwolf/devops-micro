@@ -1,223 +1,70 @@
-<div ng-controller="playerCtrl">
+<div ng-controller="epgCtrl">
     <div id="playerTop" class="player-top">
+
         <div class="paid-tv"  ng-if="user.type != 'free'">
             <div class="main-player position-div">
-                <div id="yiptv-player"></div>
+                <div ng-show="watching">
+                    <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
+                </div>
             </div>
         </div>
+
         <div class="free-tv" ng-if="user.type ==='free'">
-            <div class="main-player position-div">
-                <div id="yiptv-player"></div>
+            <div  class="main-player position-div">
+                <div ng-show="watching">
+                    <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
+                </div>
             </div>
-            <div class="main-favorites position-div">
-                <div>
+            <div class="main-favorites position-div" ng-repeat="promo in promos  | limitTo:1">
+                <div access-level="accessLevels.user">
                     <div class="ad-free">
-                        <img class="img-responsive" ng-src="../images/pages/{{language}}/upsell-premium.png">
+                        <img src="../images/upgrade_360_90.png" width="345px">
                     </div>
+                </div>
+                <div class="notification" >
+                    <img class="img-responsive" ng-src="../images/app-ad-360x270-premium.png" width="350px" height="250px"/>
                 </div>
             </div>
-        </div>
+        </div> <!-- free-tv -->
     </div>
-    <div id="channelMenuHolder" class="container-fluid">
-        <div id="menuBar">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="pre-channel">
-                        <img src="../images/arrow-left.png" width="30px" hight="30px" ng-click="previousChannel()" style="cursor: pointer">
-                    </div>
-                    <div id="currentChannel" >
-                        <img ng-src="{{channelLogo}}" height="35px" width="auto" >
-                    </div>
-                    <div class="next-channel">
-                        <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
-                    </div>
-                    <div id="programInfo">
-                        <div id="title" >{{programTitle}}</div>
-                        <div id="description" >{{programDescription}}</div>
-                    </div>
-                </div>
-                <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li ng-hide="tvUrl === undefined">
-                            <div id="programDetail" ng-controller='programDetailSlideCtrl'>
-                                <img src="../images/info.png" width="24px" height="24px" ng-click="toggleProgramDetail()" style="cursor: pointer">
-                                <div id="programDetailSlider" pageslide ps-open="checked" ps-side="top"  >
-                                    <div id="programDetailHolder" >
-                                        <div id="detailHolder">
-                                            <div id="detailTitle">
-                                                <div class="detail-title">
-                                                    {{program.title}}
-                                                </div>
-                                            </div>
-                                            <div id="detailShowTime">
-                                                {{program.showTime}}
-                                            </div>
-                                            <div id="detailDescription">
-                                                {{program.description}}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <a id="okButton"ng-click="toggleProgramDetail()" class="btn btn-danger btn-xs" >OK</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li ng-hide="tvUrl === undefined">
-                            <div id="favorite">
-                                <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel()" style="cursor: pointer">
-                            </div>
-                        </li>
-                        <li>
-                            <div id="favoriteChannels" ng-click="listFavoriteChannels()">
-                                <span translate="PLAYER_MENU_FAVORITE" ></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="recentChannels" ng-click="listRecentChannels()">
-                                <span translate="PLAYER_MENU_RECENT"></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="allChannels" ng-click="listAllChannels()">
-                                <span translate="PLAYER_MENU_ALL"></span>
-                            </div>
-                        </li>
-                        <li class="filter-li">
-                            <div id="filter" ng-controller='filterPanelSlideCtrl'>
-                                <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer">
-                                <div pageslide ps-open="checked" ps-size="360px">
-                                    <div id="channelFilterHolder" class="filter-close-btn label label-danger">
-                                        <div class="row">
-                                            <div>
-                                                <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearAll()" translate="PLAYER_CLEAR_ALL" ></a>
-                                                <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
-                                            </div>
-                                            <div class="channel-filters">
-                                                <div class="channel-filter-categories" >
-                                                    <span translate="PLAYER_CATEGORIES"></span>
-                                                </div>
-                                                <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
-                                                    <div class="panel panel-default filter-categories" >
-                                                        <div class="panel-heading" role="tab" id="headingGenre">
-                                                            <div class="panel-title filter-category-title">
-                                                                <a translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseGenre" aria-expanded="true" aria-controls="collapseGenre"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseGenre" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingGenre">
-                                                        <div class="panel-body panel-body-left">
-                                                            <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" class="filter-repeat">
-                                                                <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel-body panel-body-right">
-                                                            <div ng-repeat="tag in getTags('Genre') | filter: { col : 1 }" class="filter-repeat">
-                                                                <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleGenreSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="panel panel-default filter-categories">
-                                                        <div class="panel-heading" role="tab" id="headingRegion">
-                                                            <div class="panel-title filter-category-title">
-                                                                <a translate="PLAYER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseRegion" aria-expanded="true" aria-controls="collapseRegion"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseRegion" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRegion">
-                                                        <div class="panel-body panel-body-left">
-                                                            <div ng-repeat="tag in getTags('Origin') | filter: { col: 0 }" class="filter-repeat">
-
-                                                                <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel-body panel-body-right">
-                                                            <div ng-repeat="tag in getTags('Origin') | filter: { col : 1 }" class="filter-repeat">
-                                                                <input name="regionList[]" ng-checked="selectedRegions.indexOf(tag.id) > -1" ng-click="toggleRegionSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel panel-default filter-categories">
-                                                        <div class="panel-heading" role="tab" id="headingAudience">
-                                                            <div class="panel-title filter-category-title">
-                                                                <a translate="PLAYER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseAudience" aria-expanded="true" aria-controls="collapseAudience"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseAudience" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingAudience">
-                                                        <div class="panel-body panel-body-left">
-                                                            <div ng-repeat="tag in getTags('Audience') | filter: { col: 0 }" class="filter-repeat">
-                                                                <input name="AudienceList[]" ng-checked="selectedAudiences.indexOf(tag.id) > -1" ng-click="toggleAudienceSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel-body panel-body-right">
-                                                            <div ng-repeat="tag in getTags('Audience') | filter: { col : 1 }" class="filter-repeat">
-
-                                                                <input name="AudienceList[]" ng-checked="selectedAudiences.indexOf(tag.id) > -1" ng-click="toggleAudienceSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel panel-default filter-categories">
-                                                        <div class="panel-heading" role="tab" id="headingLanguage">
-                                                            <div class="panel-title filter-category-title">
-                                                                <a translate="PLAYER_LANGUAGE" role="button" data-toggle="collapse" data-parent="#categories" href data-target="#collapseLanguage" aria-expanded="true" aria-controls="collapseLanguage"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseLanguage" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingLanguage">
-                                                        <div class="panel-body panel-body-left">
-                                                            <div ng-repeat="tag in getTags('Language') | filter: { col: 0 }" class="filter-repeat">
-                                                                <input name="LanguageList[]" ng-checked="selectedLanguages.indexOf(tag.id) > -1" ng-click="toggleLanguageSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel-body panel-body-right">
-                                                            <div ng-repeat="tag in getTags('Language') | filter: { col : 1 }" class="filter-repeat">
-
-                                                                <input name="LanguageList[]" ng-checked="selectedLanguages.indexOf(tag.id) > -1" ng-click="toggleLanguageSelection(tag.id)" value="{{tag.id}}" type="checkbox"/>{{tag.name}}
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </div>
     <div>
-        <div id="clock" class="position-div" current-time > </div>
-        <div id='channelTimePanel' class='position-div scrollListener user-guide user-guide-panel ' >
+        <div ng-include="'views/filter.html'"></div>
+
+        <div id="clock" current-time="" class="position-div"></div>
+        <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
             <div></div>
+            <div id="guideHeader" class="guide-header">
+                <ul>
+                    <li ng-repeat="time in timeSlots" style="width: 150px;" class="time-module-item">{{::time}}</li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div>
-        <div id="logoColumn" class="user-guide-panel scrollListener" ng-controller='channelLogoController' >
-            <div class='position-div user-guide '>
-                <div id='channelLogoPanel' class=''>
-                    <div></div>
+        <div>
+            <div ng-if='noRecentChannels' style="width: 100%; text-align: center; color: white;">
+                <h3>No Recent Channels From Last Seven Days</h3>
+            </div>
+            <div id="userGuide" class="user-guide-panel">
+                <div class="position-div user-guide">
+                    <div id="channelGuidePanel" class="user-guide-description">
+                        <div>
+                            <div></div>
+                            <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
+                                <div id="channelGuideLogo" title="{{programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
+                                <div ng-repeat="show in programs.lineUp" ng-if="$index === 0" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
+                                </div>
+                                <div ng-repeat="show in programs.lineUp" ng-if="$index > 0" title="{{show.dropdownInfo}}" style="cursor: pointer; width: {{show.length*5}}px; border-right: 1px solid #000033">
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.title}}</span></p>
+                                    <p style="text-align: left;"><span class="channel-details-body">{{show.startHour + " - " + show.endHour}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="userGuide" class="user-guide-panel   scrollListener" ng-controller='channelGuideCtrl' >
-            <div class='position-div user-guide '>
-                <div id='channelGuidePanel' class='user-guide-description'>
-                    <div></div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
+</div>

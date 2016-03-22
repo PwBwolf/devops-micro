@@ -1,0 +1,241 @@
+.animate-hide {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+.navbar-right {
+    width: 290px;
+}
+
+.navbar-default {
+    .navbar-toggle {
+        border-width: 2px;
+    }
+}
+
+#menuBar input[type="radio"] {
+    display:none;
+}
+
+#menuBar input[type="radio"] + #epg-controls {
+    color: white;
+}
+
+#menuBar input[type="radio"]:checked + #epg-controls {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+#menuBar {
+    .navbar-header{
+        max-width: 60%;
+    }
+    #programInfo {
+        z-index: 10;
+        display:table-cell;
+        display:inline-block;
+        margin-left:1px;
+        background: transparent;
+        float:left;
+    }
+    .epg-controls span {
+        cursor: pointer;
+        top: 10px;
+        color: white;
+    }
+    #currentChannel {
+        img {
+            height: 40px;
+        }
+        background-color: rgba(255,255,255,0.85);
+        width: 70px;
+    }
+    .entire-description {
+        margin-left: 10px;
+        background-color: $grey;
+        border: 1px solid black;
+        width: 350px;
+        z-index: 35;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
+    .entire-title {
+        margin-left: 10px;
+        border: 1px solid black;
+        width: 300px;
+        z-index: 35;
+        background-color: $grey;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
+}
+
+
+.base-class {
+     transition: $transitionTime1;
+ }
+
+.base-classU {
+    transition: $transitionTime1;
+    text-decoration: underline;
+}
+
+.base-classU.high-u {
+    font-size: 16px;
+}
+
+.base-classU.no-u {
+    text-decoration: none;
+}
+
+.base-class.my-class {
+    text-decoration: underline;
+    font-size: 16px;
+
+}
+
+.epg-nav {
+
+}
+
+.epg-nav.info {
+    height: 50px;
+}
+
+.newdescription {
+    height: 100px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .navbar-right {
+        width: 100% !important;
+    }
+    .navbar-header{
+        max-width: 100% !important;
+    }
+    #programInfo {
+        max-width: 150px;
+    }
+    #programDetail {
+        left: -6px;
+        float: none;
+        display: block;
+    }
+
+    #favorite {
+        float: none;
+        display: block;
+
+    }
+    #favoriteChannels {
+        float: none;
+        display: block;
+    }
+    #recentChannels {
+        float: none;
+        display: block;
+    }
+    #allChannels {
+        float: none;
+        display: block;
+    }
+    #filter {
+        left: -6px;
+        float: none;
+        display: block;
+    }
+    .collapse.navbar-collapse.in {
+        background: rgba(55,55,55,0.9);
+        z-index: 25;
+        width: 120px;
+        float: right;
+        li {
+            padding-left: 10px !important;
+        }
+        .epg-controls {
+            padding-bottom: 12px !important;
+        }
+    }
+
+    .entire-title{
+        width: 300px;
+        margin-top: 10px;
+    }
+    .entire-description {
+        width: 300px;
+        margin-top: 10px;
+    }
+
+
+}
+
+@media (max-width: 479px) {
+    #menuBar {
+        #programInfo {
+            width: 80px;
+            .entire-title {
+                width: 200px;
+
+            }
+            .entire-description {
+                width: 200px;
+
+            }
+        }
+    }
+
+}
+
+@media (max-width: 410px) {
+    #menuBar {
+        #programInfo {
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: 320px) {
+    #currentChannel {
+        width: 155px;
+    }
+
+}
+
+#menuBar {
+
+
+}
+
+
+
+#programDetailHolder {
+    float: right;
+    margin-right: 40px;
+}
+
+@media (max-width: 1024px) {
+    #programInfo {
+        width: 200px;
+    }
+    #programDetailHolder {
+        margin-right: 10px;
+    }
+}
+
+//filter customization
+.category-header {
+    height: 22px;
+    padding-top: 6px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.panel {
+    margin-top: 2px;
+}
+
+#categories {
+    input {
+        cursor: pointer
+    }
+}
