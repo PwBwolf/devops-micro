@@ -37,7 +37,6 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
-
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
@@ -160,7 +159,6 @@
             var req;
             if (channelIndex === -1) { // check $scope.favoriteChannels to see if it's in there
                 req = {channelId: currentChannel.channelId};
-
                 mediaSvc.addFavoriteChannel(
                     req,
                     function (data) {
@@ -194,7 +192,6 @@
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
-
             if ($scope.watching === false) {
                 $scope.watching = true;
             }
@@ -202,7 +199,6 @@
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex
             }).indexOf(index);
-            // set $socpe.prevIndex
             if (indexOfClickedChannel > 0) {
                 $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
             } else if (indexOfClickedChannel === 0) {
@@ -210,11 +206,9 @@
             } else {
                 $scope.prevIndex = $scope.programming[0].chIndex;
             }
-            // set $scope.nextIndex
             if (indexOfClickedChannel === ($scope.programming.length - 1)) {
                 $scope.nextIndex = 0;
-            }
-            else {
+            } else {
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
 
@@ -236,9 +230,8 @@
                 // set the location.hash to the id of
                 // the element you wish to scroll to.
                 $location.hash('topBox');
-                // call $anchorScroll()
                 $anchorScroll();
-            }); //mediaSvc
+            });
         };
 
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
@@ -246,19 +239,18 @@
          */
         function setFavoriteIcon(channel, favorites) {
             var isfavorite = favorites.map(function (e) {
-                return e.station
+                return e.station;
             }).indexOf(channel);
             if (isfavorite === -1) {
                 $scope.favoriteIcon = '../../images/favorite-white.png';
             } else {
                 $scope.favoriteIcon = '../../images/favorite-yellow.png';
             }
-
-        } //setFavoriteIcon
+        }
 
         function getProgramInfo(index) {
             var epgIndex = $rootScope.channelsEpg.map(function (e) {
-                return e.channel_id
+                return e.channel_id;
             }).indexOf($rootScope.channels[index].id);
             var lineUp = [];
             var info = {title: '', description: '', showTime: 'Show Time ...'};
@@ -280,7 +272,7 @@
             }
             $rootScope.program = info;
             return info;
-        } //getProgramInfo
+        }
 
         function addRecentChannel(channelId) {
             var updatedRecents, recentCookies;
@@ -298,7 +290,6 @@
                         if (channelId === i) {
                             matchFound = true;
                         }
-
                     }
                 }
                 if (!matchFound) {

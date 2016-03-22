@@ -160,7 +160,7 @@
 <script src="scripts/services/token-service.js"></script>
 <script src="scripts/services/browser-service.js"></script>
 <script src="scripts/services/media-service.js"></script>
-<script src="scripts/services/epg-service.js"></script>
+<script src="scripts/services/player-service.js"></script>
 <script src="scripts/controllers/main-controller.js"></script>
 <script src="scripts/controllers/home-controller.js"></script>
 <script src="scripts/controllers/modal-controller.js"></script>
@@ -196,7 +196,7 @@
 <!-- GATE -->
 <script type=text/javascript>
     if(typeof ROIStorage === 'undefined') {
-        (function(d,b,c,f){d[b]={};d[b].windowName=d.name;d[b].GoogleAnalyticsObject=c;d[b].q=[];d[c]=function(){d[b].q.push(arguments)};d[c].q=d[c].q||[];d[b].roiq=[];d[b].analyticsJsNotLoaded=true;d[c].q.push([function(){d[b].realGa=d[c];d[b].analyticsJsNotLoaded=false;d[c]=function(){if(typeof arguments[0]==="function"){d[b].realGa(arguments)}else{d[b].q.push(arguments)}};d[b].roiq.push=function(){d[b].realGa.apply(d,arguments)};for(f=0;f<d[b].roiq.length;f+=1){d[b].realGa.call(d,d[b].roiq[f])}}])})(window,"ROIStorage","__gaTracker");
+        (function(d,b,c,f){d[b]={};d[b].windowName=d.name;d[b].GoogleAnalyticsObject=c;d[b].q=[];d[c]=function(){d[b].q.push(arguments)};d[c].q=d[c].q||[];d[b].roiq=[];d[b].analyticsJsNotLoaded=true;d[c].q.push([function(){d[b].realGa=d[c];d[b].analyticsJsNotLoaded=false;d[c]=function(){if(typeof arguments[0]==="function"){d[b].realGa(arguments)}else{d[b].q.push(arguments)}};d[b].roiq.push=function(){d[b].realGa.apply(d,arguments)};for(f=0;f<d[b].roiq.length;f+=1){d[b].realGa.call(d,d[b].roiq[f])}}])})(window,"ROIStorage","ga");
         (function () {
             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
             ga.src = ('https:' == document.location.protocol ? 'https://dcdefe6549f418daeefb-30545579040fdbc1d8a012b3adffa298.ssl.cf2.rackcdn.com/gate.js' : 'http://9fc219b9bd3d51c69353-30545579040fdbc1d8a012b3adffa298.r64.cf2.rackcdn.com/gate.js');
