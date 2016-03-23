@@ -233,10 +233,10 @@ function getChannelGuide() {
             if (err) {
                 logger.logError('metadataProcessorMain - getChannelGuide failed');
                 logger.logError(err);
-                sendMail('channel guide failed', err, null);
+                sendMail('metadata-processor - channel guide update failed - ' + config.environment, err, null);
             } else {
                 logger.logInfo('metadataProcessorMain - get channel guide succeed!');
-                sendMail('channel guide succeed', 'done', null);
+                sendMail('metadata-processor - channel guide updated successfully - ' + config.environment, 'success', null);
             }
         });
 }
@@ -849,15 +849,14 @@ function imageDownload() {
                 );
             }
         ],
-
         function (err) {
             if (err) {
                 logger.logError('metadataProcessorMain - image processor - failed');
                 logger.logError(err);
-                sendMail('image processor failed', err, null);
+                sendMail('metadata-processor - images update failed - ' + config.environment, err, null);
             } else {
                 logger.logInfo('metadataProcessorMain - image processor succeed!');
-                sendMail('image processor succeed', 'done', null);
+                sendMail('metadata-processor - images updated successfully - ' + config.environment, 'success', null);
             }
         });
 }
