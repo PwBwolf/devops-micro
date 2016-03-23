@@ -13,6 +13,7 @@
             },
             link: function (scope, element, attributes) {
                 attributes.$observe('playurl', function(value) {
+                    console.log('new playurl', value)
                     jwplayer(attributes.id).setup({
                         width: '100%',
                         height: 360,

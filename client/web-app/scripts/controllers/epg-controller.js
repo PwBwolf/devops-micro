@@ -1,7 +1,7 @@
 (function (app){
     'use strict';
 
-    app.controller('epgCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll', function ($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll){
+    app.controller('epgCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'epgSrvc', '$location', '$anchorScroll', '$timeout', function ($scope, $rootScope, mediaSvc, $filter, $cookies, epgSrvc, $location, $anchorScroll, $timeout){
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -11,7 +11,6 @@
 
         // playing channel related variables
         $scope.currentChannel = {};
-        $scope.mainUrl === undefined;
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedFilters = [];
@@ -22,7 +21,7 @@
         $scope.programDescription = '';
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
-        $scope.mainUrl === undefined;
+        $scope.mainUrl = undefined;
 
         $scope.tags = [];
 
@@ -209,7 +208,7 @@
             var favorites = favoriteChannels;
 
             if($scope.watching === false) {
-                $scope.watching = true;
+                $timeout(function(){ $scope.watching = true }, 500);
             }
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function(e){return e.chIndex}).indexOf(index);
@@ -231,9 +230,12 @@
             else{
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
+            console.log('indexes', index, $scope.prevIndex, $scope.nextIndex)
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
+
                 $scope.mainUrl = channelUrl.routes[0];
+                console.log('$scope.mainUrl', $scope.mainUrl)
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
