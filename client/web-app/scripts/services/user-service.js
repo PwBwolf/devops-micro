@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.factory('userSvc', ['tokenSvc', '_', '$http', '$rootScope', function (tokenSvc, _, $http, $rootScope) {
+    app.factory('userSvc', ['tokenSvc', '_', '$http', '$rootScope', '$window', function (tokenSvc, _, $http, $rootScope, $window) {
         var accessLevels = routing.accessLevels,
             userRoles = routing.userRoles,
             currentUser = noUser();
@@ -41,6 +41,7 @@
         function clearUser() {
             changeUser(noUser());
             tokenSvc.clearToken();
+            $window.sessionStorage.recent = JSON.stringify({})
         }
 
         return {

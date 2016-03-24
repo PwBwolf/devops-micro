@@ -1,7 +1,7 @@
 <div ng-controller="epgCtrl">
     <div id="playerTop" class="player-top">
 
-        <div class="paid-tv"  ng-if="user.type != 'free'">
+        <div class="paid-tv"  ng-if="user.type === 'free'">
             <div class="main-player position-div">
                 <div ng-show="watching">
                     <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="free-tv" ng-if="user.type ==='free'">
+        <div class="free-tv" ng-if="user.type !='free'">
             <div  class="main-player position-div">
                 <div ng-show="watching">
                     <pip-screen info='tv' class="mainUrl" playurl="{{mainUrl}}" channel-logo="{{channelLogo}}" id="screen1"></pip-screen>
@@ -29,10 +29,8 @@
             </div>
         </div> <!-- free-tv -->
     </div>
-
     <div>
     <div ng-include="'views/filter.html'"></div>
-
         <div id="clock" current-time="" class="position-div"></div>
         <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
             <div></div>
@@ -68,5 +66,4 @@
             </div>
         </div>
     </div>
-
 </div>

@@ -7,11 +7,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('../../client/web-app/styles/'));
 });
 
-//gulp.task('clean', function () {
-//    gulp.src('../../client/web-app/styles/custom.css')
-//        .pipe(clean({force: true}));
-//})
-
 gulp.task('watch', function() {
     gulp.watch('../../client/web-app/styles/sass/**/*', ['sass']);
 });

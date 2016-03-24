@@ -1,212 +1,214 @@
- <div id="channelMenuHolder" class="container-fluid">
-            <div id="menuBar">
-                <nav class="navbar navbar-default" role="navigation">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
+<div id="channelMenuHolder" class="container-fluid">
+  <div id="menuBar">
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
 
-                        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <div class="pre-channel">
-                            <img src="../images/arrow-left.png" width="30px" ng-click="previousChannel()" style="cursor: pointer">
-                        </div>
-
-                        <div id="currentChannel" >
-                            <img ng-src="{{channelLogo}}">
-                        </div>
-                        <div class="next-channel">
-                            <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
-                        </div>
-
-                        <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
-                            <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
-                            <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
-                            <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
-                            <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
-                        </div>
-                    </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-
-                        <ul class="nav navbar-nav navbar-right">
-
-                            <li ng-hide="mainUrl === undefined || tvProgram === null">
-                                <!--<button class="btn btn-default" ng-show="programDetail" ng-click="programDetail = false">Close</button>-->
-                                <!--<img src="../images/info.png" width="24px" height="24px" ng-hide="programDetail" ng-click="getShowDetails(); programDetail = true">-->
-                                <div id="programDetail" ng-controller='programDetailSlideCtrl'>
-                                    <img src="../images/info.png" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
-
-
-                                    <div id="programDetailSlider" pageslide ps-open="checked" ps-side="top"  >
-                                        <div id="programDetailHolder" >
-
-                                            <div id="detailHolder">
-                                                <div id="detailTitle">
-                                                    <div class="detail-title">
-                                                        {{program.title}}
-                                                    </div>
-                                                </div>
-                                                <div id="detailShowTime">
-                                                    {{program.showTime}}
-                                                </div>
-                                                <div id="detailDescription">
-                                                    {{program.description}}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <a id="okButton"ng-click="toggleProgramDetail()" class="btn btn-danger btn-xs" >OK</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li ng-hide="mainUrl === undefined">
-                                <div id="favorite">
-                                    <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)">
-                                </div>
-                            </li>
-
-
-                            <li class="epg-controls" ng-click="displayFavorites(); allCh='no-u'; recCh='';favCh='my-class'">
-                                <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
-                            </li>
-
-
-                            <li class="epg-controls" ng-click="displayRecent(); favCh=''; allCh='no-u'; recCh='my-class'">
-                                <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
-                            </li>
-
-                            <li class="epg-controls" ng-click="displayAll();  favCh=''; recCh=''; allCh='high-u'">
-                                <span class="base-classU" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
-                            </li>
-
-                            <li class="filter-li">
-                                <!-- <div id="filter" ng-controller='filterPanelSlideCtrl'> -->
-                                <div id="filter">
-                                    <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer;">
-
-                                    <div pageslide ps-open="checked" ps-size="360px">
-                                        <div id="channelFilterHolder" class="filter-close-btn label label-danger">
-                                            <div class="row">
-                                                <div>
-                                                    <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters()" translate="PLAYER_CLEAR_ALL" ></a>
-                                                    <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
-                                                </div>
-                                                <div class="channel-filters">
-                                                    <div class="channel-filter-categories" >
-                                                        <span translate="PLAYER_CATEGORIES"></span>
-                                                    </div>
-                                                    <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
-                                                        <div class="panel panel-default filter-categories" >
-                                                            <div class="panel-heading" role="tab" id="headingGenre">
-                                                                <div class="category-header" ng-click="genreField = !genreField">
-                                                                    <span translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="collapseGenre" class="panel-collapse collapse in" ng-hide="genreField">
-                                                            <div class="panel-body panel-body-left">
-                                                                <!-- <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" class="filter-repeat">
- -->
-                                                                <div ng-repeat="tag in tags[0].tags | filter: { col : 0 }" class="filter-repeat">
-                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel-body panel-body-right">
-                                                                <div ng-repeat="tag in tags[0].tags | filter: { col : 1 }" class="filter-repeat">
-
-                                                                    <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="panel panel-default filter-categories">
-                                                            <div class="panel-heading" role="tab" id="headingRegion">
-                                                                <div class="category-header" ng-click="originField = !originField">
-                                                                    <span translate="PLAYER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="collapseRegion" class="panel-collapse collapse in"  ng-hide="originField">
-                                                            <div class="panel-body panel-body-left">
-                                                                <div ng-repeat="tag in tags[2].tags | filter: { col: 0 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel-body panel-body-right">
-                                                                <div ng-repeat="tag in tags[2].tags | filter: { col : 1 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="panel panel-default filter-categories">
-                                                            <div class="panel-heading" role="tab" id="headingAudience">
-                                                                <div class="category-header" ng-click="audienceField = !audienceField">
-                                                                    <span translate="PLAYER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="collapseAudience" class="panel-collapse collapse in" ng-hide="audienceField">
-                                                            <div class="panel-body panel-body-left">
-                                                                <div ng-repeat="tag in tags[3].tags | filter: { col: 0 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel-body panel-body-right">
-                                                                <div ng-repeat="tag in tags[3].tags | filter: { col : 1 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="panel panel-default filter-categories">
-                                                            <div class="panel-heading" role="tab" id="headingLanguage">
-                                                                <div class="category-header" ng-click="languageField = !languageField">
-                                                                    <span translate="PLAYER_LANGUAGE" role="button" data-toggle="collapse" data-parent="#categories"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="collapseLanguage" class="panel-collapse collapse in" ng-hide="languageField">
-                                                            <div class="panel-body panel-body-left">
-                                                                <div ng-repeat="tag in tags[2].tags | filter: { col: 0 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel-body panel-body-right">
-                                                                <div ng-repeat="tag in tags[2].tags | filter: { col : 1 }" class="filter-repeat">
-
-                                                                    <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </nav>
-            </div> <!--menu bar -->
+        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="pre-channel">
+            <img src="../images/arrow-left.png" width="30px" ng-click="previousChannel()" style="cursor: pointer">
         </div>
+
+        <div id="currentChannel" >
+            <img ng-src="{{channelLogo}}">
+        </div>
+        <div class="next-channel">
+            <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
+        </div>
+
+        <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
+            <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
+            <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
+            <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
+            <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
+        </div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li ng-hide="mainUrl === undefined || tvProgram === null">
+              <!--<button class="btn btn-default" ng-show="programDetail" ng-click="programDetail = false">Close</button>-->
+              <!--<img src="../images/info.png" width="24px" height="24px" ng-hide="programDetail" ng-click="getShowDetails(); programDetail = true">-->
+              <div id="programDetail" ng-controller='programDetailSlideCtrl'>
+                <img src="../images/info.png" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
+
+
+                <div id="programDetailSlider" pageslide ps-open="checked" ps-side="top"  >
+                    <div id="programDetailHolder" >
+
+                      <div id="detailHolder">
+                          <div id="detailTitle">
+                              <div class="detail-title">
+                                  {{program.title}}
+                              </div>
+                          </div>
+                          <div id="detailShowTime">
+                              {{program.showTime}}
+                          </div>
+                          <div id="detailDescription">
+                              {{program.description}}
+                          </div>
+                      </div>
+
+                    <div>
+                        <a id="okButton"ng-click="toggleProgramDetail()" class="btn btn-danger btn-xs" >OK</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </li>
+            
+            <li ng-hide="mainUrl === undefined">
+              <div id="favorite">
+                  <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)">
+              </div>
+            </li>
+
+
+            <li class="epg-controls" ng-click="displayFavorites(); allCh='no-u'; recCh='';favCh='my-class'">
+                <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
+            </li>
+
+
+            <li class="epg-controls" ng-click="displayRecent(); favCh=''; allCh='no-u'; recCh='my-class'">
+                <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
+            </li>
+
+            <li class="epg-controls" ng-click="displayAll();  favCh=''; recCh=''; allCh='high-u'">
+                <span class="base-classU" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
+            </li>
+
+            <li class="filter-li">
+                <!-- <div id="filter" ng-controller='filterPanelSlideCtrl'> -->
+              <div id="filter">
+                  <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer;">
+
+                  <div pageslide ps-open="checked" ps-size="360px">
+                      <div id="channelFilterHolder" class="filter-close-btn label label-danger">
+                          <div class="row">
+                              <div>
+                                  <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters()" translate="PLAYER_CLEAR_ALL" ></a>
+                                  <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
+                              </div>
+                              <div class="channel-filters">
+                                  <div class="channel-filter-categories" >
+                                      <span translate="PLAYER_CATEGORIES"></span>
+                                  </div>
+                                  <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
+                                      <div class="panel panel-default filter-categories" >
+                                          <div class="panel-heading" role="tab" id="headingGenre">
+                                              <div class="category-header" ng-click="genreField = !genreField">
+                                                  <span translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div id="collapseGenre" class="panel-collapse collapse in" ng-hide="genreField">
+                                          <div class="panel-body panel-body-left">
+                                              <!-- <div ng-repeat="tag in getTags('Genre') | filter: { col: 0 }" class="filter-repeat">
+-->
+                                              <div ng-repeat="tag in tags[0].tags | filter: { col : 0 }" class="filter-repeat">
+                                                  <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                          <div class="panel-body panel-body-right">
+                                              <div ng-repeat="tag in tags[0].tags | filter: { col : 1 }" class="filter-repeat">
+
+                                                  <input name="genreList[]" ng-checked="selectedGenres.indexOf(tag.id) > -1" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="panel panel-default filter-categories">
+                                          <div class="panel-heading" role="tab" id="headingRegion">
+                                              <div class="category-header" ng-click="originField = !originField">
+                                                  <span translate="PLAYER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div id="collapseRegion" class="panel-collapse collapse in"  ng-hide="originField">
+                                          <div class="panel-body panel-body-left">
+                                              <div ng-repeat="tag in tags[2].tags | filter: { col: 0 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                          <div class="panel-body panel-body-right">
+                                              <div ng-repeat="tag in tags[2].tags | filter: { col : 1 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="panel panel-default filter-categories">
+                                          <div class="panel-heading" role="tab" id="headingAudience">
+                                              <div class="category-header" ng-click="audienceField = !audienceField">
+                                                  <span translate="PLAYER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div id="collapseAudience" class="panel-collapse collapse in" ng-hide="audienceField">
+                                          <div class="panel-body panel-body-left">
+                                              <div ng-repeat="tag in tags[3].tags | filter: { col: 0 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                          <div class="panel-body panel-body-right">
+                                              <div ng-repeat="tag in tags[3].tags | filter: { col : 1 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="panel panel-default filter-categories">
+                                          <div class="panel-heading" role="tab" id="headingLanguage">
+                                              <div class="category-header" ng-click="languageField = !languageField">
+                                                  <span translate="PLAYER_LANGUAGE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div id="collapseLanguage" class="panel-collapse collapse in" ng-hide="languageField">
+                                          <div class="panel-body panel-body-left">
+                                              <div ng-repeat="tag in tags[1].tags | filter: { col: 0 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                          <div class="panel-body panel-body-right">
+                                              <div ng-repeat="tag in tags[1].tags | filter: { col : 1 }" class="filter-repeat">
+
+                                                  <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </li>
+
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+  </div> <!--menu bar -->
+</div>

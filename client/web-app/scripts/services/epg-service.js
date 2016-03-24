@@ -147,7 +147,7 @@
             }
             for(var i = 0; i < channelIds.length; i++){
                 channelIndex = allChannels.map(function(e){return e.station}).indexOf(channelIds[i])
-                console.log('favorite channel object', allChannels[channelIndex])
+                //console.log('favorite channel object', allChannels[channelIndex])
                 arr.push(allChannels[channelIndex])
             }
             return arr
