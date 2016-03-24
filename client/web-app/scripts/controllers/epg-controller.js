@@ -308,9 +308,7 @@
 
         function addRecentChannel(channelId) {
             // verify that session storage is available on the user's browser
-            console.log('adding recent channel to session storage')
             if(typeof(Storage) === undefined){
-                console.log('session storage unavailable');
                 $scope.recentChannelSupport = 'We are sorry. Recent channels feature is not supported by your browser.';
             }
             

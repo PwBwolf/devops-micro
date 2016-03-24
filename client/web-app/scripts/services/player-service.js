@@ -130,3 +130,5 @@
             return arrToObj;
         }
     }]);
+}(angular.module('app')));
+

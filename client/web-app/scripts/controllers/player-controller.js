@@ -99,29 +99,32 @@
             $scope.watchNow($scope.nextIndex, $scope.favoriteChannels);
         };
 
-        $scope.displayRecent = function () {
+        $scope.displayRecent = function() {
             displayingRecents = true;
             displayingFavorites = false;
             displayingAll = false;
-            var recentPrograms = $cookies.recent;
-            if (recentPrograms) {
-                var recentCookies = JSON.parse(recentPrograms);
+
+            console.log('displaying recent channels')
+
+            var recentPrograms = $window.sessionStorage.recent;
+            if(recentPrograms){
+                var recentCookies = JSON.parse(recentPrograms);   
                 $scope.noRecentChannels = false;
             }
-            else {
+            else{
                 $scope.noRecentChannels = true;
                 $scope.programming = $scope.recentChannels;
                 return;
             }
-            $scope.recentChannels = playerSvc.mapChannels(recentCookies, $scope.allChannels);
-            $scope.recentChannels.sort(function (a, b) {
-                if (a.chIndex > b.chIndex) {
+            $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
+            $scope.recentChannels.sort(function(a, b){
+                if(a.chIndex > b.chIndex){
                     return 1;
                 }
-                if (a.chIndex < b.chIndex) {
+                if(a.chIndex < b.chIndex){
                     return -1;
                 }
-            });
+            })
             $scope.programming = $scope.recentChannels;
         };
 
@@ -192,28 +195,36 @@
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
-            if ($scope.watching === false) {
-                $scope.watching = true;
+
+            if($scope.watching === false) {
+                $timeout(function(){ $scope.watching = true }, 500);
             }
             // find the index of the channel where index === chIndex
-            var indexOfClickedChannel = $scope.programming.map(function (e) {
-                return e.chIndex
-            }).indexOf(index);
-            if (indexOfClickedChannel > 0) {
+            var indexOfClickedChannel = $scope.programming.map(function(e){return e.chIndex}).indexOf(index);
+            // set $socpe.prevIndex
+            if(indexOfClickedChannel > 0){
                 $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
-            } else if (indexOfClickedChannel === 0) {
+            }
+            else if(indexOfClickedChannel === 0){
                 $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex;
-            } else {
+            }
+            else{
                 $scope.prevIndex = $scope.programming[0].chIndex;
             }
-            if (indexOfClickedChannel === ($scope.programming.length - 1)) {
+
+            // set $scope.nextIndex
+            if(indexOfClickedChannel === ($scope.programming.length-1)){
                 $scope.nextIndex = 0;
-            } else {
+            }
+            else{
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
+            console.log('indexes', index, $scope.prevIndex, $scope.nextIndex);
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
+
                 $scope.mainUrl = channelUrl.routes[0];
+                console.log('$scope.mainUrl', $scope.mainUrl);
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
@@ -230,8 +241,10 @@
                 // set the location.hash to the id of
                 // the element you wish to scroll to.
                 $location.hash('topBox');
+                // call $anchorScroll()
                 $anchorScroll();
-            });
+                console.log('leaving watchNow');
+            }); //mediaSvc
         };
 
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
@@ -275,27 +288,35 @@
         }
 
         function addRecentChannel(channelId) {
-            var updatedRecents, recentCookies;
-            if ($cookies.recent === undefined) {
-                updatedRecents = {};
+            console.log('adding recent channel to session storage')
+            if(typeof(Storage) === undefined){
+                console.log('session storage unavailable');
+                $scope.recentChannelSupport = 'We are sorry. Recent channels feature is not supported by your browser.';
+                return
+            }
+            
+            if($window.sessionStorage.recent === undefined){
+                var updatedRecents = {};
                 updatedRecents[channelId] = channelId;
-                $cookies.recent = JSON.stringify(updatedRecents);
-                recentCookies = $cookies.recent;
-            } else {
+                $window.sessionStorage.recent = JSON.stringify(updatedRecents);
+                var recentCookies = $window.sessionStorage.recent;
+            }
+            else {
                 var matchFound = false;
-                recentCookies = $cookies.recent;
+                var recentCookies = $window.sessionStorage.recent;
                 recentCookies = JSON.parse(recentCookies);
                 for (var i in recentCookies) {
-                    if (recentCookies.hasOwnProperty(i)) {
-                        if (channelId === i) {
+                    if(recentCookies.hasOwnProperty(i)) {
+                        if (channelId ===  i) {
                             matchFound = true;
                         }
+
                     }
                 }
                 if (!matchFound) {
                     recentCookies[channelId] = channelId;
-                    updatedRecents = JSON.stringify(recentCookies);
-                    $cookies.recent = updatedRecents;
+                    var updatedRecents = JSON.stringify(recentCookies);
+                    $window.sessionStorage.recent = updatedRecents;
                 }
             }
         }
