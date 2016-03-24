@@ -104,7 +104,7 @@
             displayingFavorites = false;
             displayingAll = false;
 
-            console.log('displaying recent channels')
+            console.log('displaying recent channels');
 
             var recentPrograms = $window.sessionStorage.recent;
             if(recentPrograms){
