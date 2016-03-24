@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'playerSvc', '$location', '$anchorScroll', function ($scope, $rootScope, mediaSvc, $filter, $cookies, playerSvc, $location, $anchorScroll) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'playerSvc', '$location', '$anchorScroll', '$timeout', '$window', function ($scope, $rootScope, mediaSvc, $filter, $cookies, playerSvc, $location, $anchorScroll, $timeout, $window) {
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -116,7 +116,7 @@
                 $scope.programming = $scope.recentChannels;
                 return;
             }
-            $scope.recentChannels = epgSrvc.mapChannels(recentCookies, $scope.allChannels);
+            $scope.recentChannels = playerSvc.mapChannels(recentCookies, $scope.allChannels);
             $scope.recentChannels.sort(function(a, b){
                 if(a.chIndex > b.chIndex){
                     return 1;
