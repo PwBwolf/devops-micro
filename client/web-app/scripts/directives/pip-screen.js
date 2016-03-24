@@ -8,7 +8,6 @@
                 whichTv: '=info'
             },
             link: function (scope, element, attributes) {
-                console.log('new playurl', value)
                 attributes.$observe('playurl', function (value) {
                     jwplayer(attributes.id).setup({
                         width: '100%',
@@ -21,9 +20,9 @@
                         androidhls: true,
                         type: 'hls'
                     });
-                    console.log('still in jwplayer')
+
                 })
-                console.log('still in jwplayer')
+
             }
         };
     }]);
