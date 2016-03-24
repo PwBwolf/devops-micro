@@ -41,7 +41,7 @@
         function clearUser() {
             changeUser(noUser());
             tokenSvc.clearToken();
-            $window.sessionStorage.recent = JSON.stringify({})
+            $window.sessionStorage.removeItem('recent')
         }
 
         return {
