@@ -27,6 +27,8 @@
         $scope.nextIndex = 0;
         $scope.noRecentChannels = false;
         $scope.checked = false; // This will be binded using the ps-open attribute
+
+        $scope.channelsLoaded = false   // onlly show menu bar and epg if channels have loaded and information has been parsed
         var displayingAll = true;
         var displayingFavorites = false;
         var displayingRecents = false;
@@ -45,6 +47,7 @@
                         function (data) {
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
                             $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
+                            $scope.channelsLoaded = true
                         },
                         function (error) {
                             // handle this error with toastr later?
