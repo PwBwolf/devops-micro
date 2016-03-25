@@ -29,11 +29,16 @@
         $scope.checked = false; // This will be binded using the ps-open attribute
 
         $scope.channelsLoaded = false   // onlly show menu bar and epg if channels have loaded and information has been parsed
+        $scope.checkedInfo = false; // This will be binded using the ps-open attribute
+        
+        $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
+
         var displayingAll = true;
         var displayingFavorites = false;
         var displayingRecents = false;
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
+        var programDetailSlider = document.getElementById('programDetailSlider');
 
         activate();
 
@@ -231,6 +236,7 @@
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
+                $scope.program = programInfo
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
                 previousChannelIndex.index = currentChannelIndex.index;
@@ -247,6 +253,7 @@
                 // call $anchorScroll()
                 $anchorScroll();
                 console.log('leaving watchNow');
+                console.log('current channel object in watchNow', $scope.currentChannel);
             }); //mediaSvc
         };
 
@@ -353,6 +360,12 @@
                     $scope.tags[i].tags[j].Selected = false;
                 }
             }
+        };
+
+        $scope.toggleProgramDetail = function () {
+            console.log('in toggle program detail')
+            var width = $(window).width();
+            $scope.checkedInfo = !$scope.checkedInfo;
         };
 
         // loop through all channels
