@@ -1196,7 +1196,6 @@ ul.passwordStrength {
 #channelGuideDescription {
     height: 60px;
     line-height: 1.2;
-    border-bottom: 1px solid;
 }
 
 #smallChannelDescription p, #channelGuideDescription p {
@@ -1673,7 +1672,6 @@ body, html {
 }
 
 .sync-scroll {
-
     overflow-x: auto;
 }
 
@@ -1687,12 +1685,20 @@ body, html {
 }
 #image-logos {
     height: 60px;
+    border-right: 1px groove;
+}
+
+.logo-detail {
+    border-bottom: 1px solid;
+}
+
+.show-detail {
+    border-bottom: 1px solid;
 }
 
 .image-lineup {
     width: 154px;
     height: 60px;
-    border-right: 1px groove;
     border-color: rgb(0, 27,72);
     z-index: 8;
 }
