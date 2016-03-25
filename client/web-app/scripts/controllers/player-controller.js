@@ -247,11 +247,8 @@
                 $scope.currentChannel.index = currentChannelIndex.index;
                 $scope.currentChannel.channelId = $rootScope.channels[index].id;
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
-                // set the location.hash to the id of
-                // the element you wish to scroll to.
-                $location.hash('topBox');
-                // call $anchorScroll()
-                $anchorScroll();
+                $anchorScroll('topBox');
+
                 console.log('leaving watchNow');
                 console.log('current channel object in watchNow', $scope.currentChannel);
             }); //mediaSvc
