@@ -16,17 +16,13 @@
                     <div class="button-logo">
                         <img src="images/logo.png" width="auto" height="60px"/>
                     </div>
-
-                    <div class="premiumButtonHolder"
-                         style="height:50px;float:right;display:table-cell;vertical-align: middle;background:transparent">
-                        <div ng-controller='upgradePremiumSlideCtrl' ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()" style="margin-top:7px;width:100%; height:40px;display:inline-block;text-transform:uppercase;font-size:16px;display:table-cell;line-height:40px;text-align: center;float:right;color:white;background:rgb(131,57,178);cursor:pointer" translate="USER_HOME_UPGRADE_SUBSCRIPTION">
-                            <div id="upgradePremiumSlider" pageslide ps-open="checked" ps-size="600px" ps-speed="0"
-                                 style="z-index:10;position:fixed;margin-top:53px;height:500px;overflow:auto;">
+                    <div class="premium-button-holder" style="height:50px;float:right;display:table-cell;vertical-align: middle;background:transparent">
+                        <div ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()" style="margin-top:7px;width:100%; height:40px;display:inline-block;text-transform:uppercase;font-size:16px;display:table-cell;line-height:40px;text-align: center;float:right;color:white;background:rgb(131,57,178);cursor:pointer" translate="USER_HOME_UPGRADE_SUBSCRIPTION">
+                            <div id="upgradePremiumSlider" pageslide ps-open="showUpgradePremium" ps-size="600px" ps-speed="0" style="z-index:10;position:fixed;margin-top:53px;height:500px;overflow:auto;">
                                 <div id="upgradePremiumlHolder"
                                      style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
                                     <button class="collapse-hide" ng-click="toggleUpgradePremium()">&#10006;</button>
-                                    <div id="upgradePremium" class="clear-both"
-                                         ng-include="'views/upgrade-subscription.html'"></div>
+                                    <div id="upgradePremium" class="clear-both" ng-include="'views/upgrade-subscription.html'"></div>
                                 </div>
                             </div>
                         </div>
@@ -138,23 +134,9 @@
             </div>
         </nav>
     </header>
-    <header id="phoneUserHeader" class="visible-xs">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
-                    <div class="nav-btn">
-                        <button type="button" ng-click="signOut()" class="btn btn-default dropdown-toggle"
-                                access-level="accessLevels.user" translate="USER_HOME_SIGN_OUT"></button>
-                        <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle"
-                                translate="USER_HOME_OTHER_LANGUAGE"></button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
 </div>
-<div id="player" class="clear-both" style="background: transparent" ng-include="'views/player.html'"></div>
+<div id="player" class="clear-both hidden-xs" style="background: transparent" ng-include="'views/player.html'"></div>
+<div id="notSupported" class="clear-both visible-xs" style="background: transparent" ng-include="'views/not-supported.html'"></div>
 <style>
     body {
         background-image: url("../images/background-new.jpg");
@@ -164,3 +146,4 @@
         background-size: cover;
     }
 </style>
+

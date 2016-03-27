@@ -1,7 +1,6 @@
 (function (app) {
     'use strict';
     app.directive('combineHorizontalScrolls', [function(){
-        console.log('directive running')
         var scrollLeft = 0;
         function combine(elements){
             elements.on('scroll', function(e){

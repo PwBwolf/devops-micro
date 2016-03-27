@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', '$cookies', 'playerSvc', '$location', '$anchorScroll', '$timeout', '$window', function ($scope, $rootScope, mediaSvc, $filter, $cookies, playerSvc, $location, $anchorScroll, $timeout, $window) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$location', '$anchorScroll', '$timeout', '$window', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $location, $anchorScroll, $timeout, $window) {
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -27,10 +27,8 @@
         $scope.nextIndex = 0;
         $scope.noRecentChannels = false;
         $scope.checked = false; // This will be binded using the ps-open attribute
-
-        $scope.channelsLoaded = false   // onlly show menu bar and epg if channels have loaded and information has been parsed
+        $scope.channelsLoaded = false;   // onlly show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
-        
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
 
         var displayingAll = true;
@@ -72,11 +70,6 @@
                 $rootScope.$broadcast('ChannelsLoaded');
             });
 
-            //call to get current promotion that should be displayed on free users view
-            mediaSvc.getPromos(function (data) {
-                $scope.promos = data.ads;
-            });
-
             mediaSvc.getChannelCategories(function (data) {
                 var dataCategories = data.categories;
                 $rootScope.channelCategories = data.categories;
@@ -107,32 +100,29 @@
             $scope.watchNow($scope.nextIndex, $scope.favoriteChannels);
         };
 
-        $scope.displayRecent = function() {
+        $scope.displayRecent = function () {
             displayingRecents = true;
             displayingFavorites = false;
             displayingAll = false;
-
-            console.log('displaying recent channels');
-
             var recentPrograms = $window.sessionStorage.recent;
-            if(recentPrograms){
-                var recentCookies = JSON.parse(recentPrograms);   
+            if (recentPrograms) {
+                var recentCookies = JSON.parse(recentPrograms);
                 $scope.noRecentChannels = false;
             }
-            else{
+            else {
                 $scope.noRecentChannels = true;
                 $scope.programming = $scope.recentChannels;
                 return;
             }
             $scope.recentChannels = playerSvc.mapChannels(recentCookies, $scope.allChannels);
-            $scope.recentChannels.sort(function(a, b){
-                if(a.chIndex > b.chIndex){
+            $scope.recentChannels.sort(function (a, b) {
+                if (a.chIndex > b.chIndex) {
                     return 1;
                 }
-                if(a.chIndex < b.chIndex){
+                if (a.chIndex < b.chIndex) {
                     return -1;
                 }
-            })
+            });
             $scope.programming = $scope.recentChannels;
         };
 
@@ -203,40 +193,38 @@
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
-
-            if($scope.watching === false) {
-                $timeout(function(){ $scope.watching = true }, 500);
+            if ($scope.watching === false) {
+                $timeout(function () {
+                    $scope.watching = true;
+                }, 500);
             }
             // find the index of the channel where index === chIndex
-            var indexOfClickedChannel = $scope.programming.map(function(e){return e.chIndex}).indexOf(index);
-            // set $socpe.prevIndex
-            if(indexOfClickedChannel > 0){
+            var indexOfClickedChannel = $scope.programming.map(function (e) {
+                return e.chIndex
+            }).indexOf(index);
+            if (indexOfClickedChannel > 0) {
                 $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
             }
-            else if(indexOfClickedChannel === 0){
+            else if (indexOfClickedChannel === 0) {
                 $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex;
             }
-            else{
+            else {
                 $scope.prevIndex = $scope.programming[0].chIndex;
             }
-
             // set $scope.nextIndex
-            if(indexOfClickedChannel === ($scope.programming.length-1)){
+            if (indexOfClickedChannel === ($scope.programming.length - 1)) {
                 $scope.nextIndex = 0;
             }
-            else{
+            else {
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
-            console.log('indexes', index, $scope.prevIndex, $scope.nextIndex);
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
-
                 $scope.mainUrl = channelUrl.routes[0];
-                console.log('$scope.mainUrl', $scope.mainUrl);
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
                 var programInfo = getProgramInfo(index);
-                $scope.program = programInfo
+                $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description;
                 previousChannelIndex.index = currentChannelIndex.index;
@@ -249,9 +237,7 @@
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 $anchorScroll('topBox');
 
-                console.log('leaving watchNow');
-                console.log('current channel object in watchNow', $scope.currentChannel);
-            }); //mediaSvc
+            });
         };
 
         /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
@@ -295,14 +281,12 @@
         }
 
         function addRecentChannel(channelId) {
-            console.log('adding recent channel to session storage')
-            if(typeof(Storage) === undefined){
-                console.log('session storage unavailable');
+            if (typeof(Storage) === undefined) {
                 $scope.recentChannelSupport = 'We are sorry. Recent channels feature is not supported by your browser.';
                 return
             }
-            
-            if($window.sessionStorage.recent === undefined){
+
+            if ($window.sessionStorage.recent === undefined) {
                 var updatedRecents = {};
                 updatedRecents[channelId] = channelId;
                 $window.sessionStorage.recent = JSON.stringify(updatedRecents);
@@ -313,8 +297,8 @@
                 var recentCookies = $window.sessionStorage.recent;
                 recentCookies = JSON.parse(recentCookies);
                 for (var i in recentCookies) {
-                    if(recentCookies.hasOwnProperty(i)) {
-                        if (channelId ===  i) {
+                    if (recentCookies.hasOwnProperty(i)) {
+                        if (channelId === i) {
                             matchFound = true;
                         }
 
@@ -360,7 +344,6 @@
         };
 
         $scope.toggleProgramDetail = function () {
-            console.log('in toggle program detail')
             var width = $(window).width();
             $scope.checkedInfo = !$scope.checkedInfo;
         };

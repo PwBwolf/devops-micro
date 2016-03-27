@@ -3,6 +3,8 @@
 
     app.controller('userHomeCtrl', ['$scope', '$', '$modal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', 'webStorage', function ($scope, $, $modal, $rootScope, $location, $filter, userSvc, loggerSvc, webStorage) {
 
+        $scope.showUpgradePremium = false;
+
         $scope.showDropdown = function (id) {
             $('#' + id).collapse('show');
         };
@@ -54,21 +56,21 @@
                     }
                 }
             }).result.then(function () {
-                    $scope.saving = true;
-                    userSvc.cancelSubscription(function () {
-                        userSvc.getUserProfile(function () {
-                            $scope.saving = false;
-                            loggerSvc.logSuccess($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_SUCCESS'));
-                            $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'accountDropDown']);
-                        }, function () {
-                            loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
-                            $scope.saving = false;
-                        });
-                    }, function () {
+                $scope.saving = true;
+                userSvc.cancelSubscription(function () {
+                    userSvc.getUserProfile(function () {
                         $scope.saving = false;
-                        loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_FAILURE') + ' ' + $scope.appConfig.customerCareNumber);
+                        loggerSvc.logSuccess($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_SUCCESS'));
+                        $rootScope.$broadcast('CloseDropDown', ['changeCreditCardDropDown', 'accountDropDown']);
+                    }, function () {
+                        loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR'));
+                        $scope.saving = false;
                     });
+                }, function () {
+                    $scope.saving = false;
+                    loggerSvc.logError($filter('translate')('USER_HOME_CANCEL_SUBSCRIPTION_FAILURE') + ' ' + $scope.appConfig.customerCareNumber);
                 });
+            });
         };
 
         $rootScope.$on('CloseDropDown', function (event, args) {
@@ -77,20 +79,11 @@
             }
         });
 
-    }]);
-    
-    app.controller('upgradePremiumSlideCtrl',['$scope',function($scope){
-
-        $scope.checked = false; // This will be binded using the ps-open attribute
-
-        $scope.toggleUpgradePremium = function(){
-            
-            $scope.checked = !$scope.checked;
-            if($scope.checked) {
-                //$scope.program = $rootScope.program; 
-            }
-
+        $scope.toggleUpgradePremium = function () {
+            $scope.showUpgradePremium = !$scope.showUpgradePremium;
         }
 
+
     }]);
+
 }(angular.module('app')));

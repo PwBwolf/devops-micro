@@ -98,19 +98,6 @@ module.exports = {
         });
     },
 
-    getPromos: function (req, res) {
-        cms.getAds(function (err, data) {
-            if (err) {
-                logger.logError('mediaController - getPromos - error fetching promos');
-                logger.logError(err);
-                return res.status(500).end();
-            }
-            res.set('Cache-Control', 'public, max-age=480');
-            res.set('Expires', new Date(Date.now() + 480000).toUTCString());
-            return res.json(data);
-        });
-    },
-
     getChannelCategories: function (req, res) {
         cms.getTags(function (err, data) {
             if (err) {

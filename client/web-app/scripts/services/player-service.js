@@ -73,7 +73,7 @@
                         return cb('channel guide ctrl error bloc');
                     });
             },
-            
+
             formatFavorites: function (favorites) {
                 var arr = [];
                 for (var i = 0; i < favorites.length; i++) {
@@ -81,7 +81,7 @@
                 }
                 return arr;
             },
-            
+
             mapChannels: function (channelIds, allChannels) {
                 var arr = [];
                 var channelIndex = -1;
@@ -92,13 +92,12 @@
                     channelIndex = allChannels.map(function (e) {
                         return e.station;
                     }).indexOf(channelIds[i]);
-                    console.log('favorite channel object', allChannels[channelIndex]);
                     arr.push(allChannels[channelIndex])
                 }
                 return arr;
             }
         };
-        
+
         function showLength(startTime, endTime) {
             var lastHalfHour = Math.floor(new Date().getTime() / (1000 * 60 * 30));
             lastHalfHour = lastHalfHour * 1000 * 60 * 30;

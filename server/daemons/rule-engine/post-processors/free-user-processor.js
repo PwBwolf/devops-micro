@@ -13,10 +13,10 @@ function sendReminderEmailSms(user, subjectDays, bodyDays) {
         var message = sf(config.reminderSmsMessage[user.preferences.defaultLanguage], subjectDays);
         twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
             if (err) {
-                logger.logError('subscription - sendReminderEmailSms - error sending sms: ' + user.email);
+                logger.logError('freeUserProcessor - sendReminderEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
             } else {
-                logger.logInfo('subscription - sendReminderEmailSms - sms sent successfully: ' + user.email);
+                logger.logInfo('freeUserProcessor - sendReminderEmailSms - sms sent successfully: ' + user.email);
             }
         });
     } else {
@@ -71,10 +71,10 @@ function sendLastReminderEmailSms(user) {
         var message = config.lastReminderSmsMessage[user.preferences.defaultLanguage];
         twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
             if (err) {
-                logger.logError('subscription - sendLastReminderEmailSms - error sending sms: ' + user.email);
+                logger.logError('freeUserProcessor - sendLastReminderEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
             } else {
-                logger.logInfo('subscription - sendLastReminderEmailSms - sms sent successfully: ' + user.email);
+                logger.logInfo('freeUserProcessor - sendLastReminderEmailSms - sms sent successfully: ' + user.email);
             }
         });
     } else {

@@ -62,9 +62,6 @@
             <div class="menu-button">
                 <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
             </div>
-            <div class="menu-button">
-                <a href="/sign-in" translate="INDEX_SIGN_IN"></a>
-            </div>
             <div style="float: right">
                 <!-- this div is added to fix a bug in IE10 and IE11 - do not remove -->
             </div>
@@ -87,8 +84,7 @@
                     <a class="navbar-brand" href="/"><img src="images/small-logo.png"/></a>
 
                     <div class="nav-btn">
-                        <button type="button" goto="/sign-in" class="btn btn-default dropdown-toggle" access-level="accessLevels.anon" translate="INDEX_SIGN_IN"></button>
-                        <button type="button" ng-click="changeLanguage()" class="btn btn-default dropdown-toggle" translate="INDEX_OTHER_LANGUAGE"></button>
+                        <button type="button" ng-click="changeLanguage()" class="btn btn-default" translate="INDEX_OTHER_LANGUAGE"></button>
                     </div>
                 </div>
                 <div class="contact-number" translate="INDEX_CONTACT_NUMBER"></div>
@@ -125,14 +121,13 @@
 <script src="bower_components/angular-webstorage/angular-webstorage.js"></script>
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/async/dist/async.js"></script>
 <script src="bower_components/angulartics/src/angulartics.js"></script>
 <script src="bower_components/angulartics-google-analytics/lib/angulartics-google-analytics.js"></script>
 <script src="bower_components/angulartics-google-tag-manager/lib/angulartics-google-tag-manager.js"></script>
 <script src='bower_components/ng-scroll-repeat/dist/ng-scroll-repeat.js'></script>
-
+<script src='bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js'></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:js scripts/scripts.js -->
@@ -159,7 +154,7 @@
 <script src="scripts/directives/channel-logo.js"></script>
 <script src="scripts/directives/current-time.js"></script>
 <script src="scripts/directives/pip-screen.js"></script>
-<script src="scripts/directives/horizontal-scrolls.js"></script>
+<script src="scripts/directives/combine-horizontal-scrolls.js"></script>
 <script src="scripts/translate/en.js"></script>
 <script src="scripts/translate/es.js"></script>
 <script src="scripts/config/translate.js"></script>

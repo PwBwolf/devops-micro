@@ -3,8 +3,7 @@
 
     angular.module('app', [
         'ngSanitize', 'ngRoute', 'ngAnimate', 'pageslide-directive',
-        'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap',
-        'ngCookies', 'ks.ngScrollRepeat',
+        'pascalprecht.translate', 'webStorageModule', 'angularPayments', 'ui.bootstrap', 'ks.ngScrollRepeat',
         'angulartics', 'angulartics.google.analytics', 'angulartics.google.tagmanager'
     ]);
     angular.module('app').value('_', window._);

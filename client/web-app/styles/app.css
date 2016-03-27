@@ -1193,7 +1193,7 @@ ul.passwordStrength {
     margin-top: 10px;
 }
 
-#channelGuideDescription {
+#channelGuideDescription, #channelGuideLogo {
     height: 60px;
     line-height: 1.2;
 }
@@ -2159,7 +2159,7 @@ body, html {
         height: auto;
         width: auto;
     }
-    .premiumButtonHolder {
+    .premium-button-holder {
         width: 375px
     }
 }
@@ -2169,7 +2169,7 @@ body, html {
         width: 270px;
     }
 
-    .premiumButtonHolder {
+    .premium-button-holder {
         width: 300px;
     }
 
@@ -2193,7 +2193,7 @@ body, html {
         font-size: 13px;
     }
 
-    .premiumButtonHolder {
+    .premium-button-holder {
         width: 250px
     }
 }

@@ -37,10 +37,6 @@
                 }).success(success).error(error);
             },
 
-            getPromos: function (success, error) {
-                $http.get('/api/get-promos').success(success).error(error);
-            },
-
             getChannelCategories: function (success, error) {
                 $http.get('/api/get-channel-categories').success(success).error(error);
             },
