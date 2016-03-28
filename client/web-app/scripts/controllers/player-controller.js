@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$location', '$anchorScroll', '$timeout', '$window', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $location, $anchorScroll, $timeout, $window) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$location', '$anchorScroll', '$timeout', 'webStorage', '_', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $location, $anchorScroll, $timeout, webStorage, _) {
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -27,7 +27,7 @@
         $scope.nextIndex = 0;
         $scope.noRecentChannels = false;
         $scope.checked = false; // This will be binded using the ps-open attribute
-        $scope.channelsLoaded = false;   // onlly show menu bar and epg if channels have loaded and information has been parsed
+        $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
 
@@ -84,7 +84,6 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
-                console.log('tags', $scope.tags)
             });
         }
 
@@ -105,9 +104,8 @@
             displayingRecents = true;
             displayingFavorites = false;
             displayingAll = false;
-            var recentPrograms = $window.sessionStorage.recent;
-            if (recentPrograms) {
-                var recentCookies = JSON.parse(recentPrograms);
+            var recentChannels = webStorage.session.get('recentChannels');
+            if (recentChannels) {
                 $scope.noRecentChannels = false;
             }
             else {
@@ -115,7 +113,7 @@
                 $scope.programming = $scope.recentChannels;
                 return;
             }
-            $scope.recentChannels = playerSvc.mapChannels(recentCookies, $scope.allChannels);
+            $scope.recentChannels = playerSvc.mapChannels(recentChannels, $scope.allChannels);
             $scope.recentChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
                     return 1;
@@ -212,7 +210,6 @@
             else {
                 $scope.prevIndex = $scope.programming[0].chIndex;
             }
-            // set $scope.nextIndex
             if (indexOfClickedChannel === ($scope.programming.length - 1)) {
                 $scope.nextIndex = 0;
             }
@@ -224,7 +221,6 @@
                 $scope.mainUrl = channelUrl.routes[0];
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
-                console.log('channel info from rootScope', $rootScope.channels[index])
                 var programInfo = getProgramInfo(index);
                 $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
@@ -283,33 +279,17 @@
         }
 
         function addRecentChannel(channelId) {
-            if (typeof(Storage) === undefined) {
-                $scope.recentChannelSupport = 'We are sorry. Recent channels feature is not supported by your browser.';
-                return
-            }
-
-            if ($window.sessionStorage.recent === undefined) {
-                var updatedRecents = {};
+            var updatedRecents, recentChannels;
+            if (!webStorage.session.get('recentChannels')) {
+                updatedRecents = {};
                 updatedRecents[channelId] = channelId;
-                $window.sessionStorage.recent = JSON.stringify(updatedRecents);
-                var recentCookies = $window.sessionStorage.recent;
-            }
-            else {
+                webStorage.session.add('recentChannels', updatedRecents);
+            } else {
                 var matchFound = false;
-                var recentCookies = $window.sessionStorage.recent;
-                recentCookies = JSON.parse(recentCookies);
-                for (var i in recentCookies) {
-                    if (recentCookies.hasOwnProperty(i)) {
-                        if (channelId === i) {
-                            matchFound = true;
-                        }
-
-                    }
-                }
-                if (!matchFound) {
-                    recentCookies[channelId] = channelId;
-                    var updatedRecents = JSON.stringify(recentCookies);
-                    $window.sessionStorage.recent = updatedRecents;
+                recentChannels = webStorage.session.get('recentChannels');
+                if (!_.has(recentChannels, channelId)) {
+                    recentChannels[channelId] = channelId;
+                    webStorage.session.add('recentChannels', recentChannels);
                 }
             }
         }
@@ -328,7 +308,6 @@
             if (filterExists === -1) {
                 $scope.selectedFilters.push(id);
                 $scope.programming = filterChannels($scope.selectedFilters);
-                console.log('current programming', $scope.programming)
             } else {
                 var index = $scope.selectedFilters.indexOf(id);
                 $scope.selectedFilters.splice(index, 1);
@@ -354,7 +333,7 @@
         // build filter object with category subobjects
         // loop through all channels
         // loop through all tags on a given channel
-        // compare them against each category 
+        // compare them against each category
         // add channels that have all the tags in the filter obj
         function filterChannels(filters) {
             var arr = [];
@@ -368,106 +347,83 @@
             for (var i = 0; i < filters.length; i++) {
                 var currentFilter = filters[i];
                 if (currentFilter <= 9) {
-                    filterObj.genre[currentFilter] = currentFilter
+                    filterObj.genre[currentFilter] = currentFilter;
                 }
                 else if (currentFilter >= 28 && currentFilter <= 31) {
-                    filterObj.audience[currentFilter] = currentFilter
+                    filterObj.audience[currentFilter] = currentFilter;
                 }
                 else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || currentFilter === 41 || currentFilter === 45) {
-                    filterObj.origin[currentFilter] = currentFilter
+                    filterObj.origin[currentFilter] = currentFilter;
                 }
-                else{
-                    filterObj.language[currentFilter] = currentFilter
+                else {
+                    filterObj.language[currentFilter] = currentFilter;
                 }
-                console.log('filter object', filterObj)                
             }
             // loop over all channel objects
             for (i = 0; i < $scope.allChannels.length; i++) {
                 var matches = 0;
-                var channel = $scope.allChannels[i]
+                var channel = $scope.allChannels[i];
                 // compare all the tags against each category subobject
                 // if it has either in one category that should satisfy the OR
                 // if it has one in each category it should satisfy the AND
-                if(matchesFilters(filterObj, channel)){
-                    console.log('goootttt eeeemmm')
-                    console.log('channel', channel)
+                if (matchesFilters(filterObj, channel)) {
                     arr.push(channel)
                 }
             }
             return arr;
         }
 
-        function matchesFilters (filterObj, channel) {
-            if (hasGenre(filterObj, channel) && hasAudience(filterObj, channel) && hasOrigin(filterObj, channel) && hasLanguage(filterObj, channel)) {
-                return true;
-            }
-            else{
-                return false;
-            }
+        function matchesFilters(filterObj, channel) {
+            return (hasGenre(filterObj, channel) && hasAudience(filterObj, channel) && hasOrigin(filterObj, channel) && hasLanguage(filterObj, channel));
         }
 
-        function hasGenre(filterObj, channel){
+        function hasGenre(filterObj, channel) {
             // loop over a channel's tags and see if the channel has any tag in the genre category
             // if it does, return true
-            console.log('checking genres')
-            if(Object.keys(filterObj.genre).length === 0){
-                console.log('no genres selected returning true')
-                return true
+            if (Object.keys(filterObj.genre).length === 0) {
+                return true;
             }
-            console.log(channel.tags)
-            for(var i = 0; i < channel.tags.length; i++){
-                var tag = channel.tags[i]
-                console.log('tag', channel.tags[i])
-                console.log('tag', channel.tags[i])
-                if(filterObj.genre.hasOwnProperty(tag)){
-                    console.log('found the tag in hasGenre')
-                    return true
+            for (var i = 0; i < channel.tags.length; i++) {
+                var tag = channel.tags[i];
+                if (filterObj.genre.hasOwnProperty(tag)) {
+                    return true;
                 }
             }
         }
 
         function hasAudience(filterObj, channel) {
             // no audience filters selected so return true
-            if(Object.keys(filterObj.audience).length === 0){
-                console.log('no audience selected returning true')
-                return true
+            if (Object.keys(filterObj.audience).length === 0) {
+                return true;
             }
-            for(var i = 0; i < channel.tags.length; i++){
-                var tag = channel.tags[i]
-                console.log('tag', channel.tags[i])
-                if(filterObj.audience.hasOwnProperty(tag)){
-                    console.log('found the tag in hasAudience')
-                    return true
+            for (var i = 0; i < channel.tags.length; i++) {
+                var tag = channel.tags[i];
+                if (filterObj.audience.hasOwnProperty(tag)) {
+                    return true;
                 }
             }
         }
 
         function hasOrigin(filterObj, channel) {
-            if(Object.keys(filterObj.origin).length === 0){
-                console.log('no origin selected returning true')
-                return true
+            if (Object.keys(filterObj.origin).length === 0) {
+                return true;
             }
-            for(var i = 0; i < channel.tags.length; i++){
-                var tag = channel.tags[i]
-                console.log('tag', channel.tags[i])
-                if(filterObj.origin.hasOwnProperty(tag)){
-                    console.log('found the tag in hasOrigin')
-                    return true
+            for (var i = 0; i < channel.tags.length; i++) {
+                var tag = channel.tags[i];
+                if (filterObj.origin.hasOwnProperty(tag)) {
+                    return true;
                 }
             }
         }
 
         function hasLanguage(filterObj, channel) {
-            if(Object.keys(filterObj.language).length === 0){
-                console.log('no language selected returning true')
-                return true
+            if (Object.keys(filterObj.language).length === 0) {
+                return true;
             }
-            for(var i = 0; i < channel.tags.length; i++){
-                var tag = channel.tags[i]
-                console.log('tag', channel.tags[i])
-                if(filterObj.language.hasOwnProperty(tag)){
-                    console.log('found the tag in hasLanguage', filterObj.language[tag])
-                    return true
+            for (var i = 0; i < channel.tags.length; i++) {
+                var tag = channel.tags[i];
+                if (filterObj.language.hasOwnProperty(tag)) {
+                    return true;
                 }
             }
         }
