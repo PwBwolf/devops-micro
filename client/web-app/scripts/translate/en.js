@@ -222,6 +222,7 @@
             PLAYER_MENU_FAVORITE: 'Favorites',
             PLAYER_MENU_RECENT: 'Recent',
             PLAYER_MENU_ALL: 'All',
+            PLAYER_MENU_FILTER: 'Filter',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your preferred language',
             PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Please send updates to the phone number<sup>*</sup> or email I signed up with',

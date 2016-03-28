@@ -56,18 +56,21 @@
                             <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)">
                         </div>
                     </li>
-                    <li class="epg-controls" ng-click="displayFavorites(); allCh='no-u'; recCh='';favCh='my-class'">
+                    <li class="epg-controls" ng-click="displayFavorites(); favCh='my-class'; allCh='no-u'; recCh=''">
                         <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
                     </li>
                     <li class="epg-controls" ng-click="displayRecent(); favCh=''; allCh='no-u'; recCh='my-class'">
                         <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
                     </li>
-                    <li class="epg-controls" ng-click="displayAll();  favCh=''; recCh=''; allCh='high-u'">
+                    <li class="epg-controls" ng-click="displayAll();  favCh=''; allCh='high-u'; recCh=''">
                         <span class="base-classU" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
+                    </li>
+                    <li class="epg-controls" ng-show="displayFilter">
+                        <span class="base-class" ng-class="filertCh" translate="PLAYER_MENU_FILTER"></span>
                     </li>
                     <li class="filter-li">
                         <div id="filter">
-                            <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle()" style="cursor: pointer;">
+                            <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle(); favCh=''; allCh='no-u'; recCh=''; filertCh='my-class'" style="cursor: pointer;">
                             <div pageslide ps-open="checked" ps-size="360px">
                                 <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                     <div class="row">

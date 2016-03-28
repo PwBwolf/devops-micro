@@ -222,6 +222,7 @@
             PLAYER_MENU_FAVORITE: 'Favoritos',
             PLAYER_MENU_RECENT: 'Reciente',
             PLAYER_MENU_ALL: 'Todos',
+            PLAYER_MENU_FILTER: 'Filtrar',
             PREFERENCES_PREFERRED_LANGUAGE: 'Elige tu idioma preferido',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Elige tu idioma preferido',
             PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Favor de enviarme notificaciones al número de celular<sup>*</sup> o correo electrónico con el cual ingresé',
