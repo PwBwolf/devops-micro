@@ -36,7 +36,6 @@
         var displayingRecents = false;
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
-        var programDetailSlider = document.getElementById('programDetailSlider');
 
         activate();
 
@@ -46,6 +45,7 @@
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels;
+                    $scope.prevIndex = $scope.programming.length - 1
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
@@ -192,11 +192,6 @@
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
-            if ($scope.watching === false) {
-                $timeout(function () {
-                    $scope.watching = true;
-                }, 500);
-            }
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex
@@ -234,7 +229,11 @@
                 $scope.currentChannel.channelId = $rootScope.channels[index].id;
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
                 $anchorScroll('topBox');
-
+                if ($scope.watching === false) {
+                    $timeout(function () {
+                        $scope.watching = true;
+                    }, 500);
+                }
             });
         };
 
