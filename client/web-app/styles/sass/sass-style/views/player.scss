@@ -3,7 +3,11 @@
     transition:all linear 0.5s;
 }
 .navbar-right {
-    width: 350px;
+    width: 400px;
+}
+
+.right-menu {
+    float: right;
 }
 
 .navbar-default {
@@ -37,10 +41,13 @@
         background: transparent;
         float:left;
     }
-    .epg-controls span {
-        cursor: pointer;
-        top: 10px;
-        color: white;
+    .epg-controls{
+        display: inline;
+        span {
+            cursor: pointer;
+            top: 10px;
+            color: white;
+        }
     }
     #currentChannel {
         img {

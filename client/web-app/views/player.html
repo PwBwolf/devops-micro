@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div combine-horizontal-scrolls="horizontal-scroll" ng-if="channelsLoaded">
+    <div combine-horizontal-scrolls="horizontal-scroll" ng-show="channelsLoaded">
         <div ng-include="'views/filter.html'"></div>
         <div id="clock" current-time="" class="position-div"></div>
         <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
