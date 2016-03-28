@@ -37,13 +37,13 @@
                 <div class="position-div user-guide">
                     <div>
                         <div id="channelGuideLogo" class="image-lineup">
-                            <div id="image-logos" ng-repeat="programs in ::programming" class="channel-description">
+                            <div id="image-logos" ng-repeat="programs in programming" class="channel-description">
                                 <div class="logo-detail" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{::programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{programs.logo}}) 50% no-repeat; background-size:contain"></div>
                             </div>
                         </div>
                         <div class="horizontal-scroll horizontal-bottom sync-scroll">
-                            <div id="channelGuideDescription" ng-repeat="programs in ::programming" class="channel-description">
-                                <div class="show-detail" ng-repeat="show in ::programs.lineUp" title="{{::show.dropdownInfo}}" style="cursor: pointer; width: {{::show.length * 5}}px; border-right: 1px solid #000033">
+                            <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
+                                <div class="show-detail" ng-repeat="show in ::programs.lineUp" title="{{::show.dropdownInfo}}" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
                                     <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
                                     <p style="text-align: left;"><span class="channel-details-body">{{::show.startHour}} - {{::show.endHour}}</span></p>
                                 </div>

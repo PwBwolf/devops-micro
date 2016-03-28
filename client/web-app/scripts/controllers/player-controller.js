@@ -84,6 +84,7 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
+                console.log('tags', $scope.tags)
             });
         }
 
@@ -223,6 +224,7 @@
                 $scope.mainUrl = channelUrl.routes[0];
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
                 $scope.channelLogo = $rootScope.channels[index].logoUri;
+                console.log('channel info from rootScope', $rootScope.channels[index])
                 var programInfo = getProgramInfo(index);
                 $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
@@ -326,6 +328,7 @@
             if (filterExists === -1) {
                 $scope.selectedFilters.push(id);
                 $scope.programming = filterChannels($scope.selectedFilters);
+                console.log('current programming', $scope.programming)
             } else {
                 var index = $scope.selectedFilters.indexOf(id);
                 $scope.selectedFilters.splice(index, 1);
@@ -348,31 +351,126 @@
             $scope.checkedInfo = !$scope.checkedInfo;
         };
 
+        // build filter object with category subobjects
         // loop through all channels
         // loop through all tags on a given channel
+        // compare them against each category 
         // add channels that have all the tags in the filter obj
         function filterChannels(filters) {
             var arr = [];
-            var filterObj = {};
+            var filterObj = {
+                genre: {},
+                audience: {},
+                origin: {},
+                language: {}
+            };
             // build filters object
             for (var i = 0; i < filters.length; i++) {
                 var currentFilter = filters[i];
-                filterObj[currentFilter] = currentFilter;
+                if (currentFilter <= 9) {
+                    filterObj.genre[currentFilter] = currentFilter
+                }
+                else if (currentFilter >= 28 && currentFilter <= 31) {
+                    filterObj.audience[currentFilter] = currentFilter
+                }
+                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || currentFilter === 41 || currentFilter === 45) {
+                    filterObj.origin[currentFilter] = currentFilter
+                }
+                else{
+                    filterObj.language[currentFilter] = currentFilter
+                }
+                console.log('filter object', filterObj)                
             }
+            // loop over all channel objects
             for (i = 0; i < $scope.allChannels.length; i++) {
                 var matches = 0;
-                for (var j = 0; j < $scope.allChannels[i].tags.length; j++) {
-                    var tag = $scope.allChannels[i].tags[j];
-                    if (filterObj.hasOwnProperty(tag)) {
-                        matches++;
-                    }
-                    if ((j === $scope.allChannels[i].tags.length - 1) && (matches === Object.keys(filterObj).length)) {
-                        var currentChannel = $scope.allChannels[i];
-                        arr.push(currentChannel);
-                    }
+                var channel = $scope.allChannels[i]
+                // compare all the tags against each category subobject
+                // if it has either in one category that should satisfy the OR
+                // if it has one in each category it should satisfy the AND
+                if(matchesFilters(filterObj, channel)){
+                    console.log('goootttt eeeemmm')
+                    console.log('channel', channel)
+                    arr.push(channel)
                 }
             }
             return arr;
         }
+
+        function matchesFilters (filterObj, channel) {
+            if (hasGenre(filterObj, channel) && hasAudience(filterObj, channel) && hasOrigin(filterObj, channel) && hasLanguage(filterObj, channel)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function hasGenre(filterObj, channel){
+            // loop over a channel's tags and see if the channel has any tag in the genre category
+            // if it does, return true
+            console.log('checking genres')
+            if(Object.keys(filterObj.genre).length === 0){
+                console.log('no genres selected returning true')
+                return true
+            }
+            console.log(channel.tags)
+            for(var i = 0; i < channel.tags.length; i++){
+                var tag = channel.tags[i]
+                console.log('tag', channel.tags[i])
+                console.log('tag', channel.tags[i])
+                if(filterObj.genre.hasOwnProperty(tag)){
+                    console.log('found the tag in hasGenre')
+                    return true
+                }
+            }
+        }
+
+        function hasAudience(filterObj, channel) {
+            // no audience filters selected so return true
+            if(Object.keys(filterObj.audience).length === 0){
+                console.log('no audience selected returning true')
+                return true
+            }
+            for(var i = 0; i < channel.tags.length; i++){
+                var tag = channel.tags[i]
+                console.log('tag', channel.tags[i])
+                if(filterObj.audience.hasOwnProperty(tag)){
+                    console.log('found the tag in hasAudience')
+                    return true
+                }
+            }
+        }
+
+        function hasOrigin(filterObj, channel) {
+            if(Object.keys(filterObj.origin).length === 0){
+                console.log('no origin selected returning true')
+                return true
+            }
+            for(var i = 0; i < channel.tags.length; i++){
+                var tag = channel.tags[i]
+                console.log('tag', channel.tags[i])
+                if(filterObj.origin.hasOwnProperty(tag)){
+                    console.log('found the tag in hasOrigin')
+                    return true
+                }
+            }
+        }
+
+        function hasLanguage(filterObj, channel) {
+            if(Object.keys(filterObj.language).length === 0){
+                console.log('no language selected returning true')
+                return true
+            }
+            for(var i = 0; i < channel.tags.length; i++){
+                var tag = channel.tags[i]
+                console.log('tag', channel.tags[i])
+                if(filterObj.language.hasOwnProperty(tag)){
+                    console.log('found the tag in hasLanguage', filterObj.language[tag])
+                    return true
+                }
+            }
+        }
+
     }])
 }(angular.module('app')));
