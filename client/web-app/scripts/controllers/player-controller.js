@@ -345,15 +345,16 @@
             };
             // build filters object
             for (var i = 0; i < filters.length; i++) {
-                var currentFilter = filters[i];
+                var currentFilter = parseInt(filters[i]);
+                console.log(filters[i])
                 if (currentFilter <= 9) {
                     filterObj.genre[currentFilter] = currentFilter;
                 }
                 else if (currentFilter >= 28 && currentFilter <= 31) {
                     filterObj.audience[currentFilter] = currentFilter;
                 }
-                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || currentFilter === 41 || currentFilter === 45) {
-                    filterObj.origin[currentFilter] = currentFilter;
+                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || (currentFilter === 41) || (currentFilter === 45)) {
+                    filterObj.origin[currentFilter] = currentFilter
                 }
                 else {
                     filterObj.language[currentFilter] = currentFilter;
