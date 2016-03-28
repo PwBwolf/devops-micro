@@ -248,7 +248,10 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
             logger.logError(err);
             cb(err);
         } else {
-            if (data[0].airings) {
+            if (data[0].airings === undefined) {
+                logger.logInfo('metadataProcessorMain - updateChannel - no airings: ' + dataGraceNote.stationId);
+                cb(null);
+            } else {
                 logger.logInfo('metadataProcessorMain - updateChannel - programs retrieved from gracenote in total: ' + data[0].airings.length);
 
                 channel.airings.splice(0, channel.airings.length);
@@ -266,9 +269,6 @@ function updateChannel(channel, dataGraceNote, startTime, endTime, cb) {
                         cb(err, channel);
                     }
                 });
-            } else {
-                logger.logInfo('metadataProcessorMain - updateChannel - no airings: ' + dataGraceNote.stationId);
-                cb(null);
             }
         }
     });
@@ -285,7 +285,10 @@ function saveChannel(channel, startTime, endTime, cb) {
                 logger.logError(err);
                 cb(err);
             } else {
-                if (data[0].airings) {
+                if (data[0].airings === undefined) {
+                    logger.logInfo('metadataProcessorMain - saveChannel - no airings: ' + channel.stationId);
+                    cb(null);
+                } else {
                     var newChannel = new Channel(data[0]);
                     logger.logInfo('metadataProcessorMain - saveChannel - programs in total: ' + data[0].airings.length);
 
@@ -299,9 +302,6 @@ function saveChannel(channel, startTime, endTime, cb) {
                             cb(err, newChannel);
                         }
                     });
-                } else {
-                    logger.logInfo('metadataProcessorMain - saveChannel - no airings: ' + channel.stationId);
-                    cb(null);
                 }
             }
         });
