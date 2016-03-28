@@ -30,6 +30,7 @@
         $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
+        $scope.displayFilter = false;
 
         var displayingAll = true;
         var displayingFavorites = false;
@@ -101,9 +102,7 @@
         };
 
         $scope.displayRecent = function () {
-            displayingRecents = true;
-            displayingFavorites = false;
-            displayingAll = false;
+            $scope.displayFilter = false;
             var recentChannels = webStorage.session.get('recentChannels');
             if (recentChannels) {
                 $scope.noRecentChannels = false;
@@ -126,9 +125,7 @@
         };
 
         $scope.displayFavorites = function () {
-            displayingFavorites = true;
-            displayingAll = false;
-            displayingRecents = false;
+            $scope.displayFilter = false;
             $scope.noRecentChannels = false;
             $scope.favoriteChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
@@ -142,9 +139,7 @@
         };
 
         $scope.displayAll = function () {
-            displayingAll = true;
-            displayingFavorites = false;
-            displayingRecents = false;
+            $scope.displayFilter = false;
             $scope.noRecentChannels = false;
             $scope.programming = $scope.allChannels;
         };
@@ -295,10 +290,14 @@
         }
 
         $scope.toggle = function () {
-            $scope.checked = !$scope.checked;
-            if ($scope.checked) {
-                $scope.$emit('ToggleChannelFilterEvent');
+            if($scope.selectedFilters.length === 0) {
+                $scope.displayFilter = false;
+                $scope.checked = !$scope.checked;
+                $scope.allCh = "high-u";
+                return
             }
+            $scope.displayFilter = true;
+            $scope.checked = !$scope.checked;
         };
 
         // Each of these functions checks to see if the selected filter is already in the array
