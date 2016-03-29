@@ -159,6 +159,7 @@ module.exports = {
                     if (clientName === 'IDT') {
                         req.body.agentNumber = 2;
                     }
+                    req.body.agentNumber = config.freeSideAgentNumbers[clientName];
                     req.body.merchantId = req.query.merchantId;
                     req.body.merchantName = clientName;
                     queue.enqueue('makePayment', req.body, function (err) {

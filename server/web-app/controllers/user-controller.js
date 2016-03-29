@@ -38,31 +38,8 @@ module.exports = {
                     logger.logError('userController - signUp - merchant not found: ' + req.body.email.toLowerCase());
                     return res.status(500).send('InvalidMerchant');
                 } else {
-                    switch (merchant.name) {
-                        case 'IDT':
-                            req.body.agentNumber = 2;
-                            break;
-                        case 'TRUCONN':
-                            req.body.agentNumber = 3;
-                            break;
-                        case 'PERKSPOT':
-                            req.body.agentNumber = 4;
-                            break;
-                        case 'NEXTJUMP':
-                            req.body.agentNumber = 5;
-                            break;
-                        case 'CJ':
-                            req.body.agentNumber = 6;
-                            break;
-                        case 'MGCJK':
-                            req.body.agentNumber = 7;
-                            break;
-                        case 'AMAZON':
-                            req.body.agentNumber = 8;
-                            break;
-                        case 'UBS':
-                            req.body.agentNumber = 9;
-                            break;
+                    if (merchant.name && merchant.name.toUpperCase() !== 'YIPTV') {
+                        req.body.agentNumber = config.freeSideAgentNumbers[merchant.name];
                     }
                     return doSignUp(req, res);
                 }
@@ -489,7 +466,7 @@ module.exports = {
             if (user && user.account && user.account.type === 'free') {
                 return res.send(user._id + '_free_' + user.createdAt.getTime() + '_0');
             } else if (user && user.account && user.account.type === 'paid') {
-                var upgradeDate = user.upgradeDate ? user.upgradeDate.getTime() : '0'
+                var upgradeDate = user.upgradeDate ? user.upgradeDate.getTime() : '0';
                 return res.send(user._id + '_paid_' + user.createdAt.getTime() + '_' + upgradeDate);
             } else {
                 return res.send('error');
