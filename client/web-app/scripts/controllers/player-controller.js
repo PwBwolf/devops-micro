@@ -7,7 +7,9 @@
         $scope.favoriteChannels = [];
         $scope.recentChannels = [];
         $scope.allChannels = [];
+        $scope.filteredChannels = [];
         $scope.timeSlots = [];
+
         // playing channel related variables
         $scope.currentChannel = {};
         $scope.mainUrl = undefined;
@@ -22,6 +24,7 @@
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
         $scope.tags = [];
+
         // for previous and next channels. These may not need to be on $scope at all.
         $scope.prevIndex = 0;
         $scope.nextIndex = 0;
@@ -30,11 +33,7 @@
         $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
-        $scope.displayFilter = false;
 
-        var displayingAll = true;
-        var displayingFavorites = false;
-        var displayingRecents = false;
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
 
@@ -102,7 +101,6 @@
         };
 
         $scope.displayRecent = function () {
-            $scope.displayFilter = false;
             var recentChannels = webStorage.session.get('recentChannels');
             if (recentChannels) {
                 $scope.noRecentChannels = false;
@@ -118,7 +116,6 @@
         };
 
         $scope.displayFavorites = function () {
-            $scope.displayFilter = false;
             $scope.noRecentChannels = false;
             $scope.favoriteChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
@@ -133,9 +130,13 @@
         };
 
         $scope.displayAll = function () {
-            $scope.displayFilter = false;
             $scope.noRecentChannels = false;
             $scope.programming = $scope.allChannels;
+            updateNextAndPrev()
+        };
+
+        $scope.displayFiltered = function(){
+            $scope.programming = $scope.filteredChannels;
             updateNextAndPrev()
         };
 
@@ -187,8 +188,6 @@
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex;
             }).indexOf(index);
-
-            console.log('watchNow index, indexOfClickedChannel', index, indexOfClickedChannel)
 
             setNextAndPrev(indexOfClickedChannel)
 
@@ -279,7 +278,6 @@
         // when channel is clicked, update next and prev (working)
         function setNextAndPrev(indexOfClickedChannel){
 
-            console.log('indexOfClickedChannel in setNextAndPrev', indexOfClickedChannel)
             //// if prev or next is clicked and the prev or next channel doesn't exist in the current view
             if(indexOfClickedChannel === -1){
                 index = $scope.programming[0].chIndex;
@@ -302,7 +300,6 @@
             else {
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
-            console.log('prevIndex', $scope.prevIndex, 'nextIndex', $scope.nextIndex, 'programming', $scope.programming, 'indexOfClickedChannel', indexOfClickedChannel)
         }
 
 
@@ -318,33 +315,28 @@
                 return e.chIndex;
             }).indexOf($scope.currentChannel.index);
             // can probably shorten setNextAndPrev logic by using this modulo logic. coming back to this
-            var prev = (indexOfCurrent - 1) % ($scope.programming.length - 1)
-            var next = (indexOfCurrent + 1) % ($scope.programming.length - 1)
-            console.log('indexOfCurrent in updateNextAndPrev', indexOfCurrent, $scope.programming[prev], $scope.programming[next])
+            var prev = (indexOfCurrent - 1) % ($scope.programming.length - 1);
+            var next = (indexOfCurrent + 1) % ($scope.programming.length - 1);
             // set next and prev to first and last if current channel doesn't exist in current view
             if(indexOfCurrent === -1){
-                console.log("didn't find current channel in new view")
-                var last = $scope.programming.length - 1
-                $scope.nextIndex = $scope.programming[0].chIndex
-                $scope.prevIndex = $scope.programming[last].chIndex
-                // console.log("didn't find current channel in new view: prev, next", $scope.prevIndex, $scope.nextIndex)
-                return
+                var last = $scope.programming.length - 1;
+                $scope.nextIndex = $scope.programming[0].chIndex;
+                $scope.prevIndex = $scope.programming[last].chIndex;
+                return;
             }
             // reset next and prev if the current channel is found
             else{
-                console.log('found current channel in current view', $scope.currentChannel.index)
                 setNextAndPrev($scope.currentChannel.index)
             }
         }
 
         $scope.toggle = function () {
             if($scope.selectedFilters.length === 0) {
-                $scope.displayFilter = false;
                 $scope.checked = !$scope.checked;
                 $scope.allCh = "high-u";
                 return
             }
-            $scope.displayFilter = true;
+
             $scope.checked = !$scope.checked;
         };
 
@@ -354,13 +346,15 @@
             var filterExists = $scope.selectedFilters.indexOf(id);
             if (filterExists === -1) {
                 $scope.selectedFilters.push(id);
-                $scope.programming = filterChannels($scope.selectedFilters);
-                updateNextAndPrev()
+                $scope.filteredChannels = filterChannels($scope.selectedFilters);
+                $scope.programming = $scope.filteredChannels;
+                updateNextAndPrev();
             } else {
                 var index = $scope.selectedFilters.indexOf(id);
                 $scope.selectedFilters.splice(index, 1);
-                $scope.programming = filterChannels($scope.selectedFilters);
-                updateNextAndPrev()
+                $scope.filteredChannels = filterChannels($scope.selectedFilters);
+                $scope.programming = $scope.filteredChannels;
+                updateNextAndPrev();
             }
         };
 
@@ -375,7 +369,6 @@
         };
 
         $scope.toggleProgramDetail = function () {
-            var width = $(window).width();
             $scope.checkedInfo = !$scope.checkedInfo;
         };
 
@@ -402,7 +395,7 @@
                     filterObj.audience[currentFilter] = currentFilter;
                 }
                 else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || (currentFilter === 41) || (currentFilter === 45)) {
-                    filterObj.origin[currentFilter] = currentFilter
+                    filterObj.origin[currentFilter] = currentFilter;
                 }
                 else {
                     filterObj.language[currentFilter] = currentFilter;
@@ -410,13 +403,12 @@
             }
             // loop over all channel objects
             for (i = 0; i < $scope.allChannels.length; i++) {
-                var matches = 0;
                 var channel = $scope.allChannels[i];
                 // compare all the tags against each category subobject
                 // if it has either in one category that should satisfy the OR
                 // if it has one in each category it should satisfy the AND
                 if (matchesFilters(filterObj, channel)) {
-                    arr.push(channel)
+                    arr.push(channel);
                 }
             }
             return arr;
