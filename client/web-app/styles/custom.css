@@ -6,7 +6,10 @@
   transition: all linear 0.5s; }
 
 .navbar-right {
-  width: 350px; }
+  width: 400px; }
+
+.right-menu {
+  float: right; }
 
 .navbar-default .navbar-toggle {
   border-width: 2px; }
@@ -32,10 +35,12 @@
   background: transparent;
   float: left; }
 
-#menuBar .epg-controls span {
-  cursor: pointer;
-  top: 10px;
-  color: white; }
+#menuBar .epg-controls {
+  display: inline; }
+  #menuBar .epg-controls span {
+    cursor: pointer;
+    top: 10px;
+    color: white; }
 
 #menuBar #currentChannel {
   background-color: rgba(255, 255, 255, 0.85);

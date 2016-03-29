@@ -1672,17 +1672,19 @@ body, html {
 }
 
 .sync-scroll {
-    overflow-x: auto;
+    overflow: auto;
 }
 
-.sync-scroll::-webkit-scrollbar {
+#guideHeader::-webkit-scrollbar {
     display: none;
 }
 
 .horizontal-bottom {
+    overflow-x: scroll;
     top: -60px;
     margin-left: 154px;
 }
+
 #image-logos {
     height: 60px;
     border-right: 1px groove;
