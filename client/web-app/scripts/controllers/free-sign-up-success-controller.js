@@ -6,26 +6,22 @@
         var merchant = webStorage.session.get('signUpMerchant');
         webStorage.session.remove('signUpMerchant');
         webStorage.session.remove('signUpUsername');
-        var containerTagId = 12730;
-        var cid = 1536367;
-        var amount = 0;
-        var type = 383212;
-        var currency = 'USD';
-        if (!merchant || merchant === 'cj') {
-            if (username) {
-                userSvc.getCustomerNumberAndType(
-                    username,
-                    function (oid) {
-                        $scope.cj = $sce.trustAsResourceUrl('https://www.emjcd.com/tags/c?containerTagId=' + containerTagId + '&AMOUNT=' + amount + '&CID=' + cid + '&OID=' + oid + '&TYPE='+ type +'&CURRENCY=' + currency);
-                    },
-                    function (error) {
-                        $scope.cj = $sce.trustAsResourceUrl('https://www.emjcd.com/tags/c?containerTagId=' + containerTagId + '&AMOUNT=' + '0' + '&CID=' + cid + '&OID=' + oid + '&TYPE='+ type +'&CURRENCY=' + currency);
-                    });
-            } else {
-                $scope.cj = $sce.trustAsResourceUrl('');
-            }
+        if (username && merchant === 'cj') {
+            var containerTagId = 12730;
+            var cid = 1536367;
+            var amount = 0;
+            var type = 383212;
+            var currency = 'USD';
+            userSvc.getCustomerNumberAndType(
+                username,
+                function (oid) {
+                    $scope.merchantTracker = $sce.trustAsResourceUrl('https://www.emjcd.com/tags/c?containerTagId=' + containerTagId + '&AMOUNT=' + amount + '&CID=' + cid + '&OID=' + oid + '&TYPE=' + type + '&CURRENCY=' + currency);
+                },
+                function () {
+                    $scope.merchantTracker = $sce.trustAsResourceUrl('');
+                });
         } else {
-            $scope.cj = $sce.trustAsResourceUrl('');
+            $scope.merchantTracker = $sce.trustAsResourceUrl('');
         }
     }]);
 }(angular.module('app')));

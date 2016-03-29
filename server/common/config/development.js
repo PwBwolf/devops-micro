@@ -46,5 +46,6 @@ module.exports = {
     freeSidePaidBasicPackagePart: 16,
     freeSidePremiumPackagePart: 18,
     freeSideComplimentaryPackagePart: 15,
+    freeSideAgentNumbers: {'Internal': 1, 'IDT': 2, 'TRUCONN': 3, 'PERKSPOT': 4, 'NEXTJUMP': 5, 'CJ': 6, 'MGCJK': 7, 'AMAZON': 8, 'UBS': 9},
     cmsApiUrl: 'https://cmsint.yiptv.net'
 };
