@@ -132,6 +132,7 @@
         };
 
         $scope.displayFiltered = function(){
+            $scope.noRecentChannels = false;
             $scope.programming = $scope.filteredChannels;
             updateNextAndPrev();
         };
@@ -329,13 +330,15 @@
             }
         }
 
+        // toggles the filter open and closed
         $scope.toggle = function () {
             if($scope.selectedFilters.length === 0) {
                 $scope.checked = !$scope.checked;
                 $scope.allCh = "high-u";
+                $scope.noRecentChannels = false;
                 return
             }
-
+            $scope.noRecentChannels = false;
             $scope.checked = !$scope.checked;
         };
 

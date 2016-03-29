@@ -53,7 +53,7 @@
                     </li>
                     <li ng-hide="mainUrl === undefined">
                         <div id="favorite">
-                            <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)">
+                            <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
                         </div>
                     </li>
                     <li class="epg-controls" ng-click="displayFavorites(); favCh='my-class'; allCh='no-u'; recCh=''; filtCh='';">
@@ -75,7 +75,7 @@
                                 <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                     <div class="row">
                                         <div>
-                                            <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters()" translate="PLAYER_CLEAR_ALL" ></a>
+                                            <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters(); favCh=''; allCh='high-u'; recCh=''; filtCh=''" translate="PLAYER_CLEAR_ALL" ></a>
                                             <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
                                         </div>
                                         <div class="channel-filters">
