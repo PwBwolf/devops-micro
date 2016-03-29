@@ -45,22 +45,18 @@
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels;
-                    $scope.prevIndex = $scope.programming.length - 1
+                    $scope.prevIndex = $scope.programming.length - 1;
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
                             $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
-                            $scope.channelsLoaded = true
+                            $scope.channelsLoaded = true;
                         },
                         function (error) {
                             // handle this error with toastr later?
                         }
                     );
                 })
-            });
-
-            $scope.$on('ChannelFilterEvent', function (event, args) {
-                updateChannelGuide($rootScope.filteredChannels);
             });
 
             // copied and pasted from the player controller
@@ -112,7 +108,7 @@
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels, $scope.allChannels);
             $scope.programming = $scope.recentChannels;
-            updateNextAndPrev()
+            updateNextAndPrev();
         };
 
         $scope.displayFavorites = function () {
@@ -126,18 +122,18 @@
                 }
             });
             $scope.programming = $scope.favoriteChannels;
-            updateNextAndPrev()
+            updateNextAndPrev();
         };
 
         $scope.displayAll = function () {
             $scope.noRecentChannels = false;
             $scope.programming = $scope.allChannels;
-            updateNextAndPrev()
+            updateNextAndPrev();
         };
 
         $scope.displayFiltered = function(){
             $scope.programming = $scope.filteredChannels;
-            updateNextAndPrev()
+            updateNextAndPrev();
         };
 
         // make a sure a channel is playing. taken care of by ng-hide
@@ -155,7 +151,7 @@
                     function (data) {
                         var newFavoriteId = {channelId: currentChannel.channelId};
                         var newFavoriteIndex = $scope.allChannels.map(function (e) {
-                            return e.station
+                            return e.station;
                         }).indexOf(newFavoriteId.channelId);
                         var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
                         $scope.favoriteChannels.push(newFavoriteChannelObj);
@@ -189,7 +185,7 @@
                 return e.chIndex;
             }).indexOf(index);
 
-            setNextAndPrev(indexOfClickedChannel)
+            setNextAndPrev(indexOfClickedChannel);
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 $scope.mainUrl = channelUrl.routes[0];
@@ -263,7 +259,6 @@
                 updatedRecents[channelId] = channelId;
                 webStorage.session.add('recentChannels', updatedRecents);
             } else {
-                var matchFound = false;
                 recentChannels = webStorage.session.get('recentChannels');
                 if (!_.has(recentChannels, channelId)) {
                     recentChannels[channelId] = channelId;
@@ -300,6 +295,8 @@
             else {
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
+
+            console.log("setNextAndPrev prevIndex, nextIndex, indexOfClickedChannel", $scope.prevIndex, $scope.nextIndex, indexOfClickedChannel)
         }
 
 
@@ -315,18 +312,20 @@
                 return e.chIndex;
             }).indexOf($scope.currentChannel.index);
             // can probably shorten setNextAndPrev logic by using this modulo logic. coming back to this
-            var prev = (indexOfCurrent - 1) % ($scope.programming.length - 1);
-            var next = (indexOfCurrent + 1) % ($scope.programming.length - 1);
+            // var prev = (indexOfCurrent - 1) % ($scope.programming.length - 1);
+            // var next = (indexOfCurrent + 1) % ($scope.programming.length - 1);
             // set next and prev to first and last if current channel doesn't exist in current view
             if(indexOfCurrent === -1){
                 var last = $scope.programming.length - 1;
                 $scope.nextIndex = $scope.programming[0].chIndex;
-                $scope.prevIndex = $scope.programming[last].chIndex;
+                $scope.prevIndex = $scope.programming[last].chIndex
+                console.log("updateNextAndPrev prevIndex and nextIndex", $scope.prevIndex, $scope.nextIndex);
                 return;
             }
             // reset next and prev if the current channel is found
             else{
-                setNextAndPrev($scope.currentChannel.index)
+                console.log("updateNextAndPrev found current channel in current view", $scope.currentChannel.index, indexOfCurrent);
+                setNextAndPrev(indexOfCurrent)
             }
         }
 
