@@ -113,15 +113,8 @@
                 return;
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels, $scope.allChannels);
-            $scope.recentChannels.sort(function (a, b) {
-                if (a.chIndex > b.chIndex) {
-                    return 1;
-                }
-                if (a.chIndex < b.chIndex) {
-                    return -1;
-                }
-            });
             $scope.programming = $scope.recentChannels;
+            updateNextAndPrev()
         };
 
         $scope.displayFavorites = function () {
@@ -136,12 +129,14 @@
                 }
             });
             $scope.programming = $scope.favoriteChannels;
+            updateNextAndPrev()
         };
 
         $scope.displayAll = function () {
             $scope.displayFilter = false;
             $scope.noRecentChannels = false;
             $scope.programming = $scope.allChannels;
+            updateNextAndPrev()
         };
 
         // make a sure a channel is playing. taken care of by ng-hide
@@ -187,25 +182,15 @@
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
+
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
-                return e.chIndex
+                return e.chIndex;
             }).indexOf(index);
-            if (indexOfClickedChannel > 0) {
-                $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
-            }
-            else if (indexOfClickedChannel === 0) {
-                $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex;
-            }
-            else {
-                $scope.prevIndex = $scope.programming[0].chIndex;
-            }
-            if (indexOfClickedChannel === ($scope.programming.length - 1)) {
-                $scope.nextIndex = 0;
-            }
-            else {
-                $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
-            }
+
+            console.log('watchNow index, indexOfClickedChannel', index, indexOfClickedChannel)
+
+            setNextAndPrev(indexOfClickedChannel)
 
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 $scope.mainUrl = channelUrl.routes[0];
@@ -288,6 +273,70 @@
             }
         }
 
+        // login and press prev or next (working)
+        // refresh and press prev or next (working)
+        // switch view and press prev or next (working)
+        // when channel is clicked, update next and prev (working)
+        function setNextAndPrev(indexOfClickedChannel){
+
+            console.log('indexOfClickedChannel in setNextAndPrev', indexOfClickedChannel)
+            //// if prev or next is clicked and the prev or next channel doesn't exist in the current view
+            if(indexOfClickedChannel === -1){
+                index = $scope.programming[0].chIndex;
+                indexOfClickedChannel = 0;
+            }
+
+            if (indexOfClickedChannel > 0) {
+                $scope.prevIndex = $scope.programming[indexOfClickedChannel - 1].chIndex;
+            }
+            else if (indexOfClickedChannel === 0) {
+                $scope.prevIndex = $scope.programming[$scope.programming.length - 1].chIndex;
+            }
+            else {
+                $scope.prevIndex = $scope.programming[0].chIndex;
+            }
+
+            if (indexOfClickedChannel === ($scope.programming.length - 1)) {
+                $scope.nextIndex = $scope.programming[0].chIndex;
+            }
+            else {
+                $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
+            }
+            console.log('prevIndex', $scope.prevIndex, 'nextIndex', $scope.nextIndex, 'programming', $scope.programming, 'indexOfClickedChannel', indexOfClickedChannel)
+        }
+
+
+        // use this function when you want to update next and prev when a view has changed
+        // case 1: the currently playing channel exists in the new view
+        // case 2: it doesn't
+        function updateNextAndPrev(){
+            if($scope.programming.length === 0){
+                return;
+            }
+            // find index of current channel in programming array
+            var indexOfCurrent = $scope.programming.map(function (e) {
+                return e.chIndex;
+            }).indexOf($scope.currentChannel.index);
+            // can probably shorten setNextAndPrev logic by using this modulo logic. coming back to this
+            var prev = (indexOfCurrent - 1) % ($scope.programming.length - 1)
+            var next = (indexOfCurrent + 1) % ($scope.programming.length - 1)
+            console.log('indexOfCurrent in updateNextAndPrev', indexOfCurrent, $scope.programming[prev], $scope.programming[next])
+            // set next and prev to first and last if current channel doesn't exist in current view
+            if(indexOfCurrent === -1){
+                console.log("didn't find current channel in new view")
+                var last = $scope.programming.length - 1
+                $scope.nextIndex = $scope.programming[0].chIndex
+                $scope.prevIndex = $scope.programming[last].chIndex
+                // console.log("didn't find current channel in new view: prev, next", $scope.prevIndex, $scope.nextIndex)
+                return
+            }
+            // reset next and prev if the current channel is found
+            else{
+                console.log('found current channel in current view', $scope.currentChannel.index)
+                setNextAndPrev($scope.currentChannel.index)
+            }
+        }
+
         $scope.toggle = function () {
             if($scope.selectedFilters.length === 0) {
                 $scope.displayFilter = false;
@@ -306,10 +355,12 @@
             if (filterExists === -1) {
                 $scope.selectedFilters.push(id);
                 $scope.programming = filterChannels($scope.selectedFilters);
+                updateNextAndPrev()
             } else {
                 var index = $scope.selectedFilters.indexOf(id);
                 $scope.selectedFilters.splice(index, 1);
                 $scope.programming = filterChannels($scope.selectedFilters);
+                updateNextAndPrev()
             }
         };
 
@@ -344,7 +395,6 @@
             // build filters object
             for (var i = 0; i < filters.length; i++) {
                 var currentFilter = parseInt(filters[i]);
-                console.log(filters[i])
                 if (currentFilter <= 9) {
                     filterObj.genre[currentFilter] = currentFilter;
                 }
