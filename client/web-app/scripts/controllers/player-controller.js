@@ -51,6 +51,7 @@
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
                             $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
                             $scope.channelsLoaded = true;
+                            console.log('data straight from mediaSvc and $scope.favoriteChannels', data, $scope.favoriteChannels)
                         },
                         function (error) {
                             // handle this error with toastr later?
