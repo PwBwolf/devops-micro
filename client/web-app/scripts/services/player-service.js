@@ -81,7 +81,6 @@
                         arr.push(favorites[i].channelId);
                     }
                 }
-                console.log("array after formatFavorites", arr)
                 return arr;
             },
 

@@ -51,7 +51,6 @@
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
                             $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
                             $scope.channelsLoaded = true;
-                            console.log('data straight from mediaSvc and $scope.favoriteChannels', data, $scope.favoriteChannels, $scope.allChannels)
                         },
                         function (error) {
                             // handle this error with toastr later?
@@ -114,7 +113,6 @@
 
         $scope.displayFavorites = function () {
             $scope.noRecentChannels = false;
-            console.log("favorite channels array in displayFavorites",$scope.favoriteChannels)
             $scope.favoriteChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
                     return 1;
@@ -219,7 +217,6 @@
          /sets the favorite image to a yellow or white star
          */
         function setFavoriteIcon(channel, favorites) {
-            console.log('favorite channels in setFavoriteIcon', favorites);
             var isfavorite = favorites.map(function (e) {
                 return e.station;
             }).indexOf(channel);
@@ -300,7 +297,6 @@
                 $scope.nextIndex = $scope.programming[indexOfClickedChannel + 1].chIndex;
             }
 
-            console.log("setNextAndPrev prevIndex, nextIndex, indexOfClickedChannel", $scope.prevIndex, $scope.nextIndex, indexOfClickedChannel)
         }
 
 
@@ -323,12 +319,10 @@
                 var last = $scope.programming.length - 1;
                 $scope.nextIndex = $scope.programming[0].chIndex;
                 $scope.prevIndex = $scope.programming[last].chIndex
-                console.log("updateNextAndPrev prevIndex and nextIndex", $scope.prevIndex, $scope.nextIndex);
                 return;
             }
             // reset next and prev if the current channel is found
             else{
-                console.log("updateNextAndPrev found current channel in current view", $scope.currentChannel.index, indexOfCurrent);
                 setNextAndPrev(indexOfCurrent)
             }
         }
