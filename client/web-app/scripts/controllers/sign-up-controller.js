@@ -52,6 +52,8 @@
                         }
                     },
                     function (error) {
+                        webStorage.session.add('signUpUsername', $scope.mv.email);
+                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentFailed') {
