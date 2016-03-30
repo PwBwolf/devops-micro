@@ -77,8 +77,11 @@
             formatFavorites: function (favorites) {
                 var arr = [];
                 for (var i = 0; i < favorites.length; i++) {
-                    arr.push(favorites[i].channelId);
+                    if(favorites[i].channelId){
+                        arr.push(favorites[i].channelId);
+                    }
                 }
+                console.log("array after formatFavorites", arr)
                 return arr;
             },
 
@@ -92,7 +95,9 @@
                     channelIndex = allChannels.map(function (e) {
                         return e.station;
                     }).indexOf(channelIds[i]);
-                    arr.push(allChannels[channelIndex])
+                    if(channelIndex !== -1){
+                        arr.push(allChannels[channelIndex])
+                    }
                 }
                 return arr;
             }
