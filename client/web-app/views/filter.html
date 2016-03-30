@@ -9,13 +9,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="pre-channel">
-                    <img src="../images/arrow-left.png" width="30px" ng-click="previousChannel()" style="cursor: pointer">
+                    <img src="../images/arrow-left.png" title="{{ 'PLAYER_MENU_PREVIOUS_CHANNEL' | translate }}" width="30px" ng-click="previousChannel()" style="cursor: pointer">
                 </div>
                 <div id="currentChannel" >
                     <img ng-src="{{channelLogo}}">
                 </div>
                 <div class="next-channel">
-                    <img src="../images/arrow-right.png" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
+                    <img src="../images/arrow-right.png" title="{{ 'PLAYER_MENU_NEXT_CHANNEL' | translate }}" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
                 </div>
                 <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
                     <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
@@ -28,7 +28,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="mainUrl === undefined || tvProgram === null">
                         <div id="programDetail">
-                            <img src="../images/info.png" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
+                            <img src="../images/info.png" title="{{ 'PLAYER_MENU_INFORMATION' | translate }}" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
                             <div id="programDetailSlider" pageslide ps-open="checkedInfo" ps-side="top"  >
                                 <div id="programDetailHolder" >
                                     <div id="detailHolder">
@@ -53,7 +53,7 @@
                     </li>
                     <li ng-hide="mainUrl === undefined">
                         <div id="favorite">
-                            <img src="{{favoriteIcon}}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
+                            <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
                         </div>
                     </li>
                     <li class="epg-controls" ng-click="displayFavorites(); favCh='my-class'; allCh='no-u'; recCh=''; filtCh='';">
@@ -70,7 +70,7 @@
                     </li>
                     <li class="filter-li">
                         <div id="filter">
-                            <img src="../images/filter.png" width="35px" height="35px" ng-click="toggle(); favCh=''; allCh='no-u'; recCh=''; filtCh='my-class'" style="cursor: pointer;">
+                            <img src="../images/filter.png" title="{{ 'PLAYER_MENU_FILTER' | translate }}" width="35px" height="35px" ng-click="toggle(); favCh=''; allCh='no-u'; recCh=''; filtCh='my-class'" style="cursor: pointer;">
                             <div pageslide ps-open="checked" ps-size="360px">
                                 <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                     <div class="row">
