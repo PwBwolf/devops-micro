@@ -113,6 +113,7 @@
 
         $scope.displayFavorites = function () {
             $scope.noRecentChannels = false;
+            console.log("favorite channels array in displayFavorites",$scope.favoriteChannels)
             $scope.favoriteChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
                     return 1;
@@ -217,6 +218,7 @@
          /sets the favorite image to a yellow or white star
          */
         function setFavoriteIcon(channel, favorites) {
+            console.log('favorite channels in setFavoriteIcon', favorites);
             var isfavorite = favorites.map(function (e) {
                 return e.station;
             }).indexOf(channel);
