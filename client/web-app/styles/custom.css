@@ -170,3 +170,6 @@
 
 #categories input {
   cursor: pointer; }
+
+#channelFilterHolder .filtered-channels-count p {
+  text-align: left; }
