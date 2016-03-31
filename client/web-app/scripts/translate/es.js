@@ -231,6 +231,7 @@
             PLAYER_PROG_TITLE_UNAVAILABLE: 'Ningún Título Disponible',
             PLAYER_PROG_DESCRIPTION_UNAVAILABLE: 'No hay descripción disponible',
             PLAYER_NO_FAVORITES: 'No Hay Favoritos Seleccionados',
+            PLAYER_NO_FILTERED_CHANNELS: 'No Hay Canales',
             PREFERENCES_PREFERRED_LANGUAGE: 'Elige tu idioma preferido',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Elige tu idioma preferido',
             PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Favor de enviarme notificaciones al número de celular<sup>*</sup> o correo electrónico con el cual ingresé',

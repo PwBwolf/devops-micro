@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$location', '$anchorScroll', '$timeout', 'webStorage', '_', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $location, $anchorScroll, $timeout, webStorage, _) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '_', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, _) {
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -29,6 +29,7 @@
         $scope.nextIndex = 0;
         $scope.noRecentChannels = false;
         $scope.noFavoriteChannels = false;
+        $scope.noFiltered = false;
         $scope.checked = false; // This will be binded using the ps-open attribute
         $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
@@ -143,6 +144,7 @@
 
         $scope.displayFiltered = function(){
             $scope.noRecentChannels = false;
+            $scope.noFavoriteChannels = false;
             $scope.programming = $scope.filteredChannels;
             updateNextAndPrev();
         };
@@ -348,12 +350,6 @@
 
         // toggles the filter open and closed
         $scope.toggle = function () {
-            if($scope.selectedFilters.length === 0) {
-                $scope.checked = !$scope.checked;
-                $scope.allCh = "high-u";
-                $scope.noRecentChannels = false;
-                return
-            }
             $scope.noRecentChannels = false;
             $scope.checked = !$scope.checked;
         };
@@ -367,12 +363,29 @@
                 $scope.filteredChannels = filterChannels($scope.selectedFilters);
                 $scope.programming = $scope.filteredChannels;
                 updateNextAndPrev();
+                if($scope.filteredChannels.length === 0){
+                    console.log('setting noFiltered')
+                    $scope.noFiltered = true;
+                    return;
+                }
+                else{
+                    $scope.noFiltered = false;
+                }
             } else {
                 var index = $scope.selectedFilters.indexOf(id);
                 $scope.selectedFilters.splice(index, 1);
                 $scope.filteredChannels = filterChannels($scope.selectedFilters);
                 $scope.programming = $scope.filteredChannels;
                 updateNextAndPrev();
+                // think about making this a function. it's used twice verbatim.
+                if($scope.filteredChannels.length === 0){
+                    console.log('setting noFiltered')
+                    $scope.noFiltered = true;
+                    return;
+                }
+                else{
+                    $scope.noFiltered = false;
+                }
             }
         };
 
@@ -384,6 +397,7 @@
                     $scope.tags[i].tags[j].Selected = false;
                 }
             }
+            $scope.noFiltered = false;
         };
 
         $scope.toggleProgramDetail = function () {

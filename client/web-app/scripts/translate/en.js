@@ -231,6 +231,7 @@
             PLAYER_PROG_TITLE_UNAVAILABLE: 'Title Unavailable',
             PLAYER_PROG_DESCRIPTION_UNAVAILABLE: 'Description Unavailable',
             PLAYER_NO_FAVORITES: 'No Favorites Selected',
+            PLAYER_NO_FILTERED_CHANNELS: 'No Matching Channels',
             PREFERENCES_PREFERRED_LANGUAGE: 'Select your preferred language',
             PREFERENCES_PREFERRED_LANGUAGE_REQUIRED: 'Select your preferred language',
             PREFERENCES_EMAIL_SMS_SUBSCRIPTION: 'Please send updates to the phone number<sup>*</sup> or email I signed up with',
