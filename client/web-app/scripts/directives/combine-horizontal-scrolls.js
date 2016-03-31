@@ -3,15 +3,15 @@
     app.directive('combineHorizontalScrolls', [function(){
         var scrollLeft = 0;
         function combine(elements){
+
             elements.on('scroll', function(e){
+
                 if(e.isTrigger){
                     e.target.scrollLeft = scrollLeft;
                 }else {
                     scrollLeft = e.target.scrollLeft;
                     elements.each(function (element) {
-                        if( !this.isSameNode(e.target) ){
-                            $(this).trigger('scroll');
-                        }
+                        $(this).trigger('scroll');
                     });
                 }
             });
