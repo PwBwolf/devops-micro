@@ -169,6 +169,7 @@
                         var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
                         $scope.favoriteChannels.push(newFavoriteChannelObj);
                         $scope.favoriteIcon = '../../images/favorite-yellow.png';
+                        $scope.noFavoriteChannels = false;
                     },
                     function (error) {
                         // solve with toastr later?
@@ -176,12 +177,15 @@
                 );
             } else {
                 $scope.favoriteChannels.splice(channelIndex, 1);
+                if($scope.favoriteChannels.length === 0){
+                    $scope.noFavoriteChannels = true;
+                }
                 $scope.favoriteIcon = '../../images/favorite-white.png';
                 req = {channelId: currentChannel.channelId};
                 mediaSvc.removeFavoriteChannel(
                     req,
                     function (data) {
-                        // solve with toastr later?
+
                     },
                     function (error) {
                         // solve with toastr later?

@@ -34,7 +34,7 @@
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="mainUrl === undefined || tvProgram === null">
+                    <li ng-hide="mainUrl === undefined || tvProgram === null || noFavoriteChannels">
                         <div id="programDetail">
                             <img src="../images/info.png" title="{{ 'PLAYER_MENU_INFORMATION' | translate }}" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
                             <div id="programDetailSlider" pageslide ps-open="checkedInfo" ps-side="top"  >
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </li>
-                    <li ng-hide="mainUrl === undefined">
+                    <li ng-hide="mainUrl === undefined || noFavoriteChannels">
                         <div id="favorite">
                             <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
                         </div>
