@@ -18,10 +18,18 @@
                     <img src="../images/arrow-right.png" title="{{ 'PLAYER_MENU_NEXT_CHANNEL' | translate }}" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
                 </div>
                 <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
-                    <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false">{{programTitle}}</div>
-                    <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
-                    <div class="entire-title" ng-show="entiretitle">{{programTitle}}</div>
-                    <div class="entire-description" ng-show="entiredescription">{{programDescription}}</div>
+                    <!-- show title of show -->
+                    <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false" ng-if="programTitle">{{programTitle}}</div>
+                    <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false" ng-if="!programTitle" translate="PLAYER_PROG_TITLE_UNAVAILABLE"></div>
+                    <!-- show first 50 chars of description -->
+                    <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false" ng-if="programDescription">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
+                    <div id="description" ng-mouseover="entiredescription=true" ng-mouseleave="entiredescription=false" ng-if="!programDescription" translate="PLAYER_PROG_DESCRIPTION_UNAVAILABLE"></div>
+                    <!-- show full title on hover -->
+                    <div class="entire-title" ng-show="entiretitle && programTitle">{{programTitle}}</div>
+                    <div class="entire-title" ng-show="entiretitle && !programTitle" translate="PLAYER_PROG_TITLE_UNAVAILABLE">{{programTitle}}</div>
+                    <!-- show full description on hover -->
+                    <div class="entire-description" ng-show="entiredescription && programDescription">{{programDescription}}</div>
+                    <div class="entire-description" ng-show="entiredescription && !programDescription" translate="PLAYER_PROG_DESCRIPTION_UNAVAILABLE"></div>
                 </div>
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
@@ -33,14 +41,14 @@
                                 <div id="programDetailHolder" >
                                     <div id="detailHolder">
                                         <div id="detailTitle">
-                                            <div class="detail-title">
+                                            <div class="detail-title" ng-if="program.title">
                                                 {{program.title}}
                                             </div>
                                         </div>
-                                        <div id="detailShowTime">
+                                        <div id="detailShowTime" ng-if="program.showTime">
                                             {{program.showTime}}
                                         </div>
-                                        <div id="detailDescription">
+                                        <div id="detailDescription" ng-if="program.description">
                                             {{program.description}}
                                         </div>
                                     </div>

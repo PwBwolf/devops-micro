@@ -16,7 +16,6 @@
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedFilters = [];
-        $scope.recentChannels = [];
         $scope.favoriteIcon = '../../images/favorite-white.png';
         $scope.channelLogo = '../../images/logo.png';
         $scope.programTitle = '';
@@ -29,6 +28,7 @@
         $scope.prevIndex = 0;
         $scope.nextIndex = 0;
         $scope.noRecentChannels = false;
+        $scope.noFavoriteChannels = false;
         $scope.checked = false; // This will be binded using the ps-open attribute
         $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
@@ -36,6 +36,7 @@
 
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
+        var displayingRecents = false;
 
         activate();
 
@@ -97,7 +98,10 @@
         };
 
         $scope.displayRecent = function () {
+            $scope.noFavoriteChannels = false;
             var recentChannels = webStorage.session.get('recentChannels');
+            displayingRecents = true;
+
             if (recentChannels) {
                 $scope.noRecentChannels = false;
             }
@@ -113,6 +117,11 @@
 
         $scope.displayFavorites = function () {
             $scope.noRecentChannels = false;
+            if($scope.favoriteChannels.length === 0){
+                $scope.programming = $scope.favoriteChannels;
+                $scope.noFavoriteChannels = true;
+                return
+            }
             $scope.favoriteChannels.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
                     return 1;
@@ -127,6 +136,7 @@
 
         $scope.displayAll = function () {
             $scope.noRecentChannels = false;
+            $scope.noFavoriteChannels = false;
             $scope.programming = $scope.allChannels;
             updateNextAndPrev();
         };
@@ -186,8 +196,6 @@
                 return e.chIndex;
             }).indexOf(index);
 
-            setNextAndPrev(indexOfClickedChannel);
-
             mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
                 $scope.mainUrl = channelUrl.routes[0];
                 $scope.tvProgram = $rootScope.channelsEpg[index].programs;
@@ -195,12 +203,14 @@
                 var programInfo = getProgramInfo(index);
                 $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
-                $scope.programDescription = programInfo.description;
+                $scope.programDescription = programInfo.description || false;
+                console.log('prog desc', $scope.programDescription)
                 previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
-                addRecentChannel(currentChannelIndex.channelId); //needs to be fixed to save to local storage.
+                addRecentChannel(currentChannelIndex.channelId);
+                setNextAndPrev(indexOfClickedChannel);
                 $scope.currentChannel.index = currentChannelIndex.index;
                 $scope.currentChannel.channelId = $rootScope.channels[index].id;
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
@@ -256,13 +266,22 @@
         function addRecentChannel(channelId) {
             var updatedRecents, recentChannels;
             if (!webStorage.session.get('recentChannels')) {
-                updatedRecents = {};
-                updatedRecents[channelId] = channelId;
+                updatedRecents = [];
+                updatedRecents[0] = channelId;
                 webStorage.session.add('recentChannels', updatedRecents);
+
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
-                if (!_.has(recentChannels, channelId)) {
-                    recentChannels[channelId] = channelId;
+                console.log(typeof channelId)
+                var index = recentChannels.indexOf(channelId);
+                console.log('index in recent channels array', index)
+                if(index === -1){
+                    recentChannels.unshift(channelId);
+                    webStorage.session.add('recentChannels', recentChannels);
+                }
+                else{
+                    var mostRecent = recentChannels.splice(index, 1);
+                    recentChannels.unshift(mostRecent[0]);
                     webStorage.session.add('recentChannels', recentChannels);
                 }
             }
