@@ -16,6 +16,18 @@
     }
 }
 
+.sync-scroll {
+    overflow: auto;
+}
+
+.guide-header::-webkit-scrollbar {
+    display: none;
+}
+
+.guide-header {
+    overflow: hidden;
+}
+
 #menuBar input[type="radio"] {
     display:none;
 }
@@ -212,8 +224,6 @@
 
 
 }
-
-
 
 #programDetailHolder {
     float: right;
