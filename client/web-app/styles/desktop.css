@@ -1,4 +1,4 @@
-* {
+    * {
     margin: 0;
     padding: 0;
     position: relative;
@@ -113,11 +113,10 @@ header {
 }
 
 .contact-number {
-    width: 30%;
+    width: 50%;
     height: 100%;
     margin-right: 5px;
     padding: 2px;
-    float: right;
     padding-top: 15px;
     color: black;
     text-align: right;
