@@ -1,6 +1,20 @@
 /* Variables */
 /* typography */
 /* views */
+#headerBrand .navbar-right {
+  width: 450px;
+  height: 100%; }
+  #headerBrand .navbar-right li {
+    padding-left: 0px;
+    height: 100%; }
+  #headerBrand .navbar-right .button-menu {
+    margin-left: 2px;
+    height: 100%; }
+    #headerBrand .navbar-right .button-menu a {
+      background: rgba(210, 210, 210, 0.9); }
+  #headerBrand .navbar-right .number-contact {
+    top: 30%; }
+
 .animate-hide {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
@@ -13,6 +27,15 @@
 
 .navbar-default .navbar-toggle {
   border-width: 2px; }
+
+.sync-scroll {
+  overflow: auto; }
+
+.guide-header::-webkit-scrollbar {
+  display: none; }
+
+.guide-header {
+  overflow: hidden; }
 
 #menuBar input[type="radio"] {
   display: none; }
@@ -170,3 +193,6 @@
 
 #categories input {
   cursor: pointer; }
+
+#channelFilterHolder .filtered-channels-count p {
+  text-align: left; }

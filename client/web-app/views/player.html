@@ -23,7 +23,7 @@
         <div id="clock" current-time="" class="position-div"></div>
         <div id="channelTimePanel" class="position-div scrollListener user-guide user-guide-panel">
             <div></div>
-            <div id="guideHeader" class="guide-header horizontal-scroll sync-scroll">
+            <div class="horizontal-scroll sync-scroll guide-header">
                 <ul>
                     <li ng-repeat="time in ::timeSlots" style="width: 300px;" class="time-module-item">{{::time}}</li>
                 </ul>
@@ -35,6 +35,9 @@
             </div>
             <div ng-if='noFavoriteChannels' style="width: 100%; text-align: center; color: white;">
                 <h3 translate="PLAYER_NO_FAVORITES"></h3>
+            </div>
+            <div ng-if='noFiltered' style="width: 100%; text-align: center; color: white;">
+                <h3 translate="PLAYER_NO_FILTERED_CHANNELS"></h3>
             </div>
             <div id="userGuide" class="user-guide-panel">
                 <div class="position-div user-guide">
