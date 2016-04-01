@@ -374,6 +374,31 @@ module.exports = {
         });
     },
 
+    getAgent: function(sessionId, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.skin_info',
+            [
+                'session_id', sessionId
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - getAgent - error in getting agent 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - getAgent - error in getting agent 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - getAgent - response');
+                        logger.logInfo(response);
+                        callback(null, response.agentnum);
+                    }
+                }
+            }
+        );
+    },
+
     updateAgent: function (customerNumber, agentNumber, callback) {
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.update_customer', [

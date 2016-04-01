@@ -426,7 +426,7 @@ module.exports = {
     },
 
     upgradeSubscription: function (userEmail, newUser, cb) {
-        var currentValues, currentUser, errorType;
+        var currentValues, currentUser, errorType, oldAgentNumber;
         async.waterfall([
             // update user and account
             function (callback) {
@@ -529,6 +529,36 @@ module.exports = {
                         callback(err, userObj, sessionId);
                     });
             },
+            // get agent
+            function (userObj, sessionId, callback) {
+                if (newUser.agentNumber && newUser.agentNumber > 1) {
+                    billing.getAgent(sessionId, function (err, agentNumber) {
+                        if (err) {
+                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
+                            logger.logError(err);
+                        } else {
+                            oldAgentNumber = agentNumber;
+                        }
+                        callback(err, userObj, sessionId);
+                    });
+                } else {
+                    callback(null, userObj, sessionId);
+                }
+            },
+            // change agent
+            function (userObj, sessionId, callback) {
+                if (newUser.agentNumber && newUser.agentNumber > 1) {
+                    billing.updateAgent(userObj.account.freeSideCustomerNumber, newUser.agentNumber, function (err) {
+                        if (err) {
+                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
+                            logger.logError(err);
+                        }
+                        callback(err, userObj, sessionId);
+                    });
+                } else {
+                    callback(null, userObj, sessionId);
+                }
+            },
             // order paid package
             function (userObj, sessionId, callback) {
                 var packages = currentValues.premiumEndDate ? [config.freeSidePaidBasicPackagePart] : [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart];
@@ -552,21 +582,6 @@ module.exports = {
                         callback(err, userObj, sessionId);
                     }
                 );
-            },
-            // change agent
-            function (userObj, sessionId, callback) {
-                if (newUser.agentNumber && newUser.agentNumber > 1) {
-                    billing.updateAgent(userObj.account.freeSideCustomerNumber, newUser.agentNumber, function (err) {
-                        if (err) {
-                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
-                            logger.logError(err);
-                        }
-                        callback(err, userObj, sessionId);
-                    });
-                } else {
-                    callback(null, userObj, sessionId);
-                }
-
             },
             // send verification email/sms if registered else upgrade email
             function (userObj, sessionId, callback) {
@@ -625,6 +640,8 @@ module.exports = {
                     case 'freeside-package-insert':
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
+                        revertAgent(userObj, newUser, oldAgentNumber);
                         break;
                     case 'payment-declined':
                         revertAccountChangesForUpgrade(userObj, currentValues);
@@ -637,6 +654,7 @@ module.exports = {
                             });
                         }
                         updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
+                        revertAgent(userObj, newUser, oldAgentNumber);
                         if (userObj.status === 'registered') {
                             if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj);
@@ -2114,4 +2132,22 @@ function updateFreeSideBilling(sessionId, address, city, state, zip, county, pay
             cb(err);
         }
     });
+}
+
+function revertAgent(userObj, newUser, oldAgentNumber, cb) {
+    if (newUser.agentNumber && newUser.agentNumber > 1) {
+        billing.updateAgent(userObj.account.freeSideCustomerNumber, oldAgentNumber, function (err) {
+            if (err) {
+                logger.logError('subscription - revertAgent - error reverting agent ' + userObj.account.freeSideCustomerNumber);
+                logger.logError(err);
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    } else {
+        if (cb) {
+            cb(err);
+        }
+    }
 }

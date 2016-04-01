@@ -72,18 +72,18 @@ worker.register({
                                             payBy = 'IDTP';
                                         }
                                         if (dbUser.account.type === 'free') {
-                                            subscription.upgradeSubscription(username, {}, function (err) {
+                                            billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
                                                 if (err) {
-                                                    logger.logError('merchantProcessorMain - makePayment - error upgrading user: ' + params.username);
+                                                    logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
                                                     logger.logError(err);
                                                     rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                    subscription.upgradeSubscription(username, {}, function (err) {
                                                         if (err) {
-                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError('merchantProcessorMain - updateAgent - error upgrading user: ' + params.username);
                                                             logger.logError(err);
                                                             rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
                                                             savePayment(params, 'failure', 'server-error', function () {
@@ -109,18 +109,18 @@ worker.register({
                                                 }
                                             });
                                         } else {
-                                            subscription.processCashPayment(username, function (err) {
+                                            billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
                                                 if (err) {
-                                                    logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
+                                                    logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
                                                     logger.logError(err);
                                                     rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
                                                     savePayment(params, 'failure', 'server-error', function () {
                                                         callback(err);
                                                     });
                                                 } else {
-                                                    billing.updateAgent(dbUser.account.freeSideCustomerNumber, params.agentNumber, function (err) {
+                                                    subscription.processCashPayment(username, function (err) {
                                                         if (err) {
-                                                            logger.logError('merchantProcessorMain - makePayment - error updating agent ' + dbUser.account.freeSideCustomerNumber);
+                                                            logger.logError('merchantProcessorMain - makePayment - error in update to merchant billing: ' + params.username);
                                                             logger.logError(err);
                                                             rollbackAccountForPayment(dbUser.account._id, merchant, firstMerchantPaymentDate, billingDate);
                                                             savePayment(params, 'failure', 'server-error', function () {
@@ -204,7 +204,7 @@ worker.register({
                                             });
                                         } else {
                                             billing.updateAgent(dbUser.account.freeSideCustomerNumber, 1, function (err) {
-                                                if(err) {
+                                                if (err) {
                                                     logger.logError('merchantProcessorMain - makeRefund - error updating agent back to 1 ' + dbUser.account.freeSideCustomerNumber);
                                                     logger.logError(err);
                                                     saveRefund(params, 'failure', 'server-error', function () {
