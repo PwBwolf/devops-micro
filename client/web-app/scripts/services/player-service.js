@@ -10,7 +10,7 @@
                 var startSlot = Math.floor(currentSlot.getTime() / (1000 * 60 * 30));
                 startSlot = startSlot * 1000 * 60 * 30;
                 var timeSlots = [];
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 7; i++) {
                     hoursOffset = 3600 * 1000 * i;
                     timeSlots[i] = $filter('date')((startSlot + (hoursOffset)), 'h:mm a');
                 }
