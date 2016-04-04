@@ -1193,10 +1193,7 @@ ul.passwordStrength {
     margin-top: 10px;
 }
 
-#channelGuideDescription, #channelGuideLogo {
-    height: 60px;
-    line-height: 1.2;
-}
+
 
 #smallChannelDescription p, #channelGuideDescription p {
     margin-bottom: 0px !important;
@@ -1673,33 +1670,10 @@ body, html {
 
 
 
-
-
-.horizontal-bottom {
-    overflow-x: scroll;
-    top: -60px;
-    margin-left: 154px;
-}
-
-#image-logos {
-    height: 60px;
-    border-right: 1px groove;
-}
-
-.logo-detail {
-    border-bottom: 1px solid;
-}
-
 .show-detail {
     border-bottom: 1px solid;
 }
 
-.image-lineup {
-    width: 154px;
-    height: 60px;
-    border-color: rgb(0, 27,72);
-    z-index: 8;
-}
 
 .channel-guide-panel-minimized {
     background: lightgrey;

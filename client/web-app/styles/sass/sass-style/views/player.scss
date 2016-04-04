@@ -1,3 +1,7 @@
+#topBox {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
 .animate-hide {
     -webkit-transition:all linear 0.5s;
     transition:all linear 0.5s;
@@ -14,6 +18,26 @@
     .navbar-toggle {
         border-width: 2px;
     }
+}
+
+.image-lineup {
+    width: 154px;
+    border-color: rgb(0, 27,72);
+    z-index: 8;
+    float: left;
+    .image-logos {
+        height: 60px;
+        border-right: 1px groove;
+        .logo-detail {
+            border-bottom: 1px solid;
+        }
+    }
+
+}
+
+.horizontal-bottom {
+    overflow-x: scroll;
+    margin-left: 154px;
 }
 
 .sync-scroll {
