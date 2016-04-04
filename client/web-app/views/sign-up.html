@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul>
-                                <li translate="SIGN_UP_BULLET0"></li>
+                                <li ng-show="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'" translate="SIGN_UP_BULLET0"></li>
                                 <li translate="SIGN_UP_BULLET1"></li>
                                 <li translate="SIGN_UP_BULLET2"></li>
                                 <li translate="SIGN_UP_BULLET3"></li>
@@ -25,9 +25,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-9 bold-text"><span translate="SIGN_UP_ITEM1"></span></div>
-                        <div class="col-xs-3 bold-text text-right"><span translate="SIGN_UP_AMOUNT1"></span></div>
+                        <div ng-show="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'" class="col-xs-3 bold-text text-right"><span translate="SIGN_UP_AMOUNT1"></span></div>
+                        <div ng-hide="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'" class="col-xs-3 bold-text text-right"><span translate="SIGN_UP_AMOUNT_20_DISCOUNT"></span></div>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-show="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'">
                         <div class="col-xs-9 bold-text"><span translate="SIGN_UP_ITEM11"></span></div>
                         <div class="col-xs-3 bold-text text-right"><span translate="SIGN_UP_AMOUNT11"></span></div>
                     </div>
@@ -42,7 +43,8 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-9 bolder-text"><span translate="SIGN_UP_ITEM_TOTAL"></span></div>
-                        <div class="col-xs-3 bolder-text text-right"><span translate="SIGN_UP_AMOUNT_TOTAL"></span></div>
+                        <div ng-show="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'" class="col-xs-3 bolder-text text-right"><span translate="SIGN_UP_AMOUNT_TOTAL"></span></div>
+                        <div ng-hide="mv.merchant !== 'ubs' && mv.merchant !== 'perkspot'" class="col-xs-3 bolder-text text-right"><span translate="SIGN_UP_AMOUNT_TOTAL_20_DISCOUNT"></span></div>
                     </div>
                 </div>
                 <form name="form" id="form" ng-submit="signUp()" novalidate>
