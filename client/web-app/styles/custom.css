@@ -2,7 +2,7 @@
 /* typography */
 /* views */
 #headerBrand .navbar-right {
-  width: 450px;
+  width: 470px;
   height: 100%; }
   #headerBrand .navbar-right li {
     padding-left: 0px;
@@ -215,3 +215,9 @@
 
 #channelFilterHolder .filtered-channels-count p {
   text-align: left; }
+
+#title {
+  cursor: pointer; }
+
+#description {
+  cursor: pointer; }
