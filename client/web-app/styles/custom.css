@@ -15,10 +15,6 @@
   #headerBrand .navbar-right .number-contact {
     top: 30%; }
 
-#topBox {
-  overflow: hidden;
-  margin-bottom: 30px; }
-
 .animate-hide {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
