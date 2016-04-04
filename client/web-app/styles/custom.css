@@ -15,6 +15,10 @@
   #headerBrand .navbar-right .number-contact {
     top: 30%; }
 
+#topBox {
+  overflow: hidden;
+  margin-bottom: 30px; }
+
 .animate-hide {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
@@ -27,6 +31,21 @@
 
 .navbar-default .navbar-toggle {
   border-width: 2px; }
+
+.image-lineup {
+  width: 154px;
+  border-color: #001b48;
+  z-index: 8;
+  float: left; }
+  .image-lineup .image-logos {
+    height: 60px;
+    border-right: 1px groove; }
+    .image-lineup .image-logos .logo-detail {
+      border-bottom: 1px solid; }
+
+.horizontal-bottom {
+  overflow-x: scroll;
+  margin-left: 154px; }
 
 .sync-scroll {
   overflow: auto; }
