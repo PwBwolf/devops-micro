@@ -249,6 +249,7 @@
             }
         }
 
+        // can speed this up with epg obj which is already created in player-service
         function getProgramInfo(index) {
             var epgIndex = $rootScope.channelsEpg.map(function (e) {
                 return e.channel_id;
@@ -281,7 +282,6 @@
                 updatedRecents = [];
                 updatedRecents[0] = channelId;
                 webStorage.session.add('recentChannels', updatedRecents);
-
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
                 console.log(typeof channelId)

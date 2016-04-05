@@ -44,18 +44,7 @@
                             var channelTitle = $rootScope.filteredChannels[i].title;
                             var tags = $rootScope.filteredChannels[i].tags_ids;
                             var lineUp = channelsEpgObj[id];
-                            if(lineUp.length > 0){
-                                for (var j = 0; j < lineUp.length; j++) {
-                                    if (lineUp[j].startTime) {
-                                        lineUp[j]["startHour"] = $filter('date')(lineUp[j].startTime, 'h:mm');
-                                        lineUp[j]["endHour"] = $filter('date')(lineUp[j].endTime, 'h:mm');
-                                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"] + "\n" + lineUp[j]["description"];
-                                        lineUp[j]["length"] = showLength(lineUp[j].startTime, lineUp[j].endTime);
-                                    } else {
-                                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"];
-                                    }
-                                }
-                            }
+                            lineUp = formatLineUp(lineUp);
 
                             var programInfo = {
                                 id: id,
@@ -70,6 +59,7 @@
                             allChannels.push(programInfo);
                             allChannelsObj[id] = programInfo;
                         }
+
                         console.timeEnd('getProgramming')
                         return cb(null, allChannels);
                     })
@@ -111,6 +101,22 @@
             } else {
                 return (endTime - startTime) / 1000 / 60;
             }
+        }
+
+        function formatLineUp(lineUp){
+            if(lineUp.length > 0){
+                for (var j = 0; j < lineUp.length; j++) {
+                    if (lineUp[j].startTime) {
+                        lineUp[j]["startHour"] = $filter('date')(lineUp[j].startTime, 'h:mm');
+                        lineUp[j]["endHour"] = $filter('date')(lineUp[j].endTime, 'h:mm');
+                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"] + "\n" + lineUp[j]["description"];
+                        lineUp[j]["length"] = showLength(lineUp[j].startTime, lineUp[j].endTime);
+                    } else {
+                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"];
+                    }
+                }
+            }
+            return lineUp;
         }
 
         function objToArr(obj) {
