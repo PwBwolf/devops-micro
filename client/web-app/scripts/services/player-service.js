@@ -3,6 +3,8 @@
 
     app.factory('playerSvc', ['$filter', '$rootScope', 'mediaSvc', function ($filter, $rootScope, mediaSvc) {
 
+        var channelsEpgObj = {};
+        var allChannelsObj = {};
         return {
             getTimeSlots: function () {
                 var hoursOffset = 0;
@@ -18,55 +20,57 @@
             },
 
             getProgramming: function (cb) {
+                console.time('getProgramming')
+                // channelIds is an array of id from $rootSCope.filteredChannels and has the ids in the
+                // same order as $rootScope.filteredChannels
                 var channelIds = $rootScope.filteredChannels.map(function (item) {
                     return item.id;
                 });
+
                 var allChannels = [];
 
                 mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
-                        angular.forEach(channelIds, function (channelId) {
-                            var station = channelId;
-                            var chIndex = $rootScope.filteredChannels.map(function (e) {
-                                return e.id;
-                            }).indexOf(channelId);
-                            var logo = $rootScope.filteredChannels[chIndex].logoUri;
-                            var channelTitle = $rootScope.filteredChannels[chIndex].title;
-                            var epgIndex = channelsEpg.map(function (e) {
-                                return e.channel_id;
-                            }).indexOf(station);
-                            var lineUp = [];
-                            var tags = $rootScope.filteredChannels[chIndex].tags_ids;
-                            if (epgIndex >= 0) {
-                                lineUp = channelsEpg[epgIndex].programs;
+                        // create filteredChannelObj with channel ids as keys
+                        for(var i = 0; i < $rootScope.channelsEpg.length; i++){
+                            var id = $rootScope.channelsEpg[i].channel_id;
+                            channelsEpgObj[id] = $rootScope.channelsEpg[i].programs || [];
+                        }
+                        for(var i = 0; i < $rootScope.filteredChannels.length; i++){
+                            // I declare these here instead of directly in the programInfo object for readability
+                            var id = $rootScope.filteredChannels[i].id;
+                            var chIndex = i;
+                            var logo = $rootScope.filteredChannels[i].logoUri;
+                            var channelTitle = $rootScope.filteredChannels[i].title;
+                            var tags = $rootScope.filteredChannels[i].tags_ids;
+                            var lineUp = channelsEpgObj[id];
+                            if(lineUp.length > 0){
+                                for (var j = 0; j < lineUp.length; j++) {
+                                    if (lineUp[j].startTime) {
+                                        lineUp[j]["startHour"] = $filter('date')(lineUp[j].startTime, 'h:mm');
+                                        lineUp[j]["endHour"] = $filter('date')(lineUp[j].endTime, 'h:mm');
+                                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"] + "\n" + lineUp[j]["description"];
+                                        lineUp[j]["length"] = showLength(lineUp[j].startTime, lineUp[j].endTime);
+                                    } else {
+                                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"];
+                                    }
+                                }
                             }
-                            if (lineUp === null) {
-                                lineUp = [{
-                                    title: 'Not Available',
-                                    description: 'Not Available'
-                                }]
-                            }
+
                             var programInfo = {
-                                station: channelId,
+                                id: id,
                                 chIndex: chIndex,
                                 logo: logo,
                                 channelTitle: channelTitle,
-                                epgIndex: epgIndex,
+                                epgIndex: i,
                                 lineUp: lineUp,
                                 tags: tags
                             };
-                            for (var i = 0; i < programInfo.lineUp.length; i++) {
-                                if (programInfo.lineUp[i].startTime) {
-                                    programInfo.lineUp[i]["startHour"] = $filter('date')(programInfo.lineUp[i].startTime, 'h:mm');
-                                    programInfo.lineUp[i]["endHour"] = $filter('date')(programInfo.lineUp[i].endTime, 'h:mm');
-                                    programInfo.lineUp[i]["dropdownInfo"] = programInfo.lineUp[i]["title"] + "\n" + programInfo.lineUp[i]["description"];
-                                    programInfo.lineUp[i]["length"] = showLength(programInfo.lineUp[i].startTime, programInfo.lineUp[i].endTime);
-                                } else {
-                                    programInfo.lineUp[i]["dropdownInfo"] = programInfo.lineUp[i]["title"];
-                                }
-                            }
+
                             allChannels.push(programInfo);
-                        });
+                            allChannelsObj[id] = programInfo;
+                        }
+                        console.timeEnd('getProgramming')
                         return cb(null, allChannels);
                     })
                     .error(function () {
@@ -84,19 +88,14 @@
                 return arr;
             },
 
-            mapChannels: function (channelIds, allChannels) {
+            // get a full channel object for each channel id
+            mapChannels: function (channelIds) {
                 var arr = [];
-                var channelIndex = -1;
                 if (!Array.isArray(channelIds)) {
                     channelIds = objToArr(channelIds);
                 }
                 for (var i = 0; i < channelIds.length; i++) {
-                    channelIndex = allChannels.map(function (e) {
-                        return e.station;
-                    }).indexOf(channelIds[i]);
-                    if(channelIndex !== -1){
-                        arr.push(allChannels[channelIndex])
-                    }
+                    arr.push(allChannelsObj[channelIds[i]])
                 }
                 return arr;
             }
@@ -132,6 +131,7 @@
             }
             return arrToObj;
         }
+
     }]);
 }(angular.module('app')));
 
