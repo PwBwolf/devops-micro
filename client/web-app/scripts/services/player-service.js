@@ -43,7 +43,7 @@
                             var logo = $rootScope.filteredChannels[i].logoUri;
                             var channelTitle = $rootScope.filteredChannels[i].title;
                             var tags = $rootScope.filteredChannels[i].tags_ids;
-                            var lineUp = channelsEpgObj[id];
+                            var lineUp = channelsEpgObj[id] || [];
                             lineUp = formatLineUp(lineUp);
 
                             var programInfo = {

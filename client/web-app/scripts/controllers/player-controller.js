@@ -89,7 +89,6 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
-                console.log('origin tags', $scope.tags[2].tags, $scope.tags[2].tags.length)
             });
         }
 
