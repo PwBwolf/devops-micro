@@ -58,6 +58,7 @@
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels;
+                    console.log('number of channels', $scope.allChannels.length)
                     $scope.prevIndex = $scope.programming.length - 1;
                     console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
@@ -88,6 +89,7 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
+                console.log('origin tags', $scope.tags[2].tags, $scope.tags[2].tags.length)
             });
         }
 

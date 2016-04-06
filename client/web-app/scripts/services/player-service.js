@@ -55,12 +55,13 @@
                                 lineUp: lineUp,
                                 tags: tags
                             };
-
+                            console.log(tags[2])
                             allChannels.push(programInfo);
                             allChannelsObj[id] = programInfo;
                         }
 
                         console.timeEnd('getProgramming')
+                        //console.log('all channels', allChannels)
                         return cb(null, allChannels);
                     })
                     .error(function () {
