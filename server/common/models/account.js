@@ -17,7 +17,7 @@ var Account = new Schema({
     key: Number,
     freeSideCustomerNumber: Number,
     complimentaryCode: {type: String, sparse: true},
-    merchant: String,
+    merchant: {type: String, index: true},
     firstCardPaymentDate: Date,
     firstMerchantPaymentDate: Date,
     aioAccountId: Number, // remove post release
