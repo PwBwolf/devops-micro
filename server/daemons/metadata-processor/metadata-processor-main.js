@@ -37,7 +37,7 @@ if (daysKeep < 0 || daysKeep === undefined) {
 
 new CronJob(config.metaDataRetrievalRecurrence, function () {
         getChannelGuide();
-        imageDownload();
+        //imageDownload();
     },
     function () {
         logger.logInfo('metadata-processor-main - CronJob - gracenote retrieval has finished');
