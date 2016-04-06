@@ -73,7 +73,6 @@ module.exports = {
     },
 
     getLineup: function (channelId, period, callback) {
-        console.log('period given to cms', period)
         var route = '/index.php?json_route=/lineup';
         var id = '&channel_id=' + channelId;
         var duration = '&lineup_period=' + period;
