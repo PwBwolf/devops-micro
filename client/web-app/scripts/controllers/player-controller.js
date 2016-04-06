@@ -43,15 +43,28 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
+
+            console.time('channelsLoaded')
+            // copied and pasted from the player controller
+            mediaSvc.getUserChannels(function (data) {
+                $rootScope.channels = data.channels_list;
+                $rootScope.filteredChannels = $rootScope.channels;
+                console.timeEnd('channelLoaded')
+                $rootScope.$broadcast('ChannelsLoaded');
+            });
+
+            console.time('channelsFormatted')
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels;
+                    console.log('number of channels', $scope.allChannels.length)
                     $scope.prevIndex = $scope.programming.length - 1;
+                    console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
-                            $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels, $scope.allChannels);
+                            $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels);
                             $scope.channelsLoaded = true;
                         },
                         function (error) {
@@ -59,13 +72,7 @@
                         }
                     );
                 })
-            });
 
-            // copied and pasted from the player controller
-            mediaSvc.getUserChannels(function (data) {
-                $rootScope.channels = data.channels_list;
-                $rootScope.filteredChannels = $rootScope.channels;
-                $rootScope.$broadcast('ChannelsLoaded');
             });
 
             mediaSvc.getChannelCategories(function (data) {
@@ -82,6 +89,7 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
+                console.log('origin tags', $scope.tags[2].tags, $scope.tags[2].tags.length)
             });
         }
 
@@ -111,7 +119,7 @@
                 $scope.programming = $scope.recentChannels;
                 return;
             }
-            $scope.recentChannels = playerSvc.mapChannels(recentChannels, $scope.allChannels);
+            $scope.recentChannels = playerSvc.mapChannels(recentChannels);
             $scope.programming = $scope.recentChannels;
             updateNextAndPrev();
         };
@@ -154,7 +162,7 @@
         // make it a favorite channel if it's not.
         $scope.toggleFavoriteChannel = function (currentChannel) {
             var channelIndex = $scope.favoriteChannels.map(function (e) {
-                return e.station;
+                return e.id;
             }).indexOf(currentChannel.channelId);
             var req;
             if (channelIndex === -1) { // check $scope.favoriteChannels to see if it's in there
@@ -164,7 +172,7 @@
                     function (data) {
                         var newFavoriteId = {channelId: currentChannel.channelId};
                         var newFavoriteIndex = $scope.allChannels.map(function (e) {
-                            return e.station;
+                            return e.id;
                         }).indexOf(newFavoriteId.channelId);
                         var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
                         $scope.favoriteChannels.push(newFavoriteChannelObj);
@@ -234,7 +242,7 @@
          */
         function setFavoriteIcon(channel, favorites) {
             var isfavorite = favorites.map(function (e) {
-                return e.station;
+                return e.id;
             }).indexOf(channel);
             if (isfavorite === -1) {
                 $scope.favoriteIcon = '../../images/favorite-white.png';
@@ -243,6 +251,7 @@
             }
         }
 
+        // can speed this up with epg obj which is already created in player-service
         function getProgramInfo(index) {
             var epgIndex = $rootScope.channelsEpg.map(function (e) {
                 return e.channel_id;
@@ -275,7 +284,6 @@
                 updatedRecents = [];
                 updatedRecents[0] = channelId;
                 webStorage.session.add('recentChannels', updatedRecents);
-
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
                 console.log(typeof channelId)
