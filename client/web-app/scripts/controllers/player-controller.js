@@ -57,8 +57,7 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
-                    $scope.programming = $scope.allChannels;
-                    console.log('number of channels', $scope.allChannels.length)
+                    $scope.programming = $scope.allChannels.slice(0, 10);
                     $scope.prevIndex = $scope.programming.length - 1;
                     console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
@@ -97,6 +96,24 @@
          * filtered channel objects which becomes $scope.channelIds. this is an array
          * of only channel ids. matches up with "station" property on $scope.programming objects.
          */
+
+        $scope.loadMore = function() {
+            for(var i = 0; i < 1; i++) {
+                var checkLength = ($scope.programming.length + i) < $scope.allChannels.length;
+                console.log(checkLength);
+                console.log("i = ", i)
+                console.log("programming length ", $scope.programming.length);
+                console.log("programming length + i  ", $scope.programming.length + i);
+                console.log("all channels length ", $scope.allChannels.length);
+                if(checkLength) {
+                    var channel = $scope.allChannels.slice($scope.programming.length + i, $scope.programming.length + i + 1);
+                    $scope.programming.push(channel[0]);
+                }
+            }
+
+        };
+
+
         $scope.previousChannel = function () {
             $scope.watchNow($scope.prevIndex, $scope.favoriteChannels);
         };

@@ -52,8 +52,7 @@
 
             <!--  -->
             <div id="userGuide" class="user-guide-panel">
-                <div class="position-div user-guide">
-                    <div>
+                <div class="position-div user-guide" infinite-scroll='loadMore()' infinite-scroll-distance='2' infinite-scroll-immediate-check='false' infinite-scroll-parent="true">
                         <div id="channelGuideLogo" class="image-lineup">
                             <div id="image-logos" ng-scroll-repeat="programs in programming" page-size="20" class="channel-description">
                                 <div class="logo-detail" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{::programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{::programs.logo}}) 50% no-repeat; background-size:contain"></div>
@@ -67,9 +66,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
+
     </div>
+
+
 </div>
