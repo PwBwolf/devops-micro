@@ -67,7 +67,6 @@
 
 #menuBar #programInfo {
   z-index: 10;
-  display: table-cell;
   display: inline-block;
   margin-left: 1px;
   background: transparent;

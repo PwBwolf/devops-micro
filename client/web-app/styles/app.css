@@ -759,9 +759,9 @@ ul.passwordStrength {
 }
 
 @media screen and (max-width: 999px) {
-     .programDetail {
-         display: none;
-     }
+    .programDetail {
+        display: none;
+    }
     a.language {
         margin-left: 17px;
     }
@@ -1043,9 +1043,9 @@ ul.passwordStrength {
     background-color: rgba(200, 200, 200, 0.9) !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
-/*     padding: 15px !important; */
+    /*     padding: 15px !important; */
     text-align: center;
-/*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
+    /*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
     margin-bottom: 0;
 }
 
@@ -1193,7 +1193,10 @@ ul.passwordStrength {
     margin-top: 10px;
 }
 
-
+#channelGuideDescription, #channelGuideLogo {
+    height: 60px;
+    line-height: 1.2;
+}
 
 #smallChannelDescription p, #channelGuideDescription p {
     margin-bottom: 0px !important;
@@ -1331,7 +1334,7 @@ body, html {
 #playerTop, #playerBottom {
     width: 100%;
     margin-bottom: 8px;
-/*     box-shadow: 0px 5px 2px #888888; */
+    /*     box-shadow: 0px 5px 2px #888888; */
 }
 
 #playerTop {
@@ -1368,7 +1371,7 @@ body, html {
     width: 28%;
     height: 100%;
     vertical-align: top !important;
-/*     margin-left: -3px; */
+    /*     margin-left: -3px; */
 }
 
 .suggested-channels {
@@ -1670,10 +1673,32 @@ body, html {
 
 
 
+
+
+.horizontal-bottom {
+    overflow-x: scroll;
+    margin-left: 154px;
+}
+
+#image-logos {
+    height: 60px;
+    border-right: 1px groove;
+}
+
+.logo-detail {
+    border-bottom: 1px solid;
+}
+
 .show-detail {
     border-bottom: 1px solid;
 }
 
+.image-lineup {
+    width: 154px;
+    height: 60px;
+    border-color: rgb(0, 27,72);
+    z-index: 8;
+}
 
 .channel-guide-panel-minimized {
     background: lightgrey;
@@ -1793,7 +1818,7 @@ body, html {
 
 .time-module-item:first-child {
     margin-left: 153px;
-/*     width:150px; */
+    /*     width:150px; */
 }
 
 .user-guide {
@@ -1832,14 +1857,14 @@ body, html {
 .notification {
     text-align: center;
     position: relative;
-/*     padding: 5px 16px; */
+    /*     padding: 5px 16px; */
     border-top: 6px solid transparent;
-/*        border-bottom: 20px solid whitesmoke ; */
-/*         -webkit-box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
-/*         -moz-box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
-/*        box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
+    /*        border-bottom: 20px solid whitesmoke ; */
+    /*         -webkit-box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
+    /*         -moz-box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
+    /*        box-shadow: inset 0px 0px 4px 0px rgba(191,247,136,1); */
     line-height: 1.5;
-/*         background-color: #F7F7F7; */
+    /*         background-color: #F7F7F7; */
     color: slateblue;
     height: 100%;
 }
@@ -2307,4 +2332,10 @@ body, html {
 .navbar-default .navbar-toggle {
     border-width: 2px;
 }
+
+
+
+
+
+
 
