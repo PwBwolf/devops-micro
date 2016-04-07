@@ -1227,7 +1227,7 @@ ul.passwordStrength {
     height: 60px;
     display: inline-block;
     vertical-align: top;
-    padding: 6px;
+    padding: 0px;
 }
 
 .channel-description > div:first-child {
@@ -1260,6 +1260,7 @@ ul.passwordStrength {
 .channel-details-body {
     text-transform: uppercase;
     color: #fff;
+    padding-left: 6px;
 }
 
 * {

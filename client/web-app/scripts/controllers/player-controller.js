@@ -59,6 +59,7 @@
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     $scope.prevIndex = $scope.programming.length - 1;
+                    console.log($scope.allChannels)
                     console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
                         function (data) {
