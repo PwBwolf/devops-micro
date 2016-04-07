@@ -55,7 +55,6 @@
                                 lineUp: lineUp,
                                 tags: tags
                             };
-                            console.log(tags[2])
                             allChannels.push(programInfo);
                             allChannelsObj[id] = programInfo;
                         }
