@@ -158,7 +158,7 @@
         $scope.displayAll = function () {
             $scope.noRecentChannels = false;
             $scope.noFavoriteChannels = false;
-            $scope.programming = $scope.allChannels;
+            $scope.programming = $scope.allChannels.slice(0, 10);
             updateNextAndPrev();
         };
 
