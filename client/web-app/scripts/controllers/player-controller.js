@@ -90,6 +90,17 @@
          * filtered channel objects which becomes $scope.channelIds. this is an array
          * of only channel ids. matches up with "station" property on $scope.programming objects.
          */
+
+        $scope.images = [1, 2, 3, 4, 5, 6, 7, 8];
+        $scope.loadMore = function() {
+            var last = $scope.images[$scope.images.length - 1];
+            for(var i = 1; i <= 8; i++) {
+                $scope.images.push(last + i);
+            }
+            console.log($scope.images.length)
+        };
+
+
         $scope.previousChannel = function () {
             $scope.watchNow($scope.prevIndex, $scope.favoriteChannels);
         };
