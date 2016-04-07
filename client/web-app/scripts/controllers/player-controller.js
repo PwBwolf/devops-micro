@@ -38,6 +38,7 @@
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
+        var currentView = [];
 
         activate();
 
@@ -58,6 +59,7 @@
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels.slice(0, 10);
+                    currentView = $scope.allChannels;
                     $scope.prevIndex = $scope.programming.length - 1;
                     console.log($scope.allChannels)
                     console.timeEnd('channelsFormatted')
@@ -100,7 +102,7 @@
 
         $scope.loadMore = function() {
             for(var i = 0; i < 10; i++) {
-                var checkLength = ($scope.programming.length + 1) < $scope.allChannels.length;
+                var checkLength = ($scope.programming.length + 1) < currentView.length;
                 if(checkLength) {
                     var channel = $scope.allChannels[$scope.programming.length+1];
                     $scope.programming.push(channel);
@@ -132,7 +134,8 @@
                 return;
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels);
-            $scope.programming = $scope.recentChannels;
+            $scope.programming = $scope.recentChannels.slice(0, 10);
+            currentView = $scope.recentChannels;
             updateNextAndPrev();
         };
 
@@ -151,7 +154,8 @@
                     return -1;
                 }
             });
-            $scope.programming = $scope.favoriteChannels;
+            $scope.programming = $scope.favoriteChannels.slice(0, 10);
+            currentView = $scope.favoriteChannels;
             updateNextAndPrev();
         };
 
@@ -159,6 +163,7 @@
             $scope.noRecentChannels = false;
             $scope.noFavoriteChannels = false;
             $scope.programming = $scope.allChannels.slice(0, 10);
+            currentView = $scope.allChannels;
             updateNextAndPrev();
         };
 
