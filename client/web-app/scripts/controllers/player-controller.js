@@ -46,7 +46,7 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
-                    $scope.programming = $scope.allChannels;
+                    $scope.programming = $scope.allChannels.slice(0, 10);
                     $scope.prevIndex = $scope.programming.length - 1;
                     mediaSvc.getFavoriteChannels(
                         function (data) {
@@ -91,13 +91,20 @@
          * of only channel ids. matches up with "station" property on $scope.programming objects.
          */
 
-        $scope.images = [1, 2, 3, 4, 5, 6, 7, 8];
         $scope.loadMore = function() {
-            var last = $scope.images[$scope.images.length - 1];
-            for(var i = 1; i <= 8; i++) {
-                $scope.images.push(last + i);
+            for(var i = 0; i < 1; i++) {
+                var checkLength = ($scope.programming.length + i) < $scope.allChannels.length;
+                console.log(checkLength);
+                console.log("i = ", i)
+                console.log("programming length ", $scope.programming.length);
+                console.log("programming length + i  ", $scope.programming.length + i);
+                console.log("all channels length ", $scope.allChannels.length);
+                if(checkLength) {
+                    var channel = $scope.allChannels.slice($scope.programming.length + i, $scope.programming.length + i + 1);
+                    $scope.programming.push(channel[0]);
+                }
             }
-            console.log($scope.images.length)
+
         };
 
 

@@ -1659,7 +1659,7 @@ body, html {
 .user-guide-panel {
     width: 100%;
     height: 300px;
-    overflow-y: auto;
+    overflow-y: scroll;
     white-space: nowrap;
     padding-top: 2px;
     -webkit-transition: all 1s ease-in-out;
