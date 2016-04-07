@@ -100,18 +100,8 @@
         $scope.loadMore = function() {
             for(var i = 0; i < 10; i++) {
                 var checkLength = ($scope.programming.length + 1) < $scope.allChannels.length;
-                console.log('\n starting loop logic')
-                console.log('adding new element', checkLength);
-                console.log("i = ", i)
-                console.log("programming length", $scope.programming.length);
-                console.log("programming length + 1", $scope.programming.length + 1);
-                console.log("all channels length", $scope.allChannels.length);
-                console.log('programming array', $scope.programming)
                 if(checkLength) {
-                    //var channel = $scope.allChannels.slice($scope.programming.length + i, $scope.programming.length + i + 1);
-                    console.log($scope.programming.length+1)
-                    var channel = $scope.allChannels[$scope.programming.length+1]
-                    console.log('adding channel', channel)
+                    var channel = $scope.allChannels[$scope.programming.length+1];
                     $scope.programming.push(channel);
                 }
             }
