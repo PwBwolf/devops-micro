@@ -10,7 +10,7 @@ var config = require('../../server/common/setup/config'),
 var email = process.argv[2];
 
 if (typeof email === 'undefined') {
-    logger.logError('adminCLI - cancelSubscription - email or mobile number is missing!\n\r\tusage: node cancel-subscription <email/mobile>');
+    logger.logError('adminCLI - endPremiumSubscription - email or mobile number is missing!\n\r\tusage: node end-premium-subscription <email/mobile>');
     process.exit(1);
 } else {
     var emailRegex = config.regex.email;
@@ -18,7 +18,7 @@ if (typeof email === 'undefined') {
     var isEmail = emailRegex.test(email);
     var isPhone = phoneRegex.test(email);
     if (!isEmail && !isPhone) {
-        logger.logError('adminCLI - cancelSubscription - enter a valid email address or mobile number.');
+        logger.logError('adminCLI - endPremiumSubscription - enter a valid email address or mobile number.');
         process.exit(1);
     }
 }
@@ -33,34 +33,34 @@ var subscription = require('../../server/common/services/subscription');
 var username = validation.getUsername(email);
 Users.findOne({email: username}).populate('account').exec(function (err, user) {
     if (err) {
-        logger.logError('adminCLI - cancelSubscription - error fetching user: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - error fetching user: ' + username);
         logger.logError(err);
         process.exit(1);
     } else if (!user) {
-        logger.logError('adminCLI - cancelSubscription - user not found: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - user not found: ' + username);
         process.exit(1);
     } else if(user.cancelOn) {
-        logger.logError('adminCLI - cancelSubscription - user\'s premium subscription is already due for cancellation on ' + getFormattedDate(user.cancelOn) + ' for user: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - user\'s premium subscription is already due for cancellation on ' + getFormattedDate(user.cancelOn) + ' for user: ' + username);
         process.exit(1);
     } else if (user.status === 'failed') {
-        logger.logError('adminCLI - cancelSubscription - failed user: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - failed user: ' + username);
         process.exit(1);
     } else if (user.account.type === 'free') {
-        logger.logError('adminCLI - cancelSubscription - free user: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - free user: ' + username);
         process.exit(1);
     } else if (user.account.type === 'comp') {
-        logger.logError('adminCLI - cancelSubscription - complimentary user: ' + username);
+        logger.logError('adminCLI - endPremiumSubscription - complimentary user: ' + username);
         process.exit(1);
     } else {
-        subscription.cancelSubscription(username, function (err) {
+        subscription.endPaidSubscription(username, function (err) {
             if (err) {
-                logger.logError('adminCLI - cancelSubscription - error canceling subscription');
+                logger.logError('adminCLI - endPremiumSubscription - error ending premium subscription');
                 logger.logError(err);
                 setTimeout(function () {
                     process.exit(1);
                 }, 3000);
             } else {
-                logger.logInfo('adminCLI - cancelSubscription - user subscription canceled');
+                logger.logInfo('adminCLI - endPremiumSubscription - premium subscription ended');
                 setTimeout(function () {
                     process.exit(0);
                 }, 10000);

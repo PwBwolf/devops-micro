@@ -23,7 +23,7 @@ Account.find({'merchant': 'CJ'}).populate('primaryUser').exec(function (err, acc
         process.exit(0);
     } else {
         for (var i = 0; i < accounts.length; i++) {
-            if (accounts[i].primaryUser) {
+            if (accounts[i].primaryUser && account[i].primaryUser.cancelOn) {
                 console.log(accounts[i].primaryUser.email + ',' + accounts[i].primaryUser.status + ',' + accounts[i].type);
             }
         }

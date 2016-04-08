@@ -39,6 +39,12 @@ module.exports = {
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile'],
+    cjReports: {
+        financeEmailAddress: 'cjreports@yiptv.com',
+        ftpDomain: 'datatransfer.cj.com',
+        ftpUsername: '4630657',
+        ftpPassword: 'Y3qbB&dM'
+    },
     freeSideKeyEmailDomain: 'yiptv.us',
     freeSideSelfServiceApiUrl: 'http://10.100.10.21:8080/',
     freeSideBackOfficeApiUrl: 'http://10.100.10.21:8008/',
