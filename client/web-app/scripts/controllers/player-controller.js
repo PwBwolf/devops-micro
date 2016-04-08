@@ -23,6 +23,7 @@
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
         $scope.tags = [];
+        $scope.currentView = 'all'
 
         // for previous and next channels. These may not need to be on $scope at all.
         $scope.prevIndex = 0;
@@ -38,7 +39,10 @@
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
-        var currentView = [];
+        var currentView = 'all';
+        var dontLoadMore = true;
+
+
 
         activate();
 
@@ -59,7 +63,7 @@
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels.slice(0, 10);
-                    currentView = $scope.allChannels;
+                    currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
                     console.log($scope.allChannels)
                     console.timeEnd('channelsFormatted')
@@ -100,16 +104,32 @@
          * of only channel ids. matches up with "station" property on $scope.programming objects.
          */
 
+        // probably a more elegant way to do this, but we have a release deadline.
         $scope.loadMore = function() {
+            console.log('running loadMore')
+            if(currentView === 'all'){
+                loadMore($scope.allChannels);
+            }
+            else if(currentView === 'recents'){
+                loadMore($scope.recentChannels);
+            }
+            else if(currentView === 'favorites'){
+                loadMore($scope.favoriteChannels);
+            }
+            else if(currentView === 'filtered'){
+                loadMore($scope.filteredChannels);
+            }
+        };
+
+        function loadMore(channelsArr){
             for(var i = 0; i < 10; i++) {
-                var checkLength = ($scope.programming.length + 1) < currentView.length;
+                var checkLength = ($scope.programming.length + 1) < channelsArr.length;
                 if(checkLength) {
-                    var channel = $scope.allChannels[$scope.programming.length+1];
+                    var channel = channelsArr[$scope.programming.length+1];
                     $scope.programming.push(channel);
                 }
             }
-
-        };
+        }
 
 
         $scope.previousChannel = function () {
@@ -120,11 +140,23 @@
             $scope.watchNow($scope.nextIndex, $scope.favoriteChannels);
         };
 
-        $scope.displayRecent = function () {
+        $scope.displayAll = function () {
+            console.log('running displayAll')
+            currentView = 'all';
+            $scope.noRecentChannels = false;
             $scope.noFavoriteChannels = false;
+            $scope.programming = $scope.allChannels.slice(0, 10);
+            updateNextAndPrev();
+        };
+
+        $scope.displayRecent = function () {
+            console.log('running displayRecent')
+            $scope.noFavoriteChannels = false;
+            currentView = 'recents';
             var recentChannels = webStorage.session.get('recentChannels');
             displayingRecents = true;
 
+            // recent channels exist, else they don't
             if (recentChannels) {
                 $scope.noRecentChannels = false;
             }
@@ -135,12 +167,14 @@
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels);
             $scope.programming = $scope.recentChannels.slice(0, 10);
-            currentView = $scope.recentChannels;
+            console.log('programming array in displayRecent', $scope.programming)
             updateNextAndPrev();
         };
 
         $scope.displayFavorites = function () {
+            console.log('running displayFavorites')
             $scope.noRecentChannels = false;
+            currentView = 'favorites';
             if($scope.favoriteChannels.length === 0){
                 $scope.programming = $scope.favoriteChannels;
                 $scope.noFavoriteChannels = true;
@@ -155,22 +189,15 @@
                 }
             });
             $scope.programming = $scope.favoriteChannels.slice(0, 10);
-            currentView = $scope.favoriteChannels;
-            updateNextAndPrev();
-        };
-
-        $scope.displayAll = function () {
-            $scope.noRecentChannels = false;
-            $scope.noFavoriteChannels = false;
-            $scope.programming = $scope.allChannels.slice(0, 10);
-            currentView = $scope.allChannels;
             updateNextAndPrev();
         };
 
         $scope.displayFiltered = function(){
+            console.log('running displayFiltered')
+            currentView = 'filtered';
             $scope.noRecentChannels = false;
             $scope.noFavoriteChannels = false;
-            $scope.programming = $scope.filteredChannels;
+            $scope.programming = $scope.filteredChannels.slice(0, 10);
             updateNextAndPrev();
         };
 

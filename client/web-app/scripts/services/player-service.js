@@ -31,6 +31,7 @@
 
                 mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
+                        console.log('epg', channelsEpg)
                         // create filteredChannelObj with channel ids as keys
                         for(var i = 0; i < $rootScope.channelsEpg.length; i++){
                             var id = $rootScope.channelsEpg[i].channel_id;
