@@ -60,6 +60,7 @@
                         </div>
                         <div class="horizontal-scroll horizontal-bottom sync-scroll">
                             <div id="channelGuideDescription" ng-repeat="programs in programming" class="channel-description">
+                                <p style="text-align: left;" ng-if="programs.lineUp.length === 0"><span class="channel-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>
                                 <div class="show-detail" ng-repeat="show in ::programs.lineUp" title="{{::show.dropdownInfo}}" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
                                     <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
                                     <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>

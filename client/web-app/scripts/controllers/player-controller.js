@@ -35,6 +35,7 @@
         $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
         $scope.checkedInfo = false; // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
+        $scope.hasTitle = false;
 
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
