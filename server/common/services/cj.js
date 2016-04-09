@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs'),
     moment = require('moment-timezone'),
     config = require('../setup/config'),
@@ -5,13 +7,9 @@ var fs = require('fs'),
     logger = require('../setup/logger'),
     email = require('./email'),
     ftp = require('./ftp'),
-    mongoose = require('mongoose');
-
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
-
-require('../setup/models')(modelsPath);
-var Account = mongoose.model('Account');
+    mongoose = require('mongoose'),
+    dbYip = mongoose.createConnection(config.db),
+    Account = dbYip.model('Account');
 
 exports.exportCjAccounts = function (startDate, endDate, cb) {
     var query = {merchant: 'CJ'};

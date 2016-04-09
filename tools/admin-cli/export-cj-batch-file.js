@@ -2,8 +2,16 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var cj = require('../../server/common/services/cj'),
-    logger = require('../../server/common/setup/logger');
+var logger = require('../../server/common/setup/logger'),
+    mongoose = require('../../server/node_modules/mongoose'),
+    config = require('../../server/common/setup/config');
+
+var modelsPath = config.root + '/server/common/models',
+    db = mongoose.connect(config.db);
+
+require('../../server/common/setup/models')(modelsPath);
+
+var cj = require('../../server/common/services/cj');
 
 cj.exportCjAccounts(process.argv[2], process.argv[3], function (err) {
     if (err) {

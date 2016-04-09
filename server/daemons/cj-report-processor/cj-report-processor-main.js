@@ -5,8 +5,15 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var CronJob = require('cron').CronJob,
     config = require('../../common/setup/config'),
     logger = require('../../common/setup/logger'),
-    moment = require('moment'),
-    cj = require('../../common/services/cj');
+    mongoose = require('mongoose'),
+    moment = require('moment');
+
+var modelsPath = config.root + '/server/common/models',
+    db = mongoose.connect(config.db);
+
+require('../../common/setup/models')(modelsPath);
+
+var cj = require('../../common/services/cj');
 
 new CronJob(config.cjReportProcessorRecurrence, function () {
     logger.logInfo('cjReportProcessorMain - cj report processor starting');
