@@ -4,6 +4,7 @@ var fs = require('fs'),
     async = require('async'),
     logger = require('../setup/logger'),
     email = require('./email'),
+    ftp = require('./ftp'),
     mongoose = require('mongoose');
 
 var modelsPath = config.root + '/server/common/models',
@@ -86,7 +87,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
             });
         },
         // send finance report via email to accounting@yiptv.com
-        function (callback) {
+        /*function (callback) {
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.cjReports.financeEmailAddress,
@@ -96,7 +97,24 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
             };
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
-                    logger.logError('cj - exportCjAccounts - error send finance file to ' + mailOptions.to);
+                    logger.logError('cj - exportCjAccounts - error sending finance file to ' + mailOptions.to);
+                }
+                callback(err);
+            });
+        },*/
+        // upload cj batch file to cj ftp server
+        function (callback) {
+            var ftpOptions = {
+                host: config.cjReports.ftpHost,
+                port: config.cjReports.ftpPort,
+                user: config.cjReports.ftpUsername,
+                password: config.cjReports.ftpPassword
+            };
+            var localPath = '../../reports/' + cjFile;
+            var remotePath = config.cjReports.ftpPath + cjFile;
+            ftp.uploadFile(ftpOptions, localPath, remotePath, function (err) {
+                if (err) {
+                    logger.logError('cj - exportCjAccounts - error uploading to cj batch file to ftp server');
                 }
                 callback(err);
             });

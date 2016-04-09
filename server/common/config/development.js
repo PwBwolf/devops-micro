@@ -35,10 +35,12 @@ module.exports = {
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile', 'voip'],
     cjReports: {
-        financeEmailAddress: 'achinth@yiptv.com,tom@yiptv.com',
-        ftpDomain: '172.16.30.11',
+        financeEmailAddress: 'achinth@yiptv.com',
+        ftpPort: 21,
+        ftpHost: '172.16.10.8',
         ftpUsername: 'devtest',
-        ftpPassword: 'yiptv123'
+        ftpPassword: 'yiptv123',
+        ftpPath: '/'
     },
     freeSideKeyEmailDomain: 'dev.yiptv.ws',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',

@@ -41,9 +41,11 @@ module.exports = {
     twilioMobileType: ['mobile', 'voip'],
     cjReports: {
         financeEmailAddress: 'devteam@yiptv.com',
-        ftpDomain: '172.16.30.11',
+        ftpPort: 21,
+        ftpHost: '172.16.10.8',
         ftpUsername: 'devtest',
-        ftpPassword: 'yiptv123'
+        ftpPassword: 'yiptv123',
+        ftpPath: '/'
     },
     freeSideKeyEmailDomain: 'int.yiptv.ws',
     freeSideSelfServiceApiUrl: 'http://172.16.10.5:8080/',
