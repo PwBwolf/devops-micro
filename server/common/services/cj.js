@@ -20,7 +20,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
         // do validations
         function (callback) {
             if (!startDate && !endDate) {
-                logger.logError('cj - cj - tool invoked with incorrect number of parameters');
+                logger.logError('cj - exportCjAccounts - tool invoked with incorrect number of parameters');
                 printUsage();
                 callback('ERROR_INCORRECT_PARAMETERS');
             }
@@ -69,7 +69,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
         // write cj batch file
         function (callback) {
             cjFile = 'cj-batch-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
-            fs.writeFile('../../reports/' + cjFile, cjData, function (err) {
+            fs.writeFile(config.root + '/reports/' + cjFile, cjData, function (err) {
                 if (err) {
                     logger.logError('cj - exportCjAccounts - error writing cj report');
                 }
@@ -79,7 +79,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
         // write finance report
         function (callback) {
             financeFile = 'cj-finance-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
-            fs.writeFile('../../reports/' + financeFile, financeData, function (err) {
+            fs.writeFile(config.root + '/reports/' + financeFile, financeData, function (err) {
                 if (err) {
                     logger.logError('cj - exportCjAccounts - error writing finance report');
                 }
@@ -87,13 +87,13 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
             });
         },
         // send finance report via email to accounting@yiptv.com
-        /*function (callback) {
+        function (callback) {
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
                 to: config.cjReports.financeEmailAddress,
                 subject: 'CJ Daily Report',
                 html: 'The CJ report for the period ' + startDate + ' to ' + endDate + ' is attached',
-                attachments: [{filename: financeFile, path: '../../reports/' + financeFile}]
+                attachments: [{filename: financeFile, path: config.root + '/reports/' + financeFile}]
             };
             email.sendEmail(mailOptions, function (err) {
                 if (err) {
@@ -101,7 +101,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 }
                 callback(err);
             });
-        },*/
+        },
         // upload cj batch file to cj ftp server
         function (callback) {
             var ftpOptions = {
@@ -110,7 +110,7 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 user: config.cjReports.ftpUsername,
                 password: config.cjReports.ftpPassword
             };
-            var localPath = '../../reports/' + cjFile;
+            var localPath = config.root + '/reports/' + cjFile;
             var remotePath = config.cjReports.ftpPath + cjFile;
             ftp.uploadFile(ftpOptions, localPath, remotePath, function (err) {
                 if (err) {

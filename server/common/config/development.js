@@ -34,6 +34,7 @@ module.exports = {
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile', 'voip'],
+    cjReportProcessorRecurrence: '0 * * * * *',
     cjReports: {
         financeEmailAddress: 'achinth@yiptv.com',
         ftpPort: 21,
