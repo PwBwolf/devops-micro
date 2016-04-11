@@ -210,6 +210,7 @@
                 return e.id;
             }).indexOf(currentChannel.channelId);
             var req;
+            // add the channel to favorite channels if it's not already there
             if (channelIndex === -1) { // check $scope.favoriteChannels to see if it's in there
                 req = {channelId: currentChannel.channelId};
                 mediaSvc.addFavoriteChannel(
@@ -228,8 +229,11 @@
                         // solve with toastr later?
                     }
                 );
-            } else {
+            }
+            // remove the channel if it's already in favorites
+            else {
                 $scope.favoriteChannels.splice(channelIndex, 1);
+                $scope.programming = $scope.favoriteChannels.slice(0, 10)
                 if($scope.favoriteChannels.length === 0){
                     $scope.noFavoriteChannels = true;
                 }
@@ -408,6 +412,7 @@
         // toggles the filter open and closed
         $scope.toggle = function () {
             $scope.noRecentChannels = false;
+            $scope.noFavoriteChannels = false;
             $scope.checked = !$scope.checked;
         };
 
