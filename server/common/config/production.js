@@ -39,6 +39,15 @@ module.exports = {
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile'],
+    cjReportProcessorRecurrence: '0 0 5 * * *',
+    cjReports: {
+        financeEmailAddress: 'cjreports@yiptv.com',
+        ftpPort: 21,
+        ftpHost: 'datatransfer.cj.com',
+        ftpUsername: '4630657',
+        ftpPassword: 'Y3qbB&dM',
+        ftpPath: '/'
+    },
     freeSideKeyEmailDomain: 'yiptv.us',
     freeSideSelfServiceApiUrl: 'http://10.100.10.21:8080/',
     freeSideBackOfficeApiUrl: 'http://10.100.10.21:8008/',
@@ -51,6 +60,16 @@ module.exports = {
     freeSidePaidBasicPackagePart: 3,
     freeSidePremiumPackagePart: 9,
     freeSideComplimentaryPackagePart: 8,
-    freeSideAgentNumbers: {'Internal': 1, 'IDT': 2, 'TRUCONN': 3, 'PERKSPOT': 4, 'NEXTJUMP': 5, 'CJ': 6, 'MGCJK': 7, 'AMAZON': 8, 'UBS': 9},
+    freeSideAgentNumbers: {
+        'Internal': 1,
+        'IDT': 2,
+        'TRUCONN': 3,
+        'PERKSPOT': 4,
+        'NEXTJUMP': 5,
+        'CJ': 6,
+        'MGCJK': 7,
+        'AMAZON': 8,
+        'UBS': 9
+    },
     cmsApiUrl: 'http://10.100.10.109'
 };

@@ -300,6 +300,7 @@ gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', '
     buildDaemon('dist/server/daemons', 'merchant-processor');
     buildDaemon('dist/server/daemons', 'notification-processor');
     buildDaemon('dist/server/daemons', 'metadata-processor');
+    buildDaemon('dist/server/daemons', 'cj-report-processor');
     postDeploy(cb);
     checkAndPrepareDist('dist', 'yip-server');
 });

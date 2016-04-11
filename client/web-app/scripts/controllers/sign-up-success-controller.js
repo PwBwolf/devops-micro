@@ -15,11 +15,7 @@
             userSvc.getCustomerNumberAndType(
                 username,
                 function (oid) {
-                    console.log(oid);
-                    console.log(oid.split('_').length);
-                    console.log(oid.split('_')[3]);
                     if (oid && oid.split('_').length === 4 && oid.split('_')[3] === '0') {
-
                         $scope.merchantTracker = $sce.trustAsResourceUrl('https://www.emjcd.com/tags/c?containerTagId=' + containerTagId + '&AMOUNT=' + amount + '&CID=' + cid + '&OID=' + oid + '&TYPE=' + type + '&CURRENCY=' + currency);
                     } else {
                         $scope.merchantTracker = '';

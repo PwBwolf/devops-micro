@@ -11,7 +11,8 @@ var Dunning = new Schema({
     status: String,
     reason: String,
     processTime: Date,
-    payload: Object
+    payload: Object,
+    type: String
 }, {collection: 'Dunning'});
 
 mongoose.model('Dunning', Dunning);
