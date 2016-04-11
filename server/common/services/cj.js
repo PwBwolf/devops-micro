@@ -48,9 +48,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 if (err) {
                     logger.logError('cj - exportCjAccounts - error fetching partner accounts');
                     callback(err);
-                } else if (!accounts || accounts.length === 0) {
-                    logger.logError('cj - exportCjAccounts - no accounts found!');
-                    callback(err);
                 } else {
                     cjData = '&CID=4630657' + '\n' + '&SUBID=180563' + '\n';
                     financeData = 'OID,Username,Status,Type,Event Date,FreeSide Customer Number' + '\n';
