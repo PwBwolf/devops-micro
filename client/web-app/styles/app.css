@@ -1193,6 +1193,13 @@ ul.passwordStrength {
     margin-top: 10px;
 }
 
+#notAvailable{
+    height: 60px;
+    width: 150px;
+    line-height: 1.2;
+    border-bottom: 1px solid;
+}
+
 #channelGuideDescription, #channelGuideLogo {
     height: 60px;
     line-height: 1.2;

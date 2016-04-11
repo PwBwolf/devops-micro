@@ -414,6 +414,8 @@
         // Each of these functions checks to see if the selected filter is already in the array
         // and add it if it's not already there
         $scope.toggleFilter = function (id) {
+            $scope.programming = $scope.filteredChannels.slice(0, 10);
+            currentView = 'filtered';
             var filterExists = $scope.selectedFilters.indexOf(id);
             if (filterExists === -1) {
                 $scope.selectedFilters.push(id);
@@ -448,7 +450,9 @@
 
         $scope.clearFilters = function () {
             $scope.selectedFilters = [];
-            $scope.programming = $scope.allChannels;
+            $scope.programming = $scope.allChannels.slice(0, 10);
+            currentView = 'all';
+            // this unchecks the checkboxes in the filter
             for (var i = 0; i < $scope.tags.length; i++) {
                 for (var j = 0; j < $scope.tags[i].tags.length; j++) {
                     $scope.tags[i].tags[j].Selected = false;
