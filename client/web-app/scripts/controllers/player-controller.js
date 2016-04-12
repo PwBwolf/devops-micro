@@ -397,10 +397,6 @@
             $scope.noFiltered = false;
         };
 
-        $scope.toggleProgramDetail = function () {
-            $scope.checkedInfo = !$scope.checkedInfo;
-        };
-
         // build filter object with category subobjects
         // loop through all channels
         // loop through all tags on a given channel
