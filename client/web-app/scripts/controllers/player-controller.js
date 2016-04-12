@@ -129,26 +129,14 @@
             }
         }
 
-
-        $scope.previousChannel = function () {
-            $scope.watchNow($scope.prevIndex, $scope.favoriteChannels);
-        };
-
-        $scope.nextChannel = function () {
-            $scope.watchNow($scope.nextIndex, $scope.favoriteChannels);
-        };
-
         $scope.displayAll = function () {
-            console.log('running displayAll')
             currentView = 'all';
-            $scope.noRecentChannels = false;
-            $scope.noFavoriteChannels = false;
+            clearErrMessages();
             $scope.programming = $scope.allChannels.slice(0, 10);
         };
 
         $scope.displayRecent = function () {
-            console.log('running displayRecent')
-            $scope.noFavoriteChannels = false;
+            clearErrMessages();
             currentView = 'recents';
             var recentChannels = webStorage.session.get('recentChannels');
             displayingRecents = true;
@@ -164,12 +152,10 @@
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels);
             $scope.programming = $scope.recentChannels.slice(0, 10);
-            console.log('programming array in displayRecent', $scope.programming)
         };
 
         $scope.displayFavorites = function () {
-            console.log('running displayFavorites')
-            $scope.noRecentChannels = false;
+            clearErrMessages();
             currentView = 'favorites';
             if($scope.favoriteChannels.length === 0){
                 $scope.programming = $scope.favoriteChannels;
@@ -193,12 +179,17 @@
         }
 
         $scope.displayFiltered = function(){
-            console.log('running displayFiltered')
             currentView = 'filtered';
-            $scope.noRecentChannels = false;
-            $scope.noFavoriteChannels = false;
+            clearErrMessages();
             $scope.programming = $scope.filteredChannels.slice(0, 10);
         };
+
+        // clear error messages like "no favorites", "no filtered" etc...
+        function clearErrMessages(){
+            $scope.noRecentChannels = false;
+            $scope.noFavoriteChannels = false;
+            $scope.noFiltered = false;
+        }
 
         // make a sure a channel is playing. taken care of by ng-hide
         // check if it's already a favorite channel. remove if it is.
@@ -207,47 +198,60 @@
             var channelIndex = $scope.favoriteChannels.map(function (e) {
                 return e.id;
             }).indexOf(currentChannel.channelId);
-            var req;
             // add the channel to favorite channels if it's not already there
             if (channelIndex === -1) { // check $scope.favoriteChannels to see if it's in there
-                req = {channelId: currentChannel.channelId};
-                mediaSvc.addFavoriteChannel(
-                    req,
-                    function (data) {
-                        var newFavoriteId = {channelId: currentChannel.channelId};
-                        var newFavoriteIndex = $scope.allChannels.map(function (e) {
-                            return e.id;
-                        }).indexOf(newFavoriteId.channelId);
-                        var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
-                        $scope.favoriteChannels.push(newFavoriteChannelObj);
-                        $scope.favoriteIcon = '../../images/favorite-yellow.png';
-                        $scope.noFavoriteChannels = false;
-                    },
-                    function (error) {
-                        // solve with toastr later?
-                    }
-                );
+                addFavorite(currentChannel);
             }
             // remove the channel if it's already in favorites
             else {
-                $scope.favoriteChannels.splice(channelIndex, 1);
-                $scope.programming = $scope.favoriteChannels.slice(0, 10)
+                removeFavorite(currentChannel, channelIndex);
+            }
+        };
+
+        function addFavorite(currentChannel, cb){
+            var req = {channelId: currentChannel.channelId};
+            mediaSvc.addFavoriteChannel(
+                req,
+                function (data) {
+                    var newFavoriteId = {channelId: currentChannel.channelId};
+                    var newFavoriteIndex = $scope.allChannels.map(function (e) {
+                        return e.id;
+                    }).indexOf(newFavoriteId.channelId);
+                    var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
+                    $scope.favoriteChannels.push(newFavoriteChannelObj);
+                    $scope.favoriteIcon = '../../images/favorite-yellow.png';
+                    $scope.noFavoriteChannels = false;
+                    if(currentView === 'favorites'){
+                        console.log($scope.favoriteChannels);
+                        $scope.programming = sortChannels($scope.favoriteChannels).slice(0, 10);
+                    }
+                },
+                function (error) {
+                    // solve with toastr later?
+                }
+            );
+        }
+
+        function removeFavorite(currentChannel, channelIndex, cb){
+            $scope.favoriteChannels.splice(channelIndex, 1);
+            if(currentView === 'favorites'){
+                $scope.programming = $scope.favoriteChannels.slice(0, 10);
                 if($scope.favoriteChannels.length === 0){
                     $scope.noFavoriteChannels = true;
                 }
-                $scope.favoriteIcon = '../../images/favorite-white.png';
-                req = {channelId: currentChannel.channelId};
-                mediaSvc.removeFavoriteChannel(
-                    req,
-                    function (data) {
-
-                    },
-                    function (error) {
-                        // solve with toastr later?
-                    }
-                );
             }
-        };
+            $scope.favoriteIcon = '../../images/favorite-white.png';
+            var req = {channelId: currentChannel.channelId};
+            mediaSvc.removeFavoriteChannel(
+                req,
+                function (data) {
+
+                },
+                function (error) {
+                    // solve with toastr later?
+                }
+            );
+        }
 
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
@@ -349,48 +353,55 @@
 
         // toggles the filter open and closed
         $scope.toggle = function () {
-            $scope.noRecentChannels = false;
-            $scope.noFavoriteChannels = false;
+            clearErrMessages();
             $scope.checked = !$scope.checked;
         };
 
         // Each of these functions checks to see if the selected filter is already in the array
         // and add it if it's not already there
         $scope.toggleFilter = function (id) {
-            $scope.programming = $scope.filteredChannels.slice(0, 10);
             currentView = 'filtered';
-            var filterExists = $scope.selectedFilters.indexOf(id);
-            if (filterExists === -1) {
-                $scope.selectedFilters.push(id);
-                $scope.filteredChannels = filterChannels($scope.selectedFilters);
-                $scope.programming = $scope.filteredChannels;
-                if($scope.filteredChannels.length === 0){
-                    console.log('setting noFiltered')
-                    $scope.noFiltered = true;
-                    return;
-                }
-                else{
-                    $scope.noFiltered = false;
-                }
+            var filterIndex = $scope.selectedFilters.indexOf(id);
+            if (filterIndex === -1) {
+                filterOn(id);
             } else {
-                var index = $scope.selectedFilters.indexOf(id);
-                $scope.selectedFilters.splice(index, 1);
-                $scope.filteredChannels = filterChannels($scope.selectedFilters);
-                $scope.programming = $scope.filteredChannels;
-                // think about making this a function. it's used twice verbatim.
-                if($scope.filteredChannels.length === 0){
-                    console.log('setting noFiltered')
-                    $scope.noFiltered = true;
-                    return;
-                }
-                else{
-                    $scope.noFiltered = false;
-                }
+                filterOff(filterIndex);
             }
         };
 
+        function filterOn(id){
+            $scope.selectedFilters.push(id);
+            $scope.filteredChannels = filterChannels($scope.selectedFilters);
+            $scope.programming = $scope.filteredChannels.slice(0, 10);
+            noFiltered();
+        }
+
+        function filterOff(filterIndex){
+            $scope.selectedFilters.splice(filterIndex, 1);
+            $scope.filteredChannels = filterChannels($scope.selectedFilters);
+            $scope.programming = $scope.filteredChannels.slice(0, 10);
+            noFiltered();
+        }
+
+        // sets / unsets the noFiltered variable
+        function noFiltered(){
+            if($scope.selectedFilters.length === 0){
+                $scope.programming = $scope.allChannels.slice(0, 10);
+                return;
+            }
+            if($scope.filteredChannels.length === 0){
+                console.log('setting noFiltered')
+                $scope.noFiltered = true;
+                return;
+            }
+            else{
+                $scope.noFiltered = false;
+            }
+        }
+
         $scope.clearFilters = function () {
             $scope.selectedFilters = [];
+            $scope.filteredChannels = [];
             $scope.programming = $scope.allChannels.slice(0, 10);
             currentView = 'all';
             // this unchecks the checkboxes in the filter
@@ -402,25 +413,18 @@
             $scope.noFiltered = false;
         };
 
-        // build filter object with category subobjects
-        // loop through all channels
-        // loop through all tags on a given channel
-        // compare them against each category
-        // add channels that have all the tags in the filter obj
+        // build filter object with category subobjects, loop through all channels, loop through all tags on a given channel, compare them against each category
         function filterChannels(filters) {
             var arr = [];
             var filterObj = buildFilterObj(filters);
-            //var emptyFilter = emptyFilter();
-            //if(emptyFilter){
-            //    return arr;
-            //}
+            var noFilter = emptyFilter(filterObj);
+            if(noFilter){
+                return arr;
+            }
             console.log(filterObj)
             // loop over all channel objects
             for (var i = 0; i < $scope.allChannels.length; i++) {
                 var channel = $scope.allChannels[i];
-                // compare all the tags against each category subobject
-                // if it has either in one category that should satisfy the OR
-                // if it has one in each category it should satisfy the AND
                 if (matchesFilters(filterObj, channel)) {
                     arr.push(channel);
                 }
@@ -454,18 +458,15 @@
             return filterObj;
         }
 
-        //function emptyFilter(filterObj){
-        //    var genres = Object.keys(filterObj.genre).length;
-        //    var audiences = Object.keys(filterObj.audience).length;
-        //    var origins = Object.keys(filterObj.origin).length;
-        //    var languages = Object.keys(filterObj.language).length;
-        //    console.log(genres, audiences, origins, languages)
-        //    if(genres === 0 && audiences === 0 && origins === 0 && languages === 0){
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        function emptyFilter(filterObj){
+            if($scope.selectedFilters.length === 0){
+                return true;
+            }
+            return false;
+        }
 
+        // compare all the tags against each category subobject
+        // It is an OR within the same category and an AND between different categories
         function matchesFilters(filterObj, channel) {
             return (hasGenre(filterObj, channel) && hasAudience(filterObj, channel) && hasOrigin(filterObj, channel) && hasLanguage(filterObj, channel));
         }

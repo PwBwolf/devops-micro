@@ -28,7 +28,7 @@
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="mainUrl === undefined || noFavoriteChannels">
+                    <li ng-hide="mainUrl === undefined">
                         <div id="favorite">
                             <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
                         </div>
