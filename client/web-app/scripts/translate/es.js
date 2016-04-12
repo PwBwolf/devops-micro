@@ -199,7 +199,7 @@
             PIN_VERIFICATION_SUCCESS_MESSAGE: 'Tu cuenta se ha verificado. Haz clic en el botón "Ingresa" para ver YipTV.',
             PLAYER_ON_NOW: 'Transmitiendo ahora: ',
             PLAYER_TIME: 'Tiempo: ',
-            PLAYER_NOT_AVAILABLE: 'No Disponible',
+            PLAYER_NOT_AVAILABLE: 'Programación no Disponible',
             PLAYER_DURATION: 'Duración: ',
             PLAYER_DESCRIPTION: 'Descripción: ',
             PLAYER_TITLE: 'Título: ',

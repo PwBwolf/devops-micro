@@ -199,7 +199,7 @@
             PIN_VERIFICATION_SUCCESS_MESSAGE: 'Your account has been successfully verified. You can sign into YipTV using the Sign In button above.',
             PLAYER_ON_NOW: 'On Now: ',
             PLAYER_TIME: 'Time: ',
-            PLAYER_NOT_AVAILABLE: 'Not Available',
+            PLAYER_NOT_AVAILABLE: 'Programing Schedule Not Available',
             PLAYER_DURATION: 'Duration: ',
             PLAYER_DESCRIPTION: 'Description: ',
             PLAYER_TITLE: 'Title: ',
