@@ -41,7 +41,7 @@
         var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
         var currentView = 'all';
-        
+
         activate();
 
         function activate() {
@@ -266,7 +266,6 @@
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
                 setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
                 addRecentChannel(currentChannelIndex.channelId);
-                setNextAndPrev(indexOfClickedChannel);
                 $scope.currentChannel.index = currentChannelIndex.index;
                 $scope.currentChannel.channelId = $rootScope.channels[index].id;
                 $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});

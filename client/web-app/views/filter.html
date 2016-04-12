@@ -8,15 +8,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="pre-channel">
-                    <img src="../images/arrow-left.png" title="{{ 'PLAYER_MENU_PREVIOUS_CHANNEL' | translate }}" width="30px" ng-click="previousChannel()" style="cursor: pointer">
-                </div>
-                <div id="currentChannel" >
-                    <img ng-src="{{channelLogo}}">
-                </div>
-                <div class="next-channel">
-                    <img src="../images/arrow-right.png" title="{{ 'PLAYER_MENU_NEXT_CHANNEL' | translate }}" width="30px" height="30px" ng-click="nextChannel()" style="cursor: pointer">
-                </div>
                 <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
                     <!-- show title of show -->
                     <div id="title" ng-mouseover="entiretitle=true" ng-mouseleave="entiretitle=false" ng-if="programTitle">{{programTitle | limitTo: 50}}{{programTitle.length < 50 ? '' : '...'}}</div>
@@ -34,31 +25,6 @@
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="mainUrl === undefined || tvProgram === null || noFavoriteChannels">
-                        <div id="programDetail">
-                            <img src="../images/info.png" title="{{ 'PLAYER_MENU_INFORMATION' | translate }}" width="24px" height="24px" ng-click="toggleProgramDetail(); chinfo=true" style="cursor: pointer">
-                            <div id="programDetailSlider" pageslide ps-open="checkedInfo" ps-side="top"  >
-                                <div id="programDetailHolder" >
-                                    <div id="detailHolder">
-                                        <div id="detailTitle">
-                                            <div class="detail-title" ng-if="program.title">
-                                                {{program.title}}
-                                            </div>
-                                        </div>
-                                        <div id="detailShowTime" ng-if="program.showTime">
-                                            {{program.showTime}}
-                                        </div>
-                                        <div id="detailDescription" ng-if="program.description">
-                                            {{program.description}}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <a id="okButton"ng-click="toggleProgramDetail()" class="btn btn-danger btn-xs" >OK</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     <li ng-hide="mainUrl === undefined || noFavoriteChannels">
                         <div id="favorite">
                             <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
