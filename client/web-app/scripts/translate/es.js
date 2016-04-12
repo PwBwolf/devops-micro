@@ -206,6 +206,7 @@
             PLAYER_MINUTES: 'Minutos',
             PLAYER_RESULTS: 'Resultados:',
             PLAYER_CHANNELS_FOUND: 'canal(es) encontrados!',
+            PLAYER_FILTER_CHANNELS_FOUND: 'canal(es) encontrados: ',
             PLAYER_CATEGORIES: 'Categorías',
             PLAYER_CLEAR_ALL: 'Borrar Todo',
             PLAYER_CLOSE: 'Cerrar',

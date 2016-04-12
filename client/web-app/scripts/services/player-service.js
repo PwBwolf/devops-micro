@@ -29,6 +29,8 @@
 
                 var allChannels = [];
 
+                makeAllChannelObj($rootScope.filteredChannels);
+
                 mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
                         console.log('epg', channelsEpg)
@@ -72,7 +74,8 @@
             formatFavorites: function (favorites) {
                 var arr = [];
                 for (var i = 0; i < favorites.length; i++) {
-                    if(favorites[i].channelId){
+                    var validId = allChannelsObj.hasOwnProperty(favorites[i].channelId);
+                    if(validId){
                         arr.push(favorites[i].channelId);
                     }
                 }
@@ -137,6 +140,14 @@
                 obj[currentValue] = arr[i];
             }
             return arrToObj;
+        }
+
+        function makeAllChannelObj(arr){
+            for(var i = 0; i < arr.length; i++){
+                var id = arr[i].id;
+                var channel = arr[i];
+                allChannelsObj[id] = channel;
+            }
         }
 
     }]);

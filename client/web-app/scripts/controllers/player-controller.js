@@ -96,12 +96,6 @@
             });
         }
 
-        /**
-         * "station" property in logo objects in $scope.logos corresponds to "id" in
-         * filtered channel objects which becomes $scope.channelIds. this is an array
-         * of only channel ids. matches up with "station" property on $scope.programming objects.
-         */
-
         // probably a more elegant way to do this, but we have a release deadline.
         $scope.loadMore = function() {
             console.log('running loadMore')
@@ -208,7 +202,7 @@
             }
         };
 
-        function addFavorite(currentChannel, cb){
+        function addFavorite(currentChannel){
             var req = {channelId: currentChannel.channelId};
             mediaSvc.addFavoriteChannel(
                 req,
@@ -232,7 +226,7 @@
             );
         }
 
-        function removeFavorite(currentChannel, channelIndex, cb){
+        function removeFavorite(currentChannel, channelIndex){
             $scope.favoriteChannels.splice(channelIndex, 1);
             if(currentView === 'favorites'){
                 $scope.programming = $scope.favoriteChannels.slice(0, 10);
@@ -287,9 +281,7 @@
             });
         };
 
-        /** Takes in the channel index id that was selected and checks if that is in the users saved favoritesChannel and
-         /sets the favorite image to a yellow or white star
-         */
+        // set / unset favorite icon
         function setFavoriteIcon(channel, favorites) {
             var isfavorite = favorites.map(function (e) {
                 return e.id;
