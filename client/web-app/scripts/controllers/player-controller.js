@@ -178,7 +178,6 @@
             }
             var sortedFavorites = sortChannels($scope.favoriteChannels);
             $scope.programming = sortedFavorites.slice(0, 10);
-            updateNextAndPrev();
         };
 
         function sortChannels(arr){
