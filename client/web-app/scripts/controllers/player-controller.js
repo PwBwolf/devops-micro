@@ -181,17 +181,22 @@
                 $scope.noFavoriteChannels = true;
                 return
             }
-            $scope.favoriteChannels.sort(function (a, b) {
+            var sortedFavorites = sortChannels($scope.favoriteChannels);
+            $scope.programming = sortedFavorites.slice(0, 10);
+            updateNextAndPrev();
+        };
+
+        function sortChannels(arr){
+            arr.sort(function (a, b) {
                 if (a.chIndex > b.chIndex) {
                     return 1;
                 }
                 if (a.chIndex < b.chIndex) {
                     return -1;
                 }
-            });
-            $scope.programming = $scope.favoriteChannels.slice(0, 10);
-            updateNextAndPrev();
-        };
+            })
+            return arr;
+        }
 
         $scope.displayFiltered = function(){
             console.log('running displayFiltered')
@@ -477,6 +482,26 @@
         // add channels that have all the tags in the filter obj
         function filterChannels(filters) {
             var arr = [];
+            var filterObj = buildFilterObj(filters);
+            //var emptyFilter = emptyFilter();
+            //if(emptyFilter){
+            //    return arr;
+            //}
+            console.log(filterObj)
+            // loop over all channel objects
+            for (var i = 0; i < $scope.allChannels.length; i++) {
+                var channel = $scope.allChannels[i];
+                // compare all the tags against each category subobject
+                // if it has either in one category that should satisfy the OR
+                // if it has one in each category it should satisfy the AND
+                if (matchesFilters(filterObj, channel)) {
+                    arr.push(channel);
+                }
+            }
+            return arr;
+        }
+
+        function buildFilterObj(filters){
             var filterObj = {
                 genre: {},
                 audience: {},
@@ -499,18 +524,20 @@
                     filterObj.language[currentFilter] = currentFilter;
                 }
             }
-            // loop over all channel objects
-            for (i = 0; i < $scope.allChannels.length; i++) {
-                var channel = $scope.allChannels[i];
-                // compare all the tags against each category subobject
-                // if it has either in one category that should satisfy the OR
-                // if it has one in each category it should satisfy the AND
-                if (matchesFilters(filterObj, channel)) {
-                    arr.push(channel);
-                }
-            }
-            return arr;
+            return filterObj;
         }
+
+        //function emptyFilter(filterObj){
+        //    var genres = Object.keys(filterObj.genre).length;
+        //    var audiences = Object.keys(filterObj.audience).length;
+        //    var origins = Object.keys(filterObj.origin).length;
+        //    var languages = Object.keys(filterObj.language).length;
+        //    console.log(genres, audiences, origins, languages)
+        //    if(genres === 0 && audiences === 0 && origins === 0 && languages === 0){
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         function matchesFilters(filterObj, channel) {
             return (hasGenre(filterObj, channel) && hasAudience(filterObj, channel) && hasOrigin(filterObj, channel) && hasLanguage(filterObj, channel));
