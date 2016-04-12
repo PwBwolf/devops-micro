@@ -11,6 +11,9 @@
                 <div ng-if="mainUrl" id="currentChannel" >
                     <img ng-src="{{channelLogo}}">
                 </div>
+                <div id="favorite" ng-hide="mainUrl === undefined">
+                    <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
+                </div>
                 <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
                     <!-- show title of show -->
                     <div id="title" title="{{programTitle}}" ng-if="programTitle">{{programTitle | limitTo: 50}}{{programTitle.length < 50 ? '' : '...'}}</div>
@@ -22,11 +25,6 @@
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="mainUrl === undefined">
-                        <div id="favorite">
-                            <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
-                        </div>
-                    </li>
                     <li class="epg-controls" ng-click="displayFavorites(); favCh='my-class'; allCh='no-u'; recCh=''; filtCh='';">
                         <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
                     </li>
