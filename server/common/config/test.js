@@ -41,7 +41,7 @@ module.exports = {
     twilioMobileType: ['mobile', 'voip'],
     cjReportProcessorRecurrence: '0 0 5 * * *',
     cjReports: {
-        financeEmailAddress: 'qateam@yiptv.com',
+        financeEmailAddress: 'devteam@yiptv.com',
         ftpPort: 21,
         ftpHost: '172.16.10.8',
         ftpUsername: 'devtest',
