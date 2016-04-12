@@ -13,3 +13,18 @@
 #description {
     cursor: default;
 }
+
+#favorite {
+    width:5%;
+    height:40px;
+    float: left;
+    margin-left:10px;
+    margin-right: 10px;
+    padding-top:9px;
+    text-align: center;
+    display:inline-block;
+    vertical-align: middle;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+}
