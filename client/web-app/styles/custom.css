@@ -212,7 +212,7 @@
   text-align: left; }
 
 #title {
-  cursor: pointer; }
+  cursor: default; }
 
 #description {
-  cursor: pointer; }
+  cursor: default; }
