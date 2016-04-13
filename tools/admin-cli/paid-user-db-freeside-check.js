@@ -7,7 +7,9 @@ var config = require('../../server/common/setup/config'),
     validation = require('../../server/common/services/validation'),
     billing = require('../../server/common/services/billing'),
     async = require('async'),
-    mongoose = require('../../server/node_modules/mongoose');
+    fs = require('fs-extended'),
+    mongoose = require('../../server/node_modules/mongoose'),
+    logFile = fs.createWriteStream(__dirname + '/db-fs-check.log', {flags: 'w'});
 
 var modelsPath = config.root + '/server/common/models',
     db = mongoose.connect(config.db);
@@ -25,9 +27,12 @@ Account.find({'type': 'paid'}).populate('primaryUser').exec(function (err, accou
         process.exit(0);
     } else {
         var csv = '';
+        var count = 0;
         async.eachSeries(
             accounts,
             function (account, callback) {
+                count++;
+                logger.logInfo('processing account ' + count);
                 billing.login(account.primaryUser.email, account.key, account.primaryUser.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
                         logger.logError('error logging into freeside for user ' + account.primaryUser.email);
@@ -52,7 +57,7 @@ Account.find({'type': 'paid'}).populate('primaryUser').exec(function (err, accou
                 });
             },
             function () {
-                console.log(csv);
+                logFile.write(csv);
                 logger.logInfo('done');
                 process.exit(0);
             }
