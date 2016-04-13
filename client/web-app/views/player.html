@@ -63,7 +63,7 @@
                                 <p style="text-align: left;" ng-if="programs.lineUp.length === 0"><span class="channel-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>
                                 <div class="show-detail" ng-repeat="show in ::programs.lineUp" title="{{::show.dropdownInfo}}" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
                                     <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
-                                    <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
+                                    <p style="text-align: left;"><span title="{{::show.startHour}} - {{::show.endHour}}" class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +73,8 @@
 
     </div>
 </div>
+
+<!-- special use case footer that will not interfere with epg-->
 <footer class="top-shadow-player">
     <span id="socialMedia" translate="INDEX_SOCIAL_MEDIA"></span>
     <span id="copyright" translate="INDEX_COPYRIGHT"></span>
