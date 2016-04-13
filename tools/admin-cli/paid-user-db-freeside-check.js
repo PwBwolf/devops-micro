@@ -24,8 +24,20 @@ Account.find({'type': 'paid'}).populate('primaryUser').exec(function (err, accou
         process.exit(0);
     } else {
         for (var i = 0; i < accounts.length; i++) {
-            
+            var account = accounts[i];
+            var user = accounts[i].primaryUser;
+            var fsPackages = getFreeSidePackages(user, account);
+            if (fsPackages.count !== user.packages.count || user.cancelOn) {
+                console.log(user.email + ',' + user.createdAt.toUTCString() + ',' + user.status + ',' + account.type + ',' + account.packages + ',' +
+                    account.freeSideCustomerNumber + ',' + account.merchant + ',' + account.premiumEndDate.toUTCString() + ',' +
+                    user.upgradeDate.toUTCString() + ',' + user.cancelDate.toUTCString() + ',' + user.cancelOn.toUTCString());
+            }
         }
         process.exit(0);
     }
 });
+
+function getFreeSidePackages(user, account) {
+    billing.login(user.email, )
+}
+

@@ -6,7 +6,6 @@ var Schema = mongoose.Schema;
 var ContactUs = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, lowercase: true, trim: true},
-    telephone: {type: String, required: false}, // remove after next release
     country: {type: String, required: true},
     interest: {type: String, required: true},
     details: {type: String, required: true},
