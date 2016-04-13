@@ -25,26 +25,26 @@
             </div>
             <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="epg-controls" ng-click="displayFavorites(); favCh='my-class'; allCh='no-u'; recCh=''; filtCh='';">
+                    <li class="epg-controls" ng-click="displayFavorites();">
                         <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
                     </li>
-                    <li class="epg-controls" ng-click="displayRecent(); favCh=''; allCh='no-u'; recCh='my-class'; filtCh='';">
+                    <li class="epg-controls" ng-click="displayRecent();">
                         <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
                     </li>
-                    <li class="epg-controls" ng-click="displayAll();  favCh=''; allCh='high-u'; recCh=''; filtCh='';">
+                    <li class="epg-controls" ng-click="displayAll();">
                         <span class="base-classU" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
                     </li>
-                    <li class="epg-controls" ng-show="selectedFilters.length > 0" ng-click="displayFiltered(); favCh=''; allCh='no-u'; recCh=''; filtCh='my-class';">
+                    <li class="epg-controls" ng-show="selectedFilters.length > 0" ng-click="displayFiltered();">
                         <span class="base-class" ng-class="filtCh" translate="PLAYER_MENU_FILTER"></span>
                     </li>
                     <li class="filter-li">
                         <div id="filter">
-                            <img src="../images/filter.png" title="{{ 'PLAYER_MENU_FILTER' | translate }}" ng-click="toggle(); favCh=''; allCh='no-u'; recCh=''; filtCh='my-class'" style="cursor: pointer;">
+                            <img src="../images/filter.png" title="{{ 'PLAYER_MENU_FILTER' | translate }}" ng-click="toggle();" style="cursor: pointer;">
                             <div pageslide ps-open="checked" ps-size="360px">
                                 <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                     <div class="row">
                                         <div>
-                                            <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters(); favCh=''; allCh='high-u'; recCh=''; filtCh=''" translate="PLAYER_CLEAR_ALL" ></a>
+                                            <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters();" translate="PLAYER_CLEAR_ALL" ></a>
                                             <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
                                         </div>
                                         <div class="channel-filters">
