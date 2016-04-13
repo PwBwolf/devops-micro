@@ -1672,7 +1672,7 @@ body, html {
 .user-guide-panel {
     width: 100%;
     height: 300px;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     white-space: nowrap;
     padding-top: 2px;
     -webkit-transition: all 1s ease-in-out;
@@ -1835,6 +1835,7 @@ body, html {
     width: 100%;
     background: transparent;
     margin-right: 1px;
+    /*border-right: 1px solid;*/
 }
 
 #channelLogos{
