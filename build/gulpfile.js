@@ -221,6 +221,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-partner-accounts.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/delete-user.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/paid-user-db-freeside-check.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/remove-unused-collections.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/remove-payment-pending-field.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/update-user-fields.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);

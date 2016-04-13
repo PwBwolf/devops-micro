@@ -37,6 +37,12 @@
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
         $scope.hasTitle = false;
 
+        // scope variables for setting css on view changes
+        $scope.favCh = "";
+        $scope.recCh = "";
+        $scope.allCh = "high-u";
+        $scope.filtCh = "";
+
         var currentChannelIndex = {index: undefined, channelId: undefined};
         var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
@@ -126,6 +132,7 @@
             currentView = 'all';
             clearErrMessages();
             $scope.programming = $scope.allChannels.slice(0, 10);
+            setCSS();
         };
 
         $scope.displayRecent = function () {
@@ -141,10 +148,12 @@
             else {
                 $scope.noRecentChannels = true;
                 $scope.programming = $scope.recentChannels;
+                setCSS();
                 return;
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels);
             $scope.programming = $scope.recentChannels.slice(0, 10);
+            setCSS();
         };
 
         $scope.displayFavorites = function () {
@@ -157,6 +166,7 @@
             }
             var sortedFavorites = sortChannels($scope.favoriteChannels);
             $scope.programming = sortedFavorites.slice(0, 10);
+            setCSS();
         };
 
         function sortChannels(arr){
@@ -175,6 +185,7 @@
             currentView = 'filtered';
             clearErrMessages();
             $scope.programming = $scope.filteredChannels.slice(0, 10);
+            setCSS();
         };
 
         // clear error messages like "no favorites", "no filtered" etc...
@@ -355,17 +366,25 @@
         $scope.toggle = function () {
             clearErrMessages();
             $scope.checked = !$scope.checked;
+            //setCSS();
         };
 
         // Each of these functions checks to see if the selected filter is already in the array
         // and add it if it's not already there
         $scope.toggleFilter = function (id) {
-            currentView = 'filtered';
+            if(currentView !== "filtered"){
+                currentView = 'filtered';
+                setCSS();
+            }
             var filterIndex = $scope.selectedFilters.indexOf(id);
             if (filterIndex === -1) {
                 filterOn(id);
             } else {
                 filterOff(filterIndex);
+                if($scope.selectedFilters.length === 0){
+                    currentView = 'all';
+                    setCSS();
+                }
             }
         };
 
@@ -404,14 +423,18 @@
             $scope.filteredChannels = [];
             $scope.programming = $scope.allChannels.slice(0, 10);
             currentView = 'all';
-            // this unchecks the checkboxes in the filter
+            uncheckFilters();
+            $scope.noFiltered = false;
+            setCSS();
+        };
+
+        function uncheckFilters(){
             for (var i = 0; i < $scope.tags.length; i++) {
                 for (var j = 0; j < $scope.tags[i].tags.length; j++) {
                     $scope.tags[i].tags[j].Selected = false;
                 }
             }
-            $scope.noFiltered = false;
-        };
+        }
 
         // build filter object with category subobjects, loop through all channels, loop through all tags on a given channel, compare them against each category
         function filterChannels(filters) {
@@ -520,6 +543,29 @@
                     return true;
                 }
             }
+        }
+
+        function setCSS(){
+            clearCSS();
+            if(currentView === "favorites"){
+                $scope.favCh = 'my-class';
+            }
+            else if(currentView === "recents"){
+                $scope.recCh = 'my-class';
+            }
+            else if(currentView === "all"){
+                $scope.allCh = 'high-u';
+            }
+            else{
+                $scope.filtCh = 'my-class';
+            }
+        }
+
+        function clearCSS(){
+            $scope.favCh = '';
+            $scope.recCh = '';
+            $scope.allCh = 'no-u';
+            $scope.filtCh = '';
         }
 
     }])
