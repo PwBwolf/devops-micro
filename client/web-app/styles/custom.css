@@ -57,7 +57,7 @@ footer {
       border-bottom: 1px solid; }
 
 .horizontal-bottom {
-  overflow-x: scroll;
+  overflow-x: scroll !important;
   margin-left: 154px; }
 
 .sync-scroll {
@@ -65,6 +65,20 @@ footer {
 
 .guide-header::-webkit-scrollbar {
   display: none; }
+
+#userGuide::-webkit-scrollbar {
+  display: none; }
+
+.user-guide-panel {
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll !important;
+  white-space: nowrap;
+  padding-top: 2px;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out; }
 
 .guide-header {
   overflow: hidden; }
@@ -229,6 +243,10 @@ footer {
   margin-top: 400px;
   margin-bottom: 0px; }
 
+#channelGuideDescription {
+  width: 1800px;
+  overflow: hidden; }
+
 #channelFilterHolder .filtered-channels-count span {
   float: left; }
 
@@ -254,5 +272,4 @@ footer {
   display: inline-block;
   vertical-align: middle;
   background: transparent;
-  cursor: pointer;
   z-index: 2; }
