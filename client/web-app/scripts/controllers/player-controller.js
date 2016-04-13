@@ -46,7 +46,6 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
-
             console.time('channelsLoaded')
             // copied and pasted from the player controller
             mediaSvc.getUserChannels(function (data) {
@@ -250,6 +249,7 @@
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
 
+            console.log('channel in programming by index', $scope.programming[index])
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex;
@@ -277,6 +277,9 @@
                     $timeout(function () {
                         $scope.watching = true;
                     }, 500);
+                }
+                if(currentView === 'recents'){
+                    channelToTop(indexOfClickedChannel);
                 }
             });
         };
@@ -341,6 +344,12 @@
                     webStorage.session.add('recentChannels', recentChannels);
                 }
             }
+        }
+
+        // make this channel the first one in the epg so the most recently viewed is at the top in the "Recent" channel view
+        function channelToTop(indexOfClickedChannel){
+            var mostRecent = $scope.programming.splice(indexOfClickedChannel, 1)[0]
+            $scope.programming.unshift(mostRecent)
         }
 
         // toggles the filter open and closed

@@ -208,8 +208,8 @@
 #categories input {
   cursor: pointer; }
 
-#channelFilterHolder .filtered-channels-count p {
-  text-align: left; }
+#channelFilterHolder .filtered-channels-count span {
+  float: left; }
 
 #title {
   cursor: default; }
