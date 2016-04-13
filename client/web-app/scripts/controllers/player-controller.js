@@ -162,6 +162,7 @@
             if($scope.favoriteChannels.length === 0){
                 $scope.programming = $scope.favoriteChannels;
                 $scope.noFavoriteChannels = true;
+                setCSS();
                 return
             }
             var sortedFavorites = sortChannels($scope.favoriteChannels);
@@ -364,7 +365,7 @@
 
         // toggles the filter open and closed
         $scope.toggle = function () {
-            clearErrMessages();
+            //clearErrMessages();
             $scope.checked = !$scope.checked;
             //setCSS();
         };
@@ -372,6 +373,7 @@
         // Each of these functions checks to see if the selected filter is already in the array
         // and add it if it's not already there
         $scope.toggleFilter = function (id) {
+            clearErrMessages();
             if(currentView !== "filtered"){
                 currentView = 'filtered';
                 setCSS();
@@ -419,6 +421,7 @@
         }
 
         $scope.clearFilters = function () {
+            clearErrMessages();
             $scope.selectedFilters = [];
             $scope.filteredChannels = [];
             $scope.programming = $scope.allChannels.slice(0, 10);
