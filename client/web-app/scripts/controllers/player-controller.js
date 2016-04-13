@@ -23,7 +23,7 @@
         $scope.showChannelFilter = false;
         $scope.currentChannel = {};
         $scope.tags = [];
-        $scope.currentView = 'all'
+        $scope.currentView = 'all';
 
         // for previous and next channels. These may not need to be on $scope at all.
         $scope.prevIndex = 0;
@@ -46,24 +46,24 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
-            console.time('channelsLoaded')
+            //console.time('channelsLoaded')
             // copied and pasted from the player controller
             mediaSvc.getUserChannels(function (data) {
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
-                console.timeEnd('channelLoaded')
+                //console.timeEnd('channelLoaded')
                 $rootScope.$broadcast('ChannelsLoaded');
             });
 
-            console.time('channelsFormatted')
+            //console.time('channelsFormatted')
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
-                    console.log($scope.allChannels)
-                    console.timeEnd('channelsFormatted')
+                    //console.log($scope.allChannels)
+                    //console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
                         function (data) {
                             $scope.favoriteChannels = playerSvc.formatFavorites(data);
@@ -97,7 +97,7 @@
 
         // probably a more elegant way to do this, but we have a release deadline.
         $scope.loadMore = function() {
-            console.log('running loadMore')
+            //console.log('running loadMore')
             if(currentView === 'all'){
                 loadMore($scope.allChannels);
             }
@@ -167,7 +167,7 @@
                 if (a.chIndex < b.chIndex) {
                     return -1;
                 }
-            })
+            });
             return arr;
         }
 
@@ -205,7 +205,7 @@
             var req = {channelId: currentChannel.channelId};
             mediaSvc.addFavoriteChannel(
                 req,
-                function (data) {
+                function () {
                     var newFavoriteId = {channelId: currentChannel.channelId};
                     var newFavoriteIndex = $scope.allChannels.map(function (e) {
                         return e.id;
@@ -215,7 +215,7 @@
                     $scope.favoriteIcon = '../../images/favorite-yellow.png';
                     $scope.noFavoriteChannels = false;
                     if(currentView === 'favorites'){
-                        console.log($scope.favoriteChannels);
+                        //console.log($scope.favoriteChannels);
                         $scope.programming = sortChannels($scope.favoriteChannels).slice(0, 10);
                     }
                 },
@@ -249,7 +249,7 @@
         $scope.watchNow = function (index, favoriteChannels) {
             var favorites = favoriteChannels;
 
-            console.log('channel in programming by index', $scope.programming[index])
+            //console.log('channel in programming by index', $scope.programming[index])
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex;
@@ -263,7 +263,6 @@
                 $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description || false;
-                console.log('prog desc', $scope.programDescription)
                 previousChannelIndex.index = currentChannelIndex.index;
                 currentChannelIndex.index = index;
                 currentChannelIndex.channelId = $rootScope.channels[index].id;
@@ -331,9 +330,9 @@
                 webStorage.session.add('recentChannels', updatedRecents);
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
-                console.log(typeof channelId)
+                //console.log(typeof channelId)
                 var index = recentChannels.indexOf(channelId);
-                console.log('index in recent channels array', index)
+                //console.log('index in recent channels array', index)
                 if(index === -1){
                     recentChannels.unshift(channelId);
                     webStorage.session.add('recentChannels', recentChannels);
@@ -348,8 +347,8 @@
 
         // make this channel the first one in the epg so the most recently viewed is at the top in the "Recent" channel view
         function channelToTop(indexOfClickedChannel){
-            var mostRecent = $scope.programming.splice(indexOfClickedChannel, 1)[0]
-            $scope.programming.unshift(mostRecent)
+            var mostRecent = $scope.programming.splice(indexOfClickedChannel, 1)[0];
+            $scope.programming.unshift(mostRecent);
         }
 
         // toggles the filter open and closed
@@ -391,7 +390,7 @@
                 return;
             }
             if($scope.filteredChannels.length === 0){
-                console.log('setting noFiltered')
+                // console.log('setting noFiltered')
                 $scope.noFiltered = true;
                 return;
             }
@@ -422,7 +421,7 @@
             if(noFilter){
                 return arr;
             }
-            console.log(filterObj)
+            //console.log(filterObj)
             // loop over all channel objects
             for (var i = 0; i < $scope.allChannels.length; i++) {
                 var channel = $scope.allChannels[i];
@@ -459,7 +458,7 @@
             return filterObj;
         }
 
-        function emptyFilter(filterObj){
+        function emptyFilter(){
             if($scope.selectedFilters.length === 0){
                 return true;
             }
