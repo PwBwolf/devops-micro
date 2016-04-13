@@ -20,7 +20,7 @@
             },
 
             getProgramming: function (cb) {
-                console.time('getProgramming')
+                //console.time('getProgramming')
                 // channelIds is an array of id from $rootSCope.filteredChannels and has the ids in the
                 // same order as $rootScope.filteredChannels
                 var channelIds = $rootScope.filteredChannels.map(function (item) {
@@ -33,7 +33,7 @@
 
                 mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
-                        console.log('epg', channelsEpg)
+                        // console.log('epg', channelsEpg)
                         // create filteredChannelObj with channel ids as keys
                         for(var i = 0; i < $rootScope.channelsEpg.length; i++){
                             var id = $rootScope.channelsEpg[i].channel_id;
@@ -62,7 +62,7 @@
                             allChannelsObj[id] = programInfo;
                         }
 
-                        console.timeEnd('getProgramming')
+                        //console.timeEnd('getProgramming')
                         //console.log('all channels', allChannels)
                         return cb(null, allChannels);
                     })

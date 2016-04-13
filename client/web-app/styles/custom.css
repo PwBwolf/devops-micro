@@ -229,8 +229,8 @@ footer {
   margin-top: 400px;
   margin-bottom: 0px; }
 
-#channelFilterHolder .filtered-channels-count p {
-  text-align: left; }
+#channelFilterHolder .filtered-channels-count span {
+  float: left; }
 
 #title {
   cursor: default; }
