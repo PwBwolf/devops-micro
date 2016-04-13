@@ -19,3 +19,23 @@
 
     }
 }
+
+//footer
+
+footer {
+    width: 100%;
+    max-width: 1280px;
+    height: 32px;
+    bottom: 0px;
+    background: rgba(253, 253, 253, .91);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 9px;
+    color: grey;
+    border-top: solid 1px lightgrey;
+    padding: 10px 5px;
+    z-index: 998;
+}
+.top-shadow {
+    position: fixed;
+}
