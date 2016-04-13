@@ -1263,6 +1263,7 @@ ul.passwordStrength {
     color: #343;
     font-weight: bolder;
     text-transform: uppercase;
+    cursor: default;
 }
 
 .channel-details-body {
