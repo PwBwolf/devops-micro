@@ -148,6 +148,7 @@
             else {
                 $scope.noRecentChannels = true;
                 $scope.programming = $scope.recentChannels;
+                setCSS();
                 return;
             }
             $scope.recentChannels = playerSvc.mapChannels(recentChannels);
