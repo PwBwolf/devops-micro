@@ -5,7 +5,7 @@ var mongoose = require('../../node_modules/mongoose');
 var Schema = mongoose.Schema;
 
 var Airing = new Schema({
-    source: String,    // stationId or tmsId
+    source: String,
     fileName: String,
     type: String,
     airings: [Epg]
