@@ -60,7 +60,7 @@
                                 lineUp: lineUp,
                                 tags: tags
                             };
-                            if(programInfo.id){
+                            if(programInfo.id === "11"){
                                 console.log("I found az click and i'm adding it to the channel array", programInfo);
                             }
                             allChannels.push(programInfo);
