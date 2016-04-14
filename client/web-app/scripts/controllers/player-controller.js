@@ -65,7 +65,7 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
-                    console.log('11th element in programming array, should be az click', $scope.allChannels[10]);
+                    console.log('looking for az click', $scope.allChannels.slice(5, 15));
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
