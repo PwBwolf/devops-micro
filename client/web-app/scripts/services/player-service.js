@@ -111,9 +111,14 @@
             if(lineUp.length > 0){
                 for (var j = 0; j < lineUp.length; j++) {
                     if (lineUp[j].startTime) {
-                        lineUp[j]["startHour"] = $filter('date')(lineUp[j].startTime, 'h:mm');
-                        lineUp[j]["endHour"] = $filter('date')(lineUp[j].endTime, 'h:mm');
-                        lineUp[j]["dropdownInfo"] = lineUp[j]["title"] + "\n" + lineUp[j]["description"];
+                        var title = lineUp[j]["title"];
+                        var startTime = $filter('date')(lineUp[j].startTime, 'h:mm');
+                        var endTime = $filter('date')(lineUp[j].endTime, 'h:mm');
+                        var time = startTime + " - " + endTime;
+                        var description = lineUp[j]["description"];
+                        lineUp[j]["startHour"] = startTime;
+                        lineUp[j]["endHour"] = endTime;
+                        lineUp[j]["dropdownInfo"] = title + "\n" + time + "\n" + description;// lineUp[j]["title"] + "\n" + "" + lineUp[j]["description"];
                         lineUp[j]["length"] = showLength(lineUp[j].startTime, lineUp[j].endTime);
                     } else {
                         lineUp[j]["dropdownInfo"] = lineUp[j]["title"];
