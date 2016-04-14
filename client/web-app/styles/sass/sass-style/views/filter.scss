@@ -1,4 +1,12 @@
 
+#channelFilterHolder {
+    .filtered-channels-count {
+        span {
+            float: left;
+        }
+    }
+}
+
 #menuBar {
     .navbar-header{
         max-width: 60%;
@@ -11,8 +19,9 @@
         float:left;
     }
     .epg-controls{
-        display: inline;
         span {
+            padding-left: 7px;
+            padding-right: 7px;
             cursor: pointer;
             top: 10px;
             color: white;
@@ -42,14 +51,6 @@
         background-color: $grey;
         border-radius: 4px;
         border: 1px solid black;
-    }
-}
-
-#channelFilterHolder {
-    .filtered-channels-count {
-        span {
-            float: left;
-        }
     }
 }
 

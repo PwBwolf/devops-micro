@@ -1,17 +1,7 @@
-#topBox {
-    //overflow: hidden;
-    //margin-bottom: 30px;
-}
+
 .animate-hide {
     -webkit-transition:all linear 0.5s;
     transition:all linear 0.5s;
-}
-.navbar-right {
-    width: 400px;
-}
-
-.right-menu {
-    float: right;
 }
 
 .navbar-default {
@@ -34,6 +24,7 @@
     }
 
 }
+
 
 .sync-scroll {
     overflow: auto;
