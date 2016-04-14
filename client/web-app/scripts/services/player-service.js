@@ -5,12 +5,14 @@
 
         var channelsEpgObj = {};
         var allChannelsObj = {};
+        var timeBarStart;
         return {
             getTimeSlots: function () {
                 var hoursOffset = 0;
                 var currentSlot = new Date();
-                var startSlot = Math.floor(currentSlot.getTime() / (1000 * 60 * 30));
+                var startSlot = Math.floor(currentSlot.getTime() / (1000 * 60 * 30)); // get unix time in half hours rounded down to last half hour
                 startSlot = startSlot * 1000 * 60 * 30;
+                timeBarStart = startSlot;
                 var timeSlots = [];
                 for (var i = 0; i < 7; i++) {
                     hoursOffset = 3600 * 1000 * i;
@@ -110,10 +112,10 @@
         function formatLineUp(lineUp){
             if(lineUp.length > 0){
                 console.log("a program object", lineUp[0])
-                var now = new Date().getTime();
                 var firstShowStart = new Date(lineUp[0].startTime).getTime();
                 for (var j = 0; j < lineUp.length; j++) {
-                    if(j === 0 && (firstShowStart > now)){
+                    if(j === 0 && (firstShowStart > timeBarStart)){
+                        console.log('calling paddingObject()')
                         var paddingObj = paddingObject(lineUp[0].image, lineUp[0].startTime);
                         lineUp.unshift(paddingObj);
                     }
@@ -165,18 +167,18 @@
         // create empty program object that will create padding between current time and a show that starts in the future
         // creating all fields of a program object so I don't have to worry about where else in the code these properties are used
         function paddingObject(image, endTime){
-            var now = new Date();
             var placeHolder = {
                 description: null,
                 dropDownInfo: null,
                 title: null,
                 genres: null,
                 image: image,
-                length: showLength(endTime - now),
+                length: showLength(timeBarStart, endTime),
                 endTime: endTime,
-                startTime: now.toISOString(),
+                startTime: new Date(timeBarStart).toISOString(),
                 ratings: ""
             }
+            console.log('timebarstart', placeHolder.startTime, new Date(timeBarStart))
             return placeHolder;
         }
 

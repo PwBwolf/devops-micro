@@ -63,9 +63,17 @@
                                 <div class="show-detail" ng-if="programs.lineUp.length === 0" title="{{::show.dropdownInfo}}" style="width: 1800px; border-right: 1px solid #000033">
                                     <p style="text-align: left;"><span class="channel-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>
                                 </div>
-                                <div class="show-detail" ng-repeat="show in ::programs.lineUp" title="{{::show.dropdownInfo}}" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
-                                    <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
-                                    <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
+                                <div class="show-detail" ng-repeat="show in ::programs.lineUp" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
+                                    <div ng-if="show.title !== null" title="{{::show.dropdownInfo}}">
+                                        <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
+                                        <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
+                                    </div>
+                                    <div ng-if="show.title === null">
+                                        <p style="text-align: left;"><span class="channel-details-body" translate="PLAYER_NOT_AVAILABLE"></span></p>
+                                        <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
+                                    </div>
+                                    <!--<p style="text-align: left;" ng-if="show.title === null"><span class="channel-details-body">{{::show.title}}</span></p>-->
+                                    <!--<p style="text-align: left;" ng-if="show.title === null"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>-->
                                 </div>
                             </div>
                         </div>
