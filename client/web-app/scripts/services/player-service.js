@@ -109,7 +109,14 @@
 
         function formatLineUp(lineUp){
             if(lineUp.length > 0){
+                console.log("a program object", lineUp[0])
+                var now = new Date().getTime();
+                var firstShowStart = new Date(lineUp[0].startTime).getTime();
                 for (var j = 0; j < lineUp.length; j++) {
+                    if(j === 0 && (firstShowStart > now)){
+                        var paddingObj = paddingObject(lineUp[0].image, lineUp[0].startTime);
+                        lineUp.unshift(paddingObj);
+                    }
                     if (lineUp[j].startTime) {
                         var title = lineUp[j]["title"];
                         var startTime = $filter('date')(lineUp[j].startTime, 'h:mm');
@@ -118,7 +125,7 @@
                         var description = lineUp[j]["description"];
                         lineUp[j]["startHour"] = startTime;
                         lineUp[j]["endHour"] = endTime;
-                        lineUp[j]["dropdownInfo"] = title + "\n" + time + "\n" + description;// lineUp[j]["title"] + "\n" + "" + lineUp[j]["description"];
+                        lineUp[j]["dropdownInfo"] = title + "\n" + time + "\n" + description;
                         lineUp[j]["length"] = showLength(lineUp[j].startTime, lineUp[j].endTime);
                     } else {
                         lineUp[j]["dropdownInfo"] = lineUp[j]["title"];
@@ -153,6 +160,24 @@
                 var channel = arr[i];
                 allChannelsObj[id] = channel;
             }
+        }
+
+        // create empty program object that will create padding between current time and a show that starts in the future
+        // creating all fields of a program object so I don't have to worry about where else in the code these properties are used
+        function paddingObject(image, endTime){
+            var now = new Date();
+            var placeHolder = {
+                description: null,
+                dropDownInfo: null,
+                title: null,
+                genres: null,
+                image: image,
+                length: showLength(endTime - now),
+                endTime: endTime,
+                startTime: now.toISOString(),
+                ratings: ""
+            }
+            return placeHolder;
         }
 
     }]);
