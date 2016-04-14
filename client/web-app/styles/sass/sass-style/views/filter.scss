@@ -1,3 +1,50 @@
+
+#menuBar {
+    .navbar-header{
+        max-width: 60%;
+    }
+    #programInfo {
+        z-index: 10;
+        display:inline-block;
+        margin-left:1px;
+        background: transparent;
+        float:left;
+    }
+    .epg-controls{
+        display: inline;
+        span {
+            cursor: pointer;
+            top: 10px;
+            color: white;
+        }
+    }
+    #currentChannel {
+        img {
+            height: 40px;
+        }
+        background-color: rgba(255,255,255,0.85);
+        width: 70px;
+    }
+    .entire-description {
+        margin-left: 10px;
+        background-color: $grey;
+        border: 1px solid black;
+        width: 350px;
+        z-index: 35;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
+    .entire-title {
+        margin-left: 10px;
+        border: 1px solid black;
+        width: 300px;
+        z-index: 35;
+        background-color: $grey;
+        border-radius: 4px;
+        border: 1px solid black;
+    }
+}
+
 #channelFilterHolder {
     .filtered-channels-count {
         span {
@@ -36,3 +83,5 @@
     background: transparent;
     z-index: 2;
 }
+
+

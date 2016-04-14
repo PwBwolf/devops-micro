@@ -1669,19 +1669,6 @@ body, html {
     white-space: nowrap;
 }
 
-.user-guide-panel {
-    width: 100%;
-    height: 300px;
-    overflow-y: scroll !important;
-    white-space: nowrap;
-    padding-top: 2px;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-
-
 .horizontal-bottom {
     overflow-x: scroll;
     margin-left: 154px;

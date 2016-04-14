@@ -2,12 +2,6 @@
     <div id="menuBar">
         <nav class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div ng-if="mainUrl" id="currentChannel" >
                     <img ng-src="{{channelLogo}}">
                 </div>
@@ -23,8 +17,7 @@
                     <div id="description" ng-if="!programDescription && mainUrl" translate="PLAYER_PROG_DESCRIPTION_UNAVAILABLE"></div>
                 </div>
             </div>
-            <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav nav-pills pull-right">
                     <li class="epg-controls" ng-click="displayFavorites();">
                         <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
                     </li>
@@ -141,7 +134,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+
         </nav>
     </div>
 </div>
