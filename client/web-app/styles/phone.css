@@ -24,7 +24,6 @@
     display: none;
 }
 
-
 .player-maximized {
     height: 360px !important;
 }
@@ -145,10 +144,6 @@
         font-size: 12px;
     }
 
-    .docked {
-        background: rgba(227, 62, 66, .85) !important;
-    }
-
     .content-background {
         background: white;
         color: rgba(254, 254, 254, .89);
@@ -172,7 +167,6 @@
     header {
         width: auto;
         height: 50px;
-        background: rgba(229, 229, 231, .91) !important;
         z-index: 998;
         padding: 0px !important;
     }
@@ -310,13 +304,7 @@
         -moz-filter: grayscale(0);
     }
 
-    #topBox {
-        overflow: hidden;
-        position: relative;
-        width: auto;
-        height: auto;
-        padding: 0px 0px !important;
-    }
+    
 
     footer {
         width: 100%;
