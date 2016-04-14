@@ -65,10 +65,10 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
+                    console.log('11th element in programming array, should be az click', $scope.programming[10]);
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
-                    console.log('11th element in programming array, should be az click', $scope.programming[10]);
                     //console.log($scope.allChannels)
                     //console.timeEnd('channelsFormatted')
                     mediaSvc.getFavoriteChannels(
