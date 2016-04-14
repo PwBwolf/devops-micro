@@ -59,7 +59,6 @@ footer {
 .user-guide-panel {
   width: 100%;
   max-height: 300px;
-  overflow-y: scroll !important;
   overflow-x: hidden;
   white-space: nowrap;
   padding-top: 2px;
@@ -196,7 +195,10 @@ footer {
 
 #channelGuideDescription {
   width: 1800px;
-  overflow: hidden; }
+  overflow: hidden;
+  height: 60px;
+  line-height: 1.2;
+  border-bottom: 1px solid #000033; }
 
 #channelFilterHolder .filtered-channels-count span {
   float: left; }
