@@ -65,7 +65,7 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
-                    console.log('looking for az click', $scope.allChannels.slice(5, 15));
+                    //console.log('looking for az click', $scope.allChannels.slice(5, 15));
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
@@ -186,7 +186,15 @@
         $scope.displayFiltered = function(){
             currentView = 'filtered';
             clearErrMessages();
-            $scope.programming = $scope.filteredChannels.slice(0, 10);
+            if($scope.filteredChannels.length === 0){
+                $scope.noFiltered = true;
+                $scope.programming = $scope.filteredChannels;
+                setCSS();
+                return;
+            }
+            else{
+                $scope.programming = $scope.filteredChannels.slice(0, 10);
+            }
             setCSS();
         };
 
@@ -475,7 +483,7 @@
                 else if (currentFilter >= 28 && currentFilter <= 31) {
                     filterObj.audience[currentFilter] = currentFilter;
                 }
-                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || (currentFilter === 41) || (currentFilter === 45)) {
+                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || (currentFilter === 41) || (currentFilter === 45) || (currentFilter === 46)) {
                     filterObj.origin[currentFilter] = currentFilter;
                 }
                 else {
