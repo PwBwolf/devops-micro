@@ -11,7 +11,7 @@ autoIncrement.initialize(connection);
 var Account = new Schema({
     primaryUser: {type: Schema.Types.ObjectId, ref: 'User'},
     users: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    createdAt: {type: Date, required: true},
+    createdAt: {type: Date, required: true, index: true},
     type: {type: String, required: true, index: true},
     referredBy: String,
     key: Number,

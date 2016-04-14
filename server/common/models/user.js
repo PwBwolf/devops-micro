@@ -19,7 +19,7 @@ var User = new Schema({
     },
     oldInactiveUser: Number,
     status: {type: String, required: true, index: true},
-    createdAt: {type: Date, required: true},
+    createdAt: {type: Date, required: true, index: true},
     upgradeDate: {type: Date, required: false},
     cancelDate: {type: Date, required: false},
     complimentaryEndDate: {type: Date, required: false},
