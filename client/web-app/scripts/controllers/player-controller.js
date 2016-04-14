@@ -65,6 +65,7 @@
             $rootScope.$on('ChannelsLoaded', function () {
                 playerSvc.getProgramming(function (err, programming) {
                     $scope.allChannels = programming;
+                    console.log('looking for az click', $scope.allChannels.slice(5, 15));
                     $scope.programming = $scope.allChannels.slice(0, 10);
                     currentView = 'all';
                     $scope.prevIndex = $scope.programming.length - 1;
@@ -122,7 +123,7 @@
             for(var i = 0; i < 10; i++) {
                 var checkLength = ($scope.programming.length + 1) < channelsArr.length;
                 if(checkLength) {
-                    var channel = channelsArr[$scope.programming.length+1];
+                    var channel = channelsArr[$scope.programming.length];
                     $scope.programming.push(channel);
                 }
             }
