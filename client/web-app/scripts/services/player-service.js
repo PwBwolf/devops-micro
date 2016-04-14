@@ -117,7 +117,6 @@
                 var firstShowStart = new Date(lineUp[0].startTime).getTime();
                 for (var j = 0; j < lineUp.length; j++) {
                     if(j === 0 && (firstShowStart > timeBarStart)){
-                        console.log('calling paddingObject()')
                         var paddingObj = paddingObject(lineUp[0].image, lineUp[0].startTime);
                         lineUp.unshift(paddingObj);
                     }
@@ -180,7 +179,6 @@
                 startTime: new Date(timeBarStart).toISOString(),
                 ratings: ""
             }
-            console.log('timebarstart', placeHolder.startTime, placeHolder.endTime)
             return placeHolder;
         }
 
