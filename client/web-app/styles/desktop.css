@@ -1,4 +1,4 @@
-    * {
+* {
     margin: 0;
     padding: 0;
     position: relative;
@@ -209,9 +209,6 @@ header {
     color: rgba(62, 25, 77, 0.941176);;
     border-bottom: none;
 }
-
-
-
 
 #socialMedia {
     width: 20%;

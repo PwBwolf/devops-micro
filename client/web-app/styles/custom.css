@@ -64,7 +64,7 @@ footer {
 
 .user-guide-panel {
   width: 100%;
-  height: 300px;
+  max-height: 300px;
   overflow-y: scroll !important;
   overflow-x: hidden;
   white-space: nowrap;
@@ -90,47 +90,6 @@ footer {
 #menuBar input[type="radio"]:checked + #epg-controls {
   text-decoration: underline;
   font-weight: bolder; }
-
-#menuBar .navbar-header {
-  max-width: 60%; }
-
-#menuBar #programInfo {
-  z-index: 10;
-  display: inline-block;
-  margin-left: 1px;
-  background: transparent;
-  float: left; }
-
-#menuBar .epg-controls {
-  display: inline; }
-  #menuBar .epg-controls span {
-    cursor: pointer;
-    top: 10px;
-    color: white; }
-
-#menuBar #currentChannel {
-  background-color: rgba(255, 255, 255, 0.85);
-  width: 70px; }
-  #menuBar #currentChannel img {
-    height: 40px; }
-
-#menuBar .entire-description {
-  margin-left: 10px;
-  background-color: #ddd;
-  border: 1px solid black;
-  width: 350px;
-  z-index: 35;
-  border-radius: 4px;
-  border: 1px solid black; }
-
-#menuBar .entire-title {
-  margin-left: 10px;
-  border: 1px solid black;
-  width: 300px;
-  z-index: 35;
-  background-color: #ddd;
-  border-radius: 4px;
-  border: 1px solid black; }
 
 .base-class {
   transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s; }
@@ -238,12 +197,53 @@ footer {
   cursor: pointer; }
 
 .top-shadow-player {
-  margin-top: 400px;
+  margin-top: 300px;
   margin-bottom: 0px; }
 
 #channelGuideDescription {
   width: 1800px;
   overflow: hidden; }
+
+#menuBar .navbar-header {
+  max-width: 60%; }
+
+#menuBar #programInfo {
+  z-index: 10;
+  display: inline-block;
+  margin-left: 1px;
+  background: transparent;
+  float: left; }
+
+#menuBar .epg-controls {
+  display: inline; }
+  #menuBar .epg-controls span {
+    cursor: pointer;
+    top: 10px;
+    color: white; }
+
+#menuBar #currentChannel {
+  background-color: rgba(255, 255, 255, 0.85);
+  width: 70px; }
+  #menuBar #currentChannel img {
+    height: 40px; }
+
+#menuBar .entire-description {
+  margin-left: 10px;
+  background-color: #ddd;
+  border: 1px solid black;
+  width: 350px;
+  z-index: 35;
+  border-radius: 4px;
+  border: 1px solid black; }
+
+#menuBar .entire-title {
+  margin-left: 10px;
+  border: 1px solid black;
+  width: 300px;
+  z-index: 35;
+  background-color: #ddd;
+  border-radius: 4px;
+  border: 1px solid black; }
 
 #channelFilterHolder .filtered-channels-count span {
   float: left; }

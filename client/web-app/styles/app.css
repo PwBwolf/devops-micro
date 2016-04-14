@@ -762,6 +762,7 @@ ul.passwordStrength {
     .programDetail {
         display: none;
     }
+
     a.language {
         margin-left: 17px;
     }
@@ -840,7 +841,7 @@ ul.passwordStrength {
     overflow: hidden;
     overflow-y: auto;
     height: 560px;
-    margin-left:0px;
+    margin-left: 0px;
 }
 
 #changeCreditCardDropDown > div {
@@ -851,10 +852,10 @@ ul.passwordStrength {
 
 #channelFilterHolder {
     margin-top: 10px;
-    background-color: rgba(55,55,55,0.9);
-    width:100%;
-    height:100%;
-    padding:20px;
+    background-color: rgba(55, 55, 55, 0.9);
+    width: 100%;
+    height: 100%;
+    padding: 20px;
 }
 
 .channel-result {
@@ -890,18 +891,18 @@ ul.passwordStrength {
     background-color: #333;
     padding: 5px;
     color: #fff;
-    margin-top:10px;
-    margin-left:-20px;
-    display:inline-block;
+    margin-top: 10px;
+    margin-left: -20px;
+    display: inline-block;
 }
 
 .filter-categories {
-    width:350px;
+    width: 350px;
 }
 
 .filter-category-title {
-    height:20px;
-    display:table-cell;
+    height: 20px;
+    display: table-cell;
     vertical-align: middle;
 }
 
@@ -925,20 +926,20 @@ ul.passwordStrength {
 }
 
 .panel-body-left {
-    width:165px;
-    margin-left:-10px;
-    display:inline-block;
-    float:left;
+    width: 165px;
+    margin-left: -10px;
+    display: inline-block;
+    float: left;
 }
 
 .panel-body-right {
-    width:185px;
-    display:inline-block;
-    float:left;
+    width: 185px;
+    display: inline-block;
+    float: left;
 }
 
 .filter-repeat {
-    text-align:left;
+    text-align: left;
 }
 
 #channelFilterHolder .panel-body input[type="checkbox"] {
@@ -948,8 +949,8 @@ ul.passwordStrength {
 
 #channelFilterHolder .panel-collapse {
     border: 1px solid #ddd;
-    width:350px;
-    display:inline-block;
+    width: 350px;
+    display: inline-block;
 }
 
 .channel-filters {
@@ -958,15 +959,15 @@ ul.passwordStrength {
 }
 
 #filterClearAll {
-    float:left;
-    margin-top:-10px;
-    margin-left:10px;
+    float: left;
+    margin-top: -10px;
+    margin-left: 10px;
 }
 
 #filterClose {
-    float:right;
-    margin-top:-10px;
-    margin-right:10px;
+    float: right;
+    margin-top: -10px;
+    margin-right: 10px;
 }
 
 #guide {
@@ -1012,21 +1013,21 @@ ul.passwordStrength {
 }
 
 .button-user-mail {
-    width:50px;
-    height:50px;
-    display:table-cell;
-    display:inline-block;
-    float:left;
+    width: 50px;
+    height: 50px;
+    display: table-cell;
+    display: inline-block;
+    float: left;
     text-align: center;
     vertical-align: middle;
-    margin-top:8px;
+    margin-top: 8px;
     cursor: pointer;
 }
 
 .button-logo {
-    width:50px;
-    height:50px;
-    display:inline-block;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
     text-align: center;
     margin-left: 45%;
 }
@@ -1193,7 +1194,7 @@ ul.passwordStrength {
     margin-top: 10px;
 }
 
-#notAvailable{
+#notAvailable {
     height: 60px;
     width: 150px;
     line-height: 1.2;
@@ -1226,12 +1227,10 @@ ul.passwordStrength {
     height: auto;
 }
 
-
-
 .channel-description > div {
     overflow: hidden;
     border-right: 1px solid;
-    border-color:rgb(0, 27,72);
+    border-color: rgb(0, 27, 72);
     height: 60px;
     display: inline-block;
     vertical-align: top;
@@ -1242,7 +1241,7 @@ ul.passwordStrength {
     width: 154px;
     height: 60px;
     border-right: 1px groove;
-    border-color:rgb(0, 27,72);
+    border-color: rgb(0, 27, 72);
     z-index: 8;
 }
 
@@ -1310,7 +1309,6 @@ body, html {
     margin-right: -4px;
     vertical-align: baseline;
 }
-
 
 .channel-panel, .user-guide-panel {
     transition: all 1s ease-in-out;
@@ -1669,19 +1667,6 @@ body, html {
     white-space: nowrap;
 }
 
-.user-guide-panel {
-    width: 100%;
-    height: 300px;
-    overflow-y: scroll !important;
-    white-space: nowrap;
-    padding-top: 2px;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-
-
 .horizontal-bottom {
     overflow-x: scroll;
     margin-left: 154px;
@@ -1703,7 +1688,7 @@ body, html {
 .image-lineup {
     width: 154px;
     height: 60px;
-    border-color: rgb(0, 27,72);
+    border-color: rgb(0, 27, 72);
     z-index: 8;
 }
 
@@ -1835,13 +1820,13 @@ body, html {
     /*border-right: 1px solid;*/
 }
 
-#channelLogos{
+#channelLogos {
     position: fixed;
 }
 
 .user-guide-description {
     color: #000033;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     font-size: 100%;
     font-weight: normal;
     font-variant: normal;
@@ -1886,8 +1871,8 @@ body, html {
 .ad-free {
     width: 100%;
     height: 90px;
-    margin-left:10px;
-    margin-top:5px;
+    margin-left: 10px;
+    margin-top: 5px;
 }
 
 .ad-not-free {
@@ -1903,236 +1888,234 @@ body, html {
 }
 
 #menuBar {
-    height:40px;
-    width:100%;
+    height: 40px;
+    width: 100%;
     background: transparent;
 }
 
 #filterPanelDropDown {
     height: 2px;
-    background: rgb(235,235,235);
+    background: rgb(235, 235, 235);
 }
 
 #clock {
     z-index: 10;
-    width:154px;
-    height:28px;
-    position:absolute;
-    display:inline-block;
-    color:white;
-    background-color:#000f29;
-    text-align:center;
-    vertical-align:middle;
-    margin-top:4px;
-    padding:4px 0px 4px 12px;
+    width: 154px;
+    height: 28px;
+    position: absolute;
+    display: inline-block;
+    color: white;
+    background-color: #000f29;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 4px;
+    padding: 4px 0px 4px 12px;
 }
 
 #channelTimePanel {
-    z-index:5;
-    width:100%;
+    z-index: 5;
+    width: 100%;
     height: auto;
-    display:inline-block;
+    display: inline-block;
     overflow: hidden;
-    margin-top:2px;
+    margin-top: 2px;
 }
 
 #logoColumn {
-    background-color:transparent;
+    background-color: transparent;
     z-index: 10;
     position: absolute;
     width: 154px;
     height: 300px;
-    float:left;
+    float: left;
     overflow: hidden;
-    margin-top:-6px;
+    margin-top: -6px;
 }
 
 #userGuide {
-    background-color:transparent;
+    background-color: transparent;
     width: 100%;
-    float:left;
-    margin-top:-6px;
+    float: left;
+    margin-top: -6px;
 }
 
 .pre-channel {
     z-index: 36;
-    width:30px;
-    height:40px;
-    float:left;
-    padding-top:4px;
-    display:table-cell;
-    display:inline-block;
+    width: 30px;
+    height: 40px;
+    float: left;
+    padding-top: 4px;
+    display: table-cell;
+    display: inline-block;
     background: transparent;
 }
 
 .next-channel {
     z-index: 36;
-    width:30px;
-    height:40px;
-    float:left;
+    width: 30px;
+    height: 40px;
+    float: left;
     text-align: center;
-    margin-left:1px;
-    padding-top:4px;
-    display:table-cell;
-    display:inline-block;
+    margin-left: 1px;
+    padding-top: 4px;
+    display: table-cell;
+    display: inline-block;
     background: transparent;
 }
 
 #currentChannel {
-    width:175px;
-    height:40px;
+    width: 175px;
+    height: 40px;
     text-align: center;
-    float:left;
-    display:table-cell;
+    float: left;
+    display: table-cell;
     display: inline-block;
-    margin-left:1px;
+    margin-left: 1px;
     background: transparent;
 }
-
-
 
 #title {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    height:17px;
-    text-align:left;
-    padding-left:10px;
-    font-size:14px;
-    font-weight:bold;
-    color:white;
+    height: 17px;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
 }
 
 #description {
     text-overflow: ellipsis !important;
     white-space: nowrap;
-    height:25px;
-    text-align:left;
-    overflow:hidden;
-    padding-left:10px;
-    text-overflow:clip;
-    line-height:25px;
-    color:white;
+    height: 25px;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 10px;
+    text-overflow: clip;
+    line-height: 25px;
+    color: white;
     vertical-align: middle;
-    font-size:10px;
+    font-size: 10px;
 }
 
 #programDetail {
     float: left;
-    width:5%;
-    height:40px;
-    margin-left:1px;
-    padding-top:9px;
+    width: 5%;
+    height: 40px;
+    margin-left: 1px;
+    padding-top: 9px;
     text-align: center;
-    display:table-cell;
-    display:inline-block;
+    display: table-cell;
+    display: inline-block;
     vertical-align: middle;
     background: transparent;
 }
 
 #programDetailSlider {
-    margin-top:140px;
-    width:300px;
+    margin-top: 140px;
+    width: 300px;
 }
 
 #programDetailHolder {
-    background-color:rgba(55,55,55,0.9);
-    width:300px;
-    height:100%;
-    padding:20px;
+    background-color: rgba(55, 55, 55, 0.9);
+    width: 300px;
+    height: 100%;
+    padding: 20px;
 }
 
 #detailHolder {
-    border:1px solid;
-    border-color:rgb(150,150,150);
-    width:261px;
+    border: 1px solid;
+    border-color: rgb(150, 150, 150);
+    width: 261px;
 }
 
 #detailTitle {
-    color: rgb(0,0,0);
-    background:rgb(210,210,210);
+    color: rgb(0, 0, 0);
+    background: rgb(210, 210, 210);
     width: 260px;
-    height:25px;
+    height: 25px;
 }
 
 #detailShowTime {
     width: 250px;
-    height:24px;
-    text-align:left;
-    color: rgb(255,255,255);
-    margin-top:3px;
-    margin-left:3px;
+    height: 24px;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    margin-top: 3px;
+    margin-left: 3px;
     text-decoration: underline;
 }
 
 #detailDescription {
     word-wrap: break-word;
-    font-size:10px;
-    font-weight:normal;
-    text-overflow:ellipsis;
+    font-size: 10px;
+    font-weight: normal;
+    text-overflow: ellipsis;
     width: 260px;
     height: 200px;
     margin-left: 2px;
-    color: rgb(255,255,255);
+    color: rgb(255, 255, 255);
 }
 
 #okButton {
-    margin-bottom:10px;
-    margin-left:120px;
+    margin-bottom: 10px;
+    margin-left: 120px;
 }
 
 .detail-title {
-    margin-left:5px;
-    font-weight:bold;
-    line-height:25px;
+    margin-left: 5px;
+    font-weight: bold;
+    line-height: 25px;
 }
-
 
 #favoriteChannels {
     float: left;
-    height:40px;
-    width:10%;
+    height: 40px;
+    width: 10%;
     line-height: 40px;
     text-align: center;
-    color:white;
-    margin-left:1px;
-    display:inline-block;
+    color: white;
+    margin-left: 1px;
+    display: inline-block;
     background: transparent;
     cursor: pointer;
 }
 
 #recentChannels {
     float: left;
-    height:40px;
-    width:6%;
+    height: 40px;
+    width: 6%;
     line-height: 40px;
-    color:white;
-    display:inline-block;
+    color: white;
+    display: inline-block;
     background: transparent;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #allChannels {
-    height:40px;
-    width:40px;
+    height: 40px;
+    width: 40px;
     line-height: 40px;
-    color:white;
+    color: white;
     text-align: center;
-    display:inline-block;
-    padding-right:-3px;
+    display: inline-block;
+    padding-right: -3px;
     vertical-align: middle;
     background: transparent;
     cursor: pointer;
 }
 
 #filter {
-    width:40px;
-    height:40px;
-    display:inline-block;
-    margin-right:3px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 3px;
     background: transparent;
-    padding-right:14px;
+    padding-right: 14px;
 }
+
 /*
 ::-webkit-scrollbar {
     width: 15px;
@@ -2154,6 +2137,7 @@ body, html {
         height: auto;
         width: auto;
     }
+
     .premium-button-holder {
         width: 375px
     }
@@ -2180,7 +2164,6 @@ body, html {
         width: 7%;
     }
 }
-
 
 @media screen and (max-width: 707px) {
 
@@ -2278,7 +2261,6 @@ body, html {
         font-size: 15px;
     }
 
-
 }
 
 @media (max-width: 1024px) {
@@ -2287,8 +2269,6 @@ body, html {
     }
 
 }
-
-
 
 .free-tv {
     height: 360px;
@@ -2302,30 +2282,26 @@ body, html {
     margin: 0 auto;
 }
 
-.paid-tv .position-div{
+.paid-tv .position-div {
     display: inherit;
 }
 
-#currentChannel img{
+#currentChannel img {
     max-width: 140px;
 }
-
 
 .collapse.navbar-collapse.in {
     /*width: 25%;*/
     z-index: 25;
 }
 
-
-
-.nav.navbar-nav.navbar-right li{
+.nav.navbar-nav.navbar-right li {
     padding-left: 3%;
 }
 
 .navbar-toggle {
     margin-top: 1px;
 }
-
 
 .navbar-default .navbar-toggle {
     border-width: 2px;

@@ -228,7 +228,7 @@
             PLAYER_MENU_PREVIOUS_CHANNEL: 'Canal Anterior',
             PLAYER_MENU_NEXT_CHANNEL: 'Siguiente Canal',
             PLAYER_MENU_INFORMATION: 'Información',
-            PLAYER_MENU_ADD_REMOVE_FAVORITE: 'Añadir/Guitar Un Favorito',
+            PLAYER_MENU_ADD_REMOVE_FAVORITE: 'Añade / Remueve Favorito',
             PLAYER_MENU_USER_INFO: 'Menú De Usario',
             PLAYER_PROG_TITLE_UNAVAILABLE: 'Ningún Título Disponible',
             PLAYER_PROG_DESCRIPTION_UNAVAILABLE: 'No hay descripción disponible',
