@@ -60,6 +60,9 @@
                                 lineUp: lineUp,
                                 tags: tags
                             };
+                            if(programInfo.id){
+                                console.log("I found az click and i'm adding it to the channel array", programInfo);
+                            }
                             allChannels.push(programInfo);
                             allChannelsObj[id] = programInfo;
                         }
@@ -111,7 +114,6 @@
 
         function formatLineUp(lineUp){
             if(lineUp.length > 0){
-                console.log("a program object", lineUp[0])
                 var firstShowStart = new Date(lineUp[0].startTime).getTime();
                 for (var j = 0; j < lineUp.length; j++) {
                     if(j === 0 && (firstShowStart > timeBarStart)){
@@ -178,7 +180,7 @@
                 startTime: new Date(timeBarStart).toISOString(),
                 ratings: ""
             }
-            console.log('timebarstart', placeHolder.startTime, new Date(timeBarStart))
+            console.log('timebarstart', placeHolder.startTime, placeHolder.endTime)
             return placeHolder;
         }
 
