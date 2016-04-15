@@ -23,47 +23,52 @@ if (typeof email === 'undefined') {
     }
 }
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
+var modelsPath = config.root + '/server/common/models';
 
-require('../../server/common/setup/models')(modelsPath);
-var Users = mongoose.model('User');
-var subscription = require('../../server/common/services/subscription');
-
-var username = validation.getUsername(email);
-Users.findOne({email: username}).populate('account').exec(function (err, user) {
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - cancelSubscription - error fetching user: ' + username);
         logger.logError(err);
-        process.exit(1);
-    } else if (!user) {
-        logger.logError('adminCLI - cancelSubscription - user not found: ' + username);
-        process.exit(1);
-    } else if(user.cancelOn) {
-        logger.logError('adminCLI - cancelSubscription - user\'s premium subscription is already due for cancellation on ' + getFormattedDate(user.cancelOn) + ' for user: ' + username);
-        process.exit(1);
-    } else if (user.status === 'failed') {
-        logger.logError('adminCLI - cancelSubscription - failed user: ' + username);
-        process.exit(1);
-    } else if (user.account.type === 'free') {
-        logger.logError('adminCLI - cancelSubscription - free user: ' + username);
-        process.exit(1);
-    } else if (user.account.type === 'comp') {
-        logger.logError('adminCLI - cancelSubscription - complimentary user: ' + username);
-        process.exit(1);
+        logger.logError('adminCLI - cancelSubscription - db connection error');
     } else {
-        subscription.cancelSubscription(username, function (err) {
+        require('../../server/common/setup/models')(modelsPath);
+        var Users = mongoose.model('User');
+        var subscription = require('../../server/common/services/subscription');
+        var username = validation.getUsername(email);
+        Users.findOne({email: username}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError('adminCLI - cancelSubscription - error canceling subscription');
+                logger.logError('adminCLI - cancelSubscription - error fetching user: ' + username);
                 logger.logError(err);
-                setTimeout(function () {
-                    process.exit(1);
-                }, 3000);
+                process.exit(1);
+            } else if (!user) {
+                logger.logError('adminCLI - cancelSubscription - user not found: ' + username);
+                process.exit(1);
+            } else if (user.cancelOn) {
+                logger.logError('adminCLI - cancelSubscription - user\'s premium subscription is already due for cancellation on ' + getFormattedDate(user.cancelOn) + ' for user: ' + username);
+                process.exit(1);
+            } else if (user.status === 'failed') {
+                logger.logError('adminCLI - cancelSubscription - failed user: ' + username);
+                process.exit(1);
+            } else if (user.account.type === 'free') {
+                logger.logError('adminCLI - cancelSubscription - free user: ' + username);
+                process.exit(1);
+            } else if (user.account.type === 'comp') {
+                logger.logError('adminCLI - cancelSubscription - complimentary user: ' + username);
+                process.exit(1);
             } else {
-                logger.logInfo('adminCLI - cancelSubscription - user subscription canceled');
-                setTimeout(function () {
-                    process.exit(0);
-                }, 10000);
+                subscription.cancelSubscription(username, function (err) {
+                    if (err) {
+                        logger.logError('adminCLI - cancelSubscription - error canceling subscription');
+                        logger.logError(err);
+                        setTimeout(function () {
+                            process.exit(1);
+                        }, 3000);
+                    } else {
+                        logger.logInfo('adminCLI - cancelSubscription - user subscription canceled');
+                        setTimeout(function () {
+                            process.exit(0);
+                        }, 10000);
+                    }
+                });
             }
         });
     }

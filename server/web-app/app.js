@@ -9,8 +9,9 @@ var express = require('express'),
     logger = require('../common/setup/logger'),
     port = process.env.WEB_APP_PORT || config.webAppPort,
     app = module.exports = express(),
-    modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
+    modelsPath = config.root + '/server/common/models';
+    
+mongoose.connect(config.db);
 
 require('../common/setup/models')(modelsPath);
 require('./express')(app, logger);

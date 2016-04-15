@@ -11,60 +11,64 @@ var config = require('../../server/common/setup/config'),
     mongoose = require('../../server/node_modules/mongoose'),
     logFile = fs.createWriteStream(__dirname + '/db-fs-check.log', {flags: 'w'});
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
-
-require('../../server/common/setup/models')(modelsPath);
-var Account = mongoose.model('Account');
-
-Account.find({'type': 'paid'}).populate('primaryUser').exec(function (err, accounts) {
+var modelsPath = config.root + '/server/common/models';
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - paidUserDbFreesideCheck - error fetching accounts');
         logger.logError(err);
-        process.exit(1);
-    } else if (!accounts || accounts.length === 0) {
-        logger.logError('adminCLI - paidUserDbFreesideCheck - no accounts found!');
-        process.exit(0);
+        logger.logError('adminCLI - paidUserDbFreesideCheck - db connection error');
     } else {
-        var csv = '';
-        var count = 0;
-        async.eachSeries(
-            accounts,
-            function (account, callback) {
-                count++;
-                logger.logInfo('processing account ' + count);
-                if (account.primaryUser) {
-                    billing.login(account.primaryUser.email, account.key, account.primaryUser.createdAt.getTime(), function (err, sessionId) {
-                        if (err) {
-                            logger.logError('error logging into freeside for user ' + account.primaryUser.email);
-                            logger.logError(err);
-                            callback();
-                        } else {
-                            billing.getPackages(sessionId, function (err, packages) {
+        require('../../server/common/setup/models')(modelsPath);
+        var Account = mongoose.model('Account');
+        Account.find({'type': 'paid'}).populate('primaryUser').exec(function (err, accounts) {
+            if (err) {
+                logger.logError('adminCLI - paidUserDbFreesideCheck - error fetching accounts');
+                logger.logError(err);
+                process.exit(1);
+            } else if (!accounts || accounts.length === 0) {
+                logger.logError('adminCLI - paidUserDbFreesideCheck - no accounts found!');
+                process.exit(0);
+            } else {
+                var csv = '';
+                var count = 0;
+                async.eachSeries(
+                    accounts,
+                    function (account, callback) {
+                        count++;
+                        logger.logInfo('processing account ' + count);
+                        if (account.primaryUser) {
+                            billing.login(account.primaryUser.email, account.key, account.primaryUser.createdAt.getTime(), function (err, sessionId) {
                                 if (err) {
+                                    logger.logError('adminCLI - paidUserDbFreesideCheck - error logging into freeside for user ' + account.primaryUser.email);
                                     logger.logError(err);
-                                    logger.logError('error getting packages for user ' + account.primaryUser.email);
                                     callback();
                                 } else {
-                                    var pkg = [];
-                                    for (var i = 0; i < packages.length; i++) {
-                                        pkg.push(packages[i].pkg);
-                                    }
-                                    csv += account.primaryUser.email + ',' + account.packages.length + ',' + pkg.length + ',' + account.primaryUser.cancelOn + '\n';
-                                    callback();
+                                    billing.getPackages(sessionId, function (err, packages) {
+                                        if (err) {
+                                            logger.logError(err);
+                                            logger.logError('adminCLI - paidUserDbFreesideCheck - error getting packages for user ' + account.primaryUser.email);
+                                            callback();
+                                        } else {
+                                            var pkg = [];
+                                            for (var i = 0; i < packages.length; i++) {
+                                                pkg.push(packages[i].pkg);
+                                            }
+                                            csv += account.primaryUser.email + ',' + account.packages.length + ',' + pkg.length + ',' + account.primaryUser.cancelOn + '\n';
+                                            callback();
+                                        }
+                                    });
                                 }
                             });
+                        } else {
+                            callback();
                         }
-                    });
-                } else {
-                    callback();
-                }
-            },
-            function () {
-                logFile.write(csv);
-                logger.logInfo('done');
-                process.exit(0);
+                    },
+                    function () {
+                        logFile.write(csv);
+                        logger.logInfo('done');
+                        process.exit(0);
+                    }
+                );
             }
-        );
+        });
     }
 });

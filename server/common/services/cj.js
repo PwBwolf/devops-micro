@@ -46,9 +46,10 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
         function (callback) {
             Account.find(query, {}, {$sort: {createdAt: 1}}).populate('primaryUser').exec(function (err, accounts) {
                 if (err) {
-                    logger.logError('cj - exportCjAccounts - error fetching partner accounts');
+                    logger.logError('cj - exportCjAccounts - error fetching cj accounts');
                     callback(err);
                 } else {
+                    logger.logInfo('cj - exportCjAccounts - cj account count: ' + accounts.length);
                     cjData = '&CID=4630657' + '\n' + '&SUBID=180563' + '\n';
                     financeData = 'OID,Username,Status,Type,Event Date,FreeSide Customer Number' + '\n';
                     for (var i = 0; i < accounts.length; i++) {
