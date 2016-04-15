@@ -1968,32 +1968,6 @@ body, html {
     background: transparent;
 }
 
-#title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    height: 17px;
-    text-align: left;
-    padding-left: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-
-#description {
-    text-overflow: ellipsis !important;
-    white-space: nowrap;
-    height: 25px;
-    text-align: left;
-    overflow: hidden;
-    padding-left: 10px;
-    text-overflow: clip;
-    line-height: 25px;
-    color: white;
-    vertical-align: middle;
-    font-size: 10px;
-}
-
 #programDetail {
     float: left;
     width: 5%;
