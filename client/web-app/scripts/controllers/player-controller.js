@@ -121,7 +121,7 @@
 
         function loadMore(channelsArr){
             for(var i = 0; i < 10; i++) {
-                var checkLength = ($scope.programming.length + 1) < channelsArr.length;
+                var checkLength = ($scope.programming.length) < channelsArr.length;
                 if(checkLength) {
                     var channel = channelsArr[$scope.programming.length];
                     $scope.programming.push(channel);
