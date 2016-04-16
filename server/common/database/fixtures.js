@@ -13,10 +13,7 @@ mongoose.connect(config.db, function () {
     require('../setup/models')(modelsPath);
     var models = {
         'Countries': mongoose.model('Country'),
-        'States': mongoose.model('State'),
-        'CmsCategories': mongoose.model('CmsCategory'),
-        'CmsChannels': mongoose.model('CmsChannel'),
-        'CmsAds': mongoose.model('CmsAd')
+        'States': mongoose.model('State')
     };
 
     function processFixture(fqn) {

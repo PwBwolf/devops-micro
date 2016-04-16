@@ -16,8 +16,7 @@ var _ = require('lodash'),
     Channel = mongoose.model('Channel'),
     Image = mongoose.model('Image'),
     Airing = mongoose.model('Airing'),
-    Event = mongoose.model('Event'),
-    CmsAd = mongoose.model('CmsAd');
+    Event = mongoose.model('Event');
 
 module.exports = {
     getChannelUrl: function (req, res) {
