@@ -15,7 +15,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
     var query = {merchant: 'CJ'};
     var utcStartDate, utcEndDate, cjData, financeData, cjFile, financeFile;
     async.waterfall([
-        // do validations
         function (callback) {
             if (!startDate && !endDate) {
                 logger.logError('cj - exportCjAccounts - tool invoked with incorrect number of parameters');
@@ -42,7 +41,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback();
             }
         },
-        // collect data
         function (callback) {
             Account.find(query, {}, {$sort: {createdAt: 1}}).populate('primaryUser').exec(function (err, accounts) {
                 if (err) {
@@ -62,7 +60,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 }
             });
         },
-        // write cj batch file
         function (callback) {
             cjFile = 'cj-batch-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
             fs.writeFile(config.root + '/reports/' + cjFile, cjData, function (err) {
@@ -72,7 +69,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // write finance report
         function (callback) {
             financeFile = 'cj-finance-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
             fs.writeFile(config.root + '/reports/' + financeFile, financeData, function (err) {
@@ -82,7 +78,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // send finance report via email to accounting@yiptv.com
         function (callback) {
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
@@ -98,7 +93,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // upload cj batch file to cj ftp server
         function (callback) {
             var ftpOptions = {
                 host: config.cjReports.ftpHost,
