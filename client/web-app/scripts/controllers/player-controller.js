@@ -1,7 +1,8 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '_', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, _) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage) {
+        console.log('player controller loaded')
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -55,10 +56,13 @@
             //console.time('channelsLoaded')
             // copied and pasted from the player controller
             mediaSvc.getUserChannels(function (data) {
+                console.log('success callback for getUserChannels', data)
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 //console.timeEnd('channelLoaded')
                 $rootScope.$broadcast('ChannelsLoaded');
+            }, function(err){
+                console.log('error callback for getUserChannels', err)
             });
 
             //console.time('channelsFormatted')
@@ -99,6 +103,8 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
+            }, function(err){
+                console.log('got an err')
             });
         }
 
