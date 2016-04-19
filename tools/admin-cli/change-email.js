@@ -7,7 +7,7 @@ var config = require('../../server/common/setup/config'),
     billing = require('../../server/common/services/billing'),
     mongoose = require('../../server/node_modules/mongoose');
 
-logger.logError('adminCLI - changeEmail - this tool is not working as expected and should not be used.');
+logger.logError('adminCLI - changeEmail - this tool should not be used.');
 process.exit(1);
 
 var currentEmail = process.argv[2];
@@ -37,55 +37,46 @@ if (typeof currentEmail === 'undefined') {
     }
 }
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
+var modelsPath = config.root + '/server/common/models';
 
-require('../../server/common/setup/models')(modelsPath);
-var Users = mongoose.model('User');
-
-Users.findOne({email: currentEmail.toLowerCase()}).populate('account').exec(function (err, user) {
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - changeEmail - error fetching user for current email address: ' + currentEmail.toLowerCase());
         logger.logError(err);
-        process.exit(1);
-    } else if (!user) {
-        logger.logError('adminCLI - changeEmail - current email address not found: ' + currentEmail.toLowerCase());
-        process.exit(1);
-    } else if (user.status === 'failed') {
-        logger.logError('adminCLI - changeEmail - current email address is that of a failed user: ' + currentEmail.toLowerCase());
-        process.exit(1);
+        logger.logError('cjReportProcessorMain - db connection error');
     } else {
-        Users.findOne({email: newEmail.toLowerCase()}).populate('account').exec(function (err, newUser) {
+        require('../../server/common/setup/models')(modelsPath);
+        var Users = mongoose.model('User');
+        Users.findOne({email: currentEmail.toLowerCase()}).populate('account').exec(function (err, user) {
             if (err) {
-                logger.logError('adminCLI - changeEmail - error fetching user for new email address: ' + newEmail.toLowerCase());
+                logger.logError('adminCLI - changeEmail - error fetching user for current email address: ' + currentEmail.toLowerCase());
                 logger.logError(err);
                 process.exit(1);
-            } else if (newUser) {
-                logger.logError('adminCLI - changeEmail - an user already exists with the new email address: ' + newEmail.toLowerCase());
+            } else if (!user) {
+                logger.logError('adminCLI - changeEmail - current email address not found: ' + currentEmail.toLowerCase());
+                process.exit(1);
+            } else if (user.status === 'failed') {
+                logger.logError('adminCLI - changeEmail - current email address is that of a failed user: ' + currentEmail.toLowerCase());
                 process.exit(1);
             } else {
-                user.email = newEmail.toLowerCase();
-                user.save(function (err) {
+                Users.findOne({email: newEmail.toLowerCase()}).populate('account').exec(function (err, newUser) {
                     if (err) {
-                        logger.logError('adminCLI - changeEmail - error saving user with new email address: ' + newEmail.toLowerCase());
+                        logger.logError('adminCLI - changeEmail - error fetching user for new email address: ' + newEmail.toLowerCase());
                         logger.logError(err);
                         process.exit(1);
+                    } else if (newUser) {
+                        logger.logError('adminCLI - changeEmail - an user already exists with the new email address: ' + newEmail.toLowerCase());
+                        process.exit(1);
                     } else {
-                        billing.login(currentEmail, user.createdAt.getTime(), function (err, sessionId) {
+                        user.email = newEmail.toLowerCase();
+                        user.save(function (err) {
                             if (err) {
-                                logger.logError('adminCLI - changeEmail - error logging into freeside: ' + newEmail.toLowerCase());
+                                logger.logError('adminCLI - changeEmail - error saving user with new email address: ' + newEmail.toLowerCase());
                                 logger.logError(err);
-                                revertEmailInDatabase(user, currentEmail.toLowerCase(), function (err) {
-                                    if (err) {
-                                        logger.logError('adminCLI - changeEmail - error changing back to old email in db: ' + newEmail.toLowerCase());
-                                        logger.logError(err);
-                                    }
-                                    process.exit(1);
-                                });
+                                process.exit(1);
                             } else {
-                                billing.changeEmail(sessionId, newEmail, function (err) {
+                                billing.login(currentEmail, user.createdAt.getTime(), function (err, sessionId) {
                                     if (err) {
-                                        logger.logError('adminCLI - changeEmail - error changing email address in freeside: ' + newEmail.toLowerCase());
+                                        logger.logError('adminCLI - changeEmail - error logging into freeside: ' + newEmail.toLowerCase());
                                         logger.logError(err);
                                         revertEmailInDatabase(user, currentEmail.toLowerCase(), function (err) {
                                             if (err) {
@@ -95,8 +86,22 @@ Users.findOne({email: currentEmail.toLowerCase()}).populate('account').exec(func
                                             process.exit(1);
                                         });
                                     } else {
-                                        logger.logInfo('adminCLI - changeEmail - successfully change email address');
-                                        process.exit(0);
+                                        billing.changeEmail(sessionId, newEmail, function (err) {
+                                            if (err) {
+                                                logger.logError('adminCLI - changeEmail - error changing email address in freeside: ' + newEmail.toLowerCase());
+                                                logger.logError(err);
+                                                revertEmailInDatabase(user, currentEmail.toLowerCase(), function (err) {
+                                                    if (err) {
+                                                        logger.logError('adminCLI - changeEmail - error changing back to old email in db: ' + newEmail.toLowerCase());
+                                                        logger.logError(err);
+                                                    }
+                                                    process.exit(1);
+                                                });
+                                            } else {
+                                                logger.logInfo('adminCLI - changeEmail - successfully change email address');
+                                                process.exit(0);
+                                            }
+                                        });
                                     }
                                 });
                             }

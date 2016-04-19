@@ -55,7 +55,9 @@
                                                 <div id="collapseGenre" class="panel-collapse collapse in" ng-hide="genreField">
                                                     <div class="panel-body panel-body-left">
                                                         <div ng-repeat="tag in tags[0].tags | filter: { col : 0 }" class="filter-repeat" style="cursor: pointer">
-                                                                <input name="genreList[]" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                                <label class="label-filer">
+                                                                    <input name="genreList[]" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                                </label>
                                                         </div>
                                                     </div>
                                                     <div class="panel-body panel-body-right">

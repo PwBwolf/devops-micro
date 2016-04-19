@@ -37,49 +37,53 @@ if (typeof password === 'undefined') {
     }
 }
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
-
-require('../../server/common/setup/models')(modelsPath);
-var CrmUser = mongoose.model('CrmUser');
-
-CrmUser.findOne({email: email.toLowerCase()}, function (err, user) {
+var modelsPath = config.root + '/server/common/models';
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - crmUserResetPassword - error fetching user: ' + email.toLowerCase());
         logger.logError(err);
-        process.exit(1);
-    } else if (!user) {
-        logger.logError('adminCLI - crmUserResetPassword - password cannot be changed as the user was not found: ' + email.toLowerCase());
-        process.exit(1);
-    } else if (user.status === 'inactive') {
-            logger.logError('adminCLI - crmUserResetPassword - password cannot be changed as the user is inactive: ' + email.toLowerCase());
-            process.exit(1);
+        logger.logError('adminCLI - crmUserResetPassword - db connection error');
     } else {
-        user.password = password;
-        user.save(function (err) {
+        require('../../server/common/setup/models')(modelsPath);
+        var CrmUser = mongoose.model('CrmUser');
+        CrmUser.findOne({email: email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError('adminCLI - crmUserResetPassword - error saving new password to user: ' + email.toLowerCase());
+                logger.logError('adminCLI - crmUserResetPassword - error fetching user: ' + email.toLowerCase());
                 logger.logError(err);
                 process.exit(1);
+            } else if (!user) {
+                logger.logError('adminCLI - crmUserResetPassword - password cannot be changed as the user was not found: ' + email.toLowerCase());
+                process.exit(1);
+            } else if (user.status === 'inactive') {
+                logger.logError('adminCLI - crmUserResetPassword - password cannot be changed as the user is inactive: ' + email.toLowerCase());
+                process.exit(1);
+            } else {
+                user.password = password;
+                user.save(function (err) {
+                    if (err) {
+                        logger.logError('adminCLI - crmUserResetPassword - error saving new password to user: ' + email.toLowerCase());
+                        logger.logError(err);
+                        process.exit(1);
+                    }
+                    logger.logInfo('adminCLI - crmUserResetPassword - password changed successfully: ' + email.toLowerCase());
+                    logger.logInfo('adminCLI - crmUserResetPassword - sending password changed email to ' + email.toLowerCase());
+                    var mailOptions = {
+                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                        to: user.email,
+                        subject: config.crmPasswordChangedEmailSubject[user.preferences.defaultLanguage],
+                        html: sf(config.crmPasswordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                    };
+                    emailService.sendEmail(mailOptions, function (err) {
+                        if (err) {
+                            logger.logError('adminCLI - crmUserResetPassword - error sending password changed email to: ' + mailOptions.to);
+                            logger.logError(err);
+                            process.exit(1);
+                        } else {
+                            logger.logInfo('adminCLI - crmUserResetPassword - password changed email sent to ' + mailOptions.to);
+                            process.exit(0);
+                        }
+                    });
+                });
             }
-            logger.logInfo('adminCLI - crmUserResetPassword - password changed successfully: ' + email.toLowerCase());
-            logger.logInfo('adminCLI - crmUserResetPassword - sending password changed email to ' + email.toLowerCase());
-            var mailOptions = {
-                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                to: user.email,
-                subject: config.crmPasswordChangedEmailSubject[user.preferences.defaultLanguage],
-                html: sf(config.crmPasswordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-            };
-            emailService.sendEmail(mailOptions, function (err) {
-                if (err) {
-                    logger.logError('adminCLI - crmUserResetPassword - error sending password changed email to: ' + mailOptions.to);
-                    logger.logError(err);
-                    process.exit(1);
-                } else {
-                    logger.logInfo('adminCLI - crmUserResetPassword - password changed email sent to ' + mailOptions.to);
-                    process.exit(0);
-                }
-            });
         });
     }
 });

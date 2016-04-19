@@ -15,7 +15,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
     var query = {merchant: 'CJ'};
     var utcStartDate, utcEndDate, cjData, financeData, cjFile, financeFile;
     async.waterfall([
-        // do validations
         function (callback) {
             if (!startDate && !endDate) {
                 logger.logError('cj - exportCjAccounts - tool invoked with incorrect number of parameters');
@@ -42,13 +41,13 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback();
             }
         },
-        // collect data
         function (callback) {
             Account.find(query, {}, {$sort: {createdAt: 1}}).populate('primaryUser').exec(function (err, accounts) {
                 if (err) {
-                    logger.logError('cj - exportCjAccounts - error fetching partner accounts');
+                    logger.logError('cj - exportCjAccounts - error fetching cj accounts');
                     callback(err);
                 } else {
+                    logger.logInfo('cj - exportCjAccounts - cj account count: ' + accounts.length);
                     cjData = '&CID=4630657' + '\n' + '&SUBID=180563' + '\n';
                     financeData = 'OID,Username,Status,Type,Event Date,FreeSide Customer Number' + '\n';
                     for (var i = 0; i < accounts.length; i++) {
@@ -61,7 +60,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 }
             });
         },
-        // write cj batch file
         function (callback) {
             cjFile = 'cj-batch-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
             fs.writeFile(config.root + '/reports/' + cjFile, cjData, function (err) {
@@ -71,7 +69,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // write finance report
         function (callback) {
             financeFile = 'cj-finance-report-' + getDateTime(new Date(startDate), new Date(endDate)) + '.csv';
             fs.writeFile(config.root + '/reports/' + financeFile, financeData, function (err) {
@@ -81,7 +78,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // send finance report via email to accounting@yiptv.com
         function (callback) {
             var mailOptions = {
                 from: config.email.fromName + ' <' + config.email.fromEmail + '>',
@@ -97,7 +93,6 @@ exports.exportCjAccounts = function (startDate, endDate, cb) {
                 callback(err);
             });
         },
-        // upload cj batch file to cj ftp server
         function (callback) {
             var ftpOptions = {
                 host: config.cjReports.ftpHost,

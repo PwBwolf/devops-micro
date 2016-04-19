@@ -41,69 +41,74 @@ if (typeof password === 'undefined') {
     }
 }
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
-
-require('../../server/common/setup/models')(modelsPath);
-var User = mongoose.model('User');
-
-var username = validation.getUsername(email);
-User.findOne({email: username}, function (err, user) {
+var modelsPath = config.root + '/server/common/models';
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - resetPassword - error fetching user: ' + username);
         logger.logError(err);
-        process.exit(1);
-    } else if (!user) {
-        logger.logError('adminCLI - resetPassword - password cannot be changed as the user was not found: ' +username);
-        process.exit(1);
-    } else if (user.status === 'registered') {
-        logger.logError('adminCLI - resetPassword - password cannot be changed as the account is not verified: ' + username);
-        process.exit(1);
-    } else if (user.status === 'failed') {
-        logger.logError('adminCLI - resetPassword - password cannot be changed as the account was not created successfully: ' + username);
-        process.exit(1);
+        logger.logError('adminCLI - resetPassword - db connection error');
     } else {
-        var hashedPassword = user.hashedPassword;
-        var salt = user.salt;
-        user.password = password;
-        user.save(function (err) {
+        require('../../server/common/setup/models')(modelsPath);
+        var User = mongoose.model('User');
+
+        var username = validation.getUsername(email);
+        User.findOne({email: username}, function (err, user) {
             if (err) {
-                logger.logError('adminCLI - resetPassword - error saving new password to user: ' + username);
+                logger.logError('adminCLI - resetPassword - error fetching user: ' + username);
                 logger.logError(err);
                 process.exit(1);
+            } else if (!user) {
+                logger.logError('adminCLI - resetPassword - password cannot be changed as the user was not found: ' + username);
+                process.exit(1);
+            } else if (user.status === 'registered') {
+                logger.logError('adminCLI - resetPassword - password cannot be changed as the account is not verified: ' + username);
+                process.exit(1);
+            } else if (user.status === 'failed') {
+                logger.logError('adminCLI - resetPassword - password cannot be changed as the account was not created successfully: ' + username);
+                process.exit(1);
             } else {
-                logger.logInfo('adminCLI - resetPassword - password changed successfully: ' + username);
-                if(validation.isUsPhoneNumberInternationalFormat(username)) {
-                    logger.logInfo('adminCLI - resetPassword - sending password changed sms to ' + username);
-                    var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
-                        if (err) {
-                            logger.logError('adminCLI - resetPassword - error sending sms: ' + user.email);
-                            logger.logError(err);
+                var hashedPassword = user.hashedPassword;
+                var salt = user.salt;
+                user.password = password;
+                user.save(function (err) {
+                    if (err) {
+                        logger.logError('adminCLI - resetPassword - error saving new password to user: ' + username);
+                        logger.logError(err);
+                        process.exit(1);
+                    } else {
+                        logger.logInfo('adminCLI - resetPassword - password changed successfully: ' + username);
+                        if (validation.isUsPhoneNumberInternationalFormat(username)) {
+                            logger.logInfo('adminCLI - resetPassword - sending password changed sms to ' + username);
+                            var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
+                            twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                                if (err) {
+                                    logger.logError('adminCLI - resetPassword - error sending sms: ' + user.email);
+                                    logger.logError(err);
+                                } else {
+                                    logger.logInfo('adminCLI - resetPassword - sent sms successfully: ' + user.email);
+                                    process.exit(0);
+                                }
+                            });
                         } else {
-                            logger.logInfo('adminCLI - resetPassword - sent sms successfully: ' + user.email);
-                            process.exit(0);
+                            logger.logInfo('adminCLI - resetPassword - sending password changed email to ' + username);
+                            var mailOptions = {
+                                from: config.email.fromName + ' <' + config.email.fromEmail + '>',
+                                to: user.email,
+                                subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
+                                html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
+                            };
+                            emailService.sendEmail(mailOptions, function (err) {
+                                if (err) {
+                                    logger.logError('adminCLI - resetPassword - error sending password changed email to: ' + mailOptions.to);
+                                    logger.logError(err);
+                                    process.exit(1);
+                                } else {
+                                    logger.logInfo('adminCLI - resetPassword - password changed email sent to ' + mailOptions.to);
+                                    process.exit(0);
+                                }
+                            });
                         }
-                    });
-                } else {
-                    logger.logInfo('adminCLI - resetPassword - sending password changed email to ' + username);
-                    var mailOptions = {
-                        from: config.email.fromName + ' <' + config.email.fromEmail + '>',
-                        to: user.email,
-                        subject: config.passwordChangedEmailSubject[user.preferences.defaultLanguage],
-                        html: sf(config.passwordChangedEmailBody[user.preferences.defaultLanguage], config.imageUrl, user.firstName, user.lastName, config.customerCareNumber)
-                    };
-                    emailService.sendEmail(mailOptions, function (err) {
-                        if (err) {
-                            logger.logError('adminCLI - resetPassword - error sending password changed email to: ' + mailOptions.to);
-                            logger.logError(err);
-                            process.exit(1);
-                        } else {
-                            logger.logInfo('adminCLI - resetPassword - password changed email sent to ' + mailOptions.to);
-                            process.exit(0);
-                        }
-                    });
-                }
+                    }
+                });
             }
         });
     }

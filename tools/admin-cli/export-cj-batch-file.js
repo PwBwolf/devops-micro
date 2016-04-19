@@ -6,19 +6,24 @@ var logger = require('../../server/common/setup/logger'),
     mongoose = require('../../server/node_modules/mongoose'),
     config = require('../../server/common/setup/config');
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
+var modelsPath = config.root + '/server/common/models';
 
-require('../../server/common/setup/models')(modelsPath);
-
-var cj = require('../../server/common/services/cj');
-
-cj.exportCjAccounts(process.argv[2], process.argv[3], function (err) {
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - exportCjBatchFile - export failed');
-        process.exit(1);
+        logger.logError(err);
+        logger.logError('cjReportProcessorMain - db connection error');
     } else {
-        logger.logInfo('adminCLI - exportCjBatchFile - export completed');
-        process.exit(0);
+        require('../../server/common/setup/models')(modelsPath);
+        var cj = require('../../server/common/services/cj');
+        cj.exportCjAccounts(process.argv[2], process.argv[3], function (err) {
+            if (err) {
+                logger.logError(err);
+                logger.logError('adminCLI - exportCjBatchFile - export failed');
+                process.exit(1);
+            } else {
+                logger.logInfo('adminCLI - exportCjBatchFile - export completed');
+                process.exit(0);
+            }
+        });
     }
 });

@@ -285,3 +285,7 @@ footer {
   vertical-align: middle;
   background: transparent;
   z-index: 2; }
+
+.label-filer {
+  margin-bottom: 0px;
+  cursor: pointer; }

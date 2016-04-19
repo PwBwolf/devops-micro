@@ -9,7 +9,7 @@ var app = module.exports = express();
 
 var mongoose = require('../../../server/node_modules/mongoose');
 var config = require('../../../server/common/setup/config');
-var db = mongoose.connect(config.db);
+mongoose.connect(config.db);
 var modelsPath = config.root + '/server/common/models';
 require('../../../server/common/setup/models')(modelsPath);
 

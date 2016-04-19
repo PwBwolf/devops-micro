@@ -26,30 +26,35 @@ if (status !== 'active' && status !== 'inactive') {
     process.exit(1);
 }
 
-var modelsPath = config.root + '/server/common/models',
-    db = mongoose.connect(config.db);
-
-require('../../server/common/setup/models')(modelsPath);
-var CrmUser = mongoose.model('CrmUser');
-
-CrmUser.findOne({email: email.toLowerCase()}, function (err, user) {
+var modelsPath = config.root + '/server/common/models';
+mongoose.connect(config.db, function (err) {
     if (err) {
-        logger.logError('adminCLI - crmUserSetStatus - error fetching user: ' + email.toLowerCase());
         logger.logError(err);
-        process.exit(1);
-    } else if (!user) {
-        logger.logError('adminCLI - crmUserSetStatus - status cannot be changed as the user was not found: ' + email.toLowerCase());
-        process.exit(1);
+        logger.logError('adminCLI - crmUserSetStatus - db connection error');
     } else {
-        user.status = status;
-        user.save(function (err) {
+        require('../../server/common/setup/models')(modelsPath);
+        var CrmUser = mongoose.model('CrmUser');
+        CrmUser.findOne({email: email.toLowerCase()}, function (err, user) {
             if (err) {
-                logger.logError('adminCLI - crmUserSetStatus - error changing user status: ' + email.toLowerCase());
+                logger.logError('adminCLI - crmUserSetStatus - error fetching user: ' + email.toLowerCase());
                 logger.logError(err);
                 process.exit(1);
+            } else if (!user) {
+                logger.logError('adminCLI - crmUserSetStatus - status cannot be changed as the user was not found: ' + email.toLowerCase());
+                process.exit(1);
+            } else {
+                user.status = status;
+                user.save(function (err) {
+                    if (err) {
+                        logger.logError('adminCLI - crmUserSetStatus - error changing user status: ' + email.toLowerCase());
+                        logger.logError(err);
+                        process.exit(1);
+                    }
+                    logger.logInfo('adminCLI - crmUserSetStatus - status changed successfully for user: ' + email.toLowerCase());
+                    process.exit(0);
+                });
             }
-            logger.logInfo('adminCLI - crmUserSetStatus - status changed successfully for user: ' + email.toLowerCase());
-            process.exit(0);
         });
     }
 });
+
