@@ -2,7 +2,7 @@
     'use strict';
 
     app.factory('playerSvc', ['$filter', '$rootScope', 'mediaSvc', function ($filter, $rootScope, mediaSvc) {
-
+        console.log('player service loaded')
         var channelsEpgObj = {};
         var allChannelsObj = {};
         var timeBarStart;
