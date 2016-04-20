@@ -23,6 +23,7 @@
     "angular-animate": "^1.5.5"
   },
   "resolutions": {
-    "jquery": ">=1.10"
+    "jquery": ">=1.10",
+    "angular": "^1.5.5"
   }
 }
