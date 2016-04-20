@@ -55,13 +55,30 @@
 }
 
 #title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 17px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
     cursor: default;
 }
 
 #description {
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+    height: 25px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: clip;
+    line-height: 25px;
+    color: white;
+    vertical-align: middle;
+    font-size: 10px;
     cursor: default;
 }
-
 
 #filter {
     img {
@@ -86,3 +103,7 @@
 }
 
 
+.label-filer {
+    margin-bottom: 0px;
+    cursor: pointer;
+}

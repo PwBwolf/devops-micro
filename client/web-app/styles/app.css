@@ -45,7 +45,7 @@ input[type="radio"] {
     display: none;
 }
 
-label:before {
+.purple:before {
     content: "";
     display: inline-block;
     width: 16px;
@@ -59,7 +59,7 @@ label:before {
     box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 }
 
-label {
+.purple {
     display: inline-block;
     cursor: pointer;
     position: relative;
@@ -1966,32 +1966,6 @@ body, html {
     display: inline-block;
     margin-left: 1px;
     background: transparent;
-}
-
-#title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    height: 17px;
-    text-align: left;
-    padding-left: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-
-#description {
-    text-overflow: ellipsis !important;
-    white-space: nowrap;
-    height: 25px;
-    text-align: left;
-    overflow: hidden;
-    padding-left: 10px;
-    text-overflow: clip;
-    line-height: 25px;
-    color: white;
-    vertical-align: middle;
-    font-size: 10px;
 }
 
 #programDetail {

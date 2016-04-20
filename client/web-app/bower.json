@@ -16,13 +16,13 @@
     "ngInfiniteScroll": "^1.2.2",
     "ng-scroll-repeat": "^0.0.5",
     "angulartics-google-analytics": "^0.1.4",
-    "angulartics-google-tag-manager": "^0.0.1"
+    "angulartics-google-tag-manager": "^0.0.1",
+    "angular": "^1.5.5",
+    "angular-sanitize": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-animate": "^1.5.5"
   },
   "resolutions": {
-    "jquery": ">=1.10",
-    "angular": "^1.5.5",
-    "angular-route": "^1.5.5",
-    "angular-animate": "^1.5.5",
-    "angular-sanitize": "^1.5.5"
+    "jquery": ">=1.10"
   }
 }
