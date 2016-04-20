@@ -126,6 +126,7 @@
         };
 
         function loadMore(channelsArr){
+            console.log('loading more')
             for(var i = 0; i < 10; i++) {
                 var checkLength = ($scope.programming.length) < channelsArr.length;
                 if(checkLength) {
