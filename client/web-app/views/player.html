@@ -66,7 +66,7 @@
                                 <div class="show-detail" title="{{::show.dropdownInfo}}" ng-repeat="show in ::programs.lineUp" style="width: {{::show.length * 5}}px; border-right: 1px solid #000033">
                                     <div ng-if="::show.title !== null">
                                         <p style="text-align: left;"><span class="channel-details-body">{{::show.title}}</span></p>
-                                        <p style="text-align: left;"><span class="channel-details-body" ng-if="show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
+                                        <p style="text-align: left;"><span class="channel-details-body" ng-if="::show.startHour !== undefined">{{::show.startHour}} - {{::show.endHour}}</span></p>
                                     </div>
                                     <div ng-if="::show.title === null">
 
