@@ -62,7 +62,9 @@
                                                     </div>
                                                     <div class="panel-body panel-body-right">
                                                         <div ng-repeat="tag in tags[0].tags | filter: { col : 1 }" class="filter-repeat">
-                                                            <input name="genreList[]" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input name="genreList[]" ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,12 +78,16 @@
                                                 <div id="collapseRegion" class="panel-collapse collapse in"  ng-hide="originField">
                                                     <div class="panel-body panel-body-left">
                                                         <div ng-repeat="tag in tags[2].tags | filter: { col: 0 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                     <div class="panel-body panel-body-right">
                                                         <div ng-repeat="tag in tags[2].tags | filter: { col : 1 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -96,12 +102,16 @@
                                                 <div id="collapseAudience" class="panel-collapse collapse in" ng-hide="audienceField">
                                                     <div class="panel-body panel-body-left">
                                                         <div ng-repeat="tag in tags[3].tags | filter: { col: 0 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                     <div class="panel-body panel-body-right">
                                                         <div ng-repeat="tag in tags[3].tags | filter: { col : 1 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,12 +125,16 @@
                                                 <div id="collapseLanguage" class="panel-collapse collapse in" ng-hide="languageField">
                                                     <div class="panel-body panel-body-left">
                                                         <div ng-repeat="tag in tags[1].tags | filter: { col: 0 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                     <div class="panel-body panel-body-right">
                                                         <div ng-repeat="tag in tags[1].tags | filter: { col : 1 }" class="filter-repeat">
-                                                            <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            <label class="label-filer">
+                                                                <input ng-click="toggleFilter(tag.id)" value="{{tag.id}}" ng-model="tag.Selected" type="checkbox"/>{{tag.name}}
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
