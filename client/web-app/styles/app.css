@@ -1,32 +1,3 @@
-.bold-link {
-    font-family: gotham-bookgotham-book !important;
-    font-weight: bolder !important;
-}
-
-.bolder-link {
-    font-family: gotham-boldgotham-bold !important;
-    font-weight: bolder !important;
-}
-
-.language a:hover {
-    margin: 0 0 1px 5px;
-}
-
-
-
-.text-area {
-    height: 241px;
-}
-
-.app-button {
-    margin: 10px 5px;
-}
-
-.app-link {
-    display: block;
-    margin: 0 auto 5px;
-}
-
 #accountBox {
     position: relative;
     margin: 0 auto;

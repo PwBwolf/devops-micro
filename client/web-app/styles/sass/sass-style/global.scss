@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0px;
+    font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+
+header {
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+}
+
+/* purple label checkbox */
+.purple:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 0px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    background-color: #A03269;
+    border-radius: 3px;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+.purple {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.check-box label {
+    margin-bottom: 10px;
+}
+
+.check-box label:before {
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="radio"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    display: none;
+}
+
+input[type="radio"] {
+    margin-left: 10px;
+    display: none;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+}
+
+.navbar-default {
+    background: none;
+    border: none;
+    margin: 0px;
+}
