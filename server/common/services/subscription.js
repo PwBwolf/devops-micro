@@ -653,8 +653,9 @@ module.exports = {
                                 }
                             });
                         }
-                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
-                        revertAgent(userObj, newUser, oldAgentNumber);
+                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function () {
+                            revertAgent(userObj, newUser, oldAgentNumber);
+                        });
                         if (userObj.status === 'registered') {
                             if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj);

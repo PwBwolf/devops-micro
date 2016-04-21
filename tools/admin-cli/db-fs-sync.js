@@ -9,7 +9,7 @@ var config = require('../../server/common/setup/config'),
     async = require('async'),
     fs = require('fs-extended'),
     mongoose = require('../../server/node_modules/mongoose'),
-    logFile = fs.createWriteStream(__dirname + '/db-fs-check.log', {flags: 'w'});
+    logFile = fs.createWriteStream(__dirname + '/db-fs-sync.log', {flags: 'w'});
 
 var modelsPath = config.root + '/server/common/models';
 mongoose.connect(config.db, function (err) {
@@ -72,3 +72,4 @@ mongoose.connect(config.db, function (err) {
         });
     }
 });
+

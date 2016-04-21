@@ -610,9 +610,6 @@ module.exports = {
                                     } else {
                                         logger.logInfo('subscription - changeCreditCard - sms sent successfully: ' + user.email);
                                     }
-                                    if (cb) {
-                                        cb(err);
-                                    }
                                 });
                             } else {
                                 var mailOptions = {
