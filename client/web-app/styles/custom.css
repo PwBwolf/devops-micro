@@ -493,6 +493,10 @@ footer {
   padding: 0px;
   margin: 0px; }
 
+.modal-button {
+  margin-bottom: 10px;
+  width: 100%; }
+
 .underline-text {
   text-decoration: underline !important; }
 
