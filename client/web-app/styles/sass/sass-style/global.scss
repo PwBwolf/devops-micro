@@ -85,3 +85,73 @@ input[type="radio"] {
     border: none;
     margin: 0px;
 }
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+.content-area {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
+
+.content-area h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0px 0px 1%;
+}
+
+.content-area .content-box h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0 0 1%;
+}
+
+.content-area h1 span {
+    background: #fff;
+    padding: 0px 2% 0px 2%;
+    margin: 0px;
+}
+
+.content-area .message-box p {
+    padding: 25px 0px 0px 0px;
+    margin-top: 60px;
+}
+
+.content-box {
+    float: left;
+    width: 100%;
+    font-family: 'gotham-lightgotham-light';
+    font-size: 19px;
+    color: #000;
+    padding: 20px 0 80px 0;
+    margin: 0px;
+}
+
+.content-box a:hover {
+    color: #A03269;
+}
+
+.form-box {
+    width: 700px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: 0 auto;
+}
