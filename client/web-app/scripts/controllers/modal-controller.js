@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('modalCtrl', ['$scope', '$modalInstance', 'title', 'body', 'showOkButton', 'showYesButton', 'showNoButton', function ($scope, $modalInstance, title, body, showOkButton, showYesButton, showNoButton) {
+    app.controller('modalCtrl', ['$scope', '$uibModalInstance', 'title', 'body', 'showOkButton', 'showYesButton', 'showNoButton', function ($scope, $uibModalInstance, title, body, showOkButton, showYesButton, showNoButton) {
 
         $scope.modalTitle = title;
         $scope.modalBody = body;
@@ -10,15 +10,15 @@
         $scope.showNoButton = showNoButton;
 
         $scope.yes = function () {
-            $modalInstance.close('yes');
+            $uibModalInstance.close('yes');
         };
 
         $scope.ok = function () {
-            $modalInstance.dismiss('ok');
+            $uibModalInstance.dismiss('ok');
         };
 
         $scope.no = function () {
-            $modalInstance.dismiss('no');
+            $uibModalInstance.dismiss('no');
         };
     }]);
 }(angular.module('app')));

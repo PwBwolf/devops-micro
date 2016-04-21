@@ -355,7 +355,7 @@
             if (!webStorage.session.get('recentChannels')) {
                 updatedRecents = [];
                 updatedRecents[0] = channelId;
-                webStorage.session.add('recentChannels', updatedRecents);
+                webStorage.session.set('recentChannels', updatedRecents);
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
                 //console.log(typeof channelId)
@@ -363,12 +363,12 @@
                 //console.log('index in recent channels array', index)
                 if(index === -1){
                     recentChannels.unshift(channelId);
-                    webStorage.session.add('recentChannels', recentChannels);
+                    webStorage.session.set('recentChannels', recentChannels);
                 }
                 else{
                     var mostRecent = recentChannels.splice(index, 1);
                     recentChannels.unshift(mostRecent[0]);
-                    webStorage.session.add('recentChannels', recentChannels);
+                    webStorage.session.set('recentChannels', recentChannels);
                 }
             }
         }

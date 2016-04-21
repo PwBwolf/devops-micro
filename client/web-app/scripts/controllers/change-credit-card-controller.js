@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('changeCreditCardCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$rootScope', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $rootScope, $location, $filter) {
+    app.controller('changeCreditCardCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$scope', '$rootScope', '$filter', function (appSvc, userSvc, loggerSvc, $scope, $rootScope, $filter) {
 
         activate();
 

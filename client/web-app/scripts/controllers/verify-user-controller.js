@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('verifyUserCtrl', ['userSvc', '$scope', '$location', '$filter', function (userSvc, $scope, $location) {
+    app.controller('verifyUserCtrl', ['userSvc', '$scope', '$location', function (userSvc, $scope, $location) {
 
         verifyUser();
 

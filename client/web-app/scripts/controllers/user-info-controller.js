@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('userInfoCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter, $) {
+    app.controller('userInfoCtrl', ['userSvc', 'appSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, appSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         $scope.mv = {firstName: $scope.user.firstName, lastName: $scope.user.lastName};
 

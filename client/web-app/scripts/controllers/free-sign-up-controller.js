@@ -32,8 +32,8 @@
                     function () {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        webStorage.session.add('signUpUsername', $scope.mv.email);
-                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
+                        webStorage.session.set('signUpUsername', $scope.mv.email);
+                        webStorage.session.set('signUpMerchant', $scope.mv.merchant);
                         $location.path('/sign-up-verification/' + $scope.mv.email + '/free-sign-up-success');
                     },
                     function (error) {

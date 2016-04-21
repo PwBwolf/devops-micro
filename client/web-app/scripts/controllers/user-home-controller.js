@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('userHomeCtrl', ['$scope', '$', '$modal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', 'webStorage', function ($scope, $, $modal, $rootScope, $location, $filter, userSvc, loggerSvc, webStorage) {
+    app.controller('userHomeCtrl', ['$scope', '$', '$uibModal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', 'webStorage', function ($scope, $, $uibModal, $rootScope, $location, $filter, userSvc, loggerSvc, webStorage) {
 
         $scope.showUpgradePremium = false;
 
@@ -33,7 +33,7 @@
         };
 
         $scope.cancelSubscription = function () {
-            $modal.open({
+            $uibModal.open({
                 templateUrl: 'modalWindow',
                 controller: 'modalCtrl',
                 size: 'sm',
