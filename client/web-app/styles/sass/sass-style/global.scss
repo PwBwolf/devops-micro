@@ -155,3 +155,109 @@ input[type="radio"] {
     padding: 0px;
     margin: 0 auto;
 }
+
+.header-color {
+    color: #291753;
+}
+
+#details {
+    height: 250px;
+    resize: none;
+}
+
+.text-box {
+    background: #FFFFFF;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.dropdown-list {
+    -webkit-appearance: menulist-button;
+    padding: 0 0 0 1% !important;
+}
+
+.text-box-error {
+    background: #FFFFFF;
+    border: 2px solid;
+    border-color: rgb(228, 29, 29) !important;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+}
+
+.center-form {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.center-form span {
+    font-family: "radikalthin";
+    font-weight: normal;
+    padding: 0px 5px;
+    margin: 0px 0px 0px 0px;
+}
+
+.center-form a {
+    color: #A03269;
+    text-decoration: none;
+}
+
+.center-form a:hover {
+    color: #A03269;
+    text-decoration: underline;
+}
+
+.label-text {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: capitalize;
+}
+
+.label-text-info {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 14px;
+    padding-left: 0;
+    font-style: italic;
+}
+
+.sign-up-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: none;
+}
+
+.error-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #f92b26;
+    text-transform: uppercase;
+}
+
+.status-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #412c89;
+    text-transform: uppercase;
+}
+
+.success-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #1CAF9A;
+    text-transform: uppercase;
+}

@@ -135,6 +135,97 @@ input[type="radio"] {
   padding: 0px;
   margin: 0 auto; }
 
+.header-color {
+  color: #291753; }
+
+#details {
+  height: 250px;
+  resize: none; }
+
+.text-box {
+  background: #FFFFFF;
+  color: #000000;
+  font-family: "radikallight";
+  font-size: 20px;
+  height: 44px;
+  margin: 10px 0 1%;
+  padding: 0 1%;
+  width: 98%;
+  border-radius: 5px;
+  border: 1px solid; }
+
+.dropdown-list {
+  -webkit-appearance: menulist-button;
+  padding: 0 0 0 1% !important; }
+
+.text-box-error {
+  background: #FFFFFF;
+  border: 2px solid;
+  border-color: #e41d1d !important;
+  color: #000000;
+  font-family: "radikallight";
+  font-size: 20px;
+  height: 44px;
+  margin: 10px 0 1%;
+  padding: 0 1%;
+  width: 98%;
+  border-radius: 5px; }
+
+.center-form {
+  float: left;
+  width: 100%;
+  text-align: center; }
+
+.center-form span {
+  font-family: "radikalthin";
+  font-weight: normal;
+  padding: 0px 5px;
+  margin: 0px 0px 0px 0px; }
+
+.center-form a {
+  color: #A03269;
+  text-decoration: none; }
+
+.center-form a:hover {
+  color: #A03269;
+  text-decoration: underline; }
+
+.label-text {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  padding-left: 0;
+  text-transform: capitalize; }
+
+.label-text-info {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 14px;
+  padding-left: 0;
+  font-style: italic; }
+
+.sign-up-message {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  padding-left: 0;
+  text-transform: none; }
+
+.error-message {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  color: #f92b26;
+  text-transform: uppercase; }
+
+.status-message {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  color: #412c89;
+  text-transform: uppercase; }
+
+.success-message {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  color: #1CAF9A;
+  text-transform: uppercase; }
+
 /* Variables */
 /* typography */
 /* views */
@@ -233,6 +324,26 @@ input[type="radio"] {
 
 #currentChannel img {
   max-width: 140px; }
+
+.point {
+  background: #DDD;
+  border-radius: 2px;
+  display: inline-block;
+  height: 10px;
+  margin-right: 1px;
+  width: 19.5%; }
+
+.checkbox {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 15px 5px 0px;
+  background: url(../images/checkbox.png) no-repeat;
+  border: 0px solid #FFFFFF;
+  display: block;
+  clear: left;
+  float: left; }
 
 #headerBrand .navbar-right {
   width: 470px;
@@ -440,6 +551,29 @@ footer {
   text-align: justify;
   font-size: 12px; }
 
+a.import-button {
+  background: #A03269;
+  width: 98%;
+  height: 40px;
+  line-height: 42px;
+  font-family: 'radikalregular';
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 5px;
+  padding: 5px 20px;
+  margin: 0; }
+
+a.import-button:hover {
+  color: #fff;
+  text-decoration: none; }
+
+#emailList {
+  height: 250px;
+  resize: none; }
+
 .app-button {
   margin: 10px 5px; }
 
@@ -497,6 +631,68 @@ footer {
   margin-bottom: 10px;
   width: 100%; }
 
+.free-sign-up {
+  padding: 10px 30px 30px 30px; }
+
+.free-sign-up ul {
+  padding-left: 30px;
+  padding-bottom: 20px; }
+
+.free-sign-up li {
+  list-style-type: disc; }
+
+.sign-up-success ul {
+  padding-left: 30px; }
+
+.sign-up-success a {
+  color: black;
+  text-decoration: underline; }
+
+.sign-up-success li {
+  list-style-type: disc;
+  font-size: 90%; }
+
+.sign-up-order {
+  background: #E7E8E9;
+  padding: 10px 30px 30px 30px; }
+
+.sign-up-order hr {
+  border-top: 1px solid #000; }
+
+.sign-up-order ul {
+  padding-left: 30px;
+  padding-bottom: 20px; }
+
+.sign-up-order li {
+  list-style-type: disc;
+  font-size: 90%; }
+
+ul.passwordStrength {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: 2px;
+  width: 100%; }
+
+.form-container {
+  float: left;
+  width: 100%;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px; }
+
+.half-form {
+  float: left;
+  width: 49.5%;
+  padding: 5% 0% 0px 0px;
+  margin: 0px 0px 0px 0px; }
+
+.full-form {
+  float: left;
+  width: 100%;
+  padding: 5% 0px 0px 0px;
+  margin: 0px 0px 0px 0px; }
+
 .underline-text {
   text-decoration: underline !important; }
 
@@ -504,6 +700,24 @@ footer {
   text-decoration: underline;
   font-weight: bolder;
   font-family: 'gotham-bookgotham-book'; }
+
+.sign-in-header {
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: gotham-boldgotham-bold;
+  line-height: 1.1; }
+
+.sign-in-sub-header {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 100;
+  line-height: 1.1; }
+
+.content-text {
+  color: #000;
+  font-size: 16px; }
 
 .toast-error {
   background-color: #D43F3A; }
@@ -527,3 +741,18 @@ footer {
   display: inline-block;
   width: 340px;
   color: black; }
+
+.menu-btn, .menu-btn:hover, .menu-btn:focus {
+  background-color: #A03269;
+  border-color: #A03269; }
+
+.heading {
+  text-transform: uppercase; }
+
+.message {
+  font-family: 'gotham-bookgotham-book';
+  font-size: 16px;
+  padding-left: 0;
+  text-transform: none;
+  color: #000;
+  text-align: justify; }

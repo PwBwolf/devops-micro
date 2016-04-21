@@ -110,3 +110,25 @@
 #currentChannel img {
     max-width: 140px;
 }
+
+.point {
+    background: #DDD;
+    border-radius: 2px;
+    display: inline-block;
+    height: 10px;
+    margin-right: 1px;
+    width: 19.5%;
+}
+
+.checkbox {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 15px 5px 0px;
+    background: url(../images/checkbox.png) no-repeat;
+    border: 0px solid #FFFFFF;
+    display: block;
+    clear: left;
+    float: left;
+}

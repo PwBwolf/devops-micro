@@ -67,3 +67,79 @@
     margin-bottom: 10px;
     width: 100%;
 }
+
+.free-sign-up {
+    padding: 10px 30px 30px 30px;
+}
+
+.free-sign-up ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.free-sign-up li {
+    list-style-type: disc;
+}
+
+.sign-up-success ul {
+    padding-left: 30px;
+}
+
+.sign-up-success a {
+    color: black;
+    text-decoration: underline;
+}
+
+.sign-up-success li {
+    list-style-type: disc;
+    font-size: 90%;
+}
+
+.sign-up-order {
+    background: #E7E8E9;
+    padding: 10px 30px 30px 30px;
+}
+
+.sign-up-order hr {
+    border-top: 1px solid #000;
+}
+
+.sign-up-order ul {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.sign-up-order li {
+    list-style-type: disc;
+    font-size: 90%;
+}
+
+ul.passwordStrength {
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: 2px;
+    width: 100%;
+}
+
+.form-container {
+    float: left;
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.half-form {
+    float: left;
+    width: 49.5%;
+    padding: 5% 0% 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.full-form {
+    float: left;
+    width: 100%;
+    padding: 5% 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
