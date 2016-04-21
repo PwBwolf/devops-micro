@@ -4,6 +4,16 @@ body {
     font-family: 'gotham-bookgotham-book', Arial, sans-serif;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body, html {
+    font-size: 14px;
+}
+
 ul, ol {
     margin: 0;
     padding: 0px;
