@@ -1,0 +1,271 @@
+body {
+    margin: 0;
+    padding: 0px;
+    font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+
+header {
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+}
+
+/* purple label checkbox */
+.purple:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 0px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    background-color: #A03269;
+    border-radius: 3px;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+.purple {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.check-box label {
+    margin-bottom: 10px;
+}
+
+.check-box label:before {
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="radio"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    display: none;
+}
+
+input[type="radio"] {
+    margin-left: 10px;
+    display: none;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+}
+
+.navbar-default {
+    background: none;
+    border: none;
+    margin: 0px;
+}
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+.content-area {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
+
+.content-area h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0px 0px 1%;
+}
+
+.content-area .content-box h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0 0 1%;
+}
+
+.content-area h1 span {
+    background: #fff;
+    padding: 0px 2% 0px 2%;
+    margin: 0px;
+}
+
+.content-area .message-box p {
+    padding: 25px 0px 0px 0px;
+    margin-top: 60px;
+}
+
+.content-box {
+    float: left;
+    width: 100%;
+    font-family: 'gotham-lightgotham-light';
+    font-size: 19px;
+    color: #000;
+    padding: 20px 0 80px 0;
+    margin: 0px;
+}
+
+.content-box a:hover {
+    color: #A03269;
+}
+
+.form-box {
+    width: 700px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: 0 auto;
+}
+
+.header-color {
+    color: #291753;
+}
+
+#details {
+    height: 250px;
+    resize: none;
+}
+
+.text-box {
+    background: #FFFFFF;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.dropdown-list {
+    -webkit-appearance: menulist-button;
+    padding: 0 0 0 1% !important;
+}
+
+.text-box-error {
+    background: #FFFFFF;
+    border: 2px solid;
+    border-color: rgb(228, 29, 29) !important;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+}
+
+.center-form {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.center-form span {
+    font-family: "radikalthin";
+    font-weight: normal;
+    padding: 0px 5px;
+    margin: 0px 0px 0px 0px;
+}
+
+.center-form a {
+    color: #A03269;
+    text-decoration: none;
+}
+
+.center-form a:hover {
+    color: #A03269;
+    text-decoration: underline;
+}
+
+.label-text {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: capitalize;
+}
+
+.label-text-info {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 14px;
+    padding-left: 0;
+    font-style: italic;
+}
+
+.sign-up-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: none;
+}
+
+.error-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #f92b26;
+    text-transform: uppercase;
+}
+
+.status-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #412c89;
+    text-transform: uppercase;
+}
+
+.success-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #1CAF9A;
+    text-transform: uppercase;
+}
+
+.dropdown-width {
+    width: 400px !important;
+}
+
+.dropdown-width .form-box {
+    width: auto !important;
+}

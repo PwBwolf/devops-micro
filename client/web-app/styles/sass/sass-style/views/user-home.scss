@@ -1,0 +1,137 @@
+.cancel-on {
+    font-weight: bolder;
+    padding: 10px;
+    display: inline-block;
+    width: 340px;
+    color: black;
+}
+
+.menu-btn, .menu-btn:hover, .menu-btn:focus {
+    background-color: #A03269;
+    border-color: #A03269;
+}
+
+#profileDropDown {
+    width: 800px;
+    left: 0px;
+    margin-top: -20px;
+}
+
+#accountDropDown {
+    width: 800px;
+    left: 0px;
+    margin-top: 0px;
+}
+
+.collapse-hide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    z-index: 1;
+    color: black;
+}
+
+#preferencesDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 325px;
+}
+
+#changePasswordDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 500px;
+}
+
+#userInfoDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 380px;
+}
+
+#upgradeSubscriptionDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
+    margin-left: 0px;
+}
+
+#changeCreditCardDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
+}
+
+#headerButtons {
+    width: 100%;
+}
+
+#dropDowns > .panel {
+    display: inline;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-radius: 0px;
+}
+
+.btn-group > .btn:last-child:not(:first-child):not(.dropdown-toggle) {
+    border-radius: 0px;
+}
+
+#headerButtons .btn {
+    padding: 5px 0px !important;
+    display: inline-block;
+    border: none;
+    margin: 0 1px 0 0;
+    border-radius: 0;
+    height: 53px;
+}
+
+.button-user-mail {
+    width: 50px;
+    height: 50px;
+    display: table-cell;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.button-logo {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    margin-left: 45%;
+}
+
+.well .btn:nth-child(even) {
+    margin: 0 1%;
+}
+
+.well:not(:last-child) {
+    margin-bottom: 2px;
+}
+
+.well {
+    background-color: rgba(200, 200, 200, 0.9) !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    /*     padding: 15px !important; */
+    text-align: center;
+    /*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
+    margin-bottom: 0;
+}
+
+.btn-primary.active {
+    background-color: rgba(200, 200, 200, 0.9) !important;
+}
+
+#smallChannelDescription {
+    line-height: 1.051;
+    overflow: hidden;
+    margin-top: 10px;
+}
