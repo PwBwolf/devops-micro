@@ -143,3 +143,34 @@ ul.passwordStrength {
     padding: 5% 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
+
+@media screen and (max-width: 999px) {
+    a.language {
+        margin-left: 17px;
+    }
+
+    .form-box {
+        width: 100%;
+    }
+
+    .success-box {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .half-form {
+        width: 100%;
+    }
+
+    .language {
+        margin-right: -60px;
+    }
+
+    .form-box {
+        width: 100%;
+        font-size: 15px;
+        margin-top: 0px;
+    }
+}

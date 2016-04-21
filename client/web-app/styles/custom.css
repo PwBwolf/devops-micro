@@ -345,6 +345,13 @@ input[type="radio"] {
   clear: left;
   float: left; }
 
+#channelFilterHolder {
+  margin-top: 10px;
+  background-color: rgba(55, 55, 55, 0.9);
+  width: 100%;
+  height: 100%;
+  padding: 20px; }
+
 #headerBrand .navbar-right {
   width: 470px;
   height: 100%; }
@@ -693,6 +700,24 @@ ul.passwordStrength {
   padding: 5% 0px 0px 0px;
   margin: 0px 0px 0px 0px; }
 
+@media screen and (max-width: 999px) {
+  a.language {
+    margin-left: 17px; }
+  .form-box {
+    width: 100%; }
+  .success-box {
+    width: 100%; } }
+
+@media screen and (max-width: 767px) {
+  .half-form {
+    width: 100%; }
+  .language {
+    margin-right: -60px; }
+  .form-box {
+    width: 100%;
+    font-size: 15px;
+    margin-top: 0px; } }
+
 .underline-text {
   text-decoration: underline !important; }
 
@@ -745,6 +770,50 @@ ul.passwordStrength {
 .menu-btn, .menu-btn:hover, .menu-btn:focus {
   background-color: #A03269;
   border-color: #A03269; }
+
+#profileDropDown {
+  width: 800px;
+  left: 0px;
+  margin-top: -20px; }
+
+#accountDropDown {
+  width: 800px;
+  left: 0px;
+  margin-top: 0px; }
+
+.collapse-hide {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 5px;
+  z-index: 1;
+  color: black; }
+
+#preferencesDropDown > div {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 325px; }
+
+#changePasswordDropDown > div {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 500px; }
+
+#userInfoDropDown > div {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 380px; }
+
+#upgradeSubscriptionDropDown > div {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 560px;
+  margin-left: 0px; }
+
+#changeCreditCardDropDown > div {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 560px; }
 
 .heading {
   text-transform: uppercase; }

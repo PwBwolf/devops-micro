@@ -4,10 +4,61 @@
     display: inline-block;
     width: 340px;
     color: black;
-
 }
 
 .menu-btn, .menu-btn:hover, .menu-btn:focus {
     background-color: #A03269;
     border-color: #A03269;
+}
+
+#profileDropDown {
+    width: 800px;
+    left: 0px;
+    margin-top: -20px;
+}
+
+#accountDropDown {
+    width: 800px;
+    left: 0px;
+    margin-top: 0px;
+}
+
+.collapse-hide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    z-index: 1;
+    color: black;
+}
+
+#preferencesDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 325px;
+}
+
+#changePasswordDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 500px;
+}
+
+#userInfoDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 380px;
+}
+
+#upgradeSubscriptionDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
+    margin-left: 0px;
+}
+
+#changeCreditCardDropDown > div {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 560px;
 }
