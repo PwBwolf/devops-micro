@@ -226,6 +226,12 @@ input[type="radio"] {
   color: #1CAF9A;
   text-transform: uppercase; }
 
+.dropdown-width {
+  width: 400px !important; }
+
+.dropdown-width .form-box {
+  width: auto !important; }
+
 /* Variables */
 /* typography */
 /* views */
@@ -351,6 +357,72 @@ input[type="radio"] {
   width: 100%;
   height: 100%;
   padding: 20px; }
+
+.channel-filter-categories {
+  background-color: #333;
+  padding: 5px;
+  color: #fff;
+  margin-top: 10px;
+  margin-left: -20px;
+  display: inline-block; }
+
+.filter-categories {
+  width: 350px; }
+
+#channelFilterHolder .panel-heading {
+  background: rgba(200, 200, 200, 0.8);
+  padding: 2px 5px; }
+
+#channelFilterHolder .panel-default, #channelFilterHolder .panel {
+  border-radius: 0; }
+
+#channelFilterHolder .panel-title {
+  font-size: 100%;
+  font-weight: bolder; }
+
+#channelFilterHolder .panel-body {
+  padding: 5px;
+  color: #fff; }
+
+.panel-body-left {
+  width: 165px;
+  margin-left: -10px;
+  display: inline-block;
+  float: left; }
+
+.panel-body-right {
+  width: 185px;
+  display: inline-block;
+  float: left; }
+
+.filter-repeat {
+  text-align: left; }
+
+#channelFilterHolder .panel-body input[type="checkbox"] {
+  display: inline-block !important;
+  margin-right: 5px; }
+
+#channelFilterHolder .panel-collapse {
+  border: 1px solid #ddd;
+  width: 350px;
+  display: inline-block; }
+
+.channel-filters {
+  margin-right: 10px;
+  margin-top: 5px; }
+
+#filterClearAll {
+  float: left;
+  margin-top: -10px;
+  margin-left: 10px; }
+
+#filterClose {
+  float: right;
+  margin-top: -10px;
+  margin-right: 10px; }
+
+.panel-group .panel + .panel {
+  margin-top: 0px !important; }
 
 #headerBrand .navbar-right {
   width: 470px;
@@ -553,6 +625,15 @@ footer {
 
 .progress {
   width: 98%; }
+
+#guide {
+  margin-top: 10px;
+  margin-bottom: 40px; }
+
+#smallChannelDescription p, #channelGuideDescription p {
+  margin-bottom: 0px !important;
+  overflow: hidden;
+  vertical-align: top; }
 
 .raf-fine-print {
   text-align: justify;
@@ -814,6 +895,67 @@ ul.passwordStrength {
   overflow: hidden;
   overflow-y: auto;
   height: 560px; }
+
+#headerButtons {
+  width: 100%; }
+
+#dropDowns > .panel {
+  display: inline; }
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0px; }
+
+.btn-group > .btn:last-child:not(:first-child):not(.dropdown-toggle) {
+  border-radius: 0px; }
+
+#headerButtons .btn {
+  padding: 5px 0px !important;
+  display: inline-block;
+  border: none;
+  margin: 0 1px 0 0;
+  border-radius: 0;
+  height: 53px; }
+
+.button-user-mail {
+  width: 50px;
+  height: 50px;
+  display: table-cell;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 8px;
+  cursor: pointer; }
+
+.button-logo {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  margin-left: 45%; }
+
+.well .btn:nth-child(even) {
+  margin: 0 1%; }
+
+.well:not(:last-child) {
+  margin-bottom: 2px; }
+
+.well {
+  background-color: rgba(200, 200, 200, 0.9) !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  /*     padding: 15px !important; */
+  text-align: center;
+  /*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
+  margin-bottom: 0; }
+
+.btn-primary.active {
+  background-color: rgba(200, 200, 200, 0.9) !important; }
+
+#smallChannelDescription {
+  line-height: 1.051;
+  overflow: hidden;
+  margin-top: 10px; }
 
 .heading {
   text-transform: uppercase; }

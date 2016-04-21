@@ -261,3 +261,11 @@ input[type="radio"] {
     color: #1CAF9A;
     text-transform: uppercase;
 }
+
+.dropdown-width {
+    width: 400px !important;
+}
+
+.dropdown-width .form-box {
+    width: auto !important;
+}

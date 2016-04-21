@@ -140,3 +140,86 @@
     height: 100%;
     padding: 20px;
 }
+
+.channel-filter-categories {
+    background-color: #333;
+    padding: 5px;
+    color: #fff;
+    margin-top: 10px;
+    margin-left: -20px;
+    display: inline-block;
+}
+
+.filter-categories {
+    width: 350px;
+}
+
+#channelFilterHolder .panel-heading {
+    background: rgba(200, 200, 200, 0.80);
+    padding: 2px 5px;
+}
+
+#channelFilterHolder .panel-default, #channelFilterHolder .panel {
+    border-radius: 0;
+}
+
+#channelFilterHolder .panel-title {
+    font-size: 100%;
+    font-weight: bolder;
+}
+
+#channelFilterHolder .panel-body {
+    padding: 5px;
+    color: #fff;
+}
+
+.panel-body-left {
+    width: 165px;
+    margin-left: -10px;
+    display: inline-block;
+    float: left;
+}
+
+.panel-body-right {
+    width: 185px;
+    display: inline-block;
+    float: left;
+}
+
+.filter-repeat {
+    text-align: left;
+}
+
+#channelFilterHolder .panel-body input[type="checkbox"] {
+    display: inline-block !important;
+    margin-right: 5px;
+}
+
+#channelFilterHolder .panel-collapse {
+    border: 1px solid #ddd;
+    width: 350px;
+    display: inline-block;
+}
+
+.channel-filters {
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+#filterClearAll {
+    float: left;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+
+#filterClose {
+    float: right;
+    margin-top: -10px;
+    margin-right: 10px;
+}
+
+.panel-group .panel + .panel {
+    margin-top: 0px !important;
+}
+
+
