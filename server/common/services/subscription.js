@@ -1631,8 +1631,7 @@ function createAccount(user, userObj, type, cb) {
             users: [userObj],
             createdAt: now,
             startDate: now,
-            referredBy: user.referredBy,
-            key: new mongoose.Types.ObjectId
+            referredBy: user.referredBy
         }
     );
     if (type === 'free') {
