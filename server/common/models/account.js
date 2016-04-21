@@ -14,7 +14,7 @@ var Account = new Schema({
     createdAt: {type: Date, required: true, index: true},
     type: {type: String, required: true, index: true},
     referredBy: String,
-    key: Number,
+    key: {type: Schema.Types.ObjectId},
     freeSideCustomerNumber: Number,
     complimentaryCode: {type: String, sparse: true},
     merchant: {type: String, index: true},
@@ -26,5 +26,4 @@ var Account = new Schema({
     packages: [String]
 }, {collection: 'Accounts'});
 
-Account.plugin(autoIncrement.plugin, {model: 'Account', field: 'key', startAt: 1000});
 mongoose.model('Account', Account);
