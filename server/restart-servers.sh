@@ -6,7 +6,7 @@
 npm update
 
 cwd=`pwd`
-cd ../common/database
+cd common/database
 node fixtures.js
 cd $cwd
 
@@ -14,4 +14,4 @@ cd $cwd
 /etc/init.d/yip-web-app start
 
 cd ..
-node ../tools/deployment-scripts/notify-build.js
+node tools/deployment-scripts/notify-build.js
