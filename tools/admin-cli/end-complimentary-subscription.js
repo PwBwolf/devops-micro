@@ -71,9 +71,3 @@ mongoose.connect(config.db, function (err) {
     }
 });
 
-function getFormattedDate(date) {
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var year = date.getFullYear();
-    return month + '/' + day + '/' + year;
-}
