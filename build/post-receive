@@ -1,0 +1,12 @@
+#!/bin/sh
+GIT_WORK_TREE=~/yiptv
+export GIT_WORK_TREE
+git checkout -f
+
+export MONGO_PWD=y1ppr0d
+
+cd /opt/prodops/yiptv/server/
+chmod +x restart-daemons.sh
+chmod +x restart-servers.sh
+./restart-daemons.sh
+./restart-servers.sh
