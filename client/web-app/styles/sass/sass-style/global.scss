@@ -279,3 +279,56 @@ input[type="radio"] {
 .dropdown-width .form-box {
     width: auto !important;
 }
+
+@media (min-width: 1024px) and (max-width: 2400px) {
+    body {
+        height: auto;
+        width: auto;
+    }
+
+    .premium-button-holder {
+        width: 375px
+    }
+}
+
+@media screen and (max-width: 707px) {
+
+    .language {
+        font-size: 13px;
+    }
+
+    .premium-button-holder {
+        width: 250px
+    }
+}
+
+@media screen and (max-width: 399px) {
+    .user-home-box .caption {
+        left: 1%;
+    }
+
+    .user-home-box .caption button {
+        font-size: 14px;
+        padding: 10px;
+        width: 250px;
+    }
+
+    .cancel-on {
+        font-size: 14px;
+        width: 250px;
+    }
+
+    .submit-button {
+        height: 60px;
+        line-height: 60px;
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .navbar-right {
+        width: 270px;
+    }
+}
+

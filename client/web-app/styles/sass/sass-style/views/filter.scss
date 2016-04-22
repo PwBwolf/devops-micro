@@ -294,3 +294,24 @@
     margin-left: 1px;
     background: transparent;
 }
+
+.paid-tv .position-div {
+    display: inherit;
+}
+
+.collapse.navbar-collapse.in {
+    /*width: 25%;*/
+    z-index: 25;
+}
+
+.nav.navbar-nav.navbar-right li {
+    padding-left: 3%;
+}
+
+.navbar-toggle {
+    margin-top: 1px;
+}
+
+.navbar-default .navbar-toggle {
+    border-width: 2px;
+}

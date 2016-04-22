@@ -240,6 +240,38 @@ input[type="radio"] {
 .dropdown-width .form-box {
   width: auto !important; }
 
+@media (min-width: 1024px) and (max-width: 2400px) {
+  body {
+    height: auto;
+    width: auto; }
+  .premium-button-holder {
+    width: 375px; } }
+
+@media screen and (max-width: 707px) {
+  .language {
+    font-size: 13px; }
+  .premium-button-holder {
+    width: 250px; } }
+
+@media screen and (max-width: 399px) {
+  .user-home-box .caption {
+    left: 1%; }
+  .user-home-box .caption button {
+    font-size: 14px;
+    padding: 10px;
+    width: 250px; }
+  .cancel-on {
+    font-size: 14px;
+    width: 250px; }
+  .submit-button {
+    height: 60px;
+    line-height: 60px;
+    font-size: 15px; } }
+
+@media (max-width: 1024px) {
+  .navbar-right {
+    width: 270px; } }
+
 /* Variables */
 /* typography */
 /* views */
@@ -496,6 +528,22 @@ input[type="radio"] {
   display: inline-block;
   margin-left: 1px;
   background: transparent; }
+
+.paid-tv .position-div {
+  display: inherit; }
+
+.collapse.navbar-collapse.in {
+  /*width: 25%;*/
+  z-index: 25; }
+
+.nav.navbar-nav.navbar-right li {
+  padding-left: 3%; }
+
+.navbar-toggle {
+  margin-top: 1px; }
+
+.navbar-default .navbar-toggle {
+  border-width: 2px; }
 
 #headerBrand .navbar-right {
   width: 470px;
@@ -924,6 +972,15 @@ footer {
   #favorite {
     width: 7%; } }
 
+.free-tv {
+  height: 360px; }
+
+.paid-tv {
+  height: 360px; }
+
+.paid-tv .main-player {
+  margin: 0 auto; }
+
 .raf-fine-print {
   text-align: justify;
   font-size: 12px; }
@@ -1087,6 +1144,38 @@ ul.passwordStrength {
     width: 100%;
     font-size: 15px;
     margin-top: 0px; } }
+
+@media screen and (max-width: 639px) {
+  .user-home-box .caption {
+    left: 1%; }
+  .language a {
+    margin: 0 0 0 5px !important; }
+  .language a:hover {
+    margin: 0 0 1px 5px !important; }
+  .submit-button {
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px; }
+  .center-form {
+    font-size: 16px; }
+  .content-area h1 {
+    font-size: 24px; }
+  .label-text {
+    font-size: 15px; }
+  .error-message {
+    font-size: 15px; } }
+
+@media screen and (max-width: 479px) {
+  a.import-button {
+    font-size: 12px;
+    padding: 5px 5px;
+    margin: 0; }
+  .center-form {
+    font-size: 14px; }
+  .center-form a {
+    padding: 0 0 0 0; }
+  .center-form .separator {
+    display: none; } }
 
 .underline-text {
   text-decoration: underline !important; }

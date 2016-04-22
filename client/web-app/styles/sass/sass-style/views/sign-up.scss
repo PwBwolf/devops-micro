@@ -174,3 +174,61 @@ ul.passwordStrength {
         margin-top: 0px;
     }
 }
+
+@media screen and (max-width: 639px) {
+
+    .user-home-box .caption {
+        left: 1%;
+    }
+
+    .language a {
+        margin: 0 0 0 5px !important
+    }
+
+    .language a:hover {
+        margin: 0 0 1px 5px !important
+    }
+
+    .submit-button {
+        height: 60px;
+        line-height: 60px;
+        font-size: 20px;
+    }
+
+    .center-form {
+        font-size: 16px;
+    }
+
+    .content-area h1 {
+        font-size: 24px;
+    }
+
+    .label-text {
+        font-size: 15px;
+    }
+
+    .error-message {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+
+    a.import-button {
+        font-size: 12px;
+        padding: 5px 5px;
+        margin: 0;
+    }
+
+    .center-form {
+        font-size: 14px;
+    }
+
+    .center-form a {
+        padding: 0 0 0 0;
+    }
+
+    .center-form .separator {
+        display: none;
+    }
+}
