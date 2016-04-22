@@ -173,6 +173,8 @@ gulp.task('tools', function () {
  */
 gulp.task('server', function (cb) {
     gulp.src('../server/package.json', {dot: true}).pipe(gulp.dest('dist/server'));
+    gulp.src('../server/restart-daemons.sh', {dot: true}).pipe(gulp.dest('dist/server'));
+    gulp.src('../server/restart-servers.sh', {dot: true}).pipe(gulp.dest('dist/server'));
     gulp.src(['../server/common/**/*', '!../server/common/config/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
     gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
     gulp.src('../server/web-app/**/*', {dot: true}).pipe(gulp.dest('dist/server/web-app'));
