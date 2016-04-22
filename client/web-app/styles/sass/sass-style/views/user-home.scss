@@ -135,3 +135,13 @@
     overflow: hidden;
     margin-top: 10px;
 }
+
+.back {
+    transform: perspective(1000px) rotateY(180deg);
+    backface-visibility: hidden;
+    -webkit-transform: perspective(1000px) rotateY(180deg);
+    width: 100%;
+    -moz-transform: perspective(1000px) rotateY(180deg);
+    -ms-transform: perspective(1000px) rotateY(180deg);
+    -o-transform: perspective(1000px) rotateY(180deg);
+}

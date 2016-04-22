@@ -347,3 +347,28 @@
     vertical-align: top !important;
     /*     margin-left: -3px; */
 }
+
+.horizontal-bottom {
+    overflow-x: scroll;
+    margin-left: 154px;
+}
+
+#image-logos {
+    height: 60px;
+    border-right: 1px groove;
+}
+
+.logo-detail {
+    border-bottom: 1px solid;
+}
+
+.show-detail {
+    border-bottom: 1px solid;
+}
+
+.image-lineup {
+    width: 154px;
+    height: 60px;
+    border-color: rgb(0, 27, 72);
+    z-index: 8;
+}

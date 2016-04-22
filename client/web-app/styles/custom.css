@@ -726,6 +726,26 @@ footer {
   vertical-align: top !important;
   /*     margin-left: -3px; */ }
 
+.horizontal-bottom {
+  overflow-x: scroll;
+  margin-left: 154px; }
+
+#image-logos {
+  height: 60px;
+  border-right: 1px groove; }
+
+.logo-detail {
+  border-bottom: 1px solid; }
+
+.show-detail {
+  border-bottom: 1px solid; }
+
+.image-lineup {
+  width: 154px;
+  height: 60px;
+  border-color: #001b48;
+  z-index: 8; }
+
 .raf-fine-print {
   text-align: justify;
   font-size: 12px; }
@@ -1047,6 +1067,15 @@ ul.passwordStrength {
   line-height: 1.051;
   overflow: hidden;
   margin-top: 10px; }
+
+.back {
+  transform: perspective(1000px) rotateY(180deg);
+  backface-visibility: hidden;
+  -webkit-transform: perspective(1000px) rotateY(180deg);
+  width: 100%;
+  -moz-transform: perspective(1000px) rotateY(180deg);
+  -ms-transform: perspective(1000px) rotateY(180deg);
+  -o-transform: perspective(1000px) rotateY(180deg); }
 
 .heading {
   text-transform: uppercase; }
