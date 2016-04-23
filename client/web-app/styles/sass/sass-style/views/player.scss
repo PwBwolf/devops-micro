@@ -1,14 +1,9 @@
-
 .animate-hide {
     -webkit-transition:all linear 0.5s;
     transition:all linear 0.5s;
 }
 
-.navbar-default {
-    .navbar-toggle {
-        border-width: 2px;
-    }
-}
+
 
 .image-lineup {
     width: 154px;
@@ -259,4 +254,277 @@
     margin-bottom: 0px !important;
     overflow: hidden;
     vertical-align: top;
+}
+
+#channelGuideDescription p:last-child {
+    display: block;
+    top: -3px;
+}
+
+.channel-description > div {
+    overflow: hidden;
+    border-right: 1px solid;
+    border-color: rgb(0, 27, 72);
+    height: 60px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0px;
+}
+
+.channel-description > div:first-child {
+    width: 154px;
+    height: 60px;
+    border-right: 1px groove;
+    border-color: rgb(0, 27, 72);
+    z-index: 8;
+}
+
+.channel-details-body {
+    font-size: 60%;
+    color: #343;
+    font-weight: bolder;
+    text-transform: uppercase;
+    cursor: default;
+}
+
+.channel-details-body {
+    text-transform: uppercase;
+    color: #fff;
+    padding-left: 6px;
+}
+
+.position-div {
+    display: inline-block;
+    margin-right: -4px;
+    vertical-align: baseline;
+}
+
+.channel-panel, .user-guide-panel {
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+}
+
+
+#playerTop {
+    width: 100%;
+    margin-bottom: 8px;
+    /*     box-shadow: 0px 5px 2px #888888; */
+}
+
+#playerTop {
+    overflow: hidden;
+}
+
+.player-top {
+    height: 360px;
+}
+
+.main-player {
+    width: 72%;
+    height: 100%;
+    vertical-align: top !important;
+    background-image: url('../images/web-app-default-image.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.main-player img {
+    width: 100%;
+    height: auto;
+}
+
+.main-favorites {
+    background: transparent;
+    width: 28%;
+    height: 100%;
+    vertical-align: top !important;
+    /*     margin-left: -3px; */
+}
+
+.horizontal-bottom {
+    overflow-x: scroll;
+    margin-left: 154px;
+}
+
+#image-logos {
+    height: 60px;
+    border-right: 1px groove;
+}
+
+.logo-detail {
+    border-bottom: 1px solid;
+}
+
+.show-detail {
+    border-bottom: 1px solid;
+}
+
+.image-lineup {
+    width: 154px;
+    height: 60px;
+    border-color: rgb(0, 27, 72);
+    z-index: 8;
+}
+
+.guide-header {
+    border-bottom: medium solid transparent;
+    box-shadow: 0 2px 2px transparent;
+    z-index: 6;
+    width: 100%;
+}
+
+.guide-header > ul {
+    background-color: #000F29;
+}
+
+.time-module-item {
+    width: 300px;
+    height: 28px;
+    background: #000F29;
+    color: white;
+    padding: 4px 0 4px 12px;
+    display: inline-block;
+    vertical-align: top;
+    border-left: thick solid #000033;
+}
+
+.time-module-item:first-child {
+    margin-left: 153px;
+    /*     width:150px; */
+}
+
+.user-guide {
+    width: 100%;
+    background: transparent;
+    margin-right: 1px;
+    /*border-right: 1px solid;*/
+}
+
+#channelLogos {
+    position: fixed;
+}
+
+.ad-free {
+    width: 100%;
+    height: 90px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+#clock {
+    z-index: 10;
+    width: 154px;
+    height: 28px;
+    position: absolute;
+    display: inline-block;
+    color: white;
+    background-color: #000f29;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 4px;
+    padding: 4px 0px 4px 12px;
+}
+
+#channelTimePanel {
+    z-index: 5;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+#userGuide {
+    background-color: transparent;
+    width: 100%;
+    float: left;
+    margin-top: -6px;
+}
+
+#favoriteChannels {
+    float: left;
+    height: 40px;
+    width: 10%;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    margin-left: 1px;
+    display: inline-block;
+    background: transparent;
+    cursor: pointer;
+}
+
+#recentChannels {
+    float: left;
+    height: 40px;
+    width: 6%;
+    line-height: 40px;
+    color: white;
+    display: inline-block;
+    background: transparent;
+    cursor: pointer;
+}
+
+#recentChannels {
+    float: left;
+    height: 40px;
+    width: 6%;
+    line-height: 40px;
+    color: white;
+    display: inline-block;
+    background: transparent;
+    cursor: pointer;
+}
+
+#allChannels {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    padding-right: -3px;
+    vertical-align: middle;
+    background: transparent;
+    cursor: pointer;
+}
+
+#filter {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background: transparent;
+}
+
+@media screen and (max-width: 1024px) {
+    .premium-button-holder {
+        width: 300px;
+    }
+
+    #recentChannels {
+        width: 7%;
+    }
+
+    #allChannels {
+        width: 7%;
+    }
+
+    #favorite {
+        width: 7%;
+    }
+}
+
+.free-tv {
+    height: 360px;
+}
+
+.paid-tv {
+    height: 360px;
+}
+
+.paid-tv .main-player {
+    margin: 0 auto;
 }
