@@ -9,20 +9,16 @@
         return {
             getTimeSlots: function () {
                 var hoursOffset = 0;
-                var currentSlot = new Date();
-                var startSlot = Math.floor(currentSlot.getTime() / (1000 * 60 * 30)); // get unix time in half hours rounded down to last half hour
-                startSlot = startSlot * 1000 * 60 * 30;
-                timeBarStart = startSlot;
+                timeBarStart = lastHalfHour();
                 var timeSlots = [];
                 for (var i = 0; i < 7; i++) {
                     hoursOffset = 3600 * 1000 * i;
-                    timeSlots[i] = $filter('date')((startSlot + (hoursOffset)), 'h:mm a');
+                    timeSlots[i] = $filter('date')((timeBarStart + (hoursOffset)), 'h:mm a');
                 }
                 return timeSlots;
             },
 
             getProgramming: function (cb) {
-                //console.time('getProgramming')
                 // channelIds is an array of id from $rootSCope.filteredChannels and has the ids in the
                 // same order as $rootScope.filteredChannels
                 var channelIds = $rootScope.filteredChannels.map(function (item) {
@@ -35,7 +31,6 @@
 
                 mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
-                        // console.log('epg', channelsEpg)
                         // create filteredChannelObj with channel ids as keys
                         for(var i = 0; i < $rootScope.channelsEpg.length; i++){
                             var id = $rootScope.channelsEpg[i].channel_id;
@@ -60,15 +55,11 @@
                                 lineUp: lineUp,
                                 tags: tags
                             };
-                            if(programInfo.id === "11"){
-                                console.log("I found az click and i'm adding it to the channel array", programInfo);
-                            }
+
                             allChannels.push(programInfo);
                             allChannelsObj[id] = programInfo;
                         }
 
-                        //console.timeEnd('getProgramming')
-                        //console.log('all channels', allChannels)
                         return cb(null, allChannels);
                     })
                     .error(function () {
@@ -97,8 +88,10 @@
                     arr.push(allChannelsObj[channelIds[i]])
                 }
                 return arr;
-            }
-        };
+            },
+
+            allChannelsObj: allChannelsObj,
+        }
 
         function showLength(startTime, endTime) {
             var lastHalfHour = Math.floor(new Date().getTime() / (1000 * 60 * 30));
@@ -180,6 +173,16 @@
                 ratings: ""
             }
             return placeHolder;
+        }
+
+        // this is duplicate in player controller because I can't use it in getTimeSlots here and make it a property to
+        // export and use in other controllers, so it would have to be duplicate in here, but I decided to just keep it
+        // closer to where it's used in player-controller
+        function lastHalfHour(){
+            var currentTime = new Date();
+            var lastHalf = Math.floor(currentTime.getTime() / (1000 * 60 * 30)); // get unix time in half hours rounded down to last half hour
+            lastHalf = lastHalf * 1000 * 60 * 30;                               // get last half hour in ms again
+            return lastHalf;
         }
 
     }]);

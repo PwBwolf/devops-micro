@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '$interval', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, $interval) {
         console.log('player controller loaded')
         // epg related variables
         $scope.programming = [];
@@ -53,40 +53,19 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
-            //console.time('channelsLoaded')
             // copied and pasted from the player controller
             mediaSvc.getUserChannels(function (data) {
                 console.log('success callback for getUserChannels', data)
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
-                //console.timeEnd('channelLoaded')
                 $rootScope.$broadcast('ChannelsLoaded');
             }, function(err){
                 console.log('error callback for getUserChannels', err)
             });
 
-            //console.time('channelsFormatted')
             $rootScope.$on('ChannelsLoaded', function () {
-                playerSvc.getProgramming(function (err, programming) {
-                    $scope.allChannels = programming;
-                    //console.log('looking for az click', $scope.allChannels.slice(5, 15));
-                    $scope.programming = $scope.allChannels.slice(0, 10);
-                    currentView = 'all';
-                    $scope.prevIndex = $scope.programming.length - 1;
-                    //console.log($scope.allChannels)
-                    //console.timeEnd('channelsFormatted')
-                    mediaSvc.getFavoriteChannels(
-                        function (data) {
-                            $scope.favoriteChannels = playerSvc.formatFavorites(data);
-                            $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels);
-                            $scope.channelsLoaded = true;
-                        },
-                        function (error) {
-                            // handle this error with toastr later?
-                        }
-                    );
-                })
-
+                getProgramming();
+                autoRefresh();
             });
 
             mediaSvc.getChannelCategories(function (data) {
@@ -106,6 +85,101 @@
             }, function(err){
                 console.log('got an err')
             });
+        }
+
+        function getProgramming(){
+            playerSvc.getProgramming(function (err, programming) {
+                $scope.allChannels = programming;
+                $scope.programming = $scope.allChannels.slice(0, 10);
+                currentView = 'all';
+                console.log('allChannelsObj from player service', playerSvc.allChannelsObj)
+                mediaSvc.getFavoriteChannels(
+                    function (data) {
+                        $scope.favoriteChannels = playerSvc.formatFavorites(data);
+                        $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels);
+                        $scope.channelsLoaded = true;
+                    },
+                    function (error) {
+                        // handle this error with toastr later?
+                    }
+                );
+            })
+        }
+
+        function refreshProgramming(){
+            console.log('ahhh thats refreshing')
+            playerSvc.getProgramming(function (err, programming){
+                console.log('refreshed programming', programming);
+                $scope.allChannels = programming;
+                refreshView();
+            })
+        }
+
+        // map the views against new allChannels object to update lineUps
+        function refreshView(){
+            console.log('refreshing view')
+            $scope.programming = mapLineups($scope.programming);
+            $scope.favoriteChannels = mapLineups($scope.favoriteChannels);
+            $scope.recentChannels = mapLineups($scope.recentChannels);
+            $scope.filteredChannels = mapLineups($scope.filteredChannels);
+        }
+
+        // replace current lineUps on each channel obj with fresh lineUps
+        function mapLineups(arr){
+            for(var i = 0; i < arr.length; i++){
+                arr[i].lineUp = playerSvc.allChannelsObj[arr[i].id].lineUp;
+            }
+            console.log(arr)
+            return arr;
+        }
+
+        $scope.refresh = function(){
+            refreshProgramming();
+        }
+
+        // automatically refresh epg every 15 minutes
+        function autoRefresh(){
+            var lastHalf = lastXHour(30);
+            var lastQuarter = lastXHour(15);
+            console.log('lastQuarter', new Date(lastQuarter).toString())
+            console.log('lastHalf', new Date(lastHalf).toDateString())
+            var nextQuarter = lastQuarter + (1000 * 60 * 15);
+            var nextHalf = lastHalf + (1000 * 60 * 30);
+            var currentTime = new Date();
+            var quarterInterval = nextQuarter - currentTime.getTime();
+            var halfInterval = nextHalf - currentTime.getTime();
+            console.log('interval to next quarter hour and half hour', quarterInterval/60/1000, halfInterval/60/1000);
+            var fifteenMin = 1000 * 60 * 15;
+            var thirtyMin = 1000 * 60 * 30;
+
+            // refresh on the quarter hour after they log in
+            // refresh every 15 minutes after that
+            $timeout(function(){
+                console.log('calling the $timeout function for new programming')
+                refreshProgramming();
+                $interval(function(){
+                    refreshProgramming();
+                }, fifteenMin);
+            }, quarterInterval);
+
+            // refresh on the half hour after they log in
+            // refresh every 30 minutes after that
+            $timeout(function(){
+                console.log('calling $timeout function for new timebar')
+                $scope.timeSlots = playerSvc.getTimeSlots();
+                console.log('new timeSlots', $scope.timeSlots)
+                $interval(function(){
+                    $scope.timeSlots = playerSvc.getTimeSlots();
+                }, thirtyMin)
+            }, halfInterval);
+        }
+
+        // return the most recent x (quarter, half, etc...) hour in unix time
+        function lastXHour(x){
+            var currentTime = new Date();
+            var lastX = Math.floor(currentTime.getTime() / (1000 * 60 * x)); // get unix time in half hours rounded down to last half hour
+            lastX = lastX * 1000 * 60 * x;                               // get last half hour in ms again
+            return lastX;
         }
 
         // probably a more elegant way to do this, but we have a release deadline.
@@ -193,6 +267,7 @@
         $scope.displayFiltered = function(){
             currentView = 'filtered';
             clearErrMessages();
+            // no filtered channels
             if($scope.filteredChannels.length === 0){
                 $scope.noFiltered = true;
                 $scope.programming = $scope.filteredChannels;
@@ -358,9 +433,7 @@
                 webStorage.session.set('recentChannels', updatedRecents);
             } else {
                 recentChannels = webStorage.session.get('recentChannels');
-                //console.log(typeof channelId)
                 var index = recentChannels.indexOf(channelId);
-                //console.log('index in recent channels array', index)
                 if(index === -1){
                     recentChannels.unshift(channelId);
                     webStorage.session.set('recentChannels', recentChannels);
@@ -381,9 +454,7 @@
 
         // toggles the filter open and closed
         $scope.toggle = function () {
-            //clearErrMessages();
             $scope.checked = !$scope.checked;
-            //setCSS();
         };
 
         // Each of these functions checks to see if the selected filter is already in the array
@@ -447,6 +518,7 @@
             setCSS();
         };
 
+        // uncheck check boxes in the filter
         function uncheckFilters(){
             for (var i = 0; i < $scope.tags.length; i++) {
                 for (var j = 0; j < $scope.tags[i].tags.length; j++) {
@@ -564,6 +636,7 @@
             }
         }
 
+        // set css to show the currently selected EPG view
         function setCSS(){
             clearCSS();
             if(currentView === "favorites"){
@@ -580,6 +653,7 @@
             }
         }
 
+        //
         function clearCSS(){
             $scope.favCh = '';
             $scope.recCh = '';
