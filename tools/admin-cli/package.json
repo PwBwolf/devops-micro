@@ -10,6 +10,7 @@
     "lodash": "^3.9.3",
     "moment": "^2.10.2",
     "moment-timezone": "^0.5.3",
+    "mongodb": "^2.1.16",
     "node-uuid": "^1.4.3",
     "prompt": "^0.2.14",
     "sf": "^0.1.7"

@@ -21,9 +21,9 @@ var Account = new Schema({
     firstCardPaymentDate: Date,
     firstMerchantPaymentDate: Date,
     billingDate: Date,
-    startDate: Date,
+    startDate: {type: Date, index: true},
     premiumEndDate: Date,
-    packages: [String]
+    packages: {type:[String], index: true}
 }, {collection: 'Accounts'});
 
 Account.plugin(autoIncrement.plugin, {model: 'Account', field: 'key', startAt: 1000});

@@ -41,9 +41,6 @@ mongoose.connect(config.db, function (err) {
             } else if (!user) {
                 logger.logError('adminCLI - endPremiumSubscription - user not found: ' + username);
                 process.exit(1);
-            } else if (user.cancelOn) {
-                logger.logError('adminCLI - endPremiumSubscription - user\'s premium subscription is already due for cancellation on ' + getFormattedDate(user.cancelOn) + ' for user: ' + username);
-                process.exit(1);
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - endPremiumSubscription - failed user: ' + username);
                 process.exit(1);

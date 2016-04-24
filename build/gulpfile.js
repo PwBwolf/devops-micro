@@ -207,9 +207,12 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/deployment-scripts/cleanup.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/cancel-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/convert-to-complimentary-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/convert-to-free-db-only.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-api-client.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-crm-user.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
@@ -227,6 +230,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/freeside-login-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/remove-7-day-package.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/upgrade-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
