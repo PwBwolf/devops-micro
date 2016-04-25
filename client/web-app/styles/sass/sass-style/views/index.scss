@@ -39,3 +39,97 @@ footer {
 .top-shadow {
     position: fixed;
 }
+
+#headerBrand {
+    height: 50px;
+    text-transform: uppercase;
+    border-bottom: solid 1px transparent;
+    z-index: 50;
+}
+
+#headerBrand img {
+    width: auto;
+    height: 80px;
+    margin: 0 0 0 25px;
+    top: 9px;
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    z-index: 998;
+}
+
+.contact-number {
+    width: 50%;
+    height: 100%;
+    margin-right: 5px;
+    padding: 2px;
+    padding-top: 15px;
+    color: black;
+    text-align: right;
+    vertical-align: middle;
+}
+
+
+#menuItems {
+    margin: 6px auto;
+    text-align: center;
+}
+
+#menuItems menuItem {
+    padding: 0px 20px;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+
+#menuItems menuItem:hover {
+    cursor: pointer;
+    color: rgba(154, 154, 154, .89);
+    border-bottom: solid 1px red;
+}
+
+#menuItems div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 3%;
+    cursor: pointer;
+}
+
+#menuItems div > img {
+    height: 20px;
+    width: auto;
+}
+
+#socialMedia {
+    width: 20%;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    top: -10px;
+}
+
+#copyright {
+    width: 80%;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    top: -10px;
+}
+
+#socialMedia img {
+    width: auto;
+    height: 30px;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+#socialMedia img:hover {
+    cursor: pointer;
+    filter: none;
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+}
+
