@@ -392,8 +392,8 @@
 
                     // find the index of the channel in the current programming array
                     var indexOfClickedChannel = $scope.programming.map(function (e) {
-                        return e.chIndex;
-                    }).indexOf(index);
+                        return e.id;
+                    }).indexOf(id);
 
                     channelToTop(indexOfClickedChannel);
                 }
