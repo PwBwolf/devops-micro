@@ -43,8 +43,8 @@
                     function (data) {
                         $rootScope.referredBy = undefined;
                         $scope.saving = false;
-                        webStorage.session.add('signUpUsername', $scope.mv.email);
-                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
+                        webStorage.session.set('signUpUsername', $scope.mv.email);
+                        webStorage.session.set('signUpMerchant', $scope.mv.merchant);
                         if (data === 'registered') {
                             $location.path('/sign-up-verification/' + $scope.mv.email + '/sign-up-success');
                         } else {
@@ -52,8 +52,8 @@
                         }
                     },
                     function (error) {
-                        webStorage.session.add('signUpUsername', $scope.mv.email);
-                        webStorage.session.add('signUpMerchant', $scope.mv.merchant);
+                        webStorage.session.set('signUpUsername', $scope.mv.email);
+                        webStorage.session.set('signUpMerchant', $scope.mv.merchant);
                         if (error === 'UserExists') {
                             loggerSvc.logError($filter('translate')('SIGN_UP_USER_EXISTS'));
                         } else if (error === 'PaymentFailed') {

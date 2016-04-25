@@ -1,0 +1,30 @@
+.raf-fine-print {
+    text-align: justify;
+    font-size: 12px;
+}
+
+a.import-button {
+    background: #A03269;
+    width: 98%;
+    height: 40px;
+    line-height: 42px;
+    font-family: 'radikalregular';
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 5px;
+    padding: 5px 20px;
+    margin: 0;
+}
+
+a.import-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+#emailList {
+    height: 250px;
+    resize: none;
+}

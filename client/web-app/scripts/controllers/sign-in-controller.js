@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', '$modal', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
+    app.controller('signInCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$location', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $location, $filter) {
 
         activate();
 

@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$modal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $modal, $routeParams) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$uibModal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $uibModal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -23,7 +23,7 @@
 
         function changeLanguage(language) {
             $translate.use(language);
-            webStorage.local.add('language', language);
+            webStorage.local.set('language', language);
             $rootScope.language = language;
             $rootScope.$broadcast('LanguageChanged', language);
         }
@@ -68,7 +68,7 @@
             var newLanguage = currentLanguage === 'en' ? 'es' : 'en';
             changeLanguage(newLanguage);
             if (userSvc.isSignedIn($scope.user)) {
-                $modal.open({
+                $uibModal.open({
                     templateUrl: 'modalWindow',
                     controller: 'modalCtrl',
                     size: 'sm',
@@ -110,7 +110,7 @@
         }
 
         $scope.signOut = function () {
-            $modal.open({
+            $uibModal.open({
                 templateUrl: 'modalWindow',
                 controller: 'modalCtrl',
                 size: 'sm',

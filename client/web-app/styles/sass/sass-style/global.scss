@@ -1,0 +1,490 @@
+body {
+    margin: 0;
+    padding: 0px;
+    //font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+    height: auto;
+    font-family: default, Verdana, Arial, Tahoma;
+    font-size: 12px;
+}
+
+body {
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border: 0;
+    text-decoration: none;
+}
+
+body, html {
+    font-size: 14px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+
+header {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    background: transparent;
+    height: 50px;
+    z-index: 998;
+    margin-bottom: 3px;
+}
+
+dl {
+    margin-bottom: 40px !important;
+}
+
+dt {
+    color: darkgrey;
+    font-size: 1.25em;
+    font-weight: bolder !important;
+    text-transform: capitalize;
+}
+
+dd {
+    color: dimgrey;
+    margin-top: 2px;
+    font-size: 1.0em;
+    white-space: normal;
+}
+
+dd + dd {
+    color: rgba(135, 117, 104, .9);
+    margin-bottom: 12px;
+}
+
+#welcome {
+    padding: 0;
+    text-transform: uppercase;
+    margin: 0 auto;
+    float: right;
+    white-space: nowrap;
+}
+
+#welcome:hover {
+    cursor: default;
+    color: rgba(62, 25, 77, 0.941176);;
+    border-bottom: none;
+}
+
+.off {
+    display: none !important;
+}
+
+.on {
+    display: initial !important;
+}
+
+/* purple label checkbox */
+.purple:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 0px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    background-color: #A03269;
+    border-radius: 3px;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+.purple {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.check-box label {
+    margin-bottom: 10px;
+}
+
+.check-box label:before {
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="radio"]:checked + label:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    display: none;
+}
+
+input[type="radio"] {
+    margin-left: 10px;
+    display: none;
+}
+
+#navBar {
+    width: 100%;
+    height: 34px;
+    clear: both;
+    display: block;
+    position: absolute;
+    background: rgba(254, 254, 254, .95);
+    color: rgba(62, 25, 77, .94);
+}
+
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+}
+
+.navbar-default {
+    background: none;
+    border: none;
+    margin: 0px;
+}
+
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+.content-area {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
+
+.content-area h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0px 0px 1%;
+}
+
+.content-area .content-box h1 {
+    font-family: 'radikallight';
+    background: url(../images/title-line.png) center 18px no-repeat;
+    text-align: center;
+    font-size: 31px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #A03269;
+    padding: 0px;
+    margin: 0 0 1%;
+}
+
+.content-area h1 span {
+    background: #fff;
+    padding: 0px 2% 0px 2%;
+    margin: 0px;
+}
+
+.content-area .message-box p {
+    padding: 25px 0px 0px 0px;
+    margin-top: 60px;
+}
+
+.content-box {
+    float: left;
+    width: 100%;
+    font-family: 'gotham-lightgotham-light';
+    font-size: 19px;
+    color: #000;
+    padding: 20px 0 80px 0;
+    margin: 0px;
+}
+
+.content-box a:hover {
+    color: #A03269;
+}
+
+.form-box {
+    width: 700px;
+    font-family: 'radikallight';
+    font-size: 16px;
+    color: #000;
+    padding: 0px;
+    margin: 0 auto;
+}
+
+.header-color {
+    color: #291753;
+}
+
+#details {
+    height: 250px;
+    resize: none;
+}
+
+.text-box {
+    background: #FFFFFF;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.dropdown-list {
+    -webkit-appearance: menulist-button;
+    padding: 0 0 0 1% !important;
+}
+
+.text-box-error {
+    background: #FFFFFF;
+    border: 2px solid;
+    border-color: rgb(228, 29, 29) !important;
+    color: #000000;
+    font-family: "radikallight";
+    font-size: 20px;
+    height: 44px;
+    margin: 10px 0 1%;
+    padding: 0 1%;
+    width: 98%;
+    border-radius: 5px;
+}
+
+.center-form {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.center-form span {
+    font-family: "radikalthin";
+    font-weight: normal;
+    padding: 0px 5px;
+    margin: 0px 0px 0px 0px;
+}
+
+.center-form a {
+    color: #A03269;
+    text-decoration: none;
+}
+
+.center-form a:hover {
+    color: #A03269;
+    text-decoration: underline;
+}
+
+.label-text {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: capitalize;
+}
+
+.label-text-info {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 14px;
+    padding-left: 0;
+    font-style: italic;
+}
+
+.sign-up-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    padding-left: 0;
+    text-transform: none;
+}
+
+.error-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #f92b26;
+    text-transform: uppercase;
+}
+
+.status-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #412c89;
+    text-transform: uppercase;
+}
+
+.success-message {
+    font-family: 'gotham-bookgotham-book';
+    font-size: 16px;
+    color: #1CAF9A;
+    text-transform: uppercase;
+}
+
+.dropdown-width {
+    width: 400px !important;
+}
+
+.dropdown-width .form-box {
+    width: auto !important;
+}
+
+@media (min-width: 1024px) and (max-width: 2400px) {
+    body {
+        height: auto;
+        width: auto;
+    }
+
+    .premium-button-holder {
+        width: 375px
+    }
+}
+
+@media screen and (max-width: 707px) {
+
+    .language {
+        font-size: 13px;
+    }
+
+    .premium-button-holder {
+        width: 250px
+    }
+}
+
+@media screen and (max-width: 399px) {
+    .user-home-box .caption {
+        left: 1%;
+    }
+
+    .user-home-box .caption button {
+        font-size: 14px;
+        padding: 10px;
+        width: 250px;
+    }
+
+    .cancel-on {
+        font-size: 14px;
+        width: 250px;
+    }
+
+    .submit-button {
+        height: 60px;
+        line-height: 60px;
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .navbar-right {
+        width: 270px;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    [contentEditable=true]:focus {
+        background: rgba(90, 90, 90, 0.7);
+        border: #999 2px solid;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        padding: 1%;
+        outline: none;
+    }
+
+    header {
+        width: auto;
+        height: 50px;
+        z-index: 998;
+        padding: 0px !important;
+        background: transparent;
+    }
+
+
+    .language {
+        display: none;
+    }
+    * {
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgba(155, 155, 155, .94);
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: rgba(254, 254, 254, .89);
+    }
+
+    dl {
+        font-size: 100%;
+    }
+
+    dt {
+        color: darkgrey;
+        font-size: 1.25em;
+        font-family: Arial Narrow, Arial, sans-serif;
+        font-weight: bold !important;
+        text-transform: capitalize;
+    }
+
+    dd {
+        color: dimgrey;
+        margin-top: 2px;
+        font-size: 1.0em;
+        white-space: normal;
+    }
+
+    dd + dd {
+        color: rgba(135, 117, 104, .9);
+        margin-bottom: 12px;
+    }
+
+    body {
+        height: auto;
+        font-family: default, Verdana, Arial, Tahoma;
+        font-size: 12px;
+    }
+
+    footer {
+        width: 100%;
+        height: 48px;
+        position: fixed;
+        bottom: 0px;
+        background: rgba(253, 253, 253, .91);
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 7px;
+        color: grey;
+        border-top: solid 1px lightgrey;
+        padding: 10px;
+        z-index: 998;
+    }
+}
+

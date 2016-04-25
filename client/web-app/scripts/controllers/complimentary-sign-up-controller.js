@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('complimentarySignUpCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', '$', function (appSvc, userSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter, $) {
+    app.controller('complimentarySignUpCtrl', ['appSvc', 'userSvc', 'loggerSvc', '$rootScope', '$scope', '$routeParams', '$location', '$filter', function (appSvc, userSvc, loggerSvc, $rootScope, $scope, $routeParams, $location, $filter) {
 
         $scope.status = 0; // 0 - checking, 1 - success, 2 - error
         $scope.formSubmit = false;

@@ -10,10 +10,10 @@
                 token = accessToken;
                 if (isPersistent) {
                     webStorage.local.remove('token');
-                    webStorage.local.add('token', token);
+                    webStorage.local.set('token', token);
                 } else {
                     webStorage.session.remove('token');
-                    webStorage.session.add('token', token);
+                    webStorage.session.set('token', token);
                 }
             },
 

@@ -2,7 +2,7 @@
     'use strict';
 
     app.factory('mediaSvc', ['$http', '$q', function ($http, $q) {
-
+        console.log('media service loaded')
         return {
             getChannelUrl: function (id) {
                 return $http({
@@ -31,6 +31,7 @@
             },
 
             getUserChannels: function (success, error) {
+                console.log('calling getUserChannels in media service')
                 return $http({
                     method: 'GET',
                     url: '/api/get-user-channels'

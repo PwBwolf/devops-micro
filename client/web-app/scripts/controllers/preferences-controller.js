@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('preferencesCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$filter', '$location', function (userSvc, loggerSvc, $rootScope, $scope, $filter, $location) {
+    app.controller('preferencesCtrl', ['userSvc', 'loggerSvc', '$rootScope', '$scope', '$filter', function (userSvc, loggerSvc, $rootScope, $scope, $filter) {
 
         activate();
 
