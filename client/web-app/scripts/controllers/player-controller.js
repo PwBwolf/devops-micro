@@ -327,12 +327,10 @@
                 req,
                 function () {
                     var newFavoriteChannelObj = playerSvc.allChannelsObj[currentChannel.channelId];
-                    console.log('new favorite', newFavoriteChannelObj, currentChannel.channelId)
                     $scope.favoriteChannels.push(newFavoriteChannelObj);
                     $scope.favoriteIcon = '../../images/favorite-yellow.png';
                     $scope.noFavoriteChannels = false;
                     if(currentView === 'favorites'){
-                        //console.log($scope.favoriteChannels);
                         $scope.programming = sortChannels($scope.favoriteChannels).slice(0, 10);
                     }
                 },
@@ -363,14 +361,11 @@
             );
         }
 
-        $scope.watchNow = function (index) {
-            var id = $scope.allChannels[index].id;
-
+        $scope.watchNow = function (id) {
             mediaSvc.getChannelUrl(id).success(function (channelUrl) {
                 // set URLs for channel and channel logo
                 $scope.mainUrl = channelUrl.routes[0];
-                $scope.channelLogo = $scope.allChannels[index].logo;
-                console.log('channelLogo', $scope.channelLogo, $scope.allChannels[index])
+                $scope.channelLogo = playerSvc.allChannelsObj[id].logo;
 
                 // set program info for display in epg
                 var programInfo = getProgramInfo(id);
