@@ -254,8 +254,18 @@ footer {
         z-index: 998;
         background: transparent;
     }
+
     .navbar {
         margin-bottom: 0px !important;
     }
 
+    .navbar-brand {
+        padding: 0 5px !important;
+    }
+
+    .navbar-brand img {
+        height: 80%;
+        width: auto;
+        margin-top: 4px;
+    }
 }
