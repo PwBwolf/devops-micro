@@ -374,7 +374,20 @@ input[type="radio"] {
   body {
     height: auto;
     font-family: default, Verdana, Arial, Tahoma;
-    font-size: 12px; } }
+    font-size: 12px; }
+  footer {
+    width: 100%;
+    height: 48px;
+    position: fixed;
+    bottom: 0px;
+    background: rgba(253, 253, 253, 0.91);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 7px;
+    color: grey;
+    border-top: solid 1px lightgrey;
+    padding: 10px;
+    z-index: 998; } }
 
 /* Variables */
 /* typography */
@@ -709,6 +722,17 @@ input[type="radio"] {
 .navbar-default .navbar-toggle {
   border-width: 2px; }
 
+@media screen and (max-width: 415px) {
+  #navBar {
+    width: 100%;
+    height: 34px;
+    clear: both;
+    display: block;
+    position: absolute;
+    background: rgba(254, 254, 254, 0.95);
+    color: rgba(62, 25, 77, 0.94);
+    border-bottom: solid 1px lightgrey; } }
+
 #headerBrand .navbar-right {
   width: 470px;
   height: 100%; }
@@ -825,6 +849,15 @@ footer {
   -moz-filter: grayscale(0); }
 
 @media screen and (max-width: 415px) {
+  #navBar {
+    width: 100%;
+    height: 34px;
+    clear: both;
+    display: block;
+    position: absolute;
+    background: rgba(254, 254, 254, 0.95);
+    color: rgba(62, 25, 77, 0.94);
+    border-bottom: solid 1px lightgrey; }
   .navbar {
     margin-bottom: 0px !important; }
   .navbar-brand {
@@ -863,7 +896,45 @@ footer {
     color: black;
     text-align: right;
     vertical-align: middle;
-    border-top: thin solid whitesmoke; } }
+    border-top: thin solid whitesmoke; }
+  #menuItems {
+    margin: 6px auto;
+    text-align: center;
+    padding-left: 100px; }
+  #menuItems menuItem {
+    padding: 4px 10px;
+    text-transform: uppercase;
+    margin: 9px auto; }
+  #menuItems menuItem:hover {
+    cursor: pointer;
+    color: rgba(254, 254, 254, 0.89);
+    background: rgba(5, 5, 5, 0.5); }
+  #menuItems div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 3%;
+    cursor: pointer; }
+  #menuItems div > img {
+    height: 20px;
+    width: auto; } }
+
+@media screen and (min-width: 416px) and (max-width: 767px) {
+  .contact-number {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+    color: black;
+    text-align: right;
+    vertical-align: middle;
+    border-top: thin solid whitesmoke; }
+  header {
+    width: auto;
+    height: 50px;
+    padding: 0px !important;
+    z-index: 998;
+    background: transparent; }
+  .navbar {
+    margin-bottom: 0px !important; } }
 
 .animate-hide {
   -webkit-transition: all linear 0.5s;
@@ -1479,6 +1550,10 @@ ul.passwordStrength {
   .center-form a {
     padding: 0 0 0 0; }
   .center-form .separator {
+    display: none; } }
+
+@media screen and (min-width: 416px) and (max-width: 767px) {
+  .language {
     display: none; } }
 
 .underline-text {

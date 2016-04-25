@@ -139,6 +139,17 @@ footer {
 }
 
 @media screen and (max-width: 415px) {
+    #navBar {
+        width: 100%;
+        height: 34px;
+        clear: both;
+        display: block;
+        position: absolute;
+        background: rgba(254, 254, 254, .95);
+        color: rgba(62, 25, 77, .94);
+        border-bottom: solid 1px lightgrey;
+    }
+
     .navbar {
         margin-bottom: 0px !important;
     }
@@ -191,4 +202,60 @@ footer {
         vertical-align: middle;
         border-top: thin solid whitesmoke;
     }
+
+    #menuItems {
+        margin: 6px auto;
+        text-align: center;
+        padding-left: 100px;
+    }
+
+    #menuItems menuItem {
+        padding: 4px 10px;
+        text-transform: uppercase;
+        margin: 9px auto;
+    }
+
+    #menuItems menuItem:hover {
+        cursor: pointer;
+        color: rgba(254, 254, 254, .89);
+        background: rgba(5, 5, 5, .5);
+    }
+
+    #menuItems div {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 3%;
+        cursor: pointer;
+    }
+
+    #menuItems div > img {
+        height: 20px;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 416px) and (max-width: 767px) {
+
+    .contact-number {
+        width: 100%;
+        height: 100%;
+        padding: 10px 0;
+        color: black;
+        text-align: right;
+        vertical-align: middle;
+        border-top: thin solid whitesmoke;
+    }
+
+    header {
+        width: auto;
+        height: 50px;
+        padding: 0px !important;
+        //background: rgba(229, 229, 231, .91);
+        z-index: 998;
+        background: transparent;
+    }
+    .navbar {
+        margin-bottom: 0px !important;
+    }
+
 }
