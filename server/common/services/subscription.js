@@ -516,18 +516,17 @@ module.exports = {
             // update user information in freeside
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : (userObj.account.merchant ? userObj.account.merchant : 'YipTV'),
-                    newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL',
-                    newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.account.key, locale,
-                    newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '',
-                    newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '',
-                    newUser.cardName ? newUser.cardName : '', function (err) {
+                if (newUser.address) {
+                    billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address, newUser.city, newUser.state, newUser.zipCode, 'US', userObj.email, userObj.account.key, locale, 'CARD', newUser.cardNumber, newUser.expiryDate, newUser.cvv, newUser.cardName, function (err) {
                         if (err) {
                             logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                             errorType = 'freeside-user-update';
                         }
                         callback(err, userObj, sessionId);
                     });
+                } else {
+                    callback(null, userObj, sessionId);
+                }
             },
             // get agent
             function (userObj, sessionId, callback) {
@@ -1578,18 +1577,6 @@ module.exports = {
                     }
                     callback(err, userObj, sessionId);
                 });
-            },
-            // update billing details
-            function (userObj, sessionId, callback) {
-                var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV',
-                    'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', function (err) {
-                        if (err) {
-                            logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
-                            errorType = 'freeside-user-update';
-                        }
-                        callback(err, userObj, sessionId);
-                    });
             }
         ], function (err, userObj) {
             if (err) {
