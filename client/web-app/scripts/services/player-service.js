@@ -47,7 +47,6 @@
                                 chIndex: i,
                                 logo: $rootScope.filteredChannels[i].logoUri,
                                 channelTitle: $rootScope.filteredChannels[i].title,
-                                epgIndex: i,
                                 lineUp: lineUp,
                                 tags: $rootScope.filteredChannels[i].tags_ids
                             };

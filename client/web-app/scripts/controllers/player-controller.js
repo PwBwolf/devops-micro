@@ -22,7 +22,6 @@
         $scope.programTitle = '';
         $scope.programDescription = '';
         $scope.showChannelFilter = false;
-        $scope.currentChannel = {};
         $scope.tags = [];
         $scope.currentView = 'all';
 
@@ -44,8 +43,6 @@
         $scope.allCh = "high-u";
         $scope.filtCh = "";
 
-        var currentChannelIndex = {index: undefined, channelId: undefined};
-        var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
         var currentView = 'all';
 
@@ -369,49 +366,55 @@
             );
         }
 
-        $scope.watchNow = function (index, favoriteChannels) {
-            var favorites = favoriteChannels;
+        $scope.watchNow = function (index) {
 
             //console.log('channel in programming by index', $scope.programming[index])
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex;
             }).indexOf(index);
-            console.log('index from watchNow', index)
+            // console.log('index and indexOfClickedChannel from watchNow', index, indexOfClickedChannel)
 
-            mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
+            console.log('$scope.programming[indexOfClickedChannel] $rootScope.channels[index].id', $scope.programming[indexOfClickedChannel].id, $rootScope.channels[index].id, $scope.allChannels[index].id)
+
+            mediaSvc.getChannelUrl($scope.allChannels[index].id).success(function (channelUrl) {
+                // set URLs for channel and channel logo
                 $scope.mainUrl = channelUrl.routes[0];
-                $scope.tvProgram = $rootScope.channelsEpg[index].programs;
-                $scope.channelLogo = $rootScope.channels[index].logoUri;
+                $scope.channelLogo = $scope.allChannels[index].logoUri;
+
+                // set program info for display in epg
                 var programInfo = getProgramInfo(index);
-                $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description || false;
-                previousChannelIndex.index = currentChannelIndex.index;
-                currentChannelIndex.index = index;
-                currentChannelIndex.channelId = $rootScope.channels[index].id;
-                setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
-                addRecentChannel(currentChannelIndex.channelId);
-                $scope.currentChannel.index = currentChannelIndex.index;
-                $scope.currentChannel.channelId = $rootScope.channels[index].id;
-                $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
+                $scope.currentChannel.channelId = $scope.allChannels[index].id;
+
+                // set favorite icon (if needed) and add this channel to recent channels list
+                setFavoriteIcon($scope.currentChannel.channelId); //check if channel is a favorite
+                addRecentChannel($scope.currentChannel.channelId);
+
+                // scroll user back to player window
                 $anchorScroll('topBox');
+
+                // have delay to avoid user seeing error message while jwplayer connects to video source
                 if ($scope.watching === false) {
                     $timeout(function () {
                         $scope.watching = true;
                     }, 500);
                 }
+
+                // move this channel to top of epg if in the 'recents' view
                 if(currentView === 'recents'){
                     channelToTop(indexOfClickedChannel);
                 }
             });
+
         };
 
         // set / unset favorite icon
-        function setFavoriteIcon(channel, favorites) {
-            var isfavorite = favorites.map(function (e) {
+        function setFavoriteIcon(channelId) {
+            var isfavorite = $scope.favoriteChannels.map(function (e) {
                 return e.id;
-            }).indexOf(channel);
+            }).indexOf(channelId);
             if (isfavorite === -1) {
                 $scope.favoriteIcon = '../../images/favorite-white.png';
             } else {
@@ -421,29 +424,27 @@
 
         // can speed this up with epg obj which is already created in player-service
         function getProgramInfo(index) {
-            var epgIndex = $rootScope.channelsEpg.map(function (e) {
-                return e.channel_id;
-            }).indexOf($rootScope.channels[index].id);
-            console.log('index, epgIndex', index, epgIndex)
+            //var epgIndex = $rootScope.channelsEpg.map(function (e) {
+            //    return e.channel_id;
+            //}).indexOf($rootScope.channels[index].id);
+            console.log('index', index)
             var lineUp = [];
             var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
-            if (epgIndex >= 0) {
-                lineUp = $rootScope.channelsEpg[epgIndex].programs;
-                var endTime;
-                if (lineUp && lineUp.length > 0) {
-                    for (var i = 0; i < lineUp.length; ++i) {
-                        endTime = new Date(lineUp[i].endTime);
-                        if (now < endTime) {
-                            info.title = lineUp[i].title;
-                            info.description = lineUp[i].description;
-                            info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
-                            break;
-                        }
+
+            lineUp = $rootScope.channelsEpg[index].programs;
+            var endTime;
+            if (lineUp && lineUp.length > 0) {
+                for (var i = 0; i < lineUp.length; ++i) {
+                    endTime = new Date(lineUp[i].endTime);
+                    if (now < endTime) {
+                        info.title = lineUp[i].title;
+                        info.description = lineUp[i].description;
+                        info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
+                        break;
                     }
                 }
             }
-            $rootScope.program = info;
             return info;
         }
 
