@@ -2,7 +2,7 @@
     'use strict';
 
     app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '$interval', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, $interval) {
-        console.log('player controller loaded')
+        //console.log('player controller loaded')
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -22,7 +22,6 @@
         $scope.programTitle = '';
         $scope.programDescription = '';
         $scope.showChannelFilter = false;
-        $scope.currentChannel = {};
         $scope.tags = [];
         $scope.currentView = 'all';
 
@@ -44,8 +43,6 @@
         $scope.allCh = "high-u";
         $scope.filtCh = "";
 
-        var currentChannelIndex = {index: undefined, channelId: undefined};
-        var previousChannelIndex = {index: undefined, channelId: undefined};
         var displayingRecents = false;
         var currentView = 'all';
 
@@ -53,21 +50,34 @@
 
         function activate() {
             $scope.timeSlots = playerSvc.getTimeSlots();
-            // copied and pasted from the player controller
+            getChannels();
+            initProgrammingGuide();
+            getChannelCategories();
+        }
+
+        // get Channels for this user
+        function getChannels(){
             mediaSvc.getUserChannels(function (data) {
-                console.log('success callback for getUserChannels', data)
+                //console.log('success callback for getUserChannels', data)
                 $rootScope.channels = data.channels_list;
                 $rootScope.filteredChannels = $rootScope.channels;
                 $rootScope.$broadcast('ChannelsLoaded');
             }, function(err){
-                console.log('error callback for getUserChannels', err)
+                //console.log('error callback for getUserChannels', err)
             });
+        }
 
+        // Get programming guide info for this user and initialize autorefresh
+        function initProgrammingGuide(){
             $rootScope.$on('ChannelsLoaded', function () {
                 getProgramming();
                 autoRefresh();
             });
+        }
 
+        // This is for layout of filter categories copied from old epg
+        // leaving it instead of redoing logic here and in filter.html page
+        function getChannelCategories(){
             mediaSvc.getChannelCategories(function (data) {
                 var dataCategories = data.categories;
                 $rootScope.channelCategories = data.categories;
@@ -87,12 +97,13 @@
             });
         }
 
+        // get epg programming / favorite channels for user and initialize all channels view
         function getProgramming(){
             playerSvc.getProgramming(function (err, programming) {
                 $scope.allChannels = programming;
                 $scope.programming = $scope.allChannels.slice(0, 10);
                 currentView = 'all';
-                console.log('allChannelsObj from player service', playerSvc.allChannelsObj)
+                //console.log('allChannelsObj from player service', playerSvc.allChannelsObj)
                 mediaSvc.getFavoriteChannels(
                     function (data) {
                         $scope.favoriteChannels = playerSvc.formatFavorites(data);
@@ -106,8 +117,9 @@
             })
         }
 
+        // refresh epg programming and allChannels object
         function refreshProgramming(){
-            console.log('ahhh thats refreshing')
+            //console.log('ahhh thats refreshing')
             playerSvc.getProgramming(function (err, programming){
                 console.log('refreshed programming', programming);
                 $scope.allChannels = programming;
@@ -116,8 +128,9 @@
         }
 
         // map the views against new allChannels object to update lineUps
+        // will refresh the epg in place regardless of view or current scroll position
         function refreshView(){
-            console.log('refreshing view')
+            //console.log('refreshing view')
             $scope.programming = mapLineups($scope.programming);
             $scope.favoriteChannels = mapLineups($scope.favoriteChannels);
             $scope.recentChannels = mapLineups($scope.recentChannels);
@@ -129,33 +142,37 @@
             for(var i = 0; i < arr.length; i++){
                 arr[i].lineUp = playerSvc.allChannelsObj[arr[i].id].lineUp;
             }
-            console.log(arr)
+            //console.log(arr)
             return arr;
         }
 
         $scope.refresh = function(){
             refreshProgramming();
-        }
+        };
 
-        // automatically refresh epg every 15 minutes
+        // refresh timebar and epg on next half and quarter hour respectively
+        // automatically refresh timebar and epg every 30 and 15 minutes after that
         function autoRefresh(){
             var lastHalf = lastXHour(30);
             var lastQuarter = lastXHour(15);
-            console.log('lastQuarter', new Date(lastQuarter).toString())
-            console.log('lastHalf', new Date(lastHalf).toDateString())
-            var nextQuarter = lastQuarter + (1000 * 60 * 15);
-            var nextHalf = lastHalf + (1000 * 60 * 30);
+            //console.log('lastQuarter', new Date(lastQuarter).toString())
+            //console.log('lastHalf', new Date(lastHalf).toDateString())
+
+            var nextQuarter = lastQuarter + (1000 * 60 * 16);
+            var nextHalf = lastHalf + (1000 * 60 * 31);
+
             var currentTime = new Date();
             var quarterInterval = nextQuarter - currentTime.getTime();
             var halfInterval = nextHalf - currentTime.getTime();
-            console.log('interval to next quarter hour and half hour', quarterInterval/60/1000, halfInterval/60/1000);
+
+            //console.log('interval to next quarter hour and half hour', quarterInterval/60/1000, halfInterval/60/1000);
             var fifteenMin = 1000 * 60 * 15;
             var thirtyMin = 1000 * 60 * 30;
 
             // refresh on the quarter hour after they log in
             // refresh every 15 minutes after that
             $timeout(function(){
-                console.log('calling the $timeout function for new programming')
+                //console.log('calling the $timeout function for new programming')
                 refreshProgramming();
                 $interval(function(){
                     refreshProgramming();
@@ -165,9 +182,9 @@
             // refresh on the half hour after they log in
             // refresh every 30 minutes after that
             $timeout(function(){
-                console.log('calling $timeout function for new timebar')
+                //console.log('calling $timeout function for new timebar')
                 $scope.timeSlots = playerSvc.getTimeSlots();
-                console.log('new timeSlots', $scope.timeSlots)
+                //console.log('new timeSlots', $scope.timeSlots)
                 $interval(function(){
                     $scope.timeSlots = playerSvc.getTimeSlots();
                 }, thirtyMin)
@@ -200,7 +217,7 @@
         };
 
         function loadMore(channelsArr){
-            console.log('loading more')
+            //console.log('loading more')
             for(var i = 0; i < 10; i++) {
                 var checkLength = ($scope.programming.length) < channelsArr.length;
                 if(checkLength) {
@@ -349,48 +366,55 @@
             );
         }
 
-        $scope.watchNow = function (index, favoriteChannels) {
-            var favorites = favoriteChannels;
+        $scope.watchNow = function (index) {
 
             //console.log('channel in programming by index', $scope.programming[index])
             // find the index of the channel where index === chIndex
             var indexOfClickedChannel = $scope.programming.map(function (e) {
                 return e.chIndex;
             }).indexOf(index);
+            // console.log('index and indexOfClickedChannel from watchNow', index, indexOfClickedChannel)
 
-            mediaSvc.getChannelUrl($rootScope.channels[index].id).success(function (channelUrl) {
+            console.log('$scope.programming[indexOfClickedChannel] $rootScope.channels[index].id', $scope.programming[indexOfClickedChannel].id, $rootScope.channels[index].id, $scope.allChannels[index].id)
+
+            mediaSvc.getChannelUrl($scope.allChannels[index].id).success(function (channelUrl) {
+                // set URLs for channel and channel logo
                 $scope.mainUrl = channelUrl.routes[0];
-                $scope.tvProgram = $rootScope.channelsEpg[index].programs;
-                $scope.channelLogo = $rootScope.channels[index].logoUri;
+                $scope.channelLogo = $scope.allChannels[index].logoUri;
+
+                // set program info for display in epg
                 var programInfo = getProgramInfo(index);
-                $scope.program = programInfo;
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description || false;
-                previousChannelIndex.index = currentChannelIndex.index;
-                currentChannelIndex.index = index;
-                currentChannelIndex.channelId = $rootScope.channels[index].id;
-                setFavoriteIcon($rootScope.channels[index].id, favorites); //check if channel is a favorite
-                addRecentChannel(currentChannelIndex.channelId);
-                $scope.currentChannel.index = currentChannelIndex.index;
-                $scope.currentChannel.channelId = $rootScope.channels[index].id;
-                $rootScope.$broadcast('PlayChannel', {currentIndex: index, previousIndex: previousChannelIndex.index});
+                $scope.currentChannel.channelId = $scope.allChannels[index].id;
+
+                // set favorite icon (if needed) and add this channel to recent channels list
+                setFavoriteIcon($scope.currentChannel.channelId); //check if channel is a favorite
+                addRecentChannel($scope.currentChannel.channelId);
+
+                // scroll user back to player window
                 $anchorScroll('topBox');
+
+                // have delay to avoid user seeing error message while jwplayer connects to video source
                 if ($scope.watching === false) {
                     $timeout(function () {
                         $scope.watching = true;
                     }, 500);
                 }
+
+                // move this channel to top of epg if in the 'recents' view
                 if(currentView === 'recents'){
                     channelToTop(indexOfClickedChannel);
                 }
             });
+
         };
 
         // set / unset favorite icon
-        function setFavoriteIcon(channel, favorites) {
-            var isfavorite = favorites.map(function (e) {
+        function setFavoriteIcon(channelId) {
+            var isfavorite = $scope.favoriteChannels.map(function (e) {
                 return e.id;
-            }).indexOf(channel);
+            }).indexOf(channelId);
             if (isfavorite === -1) {
                 $scope.favoriteIcon = '../../images/favorite-white.png';
             } else {
@@ -400,28 +424,27 @@
 
         // can speed this up with epg obj which is already created in player-service
         function getProgramInfo(index) {
-            var epgIndex = $rootScope.channelsEpg.map(function (e) {
-                return e.channel_id;
-            }).indexOf($rootScope.channels[index].id);
+            //var epgIndex = $rootScope.channelsEpg.map(function (e) {
+            //    return e.channel_id;
+            //}).indexOf($rootScope.channels[index].id);
+            console.log('index', index)
             var lineUp = [];
             var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
-            if (epgIndex >= 0) {
-                lineUp = $rootScope.channelsEpg[epgIndex].programs;
-                var endTime;
-                if (lineUp && lineUp.length > 0) {
-                    for (var i = 0; i < lineUp.length; ++i) {
-                        endTime = new Date(lineUp[i].endTime);
-                        if (now < endTime) {
-                            info.title = lineUp[i].title;
-                            info.description = lineUp[i].description;
-                            info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
-                            break;
-                        }
+
+            lineUp = $rootScope.channelsEpg[index].programs;
+            var endTime;
+            if (lineUp && lineUp.length > 0) {
+                for (var i = 0; i < lineUp.length; ++i) {
+                    endTime = new Date(lineUp[i].endTime);
+                    if (now < endTime) {
+                        info.title = lineUp[i].title;
+                        info.description = lineUp[i].description;
+                        info.showTime = lineUp[i].startHour + " - " + lineUp[i].endHour;
+                        break;
                     }
                 }
             }
-            $rootScope.program = info;
             return info;
         }
 

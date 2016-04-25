@@ -2,7 +2,7 @@
     'use strict';
 
     app.factory('playerSvc', ['$filter', '$rootScope', 'mediaSvc', function ($filter, $rootScope, mediaSvc) {
-        console.log('player service loaded')
+        //console.log('player service loaded')
         var channelsEpgObj = {};
         var allChannelsObj = {};
         var timeBarStart;
@@ -36,24 +36,19 @@
                             var id = $rootScope.channelsEpg[i].channel_id;
                             channelsEpgObj[id] = $rootScope.channelsEpg[i].programs || [];
                         }
-                        for(var i = 0; i < $rootScope.filteredChannels.length; i++){
+                        for(i = 0; i < $rootScope.filteredChannels.length; i++){
                             // I declare these here instead of directly in the programInfo object for readability
-                            var id = $rootScope.filteredChannels[i].id;
-                            var chIndex = i;
-                            var logo = $rootScope.filteredChannels[i].logoUri;
-                            var channelTitle = $rootScope.filteredChannels[i].title;
-                            var tags = $rootScope.filteredChannels[i].tags_ids;
+                            id = $rootScope.filteredChannels[i].id;
                             var lineUp = channelsEpgObj[id] || [];
                             lineUp = formatLineUp(lineUp);
 
                             var programInfo = {
                                 id: id,
-                                chIndex: chIndex,
-                                logo: logo,
-                                channelTitle: channelTitle,
-                                epgIndex: i,
+                                chIndex: i,
+                                logo: $rootScope.filteredChannels[i].logoUri,
+                                channelTitle: $rootScope.filteredChannels[i].title,
                                 lineUp: lineUp,
-                                tags: tags
+                                tags: $rootScope.filteredChannels[i].tags_ids
                             };
 
                             allChannels.push(programInfo);
@@ -93,6 +88,7 @@
             allChannelsObj: allChannelsObj,
         }
 
+        // calculate length of a show. used to determine size of div for each program in epg.
         function showLength(startTime, endTime) {
             var lastHalfHour = Math.floor(new Date().getTime() / (1000 * 60 * 30));
             lastHalfHour = lastHalfHour * 1000 * 60 * 30;
@@ -131,6 +127,8 @@
             return lineUp;
         }
 
+        // Used for mapping operations
+        // create an array of an object's keys
         function objToArr(obj) {
             var arr = [];
             for (var key in obj) {
@@ -141,6 +139,7 @@
             return arr;
         }
 
+        // create an object with key : value of array element
         function arrToObj(arr) {
             var obj = {};
             for (var i = 0; i < arr.length; i++) {
@@ -150,6 +149,8 @@
             return arrToObj;
         }
 
+        // make all channels object from all channels array
+        // want O(1) object lookup time for certain operations
         function makeAllChannelObj(arr){
             for(var i = 0; i < arr.length; i++){
                 var id = arr[i].id;
@@ -162,14 +163,14 @@
         // creating all fields of a program object so I don't have to worry about where else in the code these properties are used
         function paddingObject(image, endTime){
             var placeHolder = {
-                description: null,
-                dropDownInfo: null,
-                title: null,
-                genres: null,
+                description: "",
+                dropDownInfo: "",
+                title: "",
+                genres: "",
                 image: image,
                 length: showLength(timeBarStart, endTime),
                 endTime: endTime,
-                startTime: new Date(timeBarStart).toISOString(),
+                startTime: "",
                 ratings: ""
             }
             return placeHolder;

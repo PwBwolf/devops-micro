@@ -55,7 +55,7 @@
                 <div ng-show="programming.length > 0" class="position-div user-guide" infinite-scroll='loadMore()' infinite-scroll-distance='1' infinite-scroll-immediate-check='false' infinite-scroll-parent="true">
                         <div id="channelGuideLogo" class="image-lineup">
                             <div id="image-logos" ng-repeat="programs in programming" class="channel-description">
-                                <div class="logo-detail" ng-click="watchNow(programs.chIndex, favoriteChannels, this);" title="{{::programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{::programs.logo}}) 50% no-repeat; background-size:contain"></div>
+                                <div class="logo-detail" ng-click="watchNow(programs.chIndex, this);" title="{{::programs.channelTitle}}" style="cursor: pointer; background: #FFF url({{::programs.logo}}) 50% no-repeat; background-size:contain"></div>
                             </div>
                         </div>
                         <div class="horizontal-scroll horizontal-bottom sync-scroll">
