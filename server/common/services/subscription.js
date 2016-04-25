@@ -812,10 +812,10 @@ module.exports = {
                             callback(err, userObj);
                         });
                     },
-                    // send verification email if registered
+                    // send verification email/sms if registered else send welcome message
                     function (userObj, callback) {
-                        if (validation.isUsPhoneNumber(userObj.email)) {
-                            if (newUser.sendSmsVerification) {
+                        if (userObj.status === 'registered') {
+                            if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj, function (err) {
                                     if (err) {
                                         logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.email);
@@ -824,24 +824,36 @@ module.exports = {
                                         logger.logInfo('subscription - convertToComplimentary - verification sms sent: ' + userObj.email);
                                     }
                                 });
+                            } else {
+                                sendVerificationEmail(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
+                                    }
+                                });
                             }
-                            sendVerificationEmail(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
-                                }
-                            });
                         } else {
-                            sendConvertToComplimentaryEmail(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending converted to complimentary email: ' + userObj.email);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - converted to complimentary email sent: ' + userObj.email);
-                                }
-                            });
+                            if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                                sendConvertToComplimentarySms(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending upgrade sms: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - upgrade sms sent: ' + userObj.email);
+                                    }
+                                });
+                            } else {
+                                sendConvertToComplimentaryEmail(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending upgrade email: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - upgrade email sent: ' + userObj.email);
+                                    }
+                                });
+                            }
                         }
                         callback(null, userObj);
                     },
@@ -1953,6 +1965,21 @@ function sendUpgradeEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendConvertToComplimentarySms(user, cb) {
+    var message = config.convertToComplimentarySmsMessage[user.preferences.defaultLanguage];
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendConvertToComplimentarySms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendConvertToComplimentarySms - sms sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
