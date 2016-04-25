@@ -402,3 +402,73 @@ input[type="radio"] {
     }
 }
 
+@media screen and (max-width: 415px) {
+    [contentEditable=true]:focus {
+        background: rgba(90, 90, 90, 0.7);
+        border: #999 2px solid;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        padding: 1%;
+        outline: none;
+    }
+
+    header {
+        width: auto;
+        height: 50px;
+        z-index: 998;
+        padding: 0px !important;
+        background: transparent;
+    }
+
+
+    .language {
+        display: none;
+    }
+    * {
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgba(155, 155, 155, .94);
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: rgba(254, 254, 254, .89);
+    }
+
+    dl {
+        font-size: 100%;
+    }
+
+    dt {
+        color: darkgrey;
+        font-size: 1.25em;
+        font-family: Arial Narrow, Arial, sans-serif;
+        font-weight: bold !important;
+        text-transform: capitalize;
+    }
+
+    dd {
+        color: dimgrey;
+        margin-top: 2px;
+        font-size: 1.0em;
+        white-space: normal;
+    }
+
+    dd + dd {
+        color: rgba(135, 117, 104, .9);
+        margin-bottom: 12px;
+    }
+
+    body {
+        height: auto;
+        font-family: default, Verdana, Arial, Tahoma;
+        font-size: 12px;
+    }
+}
