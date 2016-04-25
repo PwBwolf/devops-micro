@@ -1,3 +1,17 @@
+.navbar-default {
+    background-color: transparents;
+    width: 100%;
+}
+
+.open > .dropdown-menu {
+    min-width: 100%;
+}
+
+.menu {
+    width: 100%;
+    font-weight: bold;
+}
+
 #channelFilterHolder {
     .filtered-channels-count {
         span {
@@ -315,3 +329,4 @@
 .navbar-default .navbar-toggle {
     border-width: 2px;
 }
+

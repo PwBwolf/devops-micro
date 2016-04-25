@@ -3,7 +3,13 @@
     transition:all linear 0.5s;
 }
 
+.main-favorites {
+    display: none !important;
+}
 
+.main-player {
+    width: 100% !important;
+}
 
 .image-lineup {
     width: 154px;
@@ -183,6 +189,12 @@
         #programInfo {
             display: none !important;
         }
+    }
+
+    .top-shadow {
+        box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+        -webkit-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+        -moz-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
     }
 }
 
@@ -527,4 +539,10 @@
 
 .paid-tv .main-player {
     margin: 0 auto;
+}
+
+.top-shadow {
+    box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+    -webkit-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+    -moz-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
 }

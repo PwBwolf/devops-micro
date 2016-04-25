@@ -1,17 +1,28 @@
 body {
     margin: 0;
     padding: 0px;
-    font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+    //font-family: 'gotham-bookgotham-book', Arial, sans-serif;
+    height: auto;
+    font-family: default, Verdana, Arial, Tahoma;
+    font-size: 12px;
+}
+
+body {
+
 }
 
 * {
     margin: 0;
     padding: 0;
     position: relative;
+    border: 0;
+    text-decoration: none;
 }
 
 body, html {
     font-size: 14px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 ul, ol {
@@ -23,8 +34,56 @@ ul, ol {
 header {
     float: left;
     width: 100%;
-    padding: 10px 0;
+    padding: 0px;
     background: transparent;
+    height: 50px;
+    z-index: 998;
+    margin-bottom: 3px;
+}
+
+dl {
+    margin-bottom: 40px !important;
+}
+
+dt {
+    color: darkgrey;
+    font-size: 1.25em;
+    font-weight: bolder !important;
+    text-transform: capitalize;
+}
+
+dd {
+    color: dimgrey;
+    margin-top: 2px;
+    font-size: 1.0em;
+    white-space: normal;
+}
+
+dd + dd {
+    color: rgba(135, 117, 104, .9);
+    margin-bottom: 12px;
+}
+
+#welcome {
+    padding: 0;
+    text-transform: uppercase;
+    margin: 0 auto;
+    float: right;
+    white-space: nowrap;
+}
+
+#welcome:hover {
+    cursor: default;
+    color: rgba(62, 25, 77, 0.941176);;
+    border-bottom: none;
+}
+
+.off {
+    display: none !important;
+}
+
+.on {
+    display: initial !important;
 }
 
 /* purple label checkbox */
@@ -85,6 +144,17 @@ input[type="radio"] {
     margin-left: 10px;
     display: none;
 }
+
+#navBar {
+    width: 100%;
+    height: 34px;
+    clear: both;
+    display: block;
+    position: absolute;
+    background: rgba(254, 254, 254, .95);
+    color: rgba(62, 25, 77, .94);
+}
+
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     border: none;
@@ -332,3 +402,73 @@ input[type="radio"] {
     }
 }
 
+@media screen and (max-width: 415px) {
+    [contentEditable=true]:focus {
+        background: rgba(90, 90, 90, 0.7);
+        border: #999 2px solid;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        padding: 1%;
+        outline: none;
+    }
+
+    header {
+        width: auto;
+        height: 50px;
+        z-index: 998;
+        padding: 0px !important;
+        background: transparent;
+    }
+
+
+    .language {
+        display: none;
+    }
+    * {
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgba(155, 155, 155, .94);
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: rgba(254, 254, 254, .89);
+    }
+
+    dl {
+        font-size: 100%;
+    }
+
+    dt {
+        color: darkgrey;
+        font-size: 1.25em;
+        font-family: Arial Narrow, Arial, sans-serif;
+        font-weight: bold !important;
+        text-transform: capitalize;
+    }
+
+    dd {
+        color: dimgrey;
+        margin-top: 2px;
+        font-size: 1.0em;
+        white-space: normal;
+    }
+
+    dd + dd {
+        color: rgba(135, 117, 104, .9);
+        margin-bottom: 12px;
+    }
+
+    body {
+        height: auto;
+        font-family: default, Verdana, Arial, Tahoma;
+        font-size: 12px;
+    }
+}

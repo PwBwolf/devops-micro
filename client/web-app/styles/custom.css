@@ -2,15 +2,21 @@
 body {
   margin: 0;
   padding: 0px;
-  font-family: 'gotham-bookgotham-book', Arial, sans-serif; }
+  height: auto;
+  font-family: default, Verdana, Arial, Tahoma;
+  font-size: 12px; }
 
 * {
   margin: 0;
   padding: 0;
-  position: relative; }
+  position: relative;
+  border: 0;
+  text-decoration: none; }
 
 body, html {
-  font-size: 14px; }
+  font-size: 14px;
+  max-width: 1280px;
+  margin: 0 auto; }
 
 ul, ol {
   margin: 0;
@@ -20,8 +26,48 @@ ul, ol {
 header {
   float: left;
   width: 100%;
-  padding: 10px 0;
-  background: transparent; }
+  padding: 0px;
+  background: transparent;
+  height: 50px;
+  z-index: 998;
+  margin-bottom: 3px; }
+
+dl {
+  margin-bottom: 40px !important; }
+
+dt {
+  color: darkgrey;
+  font-size: 1.25em;
+  font-weight: bolder !important;
+  text-transform: capitalize; }
+
+dd {
+  color: dimgrey;
+  margin-top: 2px;
+  font-size: 1.0em;
+  white-space: normal; }
+
+dd + dd {
+  color: rgba(135, 117, 104, 0.9);
+  margin-bottom: 12px; }
+
+#welcome {
+  padding: 0;
+  text-transform: uppercase;
+  margin: 0 auto;
+  float: right;
+  white-space: nowrap; }
+
+#welcome:hover {
+  cursor: default;
+  color: rgba(62, 25, 77, 0.941176);
+  border-bottom: none; }
+
+.off {
+  display: none !important; }
+
+.on {
+  display: initial !important; }
 
 /* purple label checkbox */
 .purple:before {
@@ -73,6 +119,15 @@ input[type="checkbox"] {
 input[type="radio"] {
   margin-left: 10px;
   display: none; }
+
+#navBar {
+  width: 100%;
+  height: 34px;
+  clear: both;
+  display: block;
+  position: absolute;
+  background: rgba(254, 254, 254, 0.95);
+  color: rgba(62, 25, 77, 0.94); }
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border: none; }
@@ -272,11 +327,120 @@ input[type="radio"] {
   .navbar-right {
     width: 270px; } }
 
+@media screen and (max-width: 415px) {
+  [contentEditable=true]:focus {
+    background: rgba(90, 90, 90, 0.7);
+    border: #999 2px solid;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    padding: 1%;
+    outline: none; }
+  header {
+    width: auto;
+    height: 50px;
+    z-index: 998;
+    padding: 0px !important;
+    background: transparent; }
+  .language {
+    display: none; }
+  * {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    text-decoration: none; }
+  a {
+    text-decoration: none;
+    color: rgba(155, 155, 155, 0.94);
+    font-weight: bold; }
+  a:hover {
+    color: rgba(254, 254, 254, 0.89); }
+  dl {
+    font-size: 100%; }
+  dt {
+    color: darkgrey;
+    font-size: 1.25em;
+    font-family: Arial Narrow, Arial, sans-serif;
+    font-weight: bold !important;
+    text-transform: capitalize; }
+  dd {
+    color: dimgrey;
+    margin-top: 2px;
+    font-size: 1.0em;
+    white-space: normal; }
+  dd + dd {
+    color: rgba(135, 117, 104, 0.9);
+    margin-bottom: 12px; }
+  body {
+    height: auto;
+    font-family: default, Verdana, Arial, Tahoma;
+    font-size: 12px; } }
+
 /* Variables */
 /* typography */
+@font-face {
+  font-family: 'radikalregular';
+  src: url("fonts/nootype_-_radikal-webfont.eot");
+  src: url("fonts/nootype_-_radikal-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/nootype_-_radikal-webfont.woff2") format("woff2"), url("fonts/nootype_-_radikal-webfont.woff") format("woff"), url("fonts/nootype_-_radikal-webfont.ttf") format("truetype"), url("fonts/nootype_-_radikal-webfont.svg#radikalregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'radikalthin';
+  src: url("fonts/nootype_-_radikal_thin-webfont.eot");
+  src: url("fonts/nootype_-_radikal_thin-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/nootype_-_radikal_thin-webfont.woff2") format("woff2"), url("fonts/nootype_-_radikal_thin-webfont.woff") format("woff"), url("fonts/nootype_-_radikal_thin-webfont.ttf") format("truetype"), url("fonts/nootype_-_radikal_thin-webfont.svg#radikalthin") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'radikallight';
+  src: url("fonts/nootype_-_radikal_light-webfont.eot");
+  src: url("fonts/nootype_-_radikal_light-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/nootype_-_radikal_light-webfont.woff2") format("woff2"), url("fonts/nootype_-_radikal_light-webfont.woff") format("woff"), url("fonts/nootype_-_radikal_light-webfont.ttf") format("truetype"), url("fonts/nootype_-_radikal_light-webfont.svg#radikallight") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham-lightgotham-light';
+  src: url("fonts/gothmlig_0-webfont.eot");
+  src: url("fonts/gothmlig_0-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/gothmlig_0-webfont.woff2") format("woff2"), url("fonts/gothmlig_0-webfont.woff") format("woff"), url("fonts/gothmlig_0-webfont.ttf") format("truetype"), url("fonts/gothmlig_0-webfont.svg#gotham-lightgotham-light") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham-bookgotham-book';
+  src: url("fonts/gothmbok-webfont.eot");
+  src: url("fonts/gothmbok-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/gothmbok-webfont.woff") format("woff"), url("fonts/gothmbok-webfont.ttf") format("truetype"), url("fonts/gothmbok-webfont.svg#gotham-bookgotham-book") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham-boldgotham-bold';
+  src: url("fonts/gothmbol.eot");
+  src: url("fonts/gothmbol.eot?#iefix") format("embedded-opentype"), url("fonts/gothmbol.woff") format("woff"), url("fonts/gothmbol.ttf") format("truetype"), url("fonts/gothmbol.svg#gotham-boldgotham-bold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'bebasregular';
+  src: url("fonts/bebas_-webfont.eot");
+  src: url("fonts/bebas_-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/bebas_-webfont.woff2") format("woff2"), url("fonts/bebas_-webfont.woff") format("woff"), url("fonts/bebas_-webfont.ttf") format("truetype"), url("fonts/bebas_-webfont.svg#bebasregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
 /* views */
 .text-area {
   height: 241px; }
+
+.navbar-default {
+  background-color: transparents;
+  width: 100%; }
+
+.open > .dropdown-menu {
+  min-width: 100%; }
+
+.menu {
+  width: 100%;
+  font-weight: bold; }
 
 #channelFilterHolder .filtered-channels-count span {
   float: left; }
@@ -559,6 +723,10 @@ input[type="radio"] {
   #headerBrand .navbar-right .number-contact {
     top: 30%; }
 
+#phoneHeader {
+  position: relative;
+  z-index: 101; }
+
 footer {
   width: 100%;
   max-width: 1280px;
@@ -576,9 +744,136 @@ footer {
 .top-shadow {
   position: fixed; }
 
+#headerBrand {
+  height: 50px;
+  text-transform: uppercase;
+  border-bottom: solid 1px transparent;
+  z-index: 50; }
+
+#headerBrand img {
+  width: auto;
+  height: 80px;
+  margin: 0 0 0 25px;
+  top: 9px;
+  transition: all 1s ease-in-out;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  z-index: 998; }
+
+.contact-number {
+  width: 50%;
+  height: 100%;
+  margin-right: 5px;
+  padding: 2px;
+  padding-top: 15px;
+  color: black;
+  text-align: right;
+  vertical-align: middle; }
+
+#menuItems {
+  margin: 6px auto;
+  text-align: center; }
+
+#menuItems menuItem {
+  padding: 0px 20px;
+  text-transform: uppercase;
+  margin: 0 auto; }
+
+#menuItems menuItem:hover {
+  cursor: pointer;
+  color: rgba(154, 154, 154, 0.89);
+  border-bottom: solid 1px red; }
+
+#menuItems div {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3%;
+  cursor: pointer; }
+
+#menuItems div > img {
+  height: 20px;
+  width: auto; }
+
+#socialMedia {
+  width: 20%;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  top: -10px; }
+
+#copyright {
+  width: 80%;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  top: -10px; }
+
+#socialMedia img {
+  width: auto;
+  height: 30px;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%); }
+
+#socialMedia img:hover {
+  cursor: pointer;
+  filter: none;
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0); }
+
+@media screen and (max-width: 415px) {
+  .navbar {
+    margin-bottom: 0px !important; }
+  .navbar-brand {
+    padding: 0 5px !important; }
+  .navbar-brand img {
+    height: 75%;
+    width: auto;
+    margin-top: 4px; }
+  .nav-btn {
+    float: right;
+    padding: 2% 1%; }
+  #headerBrand {
+    height: 50px;
+    text-transform: uppercase;
+    border-bottom: solid 1px lightgrey;
+    margin-right: 20px;
+    z-index: 50; }
+  #headerBrand img {
+    width: auto;
+    height: 70px;
+    display: block !important;
+    margin: 0 auto;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    z-index: 998; }
+  .contact-number {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+    color: black;
+    text-align: right;
+    vertical-align: middle;
+    border-top: thin solid whitesmoke; } }
+
 .animate-hide {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
+
+.main-favorites {
+  display: none !important; }
+
+.main-player {
+  width: 100% !important; }
 
 .image-lineup {
   width: 154px;
@@ -702,7 +997,11 @@ footer {
 
 @media (max-width: 410px) {
   #menuBar #programInfo {
-    display: none !important; } }
+    display: none !important; }
+  .top-shadow {
+    box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+    -webkit-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+    -moz-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9); } }
 
 @media (max-width: 320px) {
   #currentChannel {
@@ -980,6 +1279,11 @@ footer {
 
 .paid-tv .main-player {
   margin: 0 auto; }
+
+.top-shadow {
+  box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+  -webkit-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+  -moz-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9); }
 
 .raf-fine-print {
   text-align: justify;
