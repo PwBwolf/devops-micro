@@ -70,4 +70,3 @@ mongoose.connect(config.db, function (err) {
         });
     }
 });
-
