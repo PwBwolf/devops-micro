@@ -232,3 +232,9 @@ ul.passwordStrength {
         display: none;
     }
 }
+
+@media screen and (min-width: 416px) and (max-width: 767px) {
+    .language {
+        display: none;
+    }
+}
