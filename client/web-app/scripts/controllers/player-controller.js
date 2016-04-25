@@ -326,11 +326,8 @@
             mediaSvc.addFavoriteChannel(
                 req,
                 function () {
-                    var newFavoriteId = {channelId: currentChannel.channelId};
-                    var newFavoriteIndex = $scope.allChannels.map(function (e) {
-                        return e.id;
-                    }).indexOf(newFavoriteId.channelId);
-                    var newFavoriteChannelObj = $scope.allChannels[newFavoriteIndex];
+                    var newFavoriteChannelObj = playerSvc.allChannelsObj[currentChannel.channelId];
+                    console.log('new favorite', newFavoriteChannelObj, currentChannel.channelId)
                     $scope.favoriteChannels.push(newFavoriteChannelObj);
                     $scope.favoriteIcon = '../../images/favorite-yellow.png';
                     $scope.noFavoriteChannels = false;
@@ -367,26 +364,19 @@
         }
 
         $scope.watchNow = function (index) {
+            var id = $scope.allChannels[index].id;
 
-            //console.log('channel in programming by index', $scope.programming[index])
-            // find the index of the channel where index === chIndex
-            var indexOfClickedChannel = $scope.programming.map(function (e) {
-                return e.chIndex;
-            }).indexOf(index);
-            // console.log('index and indexOfClickedChannel from watchNow', index, indexOfClickedChannel)
-
-            console.log('$scope.programming[indexOfClickedChannel] $rootScope.channels[index].id', $scope.programming[indexOfClickedChannel].id, $rootScope.channels[index].id, $scope.allChannels[index].id)
-
-            mediaSvc.getChannelUrl($scope.allChannels[index].id).success(function (channelUrl) {
+            mediaSvc.getChannelUrl(id).success(function (channelUrl) {
                 // set URLs for channel and channel logo
                 $scope.mainUrl = channelUrl.routes[0];
-                $scope.channelLogo = $scope.allChannels[index].logoUri;
+                $scope.channelLogo = $scope.allChannels[index].logo;
+                console.log('channelLogo', $scope.channelLogo, $scope.allChannels[index])
 
                 // set program info for display in epg
-                var programInfo = getProgramInfo(index);
+                var programInfo = getProgramInfo(id);
                 $scope.programTitle = programInfo.title;
                 $scope.programDescription = programInfo.description || false;
-                $scope.currentChannel.channelId = $scope.allChannels[index].id;
+                $scope.currentChannel.channelId = id;
 
                 // set favorite icon (if needed) and add this channel to recent channels list
                 setFavoriteIcon($scope.currentChannel.channelId); //check if channel is a favorite
@@ -404,6 +394,12 @@
 
                 // move this channel to top of epg if in the 'recents' view
                 if(currentView === 'recents'){
+
+                    // find the index of the channel in the current programming array
+                    var indexOfClickedChannel = $scope.programming.map(function (e) {
+                        return e.chIndex;
+                    }).indexOf(index);
+
                     channelToTop(indexOfClickedChannel);
                 }
             });
@@ -422,17 +418,10 @@
             }
         }
 
-        // can speed this up with epg obj which is already created in player-service
-        function getProgramInfo(index) {
-            //var epgIndex = $rootScope.channelsEpg.map(function (e) {
-            //    return e.channel_id;
-            //}).indexOf($rootScope.channels[index].id);
-            console.log('index', index)
-            var lineUp = [];
+        function getProgramInfo(id) {
             var info = {title: '', description: '', showTime: 'Show Time ...'};
             var now = new Date();
-
-            lineUp = $rootScope.channelsEpg[index].programs;
+            var lineUp = playerSvc.channelsEpgObj[id];
             var endTime;
             if (lineUp && lineUp.length > 0) {
                 for (var i = 0; i < lineUp.length; ++i) {

@@ -36,6 +36,7 @@
                             var id = $rootScope.channelsEpg[i].channel_id;
                             channelsEpgObj[id] = $rootScope.channelsEpg[i].programs || [];
                         }
+
                         for(i = 0; i < $rootScope.filteredChannels.length; i++){
                             // I declare these here instead of directly in the programInfo object for readability
                             id = $rootScope.filteredChannels[i].id;
@@ -86,6 +87,8 @@
             },
 
             allChannelsObj: allChannelsObj,
+
+            channelsEpgObj: channelsEpgObj,
         }
 
         // calculate length of a show. used to determine size of div for each program in epg.
