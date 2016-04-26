@@ -428,224 +428,6 @@ footer {
 }
 
 
-.tophead {
-    width:100%;
-    z-index:100;
-    top:0;
-    position: absolute;
-}
-
-.mainhd {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-.hdrtop {height:46px;
-
-    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMC43MSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-
-    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.71) 100%); /* FF3.6+ */
-
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.71))); /* Chrome,Safari4+ */
-
-    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* Chrome10+,Safari5.1+ */
-
-    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* Opera 11.10+ */
-
-    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* IE10+ */
-
-    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* W3C */
-
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#b5ffffff',GradientType=0 ); /* IE6-8 */
-
-}
-
-.container {
-    width: 960px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.logo {
-    position: absolute;
-    top: -10px;
-    left: 350px;
-    z-index: 1000;
-    background-image: url(../images/yiptv-logo.png);
-    background-repeat: no-repeat;
-    width: 216px;
-    height: 177px;
-}
-
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, del, dfn, em, img, center, ol, ul, li, form, label, table, tbody, tfoot, thead, tr, th, td, embed, header, menu, nav{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure, footer, header, menu, nav, section {
-    display: block;
-}
-
-//div, a, header, li, ul{
-//    margin: 0;
-//    padding: 0;
-//    border: 0;
-//    font-size: 100%;
-//    font: inherit;
-//    vertical-align: baseline;
-//}
-
-.mainhome {
-    background-color: #fff;
-}
-
-.right {
-    float: right;
-}
-
-ol, ul {
-    list-style: none;
-}
-
-ul, menu, dir {
-    display: block;
-    list-style-type: disc;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-start: 40px;
-}
-
-.hdrbottom { height:57px;
-
-    background: rgb(10,13,132); /* Old browsers */
-
-    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBhMGQ4NCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNTRiY2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-
-    background: -moz-linear-gradient(top,  rgba(10,13,132,.7) 0%, rgba(37,75,204,.8) 100%); /* FF3.6+ */
-
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(10,13,132,.8)), color-stop(100%,rgba(37,75,204,.6))); /* Chrome,Safari4+ */
-
-    background: -webkit-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* Chrome10+,Safari5.1+ */
-
-    background: -o-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* Opera 11.10+ */
-
-    background: -ms-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* IE10+ */
-
-    background: linear-gradient(to bottom,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* W3C */
-
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a0d84', endColorstr='#254bcc',GradientType=0 ); /* IE6-8 */
-
-}
-
-.hdrbottom li a {color:#fff;font-family:'Oswald', sans-serif;font-weight:400;}
-
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.mainnav li {
-    float: left;
-    list-style: none;
-}
-
-#menu-item-2881 a {
-    border-right: 1px solid rgba(110, 125, 193, 0.7);
-    border-left: 1px solid rgba(110, 125, 193, 0.7);
-    box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
-}
-
-.hdrbottom li a {
-    color: #fff;
-    /* font-family: 'Oswald', sans-serif; */
-    font-weight: 500;
-}
-
-.mainnav a {
-    display: block;
-    padding: 20px 10px;
-    color: #220857;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
-.mainnav li {
-    float: left;
-    list-style: none;
-}
-
-li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
-#menu-item-2896 a {
-    border-right: 1px solid rgba(110, 125, 193, 0.7);
-    box-shadow: 1px 0px 0px rgba(51, 57, 144, 0.7);
-}
-
-.loginnav li {
-    float: left;
-    list-style: none;
-}
-
-.loginnav li a {
-    text-decoration: none;
-    text-transform: uppercase;
-    padding: 20px 30px;
-    display: block;
-    /* border-left: 1px solid rgba(255, 255, 255, 0.2); */
-}
-
-#menu-item-8003 a {
-    border-left: 1px solid rgba(110, 125, 193, 0.7);
-    box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
-}
-
-.signupbtn {
-    /* background-color: #7ed009; */
-    background-color: #8339b2;
-    background: #67328a;
-    background: -moz-linear-gradient(top, #67328a 0%, #9d50d1 100%);
-    background: -webkit-linear-gradient(top, #67328a 0%,#9d50d1 100%);
-    background: linear-gradient(to bottom, #67328a 0%,#9d50d1 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#67328a', endColorstr='#9d50d1',GradientType=0 );
-    color: #fff;
-}
-
-#menu-item-12447 a {
-    border-left: 1px solid rgba(110, 125, 193, 0.7);
-    box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
-}
-
-.topnav li.call a {
-    background-color: transparent;
-    color: #001d4a;
-}
-
-.topnav a {
-    display: block;
-    padding: 15px;
-    text-decoration: none;
-    color: #001d4a;
-    font-family: "Oswald";
-    text-transform: uppercase;
-    font-weight: 400;
-}
-
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 
     header {
@@ -886,3 +668,153 @@ li {
         -moz-filter: grayscale(0);
     }
 }
+
+// Copied everything below here from style.css in WP project to make navbar.
+
+
+html, body, div, span, p,
+a, img, ol, ul, li,
+header, menu, nav{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.right {float:right;}
+
+.left {float:left;}
+
+body {font-family: 'Raleway', sans-serif;font-weight:300;background-color:#fff;}
+
+p {margin-bottom:15px;font-size: 18px;color:#6A6A6A;line-height: 24px;}
+
+h2 {font-size:36px;margin-bottom:15px;text-transform:uppercase;font-family: "Oswald", san-serif;color: #413E73;font-weight:400;}
+
+h3 {font-size:18px;margin-bottom:15px;font-family:'Oswald', sans-serif;color:#413e73}
+
+h4 {color:#fff;font-size:14px;font-weight:bold;margin:10px 0}
+
+h5 {font-size:18px;margin-bottom:15px;font-family:'Oswald', sans-serif;color:#413e73}
+
+button {padding: 15px 20px;background-color: #A3336B;color: #FFF;text-transform: uppercase;border: medium none;font-size: 18px;cursor: pointer;margin: 0px 15px;position: relative;top: -5px;}
+
+
+/* SECTIONS */
+
+.container {width:960px;margin:0 auto;position:relative;}
+
+.hdrtop {height:46px;
+
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMC43MSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.71) 100%); /* FF3.6+ */
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.71))); /* Chrome,Safari4+ */
+
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* Chrome10+,Safari5.1+ */
+
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* Opera 11.10+ */
+
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* IE10+ */
+
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.71) 100%); /* W3C */
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#b5ffffff',GradientType=0 ); /* IE6-8 */
+
+}
+
+.hdrbottom { height:57px;
+
+    background: rgb(10,13,132); /* Old browsers */
+
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBhMGQ4NCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNTRiY2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+
+    background: -moz-linear-gradient(top,  rgba(10,13,132,.7) 0%, rgba(37,75,204,.8) 100%); /* FF3.6+ */
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(10,13,132,.8)), color-stop(100%,rgba(37,75,204,.6))); /* Chrome,Safari4+ */
+
+    background: -webkit-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* Chrome10+,Safari5.1+ */
+
+    background: -o-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* Opera 11.10+ */
+
+    background: -ms-linear-gradient(top,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* IE10+ */
+
+    background: linear-gradient(to bottom,  rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%); /* W3C */
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a0d84', endColorstr='#254bcc',GradientType=0 ); /* IE6-8 */
+
+}
+
+.hdrbottom li a {color:#fff;font-family:'Oswald', sans-serif;font-weight:400;}
+
+.logo {position:absolute;top: -10px;left: 350px;z-index:1000;background-image:url(images/yiptv-logo.png); background-repeat:no-repeat;width:216px;height:177px}
+
+.tophead {width:100%;z-index:100;top:0;position: absolute;}
+
+.menu-legal-nav-container {margin-bottom:15px;}
+
+/* TOP RIGHT NAVIGATION */
+
+.topnav li {float:right;}
+
+.topnav li.call a {background-color:transparent;color:#001d4a;}
+
+.topnav a {display:block;padding:15px;text-decoration:none;color: #001d4a;font-family: "Oswald";text-transform: uppercase;font-weight:400;}
+
+.signin {border-right:2px solid #e6e6e8}
+
+.mobilenav {display:none;}
+
+.loginnav li {display:inline-block;}
+
+.loginnav li a {text-decoration: none;text-transform: uppercase;padding: 20px 30px;display: block;border-left: 1px solid rgba(255, 255, 255, 0.2);}
+
+.signupbtn {background-color:#7ed009;color:#fff;}
+
+/* MAIN NAVIGATION */
+
+.mainnav li {float:left}
+
+.mainnav a {display:block;padding:20px 10px;color:#220857;text-decoration:none;text-transform:uppercase;border-left: 1px solid rgba(255,255,255,0.2);}
