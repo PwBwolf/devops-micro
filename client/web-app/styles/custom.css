@@ -1980,7 +1980,8 @@ ul.passwordStrength {
   height: 50px;
   display: inline-block;
   text-align: center;
-  margin-left: 45%; }
+  margin-left: 45%;
+  position: fixed; }
 
 .well .btn:nth-child(even) {
   margin: 0 1%; }
