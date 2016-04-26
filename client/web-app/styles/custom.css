@@ -445,7 +445,7 @@ input[type="radio"] {
   height: 241px; }
 
 .navbar-default {
-  background-color: transparents;
+  background-color: transparent;
   width: 100%; }
 
 .open > .dropdown-menu {
