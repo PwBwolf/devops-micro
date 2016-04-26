@@ -242,6 +242,37 @@ module.exports = {
         );
     },
 
+    updateBillingType: function (sessionId, payBy, payInfo, payDate, payCvv, payName, callback) {
+        var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+        client.methodCall('FS.ClientAPI_XMLRPC.edit_info',
+            [
+                'session_id', sessionId,
+                'payby', payBy,
+                'payinfo', payInfo,
+                'paycvv', payCvv,
+                'month', payDate.substring(0, 2),
+                'year', payDate.substring(3),
+                'payname', payName
+            ], function (err, response) {
+                if (err) {
+                    logger.logError('billing - updateBillingType - error in updating billing type 1');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    if (response.error) {
+                        logger.logError('billing - updateBillingType - error in creating billing type 2');
+                        logger.logError(response.error);
+                        callback(response.error);
+                    } else {
+                        logger.logInfo('billing - updateBillingType - response');
+                        logger.logInfo(response);
+                        callback(null);
+                    }
+                }
+            }
+        );
+    },
+
     orderPackage: orderPackage,
 
     checkAndOrderPackage: function (sessionId, packagePart, callback) {

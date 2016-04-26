@@ -173,6 +173,8 @@ gulp.task('tools', function () {
  */
 gulp.task('server', function (cb) {
     gulp.src('../server/package.json', {dot: true}).pipe(gulp.dest('dist/server'));
+    gulp.src('../server/restart-daemons.sh', {dot: true}).pipe(gulp.dest('dist/server'));
+    gulp.src('../server/restart-servers.sh', {dot: true}).pipe(gulp.dest('dist/server'));
     gulp.src(['../server/common/**/*', '!../server/common/config/*'], {dot: true}).pipe(gulp.dest('dist/server/common'));
     gulp.src(['../server/common/config/all.js', '../server/common/config/' + argv.env + '.js'], {dot: true}).pipe(gulp.dest('dist/server/common/config'));
     gulp.src('../server/web-app/**/*', {dot: true}).pipe(gulp.dest('dist/server/web-app'));
@@ -203,25 +205,35 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/deployment-scripts/notify-build.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/update-database.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/deployment-scripts/cleanup.js', 'dist/tools/deployment-scripts', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/create-complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/create-api-client.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-cj-users.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-cj-batch-file.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-freeside-users.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-password.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/upgrade-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/cancel-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/freeside-login-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/export-partner-accounts.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/convert-to-complimentary-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/convert-to-free-db-only.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/create-api-client.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/create-crm-user.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/create-merchant.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/crm-user-reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/crm-user-set-status.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/db-fs-sync.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/delete-user.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/paid-user-db-freeside-check.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/end-complimentary-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/end-premium-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-cj-batch-file.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-cj-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-comp-users-with-expiry-date.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-freeside-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-partner-accounts.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/freeside-login-report.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/remove-7-day-package.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/upgrade-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/remove-unused-collections.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/remove-payment-pending-field.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set1/update-user-fields.js', 'dist/tools/migration-scripts/set1', 'development', argv.env);
@@ -241,6 +253,7 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/migration-scripts/set4/remove-unused-fields.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set4/remove-visitor-collection.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
     replaceAndCopy('../tools/migration-scripts/set4/delete-failed-users.js', 'dist/tools/migration-scripts/set4', 'development', argv.env);
+    replaceAndCopy('../tools/migration-scripts/set5/remove-unused-collections.js', 'dist/tools/migration-scripts/set5', 'development', argv.env);
     var version = fs.readJSONSync('./version.json').version;
     if (argv.tag && argv.tag === 'true') {
         commitAndTag(version).then(function () {

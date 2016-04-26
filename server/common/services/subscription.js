@@ -56,7 +56,7 @@ module.exports = {
             // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
-                billing.newCustomer(userObj.firstName, userObj.lastName, 'Free', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
+                billing.newCustomer(userObj.firstName, userObj.lastName, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
                     if (err) {
                         logger.logError('subscription - newFreeUser - error creating user in freeside: ' + userObj.email);
                         errorType = 'freeside-user-insert';
@@ -250,7 +250,7 @@ module.exports = {
                 switch (errorType) {
                     case 'payment-declined':
                         revertAccountPaymentDetails(userObj.email, accountObj);
-                        updateFreeSideBilling(freeSideSessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
+                        updateFreeSideBilling(freeSideSessionId, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                             sendVerificationSms(userObj);
                         } else {
@@ -339,7 +339,7 @@ module.exports = {
                 // create user in freeside
                 function (userObj, accountObj, callback) {
                     var password = userObj.createdAt.getTime();
-                    billing.newCustomer(userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
+                    billing.newCustomer(userObj.firstName, userObj.lastName, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
                         if (err) {
                             logger.logError('subscription - newComplimentaryUser - error creating user in freeside: ' + userObj.email);
                             errorType = 'freeside-user-insert';
@@ -516,26 +516,24 @@ module.exports = {
             // update user information in freeside
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address ? newUser.address : (userObj.account.merchant ? userObj.account.merchant : 'YipTV'),
-                    newUser.city ? newUser.city : 'West Palm Beach', newUser.state ? newUser.state : 'FL',
-                    newUser.zipCode ? newUser.zipCode : '00000', 'US', userObj.email, userObj.account.key, locale,
-                    newUser.address ? 'CARD' : 'BILL', newUser.cardNumber ? newUser.cardNumber : '',
-                    newUser.expiryDate ? newUser.expiryDate : '', newUser.cvv ? newUser.cvv : '',
-                    newUser.cardName ? newUser.cardName : '', function (err) {
+                if (newUser.address) {
+                    billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, newUser.address, newUser.city, newUser.state, newUser.zipCode, 'US', userObj.email, userObj.account.key, locale, 'CARD', newUser.cardNumber, newUser.expiryDate, newUser.cvv, newUser.cardName, function (err) {
                         if (err) {
                             logger.logError('subscription - upgradeSubscription - error updating user in billing system: ' + userObj.email);
                             errorType = 'freeside-user-update';
                         }
                         callback(err, userObj, sessionId);
                     });
+                } else {
+                    callback(null, userObj, sessionId);
+                }
             },
             // get agent
             function (userObj, sessionId, callback) {
                 if (newUser.agentNumber && newUser.agentNumber > 1) {
                     billing.getAgent(sessionId, function (err, agentNumber) {
                         if (err) {
-                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
-                            logger.logError(err);
+                            logger.logError('subscription - upgradeSubscription - error getting agent ' + userObj.email);
                         } else {
                             oldAgentNumber = agentNumber;
                         }
@@ -550,8 +548,7 @@ module.exports = {
                 if (newUser.agentNumber && newUser.agentNumber > 1) {
                     billing.updateAgent(userObj.account.freeSideCustomerNumber, newUser.agentNumber, function (err) {
                         if (err) {
-                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.account.freeSideCustomerNumber);
-                            logger.logError(err);
+                            logger.logError('subscription - upgradeSubscription - error updating agent ' + userObj.email);
                         }
                         callback(err, userObj, sessionId);
                     });
@@ -637,10 +634,13 @@ module.exports = {
                         break;
                     case 'freeside-user-update':
                     case 'freeside-login':
+                        revertAccountChangesForUpgrade(userObj, currentValues);
+                        revertUserChangesForUpgrade(userObj, currentValues, currentUser);
+                        break;
                     case 'freeside-package-insert':
                         revertAccountChangesForUpgrade(userObj, currentValues);
                         revertUserChangesForUpgrade(userObj, currentValues, currentUser);
-                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
+                        updateFreeSideBilling(sessionId, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
                         revertAgent(userObj, newUser, oldAgentNumber);
                         break;
                     case 'payment-declined':
@@ -653,8 +653,9 @@ module.exports = {
                                 }
                             });
                         }
-                        updateFreeSideBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '');
-                        revertAgent(userObj, newUser, oldAgentNumber);
+                        updateFreeSideBilling(sessionId, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function () {
+                            revertAgent(userObj, newUser, oldAgentNumber);
+                        });
                         if (userObj.status === 'registered') {
                             if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj);
@@ -702,7 +703,7 @@ module.exports = {
         });
 
         function changeToComplimentary(userEmail, newUser, cc, cb) {
-            var currentValues, currentUser, errorType;
+            var currentValues, currentUser, errorType, oldAgentNumber;
             async.waterfall([
                     // set account type to comp
                     function (callback) {
@@ -782,14 +783,37 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
-                        var locale = userObj.preferences.defaultLanguage + '_US';
-                        billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, 'Complimentary', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', function (err) {
+                        billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                             if (err) {
                                 logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
                                 errorType = 'freeside-user-update';
                             }
                             callback(err, userObj, sessionId);
                         });
+                    },
+                    // get agent
+                    function (userObj, sessionId, callback) {
+                        billing.getAgent(sessionId, function (err, agentNumber) {
+                            if (err) {
+                                logger.logError('subscription - convertToComplimentary - error getting agent ' + userObj.email);
+                            } else {
+                                oldAgentNumber = agentNumber;
+                            }
+                            callback(err, userObj, sessionId);
+                        });
+                    },
+                    // change agent
+                    function (userObj, sessionId, callback) {
+                        if (oldAgentNumber !== config.freeSideAgentNumbers['Internal']) {
+                            billing.updateAgent(userObj.account.freeSideCustomerNumber, config.freeSideAgentNumbers['Internal'], function (err) {
+                                if (err) {
+                                    logger.logError('subscription - convertToComplimentary - error updating agent ' + userObj.email);
+                                }
+                                callback(err, userObj, sessionId);
+                            });
+                        } else {
+                            callback(null, userObj, sessionId);
+                        }
                     },
                     // cancel existing package
                     function (userObj, sessionId, callback) {
@@ -801,7 +825,7 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // order paid package
+                    // order complimentary package
                     function (userObj, sessionId, callback) {
                         billing.orderPackage(sessionId, config.freeSideComplimentaryPackagePart, function (err) {
                             if (err) {
@@ -811,10 +835,10 @@ module.exports = {
                             callback(err, userObj);
                         });
                     },
-                    // send verification email if registered
+                    // send verification email/sms if registered else send welcome message
                     function (userObj, callback) {
-                        if (validation.isUsPhoneNumber(userObj.email)) {
-                            if (newUser.sendSmsVerification) {
+                        if (userObj.status === 'registered') {
+                            if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                                 sendVerificationSms(userObj, function (err) {
                                     if (err) {
                                         logger.logError('subscription - convertToComplimentary - error sending verification sms: ' + userObj.email);
@@ -823,24 +847,36 @@ module.exports = {
                                         logger.logInfo('subscription - convertToComplimentary - verification sms sent: ' + userObj.email);
                                     }
                                 });
+                            } else {
+                                sendVerificationEmail(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
+                                    }
+                                });
                             }
-                            sendVerificationEmail(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending verification email: ' + userObj.email);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - verification email sent: ' + userObj.email);
-                                }
-                            });
                         } else {
-                            sendConvertToComplimentaryEmail(userObj, function (err) {
-                                if (err) {
-                                    logger.logError('subscription - convertToComplimentary - error sending converted to complimentary email: ' + userObj.email);
-                                    logger.logError(err);
-                                } else {
-                                    logger.logInfo('subscription - convertToComplimentary - converted to complimentary email sent: ' + userObj.email);
-                                }
-                            });
+                            if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                                sendConvertToComplimentarySms(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending upgrade sms: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - upgrade sms sent: ' + userObj.email);
+                                    }
+                                });
+                            } else {
+                                sendConvertToComplimentaryEmail(userObj, function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - convertToComplimentary - error sending upgrade email: ' + userObj.email);
+                                        logger.logError(err);
+                                    } else {
+                                        logger.logInfo('subscription - convertToComplimentary - upgrade email sent: ' + userObj.email);
+                                    }
+                                });
+                            }
                         }
                         callback(null, userObj);
                     },
@@ -936,10 +972,9 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // modify billing address
+            // modify billing type
             function (userObj, sessionId, callback) {
-                var address = 'To be canceled on ' + moment(userObj.cancelOn).format('MM/DD/YYYY');
-                billing.updateBilling(sessionId, address, 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
+                billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1133,16 +1168,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // change billing address
-            function (userObj, sessionId, callback) {
-                billing.updateAddress(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', function (err) {
-                    if (err) {
-                        logger.logError('subscription - endComplimentarySubscription - error updating billing system with complimentary address: ' + userObj.email);
-                        errorType = 'freeside-user-update';
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
             // cancel existing packages
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, config.freeSideComplimentaryUserPackageParts, function (err) {
@@ -1153,7 +1178,7 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // add free packages in freeside
+            // add free package in freeside
             function (userObj, sessionId, callback) {
                 billing.orderPackage(sessionId, config.freeSideFreePackagePart, function (err) {
                     if (err) {
@@ -1270,7 +1295,7 @@ module.exports = {
             },
             // modify billing address
             function (userObj, sessionId, callback) {
-                billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
+                billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - endPaidSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1494,7 +1519,7 @@ module.exports = {
             },
             // modify billing address
             function (userObj, sessionId, callback) {
-                billing.updateBilling(sessionId, 'Free', 'West Palm Beach', 'FL', '00000', 'US', 'BILL', '', '', '', '', function (err) {
+                billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - dunning10Days - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
@@ -1565,18 +1590,6 @@ module.exports = {
                     }
                     callback(err, userObj, sessionId);
                 });
-            },
-            // update billing details
-            function (userObj, sessionId, callback) {
-                var locale = userObj.preferences.defaultLanguage + '_US';
-                billing.updateCustomer(sessionId, userObj.firstName, userObj.lastName, userObj.account.merchant ? userObj.account.merchant : 'YipTV',
-                    'West Palm Beach', 'FL', '00000', 'US', userObj.email, userObj.account.key, locale, 'BILL', '', '', '', '', function (err) {
-                        if (err) {
-                            logger.logError('merchant - processCashPayment - error updating user in billing system: ' + userObj.email);
-                            errorType = 'freeside-user-update';
-                        }
-                        callback(err, userObj, sessionId);
-                    });
             }
         ], function (err, userObj) {
             if (err) {
@@ -1631,7 +1644,8 @@ function createAccount(user, userObj, type, cb) {
             users: [userObj],
             createdAt: now,
             startDate: now,
-            referredBy: user.referredBy
+            referredBy: user.referredBy,
+            key: new mongoose.Types.ObjectId
         }
     );
     if (type === 'free') {
@@ -1951,6 +1965,21 @@ function sendUpgradeEmail(user, cb) {
             logger.logError(err);
         } else {
             logger.logInfo('subscription - sendUpgradeEmail - email sent successfully: ' + user.email);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function sendConvertToComplimentarySms(user, cb) {
+    var message = config.convertToComplimentarySmsMessage[user.preferences.defaultLanguage];
+    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        if (err) {
+            logger.logError('subscription - sendConvertToComplimentarySms - error sending sms: ' + user.email);
+            logger.logError(err);
+        } else {
+            logger.logInfo('subscription - sendConvertToComplimentarySms - sms sent successfully: ' + user.email);
         }
         if (cb) {
             cb(err);
