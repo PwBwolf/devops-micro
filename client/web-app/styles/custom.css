@@ -445,7 +445,7 @@ input[type="radio"] {
   height: 241px; }
 
 .navbar-default {
-  background-color: transparent;
+  background-color: transparents;
   width: 100%; }
 
 .open > .dropdown-menu {
@@ -1890,7 +1890,7 @@ ul.passwordStrength {
   color: #fff; }
 
 .cancel-on {
-  font-weight: bolder;
+  font-weight: normal;
   padding: 10px;
   display: inline-block;
   width: 340px;
