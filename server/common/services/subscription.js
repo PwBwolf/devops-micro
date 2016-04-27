@@ -734,6 +734,7 @@ module.exports = {
                                     userObj.cancelDate = undefined;
                                     userObj.complimentaryEndDate = undefined;
                                     userObj.account.type = 'comp';
+                                    userObj.account.merchant = 'YIPTV';
                                     userObj.account.complimentaryCode = newUser.code;
                                     userObj.account.premiumEndDate = undefined;
                                     userObj.account.packages = config.complimentaryUserPackages;
@@ -783,10 +784,20 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
+                        billing.updateInfo(sessionId, userObj.firstName, userObj.lastName, function (err) {
+                            if (err) {
+                                logger.logError('subscription - convertToComplimentary - error updating user info in billing system: ' + userObj.email);
+                                errorType = 'freeside-user-update';
+                            }
+                            callback(err, userObj, sessionId);
+                        });
+                    },
+                    // update user in freeside
+                    function (userObj, sessionId, callback) {
                         billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                             if (err) {
-                                logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
-                                errorType = 'freeside-user-update';
+                                logger.logError('subscription - convertToComplimentary - error updating billing type in billing system: ' + userObj.email);
+                                errorType = 'freeside-billing-update';
                             }
                             callback(err, userObj, sessionId);
                         });
@@ -900,6 +911,7 @@ module.exports = {
                                 revertUserChangesForComplimentary(userObj, currentValues, currentUser);
                                 break;
                             case 'freeside-user-update':
+                            case 'freeside-billing-update':
                             case 'freeside-login':
                             case 'freeside-package-remove':
                             case 'freeside-package-insert':
