@@ -109,6 +109,7 @@
                         $scope.favoriteChannels = playerSvc.formatFavorites(data);
                         $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels);
                         $scope.channelsLoaded = true;
+                        setCSS();
                     },
                     function (error) {
                         // handle this error with toastr later?
@@ -147,7 +148,9 @@
         }
 
         $scope.refresh = function(){
-            refreshProgramming();
+            $scope.channelsLoaded = false;
+            getProgramming();
+            clearErrMessages();
         };
 
         // refresh timebar and epg on next half and quarter hour respectively
