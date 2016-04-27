@@ -1,3 +1,74 @@
+.top-nav-div {
+    a {
+        background-color: transparent;
+        color: #001d4a;
+        text-transform: uppercase;
+        font-family: "Oswald";
+        font-weight: 400;
+    }
+}
+
+.bottom-nav-div {
+    #navbar {
+       max-width: 1200px;
+    }
+    background: linear-gradient(to bottom, rgba(10,13,132,.7) 0%,rgba(37,75,204,.8) 100%);
+    li {
+        border-left: 1px solid rgba(110, 125, 193, 0.7);
+        border-right: 1px solid rgba(110, 125, 193, 0.7);
+        box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
+        a {
+            color: white !important;
+        }
+    }
+    .premium-button-purple {
+        background: #8339b2;
+    }
+    .collapsed-menu-left{
+        float: left;
+        padding-left: 5px;
+        padding-top: 5px;
+        a {
+            padding: 5px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: .9em;
+            color: #fff;
+            background: linear-gradient(to bottom, #67328a 0%,#9d50d1 100%);
+            margin-left: 30px;
+        }
+    }
+    .collapsed-menu-right {
+        float: right;
+        padding-right: 5px;
+        padding-top: 5px;
+        a {
+            float: right;
+            padding: 5px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            background: linear-gradient(to bottom, #152b90 0%,#4b598e 50%,#152b90 100%);
+
+        }
+        button {
+            margin: auto;
+            float: right;
+            border: none;
+            span {
+                background: white !important;
+            }
+        }
+    }
+
+}
+.nav-picture {
+    img {
+        top: -65px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
 #headerBrand {
     .navbar-right {
         width: 470px;
@@ -429,13 +500,6 @@ footer {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 
-    header {
-        width: auto;
-        height: 60px;
-        background: transparent;
-        z-index: 998;
-    }
-
     .language {
         display: none;
     }
@@ -444,15 +508,7 @@ footer {
         margin-bottom: 0px !important;
     }
 
-    header {
-        width: auto;
-        height: 50px;
-        background: transparent;
-        z-index: 998;
-        margin-bottom: 3px;
-        font-size: 90%;
-        padding: 0px !important;
-    }
+
     .navbar-brand {
         padding: 0 5px !important;
     }

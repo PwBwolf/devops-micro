@@ -36,7 +36,7 @@ header {
     width: 100%;
     padding: 0px;
     background: transparent;
-    height: 50px;
+    height: 100px;
     z-index: 998;
     margin-bottom: 3px;
 }
@@ -397,9 +397,9 @@ input[type="radio"] {
 }
 
 @media (max-width: 1024px) {
-    .navbar-right {
-        width: 270px;
-    }
+    //.navbar-right {
+    //    width: 270px;
+    //}
 }
 
 @media screen and (max-width: 415px) {
@@ -415,7 +415,7 @@ input[type="radio"] {
 
     header {
         width: auto;
-        height: 50px;
+        height: 100px;
         z-index: 998;
         padding: 0px !important;
         background: transparent;
@@ -488,3 +488,12 @@ input[type="radio"] {
     }
 }
 
+.logo {
+    position: absolute;
+    top: -10px;
+    left: 40%;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    width: 216px;
+    height: 177px;
+}
