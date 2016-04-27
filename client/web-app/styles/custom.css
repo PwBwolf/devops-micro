@@ -1230,107 +1230,72 @@ footer {
     -webkit-filter: grayscale(0);
     -moz-filter: grayscale(0); } }
 
-html, body, div, span, p,
-a, img, ol, ul, li,
-header, menu, nav {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
+/* For Shawn */
+/* Desktop Styles Start */
+/* -------------------------------------------- */
+/* WordPress Layout Styles */
+/* -------------------------------------------- */
+.logo {
+  position: absolute;
+  top: -10px;
+  left: 350px;
+  z-index: 1000;
+  background-image: url(../images/yiptv-logo.png);
+  background-repeat: no-repeat;
+  width: 216px;
+  height: 177px;
+  /* This forces the logo to be in one spot. I know code to have it always stay in the middle
+      of the viewport. I am sure you guys are trying to stay browser responsive. */ }
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
+/* change name to not affect bootstrap */
+.container1 {
+  width: 960px;
+  margin: 0 auto;
+  position: relative;
+  /*   This is the container used on WP. Use whatever you like for the app. */ }
 
-body {
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility; }
-
+/* make more specific */
 ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
+  list-style: none;
+  /*   Custom list styles are applied throughout WP. I do not know how this is handled on Angular */ }
 
 .clearfix:after {
   content: "";
   display: table;
-  clear: both; }
+  clear: both;
+  /* The clearfix in place on WP right now */ }
 
+/* Menu Specific Styles */
+/* -------------------------------------------- */
 .right {
-  float: right; }
+  float: right;
+  /* This class floats the Toll Free Number and Language Switcher to the right */ }
 
-.left {
-  float: left; }
+.topnav li {
+  float: right;
+  list-style: none;
+  /*   This floats individual list items "Toll Free" & "Espanol/English" right. Why?...idk */ }
 
-body {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 300;
-  background-color: #fff; }
-
-p {
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #6A6A6A;
-  line-height: 24px; }
-
-h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
+.topnav a {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: #001d4a;
+  font-family: "Oswald";
   text-transform: uppercase;
-  font-family: "Oswald", san-serif;
-  color: #413E73;
-  font-weight: 400; }
+  font-weight: 400;
+  /* This is a bit of positioning and color/font styles for the top white nav menu items */ }
 
-h3 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-family: 'Oswald', sans-serif;
-  color: #413e73; }
-
-h4 {
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  margin: 10px 0; }
-
-h5 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-family: 'Oswald', sans-serif;
-  color: #413e73; }
-
-button {
-  padding: 15px 20px;
-  background-color: #A3336B;
-  color: #FFF;
-  text-transform: uppercase;
-  border: medium none;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 0px 15px;
-  position: relative;
-  top: -5px; }
-
-/* SECTIONS */
-.container {
-  width: 960px;
-  margin: 0 auto;
-  position: relative; }
+.mainhd {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  /* Keeps menu at the top of the page.
+      The HTML element has no container so it spans the whole viewport.
+      You may have to move the rest of the site outside of this down however tall the menu ends up being
+      so it doesn't cover elements on Angular side pages.
+    */ }
 
 .hdrtop {
   height: 46px;
@@ -1349,7 +1314,8 @@ button {
   background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0.71) 100%);
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#b5ffffff',GradientType=0 );
-  /* IE6-8 */ }
+  /* IE6-8 */
+  /* Gradients with Transparency. White backdrop makes a cheesy fade effect as you scroll.  */ }
 
 .hdrbottom {
   height: 57px;
@@ -1370,72 +1336,18 @@ button {
   background: linear-gradient(to bottom, rgba(10, 13, 132, 0.7) 0%, rgba(37, 75, 204, 0.8) 100%);
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a0d84', endColorstr='#254bcc',GradientType=0 );
-  /* IE6-8 */ }
+  /* IE6-8 */
+  /* Gradients with transparency. Similar to hdrtop class but with the blue/purple colors. */ }
 
-.hdrbottom li a {
-  color: #fff;
-  font-family: 'Oswald', sans-serif;
-  font-weight: 400; }
-
-.logo {
-  position: absolute;
-  top: -10px;
-  left: 350px;
-  z-index: 1000;
-  background-image: url(images/yiptv-logo.png);
-  background-repeat: no-repeat;
-  width: 216px;
-  height: 177px; }
-
-.tophead {
-  width: 100%;
-  z-index: 100;
-  top: 0;
-  position: absolute; }
-
-.menu-legal-nav-container {
-  margin-bottom: 15px; }
-
-/* TOP RIGHT NAVIGATION */
-.topnav li {
-  float: right; }
-
-.topnav li.call a {
-  background-color: transparent;
-  color: #001d4a; }
-
-.topnav a {
-  display: block;
-  padding: 15px;
-  text-decoration: none;
-  color: #001d4a;
-  font-family: "Oswald";
-  text-transform: uppercase;
-  font-weight: 400; }
-
-.signin {
-  border-right: 2px solid #e6e6e8; }
-
-.mobilenav {
-  display: none; }
-
-.loginnav li {
-  display: inline-block; }
-
-.loginnav li a {
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 20px 30px;
-  display: block;
-  border-left: 1px solid rgba(255, 255, 255, 0.2); }
-
-.signupbtn {
-  background-color: #7ed009;
-  color: #fff; }
-
-/* MAIN NAVIGATION */
+/* Styles for Left side of Menu IE: Channels & How to Watch */
+/* -------------------------------------------- */
 .mainnav li {
-  float: left; }
+  float: left;
+  list-style: none;
+  /* This is for the "Channels" and "How to Watch" to float left.
+       I believe these should hit the walls of the container.
+       So make sure the element with this class is within the container.
+    */ }
 
 .mainnav a {
   display: block;
@@ -1443,8 +1355,59 @@ button {
   color: #220857;
   text-decoration: none;
   text-transform: uppercase;
-  border-left: 1px solid rgba(255, 255, 255, 0.2); }
+  /* This is for "Channels" and "How to Watch" layout so they stay in the menu and space properly */ }
 
+#menu-item-2881 a {
+  border-right: 1px solid rgba(110, 125, 193, 0.7);
+  border-left: 1px solid rgba(110, 125, 193, 0.7);
+  box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
+  /* These are styles for the borders you see in the menu. The borders are things I have touched/worked on personally */ }
+
+#menu-item-2896 a {
+  border-right: 1px solid rgba(110, 125, 193, 0.7);
+  box-shadow: 1px 0px 0px rgba(51, 57, 144, 0.7);
+  /* More styles for the borders in the menu. Border's and box-shadow combine to stylize each side differently  */ }
+
+/* Styles for Left side of Menu IE: Login/Watch Now & $1 Premium */
+/* -------------------------------------------- */
+.loginnav li {
+  float: left;
+  list-style: none;
+  /* Floats the two menu items to the left. This should hit the wall of the container. */ }
+
+.signupbtn {
+  background-color: #8339b2;
+  background: #67328a;
+  background: -moz-linear-gradient(top, #67328a 0%, #9d50d1 100%);
+  background: -webkit-linear-gradient(top, #67328a 0%, #9d50d1 100%);
+  background: linear-gradient(to bottom, #67328a 0%, #9d50d1 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#67328a', endColorstr='#9d50d1',GradientType=0 );
+  color: #fff;
+  /* Gradients for the signup button. I changed this personally so it looks different than the other gradients
+    IE: hdrtop & hdrbottom. I use a CSS gradient generator  */ }
+
+#menu-item-8003 a {
+  border-left: 1px solid rgba(110, 125, 193, 0.7);
+  box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
+  /*   Borders for "Login/Watch Now" Feel free to change the ID to something useful to you
+         ID is originally set by WP.
+    */ }
+
+#menu-item-12447 a {
+  border-left: 1px solid rgba(110, 125, 193, 0.7);
+  box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
+  /* 	Borders for "$1 Premium". Again feel free to change the ID to something useful for you */ }
+
+.loginnav li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 20px 30px;
+  display: block;
+  /* This is the same as .mainnav a class. See if you can compile them into one class and selector.
+    IE: ".topright2 a" may work. I can try it with you later */ }
+
+/* Desktop Styles End */
+/* HTML */
 .animate-hide {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
