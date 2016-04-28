@@ -1234,9 +1234,6 @@ footer {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
 
-.main-favorites {
-  display: none !important; }
-
 .image-lineup {
   width: 154px;
   border-color: #001b48;
@@ -1327,10 +1324,6 @@ footer {
     float: none;
     display: block; }
   #allChannels {
-    float: none;
-    display: block; }
-  #filter {
-    left: -6px;
     float: none;
     display: block; }
   .collapse.navbar-collapse.in {
@@ -1618,6 +1611,7 @@ footer {
   cursor: pointer; }
 
 #filter {
+  text-align: center;
   width: 40px;
   height: 40px;
   display: inline-block;
