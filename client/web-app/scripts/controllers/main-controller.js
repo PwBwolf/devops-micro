@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$uibModal', '$routeParams', '$anchorScroll', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $uibModal, $routeParams, $anchorScroll) {
+    app.controller('mainCtrl', ['_', 'appSvc', 'userSvc', 'browserSvc', 'loggerSvc', 'webStorage', '$rootScope', '$scope', '$translate', '$location', '$route', '$window', '$filter', '$uibModal', '$routeParams', function (_, appSvc, userSvc, browserSvc, loggerSvc, webStorage, $rootScope, $scope, $translate, $location, $route, $window, $filter, $uibModal, $routeParams) {
 
         $scope.user = userSvc.user;
         $scope.userRoles = userSvc.userRoles;
@@ -140,11 +140,6 @@
                     });
                 });
         };
-
-        //$scope.scrollToTop = function (){
-        //    var element = document.getElementById('topOfPage');
-        //    //$anchorScroll('topOfPage');
-        //}
 
         function afterSignOut() {
             $scope.session.signOut = true;

@@ -129,11 +129,7 @@
         float: none;
         display: block;
     }
-    #filter {
-        left: -6px;
-        float: none;
-        display: block;
-    }
+
     .collapse.navbar-collapse.in {
         background: rgba(55,55,55,0.9);
         z-index: 25;
@@ -497,6 +493,7 @@
 }
 
 #filter {
+    text-align: center;
     width: 40px;
     height: 40px;
     display: inline-block;
