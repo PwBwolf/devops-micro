@@ -1234,9 +1234,6 @@ footer {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s; }
 
-.main-favorites {
-  display: none !important; }
-
 .image-lineup {
   width: 154px;
   border-color: #001b48;
