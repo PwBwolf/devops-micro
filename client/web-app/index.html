@@ -49,39 +49,42 @@
     <header id="desktopHeader" >
         <nav class="navbar navbar-default navbar-fixed-top">
             <div>
-                <div class="container top-nav-div">
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a class="number-contact" translate="INDEX_CONTACT_NUMBER"></a>
-                            </li>
-                            <li>
-                                <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
-                            </li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div> <!-- top-nav-div -->
-                <div class="bottom-nav-div">
+                <div class="nav-picture">
+                    <img class="img-responsive" src="images/logo.png" alt="">
+                </div>
+                <div class="top-nav-div">
                     <div class="container">
-                        <div class="navbar-header">
-                            <div class="collapsed-menu-left">
-                                <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="https://app.yiptv.com/sign-up/premium?lang=en">1$ Premium</a>
-                            </div>
-                            <div class="collapsed-menu-right">
-                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                                <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="https://www.yiptv.com/live-tv/index.php/es/" hreflang="es">Español</a>
-                            </div>
-
-
+                        <div class="topright">
+                            <ul class="hidden-xs">
+                                <li>
+                                    <a class="number-contact" translate="INDEX_CONTACT_NUMBER"></a>
+                                </li>
+                                <li>
+                                    <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
+                                </li>
+                            </ul>
                         </div>
 
+                    </div>
+                </div> <!-- top-nav-div -->
+                <div class="bottom-nav-div">
+                    <div class="navbar-header">
+                        <div class="collapsed-menu-left">
+                            <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="https://app.yiptv.com/sign-up/premium?lang=en">1$ Premium</a>
+                        </div>
+                        <div class="collapsed-menu-right">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="https://www.yiptv.com/live-tv/index.php/es/" hreflang="es">Español</a>
+                        </div>
+                    </div>
+                    <div class="container">
                         <div id="navbar" class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
+                            <ul class="nav navbar-nav hidden-xs">
                                 <li>
                                     <a href="https://www.yiptv.com/live-tv/index.php/en/tv-channels/">Channels</a>
                                 </li>
@@ -89,7 +92,7 @@
                                     <a href="https://www.yiptv.com/live-tv/index.php/en/how-to-watch/">How to Watch</a>
                                 </li>
                             </ul>
-                            <ul class="nav navbar-nav navbar-right">
+                            <ul class="nav navbar-nav navbar-right hidden-xs">
                                 <li>
                                     <a href="https://app.yiptv.com/sign-in?lang=en">Login/Watch Now</a>
                                 </li>
@@ -97,13 +100,31 @@
                                     <a href="https://app.yiptv.com/sign-up/premium?lang=en">1$ Premium</a>
                                 </li>
                             </ul>
+                            <ul class="coll-menu visible-xs">
+                                <li>
+                                    <a href="https://app.yiptv.com/sign-up/free?lang=en">Join Free</a>
+                                </li>
+                                <li>
+                                    <a href="https://app.yiptv.com/sign-up/premium?lang=en">Join Premium for $1</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.yiptv.com/live-tv/index.php/en/tv-channels/">Channels</a>
+                                </li>
+                                <li>
+                                    <a>FAQs</a>
+                                </li>
+                                <li>
+                                    <a translate="INDEX_CONTACT_NUMBER"></a>
+                                </li>
+                                <li>
+                                    <a href="https://app.yiptv.com/sign-in?lang=en">Watch Now!</a>
+                                </li>
+                            </ul>
                         </div><!--/.nav-collapse -->
                     </div>
 
                 </div> <!-- bottom-nav-div -->
-                <div class="nav-picture">
-                    <img class="img-responsive" src="images/logo.png" alt="">
-                </div>
+
 
             </div>
         </nav>

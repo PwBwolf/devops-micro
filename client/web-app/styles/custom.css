@@ -738,16 +738,31 @@ input[type="radio"] {
     color: rgba(62, 25, 77, 0.94);
     border-bottom: solid 1px lightgrey; } }
 
-.top-nav-div a {
-  background-color: transparent;
-  color: #001d4a;
-  text-transform: uppercase;
-  font-family: "Oswald";
-  font-weight: 400; }
+.top-nav-div {
+  height: 46px;
+  background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0.71) 100%); }
+  .top-nav-div .container {
+    top: 10px; }
+  .top-nav-div .topright {
+    height: auto;
+    float: right;
+    width: auto; }
+    .top-nav-div .topright ul li {
+      float: left;
+      display: block; }
+      .top-nav-div .topright ul li a {
+        background-color: transparent;
+        color: #001d4a;
+        text-transform: uppercase;
+        font-family: "Oswald";
+        font-weight: 400;
+        padding: 15px 15px;
+        margin-top: 15px; }
 
 .bottom-nav-div {
   background: linear-gradient(to bottom, rgba(10, 13, 132, 0.7) 0%, rgba(37, 75, 204, 0.8) 100%); }
   .bottom-nav-div #navbar {
+    width: 100%;
     max-width: 1200px; }
   .bottom-nav-div li {
     border-left: 1px solid rgba(110, 125, 193, 0.7);
@@ -785,10 +800,15 @@ input[type="radio"] {
       .bottom-nav-div .collapsed-menu-right button span {
         background: white !important; }
 
-.nav-picture img {
-  top: -65px;
-  margin-left: auto;
-  margin-right: auto; }
+.nav-picture {
+  height: 0px; }
+  .nav-picture img {
+    z-index: 1001;
+    top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 115px;
+    -webkit-transition: all 1s ease-in-out; }
 
 #headerBrand .navbar-right {
   width: 470px;
@@ -906,6 +926,17 @@ footer {
   -moz-filter: grayscale(0); }
 
 @media screen and (max-width: 415px) {
+  .nav-picture img {
+    width: 60px;
+    -webkit-transition: all 1s ease-in-out; }
+  .bottom-nav-div .navbar-header a {
+    margin-left: 15px; }
+  .bottom-nav-div .collapsed-menu-right {
+    padding-right: 0px; }
+    .bottom-nav-div .collapsed-menu-right a {
+      margin-right: 0px; }
+  .content-box {
+    padding-top: 50px; }
   #navBar {
     width: 100%;
     height: 34px;
@@ -976,6 +1007,12 @@ footer {
     width: auto; } }
 
 @media screen and (min-width: 416px) and (max-width: 767px) {
+  .nav-picture img {
+    top: 18px;
+    width: 70px;
+    -webkit-transition: all 1s ease-in-out; }
+  .content-box {
+    padding-top: 50px; }
   .contact-number {
     width: 100%;
     height: 100%;
@@ -998,6 +1035,36 @@ footer {
     height: 80%;
     width: auto;
     margin-top: 4px; } }
+
+@media screen and (max-width: 767px) {
+  .top-nav-div {
+    height: 25px; }
+    .top-nav-div li {
+      display: none; }
+  .bottom-nav-div .container {
+    background: white; }
+  .bottom-nav-div .coll-menu {
+    background: #fff url(../images/menu-icon.png) no-repeat right 16px;
+    top: 0;
+    width: 100%;
+    cursor: pointer;
+    border: none; }
+    .bottom-nav-div .coll-menu li {
+      box-shadow: none;
+      border: none;
+      display: block;
+      text-align: right;
+      padding: 5px 5px;
+      cursor: pointer; }
+      .bottom-nav-div .coll-menu li a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        display: block;
+        text-align: center;
+        background-color: #a1a1a1;
+        width: 70%;
+        color: #ffffff;
+        margin: 0 auto; } }
 
 @media screen and (min-width: 416px) and (max-width: 767px) {
   .nav-btn {
@@ -1351,8 +1418,6 @@ footer {
   width: 100%; }
 
 @media (max-width: 768px) {
-  .navbar-right {
-    width: 100% !important; }
   .navbar-header {
     max-width: 100% !important; }
   #programInfo {
@@ -1377,15 +1442,15 @@ footer {
     left: -6px;
     float: none;
     display: block; }
-  .collapse.navbar-collapse.in {
-    background: rgba(55, 55, 55, 0.9);
-    z-index: 25;
-    width: 120px;
-    float: right; }
-    .collapse.navbar-collapse.in li {
-      padding-left: 10px !important; }
-    .collapse.navbar-collapse.in .epg-controls {
-      padding-bottom: 12px !important; }
+    #filter .collapse.navbar-collapse.in {
+      background: rgba(55, 55, 55, 0.9);
+      z-index: 25;
+      width: 120px;
+      float: right; }
+      #filter .collapse.navbar-collapse.in li {
+        padding-left: 10px !important; }
+      #filter .collapse.navbar-collapse.in .epg-controls {
+        padding-bottom: 12px !important; }
   .entire-title {
     width: 300px;
     margin-top: 10px; }
