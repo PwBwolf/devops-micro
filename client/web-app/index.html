@@ -44,7 +44,7 @@
     <!-- endbuild -->
     <title>YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
-<body>
+<body id="topOfPage">
 
 <!--[if lt IE 9]>
 <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
@@ -71,7 +71,8 @@
             <div class="menu">
                 <div id="menuItems">
                     <div style="display:none"><img src="images/mini-logo.png"></div>
-                    <menuItem id="top" style="display:none" translate="INDEX_TOP"></menuItem>
+                    <!--<menuItem id="top" style="display:none" translate="INDEX_TOP"></menuItem>-->
+                    <a href="#topOfPage" id="top" style="display:none" du-smooth-scroll translate="INDEX_TOP"></a>
                 </div>
             </div>
         </nav>
@@ -128,6 +129,7 @@
 <script src="bower_components/angulartics-google-analytics/lib/angulartics-google-analytics.js"></script>
 <script src="bower_components/angulartics-google-tag-manager/lib/angulartics-google-tag-manager.js"></script>
 <script src='bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js'></script>
+<script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:js scripts/scripts.js -->
