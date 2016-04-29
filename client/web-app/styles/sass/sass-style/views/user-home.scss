@@ -1,3 +1,15 @@
+
+.nav-player-picture {
+    height: 0px;
+    img {
+        z-index: 1001;
+        top: 30px;
+        margin: 0 auto;
+        height: 60px;
+        top: 5px;
+    }
+}
+
 .cancel-on {
     font-weight: normal;
     padding: 10px;
