@@ -2,6 +2,9 @@
 
 git checkout master
 git pull
+cd client/web-app
+bower install
+cd ../../build
 cd build
 gulp deploy --env integration --deployType patch --tag true
 cd dist
