@@ -792,6 +792,17 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
+                    // update locale in freeside
+                    function (userObj, sessionId, callback) {
+                        var locale = userObj.preferences.defaultLanguage + '_US';
+                        billing.updateLocale(sessionId, locale, function (err) {
+                            if (err) {
+                                logger.logError('subscription - convertToComplimentary - error updating locale in billing system: ' + userObj.email);
+                                errorType = 'freeside-locale-update';
+                            }
+                            callback(err, userObj, sessionId);
+                        });
+                    },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
                         billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
@@ -911,6 +922,7 @@ module.exports = {
                                 revertUserChangesForComplimentary(userObj, currentValues, currentUser);
                                 break;
                             case 'freeside-user-update':
+                            case 'freeside-locale-update':
                             case 'freeside-billing-update':
                             case 'freeside-login':
                             case 'freeside-package-remove':

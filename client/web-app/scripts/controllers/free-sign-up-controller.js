@@ -5,8 +5,8 @@
 
         $scope.mv = {disclaimer: true, emailSmsSubscription: true};
         if($routeParams.merchant) {
-            var merchants = ['truconn', 'cj', 'ubs', 'perkspot'];
-            $scope.logo  = {truconn: true, cj: false, ubs: false, perkspot: false};
+            var merchants = ['truconn', 'cj', 'ubs', 'perkspot', 'mgcjk'];
+            $scope.logo  = {truconn: true, cj: false, ubs: false, perkspot: false, mgcjk: false};
             if(merchants.indexOf($routeParams.merchant.toLowerCase()) > -1) {
                 $scope.mv.merchant = $routeParams.merchant.toLowerCase();
             } else {
