@@ -28,7 +28,7 @@ header {
   width: 100%;
   padding: 0px;
   background: transparent;
-  height: 100px;
+  height: 60px;
   z-index: 998;
   margin-bottom: 3px; }
 
@@ -474,8 +474,8 @@ input[type="radio"] {
   float: left; }
 
 #menuBar .epg-controls span {
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 9px;
+  padding-right: 9px;
   cursor: pointer;
   top: 10px;
   color: white; }
@@ -718,9 +718,6 @@ input[type="radio"] {
   /*width: 25%;*/
   z-index: 25; }
 
-.pull-right li {
-  padding-left: 3%; }
-
 .navbar-toggle {
   margin-top: 1px; }
 
@@ -769,7 +766,14 @@ input[type="radio"] {
     border-right: 1px solid rgba(110, 125, 193, 0.7);
     box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7); }
     .bottom-nav-div li a {
-      color: white !important; }
+      color: white !important;
+      font-weight: 500;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 20px 30px;
+      display: block;
+      -webkit-font-smoothing: antialiased !important;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004); }
   .bottom-nav-div .premium-button-purple {
     background: #8339b2; }
   .bottom-nav-div .collapsed-menu-left {
@@ -1997,6 +2001,15 @@ ul.passwordStrength {
   width: 100%;
   text-align: center;
   color: #fff; }
+
+.nav-player-picture {
+  height: 0px; }
+  .nav-player-picture img {
+    z-index: 1001;
+    top: 30px;
+    margin: 0 auto;
+    height: 60px;
+    top: 5px; }
 
 .cancel-on {
   font-weight: bolder;

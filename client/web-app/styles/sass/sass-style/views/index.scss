@@ -40,6 +40,13 @@
         box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
         a {
             color: white !important;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            padding: 20px 30px;
+            display: block;
+            -webkit-font-smoothing: antialiased !important;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
         }
     }
     .premium-button-purple {
