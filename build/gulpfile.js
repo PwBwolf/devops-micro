@@ -207,8 +207,12 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/deployment-scripts/cleanup.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/cancel-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages-2.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-free-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-2.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-3.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/convert-to-complimentary-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
