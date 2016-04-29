@@ -480,6 +480,7 @@
             USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Please close and re-open the YipTV application browser window',
             USER_HOME_CANCEL_ON: 'Your YipTV subscription has been canceled. Your service will continue until the end of your current billing cycle ',
             USER_HOME_NO_RECENT_CHANNELS: 'No Recent Channels',
+            USER_HOME_EPG_REFRESH: 'Refresh Program Guide',
             USER_INFO_FIRST_NAME: 'First Name',
             USER_INFO_FIRST_NAME_REQUIRED: 'Enter your first name',
             USER_INFO_LAST_NAME_REQUIRED: 'Enter your last name',

@@ -28,7 +28,7 @@ header {
   width: 100%;
   padding: 0px;
   background: transparent;
-  height: 50px;
+  height: 60px;
   z-index: 998;
   margin-bottom: 3px; }
 
@@ -141,6 +141,7 @@ input[type="radio"] {
   text-transform: uppercase; }
 
 .content-area {
+  margin-top: 40px !important;
   float: left;
   width: 100%;
   padding: 0px;
@@ -323,10 +324,6 @@ input[type="radio"] {
     line-height: 60px;
     font-size: 15px; } }
 
-@media (max-width: 1024px) {
-  .navbar-right {
-    width: 270px; } }
-
 @media screen and (max-width: 415px) {
   [contentEditable=true]:focus {
     background: rgba(90, 90, 90, 0.7);
@@ -338,7 +335,7 @@ input[type="radio"] {
     outline: none; }
   header {
     width: auto;
-    height: 50px;
+    height: 100px;
     z-index: 998;
     padding: 0px !important;
     background: transparent; }
@@ -388,6 +385,15 @@ input[type="radio"] {
     border-top: solid 1px lightgrey;
     padding: 10px;
     z-index: 998; } }
+
+.logo {
+  position: absolute;
+  top: -10px;
+  left: 40%;
+  z-index: 1000;
+  background-repeat: no-repeat;
+  width: 216px;
+  height: 177px; }
 
 /* Variables */
 /* typography */
@@ -469,8 +475,8 @@ input[type="radio"] {
   float: left; }
 
 #menuBar .epg-controls span {
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 9px;
+  padding-right: 9px;
   cursor: pointer;
   top: 10px;
   color: white; }
@@ -713,9 +719,6 @@ input[type="radio"] {
   /*width: 25%;*/
   z-index: 25; }
 
-.nav.navbar-nav.navbar-right li {
-  padding-left: 3%; }
-
 .navbar-toggle {
   margin-top: 1px; }
 
@@ -732,6 +735,85 @@ input[type="radio"] {
     background: rgba(254, 254, 254, 0.95);
     color: rgba(62, 25, 77, 0.94);
     border-bottom: solid 1px lightgrey; } }
+
+.top-nav-div {
+  height: 46px;
+  background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0.71) 100%); }
+  .top-nav-div .container {
+    top: 10px; }
+  .top-nav-div .topright {
+    height: auto;
+    float: right;
+    width: auto; }
+    .top-nav-div .topright ul li {
+      float: left;
+      display: block; }
+      .top-nav-div .topright ul li a {
+        background-color: transparent;
+        color: #001d4a;
+        text-transform: uppercase;
+        font-family: "Oswald";
+        font-weight: 400;
+        padding: 15px 15px;
+        margin-top: 15px; }
+
+.bottom-nav-div {
+  background: linear-gradient(to bottom, rgba(10, 13, 132, 0.7) 0%, rgba(37, 75, 204, 0.8) 100%); }
+  .bottom-nav-div #navbar {
+    width: 100%;
+    max-width: 1200px; }
+  .bottom-nav-div li {
+    border-left: 1px solid rgba(110, 125, 193, 0.7);
+    border-right: 1px solid rgba(110, 125, 193, 0.7);
+    box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7); }
+    .bottom-nav-div li a {
+      color: white !important;
+      font-weight: 500;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 20px 30px;
+      display: block;
+      -webkit-font-smoothing: antialiased !important;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004); }
+  .bottom-nav-div .premium-button-purple {
+    background: #8339b2; }
+  .bottom-nav-div .collapsed-menu-left {
+    float: left;
+    padding-left: 5px;
+    padding-top: 5px; }
+    .bottom-nav-div .collapsed-menu-left a {
+      padding: 5px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: .9em;
+      color: #fff;
+      background: linear-gradient(to bottom, #67328a 0%, #9d50d1 100%);
+      margin-left: 30px; }
+  .bottom-nav-div .collapsed-menu-right {
+    float: right;
+    padding-right: 5px;
+    padding-top: 5px; }
+    .bottom-nav-div .collapsed-menu-right a {
+      float: right;
+      padding: 5px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      background: linear-gradient(to bottom, #152b90 0%, #4b598e 50%, #152b90 100%); }
+    .bottom-nav-div .collapsed-menu-right button {
+      margin: auto;
+      float: right;
+      border: none; }
+      .bottom-nav-div .collapsed-menu-right button span {
+        background: white !important; }
+
+.nav-picture {
+  height: 0px; }
+  .nav-picture img {
+    z-index: 1001;
+    top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 115px;
+    -webkit-transition: all 1s ease-in-out; }
 
 #headerBrand .navbar-right {
   width: 470px;
@@ -849,6 +931,17 @@ footer {
   -moz-filter: grayscale(0); }
 
 @media screen and (max-width: 415px) {
+  .nav-picture img {
+    width: 60px;
+    -webkit-transition: all 1s ease-in-out; }
+  .bottom-nav-div .navbar-header a {
+    margin-left: 15px; }
+  .bottom-nav-div .collapsed-menu-right {
+    padding-right: 0px; }
+    .bottom-nav-div .collapsed-menu-right a {
+      margin-right: 0px; }
+  .content-box {
+    padding-top: 50px; }
   #navBar {
     width: 100%;
     height: 34px;
@@ -919,6 +1012,12 @@ footer {
     width: auto; } }
 
 @media screen and (min-width: 416px) and (max-width: 767px) {
+  .nav-picture img {
+    top: 18px;
+    width: 70px;
+    -webkit-transition: all 1s ease-in-out; }
+  .content-box {
+    padding-top: 50px; }
   .contact-number {
     width: 100%;
     height: 100%;
@@ -941,6 +1040,36 @@ footer {
     height: 80%;
     width: auto;
     margin-top: 4px; } }
+
+@media screen and (max-width: 767px) {
+  .top-nav-div {
+    height: 25px; }
+    .top-nav-div li {
+      display: none; }
+  .bottom-nav-div .container {
+    background: white; }
+  .bottom-nav-div .coll-menu {
+    background: #fff url(../images/menu-icon.png) no-repeat right 16px;
+    top: 0;
+    width: 100%;
+    cursor: pointer;
+    border: none; }
+    .bottom-nav-div .coll-menu li {
+      box-shadow: none;
+      border: none;
+      display: block;
+      text-align: right;
+      padding: 5px 5px;
+      cursor: pointer; }
+      .bottom-nav-div .coll-menu li a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        display: block;
+        text-align: center;
+        background-color: #a1a1a1;
+        width: 70%;
+        color: #ffffff;
+        margin: 0 auto; } }
 
 @media screen and (min-width: 416px) and (max-width: 767px) {
   .nav-btn {
@@ -1058,23 +1187,10 @@ footer {
     -o-filter: grayscale(0); } }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  header {
-    width: auto;
-    height: 60px;
-    background: transparent;
-    z-index: 998; }
   .language {
     display: none; }
   .navbar {
     margin-bottom: 0px !important; }
-  header {
-    width: auto;
-    height: 50px;
-    background: transparent;
-    z-index: 998;
-    margin-bottom: 3px;
-    font-size: 90%;
-    padding: 0px !important; }
   .navbar-brand {
     padding: 0 5px !important; }
   .navbar-brand img {
@@ -1304,8 +1420,6 @@ footer {
   width: 100%; }
 
 @media (max-width: 768px) {
-  .navbar-right {
-    width: 100% !important; }
   .navbar-header {
     max-width: 100% !important; }
   #programInfo {
@@ -1326,15 +1440,19 @@ footer {
   #allChannels {
     float: none;
     display: block; }
-  .collapse.navbar-collapse.in {
-    background: rgba(55, 55, 55, 0.9);
-    z-index: 25;
-    width: 120px;
-    float: right; }
-    .collapse.navbar-collapse.in li {
-      padding-left: 10px !important; }
-    .collapse.navbar-collapse.in .epg-controls {
-      padding-bottom: 12px !important; }
+  #filter {
+    left: -6px;
+    float: none;
+    display: block; }
+    #filter .collapse.navbar-collapse.in {
+      background: rgba(55, 55, 55, 0.9);
+      z-index: 25;
+      width: 120px;
+      float: right; }
+      #filter .collapse.navbar-collapse.in li {
+        padding-left: 10px !important; }
+      #filter .collapse.navbar-collapse.in .epg-controls {
+        padding-bottom: 12px !important; }
   .entire-title {
     width: 300px;
     margin-top: 10px; }
@@ -1841,9 +1959,6 @@ ul.passwordStrength {
   .language {
     display: none; } }
 
-.underline-text {
-  text-decoration: underline !important; }
-
 .underline-bold-text {
   text-decoration: underline;
   font-weight: bolder;
@@ -1882,6 +1997,15 @@ ul.passwordStrength {
   width: 100%;
   text-align: center;
   color: #fff; }
+
+.nav-player-picture {
+  height: 0px; }
+  .nav-player-picture img {
+    z-index: 1001;
+    top: 30px;
+    margin: 0 auto;
+    height: 60px;
+    top: 5px; }
 
 .cancel-on {
   font-weight: normal;
