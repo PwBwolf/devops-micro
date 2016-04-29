@@ -141,6 +141,7 @@ input[type="radio"] {
   text-transform: uppercase; }
 
 .content-area {
+  margin-top: 40px !important;
   float: left;
   width: 100%;
   padding: 0px;
