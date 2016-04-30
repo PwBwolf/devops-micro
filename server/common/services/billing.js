@@ -600,6 +600,7 @@ function orderPackage(sessionId, packagePart, callback) {
         } else {
             if (response.error) {
                 logger.logError('billing - orderPackage - error in ordering package 2');
+                logger.logError(response.bill_error);
                 logger.logError(response.error);
                 callback(response.error);
             } else {
