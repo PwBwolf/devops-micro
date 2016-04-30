@@ -591,7 +591,8 @@ function orderPackage(sessionId, packagePart, callback) {
         'session_id', sessionId,
         'pkgpart', packagePart,
         'quantity', 1,
-        'svcpart', 'none'
+        'svcpart', 'none',
+        'run_bill_events', true
     ], function (err, response) {
         if (err) {
             logger.logError('billing - orderPackage - error in ordering package 1');
