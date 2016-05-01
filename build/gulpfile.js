@@ -49,7 +49,7 @@ gulp.task('jwplayer', function () {
 });
 
 gulp.task('sass', function () {
-    return gulp.src('../client/web-app/styles/sass/**/*.scss')
+    return gulp.src('../client/web-app/styles/sass/app.scss')
         .pipe($.sass())
         .pipe(gulp.dest('dist/client/web-app/styles/app.css'));
 });
