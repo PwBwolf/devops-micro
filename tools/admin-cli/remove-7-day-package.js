@@ -27,17 +27,9 @@ mongoose.connect(config.db, function (err) {
                 date = moment.utc(date.subtract(8, 'days')).startOf('day');
                 console.log(date.format());
                 var count = 0;
-                accounts.count({
-                    type: 'free',
-                    packages: {$size: 2},
-                    startDate: {$lt: new Date(date.format())}
-                }, function (err, count) {
+                accounts.count({type: 'free', packages: {$size: 2}, startDate: {$lt: new Date(date.format())}}, function (err, count) {
                     console.log(count);
-                    accounts.find({
-                        type: 'free',
-                        packages: {$size: 2},
-                        startDate: {$lt: new Date(date.format())}
-                    }).toArray(function (err, accounts) {
+                    accounts.find({type: 'free', packages: {$size: 2}, startDate: {$lt: new Date(date.format())}}).toArray(function (err, accounts) {
                         console.log(accounts.length);
                         async.eachSeries(
                             accounts,
@@ -56,7 +48,6 @@ mongoose.connect(config.db, function (err) {
                         );
                     });
                 });
-
             }
         });
     }

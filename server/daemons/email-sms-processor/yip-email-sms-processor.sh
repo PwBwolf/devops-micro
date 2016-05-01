@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-merchant-processor
+# service yip-cj-report-processor
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!

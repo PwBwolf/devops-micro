@@ -1,7 +1,7 @@
 {
   "name": "yiptv-server",
   "description": "YipTV Server",
-  "version": "0.0.1",
+  "version": "4.0.0",
   "private": true,
   "dependencies": {
     "URIjs": "^1.14.2",

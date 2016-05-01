@@ -1,8 +1,8 @@
-/* Globals */
-@import "sass-style/global";
-
-/* Variables */
+/* variables */
 @import "sass-style/variables";
+
+/* globals */
+@import "sass-style/global";
 
 /* typography */
 @import "sass-style/typography/typography";
@@ -20,7 +20,3 @@
 @import "sass-style/views/toaster";
 @import "sass-style/views/user-home";
 @import "sass-style/views/verify-user";
-
-
-
-

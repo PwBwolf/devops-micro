@@ -1,22 +1,17 @@
-body {
-    margin: 0;
-    padding: 0px;
-    //font-family: 'gotham-bookgotham-book', Arial, sans-serif;
-    height: auto;
-    font-family: default, Verdana, Arial, Tahoma;
-    font-size: 12px;
-}
-
-body {
-
-}
-
 * {
     margin: 0;
     padding: 0;
     position: relative;
     border: 0;
     text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0px;
+    height: auto;
+    font-family: default, Verdana, Arial, Tahoma;
+    font-size: 12px;
 }
 
 body, html {
@@ -96,7 +91,7 @@ dd + dd {
     position: absolute;
     left: 0;
     top: 3px;
-    background-color: #A03269;
+    background-color: $blue;
     border-radius: 3px;
     box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 }
@@ -155,7 +150,6 @@ input[type="radio"] {
     color: rgba(62, 25, 77, .94);
 }
 
-
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     border: none;
 }
@@ -164,6 +158,14 @@ input[type="radio"] {
     background: none;
     border: none;
     margin: 0px;
+}
+
+a {
+    color: $blue;
+}
+
+a:hover {
+    color: $blue;
 }
 
 .uppercase-text {
@@ -225,7 +227,7 @@ input[type="radio"] {
 }
 
 .content-box a:hover {
-    color: #A03269;
+    color: $blue;
 }
 
 .form-box {
@@ -292,12 +294,12 @@ input[type="radio"] {
 }
 
 .center-form a {
-    color: #A03269;
+    color: $blue;
     text-decoration: none;
 }
 
 .center-form a:hover {
-    color: #A03269;
+    color: $blue;
     text-decoration: underline;
 }
 
@@ -421,7 +423,6 @@ input[type="radio"] {
         padding: 0px !important;
         background: transparent;
     }
-
 
     .language {
         display: none;

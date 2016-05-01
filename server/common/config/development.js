@@ -25,7 +25,6 @@ module.exports = {
     url: 'http://localhost:3000/',
     imageUrl: 'https://app.int.yiptv.net/images/',
     secretToken: 'yip#tv@dev#712',
-    ruleEngineRecurrence: '0 * * * * *',
     contactUsEmailList: 'achinth@yiptv.com',
     cloudSpongeDomainKey: 'LJZY53MYH2K7YQKX3TZD',
     complimentarySignUpUrl: 'http://localhost:3000/sign-up/complimentary/',
@@ -34,6 +33,8 @@ module.exports = {
     metaDataRetrievalRecurrence: '0 0 2 * * *',
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile', 'voip'],
+    emailSmsProcessorRecurrence: '0 * * * * *',
+    subscriptionProcessorRecurrence: '0 * * * * *',
     cjReportProcessorRecurrence: '0 * * * * *',
     cjReports: {
         financeEmailAddress: 'achinth@yiptv.com',

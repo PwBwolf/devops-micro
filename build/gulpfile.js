@@ -316,8 +316,7 @@ function bumpVersion(versionFile, destination) {
 }
 
 gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function (cb) {
-    buildDaemon('dist/server/daemons', 'rule-engine');
-    buildDaemon('dist/server/daemons', 'merchant-processor');
+    buildDaemon('dist/server/daemons', 'email-sms-processor');
     buildDaemon('dist/server/daemons', 'notification-processor');
     buildDaemon('dist/server/daemons', 'metadata-processor');
     buildDaemon('dist/server/daemons', 'cj-report-processor');

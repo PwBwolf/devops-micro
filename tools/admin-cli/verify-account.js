@@ -104,7 +104,7 @@ function sendAccountVerifiedEmail(user, cb) {
 
 function sendAccountVerifiedSms(user, cb) {
     var message = sf(config.accountVerifiedSmsMessage[user.preferences.defaultLanguage]);
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (cb) {
             cb(err);
         }

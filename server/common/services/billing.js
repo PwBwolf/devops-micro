@@ -336,6 +336,46 @@ module.exports = {
         });
     },
 
+    cancelPackagesOn: function (sessionId, packageParts, cancelDate, callback) {
+        getPackages(sessionId, function (err, packages) {
+            if (err) {
+                logger.logError('billing - cancelPackagesOn - error getting packages');
+                logger.logError(err);
+                callback(err);
+            } else if (packages && packages.length > 0) {
+                var packageNumbers = [];
+                for (var i = 0; i < packageParts.length; i++) {
+                    for (var j = 0; j < packages.length; j++) {
+                        if (packages[j].pkgpart === String(packageParts[i])) {
+                            packageNumbers.push(packages[j].pkgnum);
+                            break;
+                        }
+                    }
+                }
+                if (packageNumbers.length > 0) {
+                    async.eachSeries(
+                        packageNumbers,
+                        function (packageNumber, callback) {
+                            cancelPackageOn(sessionId, packageNumber, cancelDate, function (err) {
+                                if (err) {
+                                    logger.logError('billing - cancelPackagesOn - error removing packages');
+                                }
+                                callback(err);
+                            });
+                        },
+                        function (err) {
+                            callback(err);
+                        }
+                    );
+                } else {
+                    callback(null);
+                }
+            } else {
+                callback(null);
+            }
+        });
+    },
+
     getBillingDate: function (sessionId, callback) {
         getPackages(sessionId, function (err, packages) {
             if (err) {
@@ -529,6 +569,8 @@ module.exports = {
 
     cancelPackage: cancelPackage,
 
+    cancelPackageOn: cancelPackageOn,
+
     getPackages: getPackages
 };
 
@@ -553,6 +595,39 @@ function cancelPackage(sessionId, packageNumber, callback) {
                 }
             } else {
                 logger.logInfo('billing - cancelPackage - response');
+                logger.logInfo(response);
+                if (callback) {
+                    callback(null);
+                }
+            }
+        }
+    });
+}
+
+function cancelPackageOn(sessionId, packageNumber, cancelDate, callback) {
+    console.log(cancelDate);
+    console.log(cancelDate.getTime() / 1000);
+    var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
+    client.methodCall('FS.ClientAPI_XMLRPC.cancel_pkg', [
+        'session_id', sessionId,
+        'pkgnum', packageNumber,
+        'date', cancelDate.getTime() / 1000
+    ], function (err, response) {
+        if (err) {
+            logger.logError('billing - cancelPackageOn - error in canceling package 1');
+            logger.logError(err);
+            if (callback) {
+                callback(err);
+            }
+        } else {
+            if (response.error) {
+                logger.logError('billing - cancelPackageOn - error in canceling package 2');
+                logger.logError(response.error);
+                if (callback) {
+                    callback(response.error);
+                }
+            } else {
+                logger.logInfo('billing - cancelPackageOn - response');
                 logger.logInfo(response);
                 if (callback) {
                     callback(null);
