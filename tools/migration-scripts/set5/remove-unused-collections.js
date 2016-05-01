@@ -19,9 +19,9 @@ function removeCollection(name, cb) {
         var collection = db.collection(name);
         collection.drop(function (err, res) {
             if (err) {
-                console.log('Error dropping collection ' + name + ': ' + err);
+                console.log('error dropping collection ' + name + ': ' + err);
             } else {
-                console.log('Successfully dropped collection ' + name + ': ' + res);
+                console.log('successfully dropped collection ' + name + ': ' + res);
             }
             cb(err);
         });

@@ -1,17 +1,18 @@
-/* Globals */
-body {
-  margin: 0;
-  padding: 0px;
-  height: auto;
-  font-family: default, Verdana, Arial, Tahoma;
-  font-size: 12px; }
-
+/* variables */
+/* globals */
 * {
   margin: 0;
   padding: 0;
   position: relative;
   border: 0;
   text-decoration: none; }
+
+body {
+  margin: 0;
+  padding: 0px;
+  height: auto;
+  font-family: default, Verdana, Arial, Tahoma;
+  font-size: 12px; }
 
 body, html {
   font-size: 14px;
@@ -79,7 +80,7 @@ dd + dd {
   position: absolute;
   left: 0;
   top: 3px;
-  background-color: #A03269;
+  background-color: #4b4dab;
   border-radius: 3px;
   box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.8); }
 
@@ -137,6 +138,12 @@ input[type="radio"] {
   border: none;
   margin: 0px; }
 
+a {
+  color: #4b4dab; }
+
+a:hover {
+  color: #4b4dab; }
+
 .uppercase-text {
   text-transform: uppercase; }
 
@@ -189,7 +196,7 @@ input[type="radio"] {
   margin: 0px; }
 
 .content-box a:hover {
-  color: #A03269; }
+  color: #4b4dab; }
 
 .form-box {
   width: 700px;
@@ -247,11 +254,11 @@ input[type="radio"] {
   margin: 0px 0px 0px 0px; }
 
 .center-form a {
-  color: #A03269;
+  color: #4b4dab;
   text-decoration: none; }
 
 .center-form a:hover {
-  color: #A03269;
+  color: #4b4dab;
   text-decoration: underline; }
 
 .label-text {
@@ -395,7 +402,6 @@ input[type="radio"] {
   width: 216px;
   height: 177px; }
 
-/* Variables */
 /* typography */
 @font-face {
   font-family: 'radikalregular';
@@ -451,7 +457,7 @@ input[type="radio"] {
   height: 241px; }
 
 .navbar-default {
-  background-color: transparents;
+  background-color: transparent;
   width: 100%; }
 
 .open > .dropdown-menu {
@@ -490,7 +496,6 @@ input[type="radio"] {
 #menuBar .entire-description {
   margin-left: 10px;
   background-color: #ddd;
-  border: 1px solid black;
   width: 350px;
   z-index: 35;
   border-radius: 4px;
@@ -498,7 +503,6 @@ input[type="radio"] {
 
 #menuBar .entire-title {
   margin-left: 10px;
-  border: 1px solid black;
   width: 300px;
   z-index: 35;
   background-color: #ddd;
@@ -517,7 +521,6 @@ input[type="radio"] {
   cursor: default; }
 
 #description {
-  text-overflow: ellipsis !important;
   white-space: nowrap;
   height: 25px;
   text-align: left;
@@ -707,7 +710,6 @@ input[type="radio"] {
   height: 40px;
   text-align: center;
   float: left;
-  display: table-cell;
   display: inline-block;
   margin-left: 1px;
   background: transparent; }
@@ -716,7 +718,6 @@ input[type="radio"] {
   display: inherit; }
 
 .collapse.navbar-collapse.in {
-  /*width: 25%;*/
   z-index: 25; }
 
 .navbar-toggle {
@@ -1800,14 +1801,14 @@ a.import-button:hover {
 .progress > div {
   border-radius: 4px; }
 
+.progress-bar-green {
+  background-color: #79d20b; }
+
 .progress-bar-purple {
-  background-color: #8356A2; }
+  background-color: #7a26ac; }
 
-.progress-bar-pink {
-  background-color: #BE6193; }
-
-.progress-bar-slategrey {
-  background-color: slategrey; }
+.progress-bar-blue {
+  background-color: #4b4dab; }
 
 .numbered-list li {
   list-style-type: decimal !important; }
@@ -1825,7 +1826,37 @@ a.import-button:hover {
   margin: 0 auto; }
 
 .submit-button {
-  background: #A03269;
+  background: #4b4dab;
+  width: 98%;
+  height: 54px;
+  line-height: 56px;
+  font-family: 'radikalregular';
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 10px;
+  padding: 0px;
+  margin: 0px; }
+
+.submit-button-green {
+  background: #79d20b;
+  width: 98%;
+  height: 54px;
+  line-height: 56px;
+  font-family: 'radikalregular';
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 10px;
+  padding: 0px;
+  margin: 0px; }
+
+.submit-button-purple {
+  background: #7a26ac;
   width: 98%;
   height: 54px;
   line-height: 56px;
@@ -2015,8 +2046,8 @@ ul.passwordStrength {
   color: black; }
 
 .menu-btn, .menu-btn:hover, .menu-btn:focus {
-  background-color: #A03269;
-  border-color: #A03269; }
+  background-color: #4b4dab;
+  border-color: #4b4dab; }
 
 #profileDropDown {
   width: 800px;
@@ -2085,7 +2116,6 @@ ul.passwordStrength {
 .button-user-mail {
   width: 50px;
   height: 50px;
-  display: table-cell;
   display: inline-block;
   float: left;
   text-align: center;
@@ -2111,9 +2141,7 @@ ul.passwordStrength {
   background-color: rgba(200, 200, 200, 0.9) !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
-  /*     padding: 15px !important; */
   text-align: center;
-  /*     box-shadow: 0 1px 1px rgba(20, 20, 20, 0.5) !important; */
   margin-bottom: 0; }
 
 .btn-primary.active {

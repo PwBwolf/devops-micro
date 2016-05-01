@@ -340,7 +340,7 @@ module.exports = {
                 }
                 if (validation.isUsPhoneNumberInternationalFormat(username)) {
                     var message = sf(config.forgotPasswordSmsMessage[user.preferences.defaultLanguage], user.resetPasswordPin);
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
                         if (err) {
                             logger.logError('userController - forgotPassword - error sending sms: ' + user.email);
                             logger.logError(err);
@@ -399,7 +399,7 @@ module.exports = {
                 }
                 if (validation.isUsPhoneNumberInternationalFormat(username)) {
                     var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
                         if (err) {
                             logger.logError('userController - resetPassword - error sending sms: ' + user.email);
                             logger.logError(err);
@@ -535,7 +535,7 @@ module.exports = {
                 }
                 if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
                     var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
                         if (err) {
                             logger.logError('userController - changePassword - error sending sms: ' + user.email);
                             logger.logError(err);
@@ -603,7 +603,7 @@ module.exports = {
                         function (sessionId, callback) {
                             if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
                                 var message = config.changeCreditCardSmsMessage[user.preferences.defaultLanguage];
-                                twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                                twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
                                     if (err) {
                                         logger.logError('subscription - changeCreditCard - error sending sms: ' + user.email);
                                         logger.logError(err);

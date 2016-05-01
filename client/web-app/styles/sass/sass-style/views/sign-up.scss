@@ -16,16 +16,16 @@
     border-radius: 4px;
 }
 
+.progress-bar-green {
+    background-color: #79d20b;
+}
+
 .progress-bar-purple {
-    background-color: #8356A2;
+    background-color: #7a26ac;
 }
 
-.progress-bar-pink {
-    background-color: #BE6193;
-}
-
-.progress-bar-slategrey {
-    background-color: slategrey;
+.progress-bar-blue {
+    background-color: $blue;
 }
 
 .numbered-list li {
@@ -48,7 +48,39 @@
 }
 
 .submit-button {
-    background: #A03269;
+    background: $blue;
+    width: 98%;
+    height: 54px;
+    line-height: 56px;
+    font-family: 'radikalregular';
+    font-size: 25px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 10px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.submit-button-green {
+    background: #79d20b;
+    width: 98%;
+    height: 54px;
+    line-height: 56px;
+    font-family: 'radikalregular';
+    font-size: 25px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 10px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.submit-button-purple {
+    background: #7a26ac;
     width: 98%;
     height: 54px;
     line-height: 56px;

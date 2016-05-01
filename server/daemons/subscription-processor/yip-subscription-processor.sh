@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-merchant-processor
+# service yip-subscription-processor
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,9 +10,9 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-merchant-processor
-SOURCE_DIR=/opt/prodops/yiptv/server/daemons/merchant-processor
-SOURCE_FILE=merchant-processor-main.js
+NAME=yip-subscription-processor
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/subscription-processor
+SOURCE_FILE=subscription-processor-main.js
 
 user=prodops
 logfile=/var/log/$NAME.log
