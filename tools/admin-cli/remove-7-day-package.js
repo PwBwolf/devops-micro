@@ -24,26 +24,17 @@ mongoose.connect(config.db, function (err) {
                 var accounts = db.collection('Accounts');
                 var users = db.collection('Users');
                 var date = moment();
-                date = moment.utc(date.subtract(7, 'days')).startOf('day');
+                date = moment.utc(date.subtract(8, 'days')).startOf('day');
                 console.log(date.format());
                 var count = 0;
-                accounts.count({
-                    type: 'free',
-                    packages: {$size: 2},
-                    startDate: {$lt: new Date(date.format())}
-                }, function (err, count) {
+                accounts.count({type: 'free', packages: {$size: 2}, startDate: {$lt: new Date(date.format())}}, function (err, count) {
                     console.log(count);
-                    accounts.find({
-                        type: 'free',
-                        packages: {$size: 2},
-                        startDate: {$lt: new Date(date.format())}
-                    }).toArray(function (err, accounts) {
+                    accounts.find({type: 'free', packages: {$size: 2}, startDate: {$lt: new Date(date.format())}}).toArray(function (err, accounts) {
                         console.log(accounts.length);
                         async.eachSeries(
                             accounts,
                             function (account, callback) {
                                 users.findOne({_id: account.primaryUser}, function (err, user) {
-                                    count++;
                                     console.log(count, user.email, user.createdAt.getTime());
                                     subscription.removePremiumPackage(user.email, function (err) {
                                         callback();
@@ -57,7 +48,6 @@ mongoose.connect(config.db, function (err) {
                         );
                     });
                 });
-
             }
         });
     }

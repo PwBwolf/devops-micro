@@ -79,7 +79,7 @@ mongoose.connect(config.db, function (err) {
                         if (validation.isUsPhoneNumberInternationalFormat(username)) {
                             logger.logInfo('adminCLI - resetPassword - sending password changed sms to ' + username);
                             var message = sf(config.passwordChangedSmsMessage[user.preferences.defaultLanguage], config.customerCareNumber);
-                            twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+                            twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
                                 if (err) {
                                     logger.logError('adminCLI - resetPassword - error sending sms: ' + user.email);
                                     logger.logError(err);

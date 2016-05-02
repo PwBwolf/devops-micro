@@ -734,6 +734,7 @@ module.exports = {
                                     userObj.cancelDate = undefined;
                                     userObj.complimentaryEndDate = undefined;
                                     userObj.account.type = 'comp';
+                                    userObj.account.merchant = 'YIPTV';
                                     userObj.account.complimentaryCode = newUser.code;
                                     userObj.account.premiumEndDate = undefined;
                                     userObj.account.packages = config.complimentaryUserPackages;
@@ -783,10 +784,31 @@ module.exports = {
                     },
                     // update user in freeside
                     function (userObj, sessionId, callback) {
+                        billing.updateInfo(sessionId, userObj.firstName, userObj.lastName, function (err) {
+                            if (err) {
+                                logger.logError('subscription - convertToComplimentary - error updating user info in billing system: ' + userObj.email);
+                                errorType = 'freeside-user-update';
+                            }
+                            callback(err, userObj, sessionId);
+                        });
+                    },
+                    // update locale in freeside
+                    function (userObj, sessionId, callback) {
+                        var locale = userObj.preferences.defaultLanguage + '_US';
+                        billing.updateLocale(sessionId, locale, function (err) {
+                            if (err) {
+                                logger.logError('subscription - convertToComplimentary - error updating locale in billing system: ' + userObj.email);
+                                errorType = 'freeside-locale-update';
+                            }
+                            callback(err, userObj, sessionId);
+                        });
+                    },
+                    // update user in freeside
+                    function (userObj, sessionId, callback) {
                         billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                             if (err) {
-                                logger.logError('subscription - convertToComplimentary - error updating user in billing system: ' + userObj.email);
-                                errorType = 'freeside-user-update';
+                                logger.logError('subscription - convertToComplimentary - error updating billing type in billing system: ' + userObj.email);
+                                errorType = 'freeside-billing-update';
                             }
                             callback(err, userObj, sessionId);
                         });
@@ -900,6 +922,8 @@ module.exports = {
                                 revertUserChangesForComplimentary(userObj, currentValues, currentUser);
                                 break;
                             case 'freeside-user-update':
+                            case 'freeside-locale-update':
+                            case 'freeside-billing-update':
                             case 'freeside-login':
                             case 'freeside-package-remove':
                             case 'freeside-package-insert':
@@ -969,18 +993,29 @@ module.exports = {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error updating user: ' + userObj.email);
                     }
-                    callback(err, userObj, sessionId);
+                    callback(err, userObj, sessionId, billingDate);
                 });
             },
             // modify billing type
-            function (userObj, sessionId, callback) {
+            function (userObj, sessionId, billingDate, callback) {
                 billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
                         logger.logError('subscription - cancelSubscription - error setting canceled address in billing system: ' + userObj.email);
                         errorType = 'freeside-user-update';
                     }
-                    callback(err, userObj);
+                    callback(err, userObj, sessionId, billingDate);
                 });
+            },
+            // cancel packages
+            function (userObj, sessionId, billingDate, callback) {
+                var cancelDate = moment(billingDate).subtract(1, 'days').toDate();
+                billing.cancelPackagesOn(sessionId, [config.freeSidePaidBasicPackagePart, config.freeSidePremiumPackagePart], cancelDate, function (err) {
+                    if (err) {
+                        logger.logError('subscription - cancelSubscription - error canceling packages in future in billing system: ' + userObj.email);
+                        errorType = 'freeside-cancel-package';
+                    }
+                    callback(err, userObj);
+                })
             },
             // send email or sms
             function (userObj, callback) {
@@ -1004,6 +1039,7 @@ module.exports = {
                 logger.logError(err);
                 switch (errorType) {
                     case 'freeside-user-update':
+                    case 'freeside-cancel-package':
                         userObj.cancelOn = undefined;
                         userObj.save(function (err) {
                             if (err) {
@@ -1192,7 +1228,7 @@ module.exports = {
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     var message = config.complimentaryAccountEndedSmsMessage[userObj.preferences.defaultLanguage];
-                    twilio.sendSms(config.twilioSmsSendMobileNumber, userObj.email, message, function (err) {
+                    twilio.sendSms(config.twilioAccountSmsNumber, userObj.email, message, function (err) {
                         if (err) {
                             logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + userObj.email);
                             logger.logError(err);
@@ -1903,7 +1939,7 @@ function sendVerificationEmailSms(user, cb) {
 
 function sendVerificationSms(user, cb) {
     var message = sf(config.accountVerificationSmsMessage[user.preferences.defaultLanguage], user.verificationPin);
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (err) {
             logger.logError('subscription - sendVerificationSms - error sending sms: ' + user.email);
             logger.logError(err);
@@ -1938,7 +1974,7 @@ function sendVerificationEmail(user, cb) {
 
 function sendUpgradeSms(user, cb) {
     var message = config.upgradeSubscriptionSmsMessage[user.preferences.defaultLanguage];
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (err) {
             logger.logError('subscription - sendUpgradeSms - error sending sms: ' + user.email);
             logger.logError(err);
@@ -1974,7 +2010,7 @@ function sendUpgradeEmail(user, cb) {
 
 function sendConvertToComplimentarySms(user, cb) {
     var message = config.convertToComplimentarySmsMessage[user.preferences.defaultLanguage];
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (err) {
             logger.logError('subscription - sendConvertToComplimentarySms - error sending sms: ' + user.email);
             logger.logError(err);
@@ -2011,7 +2047,7 @@ function sendConvertToComplimentaryEmail(user, cb) {
 function sendCreditCardPaymentFailureEmailSms(user, cb) {
     if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
         var message = sf(config.creditCardPaymentFailureSmsMessage[user.preferences.defaultLanguage]);
-        twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
             if (err) {
                 logger.logError('subscription - sendCreditCardPaymentFailureEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
@@ -2047,7 +2083,7 @@ function sendCreditCardPaymentFailureEmailSms(user, cb) {
 function sendAccountVerifiedEmailSms(user, cb) {
     if (validation.isUsPhoneNumberInternationalFormat(user.email)) {
         var message = sf(config.accountVerifiedSmsMessage[user.preferences.defaultLanguage]);
-        twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+        twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
             if (err) {
                 logger.logError('subscription - sendAccountVerifiedEmailSms - error sending sms: ' + user.email);
                 logger.logError(err);
@@ -2082,7 +2118,7 @@ function sendAccountVerifiedEmailSms(user, cb) {
 function sendCancellationSms(user, cb) {
     var cancelOn = moment(user.cancelOn).utc().format('M/D/YYYY');
     var message = sf(config.cancelSubscriptionSmsMessage[user.preferences.defaultLanguage], cancelOn);
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (err) {
             logger.logError('subscription - sendCancellationSms - error sending sms: ' + user.email);
             logger.logError(err);
@@ -2118,7 +2154,7 @@ function sendCancellationEmail(user, cb) {
 
 function sendPaidSubscriptionEndedSms(user, cb) {
     var message = config.subscriptionCanceledSmsMessage[user.preferences.defaultLanguage];
-    twilio.sendSms(config.twilioSmsSendMobileNumber, user.email, message, function (err) {
+    twilio.sendSms(config.twilioAccountSmsNumber, user.email, message, function (err) {
         if (err) {
             logger.logError('subscription - sendPaidSubscriptionEndedSms - error sending sms: ' + user.email);
             logger.logError(err);

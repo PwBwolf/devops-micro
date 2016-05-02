@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# service yip-merchant-processor
+# service yip-email-sms-processor
 #
 # This is suitable for Fedora, Red Hat, CentOS and similar distributions.
 # It will not work on Ubuntu or other Debian-style distributions!
@@ -10,9 +10,9 @@
 # Source function library.
 . /etc/init.d/functions
 
-NAME=yip-merchant-processor
-SOURCE_DIR=/opt/prodops/yiptv/server/daemons/merchant-processor
-SOURCE_FILE=merchant-processor-main.js
+NAME=yip-email-sms-processor
+SOURCE_DIR=/opt/prodops/yiptv/server/daemons/email-sms-processor
+SOURCE_FILE=email-sms-processor-main.js
 
 user=prodops
 logfile=/var/log/$NAME.log

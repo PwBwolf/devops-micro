@@ -83,7 +83,7 @@ module.exports = {
             });
             if (validation.isUsPhoneNumber(contactUs.email)) {
                 var message = config.contactUsSmsMessage;
-                twilio.sendSms(config.twilioSmsSendMobileNumber, contactUs.email, message, function (err) {
+                twilio.sendSms(config.twilioAccountSmsNumber, contactUs.email, message, function (err) {
                     if (err) {
                         logger.logError('subscription - endComplimentarySubscription - error sending sms: ' + contactUs.email);
                         logger.logError(err);

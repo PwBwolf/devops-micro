@@ -48,12 +48,18 @@ gulp.task('jwplayer', function () {
         .pipe(gulp.dest('dist/client/web-app/scripts/external'));
 });
 
+gulp.task('sass', function () {
+    return gulp.src('../client/web-app/styles/sass/app.scss')
+        .pipe($.sass())
+        .pipe(gulp.dest('../client/web-app/styles/'));
+});
+
 /**
  * Prepare the web application.
  * Process the html, css, js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
+gulp.task('webapp', ['sass', 'partials', 'roles', 'jwplayer'], function () {
     var htmlFilter = $.filter('*.html'); //Filter out each HTML file
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var cssFilter = $.filter('**/*.css'); //Filter out each CSS file
@@ -207,8 +213,12 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/deployment-scripts/cleanup.js', 'dist/tools/deployment-scripts', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/cancel-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/change-email.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
-    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-complimentary-fs-db-packages-2.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-free-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-1.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-2.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/compare-premium-fs-db-packages-3.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-code.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/complimentary-users-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/convert-to-complimentary-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
@@ -226,11 +236,13 @@ function postDeploy(cb) {
     replaceAndCopy('../tools/admin-cli/export-cj-users.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-comp-users-with-expiry-date.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-freeside-users.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/export-idt-payments.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-partner-accounts.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/export-users.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/freeside-login-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/raf-report.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/remove-7-day-package.js', 'dist/tools/admin-cli', 'development', argv.env);
+    replaceAndCopy('../tools/admin-cli/remove-7-day-package-fs-only.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/reset-password.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/upgrade-subscription.js', 'dist/tools/admin-cli', 'development', argv.env);
     replaceAndCopy('../tools/admin-cli/verify-account.js', 'dist/tools/admin-cli', 'development', argv.env);
@@ -310,8 +322,7 @@ function bumpVersion(versionFile, destination) {
 }
 
 gulp.task('doDeploy', [argv.noMinify ? 'webapp-nominify' : 'webapp', 'images', 'fonts', 'extras', 'server', 'tools'], function (cb) {
-    buildDaemon('dist/server/daemons', 'rule-engine');
-    buildDaemon('dist/server/daemons', 'merchant-processor');
+    buildDaemon('dist/server/daemons', 'email-sms-processor');
     buildDaemon('dist/server/daemons', 'notification-processor');
     buildDaemon('dist/server/daemons', 'metadata-processor');
     buildDaemon('dist/server/daemons', 'cj-report-processor');
@@ -331,7 +342,7 @@ gulp.task('deploy', [argv.env === 'integration' ? 'dummy' : 'dummy', 'clean'], f
                 gulp.src('./version.json')
                     .pipe(gulp.dest('dist/client/web-app'));
             }, function (err) {
-                console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
+                console.log('There was a problem while checking out from this tag! Maybe you forgot to do a "git fetch"?');
                 console.log(err);
             });
         } else {

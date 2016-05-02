@@ -3,7 +3,9 @@
 if [ "$1" != "" ]; then
     git checkout master
     git pull
-    cd build
+    cd client/web-app
+    bower install
+    cd ../../build
     gulp deploy --env test --tag $1
     cd dist
     git status
