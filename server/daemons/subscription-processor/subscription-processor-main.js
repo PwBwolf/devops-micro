@@ -5,12 +5,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var CronJob = require('cron').CronJob,
     config = require('../../common/setup/config'),
     logger = require('../../common/setup/logger'),
+    subscription = require('../../common/services/subscription'),
     MongoClient = require('mongodb').MongoClient,
     async = require('async'),
-    twilio = require('../../common/services/twilio'),
-    email = require('../../common/services/email'),
-    validation = require('../../common/services/validation'),
-    sf = require('sf'),
     moment = require('moment');
 
 MongoClient.connect(config.db, function (err, db) {
@@ -18,13 +15,10 @@ MongoClient.connect(config.db, function (err, db) {
         logger.logError(err);
         logger.logError('subscriptionProcessorMain - db connection error');
     } else {
-        new CronJob(config.emailSmsProcessorRecurrence, function () {
-            logger.logInfo('subscriptionProcessorMain - email sms processor starting');
-            processTasks(db, function (err) {
-                if (err) {
-                    logger.logError('subscriptionProcessorMain - error processing tasks');
-                    logger.logError(err);
-                }
+        new CronJob(config.subscriptionProcessorRecurrence, function () {
+            logger.logInfo('subscriptionProcessorMain - subscription processor starting');
+            processTasks(db, function () {
+                logger.logInfo('subscriptionProcessorMain - subscription processor ending');
             });
         }, function () {
             logger.logInfo('subscriptionProcessorMain - subscription processor has stopped');
@@ -35,21 +29,22 @@ MongoClient.connect(config.db, function (err, db) {
 function processTasks(db, cb) {
     async.waterfall([
         // remove 7 day packages
-        function (callback) {
+        function remove7DayPackage(callback) {
             var Accounts = db.collection('Accounts');
             var Users = db.collection('Users');
             var date = moment();
             date = moment.utc(date.subtract(8, 'days')).startOf('day');
-            Accounts.count({type: 'free', startDate: {$lte: new Date(date.format())}}, function (err, accountCount) {
+            var query = {type: 'free', startDate: {$lte: new Date(date.format())}};
+            Accounts.count(query, function (err, accountCount) {
                 if (err) {
-                    logger.logError('subscriptionProcessorMain - processEmailSms - error fetching account count');
+                    logger.logError('subscriptionProcessorMain - remove7DayPackage - error fetching account count');
                     logger.logError(err);
                     callback(err);
                 } else {
-                    logger.logInfo('emailSmsProcessorMain - processEmailSms - account count ' + accountCount);
-                    Accounts.find({type: 'free', startDate: {$gte: new Date(date.format())}}).toArray(function (err, accounts) {
+                    logger.logInfo('subscriptionProcessorMain - remove7DayPackage - account count ' + accountCount);
+                    Accounts.find(query).toArray(function (err, accounts) {
                         if (err) {
-                            logger.logError('emailSmsProcessorMain - processEmailSms - error fetching accounts');
+                            logger.logError('subscriptionProcessorMain - remove7DayPackage - error fetching accounts');
                             logger.logError(err);
                             callback(err);
                         } else {
@@ -58,19 +53,24 @@ function processTasks(db, cb) {
                                 function (account, callback) {
                                     Users.findOne({account: account._id}, function (err, user) {
                                         if (err) {
-                                            logger.logError('emailSmsProcessorMain - processEmailSms - error fetching user');
+                                            logger.logError('subscriptionProcessorMain - remove7DayPackage - error fetching user');
                                             logger.logError(err);
-                                            callback(err);
+                                            callback();
                                         } else if (!user) {
-                                            logger.logError('emailSmsProcessorMain - processEmailSms - user not found' + account._id);
-                                            callback(err);
-                                        } else if (user.preferences.emailSmsSubscription && (user.status === 'active' || user.status === 'registered')) {
-
+                                            logger.logError('subscriptionProcessorMain - remove7DayPackage - user not found ' + account._id);
+                                            callback();
+                                        } else if (user.status === 'active' || user.status === 'registered') {
+                                            subscription.removePremiumPackage(user.email, function (err) {
+                                                if (err) {
+                                                    logger.logError('subscriptionProcessorMain - remove7DayPackage - error removing premium package ' + user.email);
+                                                }
+                                                callback();
+                                            });
                                         }
                                     });
                                 },
-                                function (err) {
-                                    cb(err);
+                                function () {
+                                    callback();
                                 }
                             );
                         }
@@ -79,14 +79,97 @@ function processTasks(db, cb) {
             });
         },
         // end complimentary subscription
-        function (callback) {
-
+        function endComplimentarySubscription(callback) {
+            var Accounts = db.collection('Accounts');
+            var Users = db.collection('Users');
+            var date = moment();
+            date = moment.utc(date.subtract(1, 'days')).startOf('day');
+            var query = {type: 'comp', validTill: {$lte: new Date(date.format())}};
+            Accounts.count(query, function (err, accountCount) {
+                if (err) {
+                    logger.logError('subscriptionProcessorMain - endComplimentarySubscription - error fetching account count');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    logger.logInfo('subscriptionProcessorMain - endComplimentarySubscription - account count ' + accountCount);
+                    Accounts.find(query).toArray(function (err, accounts) {
+                        if (err) {
+                            logger.logError('subscriptionProcessorMain - endComplimentarySubscription - error fetching accounts');
+                            logger.logError(err);
+                            callback(err);
+                        } else {
+                            async.eachSeries(
+                                accounts,
+                                function (account, callback) {
+                                    Users.findOne({account: account._id}, function (err, user) {
+                                        if (err) {
+                                            logger.logError('subscriptionProcessorMain - endComplimentarySubscription - error fetching user');
+                                            logger.logError(err);
+                                            callback();
+                                        } else if (!user) {
+                                            logger.logError('subscriptionProcessorMain - endComplimentarySubscription - user not found ' + account._id);
+                                            callback();
+                                        } else if (user.status === 'active' || user.status === 'registered') {
+                                            subscription.endComplimentarySubscription(user.email, function (err) {
+                                                if (err) {
+                                                    logger.logError('subscriptionProcessorMain - endComplimentarySubscription - error ending complimentary subscription ' + user.email);
+                                                }
+                                                callback();
+                                            });
+                                        }
+                                    });
+                                },
+                                function () {
+                                    callback();
+                                }
+                            );
+                        }
+                    });
+                }
+            });
         },
         // end premium subscription
-        function (callback) {
-
+        function endPaidSubscription(callback) {
+            var Accounts = db.collection('Accounts');
+            var Users = db.collection('Users');
+            var date = moment();
+            date = moment.utc(date.subtract(1, 'days')).startOf('day');
+            var query = {cancelOn: {$lte: new Date(date.format())}};
+            Users.count(query, function (err, userCount) {
+                if (err) {
+                    logger.logError('subscriptionProcessorMain - endPaidSubscription - error fetching user count');
+                    logger.logError(err);
+                    callback(err);
+                } else {
+                    logger.logInfo('subscriptionProcessorMain - endPaidSubscription - user count ' + userCount);
+                    Users.find(query).toArray(function (err, users) {
+                        if (err) {
+                            logger.logError('subscriptionProcessorMain - endPaidSubscription - error fetching users');
+                            logger.logError(err);
+                            callback(err);
+                        } else {
+                            async.eachSeries(
+                                users,
+                                function (user, callback) {
+                                    if (user.status === 'active' || user.status === 'registered') {
+                                        subscription.endPremiumSubscriptionDbOnly(user.email, function (err) {
+                                            if (err) {
+                                                logger.logError('subscriptionProcessorMain - endPaidSubscription - error ending premium subscription ' + user.email);
+                                            }
+                                            callback();
+                                        });
+                                    }
+                                },
+                                function () {
+                                    callback();
+                                }
+                            );
+                        }
+                    });
+                }
+            });
         }
     ], function () {
-
+        cb();
     });
 }

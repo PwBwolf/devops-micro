@@ -24,6 +24,8 @@ MongoClient.connect(config.db, function (err, db) {
                 if (err) {
                     logger.logError('emailSmsProcessorMain - error processing email / sms');
                     logger.logError(err);
+                } else {
+                    logger.logInfo('emailSmsProcessorMain - email sms processor ending');
                 }
             });
         }, function () {
@@ -60,7 +62,7 @@ function processEmailSms(db, cb) {
                                     logger.logError(err);
                                     callback(err);
                                 } else if (!user) {
-                                    logger.logError('emailSmsProcessorMain - processEmailSms - user not found' + account._id);
+                                    logger.logError('emailSmsProcessorMain - processEmailSms - user not found ' + account._id);
                                     callback(err);
                                 } else if (user.preferences.emailSmsSubscription && (user.status === 'active' || user.status === 'registered')) {
                                     var diff = moment.utc().startOf('day').diff(moment(account.startDate).utc().startOf('day'), 'days');
