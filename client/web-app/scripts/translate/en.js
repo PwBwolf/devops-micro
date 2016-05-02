@@ -502,8 +502,7 @@
             VERIFY_USER_MESSAGE_ERROR: 'Unable to verify your account or account is already verified. Please contact customer support at',
             WP_URL_FAQS: 'index.php/en/faqs/',
             WP_URL_PRIVACY_POLICY: 'index.php/en/privacy-policy/',
-            WP_URL_TOUS: 'index.php/en/terms-of-service/',
-            WP_URL_FREE_SIGN_UP: 'index.php/en/sign-up/free/'
+            WP_URL_TOUS: 'index.php/en/terms-of-service/'
         });
     }]);
 }(angular.module('app')));

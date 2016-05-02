@@ -1,6 +1,6 @@
 {
-  "name": "build",
-  "version": "0.1.0",
+  "name": "yiptv-build",
+  "version": "0.0.1",
   "private": true,
   "author": "YipTV",
   "description": "Next generation IPTV!",
@@ -41,6 +41,7 @@
     "gulp-replace-task": "^0.1.0",
     "gulp-rev": "^2.0.1",
     "gulp-rev-replace": "^0.3.1",
+    "gulp-sass": "^2.3.1",
     "gulp-size": "^0.3.0",
     "gulp-tag-version": "^1.2.1",
     "gulp-uglify": "^1.0.1",
@@ -56,5 +57,6 @@
     "q": "^1.1.2",
     "semver": "^4.1.0",
     "yargs": "^1.3.3"
-  }
+  },
+  "dependencies": {}
 }

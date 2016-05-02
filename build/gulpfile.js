@@ -48,12 +48,18 @@ gulp.task('jwplayer', function () {
         .pipe(gulp.dest('dist/client/web-app/scripts/external'));
 });
 
+gulp.task('sass', function () {
+    return gulp.src('../client/web-app/styles/sass/app.scss')
+        .pipe($.sass())
+        .pipe(gulp.dest('../client/web-app/styles/'));
+});
+
 /**
  * Prepare the web application.
  * Process the html, css, js files along with the partials and copy them all to the
  * destination dist directory
  */
-gulp.task('webapp', ['partials', 'roles', 'jwplayer'], function () {
+gulp.task('webapp', ['sass', 'partials', 'roles', 'jwplayer'], function () {
     var htmlFilter = $.filter('*.html'); //Filter out each HTML file
     var jsFilter = $.filter('**/*.js'); //Filter out each JS file
     var cssFilter = $.filter('**/*.css'); //Filter out each CSS file
@@ -336,7 +342,7 @@ gulp.task('deploy', [argv.env === 'integration' ? 'dummy' : 'dummy', 'clean'], f
                 gulp.src('./version.json')
                     .pipe(gulp.dest('dist/client/web-app'));
             }, function (err) {
-                console.log('There was a problem while checking out from this tag!..maybe you forgot to do a "git fetch"?');
+                console.log('There was a problem while checking out from this tag! Maybe you forgot to do a "git fetch"?');
                 console.log(err);
             });
         } else {

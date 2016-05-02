@@ -103,7 +103,7 @@ function processEmailSms(db, cb) {
                             logger.logInfo('emailSmsProcessorMain - processEmailSms - 5th day users ' + users.fifth.length);
                             logger.logInfo('emailSmsProcessorMain - processEmailSms - 6th day users ' + users.sixth.length);
                             logger.logInfo('emailSmsProcessorMain - processEmailSms - 7th day users ' + users.seventh.length);
-                            callback(err);
+                            cb(err);
                         }
                     );
                 }

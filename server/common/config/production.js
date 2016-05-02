@@ -39,7 +39,7 @@ module.exports = {
     checkPhoneNumberExists: true,
     twilioMobileType: ['mobile'],
     emailSmsProcessorRecurrence: '0 0 8 * * *',
-    subscriptionProcessorRecurrence: '0 0 0 * * *',
+    subscriptionProcessorRecurrence: '0 0 7 * * *',
     cjReportProcessorRecurrence: '0 0 5 * * *',
     cjReports: {
         financeEmailAddress: 'cjreports@yiptv.com',

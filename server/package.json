@@ -1,7 +1,7 @@
 {
   "name": "yiptv-server",
   "description": "YipTV Server",
-  "version": "4.0.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "URIjs": "^1.14.2",
@@ -22,6 +22,7 @@
     "method-override": "^2.3.0",
     "moment": "^2.8.4",
     "moment-timezone": "^0.5.3",
+    "mongodb": "^2.1.18",
     "mongoose": "~3.8.8",
     "mongoose-auto-increment": "3.2.0",
     "mongoose-function": "^0.1.0",
