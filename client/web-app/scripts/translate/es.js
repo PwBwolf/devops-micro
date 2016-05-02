@@ -502,7 +502,17 @@
             VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar tu cuenta o tu cuenta ya ha sido verificada. Contacta servicio al cliente:',
             WP_URL_FAQS: 'index.php/es/preguntas-frecuentes/',
             WP_URL_PRIVACY_POLICY: 'index.php/es/privacy-policy-es/',
-            WP_URL_TOUS: 'index.php/es/terms-of-service-es/'
+            WP_URL_TOUS: 'index.php/es/terms-of-service-es/',
+            WP_URL_CHANNELS: 'index.php/es/redes-y-canales/',
+            WP_URL_HOW_TO_WATCH: 'index.php/es/nosotros/',
+            MENU_LABEL_JOIN_FREE: 'Únete Gratis',
+            MENU_LABE_$1PREMIUM: '$1 Premier',
+            MENU_LABEL_JOIN_PREMIUM: 'Únete A Premier $1',
+            MENU_LABEL_CHANNELS: 'Canales',
+            MENU_LABEL_FAQ: 'Preguntas frecuentes',
+            MENU_LABEL_WATCH_NOW: '¿Preguntas?',
+            MENU_LABEL_CALL_US: 'Ver Ahora: 855-909-4788',
+            MENU_LABEL_HOW_TO_WATCH: 'Como Ver'
         });
     }]);
 }(angular.module('app')));

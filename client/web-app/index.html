@@ -59,7 +59,7 @@
                 <div class="bottom-nav-div">
                     <div class="navbar-header">
                         <div class="collapsed-menu-left">
-                            <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="/sign-up/premium">1$ Premium</a>
+                            <a class="navbar-toggle collapsed" href="/sign-up/premium" translate="MENU_LABE_$1PREMIUM"></a>
                         </div>
                         <div class="collapsed-menu-right">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -68,45 +68,46 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="https://www.yiptv.com/live-tv/index.php/es/" hreflang="es">Español</a>
+                            <a class="navbar-toggle collapsed ng-scope" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE"></a>
                         </div>
                     </div>
                     <div class="container">
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav hidden-xs">
                                 <li>
-                                    <a href="https://www.yiptv.com/live-tv/index.php/en/tv-channels/">Channels</a>
+                                    <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="MENU_LABEL_CHANNELS"></a>
                                 </li>
                                 <li>
-                                    <a href="https://www.yiptv.com/live-tv/index.php/en/how-to-watch/">How to Watch</a>
+
+                                    <a href ng-click="goToWordPressUrl('WP_URL_HOW_TO_WATCH')" translate="MENU_LABEL_HOW_TO_WATCH"></a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right hidden-xs">
                                 <li>
-                                    <a href="/sign-in">Login/Watch Now</a>
+                                    <a href="/sign-in" translate="MENU_LABEL_WATCH_NOW"></a>
                                 </li>
                                 <li class="premium-button-purple">
-                                    <a href="/sign-up/premium">1$ Premium</a>
+                                    <a href="/sign-up/premium" translate="MENU_LABE_$1PREMIUM"></a>
                                 </li>
                             </ul>
                             <ul class="coll-menu visible-xs">
                                 <li>
-                                    <a href="/sign-up/free">Join Free</a>
+                                    <a href="/sign-up/free" translate="MENU_LABEL_JOIN_FREE"></a>
                                 </li>
                                 <li>
-                                    <a href="/sign-up/premium">Join Premium for $1</a>
+                                    <a href="/sign-up/premium" translate="MENU_LABEL_JOIN_PREMIUM"></a>
                                 </li>
                                 <li>
-                                    <a href="https://www.yiptv.com/live-tv/index.php/en/tv-channels/">Channels</a>
+                                    <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="MENU_LABEL_CHANNELS"></a>
                                 </li>
                                 <li>
-                                    <a>FAQs</a>
+                                    <a href ng-click="goToWordPressUrl('WP_URL_FAQS')" translate="SIGN_UP_SUCCESS_FAQS"></a>
                                 </li>
                                 <li>
                                     <a translate="INDEX_CONTACT_NUMBER"></a>
                                 </li>
                                 <li>
-                                    <a href="/sign-in">Watch Now!</a>
+                                    <a href="/sign-in" translate="MENU_LABEL_WATCH_NOW"></a>
                                 </li>
                             </ul>
                         </div>
