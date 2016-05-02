@@ -502,8 +502,7 @@
             VERIFY_USER_MESSAGE_ERROR: 'No se puede verificar tu cuenta o tu cuenta ya ha sido verificada. Contacta servicio al cliente:',
             WP_URL_FAQS: 'index.php/es/preguntas-frecuentes/',
             WP_URL_PRIVACY_POLICY: 'index.php/es/privacy-policy-es/',
-            WP_URL_TOUS: 'index.php/es/terms-of-service-es/',
-            WP_URL_FREE_SIGN_UP: 'index.php/es/inscribirte/gratis/'
+            WP_URL_TOUS: 'index.php/es/terms-of-service-es/'
         });
     }]);
 }(angular.module('app')));
