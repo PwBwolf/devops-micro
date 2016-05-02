@@ -25,12 +25,7 @@ angular.module('pageslide-directive', [])
 
                     /* Inspect */
 
-                    //console.log($scope);
-                    //console.log(el);
-                    //console.log(attrs);
-
                     var param = {};
-
                     param.side = $scope.psSide || 'right';
                     param.speed = $scope.psSpeed || '0.5';
                     param.size = $scope.psSize || '300px';

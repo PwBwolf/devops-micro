@@ -2,7 +2,6 @@
     'use strict';
 
     app.factory('mediaSvc', ['$http', '$q', function ($http, $q) {
-        console.log('media service loaded')
         return {
             getChannelUrl: function (id) {
                 return $http({
@@ -21,17 +20,16 @@
                 });
             },
 
-            getChannelGuideAll: function (id, hours) {
+            getEpg: function (id, hours) {
                 return $http({
                     method: 'GET',
-                    url: '/api/get-channel-guide-all',
+                    url: '/api/get-epg',
                     params: {id: id, hours: hours}
 
                 });
             },
 
             getUserChannels: function (success, error) {
-                console.log('calling getUserChannels in media service')
                 return $http({
                     method: 'GET',
                     url: '/api/get-user-channels'

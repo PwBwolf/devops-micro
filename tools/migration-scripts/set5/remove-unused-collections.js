@@ -43,7 +43,37 @@ async.waterfall([
         removeCollection('CmsChannels', function () {
             callback();
         });
-    }
+    },
+    function (callback) {
+        removeCollection('Rules', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('jobs', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Channels', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('ImageData', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Images', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('jobs', function () {
+            callback();
+        });
+    },
 ], function () {
     process.exit(0);
 });
