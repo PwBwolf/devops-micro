@@ -16,8 +16,7 @@ var mongoose = require('mongoose'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
     Merchant = mongoose.model('Merchant'),
-    Account = mongoose.model('Account'),
-    FavoriteChannel = mongoose.model('FavoriteChannel');
+    Account = mongoose.model('Account');
 
 module.exports = {
     signUp: function (req, res) {

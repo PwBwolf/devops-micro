@@ -83,6 +83,11 @@ async.waterfall([
         removeCollection('Visitors', function () {
             callback();
         });
+    },
+    function (callback) {
+        removeCollection('FavoriteChannels', function () {
+            callback();
+        });
     }
 ], function () {
     process.exit(0);
