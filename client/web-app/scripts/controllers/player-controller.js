@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.controller('playerCtrl', ['$scope', '$rootScope', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '$interval', function ($scope, $rootScope, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, $interval) {
+    app.controller('playerCtrl', ['$scope', '$rootScope', 'userSvc', 'mediaSvc', '$filter', 'playerSvc', '$anchorScroll', '$timeout', 'webStorage', '$interval', function ($scope, $rootScope, userSvc, mediaSvc, $filter, playerSvc, $anchorScroll, $timeout, webStorage, $interval) {
         // epg related variables
         $scope.programming = [];
         $scope.favoriteChannels = [];
@@ -101,9 +101,9 @@
                 $scope.allChannels = programming;
                 $scope.programming = $scope.allChannels.slice(0, 10);
                 currentView = 'all';
-                mediaSvc.getFavoriteChannels(
+                userSvc.getFavoriteChannels(
                     function (data) {
-                        $scope.favoriteChannels = playerSvc.formatFavorites(data);
+                        $scope.favoriteChannels = data;
                         $scope.favoriteChannels = playerSvc.mapChannels($scope.favoriteChannels);
                         $scope.channelsLoaded = true;
                         setCSS();
@@ -305,9 +305,8 @@
         };
 
         function addFavorite(currentChannel) {
-            var req = {channelId: currentChannel.channelId};
-            mediaSvc.addFavoriteChannel(
-                req,
+            userSvc.addFavoriteChannel(
+                currentChannel,
                 function () {
                     var newFavoriteChannelObj = playerSvc.allChannelsObj[currentChannel.channelId];
                     $scope.favoriteChannels.push(newFavoriteChannelObj);
@@ -332,9 +331,8 @@
                 }
             }
             $scope.favoriteIcon = '../../images/favorite-white.png';
-            var req = {channelId: currentChannel.channelId};
-            mediaSvc.removeFavoriteChannel(
-                req,
+            userSvc.removeFavoriteChannel(
+                currentChannel.channelId,
                 function (data) {
 
                 },
@@ -560,10 +558,7 @@
         }
 
         function emptyFilter() {
-            if ($scope.selectedFilters.length === 0) {
-                return true;
-            }
-            return false;
+            return $scope.selectedFilters.length === 0;
         }
 
         // compare all the tags against each category subobject

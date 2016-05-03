@@ -62,17 +62,6 @@
                     });
             },
 
-            formatFavorites: function (favorites) {
-                var arr = [];
-                for (var i = 0; i < favorites.length; i++) {
-                    var validId = allChannelsObj.hasOwnProperty(favorites[i].channelId);
-                    if (validId) {
-                        arr.push(favorites[i].channelId);
-                    }
-                }
-                return arr;
-            },
-
             // get a full channel object for each channel id
             mapChannels: function (channelIds) {
                 var arr = [];
@@ -87,8 +76,8 @@
 
             allChannelsObj: allChannelsObj,
 
-            channelsEpgObj: channelsEpgObj,
-        }
+            channelsEpgObj: channelsEpgObj
+        };
 
         // calculate length of a show. used to determine size of div for each program in epg.
         function showLength(startTime, endTime) {

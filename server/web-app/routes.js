@@ -130,13 +130,13 @@ var _ = require('lodash'),
         },
         {
             path: '/api/add-favorite-channel',
-            httpMethod: 'GET',
+            httpMethod: 'POST',
             middleware: [UserCtrl.addFavoriteChannel],
             accessLevel: accessLevels.user
         },
         {
             path: '/api/remove-favorite-channel',
-            httpMethod: 'GET',
+            httpMethod: 'POST',
             middleware: [UserCtrl.removeFavoriteChannel],
             accessLevel: accessLevels.user
         },

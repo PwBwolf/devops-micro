@@ -38,31 +38,7 @@
 
             getChannelCategories: function (success, error) {
                 $http.get('/api/get-channel-categories').success(success).error(error);
-            },
-
-            getFavoriteChannels: function(success, error) {
-                $http({
-                    method: 'GET',
-                    url: '/api/get-favorite-channels'
-                }).success(success).error(error);
-            },
-
-            addFavoriteChannel: function(req, success, error) {
-                $http({
-                    method: 'GET',
-                    url: '/api/add-favorite-channel',
-                    params: {channelId: req.channelId}
-                }).success(success).error(error);
-            },
-
-            removeFavoriteChannel: function(req, success, error) {
-                $http({
-                    method: 'GET',
-                    url: '/api/remove-favorite-channel',
-                    params: {channelId: req.channelId}
-                }).success(success).error(error);
             }
-
         };
     }]);
 }(angular.module('app')));

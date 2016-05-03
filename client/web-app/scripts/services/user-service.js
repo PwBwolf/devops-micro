@@ -168,6 +168,21 @@
 
             verifyPin: function (data, success, error) {
                 $http.post('/api/verify-pin', data).success(success).error(error);
+            },
+
+            getFavoriteChannels: function(success, error) {
+                $http({
+                    method: 'GET',
+                    url: '/api/get-favorite-channels'
+                }).success(success).error(error);
+            },
+
+            addFavoriteChannel: function(req, success, error) {
+                $http.post('/api/add-favorite-channel', {id: req.channelId}).success(success).error(error);
+            },
+
+            removeFavoriteChannel: function(req, success, error) {
+                $http.post('/api/remove-favorite-channel', {id: req.channelId}).success(success).error(error);
             }
         };
     }]);
