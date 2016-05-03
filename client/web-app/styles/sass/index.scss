@@ -15,18 +15,18 @@
                 position: relative;
                 display: block;
                 a {
-
+                    font-family: "Oswald";
                     background-color: transparent;
                     color: #001d4a;
                     text-transform: uppercase;
-                    font-family: "Oswald";
-                    font-weight: 400;
+                    font-weight: 500;
                     padding: 15px 15px;
                     font-size: 16px;
                     line-height: 16px;
                     display: block;
                     a {
                         display: inline;
+                        padding: 0;
                     }
                 }
             }
@@ -45,6 +45,7 @@
         border-right: 1px solid rgba(110, 125, 193, 0.7);
         box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
         a {
+            font-size: 16px;
             color: white !important;
             font-weight: 500;
             text-decoration: none;
@@ -139,7 +140,7 @@
 #topBox {
     overflow: auto;
     width: 100%;
-    //padding-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 footer {
@@ -289,9 +290,19 @@ footer {
 
 .legal-p {
     font-size: smaller;
-    margin-top: 15px;
     color: #6A6A6A;
     text-align: center;
+}
+@media screen and (max-width: 993px) {
+    .nav-picture img {
+        top: 30px;
+        width: 80px;
+        -webkit-transition: all 1s ease-in-out;
+    }
+    .bottom-nav-div li a {
+        font-size: 13px;
+    }
+
 }
 
 @media screen and (max-width: 415px) {
@@ -603,10 +614,10 @@ footer {
     #topBox {
         display: table;
         position: relative;
-        width: auto;
+        width: 100%;
         height: auto;
         padding: 0px 0px;
-        padding-bottom: 10px;
+        padding-bottom: 100px;
 
     }
 
