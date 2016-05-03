@@ -503,6 +503,7 @@
             WP_URL_FAQS: 'index.php/en/faqs/',
             WP_URL_PRIVACY_POLICY: 'index.php/en/privacy-policy/',
             WP_URL_TOUS: 'index.php/en/terms-of-service/',
+            WP_URL_END_USER: 'index.php/en/end-user-license-agreement/',
             WP_URL_CHANNELS: 'index.php/en/tv-channels/',
             WP_URL_HOW_TO_WATCH: 'index.php/en/how-to-watch/',
             MENU_LABEL_JOIN_FREE: 'Join Free',
@@ -512,7 +513,9 @@
             MENU_LABEL_FAQ: 'FAQs',
             MENU_LABEL_WATCH_NOW: 'Login/Watch Now',
             MENU_LABEL_CALL_US: 'Call us Toll Free: 855-909-4788',
-            MENU_LABEL_HOW_TO_WATCH: 'How To Watch'
+            MENU_LABEL_HOW_TO_WATCH: 'How To Watch',
+            MENU_LABEL_TERMS_OF_SERVICE: 'Terms of Service',
+            MENU_LABEL_END_USER: 'End User License Agreement'
         });
     }]);
 }(angular.module('app')));

@@ -503,6 +503,7 @@
             WP_URL_FAQS: 'index.php/es/preguntas-frecuentes/',
             WP_URL_PRIVACY_POLICY: 'index.php/es/privacy-policy-es/',
             WP_URL_TOUS: 'index.php/es/terms-of-service-es/',
+            WP_URL_END_USER: 'index.php/es/acuerdo-de-licencia/',
             WP_URL_CHANNELS: 'index.php/es/redes-y-canales/',
             WP_URL_HOW_TO_WATCH: 'index.php/es/nosotros/',
             MENU_LABEL_JOIN_FREE: 'Únete Gratis',
@@ -510,9 +511,11 @@
             MENU_LABEL_JOIN_PREMIUM: 'Únete A Premier $1',
             MENU_LABEL_CHANNELS: 'Canales',
             MENU_LABEL_FAQ: 'Preguntas frecuentes',
-            MENU_LABEL_WATCH_NOW: '¿Preguntas?',
+            MENU_LABEL_WATCH_NOW: 'Ingresar/Ver Ahora',
             MENU_LABEL_CALL_US: 'Ver Ahora: 855-909-4788',
-            MENU_LABEL_HOW_TO_WATCH: 'Como Ver'
+            MENU_LABEL_HOW_TO_WATCH: 'Cómo Ver',
+            MENU_LABEL_TERMS_OF_SERVICE: 'Terminos de uso',
+            MENU_LABEL_END_USER: 'Acuerdo de Licencia de software para Usuario'
         });
     }]);
 }(angular.module('app')));

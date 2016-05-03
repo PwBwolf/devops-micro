@@ -10,6 +10,7 @@
     <base href="/">
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link href="apple-touch-icon.png" rel="apple-touch-icon" type="image/png"/>
+
     <style>
         .ng-hide {
             display: none !important;
@@ -27,6 +28,8 @@
     <!-- endbuild -->
     <!-- build:css styles/app.css -->
     <link rel="stylesheet" href="styles/app.css"/>
+    <script src="https://use.typekit.net/gsh7jef.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <!-- endbuild -->
     <title>YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
@@ -47,10 +50,10 @@
                         <div class="topright">
                             <ul class="hidden-xs">
                                 <li>
-                                    <a class="number-contact" translate="INDEX_CONTACT_NUMBER"></a>
+                                    <a class="number-contact tk-acumin-pro" translate="INDEX_CONTACT_NUMBER"></a>
                                 </li>
                                 <li>
-                                    <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope"></a>
+                                    <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope tk-acumin-pro"></a>
                                 </li>
                             </ul>
                         </div>
@@ -118,10 +121,45 @@
     </header>
 </div>
 <div id="topBox" ng-view autoscroll="true"></div>
-<footer class="top-shadow" access-level="accessLevels.anon">
-    <span id="socialMedia" translate="INDEX_SOCIAL_MEDIA"></span>
-    <span id="copyright" translate="INDEX_COPYRIGHT"></span>
-</footer>
+<div class="legal-footer">
+    <div class="legal-container">
+
+        <div class="menu-legal-nav-container container">
+            <ul id="menu-legal-nav" class="menu">
+                <li class=""><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" translate="MENU_LABEL_TERMS_OF_SERVICE"></a></li>
+                <li class=""><a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY"></a></li>
+                <li class=""><a href ng-click="goToWordPressUrl('WP_URL_END_USER')" translate="MENU_LABEL_END_USER"></a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <p class="legal-p">
+                Copyright &copy; 2016 YipTV &#8211; Watch Live Internet TV &amp; Spanish Channels Online.Use of the YipTV Service and this website constitutes acceptance of our terms of service and privacy policy.
+            </p>
+            <p class="legal-p">
+                * Offer applies only to the first month of Premium Service and will be applied one-time only per new customer. This one dollar ($1) promotion cannot be combined with any other offer or promotion for the YipTV Premium Service. This is a limited offer, available only one-time to new customers subscribing to YipTV’s Premium Service.
+            </p>
+        </div>
+
+    </div>
+</div>
+<!--<footer class="top-shadow" access-level="accessLevels.anon">-->
+    <!--<div class="container">-->
+
+        <!--<div class="menu-legal-nav-container">-->
+            <!--<ul id="menu-legal-nav" class="menu">-->
+                <!--<li class=""><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" translate="MENU_LABEL_TERMS_OF_SERVICE"></a></li>-->
+                <!--<li class=""><a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY"></a></li>-->
+                <!--<li class=""><a href ng-click="goToWordPressUrl('WP_URL_END_USER')" translate="MENU_LABEL_END_USER"></a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+
+        <!--<p class="legal-p">Copyright &copy; 2016 YipTV &#8211; Watch Live Internet TV &amp; Spanish Channels Online.Use of the YipTV Service and this website constitutes acceptance of our terms of service and privacy policy.</p>-->
+        <!--<p class="legal-p">* Offer applies only to the first month of Premium Service and will be applied one-time only per new customer. This one dollar ($1) promotion cannot be combined with any other offer or promotion for the YipTV Premium Service. This is a limited offer, available only one-time to new customers subscribing to YipTV’s Premium Service.-->
+        <!--</p>-->
+
+    <!--</div>-->
+<!--</footer>-->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.min.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>
