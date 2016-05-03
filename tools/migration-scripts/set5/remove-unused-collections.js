@@ -80,11 +80,6 @@ async.waterfall([
         });
     },
     function (callback) {
-        removeCollection('jobs', function () {
-            callback();
-        });
-    },
-    function (callback) {
         removeCollection('Visitors', function () {
             callback();
         });
