@@ -12,16 +12,22 @@
 
             li {
                 float: left;
-
+                position: relative;
                 display: block;
                 a {
+                    font-family: "Oswald";
                     background-color: transparent;
                     color: #001d4a;
                     text-transform: uppercase;
-                    font-family: "Oswald";
-                    font-weight: 400;
+                    font-weight: 500;
                     padding: 15px 15px;
-                    margin-top: 15px;
+                    font-size: 16px;
+                    line-height: 16px;
+                    display: block;
+                    a {
+                        display: inline;
+                        padding: 0;
+                    }
                 }
             }
         }
@@ -39,6 +45,7 @@
         border-right: 1px solid rgba(110, 125, 193, 0.7);
         box-shadow: 1px 0px 0px rgba(70, 76, 167, 0.7), -1px 0px 0px rgba(70, 76, 167, 0.7);
         a {
+            font-size: 16px;
             color: white !important;
             font-weight: 500;
             text-decoration: none;
@@ -91,6 +98,7 @@
 .nav-picture {
     height: 0px;
     img {
+        position: relative;
         z-index: 1001;
         top: 30px;
         margin-left: auto;
@@ -127,13 +135,18 @@
     position: relative;
     z-index: 101;
 }
-
 //footer
 
+#topBox {
+    overflow: auto;
+    width: 100%;
+    padding-bottom: 100px;
+}
+
 footer {
+    position: fixed;
     width: 100%;
     max-width: 1280px;
-    height: 32px;
     bottom: 0px;
     background: rgba(253, 253, 253, .91);
     text-transform: uppercase;
@@ -145,7 +158,8 @@ footer {
     z-index: 998;
 }
 .top-shadow {
-    position: fixed;
+    //position: fixed;
+
 }
 
 #headerBrand {
@@ -239,6 +253,56 @@ footer {
     filter: none;
     -webkit-filter: grayscale(0);
     -moz-filter: grayscale(0);
+}
+
+.legal-footer {
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    .legal-container {
+        background: $grey2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+.menu-legal-nav-container {
+    #menu-legal-nav {
+        list-style: none;
+        text-align: center;
+        li {
+            display: inline-block;
+            color: grey;
+            font-weight: 100;
+            a{
+                display: inline;
+                color: #6f99c4;
+                text-decoration: none;
+                font-size: small;
+                padding-right: 5px;
+                padding-left: 5px;
+                //border-right: 1px solid grey;
+            }
+        }
+    }
+}
+
+.legal-p {
+    font-size: smaller;
+    color: #6A6A6A;
+    text-align: center;
+}
+@media screen and (max-width: 993px) {
+    .nav-picture img {
+        top: 30px;
+        width: 80px;
+        -webkit-transition: all 1s ease-in-out;
+    }
+    .bottom-nav-div li a {
+        font-size: 13px;
+    }
+
 }
 
 @media screen and (max-width: 415px) {
@@ -503,12 +567,6 @@ footer {
         margin-bottom: 12px;
     }
 
-    body {
-        height: auto;
-        font-family: default, Verdana, Arial, Tahoma;
-        //font-size: 12px;
-    }
-
     .docked {
         background: rgba(227, 62, 66, .85) !important;
     }
@@ -554,15 +612,17 @@ footer {
     }
 
     #topBox {
+        display: table;
         position: relative;
-        width: auto;
+        width: 100%;
         height: auto;
-        padding: 0px 0px !important;
+        padding: 0px 0px;
+        padding-bottom: 100px;
+
     }
 
     footer {
         width: 100%;
-        height: 37px;
         position: fixed;
         bottom: 0px;
         background: rgba(253, 253, 253, .91);
@@ -675,7 +735,6 @@ footer {
     }
 
     body {
-        height: auto;
         font-family: default, Verdana, Arial, Tahoma;
         //font-size: 12px;
     }
@@ -784,7 +843,6 @@ footer {
 
     footer {
         width: 100%;
-        height: 30px;
         position: fixed;
         bottom: 0px;
         background: rgba(253, 253, 253, .91);

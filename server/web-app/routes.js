@@ -99,15 +99,15 @@ var _ = require('lodash'),
             accessLevel: accessLevels.user
         },
         {
-            path: '/api/get-channel-guide',
+            path: '/api/get-channel-guide-all',
             httpMethod: 'GET',
-            middleware: [MediaCtrl.getChannelGuide],
+            middleware: [MediaCtrl.getEpg],
             accessLevel: accessLevels.user
         },
         {
-            path: '/api/get-channel-guide-all',
+            path: '/api/get-epg',
             httpMethod: 'GET',
-            middleware: [MediaCtrl.getChannelGuideAll],
+            middleware: [MediaCtrl.getEpg],
             accessLevel: accessLevels.user
         },
         {
@@ -116,11 +116,6 @@ var _ = require('lodash'),
             middleware: [MediaCtrl.getUserChannels],
             accessLevel: accessLevels.user
         },
-        {path: '/api/get-channel-list', httpMethod: 'GET', middleware: [MediaCtrl.getChannelList]},
-        {path: '/api/get-channel-info', httpMethod: 'GET', middleware: [MediaCtrl.getChannelInfo]},
-        {path: '/api/get-program-detail', httpMethod: 'GET', middleware: [MediaCtrl.getProgramDetail]},
-        {path: '/api/get-channel-logo', httpMethod: 'GET', middleware: [MediaCtrl.getChannelLogo]},
-        {path: '/api/get-program-image', httpMethod: 'GET', middleware: [MediaCtrl.getProgramImage]},
         {
             path: '/api/get-channel-categories',
             httpMethod: 'GET',
@@ -135,13 +130,13 @@ var _ = require('lodash'),
         },
         {
             path: '/api/add-favorite-channel',
-            httpMethod: 'GET',
+            httpMethod: 'POST',
             middleware: [UserCtrl.addFavoriteChannel],
             accessLevel: accessLevels.user
         },
         {
             path: '/api/remove-favorite-channel',
-            httpMethod: 'GET',
+            httpMethod: 'POST',
             middleware: [UserCtrl.removeFavoriteChannel],
             accessLevel: accessLevels.user
         },

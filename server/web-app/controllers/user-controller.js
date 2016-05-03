@@ -16,8 +16,7 @@ var mongoose = require('mongoose'),
     billing = require('../../common/services/billing'),
     User = mongoose.model('User'),
     Merchant = mongoose.model('Merchant'),
-    Account = mongoose.model('Account'),
-    FavoriteChannel = mongoose.model('FavoriteChannel');
+    Account = mongoose.model('Account');
 
 module.exports = {
     signUp: function (req, res) {
@@ -655,8 +654,7 @@ module.exports = {
             }
             return res.send(user.preferences);
         });
-    }
-    ,
+    },
 
     updatePreferences: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
@@ -715,8 +713,7 @@ module.exports = {
                 }
             });
         }
-    }
-    ,
+    },
 
     updateLanguage: function (req, res) {
         User.findOne({email: req.email.toLowerCase()}).populate('account').exec(function (err, user) {
@@ -771,8 +768,7 @@ module.exports = {
                 }
             });
         }
-    }
-    ,
+    },
 
     upgradeSubscription: function (req, res) {
         subscription.upgradeSubscription(req.email, req.body, function (err) {
@@ -783,8 +779,7 @@ module.exports = {
             }
             return res.status(200).end();
         });
-    }
-    ,
+    },
 
     cancelSubscription: function (req, res) {
         subscription.cancelSubscription(req.email, function (err) {
@@ -795,8 +790,7 @@ module.exports = {
             }
             return res.status(200).end();
         });
-    }
-    ,
+    },
 
     getEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateGetEmailSmsSubscriptionStatusInputs(req.query.email);
@@ -820,8 +814,7 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
         });
-    }
-    ,
+    },
 
     setEmailSmsSubscriptionStatus: function (req, res) {
         var validationError = validation.validateSetEmailSmsSubscriptionStatusInputs(req.body);
@@ -852,109 +845,79 @@ module.exports = {
                 return res.status(404).send('UserNotFound');
             }
         });
-    }
-    ,
+    },
 
     getFavoriteChannels: function (req, res) {
-        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('userController - getFavoriteChannels - error finding user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
+            } else if (!user) {
+                logger.logError('userController - getFavoriteChannels - user not found: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            } else if (!user.favoriteChannels) {
+                return res.send([]);
+            } else {
+                return res.send(user.favoriteChannels);
             }
-
-            var favoriteChannels = [];
-            if (data && data.channels.length > 0) {
-                for (var i = 0; i < data.channels.length; ++i) {
-                    favoriteChannels.push({channelId: data.channels[i].channelId});
-                }
-            }
-            return res.send(favoriteChannels);
         });
-    }
-    ,
+    },
 
     addFavoriteChannel: function (req, res) {
-        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('userController - addFavoriteChannel - error finding user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
-            }
-            if (!data) {
-                var favoriteChannel = new FavoriteChannel();
-                favoriteChannel.email = req.email.toLowerCase();
-                favoriteChannel.channels.push({channelId: req.query.channelId, userType: 0});
-                favoriteChannel.save(function (err) {
-                    if (err) {
-                        logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
-                        logger.logError(err);
-                        return res.status(500).send('failed to save to db to add the favorite channel!');
-                    } else {
-                        logger.logInfo('userController - addFavoriteChannel - succeed to add favorite channel for use: ' + req.email.toLowerCase());
-                        return res.status(200).end();
-                    }
+            } else if (!user) {
+                logger.logError('userController - addFavoriteChannel - user not found: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            } else if (!user.favoriteChannels) {
+                user.favoriteChannels = [req.body.id];
+                user.save(function (err) {
+                    logger.logError('userController - addFavoriteChannel - error saving favorites: ' + req.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(200).end();
+                });
+            } else if (user.favoriteChannels && _.findIndex(user.favoriteChannels, req.body.id) < 0) {
+                user.favoriteChannels.push(req.body.id);
+                user.save(function (err) {
+                    logger.logError('userController - addFavoriteChannel - error saving favorites: ' + req.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(200).end();
                 });
             } else {
-                var channelFound = false;
-                for (var i = 0; i < data.channels.length; ++i) {
-                    if (data.channels[i].channelId === req.query.channelId && data.channels[i].userType === 0) {
-                        channelFound = true;
-                        break;
-                    }
-                }
-                if (channelFound) {
-                    return res.status(200).send('favorite channel exists!');
-                } else {
-                    data.channels.push({channelId: req.query.channelId, userType: 0});
-                    data.save(function (err) {
-                        if (err) {
-                            logger.logError('userController - addFavoriteChannel - error save favorite channel for user: ' + req.email.toLowerCase());
-                            logger.logError(err);
-                            return res.status(500).send('failed to save to db to add the favorite channel!');
-                        } else {
-                            logger.logInfo('userController - addFavoriteChannel - succeed to add favorite channel for use: ' + req.email.toLowerCase());
-                            return res.status(200).end();
-                        }
-                    });
-                }
+                return res.status(200).end();
             }
         });
-    }
-    ,
+    },
 
     removeFavoriteChannel: function (req, res) {
-        FavoriteChannel.findOne({email: req.email.toLowerCase()}, function (err, data) {
+        User.findOne({email: req.email.toLowerCase()}, function (err, user) {
             if (err) {
                 logger.logError('userController - removeFavoriteChannel - error finding user: ' + req.email.toLowerCase());
                 logger.logError(err);
                 return res.status(500).end();
-            }
-            if (!data) {
-                return res.status(404).send('UserNotFound');
-            } else {
-                var index = _.findIndex(data.channels, {channelId: req.query.channelId, userType: 0});
-                if (index >= 0) {
-                    data.channels.splice(index, 1);
-                    data.save(function (err) {
-                        if (err) {
-                            logger.logError('userController - removeFavoriteChannel - error remove favorite channel: ' + req.chanelId);
-                            logger.logError(err);
-                            return res.status(500).send('failed to save to db to remove the favorite channel!');
-                        } else {
-                            logger.logInfo('userController - removeFavoriteChannel - succeed to remove favorite channel: ' + req.query.channelId);
-                            return res.status(200).end();
-                        }
-                    });
-                } else {
-                    logger.logInfo('userController - removeFavoriteChannel - favorite channel could not be found: ' + req.chanelId);
-                    return res.status(500).send('favorite channel could not be found!');
-                }
+            } else if (!user) {
+                logger.logError('userController - removeFavoriteChannel - user not found: ' + req.email.toLowerCase());
+                logger.logError(err);
+                return res.status(500).end();
+            } else if (!user.favoriteChannels) {
+                return res.status(200).end();
+            } else if (user.favoriteChannels && _.findIndex(user.favoriteChannels, req.body.id) >= 0) {
+                user.favoriteChannels.splice(_.findIndex(user.favoriteChannels, req.body.id), 1);
+                user.save(function (err) {
+                    logger.logError('userController - addFavoriteChannel - error saving favorites: ' + req.email.toLowerCase());
+                    logger.logError(err);
+                    return res.status(200).end();
+                });
             }
         });
     }
-}
-;
+};
 
 function addFreeTvCampaign(user, cb) {
     var freeSideSessionId;

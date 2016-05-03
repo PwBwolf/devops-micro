@@ -25,6 +25,11 @@
         max-width: 60%;
         min-width: 370px;
     }
+    .navbar{
+        ul.nav.pull-right{
+            padding-top: 19px;
+        }
+    }
     #programInfo {
         z-index: 10;
         display:inline-block;

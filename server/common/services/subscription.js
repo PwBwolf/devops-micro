@@ -1118,37 +1118,75 @@ module.exports = {
         });
     },
 
-    removePaidBasicPackage: function (userEmail, cb) {
+    endPremiumSubscriptionDbOnly: function (userEmail, cb) {
+        var currentValues, errorType;
         async.waterfall([
-            // remove premiumEndDate
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
-                        logger.logError('subscription - removePaidBasicPackage - error fetching user: ' + userEmail);
+                        logger.logError('subscription - endPremiumSubscriptionDbOnly - error fetching user: ' + userEmail);
                         callback(err);
+                    } else if (userObj.status === 'failed') {
+                        callback('FailedUser');
+                    } else if (userObj.account.type === 'free') {
+                        callback('FreeUser');
+                    } else {
+                        currentValues = {
+                            cancelDate: userObj.cancelDate,
+                            cancelOn: userObj.cancelOn,
+                            type: userObj.account.type,
+                            billingDate: userObj.account.billingDate,
+                            packages: userObj.account.packages
+                        };
+                        userObj.account.billingDate = undefined;
+                        userObj.account.type = 'free';
+                        userObj.account.packages = config.freeUserPackages;
+                        userObj.cancelDate = (new Date()).toUTCString();
+                        userObj.cancelOn = undefined;
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - endPremiumSubscriptionDbOnly - error saving user with canceled status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - endPremiumSubscriptionDbOnly - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
                     }
-                    callback(err, userObj);
                 });
             },
-            // login to freeside
+            // send email or sms
             function (userObj, callback) {
-                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
-                    if (err) {
-                        logger.logError('subscription - removePaidBasicPackage - error logging into billing system: ' + userObj.email);
-                    }
-                    callback(err, userObj, sessionId);
-                });
-            },
-            // cancel paid basic package
-            function (userObj, sessionId, callback) {
-                billing.cancelPackages(sessionId, [config.freeSidePaidBasicPackagePart], function (err) {
-                    if (err) {
-                        logger.logError('subscription - removePaidBasicPackage - error removing paid basic package: ' + userObj.email);
-                    }
-                    callback(err);
-                });
+                if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
+                    sendPaidSubscriptionEndedSms(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endPaidSubscription - error sending canceled sms: ' + userObj.email);
+                        }
+                    });
+                } else {
+                    sendPaidSubscriptionEndedEmail(userObj, function (err) {
+                        if (err) {
+                            logger.logError('subscription - endPaidSubscription - error sending canceled email: ' + userObj.email);
+                            logger.logError(err);
+                        }
+                    });
+                }
+                callback(null, userObj);
             }
-        ], function (err) {
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForCancel(userObj, currentValues);
+                        break;
+                }
+            }
             if (cb) {
                 cb(err);
             }

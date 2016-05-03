@@ -32,7 +32,8 @@ var User = new Schema({
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
         emailSmsSubscription: {type: Boolean}
-    }
+    },
+    favoriteChannels: [Number]
 }, {collection: 'Users'});
 
 User.virtual('password')

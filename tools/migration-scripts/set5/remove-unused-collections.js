@@ -6,7 +6,7 @@ var fs = require('fs-extended');
 var async = require('async');
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../../server/common/setup/config');
-var logFile = fs.createWriteStream(__dirname + '/remove-visitor-collection.log', {flags: 'w'});
+var logFile = fs.createWriteStream(__dirname + '/remove-unused-collections.log', {flags: 'w'});
 var logStdOut = process.stdout;
 
 console.log = function (data) {
@@ -41,6 +41,51 @@ async.waterfall([
     },
     function (callback) {
         removeCollection('CmsChannels', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Rules', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('jobs', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Airings', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Channels', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Events', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('ImageData', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Images', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Visitors', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('FavoriteChannels', function () {
             callback();
         });
     }

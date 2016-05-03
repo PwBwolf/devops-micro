@@ -1,23 +1,27 @@
 * {
     margin: 0;
     padding: 0;
-    position: relative;
     border: 0;
     text-decoration: none;
 }
 
+body, html {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    min-height: 100% !important;
+}
+
 body {
-    margin: 0;
+    position: none;
     padding: 0px;
-    height: auto;
     font-family: default, Verdana, Arial, Tahoma;
     font-size: 12px;
 }
 
-body, html {
-    font-size: 14px;
-    max-width: 1280px;
-    margin: 0 auto;
+#holder {
+    min-height: 100%;
+    position: relative;
 }
 
 ul, ol {
@@ -173,7 +177,7 @@ a:hover {
 }
 
 .content-area {
-    margin-top: 40px !important;
+
     float: left;
     width: 100%;
     padding: 0px;
@@ -222,7 +226,7 @@ a:hover {
     font-family: 'gotham-lightgotham-light';
     font-size: 19px;
     color: #000;
-    padding: 20px 0 80px 0;
+    padding: 40px 0 80px 0;
     margin: 0px;
 }
 
@@ -352,12 +356,7 @@ a:hover {
 .dropdown-width .form-box {
     width: auto !important;
 }
-
 @media (min-width: 1024px) and (max-width: 2400px) {
-    body {
-        height: auto;
-        width: auto;
-    }
 
     .premium-button-holder {
         width: 375px
@@ -469,7 +468,6 @@ a:hover {
     }
 
     body {
-        height: auto;
         font-family: default, Verdana, Arial, Tahoma;
         font-size: 12px;
     }

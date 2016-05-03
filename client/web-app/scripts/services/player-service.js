@@ -2,7 +2,6 @@
     'use strict';
 
     app.factory('playerSvc', ['$filter', '$rootScope', 'mediaSvc', function ($filter, $rootScope, mediaSvc) {
-        //console.log('player service loaded')
         var channelsEpgObj = {};
         var allChannelsObj = {};
         var timeBarStart;
@@ -29,15 +28,15 @@
 
                 makeAllChannelObj($rootScope.filteredChannels);
 
-                mediaSvc.getChannelGuideAll(channelIds.toString(), 6).success(function (channelsEpg) {
+                mediaSvc.getEpg(channelIds.toString(), 6).success(function (channelsEpg) {
                         $rootScope.channelsEpg = channelsEpg;
                         // create filteredChannelObj with channel ids as keys
-                        for(var i = 0; i < $rootScope.channelsEpg.length; i++){
+                        for (var i = 0; i < $rootScope.channelsEpg.length; i++) {
                             var id = $rootScope.channelsEpg[i].channel_id;
                             channelsEpgObj[id] = $rootScope.channelsEpg[i].programs || [];
                         }
 
-                        for(i = 0; i < $rootScope.filteredChannels.length; i++){
+                        for (i = 0; i < $rootScope.filteredChannels.length; i++) {
                             // I declare these here instead of directly in the programInfo object for readability
                             id = $rootScope.filteredChannels[i].id;
                             var lineUp = channelsEpgObj[id] || [];
@@ -63,17 +62,6 @@
                     });
             },
 
-            formatFavorites: function (favorites) {
-                var arr = [];
-                for (var i = 0; i < favorites.length; i++) {
-                    var validId = allChannelsObj.hasOwnProperty(favorites[i].channelId);
-                    if(validId){
-                        arr.push(favorites[i].channelId);
-                    }
-                }
-                return arr;
-            },
-
             // get a full channel object for each channel id
             mapChannels: function (channelIds) {
                 var arr = [];
@@ -88,8 +76,8 @@
 
             allChannelsObj: allChannelsObj,
 
-            channelsEpgObj: channelsEpgObj,
-        }
+            channelsEpgObj: channelsEpgObj
+        };
 
         // calculate length of a show. used to determine size of div for each program in epg.
         function showLength(startTime, endTime) {
@@ -104,11 +92,11 @@
             }
         }
 
-        function formatLineUp(lineUp){
-            if(lineUp.length > 0){
+        function formatLineUp(lineUp) {
+            if (lineUp.length > 0) {
                 var firstShowStart = new Date(lineUp[0].startTime).getTime();
                 for (var j = 0; j < lineUp.length; j++) {
-                    if(j === 0 && (firstShowStart > timeBarStart)){
+                    if (j === 0 && (firstShowStart > timeBarStart)) {
                         var paddingObj = paddingObject(lineUp[0].image, lineUp[0].startTime);
                         lineUp.unshift(paddingObj);
                     }
@@ -154,8 +142,8 @@
 
         // make all channels object from all channels array
         // want O(1) object lookup time for certain operations
-        function makeAllChannelObj(arr){
-            for(var i = 0; i < arr.length; i++){
+        function makeAllChannelObj(arr) {
+            for (var i = 0; i < arr.length; i++) {
                 var id = arr[i].id;
                 var channel = arr[i];
                 allChannelsObj[id] = channel;
@@ -164,7 +152,7 @@
 
         // create empty program object that will create padding between current time and a show that starts in the future
         // creating all fields of a program object so I don't have to worry about where else in the code these properties are used
-        function paddingObject(image, endTime){
+        function paddingObject(image, endTime) {
             var placeHolder = {
                 description: "",
                 dropDownInfo: "",
@@ -182,7 +170,7 @@
         // this is duplicate in player controller because I can't use it in getTimeSlots here and make it a property to
         // export and use in other controllers, so it would have to be duplicate in here, but I decided to just keep it
         // closer to where it's used in player-controller
-        function lastHalfHour(){
+        function lastHalfHour() {
             var currentTime = new Date();
             var lastHalf = Math.floor(currentTime.getTime() / (1000 * 60 * 30)); // get unix time in half hours rounded down to last half hour
             lastHalf = lastHalf * 1000 * 60 * 30;                               // get last half hour in ms again
