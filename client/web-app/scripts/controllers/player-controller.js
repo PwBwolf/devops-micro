@@ -17,7 +17,7 @@
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedFilters = [];
-        $scope.favoriteIcon = '../../images/favorite-white.png';
+        $scope.favoriteIcon = '../../images/favorite-purple.png';
         $scope.channelLogo = '../../images/logo.png';
         $scope.programTitle = '';
         $scope.programDescription = '';
@@ -351,7 +351,7 @@
                     $scope.noFavoriteChannels = true;
                 }
             }
-            $scope.favoriteIcon = '../../images/favorite-white.png';
+            $scope.favoriteIcon = '../../images/favorite-purple.png';
             var req = {channelId: currentChannel.channelId};
             mediaSvc.removeFavoriteChannel(
                 req,
@@ -410,7 +410,7 @@
                 return e.id;
             }).indexOf(channelId);
             if (isfavorite === -1) {
-                $scope.favoriteIcon = '../../images/favorite-white.png';
+                $scope.favoriteIcon = '../../images/favorite-purple.png';
             } else {
                 $scope.favoriteIcon = '../../images/favorite-yellow.png';
             }

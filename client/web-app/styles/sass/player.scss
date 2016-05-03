@@ -30,7 +30,7 @@
     max-height: 300px;
     overflow-x: hidden;
     white-space: nowrap;
-    padding-top: 2px;
+    //padding-top: 2px;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -301,7 +301,7 @@
 
 #playerTop {
     width: 100%;
-    margin-bottom: 8px;
+    //margin-bottom: 8px;
 }
 
 #playerTop {
@@ -404,14 +404,14 @@
 #clock {
     z-index: 10;
     width: 154px;
-    height: 28px;
+    height: 26px;
     position: absolute;
     display: inline-block;
     color: white;
     background-color: #000f29;
     text-align: center;
     vertical-align: middle;
-    margin-top: 4px;
+    //margin-top: 4px;
     padding: 4px 0px 4px 12px;
 }
 
@@ -421,7 +421,7 @@
     height: auto;
     display: inline-block;
     overflow: hidden;
-    margin-top: 2px;
+    //margin-top: 2px;
 }
 
 #userGuide {
