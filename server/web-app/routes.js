@@ -99,7 +99,7 @@ var _ = require('lodash'),
             accessLevel: accessLevels.user
         },
         {
-            path: '/api/get-program-guide-all',
+            path: '/api/get-channel-guide-all',
             httpMethod: 'GET',
             middleware: [MediaCtrl.getEpg],
             accessLevel: accessLevels.user
