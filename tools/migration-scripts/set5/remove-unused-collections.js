@@ -55,7 +55,17 @@ async.waterfall([
         });
     },
     function (callback) {
+        removeCollection('Airings', function () {
+            callback();
+        });
+    },
+    function (callback) {
         removeCollection('Channels', function () {
+            callback();
+        });
+    },
+    function (callback) {
+        removeCollection('Events', function () {
             callback();
         });
     },
@@ -74,6 +84,11 @@ async.waterfall([
             callback();
         });
     },
+    function (callback) {
+        removeCollection('Visitors', function () {
+            callback();
+        });
+    }
 ], function () {
     process.exit(0);
 });
