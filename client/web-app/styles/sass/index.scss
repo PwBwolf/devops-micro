@@ -12,18 +12,22 @@
 
             li {
                 float: left;
-
+                position: relative;
                 display: block;
                 a {
+
                     background-color: transparent;
                     color: #001d4a;
                     text-transform: uppercase;
                     font-family: "Oswald";
                     font-weight: 400;
                     padding: 15px 15px;
-                    margin-top: 15px;
                     font-size: 16px;
                     line-height: 16px;
+                    display: block;
+                    a {
+                        display: inline;
+                    }
                 }
             }
         }
@@ -93,6 +97,7 @@
 .nav-picture {
     height: 0px;
     img {
+        position: relative;
         z-index: 1001;
         top: 30px;
         margin-left: auto;
@@ -129,8 +134,13 @@
     position: relative;
     z-index: 101;
 }
-
 //footer
+
+#topBox {
+    overflow: auto;
+    width: 100%;
+    //padding-bottom: 100px;
+}
 
 footer {
     position: fixed;
@@ -244,20 +254,34 @@ footer {
     -moz-filter: grayscale(0);
 }
 
+.legal-footer {
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    .legal-container {
+        background: $grey2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
 .menu-legal-nav-container {
     #menu-legal-nav {
         list-style: none;
         text-align: center;
         li {
             display: inline-block;
+            color: grey;
+            font-weight: 100;
             a{
-                display: block;
+                display: inline;
                 color: #6f99c4;
                 text-decoration: none;
                 font-size: small;
                 padding-right: 5px;
                 padding-left: 5px;
-                border-right: 1px solid grey;
+                //border-right: 1px solid grey;
             }
         }
     }
@@ -265,8 +289,9 @@ footer {
 
 .legal-p {
     font-size: smaller;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #6A6A6A;
+    text-align: center;
 }
 
 @media screen and (max-width: 415px) {
@@ -531,12 +556,6 @@ footer {
         margin-bottom: 12px;
     }
 
-    body {
-        height: auto;
-        font-family: default, Verdana, Arial, Tahoma;
-        font-size: 12px;
-    }
-
     .docked {
         background: rgba(227, 62, 66, .85) !important;
     }
@@ -582,10 +601,13 @@ footer {
     }
 
     #topBox {
+        display: table;
         position: relative;
         width: auto;
         height: auto;
-        padding: 0px 0px !important;
+        padding: 0px 0px;
+        padding-bottom: 10px;
+
     }
 
     footer {
@@ -702,7 +724,6 @@ footer {
     }
 
     body {
-        height: auto;
         font-family: default, Verdana, Arial, Tahoma;
         font-size: 12px;
     }
