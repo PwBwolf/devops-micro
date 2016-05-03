@@ -4,6 +4,7 @@
     app.controller('userHomeCtrl', ['$scope', '$', '$uibModal', '$rootScope', '$location', '$filter', 'userSvc', 'loggerSvc', 'webStorage', function ($scope, $, $uibModal, $rootScope, $location, $filter, userSvc, loggerSvc, webStorage) {
 
         $scope.showUpgradePremium = false;
+        $scope.showDropdowns = false;
 
         $scope.showDropdown = function (id) {
             $('#' + id).collapse('show');

@@ -31,9 +31,9 @@
         $scope.noRecentChannels = false;
         $scope.noFavoriteChannels = false;
         $scope.noFiltered = false;
-        $scope.checked = false; // This will be binded using the ps-open attribute
-        $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
-        $scope.checkedInfo = false; // This will be binded using the ps-open attribute
+        $scope.checked = false;                         // This will be binded using the ps-open attribute
+        $scope.channelsLoaded = false;                  // only show menu bar and epg if channels have loaded and information has been parsed
+        $scope.checkedInfo = false;                     // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
         $scope.hasTitle = false;
 
