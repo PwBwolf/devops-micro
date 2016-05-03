@@ -6,7 +6,7 @@ var fs = require('fs-extended');
 var async = require('async');
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../../server/common/setup/config');
-var logFile = fs.createWriteStream(__dirname + '/remove-visitor-collection.log', {flags: 'w'});
+var logFile = fs.createWriteStream(__dirname + '/remove-unused-collections.log', {flags: 'w'});
 var logStdOut = process.stdout;
 
 console.log = function (data) {
