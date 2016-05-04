@@ -15,6 +15,7 @@
                 position: relative;
                 display: block;
                 a {
+                    text-decoration: none;
                     font-family: "Oswald";
                     background-color: transparent;
                     color: #001d4a;
@@ -25,6 +26,7 @@
                     line-height: 16px;
                     display: block;
                     a {
+                        text-decoration: none;
                         display: inline;
                         padding: 0;
                     }
@@ -98,6 +100,7 @@
 .nav-picture {
     height: 0px;
     img {
+        cursor: pointer;
         position: relative;
         z-index: 1001;
         top: 30px;
@@ -140,7 +143,7 @@
 #topBox {
     overflow: auto;
     width: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 }
 
 footer {
@@ -276,13 +279,13 @@ footer {
             color: grey;
             font-weight: 100;
             a{
+                cursor: pointer;
                 display: inline;
                 color: #6f99c4;
                 text-decoration: none;
                 font-size: small;
                 padding-right: 5px;
                 padding-left: 5px;
-                //border-right: 1px solid grey;
             }
         }
     }
@@ -550,7 +553,7 @@ footer {
     dt {
         color: darkgrey;
         font-size: 1.25em;
-        font-family: Arial Narrow, Arial, sans-serif;
+
         font-weight: bold !important;
         text-transform: capitalize;
     }
@@ -717,7 +720,6 @@ footer {
     dt {
         color: darkgrey;
         font-size: 1.25em;
-        font-family: Arial Narrow, Arial, sans-serif;
         font-weight: bold !important;
         text-transform: capitalize;
     }
@@ -735,7 +737,6 @@ footer {
     }
 
     body {
-        font-family: default, Verdana, Arial, Tahoma;
         font-size: 12px;
     }
 

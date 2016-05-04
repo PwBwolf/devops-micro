@@ -34,118 +34,117 @@
     <!-- endbuild -->
     <title>YipTV - Watch Live Internet TV & Spanish Channels Online</title>
 </head>
-<body id="topOfPage">
-    <div id="holder">
-        <!--[if lt IE 9]>
-        <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
-            to improve your experience.</p>
-        <![endif]-->
-        <div access-level="accessLevels.anon">
-            <header id="desktopHeader">
-                <nav class="navbar navbar-default navbar-fixed-top">
-                    <div>
-                        <div class="nav-picture">
-                            <img class="img-responsive" src="images/logo.png" alt="">
-                        </div>
-                        <div class="top-nav-div">
-                            <div class="container">
-                                <div class="topright">
-                                    <ul class="hidden-xs">
-                                        <li>
-                                            <a class="number-contact tk-acumin-pro" translate="INDEX_CONTACT_NUMBER"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope tk-acumin-pro"></a>
-                                        </li>
-                                    </ul>
+<body id="topOfPage" class="tk-acumin-pro">
+    <div id="footer-wrapper">
+        <div id="holder">
+            <!--[if lt IE 9]>
+            <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+                to improve your experience.</p>
+            <![endif]-->
+            <div access-level="accessLevels.anon">
+                <header id="desktopHeader">
+                    <nav class="navbar navbar-default navbar-fixed-top" ng-cloak>
+                        <div>
+                            <div class="nav-picture">
+                                <img class="img-responsive" src="images/logo.png" ng-click="goToWordPressUrl('WP_URL_HOME')" alt="">
+                            </div>
+                            <div class="top-nav-div">
+                                <div class="container">
+                                    <div class="topright">
+                                        <ul class="hidden-xs">
+                                            <li>
+                                                <a class="number-contact tk-acumin-pro" translate="INDEX_CONTACT_NUMBER"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE" class="ng-scope tk-acumin-pro"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bottom-nav-div">
-                            <div class="navbar-header">
-                                <div class="collapsed-menu-left">
-                                    <a class="navbar-toggle collapsed" href="/sign-up/premium" translate="MENU_LABE_$1PREMIUM"></a>
+                            <div class="bottom-nav-div">
+                                <div class="navbar-header">
+                                    <div class="collapsed-menu-left">
+                                        <a class="navbar-toggle collapsed" href="/sign-up/premium" translate="INDEX_LABEL_$1PREMIUM"></a>
+                                    </div>
+                                    <div class="collapsed-menu-right">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-toggle collapsed ng-scope" href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE"></a>
+                                    </div>
                                 </div>
-                                <div class="collapsed-menu-right">
-                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                                        <span class="sr-only">Toggle navigation</span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                    </button>
-                                    <a class="navbar-toggle collapsed ng-scope" href="#" ng-click="changeLanguage()" translate="INDEX_OTHER_LANGUAGE"></a>
-                                </div>
-                            </div>
-                            <div class="container">
-                                <div id="navbar" class="navbar-collapse collapse">
-                                    <ul class="nav navbar-nav hidden-xs">
-                                        <li>
-                                            <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="MENU_LABEL_CHANNELS"></a>
-                                        </li>
-                                        <li>
+                                <div class="container">
+                                    <div id="navbar" class="navbar-collapse collapse">
+                                        <ul class="nav navbar-nav hidden-xs">
+                                            <li>
+                                                <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="INDEX_LABEL_CHANNELS"></a>
+                                            </li>
+                                            <li>
 
-                                            <a href ng-click="goToWordPressUrl('WP_URL_HOW_TO_WATCH')" translate="MENU_LABEL_HOW_TO_WATCH"></a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav navbar-nav navbar-right hidden-xs">
-                                        <li>
-                                            <a href="/sign-in" translate="MENU_LABEL_WATCH_NOW"></a>
-                                        </li>
-                                        <li class="premium-button-purple">
-                                            <a href="/sign-up/premium" translate="MENU_LABE_$1PREMIUM"></a>
-                                        </li>
-                                    </ul>
-                                    <ul class="coll-menu visible-xs">
-                                        <li>
-                                            <a href="/sign-up/free" translate="MENU_LABEL_JOIN_FREE"></a>
-                                        </li>
-                                        <li>
-                                            <a href="/sign-up/premium" translate="MENU_LABEL_JOIN_PREMIUM"></a>
-                                        </li>
-                                        <li>
-                                            <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="MENU_LABEL_CHANNELS"></a>
-                                        </li>
-                                        <li>
-                                            <a href ng-click="goToWordPressUrl('WP_URL_FAQS')" translate="SIGN_UP_SUCCESS_FAQS"></a>
-                                        </li>
-                                        <li>
-                                            <a translate="INDEX_CONTACT_NUMBER"></a>
-                                        </li>
-                                        <li>
-                                            <a href="/sign-in" translate="MENU_LABEL_WATCH_NOW"></a>
-                                        </li>
-                                    </ul>
+                                                <a href ng-click="goToWordPressUrl('WP_URL_HOW_TO_WATCH')" translate="INDEX_LABEL_HOW_TO_WATCH"></a>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav navbar-nav navbar-right hidden-xs">
+                                            <li>
+                                                <a href="/sign-in" translate="INDEX_LABEL_WATCH_NOW"></a>
+                                            </li>
+                                            <li class="premium-button-purple">
+                                                <a href="/sign-up/premium" translate="INDEX_LABEL_$1PREMIUM"></a>
+                                            </li>
+                                        </ul>
+                                        <ul class="coll-menu visible-xs">
+                                            <li>
+                                                <a href="/sign-up/free" translate="INDEX_LABEL_JOIN_FREE"></a>
+                                            </li>
+                                            <li>
+                                                <a href="/sign-up/premium" translate="INDEX_LABEL_JOIN_PREMIUM"></a>
+                                            </li>
+                                            <li>
+                                                <a href ng-click="goToWordPressUrl('WP_URL_CHANNELS')" translate="INDEX_LABEL_CHANNELS"></a>
+                                            </li>
+                                            <li>
+                                                <a href ng-click="goToWordPressUrl('WP_URL_FAQS')" translate="INDEX_LABEL_FAQS"></a>
+                                            </li>
+                                            <li>
+                                                <a translate="INDEX_CONTACT_NUMBER"></a>
+                                            </li>
+                                            <li>
+                                                <a href="/sign-in" translate="INDEX_LABEL_WATCH_NOW"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </nav>
-            </header>
+                    </nav>
+                </header>
+            </div>
+            <div id="topBox" ng-view autoscroll="true"></div>
         </div>
-        <div id="topBox" ng-view autoscroll="true"></div>
-        <div class="legal-footer" >
+        <div class="legal-footer" ng-cloak>
             <div class="legal-container">
 
                 <div class="menu-legal-nav-container container">
                     <ul id="menu-legal-nav" class="menu">
-                        <li class=""><a href ng-click="goToWordPressUrl('WP_URL_TOUS')" translate="MENU_LABEL_TERMS_OF_SERVICE"></a>|</li>
-                        <li class=""><a href ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="COMP_SIGN_UP_PRIVACY_POLICY"></a>|</li>
-                        <li class=""><a href ng-click="goToWordPressUrl('WP_URL_END_USER')" translate="MENU_LABEL_END_USER"></a></li>
+                        <li class=""><a ng-click="goToWordPressUrl('WP_URL_TOUS')" translate="INDEX_LABEL_TERMS_OF_SERVICE"></a>|</li>
+                        <li class=""><a ng-click="goToWordPressUrl('WP_URL_PRIVACY_POLICY')" translate="INDEX_LABEL_PRIVACY_POLICY"></a>|</li>
+                        <li class=""><a ng-click="goToWordPressUrl('WP_URL_END_USER')" translate="INDEX_LABEL_END_USER"></a></li>
                     </ul>
                 </div>
 
                 <div class="container">
-                    <p class="legal-p">
-                        Copyright &copy; 2016 YipTV &#8211; Watch Live Internet TV &amp; Spanish Channels Online.Use of the YipTV Service and this website constitutes acceptance of our terms of service and privacy policy.
-                    </p>
-                    <p class="legal-p" ng-hide ="user.type !== 'free'">
-                        * Offer applies only to the first month of Premium Service and will be applied one-time only per new customer. This one dollar ($1) promotion cannot be combined with any other offer or promotion for the YipTV Premium Service. This is a limited offer, available only one-time to new customers subscribing to YipTV’s Premium Service.
+                    <p class="legal-p" translate="INDEX_LABEL_LEGAL1">
                     </p>
                 </div>
 
             </div>
         </div>
     </div>
+
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.min.js"></script>
 <script src="bower_components/json3/lib/json3.min.js"></script>

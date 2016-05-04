@@ -179,6 +179,19 @@
             INDEX_CONTACT_NUMBER: 'Llámanos grátis: <a href=\'tel:+18559194788\'>855-919-4788</a>',
             INDEX_SOCIAL_MEDIA: '<a target="_blank" href="https://www.facebook.com/yiptvespanol"><img src="images/facebook.png" alt=""/></a><a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>',
             INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2016 YIPTV. Uso del servicio de YIPTV y de ésta página web constituye aceptación de nuestros términos de uso y política de privacidad.',
+            INDEX_LABEL_JOIN_FREE: 'Únete Gratis',
+            INDEX_LABEL_$1PREMIUM: '$1 Premier',
+            INDEX_LABEL_JOIN_PREMIUM: 'Únete A Premier $1',
+            INDEX_LABEL_CHANNELS: 'Canales',
+            INDEX_LABEL_FAQ: 'Preguntas frecuentes',
+            INDEX_LABEL_WATCH_NOW: 'Ingresar/Ver Ahora',
+            INDEX_LABEL_CALL_US: 'Ver Ahora: 855-909-4788',
+            INDEX_LABEL_HOW_TO_WATCH: 'Cómo Ver',
+            INDEX_LABEL_TERMS_OF_SERVICE: 'Terminos De Uso',
+            INDEX_LABEL_END_USER: 'Acuerdo De Licencia De Software Para Usuario',
+            INDEX_LABEL_LEGAL1: 'Derechos de Autor © 2016 Tv en Vivo Gratis – Ver TV Gratis por Internet en YipTV.. Uso de el servicio de YIPTV y de esta pagina web constituye aceptación de nuestros términos de uso y póliza de privacidad.',
+            INDEX_LABEL_FAQS: 'Preguntas Frecuentes',
+            INDEX_LABEL_PRIVACY_POLICY: 'Política De Privacidad',
             MAIN_ERROR_APP_CONFIG: 'Error para capturar configuración de la aplicación',
             MAIN_SIGN_OUT_CONFIRMATION: '¿Seguro que deseas salir de YipTV?',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Deseas cambiar tu idioma preferido a',
@@ -506,16 +519,7 @@
             WP_URL_END_USER: 'index.php/es/acuerdo-de-licencia/',
             WP_URL_CHANNELS: 'index.php/es/redes-y-canales/',
             WP_URL_HOW_TO_WATCH: 'index.php/es/nosotros/',
-            MENU_LABEL_JOIN_FREE: 'Únete Gratis',
-            MENU_LABE_$1PREMIUM: '$1 Premier',
-            MENU_LABEL_JOIN_PREMIUM: 'Únete A Premier $1',
-            MENU_LABEL_CHANNELS: 'Canales',
-            MENU_LABEL_FAQ: 'Preguntas frecuentes',
-            MENU_LABEL_WATCH_NOW: 'Ingresar/Ver Ahora',
-            MENU_LABEL_CALL_US: 'Ver Ahora: 855-909-4788',
-            MENU_LABEL_HOW_TO_WATCH: 'Cómo Ver',
-            MENU_LABEL_TERMS_OF_SERVICE: 'Terminos de uso',
-            MENU_LABEL_END_USER: 'Acuerdo de Licencia de software para Usuario'
+            WP_URL_HOME: 'index.php/es/'
         });
     }]);
 }(angular.module('app')));
