@@ -179,6 +179,19 @@
             INDEX_CONTACT_NUMBER: 'Call us toll free: <a href=\'tel:+18559194788\'>855-919-4788</a>',
             INDEX_SOCIAL_MEDIA: '<a target="_blank" href="https://www.facebook.com/pages/Yiptv/670093559720356?fref=ts"><img src="images/facebook.png" alt=""/></a><a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>',
             INDEX_COPYRIGHT: 'Copyright ® 2012-2016 YipTV. User of the YipTV service and this web site constitutes acceptance of our terms of use and privacy policy.',
+            INDEX_LABEL_JOIN_FREE: 'Join Free',
+            INDEX_LABEL_$1PREMIUM: '$1 Premium',
+            INDEX_LABEL_JOIN_PREMIUM: 'Join Premium for $1',
+            INDEX_LABEL_CHANNELS: 'Channels',
+            INDEX_LABEL_FAQ: 'FAQs',
+            INDEX_LABEL_WATCH_NOW: 'Login/Watch Now',
+            INDEX_LABEL_CALL_US: 'Call us Toll Free: 855-909-4788',
+            INDEX_LABEL_HOW_TO_WATCH: 'How To Watch',
+            INDEX_LABEL_TERMS_OF_SERVICE: 'Terms of Service',
+            INDEX_LABEL_END_USER: 'End User License Agreement',
+            INDEX_LABEL_LEGAL1: 'Copyright &copy; 2016 YipTV &#8211; Watch Live Internet TV &amp; Spanish Channels Online.Use of the YipTV Service and this website constitutes acceptance of our terms of service and privacy policy.',
+            INDEX_LABEL_FAQS: 'FAQs',
+            INDEX_LABEL_PRIVACY_POLICY: 'Privacy Policy',
             MAIN_ERROR_APP_CONFIG: 'Error fetching application configuration',
             MAIN_SIGN_OUT_CONFIRMATION: 'Are you sure you want to sign out of YipTV?',
             MAIN_LANGUAGE_CHANGE_SAVE_CHECK: 'Do you want to change your preferred language to ',
@@ -506,16 +519,7 @@
             WP_URL_END_USER: 'index.php/en/end-user-license-agreement/',
             WP_URL_CHANNELS: 'index.php/en/tv-channels/',
             WP_URL_HOW_TO_WATCH: 'index.php/en/how-to-watch/',
-            MENU_LABEL_JOIN_FREE: 'Join Free',
-            MENU_LABE_$1PREMIUM: '$1 Premium',
-            MENU_LABEL_JOIN_PREMIUM: 'Join Premium for $1',
-            MENU_LABEL_CHANNELS: 'Channels',
-            MENU_LABEL_FAQ: 'FAQs',
-            MENU_LABEL_WATCH_NOW: 'Login/Watch Now',
-            MENU_LABEL_CALL_US: 'Call us Toll Free: 855-909-4788',
-            MENU_LABEL_HOW_TO_WATCH: 'How To Watch',
-            MENU_LABEL_TERMS_OF_SERVICE: 'Terms of Service',
-            MENU_LABEL_END_USER: 'End User License Agreement'
+            WP_URL_HOME: 'index.php/en/'
         });
     }]);
 }(angular.module('app')));

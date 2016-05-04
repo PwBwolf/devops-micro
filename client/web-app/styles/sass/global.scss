@@ -3,10 +3,10 @@
     padding: 0;
     border: 0;
     text-decoration: none;
+
 }
 
 body, html {
-
     margin: 0 auto;
     height: 100%;
     min-height: 100% !important;
@@ -15,16 +15,20 @@ body, html {
 body {
     position: none;
     padding: 0px;
-    font-family: default, Verdana, Arial, Tahoma;
     font-size: 12px;
 }
 
 #holder {
+    margin: 0 auto;
     max-width: 1280px;
     min-height: 100%;
     position: relative;
 }
 
+#footer-wrapper {
+    min-height: 100%;
+    position: relative;
+}
 ul, ol {
     margin: 0;
     padding: 0px;
@@ -187,7 +191,7 @@ a:hover {
 }
 
 .content-area h1 {
-    font-family: 'radikallight';
+
     background: url(../images/title-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
@@ -199,7 +203,6 @@ a:hover {
 }
 
 .content-area .content-box h1 {
-    font-family: 'radikallight';
     background: url(../images/title-line.png) center 18px no-repeat;
     text-align: center;
     font-size: 31px;
@@ -224,7 +227,6 @@ a:hover {
 .content-box {
     float: left;
     width: 100%;
-    font-family: 'gotham-lightgotham-light';
     font-size: 19px;
     color: #000;
     padding: 40px 0 80px 0;
@@ -237,7 +239,6 @@ a:hover {
 
 .form-box {
     width: 700px;
-    font-family: 'radikallight';
     font-size: 16px;
     color: #000;
     padding: 0px;
@@ -256,7 +257,6 @@ a:hover {
 .text-box {
     background: #FFFFFF;
     color: #000000;
-    font-family: "radikallight";
     font-size: 20px;
     height: 44px;
     margin: 10px 0 1%;
@@ -276,7 +276,6 @@ a:hover {
     border: 2px solid;
     border-color: rgb(228, 29, 29) !important;
     color: #000000;
-    font-family: "radikallight";
     font-size: 20px;
     height: 44px;
     margin: 10px 0 1%;
@@ -292,7 +291,6 @@ a:hover {
 }
 
 .center-form span {
-    font-family: "radikalthin";
     font-weight: normal;
     padding: 0px 5px;
     margin: 0px 0px 0px 0px;
@@ -309,42 +307,36 @@ a:hover {
 }
 
 .label-text {
-    font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
     text-transform: capitalize;
 }
 
 .label-text-info {
-    font-family: 'gotham-bookgotham-book';
     font-size: 14px;
     padding-left: 0;
     font-style: italic;
 }
 
 .sign-up-message {
-    font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     padding-left: 0;
     text-transform: none;
 }
 
 .error-message {
-    font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     color: #f92b26;
     text-transform: uppercase;
 }
 
 .status-message {
-    font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     color: #412c89;
     text-transform: uppercase;
 }
 
 .success-message {
-    font-family: 'gotham-bookgotham-book';
     font-size: 16px;
     color: #1CAF9A;
     text-transform: uppercase;
@@ -451,7 +443,6 @@ a:hover {
     dt {
         color: darkgrey;
         font-size: 1.25em;
-        font-family: Arial Narrow, Arial, sans-serif;
         font-weight: bold !important;
         text-transform: capitalize;
     }
@@ -469,7 +460,6 @@ a:hover {
     }
 
     body {
-        font-family: default, Verdana, Arial, Tahoma;
         font-size: 12px;
     }
 
