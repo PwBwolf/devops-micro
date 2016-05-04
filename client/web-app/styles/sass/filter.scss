@@ -33,9 +33,11 @@
     #programInfo {
         z-index: 10;
         display:inline-block;
-        margin-left:1px;
+        margin-left: 175px;
+        margin-top: 10px;
         background: transparent;
         float:left;
+        position: absolute;
     }
     .epg-controls{
         span {
@@ -49,10 +51,12 @@
     #currentChannel {
         img {
             height: 60px;
-            padding-left: 10px;
+            padding-left: 25px;
+            position: absolute;
+            z-index: 3;
         }
         background-color: rgba(255,255,255,0.85);
-        width: 70px;
+        //width: 70px;
     }
     .entire-description {
         margin-left: 10px;
@@ -80,7 +84,7 @@
     text-align: left;
     font-size: 14px;
     font-weight: bold;
-    color: white;
+    color: #8339B2;
     cursor: default;
 }
 
@@ -91,7 +95,7 @@
     overflow: hidden;
     text-overflow: clip;
     line-height: 25px;
-    color: white;
+    color: #8339B2;
     vertical-align: middle;
     font-size: 10px;
     cursor: default;
@@ -106,17 +110,18 @@
 }
 
 #favorite {
-    width:5%;
+    //width:5%;
     height:40px;
     float: left;
-    margin-left:24%;
+    margin-left: 141px;
     margin-right: 10px;
     padding-top:18px;
     text-align: center;
     display:inline-block;
     vertical-align: middle;
     background: transparent;
-    z-index: 2;
+    z-index: 3;
+    position: absolute;
 }
 
 .label-filer {
@@ -305,7 +310,7 @@
 }
 
 #currentChannel {
-    width: 175px;
+    //width: 175px;
     height: 40px;
     text-align: center;
     float: left;
@@ -346,4 +351,14 @@
 
 #channelMenuBackground{
     position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#channelMenuWhite{
+    position: absolute;
+    height: 57px;
+    width: 168px;;
+    z-index: 1;
 }

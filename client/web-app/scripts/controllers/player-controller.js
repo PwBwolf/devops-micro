@@ -98,6 +98,7 @@
         // get epg programming / favorite channels for user and initialize all channels view
         function getProgramming() {
             playerSvc.getProgramming(function (err, programming) {
+                console.log('calling for prog', programming)
                 $scope.allChannels = programming;
                 $scope.programming = $scope.allChannels.slice(0, 10);
                 currentView = 'all';
