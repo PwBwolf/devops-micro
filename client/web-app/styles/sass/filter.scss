@@ -294,6 +294,8 @@
     height: 57px;
     width: 100%;
     display: flex;
+    padding-left: 0px;
+    position: relative;
 }
 
 #menuBar {
@@ -339,4 +341,9 @@
         color: rgba(62, 25, 77, .94);
         border-bottom: solid 1px lightgrey;
     }
+}
+
+
+#channelMenuBackground{
+    position: absolute;
 }
