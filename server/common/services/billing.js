@@ -511,7 +511,7 @@ module.exports = {
             '_date', Math.round(new Date().getTime() / 1000)
         ], function (err, response) {
             if (err) {
-                logger.logError('billing - makePayment - error in insertint payment 1');
+                logger.logError('billing - makePayment - error in inserting payment 1');
                 logger.logError(err);
                 if (callback) {
                     callback(err);

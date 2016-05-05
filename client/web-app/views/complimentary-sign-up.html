@@ -43,7 +43,7 @@
                     </div>
                     <div class="full-form">
                         <span class="label-text" translate="COMP_SIGN_UP_EMAIL"></span><br>
-                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="comp" id="email" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && (form.email.$invalid || mobileNumberStatus === 'NOT_MOBILE')}">
+                        <input ng-change="resetMobileNumberStatus()" ng-focus="resetMobileNumberStatus()" ng-blur="checkIfMobileNumber()" autocomplete="off" type="text" maxlength="50" required is-email-or-us-phone is-sign-up-allowed="comp" id="email" name="email" ng-model="mv.email" class="text-box" ng-class="{'text-box-error': form.email.$touched && (form.email.$invalid || mobileNumberStatus === 'NOT_MOBILE')}"><br>
                         <span class="label-text-info" translate="COMP_SIGN_UP_VERIFICATION"></span>
                         <div class="error-message" ng-show="form.email.$touched && form.email.$error.required" translate="COMP_SIGN_UP_EMAIL_REQUIRED"></div>
                         <div class="error-message" ng-show="form.email.$touched && !form.email.$error.required && form.email.$error.isEmailOrUsPhone" translate="COMP_SIGN_UP_EMAIL_INVALID"></div>

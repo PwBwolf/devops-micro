@@ -23,7 +23,6 @@ module.exports = {
     newFreeUser: function (user, cb) {
         var errorType, freeSideCustomerNumber, freeSideSessionId;
         async.waterfall([
-            // create user in db
             function (callback) {
                 createUser(user, null, function (err, userObj) {
                     if (err) {
@@ -32,7 +31,6 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // create account in db
             function (userObj, callback) {
                 createAccount(user, userObj, 'free', function (err, accountObj) {
                     if (err) {
@@ -42,7 +40,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // update user with account
             function (userObj, accountObj, callback) {
                 userObj.account = accountObj;
                 userObj.save(function (err) {
@@ -53,7 +50,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
                 billing.newCustomer(userObj.firstName, userObj.lastName, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
@@ -66,7 +62,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // update freeside customer number in account
             function (userObj, accountObj, callback) {
                 accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
                 accountObj.save(function (err) {
@@ -77,7 +72,6 @@ module.exports = {
                 });
                 callback(null, userObj, accountObj);
             },
-            // add free packages in freeside
             function (userObj, accountObj, callback) {
                 async.eachSeries(
                     config.freeSideFreePremiumUserPackageParts,
@@ -95,7 +89,6 @@ module.exports = {
                     }
                 );
             },
-            // send verification sms or email
             function (userObj, accountObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendVerificationSms(userObj, function (err) {
@@ -144,7 +137,6 @@ module.exports = {
     newPaidUser: function (user, cb) {
         var errorType, freeSideCustomerNumber, freeSideSessionId;
         async.waterfall([
-            // create user in db
             function (callback) {
                 createUser(user, null, function (err, userObj) {
                     if (err) {
@@ -153,7 +145,6 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // create account in db
             function (userObj, callback) {
                 createAccount(user, userObj, 'paid', function (err, accountObj) {
                     if (err) {
@@ -163,7 +154,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // update user with account
             function (userObj, accountObj, callback) {
                 userObj.account = accountObj;
                 userObj.save(function (err) {
@@ -174,7 +164,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // create user in freeside
             function (userObj, accountObj, callback) {
                 var password = userObj.createdAt.getTime();
                 billing.newCustomer(userObj.firstName, userObj.lastName, user.address, user.city, user.state, user.zipCode, 'US', userObj.email, accountObj.key, password, 'CARD', user.cardNumber, user.expiryDate, user.cvv, user.cardName, userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
@@ -187,7 +176,6 @@ module.exports = {
                     callback(err, userObj, accountObj);
                 });
             },
-            // update freeside customer number in account
             function (userObj, accountObj, callback) {
                 accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
                 accountObj.save(function (err) {
@@ -198,7 +186,6 @@ module.exports = {
                 });
                 callback(null, userObj, accountObj);
             },
-            // add paid packages in freeside
             function (userObj, accountObj, callback) {
                 async.eachSeries(
                     config.freeSidePaidUserPackageParts,
@@ -221,7 +208,6 @@ module.exports = {
                     }
                 );
             },
-            // send verification sms or email
             function (userObj, accountObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendVerificationSms(userObj, function (err) {
@@ -306,7 +292,6 @@ module.exports = {
 
         function createComplimentaryUser(user, cc, cb) {
             async.waterfall([
-                // create user in db
                 function (callback) {
                     createUser(user, cc, function (err, userObj) {
                         if (err) {
@@ -315,7 +300,6 @@ module.exports = {
                         callback(err, userObj);
                     });
                 },
-                // create account in db
                 function (userObj, callback) {
                     createAccount(user, userObj, 'comp', function (err, accountObj) {
                         if (err) {
@@ -325,7 +309,6 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     });
                 },
-                // update user with account
                 function (userObj, accountObj, callback) {
                     userObj.account = accountObj;
                     userObj.save(function (err) {
@@ -336,7 +319,6 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     });
                 },
-                // create user in freeside
                 function (userObj, accountObj, callback) {
                     var password = userObj.createdAt.getTime();
                     billing.newCustomer(userObj.firstName, userObj.lastName, 'YipTV', 'West Palm Beach', 'FL', '00000', 'US', userObj.email, accountObj.key, password, 'BILL', '', '', '', '', userObj.preferences.defaultLanguage + '_US', user.agentNumber ? user.agentNumber : '', function (err, customerNumber, sessionId) {
@@ -349,7 +331,6 @@ module.exports = {
                         callback(err, userObj, accountObj);
                     });
                 },
-                // update freeside customer number in account
                 function (userObj, accountObj, callback) {
                     accountObj.freeSideCustomerNumber = freeSideCustomerNumber;
                     accountObj.save(function (err) {
@@ -360,7 +341,6 @@ module.exports = {
                     });
                     callback(null, userObj, accountObj);
                 },
-                // add complimentary package in freeside
                 function (userObj, accountObj, callback) {
                     async.eachSeries(
                         config.freeSideComplimentaryUserPackageParts,
@@ -378,7 +358,6 @@ module.exports = {
                         }
                     );
                 },
-                // send verification sms or email
                 function (userObj, accountObj, callback) {
                     sendVerificationEmailSms(userObj, function (err) {
                         if (err) {
@@ -390,7 +369,6 @@ module.exports = {
                     });
                     callback(null, userObj, accountObj);
                 },
-                // increment complimentary code account count by one
                 function (userObj, accountObj, callback) {
                     cc.accountCount++;
                     cc.save(function (err) {
@@ -428,7 +406,6 @@ module.exports = {
     upgradeSubscription: function (userEmail, newUser, cb) {
         var currentValues, currentUser, errorType, oldAgentNumber;
         async.waterfall([
-            // update user and account
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -503,7 +480,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -513,7 +489,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // update user information in freeside
             function (userObj, sessionId, callback) {
                 var locale = userObj.preferences.defaultLanguage + '_US';
                 if (newUser.address) {
@@ -528,7 +503,6 @@ module.exports = {
                     callback(null, userObj, sessionId);
                 }
             },
-            // get agent
             function (userObj, sessionId, callback) {
                 if (newUser.agentNumber && newUser.agentNumber > 1) {
                     billing.getAgent(sessionId, function (err, agentNumber) {
@@ -543,7 +517,6 @@ module.exports = {
                     callback(null, userObj, sessionId);
                 }
             },
-            // change agent
             function (userObj, sessionId, callback) {
                 if (newUser.agentNumber && newUser.agentNumber > 1) {
                     billing.updateAgent(userObj.account.freeSideCustomerNumber, newUser.agentNumber, function (err) {
@@ -556,7 +529,6 @@ module.exports = {
                     callback(null, userObj, sessionId);
                 }
             },
-            // order paid package
             function (userObj, sessionId, callback) {
                 var packages = currentValues.premiumEndDate ? [config.freeSidePaidBasicPackagePart] : [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart];
                 async.eachSeries(
@@ -580,7 +552,6 @@ module.exports = {
                     }
                 );
             },
-            // send verification email/sms if registered else upgrade email
             function (userObj, sessionId, callback) {
                 if (userObj.status === 'registered') {
                     if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
@@ -705,7 +676,6 @@ module.exports = {
         function changeToComplimentary(userEmail, newUser, cc, cb) {
             var currentValues, currentUser, errorType, oldAgentNumber;
             async.waterfall([
-                    // set account type to comp
                     function (callback) {
                         User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                             if (err) {
@@ -772,7 +742,6 @@ module.exports = {
                             }
                         });
                     },
-                    // login to freeside
                     function (userObj, callback) {
                         billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                             if (err) {
@@ -782,7 +751,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // update user in freeside
                     function (userObj, sessionId, callback) {
                         billing.updateInfo(sessionId, userObj.firstName, userObj.lastName, function (err) {
                             if (err) {
@@ -792,7 +760,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // update locale in freeside
                     function (userObj, sessionId, callback) {
                         var locale = userObj.preferences.defaultLanguage + '_US';
                         billing.updateLocale(sessionId, locale, function (err) {
@@ -803,7 +770,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // update user in freeside
                     function (userObj, sessionId, callback) {
                         billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                             if (err) {
@@ -813,7 +779,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // get agent
                     function (userObj, sessionId, callback) {
                         billing.getAgent(sessionId, function (err, agentNumber) {
                             if (err) {
@@ -824,7 +789,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // change agent
                     function (userObj, sessionId, callback) {
                         if (oldAgentNumber !== config.freeSideAgentNumbers['Internal']) {
                             billing.updateAgent(userObj.account.freeSideCustomerNumber, config.freeSideAgentNumbers['Internal'], function (err) {
@@ -837,7 +801,6 @@ module.exports = {
                             callback(null, userObj, sessionId);
                         }
                     },
-                    // cancel existing package
                     function (userObj, sessionId, callback) {
                         billing.cancelPackages(sessionId, config.freeSideFreePremiumUserPackageParts, function (err) {
                             if (err) {
@@ -847,7 +810,6 @@ module.exports = {
                             callback(err, userObj, sessionId);
                         });
                     },
-                    // order complimentary package
                     function (userObj, sessionId, callback) {
                         billing.orderPackage(sessionId, config.freeSideComplimentaryPackagePart, function (err) {
                             if (err) {
@@ -857,7 +819,6 @@ module.exports = {
                             callback(err, userObj);
                         });
                     },
-                    // send verification email/sms if registered else send welcome message
                     function (userObj, callback) {
                         if (userObj.status === 'registered') {
                             if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
@@ -902,7 +863,6 @@ module.exports = {
                         }
                         callback(null, userObj);
                     },
-                    // increment complimentary code account count by one
                     function (userObj, callback) {
                         cc.accountCount++;
                         cc.save(function (err) {
@@ -964,7 +924,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -973,7 +932,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // get billing date
             function (userObj, sessionId, callback) {
                 billing.getBillingDate(sessionId, function (err, billingDate) {
                     if (err) {
@@ -982,7 +940,6 @@ module.exports = {
                     callback(err, userObj, sessionId, billingDate);
                 });
             },
-            // update user
             function (userObj, sessionId, billingDate, callback) {
                 if (billingDate) {
                     userObj.cancelOn = moment(billingDate).subtract(1, 'days').toDate().toUTCString();
@@ -996,7 +953,6 @@ module.exports = {
                     callback(err, userObj, sessionId, billingDate);
                 });
             },
-            // modify billing type
             function (userObj, sessionId, billingDate, callback) {
                 billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
@@ -1006,7 +962,6 @@ module.exports = {
                     callback(err, userObj, sessionId, billingDate);
                 });
             },
-            // cancel packages
             function (userObj, sessionId, billingDate, callback) {
                 var cancelDate = moment(billingDate).subtract(1, 'days').toDate();
                 billing.cancelPackagesOn(sessionId, [config.freeSidePaidBasicPackagePart, config.freeSidePremiumPackagePart], cancelDate, function (err) {
@@ -1017,7 +972,6 @@ module.exports = {
                     callback(err, userObj);
                 })
             },
-            // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendCancellationSms(userObj, function (err) {
@@ -1059,7 +1013,6 @@ module.exports = {
     removePremiumPackage: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // remove premiumEndDate
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1081,7 +1034,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1091,7 +1043,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel premium package
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
                     if (err) {
@@ -1101,7 +1052,6 @@ module.exports = {
                     callback(err, userObj);
                 });
             }
-            // need to send email or sms after this
         ], function (err, userObj) {
             if (err) {
                 logger.logError(err);
@@ -1160,7 +1110,6 @@ module.exports = {
                     }
                 });
             },
-            // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendPaidSubscriptionEndedSms(userObj, function (err) {
@@ -1196,7 +1145,6 @@ module.exports = {
     endComplimentarySubscription: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // set user status to 'active' and 'free'
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1232,7 +1180,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1242,7 +1189,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel existing packages
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, config.freeSideComplimentaryUserPackageParts, function (err) {
                     if (err) {
@@ -1252,7 +1198,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // add free package in freeside
             function (userObj, sessionId, callback) {
                 billing.orderPackage(sessionId, config.freeSideFreePackagePart, function (err) {
                     if (err) {
@@ -1262,7 +1207,6 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     var message = config.complimentaryAccountEndedSmsMessage[userObj.preferences.defaultLanguage];
@@ -1317,7 +1261,6 @@ module.exports = {
     endPaidSubscription: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
-            // set user status to 'active' and type to 'free' and set canceledDate to current date
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1357,7 +1300,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1367,7 +1309,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // modify billing address
             function (userObj, sessionId, callback) {
                 billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
@@ -1377,7 +1318,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel paid basic and premium package
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
                     if (err) {
@@ -1387,7 +1327,6 @@ module.exports = {
                     callback(err, userObj);
                 });
             },
-            // send email or sms
             function (userObj, callback) {
                 if (validation.isUsPhoneNumberInternationalFormat(userObj.email)) {
                     sendPaidSubscriptionEndedSms(userObj, function (err) {
@@ -1426,10 +1365,195 @@ module.exports = {
         });
     },
 
+    suspendUser: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - suspendUser - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.status === 'failed') {
+                        callback('FailedUser');
+                    } else if (userObj.status === 'suspended') {
+                        callback('SuspendedUser');
+                    } else if (userObj.account.type === 'comp') {
+                        callback('ComplimentaryUser');
+                    } else {
+                        currentValues = {
+                            cancelDate: userObj.cancelDate,
+                            cancelOn: userObj.cancelOn,
+                            type: userObj.account.type,
+                            premiumEndDate: userObj.account.premiumEndDate,
+                            billingDate: userObj.account.billingDate,
+                            packages: userObj.account.packages,
+                            status: userObj.status,
+                            suspendDate: userObj.suspendDate
+                        };
+                        userObj.account.billingDate = undefined;
+                        userObj.account.type = 'none';
+                        userObj.account.packages = [];
+                        userObj.account.premiumEndDate = undefined;
+                        userObj.cancelDate = undefined;
+                        userObj.cancelOn = undefined;
+                        userObj.suspendDate = (new Date()).toUTCString();
+                        userObj.status = 'suspended';
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - suspendUser - error saving user with suspended status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - suspendUser - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - suspendUser - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            function (userObj, sessionId, callback) {
+                billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
+                    if (err) {
+                        logger.logError('subscription - suspendUser - error setting canceled address in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            function (userObj, sessionId, callback) {
+                billing.cancelPackages(sessionId, [config.freeSideFreePackagePart, config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
+                    if (err) {
+                        logger.logError('subscription - suspendUser - error removing active packages: ' + userObj.email);
+                        errorType = 'freeside-package-remove';
+                    }
+                    callback(err, userObj);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForSuspendUser(userObj, currentValues);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-package-remove':
+                        revertAccountChangesForSuspendUser(userObj, currentValues);
+                        revertUserChangesForSuspendUser(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
+    unsuspendUser: function (userEmail, cb) {
+        var currentValues, errorType;
+        async.waterfall([
+            function (callback) {
+                User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
+                    if (err) {
+                        logger.logError('subscription - unsuspendUser - error fetching user: ' + userEmail);
+                        callback(err);
+                    } else if (userObj.status === 'failed') {
+                        callback('FailedUser');
+                    } else if (userObj.status !== 'suspended') {
+                        callback('NonSuspendedUser');
+                    } else {
+                        currentValues = {
+                            type: userObj.account.type,
+                            packages: userObj.account.packages,
+                            status: userObj.status,
+                            suspendDate: userObj.suspendDate
+                        };
+                        userObj.account.type = 'free';
+                        userObj.account.packages = config.freeUserPackages;
+                        userObj.suspendDate = undefined;
+                        userObj.status = 'active';
+                        userObj.save(function (err) {
+                            if (err) {
+                                logger.logError('subscription - unsuspendUser - error saving user with active status: ' + userObj.email);
+                                callback(err);
+                            } else {
+                                userObj.account.save(function (err) {
+                                    if (err) {
+                                        logger.logError('subscription - unsuspendUser - error updating account: ' + userObj.email);
+                                        errorType = 'db-account-update';
+                                    }
+                                    callback(err, userObj);
+                                });
+                            }
+                        });
+                    }
+                });
+            },
+            function (userObj, callback) {
+                billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
+                    if (err) {
+                        logger.logError('subscription - unsuspendUser - error logging into billing system: ' + userObj.email);
+                        errorType = 'freeside-login';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            function (userObj, sessionId, callback) {
+                billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
+                    if (err) {
+                        logger.logError('subscription - unsuspendUser - error setting canceled address in billing system: ' + userObj.email);
+                        errorType = 'freeside-user-update';
+                    }
+                    callback(err, userObj, sessionId);
+                });
+            },
+            function (userObj, sessionId, callback) {
+                billing.orderPackage(sessionId, config.freeSideFreePackagePart, function (err) {
+                    if (err) {
+                        logger.logError('subscription - unsuspendUser - error adding free package: ' + userObj.email);
+                        errorType = 'freeside-package-insert';
+                    }
+                    callback(err, userObj);
+                });
+            }
+        ], function (err, userObj) {
+            if (err) {
+                logger.logError(err);
+                switch (errorType) {
+                    case 'db-account-update':
+                        revertUserChangesForUnsuspendUser(userObj, currentValues);
+                        break;
+                    case 'freeside-user-update':
+                    case 'freeside-login':
+                    case 'freeside-package-insert':
+                        revertAccountChangesForUnsuspendUser(userObj, currentValues);
+                        revertUserChangesForUnsuspendUser(userObj, currentValues);
+                        break;
+                }
+            }
+            if (cb) {
+                cb(err);
+            }
+        });
+    },
+
     dunning5Days: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // get user
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1446,7 +1570,6 @@ module.exports = {
                     });
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1456,7 +1579,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel premium package
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart], function (err) {
                     if (err) {
@@ -1485,7 +1607,6 @@ module.exports = {
     reverseDunning5Days: function (userEmail, cb) {
         var errorType, currentValues;
         async.waterfall([
-            // get user
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1502,7 +1623,6 @@ module.exports = {
                     });
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1512,7 +1632,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // add premium package
             function (userObj, sessionId, callback) {
                 billing.checkAndOrderPackage(sessionId, config.freeSidePremiumPackagePart, function (err) {
                     if (err) {
@@ -1541,7 +1660,6 @@ module.exports = {
     dunning10Days: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
-            // set user status to 'active' and type to 'free' and set canceledDate to current date
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1581,7 +1699,6 @@ module.exports = {
                     }
                 });
             },
-            // login to freeside
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1591,7 +1708,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // modify billing address
             function (userObj, sessionId, callback) {
                 billing.updateBillingType(sessionId, 'BILL', '', '', '', '', function (err) {
                     if (err) {
@@ -1601,7 +1717,6 @@ module.exports = {
                     callback(err, userObj, sessionId);
                 });
             },
-            // cancel paid basic and premium package
             function (userObj, sessionId, callback) {
                 billing.cancelPackages(sessionId, [config.freeSidePremiumPackagePart, config.freeSidePaidBasicPackagePart], function (err) {
                     if (err) {
@@ -1635,7 +1750,6 @@ module.exports = {
     processCashPayment: function (userEmail, cb) {
         var currentValues, errorType;
         async.waterfall([
-            // get user and update
             function (callback) {
                 User.findOne({email: userEmail}).populate('account').exec(function (err, userObj) {
                     if (err) {
@@ -1655,7 +1769,6 @@ module.exports = {
                     }
                 });
             },
-            // login
             function (userObj, callback) {
                 billing.login(userObj.email, userObj.account.key, userObj.createdAt.getTime(), function (err, sessionId) {
                     if (err) {
@@ -1890,6 +2003,66 @@ function revertAccountChangesForCancel(user, currentValues, cb) {
     user.account.save(function (err) {
         if (err) {
             logger.logError('subscription - revertAccountChangesForCancel - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserChangesForSuspendUser(user, currentValues, cb) {
+    user.cancelDate = currentValues.cancelDate;
+    user.cancelOn = currentValues.cancelOn;
+    user.status = currentValues.status;
+    user.suspendDate = currentValues.suspendDate;
+    user.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertUserChangesForSuspendUser - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForSuspendUser(user, currentValues, cb) {
+    user.account.type = currentValues.type;
+    user.account.packages = currentValues.packages;
+    user.premiumEndDate = currentValues.premiumEndDate;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForSuspendUser - error reverting account changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertUserChangesForUnsuspendUser(user, currentValues, cb) {
+    user.status = currentValues.status;
+    user.suspendDate = currentValues.suspendDate;
+    user.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertUserChangesForUnsuspendUser - error reverting user changes: ' + email);
+            logger.logError(err);
+        }
+        if (cb) {
+            cb(err);
+        }
+    });
+}
+
+function revertAccountChangesForUnsuspendUser(user, currentValues, cb) {
+    user.account.billingDate = currentValues.billingDate;
+    user.account.type = currentValues.type;
+    user.account.packages = currentValues.packages;
+    user.account.save(function (err) {
+        if (err) {
+            logger.logError('subscription - revertAccountChangesForUnsuspendUser - error reverting account changes: ' + email);
             logger.logError(err);
         }
         if (cb) {

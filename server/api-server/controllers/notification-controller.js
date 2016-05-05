@@ -5,10 +5,7 @@ var mongoose = require('mongoose'),
     config = require('../../common/setup/config'),
     db = mongoose.createConnection(config.db),
     ApiClient = db.model('ApiClient'),
-    ApiLog = db.model('ApiLog'),
-    monq = require('monq'),
-    queueDb = monq(config.db),
-    queue = queueDb.queue('api-requests');
+    ApiLog = db.model('ApiLog');
 
 module.exports = {
 
@@ -62,7 +59,7 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 req.body.clientId = req.query.clientId;
-                queue.enqueue('executeDunning', req.body, function (err) {
+                dummy('executeDunning', req.body, function (err) {
                     if (err) {
                         logger.logError('notificationController - executeDunning - error adding job to queue');
                         logger.logError(err);
@@ -106,7 +103,7 @@ module.exports = {
                     return res.status(200).send({error: 'unauthorized'});
                 }
                 req.body.clientId = req.query.clientId;
-                queue.enqueue('paymentReceived', req.body, function (err) {
+                dummy('paymentReceived', req.body, function (err) {
                     if (err) {
                         logger.logError('notificationController - paymentReceived - error adding job to queue');
                         logger.logError(err);
@@ -150,4 +147,8 @@ function validateCredentials(clientId, apiKey, cb) {
     } else {
         cb(null, false);
     }
+}
+
+function dummy(one, two, cb) {
+    cb();
 }
