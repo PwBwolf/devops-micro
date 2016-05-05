@@ -176,7 +176,7 @@
             INDEX_OK_BUTTON: 'OK',
             INDEX_YES_BUTTON: 'Yes',
             INDEX_NO_BUTTON: 'No',
-            INDEX_CONTACT_NUMBER: 'Call us toll free: 855-919-4788',
+            INDEX_CONTACT_NUMBER: 'Call us toll free: <a href=\'tel:+18559194788\'>855-919-4788</a>',
             INDEX_SOCIAL_MEDIA: '<a target="_blank" href="https://www.facebook.com/pages/Yiptv/670093559720356?fref=ts"><img src="images/facebook.png" alt=""/></a><a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>',
             INDEX_COPYRIGHT: 'Copyright ® 2012-2016 YipTV. User of the YipTV service and this web site constitutes acceptance of our terms of use and privacy policy.',
             INDEX_LABEL_JOIN_FREE: 'Join Free',
