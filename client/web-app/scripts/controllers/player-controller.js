@@ -16,7 +16,7 @@
         $scope.watching = false;
         $scope.selectedPromo = -1;
         $scope.selectedFilters = [];
-        $scope.favoriteIcon = '../../images/favorite-white.png';
+        $scope.favoriteIcon = '../../images/favorite-purple.png';
         $scope.channelLogo = '../../images/logo.png';
         $scope.programTitle = '';
         $scope.programDescription = '';
@@ -30,9 +30,9 @@
         $scope.noRecentChannels = false;
         $scope.noFavoriteChannels = false;
         $scope.noFiltered = false;
-        $scope.checked = false; // This will be binded using the ps-open attribute
-        $scope.channelsLoaded = false;   // only show menu bar and epg if channels have loaded and information has been parsed
-        $scope.checkedInfo = false; // This will be binded using the ps-open attribute
+        $scope.checked = false;                         // This will be binded using the ps-open attribute
+        $scope.channelsLoaded = false;                  // only show menu bar and epg if channels have loaded and information has been parsed
+        $scope.checkedInfo = false;                     // This will be binded using the ps-open attribute
         $scope.program = {title: '', description: '', showTime: 'ShowTime ...'};
         $scope.hasTitle = false;
 
@@ -98,6 +98,7 @@
         // get epg programming / favorite channels for user and initialize all channels view
         function getProgramming() {
             playerSvc.getProgramming(function (err, programming) {
+                console.log('calling for prog', programming)
                 $scope.allChannels = programming;
                 $scope.programming = $scope.allChannels.slice(0, 10);
                 currentView = 'all';
@@ -330,7 +331,7 @@
                     $scope.noFavoriteChannels = true;
                 }
             }
-            $scope.favoriteIcon = '../../images/favorite-white.png';
+            $scope.favoriteIcon = '../../images/favorite-purple.png';
             userSvc.removeFavoriteChannel(
                 currentChannel.channelId,
                 function (data) {
@@ -388,7 +389,7 @@
                 return e.id;
             }).indexOf(channelId);
             if (isfavorite === -1) {
-                $scope.favoriteIcon = '../../images/favorite-white.png';
+                $scope.favoriteIcon = '../../images/favorite-purple.png';
             } else {
                 $scope.favoriteIcon = '../../images/favorite-yellow.png';
             }
