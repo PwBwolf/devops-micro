@@ -78,6 +78,11 @@
     width: 100%;
 }
 
+#dropDowns{
+    position: absolute;
+    z-index: 5;
+}
+
 #dropDowns > .panel {
     display: inline;
 }
