@@ -11,17 +11,11 @@
                              data-target="#profileDropDown" data-parent="#dropDowns" aria-expanded="false"
                              aria-controls="profileDropDown" translate="USER_HOME_PROFILE"/>
                     </div>
-                    <div ng-show="false" class="button-user-mail">
-                        <img src="images/mail.png" width="35px" height="35px" ng-hide="user.type === 'comp'"
-                             data-toggle="collapse" data-target="#accountDropDown" data-parent="#dropDowns"
-                             aria-expanded="false" aria-controls="accountDropDown" translate="USER_HOME_ACCOUNT"/>
-                    </div>
 
                     <div class="premium-button-holder" style="height:50px;float:right;display:table-cell;vertical-align: middle;background:transparent">
                         <div ng-show="user.type === 'free'" ng-click="toggleUpgradePremium()" style="margin-top:7px;width:100%; height:40px;display:inline-block;text-transform:uppercase;font-size:16px;display:table-cell;line-height:40px;text-align: center;float:right;color:white;background:rgb(131,57,178);cursor:pointer" translate="USER_HOME_UPGRADE_SUBSCRIPTION">
                             <div id="upgradePremiumSlider" pageslide ps-open="showUpgradePremium" ps-size="600px" ps-speed="0" style="z-index:10;position:fixed;margin-top:53px;height:500px;overflow:auto;">
-                                <div id="upgradePremiumlHolder"
-                                     style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
+                                <div id="upgradePremiumlHolder" style="background-color:rgba(200,200,200,0.9);overflow:scroll;width:600px;height:100%;">
                                     <button class="collapse-hide" ng-click="toggleUpgradePremium()">&#10006;</button>
                                     <div id="upgradePremium" class="clear-both" ng-include="'views/upgrade-subscription.html'"></div>
                                 </div>

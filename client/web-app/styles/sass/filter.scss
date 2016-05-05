@@ -23,29 +23,40 @@
 #menuBar {
     .navbar-header{
         max-width: 60%;
+        min-width: 370px;
+    }
+    .navbar{
+        ul.nav.pull-right{
+            padding-top: 19px;
+        }
     }
     #programInfo {
         z-index: 10;
         display:inline-block;
-        margin-left:1px;
+        margin-left: 175px;
+        margin-top: 10px;
         background: transparent;
         float:left;
+        position: absolute;
     }
     .epg-controls{
         span {
             padding-left: 9px;
             padding-right: 9px;
             cursor: pointer;
-            top: 10px;
+            top: 19px;
             color: white;
         }
     }
     #currentChannel {
         img {
-            height: 40px;
+            height: 60px;
+            padding-left: 25px;
+            position: absolute;
+            z-index: 3;
         }
         background-color: rgba(255,255,255,0.85);
-        width: 70px;
+        //width: 70px;
     }
     .entire-description {
         margin-left: 10px;
@@ -73,7 +84,7 @@
     text-align: left;
     font-size: 14px;
     font-weight: bold;
-    color: white;
+    color: #8339B2;
     cursor: default;
 }
 
@@ -84,7 +95,7 @@
     overflow: hidden;
     text-overflow: clip;
     line-height: 25px;
-    color: white;
+    color: #8339B2;
     vertical-align: middle;
     font-size: 10px;
     cursor: default;
@@ -92,24 +103,25 @@
 
 #filter {
     img {
-        top: 9px;
+        top: 19px;
         width: 20px;
         height: 20px;
     }
 }
 
 #favorite {
-    width:5%;
+    //width:5%;
     height:40px;
     float: left;
-    margin-left:10px;
+    margin-left: 141px;
     margin-right: 10px;
-    padding-top:9px;
+    padding-top:18px;
     text-align: center;
     display:inline-block;
     vertical-align: middle;
     background: transparent;
-    z-index: 2;
+    z-index: 3;
+    position: absolute;
 }
 
 .label-filer {
@@ -284,9 +296,11 @@
 
 #channelMenuHolder {
     background: transparent;
-    height: 40px;
+    height: 57px;
     width: 100%;
     display: flex;
+    padding-left: 0px;
+    position: relative;
 }
 
 #menuBar {
@@ -296,7 +310,7 @@
 }
 
 #currentChannel {
-    width: 175px;
+    //width: 175px;
     height: 40px;
     text-align: center;
     float: left;
@@ -332,4 +346,19 @@
         color: rgba(62, 25, 77, .94);
         border-bottom: solid 1px lightgrey;
     }
+}
+
+
+#channelMenuBackground{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#channelMenuWhite{
+    position: absolute;
+    height: 57px;
+    width: 168px;;
+    z-index: 1;
 }
