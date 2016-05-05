@@ -403,7 +403,7 @@
 }
 
 #clock {
-    z-index: 10;
+    z-index: -1;
     width: 154px;
     height: 26px;
     position: absolute;
@@ -522,4 +522,9 @@
     box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
     -webkit-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
     -moz-box-shadow: 0px -1px 2px rgba(180, 180, 180, 0.9);
+}
+
+.timebar{
+    position: relative;
+    z-index: -2;
 }
