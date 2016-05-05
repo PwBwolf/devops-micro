@@ -92,7 +92,3 @@ async.waterfall([
 ], function () {
     process.exit(0);
 });
-
-
-
-

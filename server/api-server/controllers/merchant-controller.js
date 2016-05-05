@@ -108,7 +108,7 @@ module.exports = {
                     } else {
                         return res.status(200).send({
                             error: '',
-                            result: user !== null,
+                            result: (user !== null && user.status !== 'suspended'),
                             billingDate: billingDate
                         });
                     }
@@ -267,6 +267,10 @@ function makePaymentService(params, callback) {
                         });
                     } else {
                         if (dbUser.status === 'failed') {
+                            savePayment(params, 'failure', 'account-error', function () {
+                                callback(new Error('account-error'));
+                            });
+                        } else if (dbUser.status === 'suspended') {
                             savePayment(params, 'failure', 'account-error', function () {
                                 callback(new Error('account-error'));
                             });
