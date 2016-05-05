@@ -44,6 +44,9 @@ var db = mongoose.createConnection(config.db, function (err) {
                                 } else if (userObj.status === 'failed') {
                                     logger.logError('adminCLI - upgradeSubscription - failed user: ' + username);
                                     process.exit(1);
+                                } else if (userObj.status === 'suspended') {
+                                    logger.logError('adminCLI - upgradeSubscription - suspended user: ' + username);
+                                    process.exit(1);
                                 } else if (userObj.account.type === 'paid') {
                                     logger.logError('adminCLI - upgradeSubscription - premium user: ' + username);
                                     process.exit(1);

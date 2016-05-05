@@ -43,6 +43,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - convertToFreeDbOnly - failed user: ' + username);
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - convertToFreeDbOnly - suspended user: ' + username);
+                process.exit(1);
             } else if (user.account.type === 'free') {
                 logger.logError('adminCLI - convertToFreeDbOnly - free user: ' + username);
                 process.exit(1);

@@ -57,6 +57,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - changeEmail - current email address is that of a failed user: ' + currentEmail.toLowerCase());
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - changeEmail - current email address is that of a suspended user: ' + currentEmail.toLowerCase());
+                process.exit(1);
             } else {
                 Users.findOne({email: newEmail.toLowerCase()}).populate('account').exec(function (err, newUser) {
                     if (err) {

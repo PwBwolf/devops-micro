@@ -49,6 +49,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - convertToComplimentarySubscription - failed user: ' + username);
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - convertToComplimentarySubscription - suspended user: ' + username);
+                process.exit(1);
             } else if (user.account.type === 'comp') {
                 logger.logError('adminCLI - convertToComplimentarySubscription - complimentary user: ' + username);
                 process.exit(1);

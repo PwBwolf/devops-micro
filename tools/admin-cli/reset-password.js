@@ -65,6 +65,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - resetPassword - password cannot be changed as the account was not created successfully: ' + username);
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - resetPassword - password cannot be changed as the account is suspended: ' + username);
+                process.exit(1);
             } else {
                 var hashedPassword = user.hashedPassword;
                 var salt = user.salt;

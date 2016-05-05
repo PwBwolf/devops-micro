@@ -44,6 +44,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - endPremiumSubscription - failed user: ' + username);
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - endPremiumSubscription - suspended user: ' + username);
+                process.exit(1);
             } else if (user.account.type === 'free') {
                 logger.logError('adminCLI - endPremiumSubscription - free user: ' + username);
                 process.exit(1);

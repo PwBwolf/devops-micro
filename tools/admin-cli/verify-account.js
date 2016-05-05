@@ -46,6 +46,9 @@ mongoose.connect(config.db, function (err) {
             } else if (user.status === 'failed') {
                 logger.logError('adminCLI - verifyAccount - account cannot be verified as the account was not created successfully: ' + username);
                 process.exit(1);
+            } else if (user.status === 'suspended') {
+                logger.logError('adminCLI - verifyAccount - account cannot be verified as the account is suspended: ' + username);
+                process.exit(1);
             } else if (user.status !== 'registered') {
                 logger.logError('adminCLI - verifyAccount - account is already verified.');
                 process.exit(1);
