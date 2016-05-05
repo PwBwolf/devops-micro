@@ -545,10 +545,10 @@
                 if (currentFilter <= 9) {
                     filterObj.genre[currentFilter] = currentFilter;
                 }
-                else if (currentFilter >= 28 && currentFilter <= 31) {
+                else if ((currentFilter >= 29 && currentFilter <= 31) || (currentFilter >= 55 && currentFilter <=58)) {
                     filterObj.audience[currentFilter] = currentFilter;
                 }
-                else if ((currentFilter >= 10 && currentFilter <= 18) || (currentFilter >= 20 && currentFilter <= 25) || (currentFilter >= 35 && currentFilter <= 37) || (currentFilter === 41) || (currentFilter === 45) || (currentFilter === 46)) {
+                else if (currentFilter === 12 || currentFilter === 23 || currentFilter === 47 || currentFilter === 48 || currentFilter === 50 || currentFilter === 53 || currentFilter === 54) {
                     filterObj.origin[currentFilter] = currentFilter;
                 }
                 else {

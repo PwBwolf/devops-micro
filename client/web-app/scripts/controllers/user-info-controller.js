@@ -6,7 +6,6 @@
         $scope.mv = {firstName: $scope.user.firstName, lastName: $scope.user.lastName};
 
         $scope.updateUserInfo = function () {
-
             if ($scope.form.$valid) {
                 $scope.saving = true;
                 userSvc.updateUserInfo(
