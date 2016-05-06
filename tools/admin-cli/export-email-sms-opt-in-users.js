@@ -28,21 +28,15 @@ MongoClient.connect(config.db, function (err, db) {
             } else {
                 var csv = '';
                 var count = 0;
-                async.eachSeries(
-                    users,
-                    function (user, callback) {
-                        count++;
-                        logger.logInfo('processing user ' + count);
-                        csv += user.email + ',' + user.firstName + ',' + user.lastName + '\n';
-                        callback();
-                    },
-                    function () {
-                        logFile.write(csv);
-                        logger.logInfo(csv);
-                        logger.logInfo('done');
-                        process.exit(0);
-                    }
-                );
+                for (var i = 0; i < users.length; i++) {
+                    count++;
+                    logger.logInfo('processing user ' + count);
+                    csv += users[i].email + ',' + users[i].firstName + ',' + users[i].lastName + '\n';
+                }
+                logFile.write(csv);
+                logger.logInfo(csv);
+                logger.logInfo('done');
+                process.exit(0);
             }
         });
     }
