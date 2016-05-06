@@ -11,51 +11,51 @@
                 </div>
                 <!-- star icon (favorited or not)-->
                 <div id="favorite" ng-hide="mainUrl === undefined">
-                    <img src="{{favoriteIcon}}" title="{{ 'PLAYER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
+                    <img src="{{favoriteIcon}}" title="{{ 'FILTER_MENU_ADD_REMOVE_FAVORITE' | translate }}" width="20px" height="20px" ng-click="toggleFavoriteChannel(currentChannel)" style="cursor: pointer">
                 </div>
                 <!-- program title and description -->
                 <div id="programInfo" ng-init="entiretitle=false; entiredescription=false">
                     <!-- show title of show -->
                     <div id="title" title="{{programTitle}}" ng-if="programTitle">{{programTitle | limitTo: 50}}{{programTitle.length < 50 ? '' : '...'}}</div>
-                    <div id="title" ng-if="!programTitle && mainUrl" translate="PLAYER_PROG_TITLE_UNAVAILABLE"></div>
+                    <div id="title" ng-if="!programTitle && mainUrl" translate="FILTER_PROG_TITLE_UNAVAILABLE"></div>
                     <!-- show first 50 chars of description -->
                     <div id="description" title="{{programDescription}}" ng-if="programDescription">{{programDescription | limitTo: 50}}{{programDescription.length < 50 ? '' : '...'}}</div>
-                    <div id="description" ng-if="!programDescription && mainUrl" translate="PLAYER_PROG_DESCRIPTION_UNAVAILABLE"></div>
+                    <div id="description" ng-if="!programDescription && mainUrl" translate="FILTER_PROG_DESCRIPTION_UNAVAILABLE"></div>
                 </div>
             </div>
             <!-- right half of menu bar -->
             <ul class="nav nav-pills pull-right">
                 <li class="epg-controls" ng-click="displayFavorites();">
-                    <span class="base-class" ng-class="favCh" translate="PLAYER_MENU_FAVORITE"></span>
+                    <span class="base-class" ng-class="favCh" translate="FILTER_MENU_FAVORITE"></span>
                 </li>
                 <li class="epg-controls" ng-click="displayRecent();">
-                    <span class="base-class" ng-class="recCh" translate="PLAYER_MENU_RECENT"></span>
+                    <span class="base-class" ng-class="recCh" translate="FILTER_MENU_RECENT"></span>
                 </li>
                 <li class="epg-controls" ng-click="displayAll();">
-                    <span class="base-classU" ng-class="allCh" translate="PLAYER_MENU_ALL"></span>
+                    <span class="base-classU" ng-class="allCh" translate="FILTER_MENU_ALL"></span>
                 </li>
                 <li class="epg-controls" ng-show="selectedFilters.length > 0" ng-click="displayFiltered();">
-                    <span class="base-class" ng-class="filtCh" translate="PLAYER_MENU_FILTER"></span>
+                    <span class="base-class" ng-class="filtCh" translate="FILTER_MENU_FILTER"></span>
                 </li>
                 <li class="filter-li">
                     <div id="filter">
-                        <img src="../images/filter.png" title="{{ 'PLAYER_MENU_FILTER' | translate }}" ng-click="toggle();" style="cursor: pointer;">
+                        <img src="../images/filter.png" title="{{ 'FILTER_MENU_FILTER' | translate }}" ng-click="toggle();" style="cursor: pointer;">
                         <div pageslide ps-open="checked" ps-size="360px">
                             <div id="channelFilterHolder" class="filter-close-btn label label-danger">
                                 <div class="row">
                                     <div>
-                                        <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters();" translate="PLAYER_CLEAR_ALL" ></a>
-                                        <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="PLAYER_CLOSE"></a>
+                                        <a id="filterClearAll" class="btn btn-danger btn-xs" ng-click="clearFilters();" translate="FILTER_CLEAR_ALL" ></a>
+                                        <a id="filterClose" ng-click="toggle()" class="btn btn-danger btn-xs" translate="FILTER_CLOSE"></a>
                                     </div>
                                     <div class="channel-filters">
                                         <div class="channel-filter-categories" >
-                                            <span translate="PLAYER_CATEGORIES"></span>
+                                            <span translate="FILTER_CATEGORIES"></span>
                                         </div>
                                         <div class="panel-group" id="categories" role="tablist" aria-multiselectable="true">
                                             <div class="panel panel-default filter-categories" >
                                                 <div class="panel-heading" role="tab" id="headingGenre" style="cursor: pointer">
                                                     <div class="category-header" ng-click="genreField = !genreField">
-                                                        <span translate="PLAYER_GENRE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                                        <span translate="FILTER_GENRE" role="button" data-toggle="collapse" data-parent="#categories"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                             <div class="panel panel-default filter-categories">
                                                 <div class="panel-heading" role="tab" id="headingRegion" style="cursor: pointer">
                                                     <div class="category-header" ng-click="originField = !originField">
-                                                        <span translate="PLAYER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                                        <span translate="FILTER_ORIGIN" role="button" data-toggle="collapse" data-parent="#categories"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@
                                             <div class="panel panel-default filter-categories">
                                                 <div class="panel-heading" role="tab" id="headingAudience" style="cursor: pointer">
                                                     <div class="category-header" ng-click="audienceField = !audienceField">
-                                                        <span translate="PLAYER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                                        <span translate="FILTER_AUDIENCE" role="button" data-toggle="collapse" data-parent="#categories"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,7 +125,7 @@
                                             <div class="panel panel-default filter-categories">
                                                 <div class="panel-heading" role="tab" id="headingLanguage" style="cursor: pointer">
                                                     <div class="category-header" ng-click="languageField = !languageField">
-                                                        <span translate="PLAYER_LANGUAGE" role="button" data-toggle="collapse" data-parent="#categories"></span>
+                                                        <span translate="FILTER_LANGUAGE" role="button" data-toggle="collapse" data-parent="#categories"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -147,7 +147,7 @@
                                             </div>
                                         </div>
                                         <div class="filtered-channels-count">
-                                            <span translate="PLAYER_FILTER_CHANNELS_FOUND"></span>
+                                            <span translate="FILTER_FILTERED_CHANNELS_FOUND"></span>
                                             <span style="margin-left: 6px;">{{filteredChannels.length}}</span>
                                         </div>
                                     </div>
