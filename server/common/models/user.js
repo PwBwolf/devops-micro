@@ -32,7 +32,7 @@ var User = new Schema({
     account: {type: Schema.Types.ObjectId, ref: 'Account'},
     preferences: {
         defaultLanguage: {type: String, required: true, lowercase: true},
-        emailSmsSubscription: {type: Boolean}
+        emailSmsSubscription: {type: Boolean, index: true}
     },
     favoriteChannels: [Number]
 }, {collection: 'Users'});
