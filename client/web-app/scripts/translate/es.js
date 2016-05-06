@@ -176,7 +176,7 @@
             INDEX_OK_BUTTON: 'Ok',
             INDEX_YES_BUTTON: 'Sí',
             INDEX_NO_BUTTON: 'No',
-            INDEX_CONTACT_NUMBER: 'Llámanos grátis: <a href=\'tel:+18559194788\'>855-919-4788</a>',
+            INDEX_CONTACT_NUMBER: 'Llámanos grátis: 855-919-4788',
             INDEX_SOCIAL_MEDIA: '<a target="_blank" href="https://www.facebook.com/yiptvespanol"><img src="images/facebook.png" alt=""/></a><a target="_blank" href="https://twitter.com/YipTV"><img src="images/twitter.png" alt=""/></a>',
             INDEX_COPYRIGHT: 'Derechos de Autor ® 2012-2016 YIPTV. Uso del servicio de YIPTV y de ésta página web constituye aceptación de nuestros términos de uso y política de privacidad.',
             INDEX_LABEL_JOIN_FREE: 'Únete Gratis',
