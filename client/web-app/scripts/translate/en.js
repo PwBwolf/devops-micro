@@ -231,6 +231,7 @@
             PLAYER_MENU_INFORMATION: 'Information',
             PLAYER_NO_FAVORITES: 'No Favorites Selected',
             PLAYER_NO_FILTERED_CHANNELS: 'No Matching Channels',
+            PLAYER_NO_RECENT_CHANNELS: 'No Recent Channels',
             FILTER_FILTERED_CHANNELS_FOUND: 'channel(s) found: ',
             FILTER_CATEGORIES: 'Categories',
             FILTER_CLEAR_ALL: 'Clear All',
@@ -492,6 +493,7 @@
             USER_HOME_CANCEL_SUBSCRIPTION_ACCOUNT_REFRESH_ERROR: 'Please close and re-open the YipTV application browser window',
             USER_HOME_CANCEL_ON: 'Your YipTV subscription has been canceled. Your service will continue until the end of your current billing cycle ',
             USER_HOME_NO_RECENT_CHANNELS: 'No Recent Channels',
+
             USER_HOME_EPG_REFRESH: 'Refresh Program Guide',
             USER_HOME_MENU_USER_INFO: 'User Menu',
             USER_INFO_FIRST_NAME: 'First Name',

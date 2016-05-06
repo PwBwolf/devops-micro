@@ -231,6 +231,7 @@
             PLAYER_MENU_INFORMATION: 'Información',
             PLAYER_NO_FAVORITES: 'No Hay Favoritos Seleccionados',
             PLAYER_NO_FILTERED_CHANNELS: 'No Hay Canales',
+            PLAYER_NO_RECENT_CHANNELS: 'No Hay Canales Recientes',
             FILTER_FILTERED_CHANNELS_FOUND: 'canal(es) encontrados: ',
             FILTER_CATEGORIES: 'Categorías',
             FILTER_CLEAR_ALL: 'Borrar Todo',
