@@ -90,7 +90,6 @@
                     }
                 }
                 $scope.tags = $rootScope.channelCategories;
-                console.log('tags',$scope.tags)
             }, function (err) {
                 // show error
             });
@@ -99,7 +98,6 @@
         // get epg programming / favorite channels for user and initialize all channels view
         function getProgramming() {
             playerSvc.getProgramming(function (err, programming) {
-                console.log('calling for prog', programming)
                 $scope.allChannels = programming;
                 $scope.programming = $scope.allChannels.slice(0, 10);
                 currentView = 'all';
@@ -217,7 +215,6 @@
             clearErrMessages();
             $scope.programming = $scope.allChannels.slice(0, 10);
             setCSS();
-            console.log(testTags($scope.tags[2].tags))
         };
 
         $scope.displayRecent = function () {
@@ -644,41 +641,6 @@
             $scope.recCh = '';
             $scope.allCh = 'no-u';
             $scope.filtCh = '';
-        }
-
-        // this function returns a count of the channels that match a tag in the provided obj
-        function testTags(arr){
-            var obj = arrToObj(arr);
-            var count = 0;
-            console.log(obj)
-            var badChannels = [];
-            var foundTag = false;
-            for(var i = 0; i < $scope.allChannels.length; i++){
-                foundTag = false;
-                for(var j = 0; j < $scope.allChannels[i].tags.length; j++){
-                    var tag = $scope.allChannels[i].tags[j]
-                    //console.log(tag)
-                    if(obj.hasOwnProperty(tag)){
-                        count++;
-                        foundTag = true;
-                    }
-                }
-                if(!foundTag){
-                    badChannels.push($scope.allChannels[i])
-                }
-            }
-            console.log(badChannels);
-            return count;
-        }
-
-        function arrToObj(arr) {
-            var obj = {};
-            for (var i = 0; i < arr.length; i++) {
-                var currentValue = arr[i].id;
-                console.log('currentValue', currentValue)
-                obj[currentValue] = arr[i];
-            }
-            return obj;
         }
 
     }])
