@@ -150,6 +150,7 @@ module.exports = {
                 req.body.agentNumber = config.freeSideAgentNumbers[clientName];
                 req.body.merchantId = req.query.merchantId;
                 req.body.merchantName = clientName;
+                req.body.merchantReferenceId = req.body.merchantReferenceId;
                 makePaymentService(req.body, function (err) {
                     if (err) {
                         logger.logError('merchantController - makePayment - error adding job to queue');
@@ -310,7 +311,7 @@ function makePaymentService(params, callback) {
                                                             callback(err);
                                                         });
                                                     } else {
-                                                        billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                        billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, params.merchantReferenceId, function (err) {
                                                             if (err) {
                                                                 logger.logError('merchantProcessorMain - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
                                                                 logger.logError(err);
@@ -347,7 +348,7 @@ function makePaymentService(params, callback) {
                                                             callback(err);
                                                         });
                                                     } else {
-                                                        billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, function (err) {
+                                                        billing.makePayment(dbUser.account.freeSideCustomerNumber, params.amount, payBy, params.merchantReferenceId, function (err) {
                                                             if (err) {
                                                                 logger.logError('merchantGateway - makePayment - error updating payment 1 ' + dbUser.account.freeSideCustomerNumber);
                                                                 logger.logError(err);

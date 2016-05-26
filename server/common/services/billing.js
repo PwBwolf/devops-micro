@@ -250,8 +250,8 @@ module.exports = {
                 'payby', payBy,
                 'payinfo', payInfo,
                 'paycvv', payCvv,
-                'month', payDate.substring(0, 2),
-                'year', payDate.substring(3),
+                'month', payDate ? payDate.substring(0, 2) : '12',
+                'year', payDate ? payDate.substring(3) : '2099',
                 'payname', payName
             ], function (err, response) {
                 if (err) {
@@ -501,14 +501,15 @@ module.exports = {
         });
     },
 
-    makePayment: function (customerNumber, amount, payBy, callback) {
+    makePayment: function (customerNumber, amount, payBy, orderNumber, callback) {
         var client = xmlrpc.createClient(config.freeSideBackOfficeApiUrl);
         client.methodCall('FS.API.insert_payment', [
             'secret', config.freeSideSecretKey,
             'custnum', customerNumber,
             'payby', payBy,
             'paid', amount,
-            '_date', Math.round(new Date().getTime() / 1000)
+            '_date', Math.round(new Date().getTime() / 1000),
+            'order_number', orderNumber
         ], function (err, response) {
             if (err) {
                 logger.logError('billing - makePayment - error in inserting payment 1');
@@ -605,8 +606,6 @@ function cancelPackage(sessionId, packageNumber, callback) {
 }
 
 function cancelPackageOn(sessionId, packageNumber, cancelDate, callback) {
-    console.log(cancelDate);
-    console.log(cancelDate.getTime() / 1000);
     var client = xmlrpc.createClient(config.freeSideSelfServiceApiUrl);
     client.methodCall('FS.ClientAPI_XMLRPC.cancel_pkg', [
         'session_id', sessionId,
