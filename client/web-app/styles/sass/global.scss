@@ -309,12 +309,13 @@ a:hover {
     margin: 0px 0px 0px 0px;
 }
 
-.center-form a {
+.center-form a, .form-box a {
     color: $blue;
+    font-weight: bold;
     text-decoration: none;
 }
 
-.center-form a:hover {
+.center-form a:hover, .form-box a:hover {
     color: $blue;
     text-decoration: underline;
 }
